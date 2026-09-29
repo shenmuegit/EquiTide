@@ -1,0 +1,162 @@
+{
+  "version": "2.0.0rc5",
+  "scope": "offline native capabilities; no project execution policy or live acceptance",
+  "routing": {
+    "BINANCE": {
+      "single_sandbox_build": true,
+      "dual_sandbox_error": "Venue BINANCE already routed to SIM_1, cannot register SIM_0 for the same venue"
+    },
+    "OKX": {
+      "single_sandbox_build": true,
+      "dual_sandbox_error": "Venue OKX already routed to SIM_0, cannot register SIM_1 for the same venue"
+    }
+  },
+  "one_margin_account": {
+    "account_type": "MARGIN",
+    "initial_usdt": "20000",
+    "quote_price_usdt": "50000",
+    "fill_model": "native default",
+    "balances": {
+      "USDT": "19994.10000000"
+    },
+    "events": [
+      {
+        "type": "filled",
+        "instrument": "BTCUSDT.BINANCE",
+        "quantity": "0.100000",
+        "side": "BUY",
+        "commission": "5.00000000 USDT",
+        "order_status": "FILLED"
+      },
+      {
+        "type": "filled",
+        "instrument": "BTCUSDT-PERP.BINANCE",
+        "quantity": "0.100",
+        "side": "SELL",
+        "commission": "0.90000000 USDT",
+        "order_status": "FILLED"
+      }
+    ],
+    "positions": [
+      {
+        "instrument": "BTCUSDT-PERP.BINANCE",
+        "signed_quantity": "-0.1"
+      },
+      {
+        "instrument": "BTCUSDT.BINANCE",
+        "signed_quantity": "0.1"
+      }
+    ],
+    "orders": [
+      {
+        "instrument": "BTCUSDT.BINANCE",
+        "status": "FILLED",
+        "quantity": "0.100000",
+        "filled_quantity": "0.100000"
+      },
+      {
+        "instrument": "BTCUSDT-PERP.BINANCE",
+        "status": "FILLED",
+        "quantity": "0.100",
+        "filled_quantity": "0.100"
+      }
+    ],
+    "stop_callback_seen": true
+  },
+  "one_cash_account_error": "Cash account cannot trade futures or perpetuals",
+  "partial_fill": {
+    "account_type": "CASH",
+    "initial_usdt": "1000000",
+    "quote_price_usdt": "50000",
+    "fill_model": "LimitOrderPartialFillModel",
+    "balances": {
+      "USDT": "499500.00000000",
+      "BTC": "10.00000000"
+    },
+    "events": [
+      {
+        "type": "filled",
+        "instrument": "BTCUSDT.BINANCE",
+        "quantity": "5.000000",
+        "side": "BUY",
+        "commission": "250.00000000 USDT",
+        "order_status": "PARTIALLY_FILLED"
+      },
+      {
+        "type": "filled",
+        "instrument": "BTCUSDT.BINANCE",
+        "quantity": "5.000000",
+        "side": "BUY",
+        "commission": "250.00000000 USDT",
+        "order_status": "FILLED"
+      }
+    ],
+    "positions": [
+      {
+        "instrument": "BTCUSDT.BINANCE",
+        "signed_quantity": "10.0"
+      }
+    ],
+    "orders": [
+      {
+        "instrument": "BTCUSDT.BINANCE",
+        "status": "FILLED",
+        "quantity": "10.000000",
+        "filled_quantity": "10.000000"
+      }
+    ],
+    "stop_callback_seen": true
+  },
+  "one_leg_rejected_and_stop": {
+    "account_type": "MARGIN",
+    "initial_usdt": "20000",
+    "quote_price_usdt": "50000",
+    "fill_model": "native default",
+    "balances": {
+      "USDT": "19995.00000000"
+    },
+    "events": [
+      {
+        "type": "filled",
+        "instrument": "BTCUSDT.BINANCE",
+        "quantity": "0.100000",
+        "side": "BUY",
+        "commission": "5.00000000 USDT",
+        "order_status": "FILLED"
+      },
+      {
+        "type": "rejected",
+        "instrument": "BTCUSDT-PERP.BINANCE",
+        "reason": "Reduce-only order O-20240101-000000-001-000-2 (MARKET-SELL) would have increased position"
+      }
+    ],
+    "positions": [
+      {
+        "instrument": "BTCUSDT.BINANCE",
+        "signed_quantity": "0.1"
+      }
+    ],
+    "orders": [
+      {
+        "instrument": "BTCUSDT.BINANCE",
+        "status": "FILLED",
+        "quantity": "0.100000",
+        "filled_quantity": "0.100000"
+      },
+      {
+        "instrument": "BTCUSDT-PERP.BINANCE",
+        "status": "REJECTED",
+        "quantity": "0.100",
+        "filled_quantity": "0.000"
+      }
+    ],
+    "stop_callback_seen": true
+  },
+  "live_trading_ready": false,
+  "unverified": [
+    "cash spot plus perpetual in one live node",
+    "project hedging after partial fills or rejected orders",
+    "data interruption and reconnection with existing exposure",
+    "exchange account margin, liquidation, ADL and private bills"
+  ]
+}
