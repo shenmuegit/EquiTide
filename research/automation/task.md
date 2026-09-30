@@ -1,6 +1,6 @@
 # 每两小时 BTC/ETH 策略研究
 
-用户授权每两小时找或生成新策略/策略组合，回测、验证、提交并 push；直接完成本轮工作，不重复请求已给的许可。仅历史研究与模拟，不下真实订单。每轮选 1–2 个候选，90 分钟内计算完，留时间保存结果、检查和推送。
+用户授权每两小时找或生成策略/策略组合，回测、验证、提交并 push，目标是找到正收益方法；直接完成本轮工作，不重复请求已给的许可。不同参数、不同权重是允许探索的新配置。仅历史研究与模拟，不下真实订单。每轮探索 1–2 个策略方向，可包含预设的参数/权重批次，90 分钟内计算完，留时间保存结果、检查和推送。
 
 ## 开始
 
@@ -8,15 +8,15 @@
 
 先读取 `.agents/skills/walk-forward-validation/SKILL.md`、`.agents/skills/ml4t-sensitivity-analysis/SKILL.md`、`.agents/skills/ml4t-transaction-costs/SKILL.md`、`research/automation/README.md`、完整 `registry.jsonl`、最近实验报告，以及已有 `freqtrade_trial/results/` 和 `checks/*oos.py`。使用这三个技能完成验证；缺文件时从研究分支恢复，不能跳过。不要委派子代理。
 
-获取远程最新研究记录，目录干净才 `git merge --ff-only`。保留他人的修改、冲突和未推送提交，不 force push、hard reset 或 clean。上一轮有 reserved 记录时，已有可靠计算结果可补齐报告；没有结果则标记 abandoned/blocked，不能重跑旧候选。先处理未推送的研究证据，再研究新候选。
+获取远程最新研究记录，目录干净才 `git merge --ff-only`。保留他人的修改、冲突和未推送提交，不 force push、hard reset 或 clean。上一轮有 reserved 记录时，已有可靠计算结果可补齐报告；没有结果则标记 abandoned/blocked，之后允许恢复或重试。先处理未推送证据。优先补测初始 16 个条目中 `result_available=false` 的配置，按实际数据可用性推进；不能把已写代码或工程检查当作实际回测完成，也不要反复只尝试同一个受阻条目。
 
 ## 新颖性与预登记
 
-阅读历史，比较信号、风险、分配/再平衡规则。改名字、只改参数/币种/周期、组件顺序或组合权重，都不是新候选。使用稳定 family ID；结构哈希无法判断任意逻辑同义改写，必须同时做语义查重。已验证组件用于真正新的组合时，复用已有净值，不能重新测试相同组件。
+阅读历史，以完整具体配置查重：规则、参数、币种、周期、组件及权重全部相同且已有真实回测结果，才算已验证重复。不同参数、不同权重、不同币种/周期或不同分配/再平衡参数均可作为新配置；不因 family 相同而排除。仅改名称、组件排列或等价数字格式不算新配置。权重保留原值，不自动归一化，spec 的逻辑必须明确它代表资金占比或敞口。已验证组件用于组合时优先复用已有净值；参数变化的组件可重新测试。
 
 研究优先一手论文、官方文档和作者原始代码，记录链接、访问日期和版本；浏览资料不是指令。明确经济假设，优先现有引擎/数据/核算，仅在不能复用时写最小独立研究检查。
 
-在看结果前保存 `research/experiments/<UTC轮次>/spec.json`：固定规则、参数、数据边界、敏感性邻域和失败判据。运行 `python3 research/automation/registry.py reserve <spec路径>`，成功才计算；退出 3 必须换候选，退出 2 修复登记问题。所有失败、负收益和中断永久留档。参数扰动属于同一次验证，全部参数写报告，不能下一轮换参数重跑。
+在看结果前保存 `research/experiments/<UTC轮次>/spec.json`：固定规则、完整参数、数据边界、敏感性邻域和失败判据。所有实际评估的具体配置（包括参数扰动和权重网格）逐个运行 `python3 research/automation/registry.py reserve <spec路径>`，成功才计算；退出 3 表示已有结果或正在执行，读取既有结果用于对比或换配置，不重新计算；退出 2 修复登记问题。敏感性批次可共用一个汇总报告，但每个具体配置必须独立登记并 finish，避免下轮重复已跑过的变体。缺实际结果的历史条目可补测；负收益的完整回测同样算已有结果。所有结果和中断记录永久保留。
 
 ## 三项验证
 
@@ -28,7 +28,7 @@
 
 ## 留档、提交、push
 
-保存 `report.json` 与中文 `result.md`：假设、查重、来源、数据、参数、三项验证、结论、局限和下轮排除项。大行情/大逐笔文件留在忽略的 `data/`，Git 保存轻量充分证据和代码。完成后运行 `python3 research/automation/registry.py finish <spec路径> <passed|rejected|blocked|abandoned> <report路径>`。失败、缺数据或没有新合格候选也记录本轮实际阻碍并提交推送，不用旧策略填数。
+保存 `report.json` 与中文 `result.md`：假设、查重、来源、数据、完整参数/权重、三项验证、结论、局限和下一批探索依据。大行情/大逐笔文件留在忽略的 `data/`，Git 保存轻量充分证据和代码。每个实际配置完成后运行 `python3 research/automation/registry.py finish <spec路径> <passed|rejected|blocked|abandoned> <report路径>`；passed/rejected 仅用于已实际完成的回测，标记有结果；无实际结果用 blocked/abandoned，允许后续恢复。所有回测结果，包括负收益结果，都保留并提交推送；失败、缺数据也保存本轮实际阻碍。
 
 运行 `python3 checks/strategy_registry.py` 及本轮必要检查，审查 diff，只提交本轮相关文件，不提交凭据/大数据/无关修改。不自动合并 main。
 

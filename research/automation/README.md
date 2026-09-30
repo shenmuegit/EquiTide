@@ -6,9 +6,11 @@
 
 ## 流程与查重
 
-每轮读取完整 `registry.jsonl`、已有结果和本轮任务说明 `task.md`，找或生成 1–2 个新策略/组合；在看回测结果前固定假设、参数、数据边界和失败判据。reserve 成功后才允许回测。完成三项验证后保存 `research/experiments/<UTC轮次>/` 下的 spec、report、中文结论及可复现代码，finish 登记并提交推送到研究分支。负收益、失败和中断记录同样保留。
+每轮读取完整 `registry.jsonl`、已有结果和本轮任务说明 `task.md`，探索 1–2 个策略方向及预设参数/权重批次，目标是找到正收益方法。优先补测初始 16 个条目中缺真实回测结果的配置；代码和工程检查不能替代回测结果。在看结果前固定假设、完整参数/权重、数据边界和失败判据。每个具体配置 reserve 成功后才回测，finish 后保存 spec、report、中文结论和可复现代码并提交推送。所有回测结果，包括负收益结果，都永久保留。
 
-结构指纹忽略名称/来源，排序币种列表；组合按组件指纹排序、合并重复组件、归一化权重。另用稳定族 ID 和逻辑指纹排除仅改参数/币种/周期/权重。任意程序语义等价无法仅靠哈希识别，执行者必须阅读历史进行语义查重。参数敏感性变体合并到同次报告，不能在下一轮作为新策略重跑。
+只有完整具体配置相同且有实际回测结果，才算已验证重复；相同配置正在执行时也拦截，防止并发重跑。不同参数、权重、币种、周期或组合设置均允许探索，不因策略族相同而排除。结构指纹忽略名称/来源/族名称，排序币种和组件、合并相同组件权重，数值 20 与 20.0 相同。组合保留权重原值，不自动归一化；权重意义由分配规则明确。参数/权重敏感性变体可共用报告，但每个实际评估的配置独立登记，后续精确重复时复用结果。
+
+登记簿保留历史 ID 与组件引用，以当前完整规则重新核对旧配置。`result_available` 表示是否有实际回测结果；初始条目经归档证据核对后追加标记，缺结果的允许补测。完整回测 finish 为 passed/rejected 后标记有结果，无回测结果用 blocked/abandoned，可恢复或重试，历史记录不删除。
 
 策略 spec 格式：
 
@@ -16,7 +18,7 @@
 {"kind":"strategy","family":"stable-family-id","market":"spot","universe":["BTC/USDT","ETH/USDT"],"timeframe":"1d","logic":{"entry":"明确的信号规则，常数写入 parameters","exit":"明确退出规则","sizing":"仓位和风险规则"},"parameters":{"lookback":20,"threshold":2}}
 ```
 
-组合格式：`kind=combination`、稳定 `family`、`logic`（分配/再平衡规则），以及至少两个 `components=[{"fingerprint":"已登记策略SHA256","weight":1}, ...]`。weight 是正资金分仓权重；组件内部可以有空头。
+组合格式：`kind=combination`、稳定 `family`、`logic`（分配/再平衡规则）、`parameters`（如再平衡间隔），以及至少两个 `components=[{"fingerprint":"已登记策略SHA256","weight":1}, ...]`。weight 是正资金分仓权重或敞口，具体意义写入 logic；组件内部可以有空头。不同权重数值或组合参数会产生新指纹。
 
 ```sh
 python3 research/automation/registry.py reserve research/experiments/<轮次>/spec.json
@@ -24,7 +26,7 @@ python3 research/automation/registry.py finish research/experiments/<轮次>/spe
 python3 checks/strategy_registry.py
 ```
 
-退出码 0 成功、3 重复、2 输入/登记簿/结果无效。登记簿只追加，失败记录不删除。初始清单来自已提交结果和现存脚本，`legacy-script` 表示只有代码、当前没有结果证据，保守排除重复；不能称验证已通过。
+退出码 0 成功、3 已有相同配置结果或正在执行、2 输入/登记簿/结果无效。登记簿只追加，失败记录不删除。初始清单来自已提交结果和现存脚本；缺回测结果的条目进入补测队列，不能称验证已通过。
 
 ## 验证与推送
 

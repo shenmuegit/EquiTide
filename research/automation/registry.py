@@ -11,10 +11,16 @@ from pathlib import Path
 
 
 def digest(value):
-    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
+    def normalize(item):
+        if isinstance(item, dict):
+            return {key:normalize(child) for key,child in item.items()}
+        if isinstance(item, list):
+            return [normalize(child) for child in item]
+        return int(item) if isinstance(item, float) and item.is_integer() else item
+    return hashlib.sha256(json.dumps(normalize(value), sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
 
 
-def identities(spec):
+def fingerprint(spec):
     kind, family, logic = spec["kind"], spec["family"], spec["logic"]
     if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", family) or not isinstance(logic, dict) or not logic:
         raise ValueError("family must be a stable lowercase ID; logic must be a nonempty object")
@@ -25,8 +31,6 @@ def identities(spec):
             raise ValueError("universe must use BTC/USDT and/or ETH/USDT")
         definition = {key: spec[key] for key in ("kind", "market", "timeframe", "logic", "parameters")}
         definition["universe"] = sorted(set(spec["universe"]))
-        # ponytail: structural fingerprints plus stable family IDs; review prose synonyms before reserving.
-        idea = {"kind":kind, "logic":logic}
     elif kind == "combination":
         weights = {}
         for component in spec["components"]:
@@ -36,12 +40,13 @@ def identities(spec):
             weights[fp] = weights.get(fp, Fraction(0)) + weight
         if len(weights) < 2:
             raise ValueError("a combination requires at least two distinct components")
-        total = sum(weights.values())
-        definition = {"kind":kind, "logic":logic, "components":[{"fingerprint":fp,"weight":str(weights[fp]/total)} for fp in sorted(weights)]}
-        idea = {"kind":kind, "logic":logic, "components":sorted(weights)}
+        parameters = spec.get("parameters", {})
+        if not isinstance(parameters, dict):
+            raise ValueError("combination parameters must be an object")
+        definition = {"kind":kind, "logic":logic, "parameters":parameters, "components":[{"fingerprint":fp,"weight":str(weights[fp])} for fp in sorted(weights)]}
     else:
         raise ValueError("kind must be strategy or combination")
-    return digest(definition), digest(idea)
+    return digest(definition)
 
 
 def read_records(path):
@@ -66,24 +71,30 @@ def main():
     args = parser.parse_args()
     try:
         spec = json.loads(args.spec.read_text(encoding="utf-8"))
-        fp, idea = identities(spec)
+        fp = fingerprint(spec)
         args.ledger.parent.mkdir(parents=True, exist_ok=True)
         with args.ledger.with_suffix(".lock").open("a") as lock:
             fcntl.flock(lock, fcntl.LOCK_EX)
             records = read_records(args.ledger)
+            # Recompute historical definitions without rewriting their IDs or losing component references.
+            matches = [(key,row) for key,row in records.items() if key == fp or fingerprint(row["spec"]) == fp]
             if args.command == "reserve":
-                for row in records.values():
-                    same_family = spec["kind"] == "strategy" and row["spec"]["kind"] == "strategy" and row["spec"]["family"] == spec["family"]
-                    if row["fingerprint"] == fp or row["idea_fingerprint"] == idea or same_family:
-                        print(f"DUPLICATE: {row['fingerprint']} ({row['status']})")
-                        return 3
+                for key,row in matches:
+                    if row.get("result_available") is False and row["status"] != "reserved":
+                        continue
+                    print(f"DUPLICATE: {key} ({row['status']})")
+                    return 3
                 if spec["kind"] == "combination" and any(c["fingerprint"] not in records for c in spec["components"]):
                     raise ValueError("reserve every component before its combination")
-                row = {"fingerprint":fp, "idea_fingerprint":idea, "spec":spec, "status":"reserved"}
+                row = {"fingerprint":fp, "spec":spec, "status":"reserved", "result_available":False}
+                if matches:
+                    row["retest_of"] = [key for key,_ in matches]
             else:
-                if fp not in records or records[fp]["status"] != "reserved":
+                pending = [key for key,row in matches if row["status"] == "reserved"]
+                if not pending:
                     raise ValueError("only an existing reserved trial can be finished")
-                row = {"fingerprint":fp, "status":args.status, "report":str(args.report), "report_sha256":hashlib.sha256(args.report.read_bytes()).hexdigest()}
+                fp = pending[0]
+                row = {"fingerprint":fp, "status":args.status, "result_available":args.status in ("passed","rejected"), "report":str(args.report), "report_sha256":hashlib.sha256(args.report.read_bytes()).hexdigest()}
             row["recorded_at_utc"] = datetime.now(timezone.utc).isoformat()
             with args.ledger.open("a", encoding="utf-8") as output:
                 output.write(json.dumps(row, ensure_ascii=False, allow_nan=False)+"\n")
