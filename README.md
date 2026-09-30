@@ -1,5 +1,7 @@
 # USDT 量化研究
 
+BTC/ETH 每两小时自动研究、查重、三项验证与结果推送，见[定时研究任务](research/automation/README.md)。研究结果维护在 `codex/strategy-research` 分支。
+
 Python 3.12、NautilusTrader 2.0.0rc5、PostgreSQL，以及 `web/` 下的 React、TypeScript、Vite 单页。当前提供历史买入分析页面、研究、回测与任务 API。自动交易和实盘管理尚未通过验收。
 
 `Freqtrade/` 是上游 Freqtrade 的 Git 子模块；克隆本仓库时使用 `git clone --recurse-submodules`。`freqtrade_trial/` 保存 BTC/USDT 15 分钟线的指标策略、回测结果和未来数据偏差检查结果。
