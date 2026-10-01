@@ -1,0 +1,268 @@
+{
+  "round": "20261001T173606Z",
+  "trigger_utc": "2026-10-01T17:36:06.903Z",
+  "frozen_at_utc": "2026-10-01T17:43:13.891845+00:00",
+  "hypothesis": "Keep the entire already-used SMA60/65/70 and65/75/85%BTC grid unchanged and test economic transfer to March-September2025. Newly downloaded earlier history adds market-stage evidence but is not forward or a pristine holdout; no retuning permitted after transfer outcomes.",
+  "grid": {
+    "lookback_days": [
+      60,
+      65,
+      70
+    ],
+    "band": 0.01,
+    "weight_pairs": [
+      [
+        0.65,
+        0.35
+      ],
+      [
+        0.75,
+        0.25
+      ],
+      [
+        0.85,
+        0.15
+      ]
+    ],
+    "total_initial_usdt": 2000,
+    "component_capitals": {
+      "BTC": [
+        1300,
+        1500,
+        1700
+      ],
+      "ETH": [
+        700,
+        500,
+        300
+      ]
+    }
+  },
+  "oos_start_utc": "2025-03-18T00:01:00Z",
+  "terminal_exit_utc": "2025-09-14T00:01:00Z",
+  "development_history_reused": false,
+  "walk_forward": {
+    "train_days": 180,
+    "embargo_days": 3,
+    "test_days": 30,
+    "step_days": 30,
+    "purge_days": 0,
+    "folds": 6,
+    "fit": "None: fixed rules, no supervised labels or OOS fitting; completed historical prices warm indicators. Capital/positions and desired signal state carry through folds."
+  },
+  "rules": {
+    "entry": "Start cash; prior completed daily close strictly above mean of prior N completed closes*(1+0.01) enters desired-long state.",
+    "exit": "Prior close strictly below SMA*(1-0.01) exits desired-long; equality/deadband preserves desired state.",
+    "sizing": "At next UTC00:01 real minute open, buy maximum affordable LOT_SIZE floored quantity; keep leftover USDT. Sell all lot-valid held units when desired-cash or terminal. Failed orders do not change holdings and are retried at later daily decisions. No leverage, borrow, funding, transfers, rebalancing or USDT yield.",
+    "portfolio": "Explicit raw weights specify initial fractions of2000USDT, not maintained weights; sum corresponding already-costed absolute component NAVs with no second scaling."
+  },
+  "execution": {
+    "metadata_path": "research/experiments/20261001T053425Z/spot_metadata_snapshot.json",
+    "metadata_sha256": "857af9870c57ad05e50a5ee6fad92240b384b99cc22e9ae8cece0e6f94e2d033",
+    "filters": {
+      "BTCUSDT": {
+        "PRICE_FILTER": {
+          "filterType": "PRICE_FILTER",
+          "minPrice": "0.01000000",
+          "maxPrice": "1000000.00000000",
+          "tickSize": "0.01000000"
+        },
+        "LOT_SIZE": {
+          "filterType": "LOT_SIZE",
+          "minQty": "0.00001000",
+          "maxQty": "9000.00000000",
+          "stepSize": "0.00001000"
+        },
+        "ICEBERG_PARTS": {
+          "filterType": "ICEBERG_PARTS",
+          "limit": 100
+        },
+        "MARKET_LOT_SIZE": {
+          "filterType": "MARKET_LOT_SIZE",
+          "minQty": "0.00000000",
+          "maxQty": "128.92264677",
+          "stepSize": "0.00000000"
+        },
+        "TRAILING_DELTA": {
+          "filterType": "TRAILING_DELTA",
+          "minTrailingAboveDelta": 10,
+          "maxTrailingAboveDelta": 2000,
+          "minTrailingBelowDelta": 10,
+          "maxTrailingBelowDelta": 2000
+        },
+        "PERCENT_PRICE_BY_SIDE": {
+          "filterType": "PERCENT_PRICE_BY_SIDE",
+          "bidMultiplierUp": "1.2",
+          "bidMultiplierDown": "0.5",
+          "askMultiplierUp": "2",
+          "askMultiplierDown": "0.8",
+          "avgPriceMins": 5
+        },
+        "NOTIONAL": {
+          "filterType": "NOTIONAL",
+          "minNotional": "5.00000000",
+          "applyMinToMarket": true,
+          "maxNotional": "9000000.00000000",
+          "applyMaxToMarket": false,
+          "avgPriceMins": 5
+        },
+        "MAX_NUM_ORDERS": {
+          "filterType": "MAX_NUM_ORDERS",
+          "maxNumOrders": 200
+        },
+        "MAX_NUM_ORDER_LISTS": {
+          "filterType": "MAX_NUM_ORDER_LISTS",
+          "maxNumOrderLists": 20
+        },
+        "MAX_NUM_ALGO_ORDERS": {
+          "filterType": "MAX_NUM_ALGO_ORDERS",
+          "maxNumAlgoOrders": 5
+        },
+        "MAX_NUM_ORDER_AMENDS": {
+          "filterType": "MAX_NUM_ORDER_AMENDS",
+          "maxNumOrderAmends": 10
+        }
+      },
+      "ETHUSDT": {
+        "PRICE_FILTER": {
+          "filterType": "PRICE_FILTER",
+          "minPrice": "0.01000000",
+          "maxPrice": "1000000.00000000",
+          "tickSize": "0.01000000"
+        },
+        "LOT_SIZE": {
+          "filterType": "LOT_SIZE",
+          "minQty": "0.00010000",
+          "maxQty": "9000.00000000",
+          "stepSize": "0.00010000"
+        },
+        "ICEBERG_PARTS": {
+          "filterType": "ICEBERG_PARTS",
+          "limit": 100
+        },
+        "MARKET_LOT_SIZE": {
+          "filterType": "MARKET_LOT_SIZE",
+          "minQty": "0.00000000",
+          "maxQty": "2603.30411046",
+          "stepSize": "0.00000000"
+        },
+        "TRAILING_DELTA": {
+          "filterType": "TRAILING_DELTA",
+          "minTrailingAboveDelta": 10,
+          "maxTrailingAboveDelta": 2000,
+          "minTrailingBelowDelta": 10,
+          "maxTrailingBelowDelta": 2000
+        },
+        "PERCENT_PRICE_BY_SIDE": {
+          "filterType": "PERCENT_PRICE_BY_SIDE",
+          "bidMultiplierUp": "1.2",
+          "bidMultiplierDown": "0.5",
+          "askMultiplierUp": "2",
+          "askMultiplierDown": "0.8",
+          "avgPriceMins": 5
+        },
+        "NOTIONAL": {
+          "filterType": "NOTIONAL",
+          "minNotional": "5.00000000",
+          "applyMinToMarket": true,
+          "maxNotional": "9000000.00000000",
+          "applyMaxToMarket": false,
+          "avgPriceMins": 5
+        },
+        "MAX_NUM_ORDERS": {
+          "filterType": "MAX_NUM_ORDERS",
+          "maxNumOrders": 200
+        },
+        "MAX_NUM_ORDER_LISTS": {
+          "filterType": "MAX_NUM_ORDER_LISTS",
+          "maxNumOrderLists": 20
+        },
+        "MAX_NUM_ALGO_ORDERS": {
+          "filterType": "MAX_NUM_ALGO_ORDERS",
+          "maxNumAlgoOrders": 5
+        },
+        "MAX_NUM_ORDER_AMENDS": {
+          "filterType": "MAX_NUM_ORDER_AMENDS",
+          "maxNumOrderAmends": 10
+        }
+      }
+    },
+    "simulation": "Hypothetical immediately filled marketable LIMIT IOC at estimated adverse execution price, buy rounded up/sell down to PRICE_FILTER tick; quantity floored to LOT_SIZE. Check static price/quantity bounds and NOTIONAL. Fee paid in USDT; no fee discounts.",
+    "percent_price": "Check frozen PERCENT_PRICE_BY_SIDE against preceding5 fully closed minute quote-volume/base-volume VWAP proxy. Historical reference-price regime is unavailable; proxy is explicitly an assumption, not historical exchange order validation.",
+    "limitations": "Snapshot taken October1, applied uniformly to reused historical data as execution stress assumption, not historical filters. No L2, queue, latency, partial fills or guarantee IOC fills; MARKET_LOT_SIZE does not apply to simulated limit IOC. Applied to2025 prices as a declared stress assumption; not claimed2025 historical exchange rules."
+  },
+  "costs": {
+    "fee_per_side": 0.001,
+    "half_spread": 0.0001,
+    "slippage": 0.0002,
+    "impact_coefficient": 0.5,
+    "impact_inputs": "Previous20 completed UTC day quote ADV and sample stdev20 log daily returns. Buy cash before costs is conservative notional upper bound; sell uses units*reference. Decimal sqrt of budget/ADV, sigma/ADV derived from existing lagged daily function.",
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "max_lagged_ADV_participation": 0.001,
+    "all_costs_simultaneously_scaled": true,
+    "rounding_cost_separately_recorded": true,
+    "terminal_costed": true,
+    "funding_borrow": "N/A unlevered long-only spot"
+  },
+  "nav": {
+    "minute_marks": "Each fully closed minute after start until terminal boundary, plus all daily post-decision reference-open marks and final liquidation;259382 aligned points per scene. Initial pre-trade cash and post-trade NAV are both retained.",
+    "risk": "Overall/fold DD from full continuous minute-close/post-order vector; Sharpe365 from180 daily boundary returns, terminal included once; Calmar uses minute DD.",
+    "compact_storage": "Lossless cash/quantity daily segments plus hash-bound real minute close prices, daily reference opens, explicit construction formula/indexes and little-endian float64 NAV SHA. Complete vectors additionally cached in ignored data/runs; no market arrays in Git.",
+    "intraminute_limit": "Minute-close and order marks are not tick/intraminute-low or executable liquidation-value risk."
+  },
+  "failure_criteria": {
+    "all_cost_returns_positive": true,
+    "min_positive_1x_folds": 4,
+    "max_minute_DD_3x_pct": 25,
+    "min_3x_positive_neighbourhood_fraction": 0.6,
+    "min_1x_round_trips": 2,
+    "min_1x_reference_gross_PnL_to_cost": 2.5,
+    "no_negative_cash_or_units": true,
+    "neighbourhoods": "Per asset: lookback x actual allocated capital3x3; portfolios: lookback x BTC raw initial weight3x3. Comparators recorded rejected solely comparator scope; this is reused historical research, not forward qualification."
+  },
+  "counts": {
+    "research_components": 18,
+    "research_portfolios": 9,
+    "comparator_components": 2,
+    "comparator_portfolios": 1,
+    "all_reserved": 30,
+    "actual_cost_scenes": 90
+  },
+  "forward_plan": "Keep original113625 future plan and parameters unchanged; itsOctober2UTC start has not happened at this run. No forward results.",
+  "sources": [
+    {
+      "url": "https://developers.binance.com/en/docs/products/spot/filters",
+      "accessed": "2026-10-01",
+      "use": "Official static filter definitions and prior-price percent constraints; assumptions explicitly separate."
+    },
+    {
+      "url": "https://github.com/binance/binance-public-data",
+      "accessed": "2026-10-01",
+      "use": "Hash-verified real cached spot data"
+    }
+  ],
+  "actual_first_tool_utc": "2026-10-01T17:37:02Z",
+  "data_start_utc": "2024-09-16T00:00:00Z",
+  "data_end_exclusive_utc": "2025-09-16T00:00:00Z",
+  "previous_period_reference": {
+    "report": "research/experiments/20261001T133655Z/report.json",
+    "sha256": "5349e614e7d42c2e2bed6ad42c72dcce7c768b7e73c3816ff943082f2a4c8116",
+    "OOS_start": "2026-03-18T00:01:00Z",
+    "OOS_end": "2026-09-14T00:01:00Z",
+    "prior_passed": [
+      "rounded_combo_n60_btc0.65",
+      "rounded_combo_n60_btc0.75",
+      "rounded_combo_n60_btc0.85",
+      "rounded_combo_n65_btc0.65",
+      "rounded_combo_n65_btc0.75",
+      "rounded_combo_n65_btc0.85"
+    ],
+    "comparison": "Read previously completed results; no recomputation of2026strategies and no unregistered concatenated-period portfolio calculation."
+  },
+  "transfer_confirmation": "A combination confirms the prior historical candidate only if the same mathematical/execution rule meets frozen gates in BOTH separately reported periods; new passed status here refers to2025period gates. No stable live/forward profitability inference.",
+  "history_note": "Newly acquired earlier calendar history, retrospectively chosen after2026results. Not a prospective untouched final test. Public history/unknown trials and repeated selection prevent significance claims."
+}
