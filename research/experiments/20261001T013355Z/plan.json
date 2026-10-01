@@ -1,0 +1,16 @@
+{
+  "registered_at_utc": "2026-10-01T01:47:00Z",
+  "directions": ["daily price SMA", "daily OBV SMA"],
+  "data_start_utc": "2025-09-16T00:00:00Z",
+  "data_end_exclusive_utc": "2026-09-16T00:00:00Z",
+  "history_is_reused_development_data": true,
+  "legacy_holdout_start": "2026-03-16T00:01:00Z",
+  "legacy_terminal_exit": "2026-09-15T00:01:00Z",
+  "walk_forward": {"train_days": 180, "test_days": 30, "step_days": 30, "embargo_days": 3, "purge_days": 0, "parameter_fitting": "none; fixed grid before outcomes; rolling training windows diagnostic only", "continuous_oos": "positions carry across adjacent test folds, liquidate only at final exit"},
+  "sensitivity": {"sma_BTC_lookback": [60, 65, 70], "sma_ETH_lookback": [16, 20, 24], "sma_initial_risky_sleeve_fraction": [0.5, 0.75, 1.0], "obv_short_days": [1, 2, 3], "obv_long_days": [4, 6, 8], "obv_sleeve_fraction": 1.0},
+  "combination_grid": {"initial_capital_fractions": [[0.25, 0.75], [0.75, 0.25]], "legacy_raw_sleeve_units": [1, 1], "rebalance": "none; sum actual marked component equity; no transfer between sleeves; fractions specify capital out of 2000 USDT, raw units specify 1000 USDT each"},
+  "costs": {"capital_per_component_usdt": 1000, "fee_per_side": 0.001, "half_spread_per_side": 0.0001, "slippage_per_side": 0.0002, "impact": "0.5 * lagged 20-day daily close return volatility * sqrt(reference order notional / lagged 20-day mean daily quote volume)", "max_order_participation_of_lagged_ADV": 0.001, "multipliers": [1, 2, 3], "estimated_not_historical_L2": true},
+  "failure_criteria": {"all_cost_multipliers_net_return_positive": true, "at_least_four_of_six_positive_fold_returns_at_1x": true, "continuous_max_drawdown_at_3x_lte_pct": 25, "sensitivity_neighborhood_positive_fraction_at_3x_gte": 0.6, "minimum_executions": 2, "missing_or_discontinuous_data": "blocked without actual backtest"},
+  "selection": "report full grid; any positive result remains historical candidate requiring future untouched data; no OOS-selected retuning represented as independent confirmation",
+  "sources": ["https://www.monash.edu/__data/assets/pdf_file/0011/3744821/Trend-following-Strategies-for-Crypto-Investors.pdf", "https://backoffice.biblio.ugent.be/download/01HY3C3S169G1N6QNYR55NZMFB/01HY60XZGZYHNQ6188MSVJT0SG", "https://github.com/binance/binance-public-data"]
+}

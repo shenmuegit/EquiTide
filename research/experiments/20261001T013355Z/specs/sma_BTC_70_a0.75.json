@@ -1,0 +1,20 @@
+{
+  "kind": "strategy",
+  "family": "daily-price-sma",
+  "logic": {
+    "entry": "previous daily close > prior daily close SMA",
+    "exit": "otherwise USDT",
+    "sizing": "unlevered spot; next 00:01 UTC minute open; fixed initial risky sleeve fraction, remaining capital permanent USDT; no transfers"
+  },
+  "parameters": {
+    "lookback_days": 70,
+    "initial_risky_sleeve_fraction": 0.75
+  },
+  "universe": [
+    "BTC/USDT"
+  ],
+  "timeframe": "1d",
+  "market": "spot",
+  "name": "sma_BTC_70_a0.75",
+  "validation_plan": "research/experiments/20261001T013355Z/plan.json"
+}

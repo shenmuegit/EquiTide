@@ -1,0 +1,20 @@
+{
+  "kind": "strategy",
+  "family": "daily-obv-sma",
+  "logic": {
+    "entry": "SMA(OBV,short) >= SMA(OBV,long); unchanged close adds base volume",
+    "exit": "otherwise USDT",
+    "sizing": "unlevered spot; next 00:01 UTC minute open"
+  },
+  "parameters": {
+    "short_days": 2,
+    "long_days": 4
+  },
+  "universe": [
+    "BTC/USDT"
+  ],
+  "timeframe": "1d",
+  "market": "spot",
+  "name": "obv_BTC_2_4",
+  "validation_plan": "research/experiments/20261001T013355Z/plan.json"
+}
