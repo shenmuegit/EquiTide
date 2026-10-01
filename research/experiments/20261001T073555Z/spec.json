@@ -1,0 +1,121 @@
+{
+  "round": "20261001T073555Z",
+  "parent_commit": "00ea316b77e0ca506f80fe13d7f5486ea4804294",
+  "prior_registry_sha256": "d1c9d05b922d343f15518994ec608804120b047e41f61d0503c670fda2289e20",
+  "prior_canonical_definitions": 106,
+  "direction": "M1 training-only Ridge predicts cost-inclusive matched carry PNL; hourly original factors and fixed holding",
+  "assets": [
+    "BTC",
+    "ETH"
+  ],
+  "alphas": [
+    0.1,
+    1,
+    10
+  ],
+  "buffers_usdt": [
+    0,
+    1,
+    5
+  ],
+  "continuous_holding_hours": 24,
+  "per_leg_fraction": 0.25,
+  "capital_usdt": 10000,
+  "isolated_books_usdt": [
+    5000,
+    5000
+  ],
+  "transfers": false,
+  "validation": {
+    "data_start": "2025-09-16T00:00:00Z",
+    "data_end_exclusive": "2026-09-16T00:00:00Z",
+    "train_days": 180,
+    "embargo_days": 3,
+    "test_days": 28,
+    "step_days": 28,
+    "folds": 6,
+    "OOS_start_signal": "2026-03-18T00:00:00Z",
+    "OOS_end_signal": "2026-09-02T00:00:00Z",
+    "fit_each_fold": "decision in train range AND label_end_ts AND label_available_ts strictly before train_end; each fit has embargo 3 days before test start",
+    "active_features": "original F01..F12; train non-null coverage >=98%; median imputer and StandardScaler fit only training; unavailable OI/indicative funding/takerflow/L2/cross factors stay null",
+    "ridge": "sklearn1.7.2 Ridge alpha fixed, solver=svd; no OOS/validation alpha selection",
+    "label": "same matched 24h next-minute execution/cost/funding rules as extension at nominal NAV10000, target per-leg .25; maturity max(exit, funding available). Costs base1x. Endogenous future cost is label, never feature. Purge overlapping immature labels.",
+    "forecast": "predicted normalized PNL times decision-known NAV > buffer; base forecast reused across stressed scenarios",
+    "execution": "signal hourly completed close at T, actual next T+1 minute open; quantities known before gap funding, gap settles old position before fill; fixed T+24h expiry executed next minute; continuous holdings across folds; terminal liquidation costs",
+    "history": "reused development history; no untouched final holdout",
+    "missing_features": "normalized cache lacks taker flow, OI, historical indicative funding, L2; nulls not synthetic replacements"
+  },
+  "costs": {
+    "spot_fee": 0.001,
+    "perp_fee": 0.0005,
+    "half_spread": 0.0001,
+    "slippage": 0.0002,
+    "impact": "0.5*strictly previous20completedDaysLogVol*sqrt(notional/laggedADV)",
+    "participation_max": 0.001,
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "paid_funding": "actual negative receipts multiplied; positive receipts unchanged",
+    "maintenance_ratio_assumed": 0.01,
+    "metadata": "frozen actual prior-round exchange snapshot assumed for history",
+    "borrow": "no spot shorts or borrowing"
+  },
+  "native": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "holding_hours": 24,
+    "alpha": 1,
+    "buffer_usdt": 1,
+    "per_leg_fraction": 0.45,
+    "start": "2026-03-18T00:00:00Z",
+    "end": "2026-03-21T00:00:00Z",
+    "label": "original label_frame 24h only used, original fixed common-lot qty from case start; original spot fee10bp/perp2bp/flat execution5bp; hourly next shared record entry, exact24h exit",
+    "model": "first 180d chronological mature-label fit only, frozen all72h",
+    "costs": "original flat execution +fees+paid funding stressed1/2/3; native not long-run three-gate qualification"
+  },
+  "gates": {
+    "all_cost_returns_positive": true,
+    "positive_folds_1x_min": 4,
+    "max_drawdown_pct_3x": 25,
+    "positive_neighborhood_fraction_3x_min": 0.6,
+    "round_trips_1x_min": 4,
+    "cash_margin_violations": 0,
+    "gross_to_execution_cost_1x_min": 2.5
+  },
+  "benchmark": "reuse actual prior-round45%spot BTC/ETH curves and cash0; unequal directional/gross exposures disclosed; no recalculation",
+  "sources": [
+    {
+      "url": "https://scikit-learn.org/1.7/modules/generated/sklearn.linear_model.Ridge.html",
+      "version": "1.7.2",
+      "access_date": "2026-10-01"
+    },
+    {
+      "url": "https://scikit-learn.org/1.7/common_pitfalls.html",
+      "scope": "training-only preprocessing",
+      "access_date": "2026-10-01"
+    },
+    {
+      "url": "https://github.com/binance/binance-public-data",
+      "scope": "real cache + official checksums"
+    },
+    {
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Get-Funding-Rate-History",
+      "scope": "actual funding and settlement marks"
+    },
+    {
+      "url": "https://github.com/shenmuegit/EquiTide",
+      "version": "00ea316b77e0ca506f80fe13d7f5486ea4804294",
+      "scope": "original M1 and factors/labels/native engine"
+    }
+  ],
+  "limits": [
+    "hourly sampled continuous NAV drawdown, not minute mark maximum",
+    "current metadata/hypothetical1% maintenance, no historical exchange liquidation tiers/L2/USDpeg/custody validation",
+    "initial scope has abbreviated examples; 2 actual24h native cases restore evidence, untested8h examples not asserted complete",
+    "all18grid configs stored; no OOS optimum selected as independent discovery; historic total trial count unknown"
+  ]
+}

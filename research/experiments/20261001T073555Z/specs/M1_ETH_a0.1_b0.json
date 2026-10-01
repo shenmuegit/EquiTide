@@ -1,0 +1,63 @@
+{
+  "kind": "strategy",
+  "family": "ridge-carry-m1-continuous",
+  "market": "spot-perpetual-hedge",
+  "timeframe": "1h",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "logic": {
+    "entry": "predicted normalized PNL times decision-known NAV > buffer; base forecast reused across stressed scenarios",
+    "exit": "fixed24h next minute; repeat after next hourly signal; terminal exit cost included",
+    "sizing": "floor .25*known total NAV/known spot to common lot; each leg25%, gross50%, two isolated books/no transfers",
+    "features": "original F01..F12; train non-null coverage >=98%; median imputer and StandardScaler fit only training; unavailable OI/indicative funding/takerflow/L2/cross factors stay null",
+    "training": "decision in train range AND label_end_ts AND label_available_ts strictly before train_end; each fit has embargo 3 days before test start",
+    "labels": "same matched 24h next-minute execution/cost/funding rules as extension at nominal NAV10000, target per-leg .25; maturity max(exit, funding available). Costs base1x. Endogenous future cost is label, never feature. Purge overlapping immature labels.",
+    "execution": "signal hourly completed close at T, actual next T+1 minute open; quantities known before gap funding, gap settles old position before fill; fixed T+24h expiry executed next minute; continuous holdings across folds; terminal liquidation costs"
+  },
+  "parameters": {
+    "baseline": "M1",
+    "holding_hours": 24,
+    "per_leg_fraction": 0.25,
+    "buffer_usdt": 0,
+    "ridge_alpha": 0.1,
+    "funding_window": 21,
+    "capital_usdt": 10000,
+    "books": [
+      5000,
+      5000
+    ],
+    "train_days": 180,
+    "embargo_days": 3,
+    "test_days": 28,
+    "step_days": 28,
+    "data_start": "2025-09-16T00:00:00Z",
+    "data_end_exclusive": "2026-09-16T00:00:00Z",
+    "OOS_start_signal": "2026-03-18T00:00:00Z",
+    "OOS_end_signal": "2026-09-02T00:00:00Z",
+    "active_coverage": 0.98,
+    "solver": "svd",
+    "preprocessing": "training-only median imputer+standard scaler",
+    "feature_set": "original F01..12, nullable if unavailable",
+    "label_horizon_hours": 24,
+    "label_fraction": 0.25,
+    "costs": {
+      "spot_fee": 0.001,
+      "perp_fee": 0.0005,
+      "half_spread": 0.0001,
+      "slippage": 0.0002,
+      "impact": "0.5*strictly previous20completedDaysLogVol*sqrt(notional/laggedADV)",
+      "participation_max": 0.001,
+      "multipliers": [
+        1,
+        2,
+        3
+      ],
+      "paid_funding": "actual negative receipts multiplied; positive receipts unchanged",
+      "maintenance_ratio_assumed": 0.01,
+      "metadata": "frozen actual prior-round exchange snapshot assumed for history",
+      "borrow": "no spot shorts or borrowing"
+    },
+    "metadata_snapshot": "research/experiments/20261001T053425Z/spot_metadata_snapshot.json"
+  }
+}

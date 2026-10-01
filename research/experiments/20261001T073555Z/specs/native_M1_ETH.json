@@ -1,0 +1,45 @@
+{
+  "kind": "strategy",
+  "family": "ridge-carry-m1-native",
+  "market": "spot-perpetual-hedge",
+  "timeframe": "1h",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "logic": {
+    "entry": "unchanged native M1: original24h-label training-only Ridge predicts normalized net gain*initial10000 above1USDT",
+    "exit": "one episode fixed24h or scheduledend, unchanged native engine",
+    "sizing": "fixed commonlot target from45%initialcapital/case start spot; matched longspot/shortperp",
+    "training": "decision in train range AND label_end_ts AND label_available_ts strictly before train_end; each fit has embargo 3 days before test start",
+    "execution": "original label_frame 24h only used, original fixed common-lot qty from case start; original spot fee10bp/perp2bp/flat execution5bp; hourly next shared record entry, exact24h exit"
+  },
+  "parameters": {
+    "baseline": "M1",
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "holding_hours": 24,
+    "alpha": 1,
+    "buffer_usdt": 1,
+    "per_leg_fraction": 0.45,
+    "start": "2026-03-18T00:00:00Z",
+    "end": "2026-03-21T00:00:00Z",
+    "label": "original label_frame 24h only used, original fixed common-lot qty from case start; original spot fee10bp/perp2bp/flat execution5bp; hourly next shared record entry, exact24h exit",
+    "model": "first 180d chronological mature-label fit only, frozen all72h",
+    "costs": "original flat execution +fees+paid funding stressed1/2/3; native not long-run three-gate qualification",
+    "base_asset": "ETH",
+    "funding_window": 21,
+    "model_train_days": 180,
+    "model_train_end": "2026-03-15T00:00:00Z",
+    "embargo_days": 3,
+    "active_coverage": 0.98,
+    "solver": "svd",
+    "capital_usdt": 10000,
+    "books": [
+      5000,
+      5000
+    ],
+    "metadata_snapshot": "research/experiments/20261001T053425Z/spot_metadata_snapshot.json"
+  }
+}
