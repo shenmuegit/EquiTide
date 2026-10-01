@@ -1,0 +1,22 @@
+{
+  "kind": "strategy",
+  "family": "spot-hold-comparator",
+  "market": "spot",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "timeframe": "1h",
+  "logic": {
+    "entry": "initial equal-capital long spot sleeves at first validation 00:01 or 01:01 minute open",
+    "exit": "scheduled terminal exit at prespecified minute open",
+    "sizing": "unlevered spot; no transfers between sleeves; cash zero yield"
+  },
+  "parameters": {
+    "start_utc": "2026-03-18T00:01:00Z",
+    "end_utc": "2026-09-02T00:01:00Z",
+    "initial_capital_usdt": 2000
+  },
+  "name": "benchmark_pairs_hold",
+  "validation_plan": "research/experiments/20261001T033355Z/plan.json"
+}

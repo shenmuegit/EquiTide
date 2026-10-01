@@ -36,6 +36,9 @@ python3 checks/strategy_registry.py
 
 ## 最近完成的轮次
 
+- [2026-10-01 03:33 UTC](../experiments/20261001T033355Z/result.md)：配对与跨交易所资金费对冲各 9 个参数配置、另 2 个同期持有基准完成真实六折/敏感性/1–3 倍成本，20 个配置均 finish。无合格候选，配对 600h/Z=2.2 在三倍成本仍 +0.925%，仅 2/6 折盈利且邻域 1/9 正收益；资金费对冲邻域 0/9 为正。初始 16 条已有 13 条实际结果，剩余 B0/B1/M1。
+- 本轮缓存新增 Binance perp 分钟、hour mark、实际资金费与 settlement mark，OKX 分钟/资金费/真实 quote volume；见该轮 manifest。Binance mark 归档缺失的 24h 以真实官方 REST 补取。OKX 下载器已修复等值资金费科学计数格式误判。后续补原生 carry 仍需分钟 mark、Nautilus 和具体 episode/model 预登记。
+
 - [2026-10-01 01:33 UTC](../experiments/20261001T013355Z/result.md)：补齐初始缺结果条目中的 6 条；36 个单策略、6 个组合完成真实六折验证、全参数网格及 1/2/3 倍成本。42 个候选全部未通过完整门槛，27 个在 1 倍成本为正、15 个在 3 倍为正。两个同期持有比较配置额外登记并保存；本轮 44 个配置均 finish。原始 16 条仍有 5 条缺实际结果：B0/B1/M1、永续配对、跨交易所资金费 Z。
 - 行情已缓存在忽略的 `data/raw/research_20261001/` 与 `data/normalized/binance/`。54 个官方 archive checksum 及规范化数据哈希见该轮 `data_manifest.json`。下一轮复用有效缓存，勿重新下载或重复已完成配置；数据文件版本兼容旧脚本路径，实际下载日期以 manifest 为准。
 - 审计重放使用该轮 `reproduce.sh`，不写登记报告；新研究仍须新 spec、reserve 和 finish。该轮公开记录了两条基准首次计算未事前登记的流程偏差，后续比较配置也须先登记。

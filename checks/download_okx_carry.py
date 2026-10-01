@@ -7,6 +7,7 @@ import json
 import time
 import zipfile
 from datetime import datetime, timezone
+from decimal import Decimal
 from pathlib import Path
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -89,6 +90,13 @@ def load_archives(module):
     return records, sources
 
 
+def same_funding(left, right):
+    """Compare actual funding values, accepting equivalent decimal representations."""
+    return (left["instrument_name"] == right["instrument_name"]
+            and int(left["funding_time"]) == int(right["funding_time"])
+            and Decimal(left["funding_rate"]) == Decimal(right["funding_rate"]))
+
+
 def recent_funding():
     records, pages, cursor = {}, [], END
     while cursor >= utc_ms("2026-08-31T16:00:00Z"):
@@ -124,7 +132,7 @@ def main():
     funding, funding_sources = load_archives(3)
     latest, latest_source = recent_funding()
     for ts, row in latest.items():
-        if ts in funding and funding[ts] != row:
+        if ts in funding and not same_funding(funding[ts], row):
             raise ValueError(f"conflicting funding {ts}")
         funding[ts] = row
     expected = list(range(START, END, MINUTE))

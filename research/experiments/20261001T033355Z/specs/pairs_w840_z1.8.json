@@ -1,0 +1,25 @@
+{
+  "kind": "strategy",
+  "family": "perpetual-pair-ols-adf",
+  "logic": {
+    "entry": "prior-window OLS log BTC on log ETH; ADF passes and current |Z| exceeds entry threshold",
+    "exit": "|Z| below exit threshold or above stop threshold",
+    "sizing": "beta-matched opposite perpetual legs; actual funding; next hh:01 minute open"
+  },
+  "parameters": {
+    "window_hours": 840,
+    "adf_maxlag": 10,
+    "adf_p": 0.05,
+    "entry_z": 1.8,
+    "exit_z": 0.5,
+    "stop_z": 4
+  },
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "timeframe": "1h",
+  "market": "perpetual",
+  "name": "pairs_w840_z1.8",
+  "validation_plan": "research/experiments/20261001T033355Z/plan.json"
+}

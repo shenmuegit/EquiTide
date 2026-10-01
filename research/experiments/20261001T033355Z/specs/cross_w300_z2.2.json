@@ -1,0 +1,22 @@
+{
+  "kind": "strategy",
+  "family": "cross-exchange-funding-z",
+  "logic": {
+    "entry": "OKX realized funding exceeds Binance and Z(max venue funding) > threshold after publication buffer",
+    "exit": "Z <= 0 or OKX ceases to be best; scheduled end",
+    "sizing": "Binance spot long plus OKX perpetual short; quantity floor; capital / 14"
+  },
+  "parameters": {
+    "window_settlements": 300,
+    "entry_z": 2.2,
+    "publication_buffer_hours": 1,
+    "lot_btc": 0.01
+  },
+  "universe": [
+    "BTC/USDT"
+  ],
+  "timeframe": "8h",
+  "market": "cross-exchange-hedge",
+  "name": "cross_w300_z2.2",
+  "validation_plan": "research/experiments/20261001T033355Z/plan.json"
+}
