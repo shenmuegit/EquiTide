@@ -1,0 +1,42 @@
+{
+  "kind": "strategy",
+  "family": "ridge-carry-m1-native",
+  "market": "spot-perpetual-hedge",
+  "timeframe": "1h",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "logic": {
+    "entry": "unchanged native M1, Ridge original8h-label forecast*initial10000 >1USDT",
+    "exit": "unchanged native oneepisode fixed8h or scheduledend",
+    "sizing": "fixed commonlot from45%initialNAV/first publicly visible signal spot; known at first signal, only rescales mature historical labels, no future outcomes",
+    "training": "180d mature original8h labels,3daygap,train-onlycoverage/preprocess,RidgeSVdalpha1; firstsignal fit then72h frozen",
+    "execution": "original label_frame cashflow definition extended to fixed8h, native next shared closed hourly price entersT+1h and knownT+8h exit; actual7h holding. Same original fees/ticks/actual funding and maturity rules. Only8h labels, not24h models reused."
+  },
+  "parameters": {
+    "holding_hours": 8,
+    "alpha": 1,
+    "buffer_usdt": 1,
+    "fraction_initial_NAV": 0.45,
+    "funding_window": 21,
+    "train_start": "2025-09-16T00:00:00Z",
+    "train_end_exclusive": "2026-03-15T00:00:00Z",
+    "embargo_days": 3,
+    "start_signal": "2026-03-18T00:00:00Z",
+    "end": "2026-03-21T00:00:00Z",
+    "labels": "original label_frame cashflow definition extended to fixed8h, native next shared closed hourly price entersT+1h and knownT+8h exit; actual7h holding. Same original fees/ticks/actual funding and maturity rules. Only8h labels, not24h models reused.",
+    "quantity": "fixed commonlot from45%initialNAV/first publicly visible signal spot; known at first signal, only rescales mature historical labels, no future outcomes",
+    "spot_fee": 0.001,
+    "perp_fee": 0.0002,
+    "execution_bps_per_leg": 5,
+    "scope": "original native M1 strategy unchanged, short-case evidence only; volume impact and long4foldqualification belong to continuous extension",
+    "cost_stress": "original fees+flat5bpexecution and paid funding1/2/3, forecast fixedbasecost",
+    "capital_usdt": 10000,
+    "books_usdt": [
+      5000,
+      5000
+    ],
+    "base_asset": "BTC",
+    "metadata_snapshot": "research/experiments/20261001T053425Z/spot_metadata_snapshot.json"
+  }
+}

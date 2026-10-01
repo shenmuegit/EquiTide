@@ -1,0 +1,38 @@
+{
+  "kind": "strategy",
+  "family": "spot-hold-comparator",
+  "market": "spot",
+  "timeframe": "1h",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "logic": {
+    "entry": "first OOS completed signal, actualnextminute spotopen buy",
+    "exit": "terminalnextminute sell, costincluded",
+    "sizing": "25%initial10000NAV spot,75%cash, actualspotlot floor, no rebalancing, no leverage"
+  },
+  "parameters": {
+    "capital_usdt": 10000,
+    "fraction_initial_NAV": 0.25,
+    "start_signal": "2026-05-10T00:00:00Z",
+    "end_signal": "2026-08-30T00:00:00Z",
+    "costs": {
+      "spot_fee": 0.001,
+      "perp_fee": 0.0005,
+      "half_spread": 0.0001,
+      "slippage": 0.0002,
+      "impact": "0.5*prior20completedUTCdaysLogVol*sqrt(order_notional/prior20dayADV)",
+      "participation_max": 0.001,
+      "multipliers": [
+        1,
+        2,
+        3
+      ],
+      "funding_stress": "actual paid negative receipts scale; positive income unchanged; exact API settlement ms jitter/mark preserved",
+      "maintenance_ratio_assumed": 0.01,
+      "metadata_snapshot": "research/experiments/20261001T053425Z/spot_metadata_snapshot.json",
+      "borrow": "no spot shorts or borrowing"
+    },
+    "metadata_snapshot": "research/experiments/20261001T053425Z/spot_metadata_snapshot.json"
+  }
+}

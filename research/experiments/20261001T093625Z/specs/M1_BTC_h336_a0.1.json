@@ -1,0 +1,71 @@
+{
+  "kind": "strategy",
+  "family": "ridge-carry-m1-long",
+  "market": "spot-perpetual-hedge",
+  "timeframe": "1h",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "logic": {
+    "entry": "predicted cost-inclusive normalized PNL times decision-known NAV >1USDT; each horizon model forecast stays base1x in every stress path",
+    "exit": "fixed H hours nextminute; new attempt at next hourly decision; terminal exitscost included",
+    "sizing": "each matched leg25%decision-known totalNAV, gross50%, floor commonlot; isolated cash/collateral/no transfers",
+    "training": "decision in180d train AND actual label_end AND label_available strictly before train cutoff; purge immature labels separately from missing21day cost-warmup",
+    "features": "original nullable F01..12; non-null train coverage>=98%; training-only median impute + StandardScaler + Ridge(alpha fixed,solver=svd), fit first test signal; no OOS model selection",
+    "labels": "fixed NAV10000, per-leg25%, rounded commonlot based on known decision spot; true entry minuteT+1 and exitT+H+1; four execution fees/spread/slip/laggedvolumeimpact and actual signed funding; maturity max(exit,funding available)",
+    "execution": "hourly completed close signal, next minute true OPEN fill, fixed H hour expiry exitsnextminute, repeat next hourly decision, gap settlement for old position before fill, no fold reset"
+  },
+  "parameters": {
+    "baseline": "M1",
+    "holding_hours": 336,
+    "per_leg_fraction": 0.25,
+    "ridge_alpha": 0.1,
+    "buffer_usdt": 1,
+    "funding_window": 21,
+    "capital_usdt": 10000,
+    "books_usdt": [
+      5000,
+      5000
+    ],
+    "validation": {
+      "data_start": "2025-09-16T00:00:00Z",
+      "data_end_exclusive": "2026-09-16T00:00:00Z",
+      "train_days": 180,
+      "embargo_days": 56,
+      "test_days": 28,
+      "step_days": 28,
+      "folds": 4,
+      "OOS_start_signal": "2026-05-10T00:00:00Z",
+      "OOS_end_signal": "2026-08-30T00:00:00Z",
+      "embargo_rationale": "56days=2*maximum28daylabelhorizon; shared dates across all grid cells",
+      "train_rule": "decision in180d train AND actual label_end AND label_available strictly before train cutoff; purge immature labels separately from missing21day cost-warmup",
+      "preprocessing": "original nullable F01..12; non-null train coverage>=98%; training-only median impute + StandardScaler + Ridge(alpha fixed,solver=svd), fit first test signal; no OOS model selection",
+      "features_reused": "load already causal original factor_frame features from prior073555 immutable archive; validate source/cache hashes and availability; do not recompute prior strategies",
+      "labels": "fixed NAV10000, per-leg25%, rounded commonlot based on known decision spot; true entry minuteT+1 and exitT+H+1; four execution fees/spread/slip/laggedvolumeimpact and actual signed funding; maturity max(exit,funding available)",
+      "forecast": "predicted cost-inclusive normalized PNL times decision-known NAV >1USDT; each horizon model forecast stays base1x in every stress path",
+      "execution": "hourly completed close signal, next minute true OPEN fill, fixed H hour expiry exitsnextminute, repeat next hourly decision, gap settlement for old position before fill, no fold reset",
+      "history": "repeated development/validation history; no untouched final holdout; four112dayOOS folds do not prove stable production"
+    },
+    "label_horizon_hours": 336,
+    "costs": {
+      "spot_fee": 0.001,
+      "perp_fee": 0.0005,
+      "half_spread": 0.0001,
+      "slippage": 0.0002,
+      "impact": "0.5*prior20completedUTCdaysLogVol*sqrt(order_notional/prior20dayADV)",
+      "participation_max": 0.001,
+      "multipliers": [
+        1,
+        2,
+        3
+      ],
+      "funding_stress": "actual paid negative receipts scale; positive income unchanged; exact API settlement ms jitter/mark preserved",
+      "maintenance_ratio_assumed": 0.01,
+      "metadata_snapshot": "research/experiments/20261001T053425Z/spot_metadata_snapshot.json",
+      "borrow": "no spot shorts or borrowing"
+    },
+    "solver": "svd",
+    "active_train_coverage": 0.98,
+    "metadata_snapshot": "research/experiments/20261001T053425Z/spot_metadata_snapshot.json"
+  }
+}
