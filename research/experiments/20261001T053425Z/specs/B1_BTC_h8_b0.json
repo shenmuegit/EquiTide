@@ -1,0 +1,24 @@
+{
+  "kind": "strategy",
+  "family": "repeated-matched-carry",
+  "market": "spot-perpetual-hedge",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "timeframe": "1h",
+  "logic": {
+    "entry": "hourly when flat; B0 forced, B1 prior 21 realized hourly funding median times hold minus estimated roundtrip cost above buffer; require full horizon",
+    "exit": "B0 fixed signal+hold; B1 remaining expected funding minus future exit cost <= buffer or fixed signal+hold; next minute open; then next hourly decision may re-enter",
+    "sizing": "same floored common lot base quantity on both legs; fraction of contemporaneous known NAV per leg; separate spot cash/perp collateral; no transfers; no borrow"
+  },
+  "parameters": {
+    "baseline": "B1",
+    "holding_hours": 8,
+    "funding_window": 21,
+    "per_leg_fraction": 0.45,
+    "buffer_usdt": 0,
+    "initial_capital_usdt": 10000
+  },
+  "name": "B1_BTC_h8_b0",
+  "validation_plan": "research/experiments/20261001T053425Z/plan.json"
+}

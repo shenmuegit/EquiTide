@@ -1,0 +1,105 @@
+{
+  "round": "20261001T053425Z",
+  "parent_commit": "b14cd472a433045ae34cd4687fa7359e95058306",
+  "prior_ledger_sha256": "fc27db0a7a4e6f424a1e477cc95b55bcea1e6f6f052a9740d7b60bc2bcc33e56",
+  "prior_records": 162,
+  "prior_canonical_definitions": 72,
+  "initial_available": 13,
+  "directions": [
+    "B0 forced matched spot/perp carry",
+    "B1 median funding cost-gated carry"
+  ],
+  "validation": {
+    "data_start": "2025-09-16T00:00:00Z",
+    "data_end": "2026-09-16T00:00:00Z",
+    "train_days": 180,
+    "embargo_days": 3,
+    "test_days": 28,
+    "step_days": 28,
+    "folds": 6,
+    "OOS_start_signal": "2026-03-18T00:00:00Z",
+    "OOS_end_signal": "2026-09-02T00:00:00Z",
+    "signal": "hourly completed minute-close observations at hh:00",
+    "execution": "next hh:01 minute OPEN, independent of signal construction",
+    "funding_information": "actual available_ts settlement+1h; preserve ms jitter",
+    "purge": 0,
+    "development_history": true,
+    "hourly_NAV": "actual next minute spot/perp open proxy reference, fees included; not minute mark NAV"
+  },
+  "capital": {
+    "total_usdt": 10000,
+    "spot_cash_usdt": 5000,
+    "perp_collateral_usdt": 5000,
+    "transfers": false,
+    "B0_sleeve_fraction": [
+      0.25,
+      0.45
+    ],
+    "B1_sleeve_fraction": 0.45,
+    "fraction_meaning": "per-leg entry notional as fraction of current combined NAV; no auto normalization; gross twice fraction"
+  },
+  "costs": {
+    "spot_fee": 0.001,
+    "perp_fee": 0.0005,
+    "half_spread": 0.0001,
+    "slippage": 0.0002,
+    "impact": "0.5*prior20completedDaysLogVol*sqrt(orderNotional/prior20dADV)",
+    "participation_max": 0.001,
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "funding_stress": "paid amounts scaled; receipts unchanged",
+    "maintenance_assumption": 0.01,
+    "borrow": "no spot short or borrowing",
+    "metadata": "current exchange snapshots explicitly assumed for history",
+    "B1_forecast_costs": "base 1x cost forecast held fixed in stress paths; realized fills and paid funding stressed; quantities evolve with scenario NAV"
+  },
+  "gates": {
+    "all_cost_returns_positive": true,
+    "positive_folds_1x_min": 4,
+    "max_drawdown_pct_3x": 25,
+    "positive_neighborhood_fraction_3x_min": 0.6,
+    "round_trips_1x_min": 4,
+    "cash_margin_violations": 0
+  },
+  "native_recovery": {
+    "baselines": [
+      "B0",
+      "B1"
+    ],
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "holding_hours": [
+      8,
+      24
+    ],
+    "start_signal_utc": "2026-03-18T00:00:00Z",
+    "end_utc": "2026-03-21T00:00:00Z",
+    "native_quotes": "hourly closed prices; next shared closed record fill as original engine; exact API settlement marks; known expiry same-record exit",
+    "fraction": 0.45,
+    "funding_window": 21,
+    "buffer_usdt": 1,
+    "spot_fee": 0.001,
+    "perp_fee": 0.0002,
+    "execution_bps_per_leg": 5,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "purpose": "restore actual results for original incomplete examples; no long-run profit acceptance based on native case alone",
+    "cost_scenario_signals": "native original config fees/execution are stressed, so its own entry/exit gates may change",
+    "target_lot": "floor target quantity to common current spot/perp lot; exact matched base"
+  },
+  "limits": [
+    "Fixed repeated episodes are explicit extensions, not identical to original one-entry BacktestConfig",
+    "No untouched final test",
+    "Hourly NAV MDD, not minute MDD",
+    "Current metadata and simplified 1% maintenance, not historical exchange tiers",
+    "Margin envelope uses whole hourly mark high for remaining short, conservative even before entry minute; no automatic liquidation path simulated"
+  ]
+}

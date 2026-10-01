@@ -1,0 +1,34 @@
+{
+  "kind": "strategy",
+  "family": "native-carry-recovery",
+  "market": "spot-perpetual-hedge",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "timeframe": "1h",
+  "logic": {
+    "entry": "original CarryStrategy B0 single-entry rules with causal funding history",
+    "exit": "original remaining-funding early exit for B1 or known fixed expiry; no repeated entries",
+    "sizing": "matched spot long and perpetual short; target from starting quote at 45% total initial capital"
+  },
+  "parameters": {
+    "baseline": "B0",
+    "holding_hours": 8,
+    "funding_window": 21,
+    "initial_capital_usdt": 10000,
+    "buffer_usdt": 1,
+    "start_utc": "2026-03-18T00:00:00Z",
+    "end_utc": "2026-03-21T00:00:00Z",
+    "fraction": 0.45,
+    "spot_fee": 0.001,
+    "perp_fee": 0.0002,
+    "execution_bps": 5,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  },
+  "name": "native_B0_ETH_h8",
+  "validation_plan": "research/experiments/20261001T053425Z/plan.json"
+}
