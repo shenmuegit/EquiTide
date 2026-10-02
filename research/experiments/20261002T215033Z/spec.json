@@ -1,0 +1,373 @@
+{
+  "round": "20261002T215033Z",
+  "trigger_utc": "2026-10-02T21:50:33.504Z",
+  "actual_first_tool_utc": "2026-10-02T21:51:11Z",
+  "frozen_at_utc": "2026-10-02T21:57:33.376270+00:00",
+  "hypothesis": "Combine close-channel breakout and recursively seeded EMA on opposite assets to test whether different causal timing diversifies fold returns and drawdowns.The same BTC/ETH trend may dominate both;new combinations may remain concentrated or add whipsaws.Freeze both directions and full two-parameter grid before evaluating new portfolio NAV.",
+  "grid": {
+    "CHANNEL_entry_days": [
+      10,
+      15,
+      20
+    ],
+    "CHANNEL_exit_days": 30,
+    "EMA_span_days": [
+      50,
+      65,
+      80
+    ],
+    "EMA_symmetric_band": 0.015,
+    "directions": [
+      "BTC_CHANNEL_ETH_EMA",
+      "BTC_EMA_ETH_CHANNEL"
+    ],
+    "raw_weights": [
+      0.75,
+      0.25
+    ],
+    "capital_usdt": 2000,
+    "component_capitals_usdt": [
+      1500,
+      500
+    ],
+    "predeclared_center": {
+      "CHANNEL_entry_days": 15,
+      "EMA_span_days": 65
+    }
+  },
+  "new_configs": 36,
+  "new_cost_scenes": 108,
+  "prior_canonical_trials": 734,
+  "walk_forward": {
+    "train_days": 180,
+    "embargo_days": 3,
+    "test_days": 30,
+    "step_days": 30,
+    "purge_days": 0,
+    "folds": 6,
+    "fit": "No fit/labels or per-fold tuning. Reuse fixed causal Decimal close-channel and Pythonfloat recursive EMA decisions;Decimal28 cash/units/fills;180train/3gap/purge0,continuous6x30 diagnostics.Cash/units crossfolds with sameOOS183cash initialization."
+  },
+  "execution": {
+    "metadata_path": "research/experiments/20261001T053425Z/spot_metadata_snapshot.json",
+    "metadata_sha256": "857af9870c57ad05e50a5ee6fad92240b384b99cc22e9ae8cece0e6f94e2d033",
+    "filters": {
+      "BTCUSDT": {
+        "PRICE_FILTER": {
+          "filterType": "PRICE_FILTER",
+          "minPrice": "0.01000000",
+          "maxPrice": "1000000.00000000",
+          "tickSize": "0.01000000"
+        },
+        "LOT_SIZE": {
+          "filterType": "LOT_SIZE",
+          "minQty": "0.00001000",
+          "maxQty": "9000.00000000",
+          "stepSize": "0.00001000"
+        },
+        "ICEBERG_PARTS": {
+          "filterType": "ICEBERG_PARTS",
+          "limit": 100
+        },
+        "MARKET_LOT_SIZE": {
+          "filterType": "MARKET_LOT_SIZE",
+          "minQty": "0.00000000",
+          "maxQty": "128.92264677",
+          "stepSize": "0.00000000"
+        },
+        "TRAILING_DELTA": {
+          "filterType": "TRAILING_DELTA",
+          "minTrailingAboveDelta": 10,
+          "maxTrailingAboveDelta": 2000,
+          "minTrailingBelowDelta": 10,
+          "maxTrailingBelowDelta": 2000
+        },
+        "PERCENT_PRICE_BY_SIDE": {
+          "filterType": "PERCENT_PRICE_BY_SIDE",
+          "bidMultiplierUp": "1.2",
+          "bidMultiplierDown": "0.5",
+          "askMultiplierUp": "2",
+          "askMultiplierDown": "0.8",
+          "avgPriceMins": 5
+        },
+        "NOTIONAL": {
+          "filterType": "NOTIONAL",
+          "minNotional": "5.00000000",
+          "applyMinToMarket": true,
+          "maxNotional": "9000000.00000000",
+          "applyMaxToMarket": false,
+          "avgPriceMins": 5
+        },
+        "MAX_NUM_ORDERS": {
+          "filterType": "MAX_NUM_ORDERS",
+          "maxNumOrders": 200
+        },
+        "MAX_NUM_ORDER_LISTS": {
+          "filterType": "MAX_NUM_ORDER_LISTS",
+          "maxNumOrderLists": 20
+        },
+        "MAX_NUM_ALGO_ORDERS": {
+          "filterType": "MAX_NUM_ALGO_ORDERS",
+          "maxNumAlgoOrders": 5
+        },
+        "MAX_NUM_ORDER_AMENDS": {
+          "filterType": "MAX_NUM_ORDER_AMENDS",
+          "maxNumOrderAmends": 10
+        }
+      },
+      "ETHUSDT": {
+        "PRICE_FILTER": {
+          "filterType": "PRICE_FILTER",
+          "minPrice": "0.01000000",
+          "maxPrice": "1000000.00000000",
+          "tickSize": "0.01000000"
+        },
+        "LOT_SIZE": {
+          "filterType": "LOT_SIZE",
+          "minQty": "0.00010000",
+          "maxQty": "9000.00000000",
+          "stepSize": "0.00010000"
+        },
+        "ICEBERG_PARTS": {
+          "filterType": "ICEBERG_PARTS",
+          "limit": 100
+        },
+        "MARKET_LOT_SIZE": {
+          "filterType": "MARKET_LOT_SIZE",
+          "minQty": "0.00000000",
+          "maxQty": "2603.30411046",
+          "stepSize": "0.00000000"
+        },
+        "TRAILING_DELTA": {
+          "filterType": "TRAILING_DELTA",
+          "minTrailingAboveDelta": 10,
+          "maxTrailingAboveDelta": 2000,
+          "minTrailingBelowDelta": 10,
+          "maxTrailingBelowDelta": 2000
+        },
+        "PERCENT_PRICE_BY_SIDE": {
+          "filterType": "PERCENT_PRICE_BY_SIDE",
+          "bidMultiplierUp": "1.2",
+          "bidMultiplierDown": "0.5",
+          "askMultiplierUp": "2",
+          "askMultiplierDown": "0.8",
+          "avgPriceMins": 5
+        },
+        "NOTIONAL": {
+          "filterType": "NOTIONAL",
+          "minNotional": "5.00000000",
+          "applyMinToMarket": true,
+          "maxNotional": "9000000.00000000",
+          "applyMaxToMarket": false,
+          "avgPriceMins": 5
+        },
+        "MAX_NUM_ORDERS": {
+          "filterType": "MAX_NUM_ORDERS",
+          "maxNumOrders": 200
+        },
+        "MAX_NUM_ORDER_LISTS": {
+          "filterType": "MAX_NUM_ORDER_LISTS",
+          "maxNumOrderLists": 20
+        },
+        "MAX_NUM_ALGO_ORDERS": {
+          "filterType": "MAX_NUM_ALGO_ORDERS",
+          "maxNumAlgoOrders": 5
+        },
+        "MAX_NUM_ORDER_AMENDS": {
+          "filterType": "MAX_NUM_ORDER_AMENDS",
+          "maxNumOrderAmends": 10
+        }
+      }
+    },
+    "simulation": "Hypothetical immediately filled marketable LIMIT IOC at estimated adverse execution price, buy rounded up/sell down to PRICE_FILTER tick; quantity floored to LOT_SIZE. Check static price/quantity bounds and NOTIONAL. Fee paid in USDT; no fee discounts.",
+    "percent_price": "Check frozen PERCENT_PRICE_BY_SIDE against preceding5 fully closed minute quote-volume/base-volume VWAP proxy. Historical reference-price regime is unavailable; proxy is explicitly an assumption, not historical exchange order validation.",
+    "limitations": "Snapshot taken October1, applied uniformly to reused historical data as execution stress assumption, not historical filters. No L2, queue, latency, partial fills or guarantee IOC fills; MARKET_LOT_SIZE does not apply to simulated limit IOC."
+  },
+  "costs": {
+    "fee_per_side": 0.001,
+    "half_spread": 0.0001,
+    "slippage": 0.0002,
+    "impact_coefficient": 0.5,
+    "impact_inputs": "Previous20 completed UTC day quote ADV and sample stdev20 log daily returns. Buy cash before costs is conservative notional upper bound; sell uses units*reference. Decimal sqrt of budget/ADV, sigma/ADV derived from existing lagged daily function.",
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "max_lagged_ADV_participation": 0.001,
+    "all_costs_simultaneously_scaled": true,
+    "rounding_cost_separately_recorded": true,
+    "terminal_costed": true,
+    "funding_borrow": "N/A unlevered long-only spot"
+  },
+  "gates": {
+    "positive_all_costs": true,
+    "positive_1x_folds_min": 4,
+    "minute_DD3_max_pct": 25,
+    "neighbourhood_positive3_min_fraction": 0.6,
+    "round_trips1_min": 2,
+    "gross_reference_PnL_to_cost1_min": 2.5,
+    "no_balance_violations": true,
+    "terminal_flat": true
+  },
+  "CHANNEL_rules": {
+    "entry": "At daily decision i,use completed prior close C[i-1]. Strictly above max(C[i-entry_lookback_days-1:i-1]) sets desired-long. The entry comparison range contains exactly entry_lookback_days completed closes ending i-2;it EXCLUDES the tested close i-1.",
+    "exit": "Prior close C[i-1] strictly below min(C[i-exit_lookback_days-1:i-1]) sets desired-cash. Exit range contains exactly exit_lookback_days closes ending i-2. Equality or neither event preserves desired-state. No shorting,buffer,volatility filter,confirmation,stop or pyramiding.",
+    "sizing": "At next UTC00:01 real minute open, buy maximum affordable LOT_SIZE floored quantity; keep leftover USDT. Sell all lot-valid held units when desired-cash or terminal. Failed orders do not change holdings and are retried at later daily decisions. No leverage, borrow, funding, transfers, rebalancing or USDT yield.",
+    "portfolio": "Explicit raw weights specify initial fractions of2000USDT, not maintained weights; sum corresponding already-costed absolute component NAVs with no second scaling."
+  },
+  "CHANNEL_definition": "Decimal precision28 using daily CLOSE extrema only,not intraday highs/lows. Integer range widths include exactly L prior closes excluding tested prior close. All window timestamps end by i-2 daily completion;tested close available at UTC00:00 of decision day,trade reference next UTC00:01.",
+  "CHANNEL_initialization": "Desired cash at OOS183;warm prior max60+1 closes;state and actual cash/units carry across all six folds.No prefilled position or per-fold reset.",
+  "EMA_rules": {
+    "entry": "Prior completed daily close strictly above prior-close EMA*(1+band) enters desired-long; start desired cash at OOS183.",
+    "exit": "Prior completed daily close strictly below EMA*(1-band) enters desired-cash; equality/deadband preserves desired state.",
+    "sizing": "At next UTC00:01 real minute open, buy maximum affordable LOT_SIZE floored quantity; keep leftover USDT. Sell all lot-valid held units when desired-cash or terminal. Failed orders do not change holdings and are retried at later daily decisions. No leverage, borrow, funding, transfers, rebalancing or USDT yield.",
+    "portfolio": "Explicit raw weights specify initial fractions of2000USDT, not maintained weights; sum corresponding already-costed absolute component NAVs with no second scaling."
+  },
+  "EMA_definition": "alpha=2/(span+1), E[0]=first dataset completed daily close; E[j]=(1-alpha)*E[j-1]+alpha*C[j] (adjust=False). At decision index i compare only C[i-1] with E[i-1]*(1+/-band); initialise desired state cash at first OOS decision183, preserve in deadband/equality; update recursively from dataset day0 without resets across folds. EMA seed memory extends earlier than rolling train window; no model fit or label.",
+  "allocation": "Raw BTC/ETH75/25 means initial1500/500USDT of2000. Reuse fully costed absolute minute NAV at exactly those funded sizes;no second weighting,no auto-normalisation,capital transfers,maintained weights or rebalance.Both separate spot accounts retain their own cash/units.No new component simulations.",
+  "sensitivity": "Each historical year/direction:complete3x3 channel entry10/15/20days x EMA span50/65/80days.All channel exits30days;EMA symmetric1.5percent;centerchannel15/EMA65.All36 concrete combinations reserve before summing NAV.Record all cost/fold/return/risk and adjacent2sd descriptions.No OOS selection or frozen-observer change.",
+  "periods": {
+    "2025": {
+      "source_round": "20261001T173606Z",
+      "report": "research/experiments/20261001T173606Z/report.json",
+      "sha256": "745c852f97b5ab37c63a16e55b513193c5a5b64c02c9f02e17b741d227316ed0",
+      "oos_start_utc": "2025-03-18T00:01:00Z",
+      "terminal_exit_utc": "2025-09-14T00:01:00Z",
+      "normalized_data": {
+        "BTC": {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6",
+          "minutes": 525600,
+          "first_open_ns": 1726444800000000000,
+          "last_available_ns": 1757980800000000000
+        },
+        "ETH": {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57",
+          "minutes": 525600,
+          "first_open_ns": 1726444800000000000,
+          "last_available_ns": 1757980800000000000
+        }
+      }
+    },
+    "2026": {
+      "source_round": "20261001T133655Z",
+      "report": "research/experiments/20261001T133655Z/report.json",
+      "sha256": "5349e614e7d42c2e2bed6ad42c72dcce7c768b7e73c3816ff943082f2a4c8116",
+      "oos_start_utc": "2026-03-18T00:01:00Z",
+      "terminal_exit_utc": "2026-09-14T00:01:00Z",
+      "normalized_data": {
+        "BTC": {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16",
+          "minutes": 525600,
+          "first_open_ns": 1757980800000000000,
+          "last_available_ns": 1789516800000000000
+        },
+        "ETH": {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584",
+          "minutes": 525600,
+          "first_open_ns": 1757980800000000000,
+          "last_available_ns": 1789516800000000000
+        }
+      }
+    }
+  },
+  "development_history_reused": true,
+  "component_report_rounds": {
+    "CHANNEL": "20261002T174933Z",
+    "EMA": "20261001T234032Z"
+  },
+  "interpretation": "Both histories are repeatedly used development periods,and existing component results motivated this combination hypothesis.Causal trades do not remove retrospective selection/multiple-testing bias.Not untouched finalholdout,statistical significance or stable live profit.Same realised NAV for different parameters is disclosed,not independent evidence.",
+  "cross_period_confirmation": "Same direction/channel entry/EMA span/rawweights must meet all gates in EACH separately reported sixfold period.No new cross-year compounded backtest.",
+  "reference": {
+    "title": "pandas.DataFrame.ewm",
+    "version": "Official pandas3.0.6 documentation accessed;runtime not upgraded",
+    "url": "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.ewm.html",
+    "accessed_utc_date": "2026-10-02",
+    "scope": "alpha=2/(span+1) and adjust=False recursive seed/update definition only. Existing production EMA signals use Python float recursion,Decimal28 only for fills/cash/units. No library-backed trading-profit claim."
+  },
+  "market_data_reference": {
+    "url": "https://developers.binance.com/en/docs/catalog/core-trading-spot-trading/api/rest-api/market",
+    "accessed_utc_date": "2026-10-02",
+    "scope": "Official current public klines interface for cumulative shadow marks;raw actual replies archived."
+  },
+  "forward_plan": {
+    "path": "research/experiments/20261001T113625Z/forward_plan.json",
+    "sha256": "2798390f02bd43059097cf16f9b8b1f30db4b96776431c18684b540130f86d81",
+    "status_at_freeze": "Collecting;source195003 cumulative1179minutes retains original symmetricSMA65/1percent and original frozen hash."
+  },
+  "forward_resume": {
+    "source_state": "research/experiments/20261002T195003Z/forward_state.json",
+    "state_sha256": "31a8191c5afe867cc2e5b61c846b108c7c494ced7a9418f72b8f350ed84e343a",
+    "source_report": "research/experiments/20261002T195003Z/forward_report.json",
+    "report_sha256": "8fb4bc60b422464fb280d52c24f245be617fef9e962cf46ada8726cc26e92609",
+    "resume_utc": "2026-10-02T19:40:00Z",
+    "cutoff_utc": "2026-10-02T21:40:00Z",
+    "new_minutes": 120,
+    "cumulative_minutes": 1299,
+    "action": "Append closed minutes to original positions/costs only;next daily decisionOct3UTC00:01.No reset,repeat buys or terminal liquidation.",
+    "new_configs": 3,
+    "new_cost_scenes": 9,
+    "qualification": "Partial1299minutes/0complete days;no180day/sixfold qualification,longrun plan remains collecting."
+  },
+  "read_only_comparator_refs": [
+    {
+      "name": "transfer2025_rounded_combo_n65_btc0.75",
+      "year": "2025",
+      "kind": "SMA_or_hold",
+      "report": "research/experiments/20261001T173606Z/report.json",
+      "report_sha256": "745c852f97b5ab37c63a16e55b513193c5a5b64c02c9f02e17b741d227316ed0"
+    },
+    {
+      "name": "transfer2025_rounded_hold_equal2000",
+      "year": "2025",
+      "kind": "SMA_or_hold",
+      "report": "research/experiments/20261001T173606Z/report.json",
+      "report_sha256": "745c852f97b5ab37c63a16e55b513193c5a5b64c02c9f02e17b741d227316ed0"
+    },
+    {
+      "name": "ema_2025_combo_s65_b0.015_btc0.75",
+      "year": "2025",
+      "kind": "EMA_center",
+      "report": "research/experiments/20261001T234032Z/report.json",
+      "report_sha256": "6b96d206e6074b54fc8012bf9b5258c2c7e3e68eccc1c7efc3023603df295b66"
+    },
+    {
+      "name": "channel_2025_combo_e15_x30_btc0.75",
+      "year": "2025",
+      "kind": "CHANNEL15_30",
+      "report": "research/experiments/20261002T174933Z/report.json",
+      "report_sha256": "8f36f1509ece0969257fb48e8e89e515780eb16853938e2971b5e1273edf35ed"
+    },
+    {
+      "name": "rounded_combo_n65_btc0.75",
+      "year": "2026",
+      "kind": "SMA_or_hold",
+      "report": "research/experiments/20261001T133655Z/report.json",
+      "report_sha256": "5349e614e7d42c2e2bed6ad42c72dcce7c768b7e73c3816ff943082f2a4c8116"
+    },
+    {
+      "name": "rounded_hold_equal2000",
+      "year": "2026",
+      "kind": "SMA_or_hold",
+      "report": "research/experiments/20261001T133655Z/report.json",
+      "report_sha256": "5349e614e7d42c2e2bed6ad42c72dcce7c768b7e73c3816ff943082f2a4c8116"
+    },
+    {
+      "name": "ema_2026_combo_s65_b0.015_btc0.75",
+      "year": "2026",
+      "kind": "EMA_center",
+      "report": "research/experiments/20261001T234032Z/report.json",
+      "report_sha256": "6b96d206e6074b54fc8012bf9b5258c2c7e3e68eccc1c7efc3023603df295b66"
+    },
+    {
+      "name": "channel_2026_combo_e15_x30_btc0.75",
+      "year": "2026",
+      "kind": "CHANNEL15_30",
+      "report": "research/experiments/20261002T174933Z/report.json",
+      "report_sha256": "8f36f1509ece0969257fb48e8e89e515780eb16853938e2971b5e1273edf35ed"
+    }
+  ]
+}
