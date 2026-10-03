@@ -1,0 +1,181 @@
+{
+  "kind": "strategy",
+  "family": "daily-channel-ema-confirmation",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "logic": {
+    "entry": "At decision i, enter only when prior completed close C[i-1] strictly exceeds max(C[i-entry-1:i-1]) AND float(C[i-1])>EMA[i-1]*(1+band).The channel reference ends at i-2;no delayed arming memory.",
+    "exit": "Set desired cash when C[i-1]<min(C[i-exit-1:i-1]) OR float(C[i-1])<EMA[i-1]*(1-band).Exit takes precedence;otherwise joint entry sets long;all other cases/equality preserve desired.",
+    "EMA": "alpha=2/(span+1);E[0]=float(first completed daily close),E[j]=(1-alpha)*E[j-1]+alpha*float(C[j]);Python float,adjust=False from datasetday0;never reset across folds.",
+    "state": "OOS183 starts with cash and desired-cash;no pending entry or warmup position;daily decisions only using closes through i-1;no fit/labels/OOS tuning.",
+    "sizing": "All affordable independent sleeve cash subject to Decimal28 tick/LOT/filter/participation and next00:01-minute IOC fill assumptions;no leverage,short,stop,scale-in or rebalance."
+  },
+  "parameters": {
+    "initial_capital_usdt": 1200,
+    "start_utc": "2025-03-18T00:01:00Z",
+    "end_utc": "2025-09-14T00:01:00Z",
+    "execution": {
+      "metadata_path": "research/experiments/20261001T053425Z/spot_metadata_snapshot.json",
+      "metadata_sha256": "857af9870c57ad05e50a5ee6fad92240b384b99cc22e9ae8cece0e6f94e2d033",
+      "filters": {
+        "BTCUSDT": {
+          "PRICE_FILTER": {
+            "filterType": "PRICE_FILTER",
+            "minPrice": "0.01000000",
+            "maxPrice": "1000000.00000000",
+            "tickSize": "0.01000000"
+          },
+          "LOT_SIZE": {
+            "filterType": "LOT_SIZE",
+            "minQty": "0.00001000",
+            "maxQty": "9000.00000000",
+            "stepSize": "0.00001000"
+          },
+          "ICEBERG_PARTS": {
+            "filterType": "ICEBERG_PARTS",
+            "limit": 100
+          },
+          "MARKET_LOT_SIZE": {
+            "filterType": "MARKET_LOT_SIZE",
+            "minQty": "0.00000000",
+            "maxQty": "128.92264677",
+            "stepSize": "0.00000000"
+          },
+          "TRAILING_DELTA": {
+            "filterType": "TRAILING_DELTA",
+            "minTrailingAboveDelta": 10,
+            "maxTrailingAboveDelta": 2000,
+            "minTrailingBelowDelta": 10,
+            "maxTrailingBelowDelta": 2000
+          },
+          "PERCENT_PRICE_BY_SIDE": {
+            "filterType": "PERCENT_PRICE_BY_SIDE",
+            "bidMultiplierUp": "1.2",
+            "bidMultiplierDown": "0.5",
+            "askMultiplierUp": "2",
+            "askMultiplierDown": "0.8",
+            "avgPriceMins": 5
+          },
+          "NOTIONAL": {
+            "filterType": "NOTIONAL",
+            "minNotional": "5.00000000",
+            "applyMinToMarket": true,
+            "maxNotional": "9000000.00000000",
+            "applyMaxToMarket": false,
+            "avgPriceMins": 5
+          },
+          "MAX_NUM_ORDERS": {
+            "filterType": "MAX_NUM_ORDERS",
+            "maxNumOrders": 200
+          },
+          "MAX_NUM_ORDER_LISTS": {
+            "filterType": "MAX_NUM_ORDER_LISTS",
+            "maxNumOrderLists": 20
+          },
+          "MAX_NUM_ALGO_ORDERS": {
+            "filterType": "MAX_NUM_ALGO_ORDERS",
+            "maxNumAlgoOrders": 5
+          },
+          "MAX_NUM_ORDER_AMENDS": {
+            "filterType": "MAX_NUM_ORDER_AMENDS",
+            "maxNumOrderAmends": 10
+          }
+        },
+        "ETHUSDT": {
+          "PRICE_FILTER": {
+            "filterType": "PRICE_FILTER",
+            "minPrice": "0.01000000",
+            "maxPrice": "1000000.00000000",
+            "tickSize": "0.01000000"
+          },
+          "LOT_SIZE": {
+            "filterType": "LOT_SIZE",
+            "minQty": "0.00010000",
+            "maxQty": "9000.00000000",
+            "stepSize": "0.00010000"
+          },
+          "ICEBERG_PARTS": {
+            "filterType": "ICEBERG_PARTS",
+            "limit": 100
+          },
+          "MARKET_LOT_SIZE": {
+            "filterType": "MARKET_LOT_SIZE",
+            "minQty": "0.00000000",
+            "maxQty": "2603.30411046",
+            "stepSize": "0.00000000"
+          },
+          "TRAILING_DELTA": {
+            "filterType": "TRAILING_DELTA",
+            "minTrailingAboveDelta": 10,
+            "maxTrailingAboveDelta": 2000,
+            "minTrailingBelowDelta": 10,
+            "maxTrailingBelowDelta": 2000
+          },
+          "PERCENT_PRICE_BY_SIDE": {
+            "filterType": "PERCENT_PRICE_BY_SIDE",
+            "bidMultiplierUp": "1.2",
+            "bidMultiplierDown": "0.5",
+            "askMultiplierUp": "2",
+            "askMultiplierDown": "0.8",
+            "avgPriceMins": 5
+          },
+          "NOTIONAL": {
+            "filterType": "NOTIONAL",
+            "minNotional": "5.00000000",
+            "applyMinToMarket": true,
+            "maxNotional": "9000000.00000000",
+            "applyMaxToMarket": false,
+            "avgPriceMins": 5
+          },
+          "MAX_NUM_ORDERS": {
+            "filterType": "MAX_NUM_ORDERS",
+            "maxNumOrders": 200
+          },
+          "MAX_NUM_ORDER_LISTS": {
+            "filterType": "MAX_NUM_ORDER_LISTS",
+            "maxNumOrderLists": 20
+          },
+          "MAX_NUM_ALGO_ORDERS": {
+            "filterType": "MAX_NUM_ALGO_ORDERS",
+            "maxNumAlgoOrders": 5
+          },
+          "MAX_NUM_ORDER_AMENDS": {
+            "filterType": "MAX_NUM_ORDER_AMENDS",
+            "maxNumOrderAmends": 10
+          }
+        }
+      },
+      "simulation": "Hypothetical immediately filled marketable LIMIT IOC at estimated adverse execution price, buy rounded up/sell down to PRICE_FILTER tick; quantity floored to LOT_SIZE. Check static price/quantity bounds and NOTIONAL. Fee paid in USDT; no fee discounts.",
+      "percent_price": "Check frozen PERCENT_PRICE_BY_SIDE against preceding5 fully closed minute quote-volume/base-volume VWAP proxy. Historical reference-price regime is unavailable; proxy is explicitly an assumption, not historical exchange order validation.",
+      "limitations": "Snapshot taken October1, applied uniformly to reused historical data as execution stress assumption, not historical filters. No L2, queue, latency, partial fills or guarantee IOC fills; MARKET_LOT_SIZE does not apply to simulated limit IOC. Applied to2025 prices as a declared stress assumption; not claimed2025 historical exchange rules."
+    },
+    "costs": {
+      "fee_per_side": 0.001,
+      "half_spread": 0.0001,
+      "slippage": 0.0002,
+      "impact_coefficient": 0.5,
+      "impact_inputs": "Previous20 completed UTC day quote ADV and sample stdev20 log daily returns. Buy cash before costs is conservative notional upper bound; sell uses units*reference. Decimal sqrt of budget/ADV, sigma/ADV derived from existing lagged daily function.",
+      "multipliers": [
+        1,
+        2,
+        3
+      ],
+      "max_lagged_ADV_participation": 0.001,
+      "all_costs_simultaneously_scaled": true,
+      "rounding_cost_separately_recorded": true,
+      "terminal_costed": true,
+      "funding_borrow": "N/A unlevered long-only spot"
+    },
+    "entry_lookback_days": 20,
+    "exit_lookback_days": 30,
+    "channel_definition": "Decimal precision28 using daily CLOSE extrema only,not intraday highs/lows. Integer range widths include exactly L prior closes excluding tested prior close. All window timestamps end by i-2 daily completion;tested close available at UTC00:00 of decision day,trade reference next UTC00:01.",
+    "signal_initialization": "Desired cash at OOS183;warm prior max60+1 closes;state and actual cash/units carry across all six folds.No prefilled position or per-fold reset.",
+    "EMA_span_days": 50,
+    "EMA_symmetric_band": 0.015
+  },
+  "name": "filtered_alloc_2025_BTC_e20_s50_c1200",
+  "validation_plan": "research/experiments/20261003T052049Z/spec.json"
+}
