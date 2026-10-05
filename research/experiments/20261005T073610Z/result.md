@@ -210,3 +210,5 @@ entry15组合：2025 band1.0%：三倍成本收益42.75414%，分钟回撤13.329
 代码、spec、report、压缩逐配置结果、数据哈希、中文结果和必要日志均保存。大行情/NAV缓存留忽略data目录。spec.json/data_manifest.json记录具体SHA及数据范围；report.json/source_hashes绑定代码和原验证文件。
 复现命令：`bash research/experiments/20261005T073610Z/reproduce.sh`；无HTTP或登记写入，108新历史+54只读+9观察精确重放。
 下轮可预登记单独退出阈值或新规则方向，关注跨年度折一致性，不因本轮排名追认合格。
+
+图表标签修正：本轮带宽图原纵轴误沿用5/10/30，修正为冻结band1/1.5/2%。上轮053510实际exit15/25/30也附修正图previous_053510_sensitivity_corrected.png，原图/记录保持历史。presentation_correction.json保存源图/报告SHA；无任何回测数值或登记变化。

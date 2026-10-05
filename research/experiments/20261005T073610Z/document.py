@@ -15,6 +15,7 @@ lines+=['','## 原冻结模拟观察','', '续接053510原state/report，从Oct5
 for n,c in f['configs'].items():
  for k,z in c['scenes'].items():lines.append(f"|{n}|{k}|{z['net_return_pct']:.6f}|{z['max_drawdown_pct']:.6f}|")
 lines+=['', '3个partial快照均rejected仅表示不足180日/六折，不终止长期观察。延迟真实数据模拟，无实盘订单，无实时成交证据，不称稳定盈利。', '', '## 登记、证据和复现','', f"完整读取登记簿{p['lines']}行、{p['canonical']}规范定义、{len(p['records'])}保留ID、{len(p['prior_conclusions'])}轮历史结论，初始16均已有结果。全部39新定义先reserve，审计通过后finish，负收益永久保留。", '本轮历史独立审计全部162场景、42019884逐分钟NAV点、19440因果决策、72未来/当前收盘扰动探针、540成交，其中360新成交。观察审计9场景原账户连续性及HTTP200原始响应/hash/时间轴。', '代码、spec、report、压缩逐配置结果、数据哈希、中文结果和必要日志均保存。大行情/NAV缓存留忽略data目录。spec.json/data_manifest.json记录具体SHA及数据范围；report.json/source_hashes绑定代码和原验证文件。', '复现命令：`bash research/experiments/20261005T073610Z/reproduce.sh`；无HTTP或登记写入，108新历史+54只读+9观察精确重放。', '下轮可预登记单独退出阈值或新规则方向，关注跨年度折一致性，不因本轮排名追认合格。']
+lines += ['', '图表标签修正：本轮带宽图原纵轴误沿用5/10/30，修正为冻结band1/1.5/2%。上轮053510实际exit15/25/30也附修正图previous_053510_sensitivity_corrected.png，原图/记录保持历史。presentation_correction.json保存源图/报告SHA；无任何回测数值或登记变化。']
 (T/'result.md').write_text('\n'.join(lines)+'\n')
 fig,axes=plt.subplots(2,3,figsize=(13,7))
 for i,y in enumerate(('2025','2026')):
@@ -22,5 +23,5 @@ for i,y in enumerate(('2025','2026')):
   cells={(c['EMA_band'],c['entry_days']):c for c in r['configs'].values() if c['year']==y and c.get('asset','combination')==a};v=np.array([[cells[x,e]['scenes']['3']['net_return_pct'] for e in (10,15,20)] for x in (.01,.015,.02)]);ax=axes[i,j];im=ax.imshow(v,cmap='RdYlGn',vmin=-20,vmax=60)
   for ii,x in enumerate((.01,.015,.02)):
    for jj,e in enumerate((10,15,20)):ax.text(jj,ii,f'{v[ii,jj]:.2f}%',ha='center',va='center')
-  ax.set_xticks(range(3),[10,15,20]);ax.set_yticks(range(3),[5,10,30]);ax.set_xlabel('Entry days');ax.set_ylabel('EMA band (%)');ax.set_title(f'{y} {a}, 3x costs')
+  ax.set_xticks(range(3),[10,15,20]);ax.set_yticks(range(3),[100*x for x in r['plan']['grid']['EMA_symmetric_bands']]);ax.set_xlabel('Entry days');ax.set_ylabel('EMA band (%)');ax.set_title(f'{y} {a}, 3x costs')
 fig.tight_layout();fig.savefig(T/'sensitivity.png',dpi=130);plt.close(fig)

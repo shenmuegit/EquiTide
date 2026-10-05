@@ -30,7 +30,9 @@ assert all(len(z['equity_usdt'])==4754 and z['elapsed_minutes']==4749 and z['ela
 old=json.loads((R/f['source_state']).read_text());state=json.loads((T/'forward_state.json').read_text());assert old['positions_by_asset_and_cost']==state['positions_by_asset_and_cost'] and state['next_daily_decision_utc']=='2026-10-06T00:01:00Z'
 replay=(T/'reproduce.log').read_text();assert all(x in replay for x in ('PASS:all108 NEW scenes','and54 EXISTING scenes read-only verified','PASS:all9 cumulative forward scenes','PASS: new parameters/weights'))
 assert len((T/'finish.log').read_text().splitlines())==39
-base=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip();assert base=='1ca75d0a110544501eab76a0107dde7355ef733e'
+fix=json.loads((T/'presentation_correction.json').read_text());assert sha(T/'report.json')==fix['unchanged_current_report_sha256'] and sha(L)==fix['unchanged_registry_sha256'] and sha(T/'sensitivity.png')==fix['current_corrected_figure_sha256']
+assert sha(R/fix['prior_corrected_copy'])==fix['prior_corrected_copy_sha256']
+base=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip();assert base=='534d35ef65ec177ef488abde2d9bce01c666252c'
 paths=sorted(q for q in T.rglob('*') if q.is_file() and '__pycache__' not in q.parts and q.name!='verification.json')+[L,R/'research/automation/README.md']
 v={'passed':True,'verified_at_utc':datetime.now(timezone.utc).isoformat(),'base_commit':base,'registry':{'rows':3085,'canonical':1493,'preserved_ids':1495,'unchanged_prior_rows':3007,'new_reserved_and_finished':39,'pending':0},'historical_summary':r['summary'],'audits':audits,'files_sha256':{str(q.relative_to(R)):sha(q) for q in paths}}
 (T/'verification.json').write_text(json.dumps(v,indent=2)+'\n');print(json.dumps(v['registry']))
