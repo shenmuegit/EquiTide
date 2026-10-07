@@ -1,0 +1,41 @@
+{
+  "kind": "strategy",
+  "family": "daily-sma-hysteresis",
+  "market": "spot",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "timeframe": "1d",
+  "logic": {
+    "entry": "While cash, prior completed close strictly > mean of prior N completed daily closes * (1+band).",
+    "exit": "While long, prior completed close strictly < mean of prior N completed daily closes * (1-band). Equality/deadband preserves state.",
+    "sizing": "All available component cash buys spot at next 00:01 UTC minute open, after costs; no leverage, borrowing, periodic rebalance or transfers. USDT yield=0."
+  },
+  "parameters": {
+    "lookback_days": 65,
+    "symmetric_band_fraction": 0.01,
+    "initial_capital_usdt": 500,
+    "start_utc": "2026-10-02T00:01:00Z",
+    "end_utc": "2026-10-07T10:10:00Z",
+    "initial_state": "cash",
+    "costs": {
+      "fee_per_side": 0.001,
+      "half_spread_per_side": 0.0001,
+      "slippage_per_side": 0.0002,
+      "impact": "0.5 * strictly previous20completedUTCdays sample log-close volatility * sqrt(reference order upper-bound cash budget or sell reference notional / previous20day quote ADV)",
+      "participation_max": 0.001,
+      "multipliers": [
+        1,
+        2,
+        3
+      ],
+      "terminal_exit_costed": true,
+      "funding_borrow": "Not applicable to unlevered long-only spot; no spot short or borrow.",
+      "execution_limitations": "Reuse existing daily floating-quantity accounting; no historical L2, tick/lot/min-notional or minute capacity calibration. Daily close NAV does not include full intraday drawdown."
+    },
+    "observation_terminal_action": "Mark only; no artificial liquidation; preserve units/cash for continuing frozen plan",
+    "qualification": "Partial shadow snapshot; minimum180days not reached; no long-run pass/fail inference"
+  },
+  "name": "forward_snapshot_ETH",
+  "validation_plan": "research/experiments/20261007T103750Z/spec.json"
+}
