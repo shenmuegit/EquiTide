@@ -37,3 +37,9 @@
 普通 git push 凭据可用时直接推送；否则使用已连接的 GitHub 应用 Git Data API，不再要求用户登录：核对研究分支最新 SHA/tree，create_tree 以该 tree 为 base、包含本轮全部文件的正确内容和模式，create_commit 的 parent 为核对过的 SHA，update_ref 使用 force=false。若并发更新则保留工作并解决，不能覆盖。API 推送成功后 git fetch origin；本地只 stage 本轮文件并 git write-tree，和远程 tree 完全一致才允许 git reset --soft origin/codex/strategy-research 对齐 HEAD（不改文件），再核对干净状态及 ls-remote SHA。推送失败要保留工作和真实失败说明。
 
 最终中文简报给出新候选、三项验证状态、淘汰/保留理由、commit SHA 和真实 push 状态。缺环境/权限/额度时明确说明，继续能完成的独立工作。
+
+## 与十策略实盘报价模拟盘共用分支
+
+写登记、研究产物及 Git 提交/push 前，与 `research/paper10/run.py` 共用 `research/automation/branch.lock` 的排他锁；取不到锁时保留工作，等待可用后继续，不覆盖并行任务。`parameters.owner_automation_id=btc-eth-2` 的观察登记由 paper10 恢复/finish，不能把仍在运行的模拟盘观察当研究中断清理。十策略 plan/state/observations 与旧 SMA 延迟 shadow 分开，不重置账户、不替换冻结参数、不把旧回测当实盘报价模拟收益。
+
+`owner_automation_id=btc-eth-2` 的 blocked/abandoned 观察窗口保留无实际结果，过去的观察截止不能补单重跑。研究任务只优先补初始16条历史策略，不应断言全部登记均有结果，亦不把paper失败观察当缺历史回测。
