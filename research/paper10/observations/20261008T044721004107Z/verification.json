@@ -1,0 +1,92 @@
+{
+  "checked_at_utc": "2026-10-08T04:50:37.169595+00:00",
+  "checks": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "research/paper10/check.py"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"synthetic_fixture_checks\": \"PASS\", \"spread_and_fee_not_double_counted\": true, \"lot_and_balance_guard\": true, \"all_four_signal_families_causal\": true, \"same_observation_idempotent\": true, \"same_closed_day_does_not_retrade\": true, \"not_performance_evidence\": true}"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "research/paper10/run.py",
+        "--reproduce",
+        "20261008T044721004107Z"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"actual_portfolios\":10,\"cost_scenes\":30,\"filled_virtual_orders\":0,\"independent_money_identities_checked\":true,\"passed\":true,\"real_orders\":0,\"receipt_times_and_raw_quotes_verified\":true,\"report_sha256\":\"1c7e8e00d8b6ae787cd5bdf433ebfdffe00c6bd8284ee468fd21ddfdffd4e3ec\",\"reproduced_exact_state_and_report\":true}"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "checks/strategy_registry.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: new parameters/weights and missing-result retries are allowed; exact/reordered completed trials stay blocked"
+    },
+    {
+      "command": [
+        "python3",
+        "checks/monitor_snapshot.py"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"ok\": true, \"paper_accounts\": 10, \"observations\": 6, \"research_configs\": 2043, \"protected_inputs_unchanged\": true}"
+    }
+  ],
+  "plan_sha256_unchanged": "383cbfe8544627e05ff498ae4f803dbc3ccfd24753311add9cba2f5aa064e34f",
+  "continuous_sleeves_checked": 60,
+  "cash_units_desired_processed_day_and_costs_unchanged": true,
+  "observations_before": 5,
+  "observations_after": 6,
+  "all10_reserved_before_HTTP_and_finished_with_actual_results": true,
+  "pending_reservations": 0,
+  "new_signal_decisions": 0,
+  "new_virtual_trades": 0,
+  "real_orders": 0,
+  "data_quality_alert": {
+    "new_gap": {
+      "from_utc": "2026-10-08T01:40:26.090362Z",
+      "seconds": 11241.0344,
+      "to_utc": "2026-10-08T04:47:47.124762Z"
+    },
+    "coverage_fraction": 0.8905742920587447,
+    "below_frozen95pct_gate": true,
+    "no_backfilled_trades": true,
+    "cause": "not determined from market journals; actual observation resumed"
+  },
+  "snapshot_totals": {
+    "1": {
+      "nav": "19982.4325240277000000000",
+      "pnl": "-17.5674759723000000000",
+      "return_pct": -0.0878373798615,
+      "cost": "3.631314972299999999999999455",
+      "fee": "2.9959970223000000000",
+      "executions": 4,
+      "round_trips": 0
+    },
+    "2": {
+      "nav": "19978.8263079630000000000",
+      "pnl": "-21.1736920370000000000",
+      "return_pct": -0.105868460185,
+      "cost": "7.253117037000000000000000344",
+      "fee": "5.9868547870000000000",
+      "executions": 4,
+      "round_trips": 0
+    },
+    "3": {
+      "nav": "19975.2349826414000000000",
+      "pnl": "-24.7650173586000000000",
+      "return_pct": -0.123825086793,
+      "cost": "10.85959335860000000000000097",
+      "fee": "8.9702488086000000000",
+      "executions": 4,
+      "round_trips": 0
+    }
+  },
+  "report_sha256": "1c7e8e00d8b6ae787cd5bdf433ebfdffe00c6bd8284ee468fd21ddfdffd4e3ec",
+  "state_sha256": "b2b90bd17f54a76f04a366d804e6edda3d8d9f4eb93f1778d380fafbd2dee8ee",
+  "interpretation": "Engineering fixtures are not performance. Observation is only10.26hours of fixed-strategy actual market quotes plus virtual money;180day/sixfold incomplete;no parameter tuning or account reset."
+}
