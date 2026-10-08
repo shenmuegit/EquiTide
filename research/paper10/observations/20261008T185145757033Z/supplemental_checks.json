@@ -1,0 +1,32 @@
+[
+  {
+    "kind": "fixture",
+    "command": ".venv/bin/python research/paper10/check.py",
+    "exit_code": 0,
+    "stdout": "{\"synthetic_fixture_checks\": \"PASS\", \"spread_and_fee_not_double_counted\": true, \"lot_and_balance_guard\": true, \"all_four_signal_families_causal\": true, \"same_observation_idempotent\": true, \"same_closed_day_does_not_retrade\": true, \"not_performance_evidence\": true}"
+  },
+  {
+    "kind": "actual",
+    "command": ".venv/bin/python research/paper10/run.py --reproduce 20261008T185145757033Z",
+    "exit_code": 0,
+    "stdout": "{\"actual_portfolios\":10,\"cost_scenes\":30,\"filled_virtual_orders\":0,\"independent_money_identities_checked\":true,\"passed\":true,\"real_orders\":0,\"receipt_times_and_raw_quotes_verified\":true,\"report_sha256\":\"480e144a54be24ea28c545c91e476402bdd9559923e39d1d0431cdbbf7aa7db3\",\"reproduced_exact_state_and_report\":true}"
+  },
+  {
+    "kind": "registry",
+    "command": ".venv/bin/python checks/strategy_registry.py",
+    "exit_code": 0,
+    "stdout": "PASS: new parameters/weights and missing-result retries are allowed; exact/reordered completed trials stay blocked"
+  },
+  {
+    "kind": "snapshot",
+    "command": "python3 research/monitor/snapshot.py",
+    "exit_code": 0,
+    "stdout": "{\"output\": \"/home/desktop/.local/share/equitide-research/worktree/research/monitor/latest.json\", \"bytes\": 87483, \"paper_status\": \"ready\", \"research_configs\": 2115, \"compressed_research_bytes\": 654979}"
+  },
+  {
+    "kind": "monitor",
+    "command": "python3 checks/monitor_snapshot.py",
+    "exit_code": 0,
+    "stdout": "{\"ok\": true, \"paper_accounts\": 10, \"observations\": 13, \"research_configs\": 2115, \"protected_inputs_unchanged\": true}"
+  }
+]
