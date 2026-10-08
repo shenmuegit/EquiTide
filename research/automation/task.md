@@ -43,3 +43,7 @@
 写登记、研究产物及 Git 提交/push 前，与 `research/paper10/run.py` 共用 `research/automation/branch.lock` 的排他锁；取不到锁时保留工作，等待可用后继续，不覆盖并行任务。`parameters.owner_automation_id=btc-eth-2` 的观察登记由 paper10 恢复/finish，不能把仍在运行的模拟盘观察当研究中断清理。十策略 plan/state/observations 与旧 SMA 延迟 shadow 分开，不重置账户、不替换冻结参数、不把旧回测当实盘报价模拟收益。
 
 `owner_automation_id=btc-eth-2` 的 blocked/abandoned 观察窗口保留无实际结果，过去的观察截止不能补单重跑。研究任务只优先补初始16条历史策略，不应断言全部登记均有结果，亦不把paper失败观察当缺历史回测。
+
+## 网页监控汇总
+
+用户已要求公开只读网页持续监控模拟盘与策略挖掘，并显示独立实时BTC/ETH公开报价。每轮完成真实结果登记及检查后、提交push前，在同一分支排他锁保护下运行 `python3 research/monitor/snapshot.py` 和 `python3 checks/monitor_snapshot.py`，把 `research/monitor/latest.json`、`research/monitor/configs.json.gz` 与本轮证据一起提交推送。阅读 `research/monitor/README.md`。汇总只读取已有证据，不是新的回测或账户观察，不新建虚拟成交，不改paper冻结计划/执行器/本金/持仓，不拿旧SMA延迟shadow充当十策略的真实行情模拟收益。生成失败保留上次有效汇总、记录具体失败并继续保存本轮真实研究证据；不能为监控通过而重写历史。网页自动读取公开分支，无需每轮重新部署网页或新建定时任务。

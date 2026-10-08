@@ -27,3 +27,7 @@
 ```
 
 check.py默认仅运行明确标注的合成账务/时序夹具，不是业绩证据；--reproduce只核对已有真实输入/成交/状态，不HTTP、不写登记、不生成新成交。改执行器后必须保留旧版本及既有账本，先通过必要检查，不得静默重写历史。
+
+## 公开只读网页监控
+
+每轮账户、观察登记和检查完成后，保留执行会话的分支锁，在提交push前运行 `python3 research/monitor/snapshot.py` 与 `python3 checks/monitor_snapshot.py`；将生成的 `research/monitor/latest.json` 和 `research/monitor/configs.json.gz` 同本轮轻量证据一起提交推送。详见 `research/monitor/README.md`。该步骤只读账户，不是一次新的观察，不生成交易或登记新策略。网页市场报价独立实时刷新，账户业绩仍以已完成的真实观察账本为准；不能为网页更新而重置账户、补造交易或改变冻结参数。

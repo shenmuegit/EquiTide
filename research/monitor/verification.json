@@ -1,0 +1,55 @@
+{
+  "checked_at_utc": "2026-10-08T04:01:27.031548+00:00",
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "checks/monitor_snapshot.py"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"ok\": true, \"paper_accounts\": 10, \"observations\": 5, \"research_configs\": 2043, \"protected_inputs_unchanged\": true}"
+    },
+    {
+      "command": [
+        "python3",
+        "checks/strategy_registry.py"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: new parameters/weights and missing-result retries are allowed; exact/reordered completed trials stay blocked"
+    },
+    {
+      "command": [
+        "node",
+        "--experimental-transform-types",
+        "checks/frontend_api.mjs"
+      ],
+      "exit_code": 0,
+      "stdout": "Frontend semantics passed: UTC submission, separate no-trade result, real equity, explicit failures."
+    }
+  ],
+  "browser": {
+    "ok": true,
+    "accounts": 10,
+    "research_rows_per_page": 25,
+    "paper_state_sha256": "45222f183ca5c3c4a5ba86fbcbf8d6e54e328d14a0af2a23611d15792c139f0a",
+    "actual_public_quote_responses": 2,
+    "browser_errors": [],
+    "mobile_overflow": false,
+    "ledger_preserved_on_failure": true
+  },
+  "dependency_audit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "protected_sha256": {
+    "research/paper10/plan.json": "383cbfe8544627e05ff498ae4f803dbc3ccfd24753311add9cba2f5aa064e34f",
+    "research/paper10/state.json": "45222f183ca5c3c4a5ba86fbcbf8d6e54e328d14a0af2a23611d15792c139f0a",
+    "research/automation/registry.jsonl": "75a31d02cab2cd1ff70e92b46de99144bd2350706ee7cf1f6137496a7af3c3be",
+    "research/paper10/run.py": "be7d9a9e8fff0b99ffdd722df3398d0d8af80aa1c67bca9b7e579c8c1b4ef112"
+  },
+  "interpretation": "engineering/read-only display verification only; no new strategy evaluation, paper NAV, or simulated trade"
+}
