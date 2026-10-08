@@ -1,0 +1,98 @@
+{
+  "checked_at_utc": "2026-10-08T10:51:43.205517+00:00",
+  "base_head": "00666b96d6dd4a5ab52d65293be61b0dac7c207c",
+  "checks": [
+    {
+      "kind": "fixture",
+      "command": ".venv/bin/python research/paper10/check.py",
+      "exit_code": 0,
+      "stdout": "{\"synthetic_fixture_checks\": \"PASS\", \"spread_and_fee_not_double_counted\": true, \"lot_and_balance_guard\": true, \"all_four_signal_families_causal\": true, \"same_observation_idempotent\": true, \"same_closed_day_does_not_retrade\": true, \"not_performance_evidence\": true}"
+    },
+    {
+      "kind": "actual",
+      "command": ".venv/bin/python research/paper10/run.py --reproduce 20261008T104725583453Z",
+      "exit_code": 0,
+      "stdout": "{\"actual_portfolios\":10,\"cost_scenes\":30,\"filled_virtual_orders\":0,\"independent_money_identities_checked\":true,\"passed\":true,\"real_orders\":0,\"receipt_times_and_raw_quotes_verified\":true,\"report_sha256\":\"f24517d2d348f92dd40662e613453a90bb7368f8bd9a4f19343a7ce3d87b3887\",\"reproduced_exact_state_and_report\":true}"
+    },
+    {
+      "kind": "registry",
+      "command": ".venv/bin/python checks/strategy_registry.py",
+      "exit_code": 0,
+      "stdout": "PASS: new parameters/weights and missing-result retries are allowed; exact/reordered completed trials stay blocked"
+    },
+    {
+      "kind": "snapshot",
+      "command": "python3 research/monitor/snapshot.py",
+      "exit_code": 0,
+      "stdout": "{\"output\": \"/home/desktop/.local/share/equitide-research/worktree/research/monitor/latest.json\", \"bytes\": 81307, \"paper_status\": \"ready\", \"research_configs\": 2067, \"compressed_research_bytes\": 642413}"
+    },
+    {
+      "kind": "monitor",
+      "command": "python3 checks/monitor_snapshot.py",
+      "exit_code": 0,
+      "stdout": "{\"ok\": true, \"paper_accounts\": 10, \"observations\": 9, \"research_configs\": 2067, \"protected_inputs_unchanged\": true}"
+    }
+  ],
+  "plan_sha256_unchanged": "383cbfe8544627e05ff498ae4f803dbc3ccfd24753311add9cba2f5aa064e34f",
+  "continuous_sleeves_checked": 60,
+  "cash_units_desired_processed_day_and_costs_unchanged": true,
+  "previous_ledger_prefix_unchanged": true,
+  "observations_before": 8,
+  "observations_after": 9,
+  "all10_reserved_before_HTTP_and_finished_with_actual_results": true,
+  "pending_reservations": 0,
+  "new_signal_decisions": 0,
+  "new_virtual_trades": 0,
+  "real_orders": 0,
+  "elapsed_seconds": 58530.968228,
+  "last_interval_seconds": 6692.492438,
+  "new_sampling_gap": null,
+  "coverage_gap_count": 1,
+  "coverage_fraction": 0.9309590372013212,
+  "coverage_below95pct_previously_disclosed": true,
+  "no_backfilled_orders": true,
+  "snapshot_totals": {
+    "1": {
+      "nav": "19980.9304930277000000000",
+      "pnl": "-19.0695069723000000000",
+      "return_pct": -0.0953475348615,
+      "cost": "3.631314972299999999999999455",
+      "fee": "2.9959970223000000000",
+      "impact": "0.02878136157146220905814714612",
+      "executions": 4,
+      "round_trips": 0
+    },
+    "2": {
+      "nav": "19977.3256189630000000000",
+      "pnl": "-22.6743810370000000000",
+      "return_pct": -0.113371905185,
+      "cost": "7.253117037000000000000000344",
+      "fee": "5.9868547870000000000",
+      "impact": "0.05750087820381222116848540941",
+      "executions": 4,
+      "round_trips": 0
+    },
+    "3": {
+      "nav": "19973.7375346414000000000",
+      "pnl": "-26.2624653586000000000",
+      "return_pct": -0.131312326793,
+      "cost": "10.85959335860000000000000097",
+      "fee": "8.9702488086000000000",
+      "impact": "0.08613936676867873382611081796",
+      "executions": 4,
+      "round_trips": 0
+    }
+  },
+  "report_sha256": "f24517d2d348f92dd40662e613453a90bb7368f8bd9a4f19343a7ce3d87b3887",
+  "state_sha256": "cc7caed03ef6a419f94acff5bd1d73b732b6c54d0eb2fa9c5f3cd70fb96c895b",
+  "protected_code_research_and_shadow_sha256": {
+    "research/paper10/plan.json": "383cbfe8544627e05ff498ae4f803dbc3ccfd24753311add9cba2f5aa064e34f",
+    "research/paper10/run.py": "be7d9a9e8fff0b99ffdd722df3398d0d8af80aa1c67bca9b7e579c8c1b4ef112",
+    "research/paper10/check.py": "1ad2bb204f407869fef79737c4529daa1b04c0e9973c76319ff49147881a2cce",
+    "research/automation/registry.py": "edde322d3ca3cce26ca292cccee2f5c23c7529601b65ccf518a6f1db3f284523",
+    "research/experiments/20261008T090319Z/report.json": "3f60510e607b456f8347c4669e311d009a9ee245d89ff9a2605ed058f1b51397",
+    "research/experiments/20261008T090319Z/forward_state.json": "cb1b6759df3744ccd4732decafc1796c66d456e18b34da25877623c9fa39f9d1",
+    "research/experiments/20261008T090319Z/forward_report.json": "60d2c16035278507c22237736dbcf673e0ceb1b26918af1c969b97f0f06f3378"
+  },
+  "interpretation": "Fixed parameters;16.258602hours actual-quote virtual-money observations;zero complete30day windows. Sampling drawdown only;accounts continue."
+}
