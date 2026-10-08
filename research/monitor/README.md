@@ -25,6 +25,8 @@ python3 checks/monitor_snapshot.py
 
 沿用 `web/` 的React、Vite、Recharts和字体。`web/monitor.html` 是独立入口，原历史分析入口保持；生产构建同时输出两个入口。没有后台数据库或私有API凭据。
 
+2026-10-08视觉改版使用官方Carbon表格与控件，仅编译实际用到的组件样式；采用顶部导航、清晰金额层级、系统默认主题和可手动切换的双色模式。收益图按需加载，研究明细进入研究视图后再读取。检查记录见 `redesign.json`，本地Lighthouse移动端实验室结果与生产站点、真实用户INP明确区分。
+
 ```sh
 cd web
 npm ci

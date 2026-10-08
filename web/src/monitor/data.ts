@@ -93,3 +93,18 @@ export function comparableRows(rows: ResearchConfig[], start: string, end: strin
   return rows.filter(r => r.start_utc === start && r.end_utc === end && r.kind === kind && r.scenes[cost]
     && (kind !== 'combination' || r.capital_usdt === 2000));
 }
+
+// Shared display formatting; chart code is loaded only after ledger content.
+export const COSTS: Cost[] = ['1', '2', '3'];
+export const COLORS = ['var(--chart-main)', 'var(--chart-secondary)', 'var(--chart-stress)'];
+export const number = (value: string | number | null | undefined, digits = 2) => value == null ? '暂无' :
+  Number(value).toLocaleString('en-US', { minimumFractionDigits: digits, maximumFractionDigits: digits });
+export const signed = (value: string | number, digits = 2) => `${Number(value) > 0 ? '+' : Number(value) < 0 ? '−' : ''}${number(Math.abs(Number(value)), digits)}`;
+export const tone = (value: string | number) => Number(value) > 0 ? 'positive' : Number(value) < 0 ? 'negative' : 'neutral';
+export const date = (value: string | null | undefined, short = false) => value ? new Intl.DateTimeFormat('zh-CN', {
+  timeZone: 'Asia/Shanghai', month: '2-digit', day: '2-digit', ...(short ? {} : { year: 'numeric' }),
+  hour: '2-digit', minute: '2-digit', hour12: false,
+}).format(new Date(value)) : '暂无';
+export const clock = (value: number | string) => new Intl.DateTimeFormat('zh-CN', {
+  timeZone: 'Asia/Shanghai', hour: '2-digit', minute: '2-digit', hour12: false,
+}).format(new Date(value));
