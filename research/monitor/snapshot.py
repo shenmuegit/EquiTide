@@ -53,6 +53,8 @@ def indicator(spec, records, depth=0):
     percent = lambda value: f"{float(value) * 100:g}%"
     if "channel" in family or "close-range" in family:
         text = f"收盘通道 {p.get('entry_lookback_days', '?')}/{p.get('exit_lookback_days', '?')}"
+        if "volume_lookback_days" in p and "minimum_volume_ratio" in p:
+            text += f" + 成交额/均额{p['volume_lookback_days']}≥{float(p['minimum_volume_ratio']):g}×"
         if "EMA_span_days" in p:
             text += f" + EMA{p['EMA_span_days']} ±{percent(p['EMA_symmetric_band'])}"
     elif "sma" in family or "ema" in family:

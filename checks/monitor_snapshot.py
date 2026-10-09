@@ -13,6 +13,8 @@ module_spec.loader.exec_module(snapshot)
 
 
 def main():
+    label = snapshot.indicator({"kind": "strategy", "family": "daily-close-range-relative-quote-volume", "universe": ["BTC/USDT"], "parameters": {"entry_lookback_days": 15, "exit_lookback_days": 30, "volume_lookback_days": 20, "minimum_volume_ratio": 1.25}}, {})
+    assert "成交额/均额20" in label and "≥1.25×" in label, "quote-volume indicator parameters missing"
     protected = [ROOT / p for p in (
         "research/paper10/plan.json", "research/paper10/state.json",
         "research/automation/registry.jsonl", "research/paper10/run.py",
