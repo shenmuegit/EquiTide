@@ -216,7 +216,14 @@ def build_research(root):
             canonical[fp] = record
     reports, matches, cross = {}, {}, set()
     rounds = []
-    for path in sorted((root / "research/experiments").glob("*/report.json")):
+    experiments = root / "research/experiments"
+    report_paths = set(experiments.glob("*/report.json"))
+    for record in canonical.values():
+        if record.get("result_available") and record.get("report"):
+            path = (root / record["report"]).resolve()
+            if path.is_relative_to(experiments.resolve()) and path.suffix == ".json" and path.is_file():
+                report_paths.add(path)
+    for path in sorted(report_paths):
         report, relative = load(path), path.relative_to(root).as_posix()
         digest = sha(path.read_bytes())
         reports[relative] = (report, digest)
@@ -237,7 +244,7 @@ def build_research(root):
                 cross.add(fp)
         summary = report.get("summary", {})
         new_count = summary.get("new_configs", len([c for c in cfgs.values() if isinstance(c, dict) and c.get("is_new")]))
-        if new_count:
+        if new_count and path.name == "report.json":
             passed, rejected = summary.get("passed", []), summary.get("rejected", [])
             rounds.append({"id": path.parent.name, "at": report.get("evaluation_started_utc", report.get("created_at_utc")),
                            "new_configs": new_count, "passed": len(passed) if isinstance(passed, list) else passed,

@@ -32,6 +32,25 @@ def main():
         assert total == Decimal(paper["history"][-1]["totals"][cost]["nav"])
     ids = [r["fingerprint"] for r in data["research"]["configs"]]
     assert len(ids) == len(set(ids)), "equivalent configurations counted twice"
+    # Finished structured evidence may use a component-specific report filename.
+    registry = snapshot.registry_module(ROOT)
+    for record in registry.read_records(ROOT / "research/automation/registry.jsonl").values():
+        report_path = ROOT / record.get("report", "")
+        params = record["spec"].get("parameters", {})
+        if (not record.get("result_available") or snapshot.is_observation(record["spec"])
+                or report_path.name == "report.json" or report_path.suffix != ".json"
+                or not report_path.is_file() or not params.get("start_utc") or not params.get("end_utc")):
+            continue
+        if snapshot.sha(report_path.read_bytes()) != record.get("report_sha256"):
+            continue
+        fp = registry.fingerprint(record["spec"])
+        configs = snapshot.load(report_path).get("configs", {})
+        if not isinstance(configs, dict):
+            continue
+        cfg = next((c for c in configs.values() if isinstance(c, dict) and c.get("fingerprint") == fp), {})
+        if any(snapshot.metric_scene(s) for s in cfg.get("scenes", {}).values()):
+            assert fp in ids, f"finished report absent from dashboard: {report_path.name} {fp}"
+    assert len({r["id"] for r in data["research"]["rounds"]}) == len(data["research"]["rounds"])
     assert all(not snapshot.is_observation(r["spec"]) for r in data["research"]["configs"])
     assert any(r["status"] == "rejected" for r in data["research"]["configs"])
     assert any(s["return_pct"] < 0 for r in data["research"]["configs"] for s in r["scenes"].values()), "negative results disappeared"
