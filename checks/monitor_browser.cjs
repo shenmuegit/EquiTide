@@ -13,7 +13,8 @@ const zlib = require('node:zlib');
   const research = JSON.parse(zlib.gunzipSync(fs.readFileSync(path.join(root, 'research/monitor/configs.json.gz'))));
   const formatSigned = (v, digits) => `${Number(v) > 0 ? '+' : Number(v) < 0 ? '−' : ''}${Math.abs(Number(v)).toLocaleString('en-US', {minimumFractionDigits: digits, maximumFractionDigits: digits})}`;
   const expectedNav = Number(snapshot.paper.totals['1'].nav).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-  const expectedTop = research.filter(r => r.kind === 'combination' && r.capital_usdt === 2000 && r.start_utc === '2026-03-18T00:01:00Z' && r.end_utc === '2026-09-14T00:01:00Z').sort((a,b) => b.scenes['3'].return_pct - a.scenes['3'].return_pct)[0];
+  const expectedRanking = research.filter(r => r.kind === 'combination' && r.capital_usdt === 2000 && r.start_utc === '2026-03-18T00:01:00Z' && r.end_utc === '2026-09-14T00:01:00Z').sort((a,b) => b.scenes['3'].return_pct - a.scenes['3'].return_pct);
+  const expectedTop = expectedRanking[0];
   const assertTableAlignment = async (selector, width) => {
     const measured = await page.locator(selector).evaluate(table => {
       const rect = e => e.getBoundingClientRect();
@@ -92,17 +93,19 @@ const zlib = require('node:zlib');
       assert.equal(await page.locator(`.research-table tbody tr .scenario-${cost} .scenario-return`).first().innerText(), formatSigned(expectedTop.scenes[cost].return_pct, 2) + '%');
     }
     assert.equal(await page.locator('.segmented').count(), 0, 'research still needs cost switching');
-    await page.getByRole('searchbox', { name: '搜索技术指标、参数或权重', exact: true }).fill('EMA29');
-    assert.ok(await page.locator('.research-table tbody tr').count() > 0);
-    assert.match(await page.locator('.research-table tbody tr').first().innerText(), /EMA29/);
-    await page.getByRole('searchbox', { name: '搜索技术指标、参数或权重', exact: true }).fill('');
-    await page.getByRole('combobox', { name: '验证筛选' }).selectOption('rejected');
-    assert.match(await page.locator('.research-table tbody tr').first().innerText(), /未通过/);
-    await page.locator('.research-table .strategy-link').first().click();
+    assert.equal(await page.locator('.research-view input, .research-view select, .research-filters').count(), 0, 'research filter controls remain');
+    assert.match(await page.locator('.ranking-context').innerText(), /2026-03-18.*2026-09-14/s);
+    assert.match(await page.locator('.ranking-context').innerText(), /2,000/);
+    const rejected = expectedRanking.slice(0, 25).find(r => r.status === 'rejected');
+    assert.ok(rejected, 'expected an unpassed configuration among the visible real results');
+    await page.getByRole('button', { name: `查看研究配置 ${rejected.name}`, exact: true }).click();
     assert.match(await page.getByRole('dialog').innerText(), /未通过的预注册条件/);
     assert.equal(await page.locator('.fold-grid > div').count(), 6);
     await page.keyboard.press('Escape');
-    await page.getByRole('combobox', { name: '验证筛选' }).selectOption('all');
+    await page.getByRole('button', { name: '下一页', exact: true }).click();
+    assert.equal(await page.locator('.research-table .strategy-id').first().innerText(), '26');
+    assert.equal(await page.locator('.research-table .scenario-3 .scenario-return').first().innerText(), formatSigned(expectedRanking[25].scenes['3'].return_pct, 2) + '%');
+    await page.getByRole('button', { name: '上一页', exact: true }).click();
     await page.screenshot({ path: path.join(out, 'research-desktop.png'), fullPage: true });
     await page.getByRole('button', { name: '运行记录', exact: true }).click();
     assert.equal(await page.locator('table tbody tr').count(), snapshot.paper.trades.length);
@@ -135,6 +138,12 @@ const zlib = require('node:zlib');
         assert.ok(measured.tables.every(t => t.scroll <= t.client), `${view} has an internal horizontal scroller at ${width}: ${JSON.stringify(measured)}`);
         assert.ok(measured.contained_rows, `${view} row content overlaps following rows at ${width}: ${JSON.stringify(measured)}`);
         assert.ok(measured.scenarios.every(n => n === 3), `${view} hides a scenario at ${width}`);
+        if (view === '策略研究') {
+          assert.equal(await page.locator('.research-view input, .research-view select').count(), 0);
+          await page.evaluate(() => scrollTo(0, 0));
+          const top = await page.locator('.research-table tbody tr').first().evaluate(e => e.getBoundingClientRect().top);
+          assert.ok(top < (width > 1000 ? 650 : 900), `first research row is too far down at ${width}: ${top}`);
+        }
         const alignment = view === '运行记录' ? undefined : await assertTableAlignment(view === '模拟盘' ? '.account-table' : '.research-table', width);
         responsive.push({ view, width, horizontal_scroll: false, all_scenarios_visible: true, row_content_overlaps: false, alignment });
       }
@@ -142,6 +151,9 @@ const zlib = require('node:zlib');
     await page.setViewportSize({ width: 375, height: 812 });
     await page.getByRole('button', { name: '策略研究', exact: true }).click();
     await page.screenshot({ path: path.join(out, 'research-mobile.png'), fullPage: true });
+    await page.getByRole('button', { name: '切换浅色主题', exact: true }).click();
+    await page.screenshot({ path: path.join(out, 'research-mobile-light.png'), fullPage: true });
+    await page.getByRole('button', { name: '切换深色主题', exact: true }).click();
     await page.locator('.research-table .strategy-link').first().click();
     await page.getByRole('dialog').waitFor();
     const detailWidth = await page.getByRole('dialog').evaluate(e => ({ client: e.clientWidth, scroll: e.scrollWidth }));
@@ -166,7 +178,7 @@ const zlib = require('node:zlib');
     assert.ok(quotes.some(q => q.symbol === 'BTCUSDT') && quotes.some(q => q.symbol === 'ETHUSDT'), 'live public quotes not observed');
     const result = { ok: true, accounts: 10, research_rows_per_page: 25, paper_state_sha256: snapshot.paper.state_sha256,
       actual_public_quote_responses: quotes.length, browser_errors: errors, mobile_overflow: false,
-      ledger_preserved_on_failure: true, all_cost_columns_visible: true, responsive, evidence_source: 'unchanged saved real account/research records', screenshots: out };
+      ledger_preserved_on_failure: true, all_cost_columns_visible: true, research_filter_controls: 0, pagination_preserves_ranking: true, unpassed_results_visible: true, responsive, evidence_source: 'unchanged saved real account/research records', screenshots: out };
     fs.writeFileSync(path.join(out, 'result.json'), JSON.stringify(result, null, 2) + '\n');
     console.log(JSON.stringify(result));
   } finally { await browser.close(); }

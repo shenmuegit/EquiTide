@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useId, useMemo, useRef, useState } from 'react';
-import { Button, Search, Select, SkeletonPlaceholder, Table, TableBody,
+import { Button, Select, SkeletonPlaceholder, Table, TableBody,
   TableCell, TableHead, TableHeader, TableRow, Tag, Theme } from '@carbon/react';
 import { ArrowClockwise, ArrowUpRight, ChartLine, ClockCounterClockwise, Flask,
   Moon, Pause, Play, Sun, WarningCircle, X, CheckCircle, GithubLogo } from '@phosphor-icons/react';
@@ -204,68 +204,54 @@ function PaperView({ paper, now, onSelect }: { paper: Paper; now: number; onSele
 
 function ResearchView({ snapshot, configs, error, onSelect }: { snapshot: Snapshot; configs: ResearchConfig[]; error: string; onSelect: (r: ResearchConfig) => void }) {
   const research = snapshot.research;
-  const cost = '3';
-  const [kind, setKind] = useState('combination');
-  const [period, setPeriod] = useState('2026-03-18T00:01:00Z|2026-09-14T00:01:00Z');
-  const [status, setStatus] = useState('all');
-  const [query, setQuery] = useState('');
-  const [sort, setSort] = useState('return');
+  const start = '2026-03-18T00:01:00Z', end = '2026-09-14T00:01:00Z';
   const [page, setPage] = useState(1);
-  const [start, end] = period.split('|');
-  const comparable = useMemo(() => comparableRows(configs, start, end, kind, cost), [configs, start, end, kind, cost]);
-  const filtered = useMemo(() => comparable.filter(r => (status === 'all' || (status === 'cross' ? r.cross_period_passed : r.status === status))
-    && `${r.name} ${r.indicator} ${r.family} ${weights(r.weights)}`.toLowerCase().includes(query.toLowerCase())).sort((a, b) =>
-    sort === 'drawdown' ? a.scenes[cost]!.drawdown_pct - b.scenes[cost]!.drawdown_pct : b.scenes[cost]!.return_pct - a.scenes[cost]!.return_pct),
-  [comparable, status, query, sort, cost]);
-  const pages = Math.max(1, Math.ceil(filtered.length / 25));
+  const comparable = useMemo(() => comparableRows(configs, start, end, 'combination', '3')
+    .sort((a, b) => b.scenes['3']!.return_pct - a.scenes['3']!.return_pct), [configs]);
+  const pages = Math.max(1, Math.ceil(comparable.length / 25));
   const safePage = Math.min(page, pages);
-  const rows = filtered.slice((safePage - 1) * 25, safePage * 25);
+  const rows = comparable.slice((safePage - 1) * 25, safePage * 25);
   const passed = comparable.filter(r => r.status === 'passed').length;
-  const positive = comparable.filter(r => r.scenes[cost]!.return_pct > 0).length;
+  const positive = comparable.filter(r => r.scenes['3']!.return_pct > 0).length;
   const cross = comparable.filter(r => r.cross_period_passed).length;
   const latest = research.last_run;
-  return <>
-    <div className="page-title"><div><h1>策略研究<Tag type="gray" size="sm" className="badge">{research.counts.registered.toLocaleString()}个独立配置</Tag></h1><p className="page-description">同区间比较收益、回撤与验证记录。</p></div><div className="updated-note">最新研究轮次<strong>{latest ? date(latest.at) : '暂无'}</strong></div></div>
+  return <div className="research-view">
+    <div className="page-title research-title"><div><p className="research-kicker">BTC / ETH · 历史回测</p><h1>策略研究</h1><p className="page-description">同时比较收益、回撤与三档交易成本。</p></div>
+      <div className="updated-note">最新研究<strong>{latest ? date(latest.at) : '暂无'} 北京时间</strong>{latest && <EvidenceLink path={latest.result}>本轮研究结论</EvidenceLink>}</div></div>
     {error && <div className="alert" role="status"><WarningCircle size={18} />{error}</div>}
     <div className="metrics-strip research-metrics">
-      <Metric label="已有实际回测" value={number(research.counts.results, 0)} unit="配置" sub={`${research.counts.observation_records_excluded}条持续观察记录已单独统计`} />
-      <Metric label="当前区间正收益" value={configs.length ? number(positive, 0) : "读取中"} unit={configs.length ? `/ ${comparable.length}` : undefined} sub={`${cost}×成本 · 相同时间区间、配置类型`} valueTone="positive" />
-      <Metric label="当前区间通过门槛" value={configs.length ? number(passed, 0) : "读取中"} unit="配置" sub="结合逐折盈利、整体回撤、交易及成本条件" />
-      <Metric label="跨2025/2026通过" value={configs.length ? number(cross, 0) : "读取中"} unit="配置" sub="两个时期均通过历史门槛 · 非独立最终测试集" />
+      <Metric label="累计实际回测" value={number(research.counts.results, 0)} unit="配置" sub="不同参数、原始权重分别登记" />
+      <Metric label="本期正收益" value={configs.length ? number(positive, 0) : '读取中'} unit={configs.length ? `/ ${comparable.length}` : undefined} sub="组合 · 3×成本后净收益为正" valueTone="positive" />
+      <Metric label="本期历史通过" value={configs.length ? number(passed, 0) : '读取中'} unit="配置" sub={configs.length ? `${comparable.length - passed}个未通过，同样保留在榜单` : '逐折、回撤、交易及成本门槛'} />
+      <Metric label="跨两期通过" value={configs.length ? number(cross, 0) : '读取中'} unit="配置" sub="2025、2026两个历史区间" />
     </div>
-    <div className="research-context"><div><Flask size={20} /><span>这些历史区间已反复用于研究。参数敏感性以原批次报告为准；历史通过不代表稳定实盘盈利。</span></div>{latest && <EvidenceLink path={latest.result}>最新中文结论</EvidenceLink>}</div>
-    <section className="panel research-panel"><PanelHeading title="收益排名" sub={kind === 'combination' ? '同区间、初始本金2,000 USDT的组合比较；配置不按指标族合并。' : '同区间的单币组件比较；各组件原始本金见详情。'} />
-      <div className="research-filters">
-        <div className="search-box"><span className="field-label">指标、参数或权重</span><Search id="monitor-research-search" size="md" labelText="搜索技术指标、参数或权重" closeButtonLabelText="清除搜索" placeholder="例如 EMA29、0.75" value={query} onChange={e => { setQuery(e.target.value); setPage(1); }} /></div>
-        <FilterSelect label="回测区间" value={period} onChange={v => { setPeriod(v); setPage(1); }}>{research.periods.map(p => <option key={p.start_utc + p.end_utc} value={`${p.start_utc}|${p.end_utc}`}>{p.start_utc.slice(0, 10)} 至 {p.end_utc.slice(0, 10)} UTC</option>)}</FilterSelect>
-        <FilterSelect label="配置类型" value={kind} onChange={v => { setKind(v); setPage(1); }}><option value="combination">BTC / ETH 组合</option><option value="strategy">单币策略组件</option></FilterSelect>
-        <FilterSelect label="验证筛选" value={status} onChange={v => { setStatus(v); setPage(1); }}><option value="all">全部验证状态</option><option value="passed">通过历史门槛</option><option value="rejected">未通过历史门槛</option><option value="cross">跨两个时期通过</option></FilterSelect>
-        <FilterSelect label="排名排序" value={sort} onChange={v => { setSort(v); setPage(1); }}><option value="return">3×收益率倒序</option><option value="drawdown">3×回撤从低到高</option></FilterSelect>
-      </div>
-      <div className="research-summary"><span>当前筛选 <b>{filtered.length}</b> 个配置</span><span>正收益 {positive} · 通过 {passed} · 未通过 {comparable.length - passed}</span></div>
+    <section className="panel research-panel" aria-labelledby="research-ranking-title">
+      <div className="ranking-heading"><h2 id="research-ranking-title">收益排名 <span>{configs.length ? `${comparable.length}组组合` : '读取中'}</span></h2><span className="ranking-order">按 3×净收益降序</span></div>
+      <dl className="ranking-context"><div><dt>回测区间</dt><dd className="mono">{start.slice(0, 10)} — {end.slice(0, 10)} <span>UTC</span></dd></div><div><dt>初始本金</dt><dd className="mono">2,000 <span>USDT / 组合</span></dd></div><div><dt>成本比较</dt><dd>1× 基准<span> / </span>2×<span> / </span>3×</dd></div></dl>
       <div className="table-scroll" aria-label="研究收益榜"><Table size="xl" className="research-table scenario-table">
         <colgroup><col className="identity-col" /><col className="weight-col" />{COSTS.map(c => <col className="scenario-col" key={c} />)}<col className="context-col" /><col className="context-col" /><col className="detail-col" /></colgroup>
         <TableHead><TableRow><TableHeader><span className="identity-header"><span>排名</span><span>技术指标 / 参数</span></span></TableHeader><TableHeader>原始权重</TableHeader>
-          {COSTS.map(c => <TableHeader key={c} className="right scenario-header">{c}×{c === '1' ? ' 基准' : ' 成本'}{c === '3' ? sort === 'return' ? ' ↓' : ' ↑' : ''}<small>净收益 / 回撤</small></TableHeader>)}
+          {COSTS.map(c => <TableHeader key={c} className="right scenario-header">{c}×{c === '1' ? ' 基准' : ' 成本'}{c === '3' ? ' ↓' : ''}<small>净收益 / 回撤</small></TableHeader>)}
           <TableHeader className="right">1×盈利折</TableHeader><TableHeader>验证状态</TableHeader><TableHeader className="detail-header">详情</TableHeader>
         </TableRow></TableHead>
         <TableBody>{rows.map((r, i) => <TableRow key={r.fingerprint}>
-          <TableCell className="identity-cell"><div className="strategy-cell"><span className="strategy-id mono">{(safePage - 1) * 25 + i + 1}</span><span><button className="strategy-link" onClick={() => onSelect(r)}>{r.indicator}</button><small className="config-name mono">{r.name}</small></span></div></TableCell>
+          <TableCell className="identity-cell"><div className="strategy-cell"><span className="strategy-id mono">{String((safePage - 1) * 25 + i + 1).padStart(2, '0')}</span><span><button className="strategy-link" onClick={() => onSelect(r)}>{r.indicator.split(' · ').map((part, index) => <span className="strategy-line" key={index}>{part}</span>)}</button><small className="config-name mono">{r.name}</small></span></div></TableCell>
           <TableCell data-label="原始权重" className="weight-text weight-cell"><WeightList items={r.weights} /></TableCell>
           {COSTS.map(c => { const scene = r.scenes[c]; return <TableCell key={c} data-label={`${c}×${c === '1' ? ' 基准' : ' 成本'}`} className={`right scenario-cell scenario-${c}`}>
             {scene ? <><span className={`scenario-return mono ${tone(scene.return_pct)}`}>{signed(scene.return_pct)}%</span><small className="scenario-note">回撤 <span className="mono">{number(scene.drawdown_pct)}%</span></small></> : <span className="muted">暂无</span>}
           </TableCell>; })}
           <TableCell data-label="1×盈利折" className="right mono context-one">{r.positive_folds_1x ?? r.scenes['1']?.fold_returns_pct.filter(x => x > 0).length ?? '暂无'}<span className="muted"> / {r.validation.walk_forward_folds || '暂无'}</span></TableCell>
           <TableCell data-label="验证状态" className="context-two"><span className={`status-label ${r.status === 'passed' ? 'positive' : 'muted'}`}>{r.status === 'passed' ? <CheckCircle size={14} /> : <X size={14} />}{r.status === 'passed' ? '历史通过' : '未通过'}</span>{r.cross_period_passed && <small className="cross-period">跨两期通过</small>}</TableCell>
-          <TableCell className="detail-cell"><button className="icon-button row-detail" onClick={() => onSelect(r)} aria-label={`查看研究配置 ${r.name}`}><ArrowUpRight size={18} /></button></TableCell>
+          <TableCell className="detail-cell"><button className="icon-button row-detail" onClick={() => onSelect(r)} aria-label={`查看研究配置 ${r.name}`}>详情<ArrowUpRight size={14} /></button></TableCell>
         </TableRow>)}</TableBody>
       </Table></div>
       {!configs.length && <div className="table-empty">{error || '正在读取并核验研究结果…'}</div>}
-      {!!configs.length && !rows.length && <div className="table-empty">没有符合当前条件的配置。可调整区间或筛选条件。</div>}
-      <div className="pagination"><span>第 {safePage} / {pages} 页，每页25条</span><div><Button kind="ghost" size="md" disabled={safePage <= 1} onClick={() => setPage(safePage - 1)}>上一页</Button><Button kind="ghost" size="md" disabled={safePage >= pages} onClick={() => setPage(safePage + 1)}>下一页</Button></div></div>
-      <div className="panel-foot"><span>另有 {research.counts.unranked} 个历史配置无同格式可比指标，保留原始结果并排除出此收益榜。等效净值不代表独立验证。</span><EvidenceLink path="research/automation/registry.jsonl">完整登记</EvidenceLink></div>
+      {!!configs.length && !rows.length && <div className="table-empty">该区间尚无同本金的组合结果。</div>}
+      <div className="pagination"><span>{rows.length ? `${(safePage - 1) * 25 + 1}–${Math.min(safePage * 25, comparable.length)} / ${comparable.length}组` : '暂无结果'}<small>第 {safePage} / {pages} 页</small></span><div><Button kind="ghost" size="md" disabled={safePage <= 1} onClick={() => setPage(safePage - 1)}>上一页</Button><Button kind="ghost" size="md" disabled={safePage >= pages} onClick={() => setPage(safePage + 1)}>下一页</Button></div></div>
+      <div className="panel-foot"><span>各配置保留原始权重，不按指标族合并。另有 {research.counts.unranked} 个历史配置无同格式可比指标，完整结果仍保留。</span><EvidenceLink path="research/automation/registry.jsonl">完整研究登记</EvidenceLink></div>
     </section>
-  </>;
+    <aside className="research-context"><Flask size={18} /><p>历史区间已反复用于研究，等效净值不构成独立验证。参数敏感性见原批次报告；历史通过不代表稳定实盘盈利。</p></aside>
+  </div>;
 }
 
 function ActivityView({ snapshot }: { snapshot: Snapshot }) {
@@ -333,10 +319,10 @@ export default function Monitor() {
   const data = useEvidence(enabled, refreshKey, tab === 'research');
   const market = useQuotes(enabled, refreshKey);
   useEffect(() => { const timer = setInterval(() => setNow(Date.now()), 10_000); return () => clearInterval(timer); }, []);
-  useEffect(() => { document.documentElement.dataset.monitorTheme = theme; const meta = document.querySelector<HTMLMetaElement>('meta[name=theme-color]'); if (meta) meta.content = theme === 'dark' ? '#171b19' : '#f5f6f5'; try { localStorage.setItem('equitide-monitor-theme', theme); } catch { /* optional preference */ } }, [theme]);
+  useEffect(() => { document.documentElement.dataset.monitorTheme = theme; const meta = document.querySelector<HTMLMetaElement>('meta[name=theme-color]'); if (meta) meta.content = theme === 'dark' ? '#171b19' : '#f4f5f1'; try { localStorage.setItem('equitide-monitor-theme', theme); } catch { /* optional preference */ } }, [theme]);
   const paper = data.snapshot?.paper;
   const healthy = paper?.status === 'ready' && now - Date.parse(paper.observed_at_utc) <= paper.maximum_gap_seconds * 1000;
-  return <Theme theme={theme === 'dark' ? 'g100' : 'g10'}><div className="monitor-app">
+  return <Theme theme={theme === 'dark' ? 'g100' : 'g10'}><div className={`monitor-app monitor-${tab}`}>
     <a href="#monitor-main" className="skip-link">跳到监控内容</a>
     <header className="app-header"><div className="header-inner">
       <a className="brand-link" href="#paper" onClick={() => setTab('paper')} title="模拟盘首页"><Brand /></a>
@@ -347,11 +333,11 @@ export default function Monitor() {
       </div>
     </div></header>
     <main id="monitor-main" className="main-content">
-      <section className="market-strip" aria-label="BTC与ETH实时公开报价"><div className="market-heading"><b>实时行情</b><small>Binance 现货</small></div>
+      {tab !== 'research' && <section className="market-strip" aria-label="BTC与ETH实时公开报价"><div className="market-heading"><b>实时行情</b><small>Binance 现货</small></div>
         <QuoteTile symbol="BTC" quote={market.quotes.BTCUSDT} error={market.errors.BTCUSDT} now={now} paused={!enabled} />
         <QuoteTile symbol="ETH" quote={market.quotes.ETHUSDT} error={market.errors.ETHUSDT} now={now} paused={!enabled} />
         <div className="market-footnote"><span className={`system-status ${healthy ? '' : 'warning'}`}><i />{paper ? healthy ? '账户记录正常' : '等待有效观察' : '正在读取记录'}</span><small>{enabled ? '行情每10秒刷新' : '自动刷新已暂停'}</small></div>
-      </section>
+      </section>}
       {data.error && <div className="alert" role="alert"><WarningCircle size={18} />{data.error}{data.snapshot && '；以下保留最后有效记录。'}</div>}
       {!data.snapshot ? <section className="loading-panel" aria-live="polite"><h1>{data.error ? '暂时无法读取研究账本' : '正在读取研究账本'}</h1>
         {data.error ? <p>使用顶部刷新按钮重试。实时市场报价仍单独运行。</p> : <><div className="loading-metrics">{[0, 1, 2, 3].map(i => <SkeletonPlaceholder key={i} />)}</div><SkeletonPlaceholder className="loading-chart" /><SkeletonPlaceholder className="loading-table" /></>}
