@@ -14,6 +14,39 @@ const zlib = require('node:zlib');
   const formatSigned = (v, digits) => `${Number(v) > 0 ? '+' : Number(v) < 0 ? '−' : ''}${Math.abs(Number(v)).toLocaleString('en-US', {minimumFractionDigits: digits, maximumFractionDigits: digits})}`;
   const expectedNav = Number(snapshot.paper.totals['1'].nav).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
   const expectedTop = research.filter(r => r.kind === 'combination' && r.capital_usdt === 2000 && r.start_utc === '2026-03-18T00:01:00Z' && r.end_utc === '2026-09-14T00:01:00Z').sort((a,b) => b.scenes['3'].return_pct - a.scenes['3'].return_pct)[0];
+  const assertTableAlignment = async (selector, width) => {
+    const measured = await page.locator(selector).evaluate(table => {
+      const rect = e => e.getBoundingClientRect();
+      const aligned = values => Math.max(...values) - Math.min(...values) <= 1;
+      const rows = [...table.tBodies[0].rows];
+      const desktop = innerWidth > 1000;
+      const normalize = value => ({ start: 'left', end: 'right' }[value] || value);
+      const headerAxes = desktop && [...table.tHead.rows[0].cells].every((head, index) =>
+        normalize(getComputedStyle(head.querySelector('.cds--table-header-label')).textAlign) === normalize(getComputedStyle(rows[0].cells[index]).textAlign));
+      const identityHeading = table.querySelector('.identity-header > :last-child');
+      const identityAxis = !desktop || !!identityHeading && Math.abs(rect(identityHeading).x - rect(rows[0].querySelector('.strategy-cell > :last-child')).x) <= 1;
+      const columns = rows.every(row => {
+        const cells = [...row.querySelectorAll('.scenario-cell')];
+        return aligned(cells.map(e => rect(e).width)) && aligned(cells.map(e => rect(e).y)) &&
+          ['.scenario-return', '.scenario-pnl', '.scenario-note'].every(selector => {
+            const items = cells.map(e => e.querySelector(selector)).filter(Boolean);
+            return !items.length || aligned(items.map(e => rect(e).y));
+          });
+      });
+      const mobileAxes = desktop || rows.every(row => [...row.querySelectorAll('td[data-label]')].every(cell =>
+        getComputedStyle(cell).textAlign === 'left' && getComputedStyle(cell, '::before').textAlign === 'left'));
+      const headerPadding = !desktop || [...table.querySelectorAll('.cds--table-header-label')].every(e =>
+        getComputedStyle(e).paddingTop === '0px' && getComputedStyle(e).paddingBottom === '0px');
+      return { desktop, header_axes_match: !desktop || headerAxes, identity_axis_matches: identityAxis,
+        cost_widths_and_baselines_match: columns, mobile_labels_and_values_match: mobileAxes, no_duplicate_header_padding: headerPadding };
+    });
+    assert.ok(measured.header_axes_match, `${selector} header/body alignment differs at ${width}: ${JSON.stringify(measured)}`);
+    assert.ok(measured.identity_axis_matches, `${selector} strategy heading is offset at ${width}`);
+    assert.ok(measured.cost_widths_and_baselines_match, `${selector} cost columns differ at ${width}`);
+    assert.ok(measured.mobile_labels_and_values_match, `${selector} mobile label/value alignment differs at ${width}`);
+    assert.ok(measured.no_duplicate_header_padding, `${selector} header has duplicate vertical padding at ${width}`);
+    return measured;
+  };
   const browser = await chromium.launch({ headless: true, executablePath: process.env.CHROMIUM_PATH, args: ['--no-sandbox'] });
   const page = await browser.newPage({ viewport: { width: 1440, height: 1080 }, deviceScaleFactor: 1, colorScheme: 'dark', reducedMotion: 'reduce' });
   const errors = [];
@@ -31,6 +64,7 @@ const zlib = require('node:zlib');
     await page.goto(process.env.MONITOR_URL || 'http://127.0.0.1:5178/monitor.html');
     await page.locator('.account-table tbody tr').last().waitFor({ timeout: 30000 });
     assert.equal(await page.locator('.account-table tbody tr').count(), 10);
+    await assertTableAlignment('.account-table', 1440);
     assert.ok((await page.locator('.metrics-strip').innerText()).includes(expectedNav));
     assert.equal(await page.locator('.segmented').count(), 0, 'cost switches remain');
     for (const account of snapshot.paper.accounts) {
@@ -101,7 +135,8 @@ const zlib = require('node:zlib');
         assert.ok(measured.tables.every(t => t.scroll <= t.client), `${view} has an internal horizontal scroller at ${width}: ${JSON.stringify(measured)}`);
         assert.ok(measured.contained_rows, `${view} row content overlaps following rows at ${width}: ${JSON.stringify(measured)}`);
         assert.ok(measured.scenarios.every(n => n === 3), `${view} hides a scenario at ${width}`);
-        responsive.push({ view, width, horizontal_scroll: false, all_scenarios_visible: true, row_content_overlaps: false });
+        const alignment = view === '运行记录' ? undefined : await assertTableAlignment(view === '模拟盘' ? '.account-table' : '.research-table', width);
+        responsive.push({ view, width, horizontal_scroll: false, all_scenarios_visible: true, row_content_overlaps: false, alignment });
       }
     }
     await page.setViewportSize({ width: 375, height: 812 });

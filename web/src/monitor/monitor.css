@@ -280,9 +280,6 @@ dt { color: var(--muted); } dd { margin: 0; }
   .chart-panel .panel-heading { gap: 10px; } .chart-panel .filter-select { min-width: 135px; }
   .equity-chart { height: 210px; } .chart-legend { gap: 14px; font-size: 10px; } .chart-legend .legend-note { display: none; }
   .progress-panel { padding: 20px; } .progress-number { font-size: 31px; } .mini-facts > div { font-size: 11px; }
-    .account-table.cds--data-table th, .account-table.cds--data-table td { padding-left: 10px; padding-right: 10px; font-size: 11px; }
-  .strategy-cell { min-width: 0; gap: 8px; } .strategy-id { font-size: 10px; width: 25px; }
-  .strategy-cell b { font-size: 11px; } .account-table .icon-button { width: 26px; }
   .research-filters { padding-left: 16px; padding-right: 16px; } .research-summary { padding-left: 16px; padding-right: 16px; font-size: 11px; }
   .panel-foot { padding-left: 16px; padding-right: 16px; } .pagination { padding-left: 16px; font-size: 11px; }
   .activity-list { padding-left: 16px; padding-right: 16px; } .activity-item { gap: 10px; } .activity-item b { font-size: 12px; }
@@ -306,15 +303,22 @@ dt { color: var(--muted); } dd { margin: 0; }
   padding: 14px 12px; overflow-wrap: anywhere; white-space: normal; height: auto;
 }
 .monitor-app .cds--data-table .right { white-space: normal; }
+/* Carbon's header label has its own alignment and vertical padding. */
+.monitor-app .cds--data-table .cds--table-header-label { text-align: inherit; padding-block: 0; }
+.monitor-app .scenario-table td { line-height: 20px; }
+.monitor-app .scenario-table .detail-header { text-align: center; }
+.identity-header { display: grid; grid-template-columns: 29px minmax(0, 1fr); gap: 14px; }
+.weight-list { display: grid; gap: 2px; }
+.weight-line { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 6px; font-size: 12px; line-height: 20px; }
+.weight-line > :last-child { text-align: right; white-space: nowrap; }
 .monitor-app .cds--data-table .detail-cell { padding: 6px; text-align: center; }
 .strategy-cell { align-items: flex-start; }
 .strategy-cell > span:last-child { min-width: 0; }
 .strategy-link { max-width: 100%; overflow-wrap: anywhere; }
 .scenario-header small { display: block; margin-top: 5px; color: var(--muted); font-size: 11px; line-height: 1.5; font-weight: 400; }
-.scenario-return { display: block; font-weight: 500; font-size: 14px; }
-.scenario-pnl { display: block; font-size: 12px; margin-top: 4px; }
-.scenario-note { display: block; color: var(--muted); font-size: 12px; line-height: 1.6; margin-top: 5px; }
-.ranking-note { color: var(--muted); font-size: 12px; }
+.scenario-return { display: block; font-weight: 500; font-size: 14px; line-height: 20px; }
+.scenario-pnl { display: block; font-size: 12px; line-height: 20px; margin-top: 4px; }
+.scenario-note { display: block; color: var(--muted); font-size: 12px; line-height: 20px; margin-top: 4px; }
 .positions, .cash-label, .status-label { white-space: normal; }
 .status-label { max-width: 100%; line-height: 1.5; }
 .status-label svg { flex-shrink: 0; }
@@ -327,6 +331,9 @@ dt { color: var(--muted); } dd { margin: 0; }
 .fold-costs small { display: block; overflow-wrap: anywhere; }
 .fold-title { font-weight: 500; color: var(--text) !important; }
 
+@media (min-width: 1001px) {
+  .monitor-app .scenario-table th:first-child, .monitor-app .scenario-table td:first-child { padding-inline-start: 24px; }
+}
 @media (max-width: 1000px) {
   .scenario-table colgroup, .trade-table colgroup { display: none; }
   .scenario-table, .scenario-table tbody, .trade-table, .trade-table tbody { display: block; width: 100%; }
@@ -335,12 +342,14 @@ dt { color: var(--muted); } dd { margin: 0; }
   }
   .scenario-table tbody tr {
     display: grid; width: 100%; height: auto; min-height: 0; grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-areas: 'identity identity identity' 'weights weights details' 'cost1 cost2 cost3' 'context1 context1 context2';
+    grid-template-areas: 'identity identity identity' 'weights weights weights' 'cost1 cost2 cost3' 'context1 context2 details';
     gap: 14px 12px; padding: 18px 16px; border-bottom: 1px solid var(--border);
   }
-  .monitor-app .scenario-table tbody td, .monitor-app .trade-table tbody td { display: block; min-width: 0; padding: 0; border: 0; text-align: left; }
+  .monitor-app .cds--data-table.scenario-table tbody td, .monitor-app .cds--data-table.trade-table tbody td { display: block; min-width: 0; padding: 0; border: 0; text-align: left; }
   .scenario-table .identity-cell { grid-area: identity; }
   .scenario-table .weight-cell { grid-area: weights; }
+  .scenario-table .weight-list { display: flex; flex-wrap: wrap; gap: 6px 24px; }
+  .scenario-table .weight-line { grid-template-columns: auto auto; }
   .scenario-table .scenario-1 { grid-area: cost1; }
   .scenario-table .scenario-2 { grid-area: cost2; }
   .scenario-table .scenario-3 { grid-area: cost3; }
@@ -361,7 +370,7 @@ dt { color: var(--muted); } dd { margin: 0; }
   .detail-scenes table, .detail-scenes tbody { display: block; width: 100%; }
   .detail-scenes thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); clip-path: inset(50%); }
   .detail-scenes tbody tr { display: grid; height: auto; min-height: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 20px; padding: 18px 0; border-bottom: 1px solid var(--border); }
-  .monitor-app .detail-scenes tbody td { display: block; min-width: 0; padding: 0; border: 0; text-align: left; }
+  .monitor-app .detail-scenes .cds--data-table tbody td { display: block; min-width: 0; padding: 0; border: 0; text-align: left; }
   .detail-scenario-label { grid-column: 1 / -1; font-weight: 500; }
   .fold-grid { grid-template-columns: 1fr; }
   .fold-costs b { font-size: 15px; }
@@ -376,4 +385,4 @@ dt { color: var(--muted); } dd { margin: 0; }
   .quote-value { font-size: clamp(19px, 5.5vw, 23px); }
 }
 
-@media (max-width: 768px) { .research-filters > :nth-child(2) { grid-column: 1 / -1; } }
+@media (max-width: 768px) { .research-filters > :nth-child(2), .research-filters > :last-child { grid-column: 1 / -1; } }

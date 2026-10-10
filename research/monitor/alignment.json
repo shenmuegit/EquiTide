@@ -1,0 +1,484 @@
+{
+  "schema_version": 1,
+  "request": "修正列表对齐，三档成本直接并列，自适应宽度且无横向滚动。",
+  "base_commit": "e276114052d0c895580128f7d906b9d3919f5c49",
+  "design": "保留 Carbon、Geist、现有导航和配色；设计变化3/10、动效1/10、密度8/10。",
+  "root_causes": [
+    "Carbon 表头内部标签 text-align:start 覆盖了数值列的右对齐。",
+    "Carbon xl 表头标签内的上下各16px留白与单元格留白叠加。",
+    "窄屏 td 左对齐规则的优先级低于旧数值列 .right 规则；盈利折横跨两列造成参差。"
+  ],
+  "changes": [
+    "表头继承所在列的对齐方式，保留一层统一留白。",
+    "排名/策略编号与指标名称分别沿相同轴对齐；详情表头与操作按钮对齐。",
+    "BTC、ETH权重按币种和数值分行；各成本列收益、盈亏、回撤使用一致行高。",
+    "窄屏三档成本等宽并列，标签和数值沿各列左边缘对齐；持仓/盈利折、成交/状态、详情沿三列排列。"
+  ],
+  "regression_before_fix": {
+    "failed_as_expected": true,
+    "reason": "account-table header/body alignment differs at 1440; no_duplicate_header_padding=false",
+    "log_sha256": "a08ddd813aa033981408af5adf193fbae4a1b02a6e45c0a61152061c75f39cda"
+  },
+  "desktop_header_heights": {
+    "模拟盘": {
+      "before_px": 113.921875,
+      "after_px": 65.421875
+    },
+    "策略研究": {
+      "before_px": 97.421875,
+      "after_px": 65.421875
+    }
+  },
+  "browser_checks": {
+    "local": {
+      "ok": true,
+      "accounts": 10,
+      "research_rows_per_page": 25,
+      "paper_state_sha256": "8f886ba6a4958bd6c9e5d0defc6032229dd88beeab2681ae5cc9ea45c050c615",
+      "actual_public_quote_responses": 2,
+      "browser_errors": [],
+      "mobile_overflow": false,
+      "ledger_preserved_on_failure": true,
+      "all_cost_columns_visible": true,
+      "responsive": [
+        {
+          "view": "模拟盘",
+          "width": 320,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": false,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "策略研究",
+          "width": 320,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": false,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "运行记录",
+          "width": 320,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false
+        },
+        {
+          "view": "模拟盘",
+          "width": 375,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": false,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "策略研究",
+          "width": 375,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": false,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "运行记录",
+          "width": 375,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false
+        },
+        {
+          "view": "模拟盘",
+          "width": 768,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": false,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "策略研究",
+          "width": 768,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": false,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "运行记录",
+          "width": 768,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false
+        },
+        {
+          "view": "模拟盘",
+          "width": 1024,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": true,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "策略研究",
+          "width": 1024,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": true,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "运行记录",
+          "width": 1024,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false
+        },
+        {
+          "view": "模拟盘",
+          "width": 1440,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": true,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "策略研究",
+          "width": 1440,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": true,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "运行记录",
+          "width": 1440,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false
+        }
+      ],
+      "evidence_source": "unchanged saved real account/research records"
+    },
+    "production": {
+      "ok": true,
+      "accounts": 10,
+      "research_rows_per_page": 25,
+      "paper_state_sha256": "8f886ba6a4958bd6c9e5d0defc6032229dd88beeab2681ae5cc9ea45c050c615",
+      "actual_public_quote_responses": 2,
+      "browser_errors": [],
+      "mobile_overflow": false,
+      "ledger_preserved_on_failure": true,
+      "all_cost_columns_visible": true,
+      "responsive": [
+        {
+          "view": "模拟盘",
+          "width": 320,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": false,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "策略研究",
+          "width": 320,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": false,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "运行记录",
+          "width": 320,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false
+        },
+        {
+          "view": "模拟盘",
+          "width": 375,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": false,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "策略研究",
+          "width": 375,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": false,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "运行记录",
+          "width": 375,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false
+        },
+        {
+          "view": "模拟盘",
+          "width": 768,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": false,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "策略研究",
+          "width": 768,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": false,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "运行记录",
+          "width": 768,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false
+        },
+        {
+          "view": "模拟盘",
+          "width": 1024,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": true,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "策略研究",
+          "width": 1024,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": true,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "运行记录",
+          "width": 1024,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false
+        },
+        {
+          "view": "模拟盘",
+          "width": 1440,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": true,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "策略研究",
+          "width": 1440,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false,
+          "alignment": {
+            "desktop": true,
+            "header_axes_match": true,
+            "identity_axis_matches": true,
+            "cost_widths_and_baselines_match": true,
+            "mobile_labels_and_values_match": true,
+            "no_duplicate_header_padding": true
+          }
+        },
+        {
+          "view": "运行记录",
+          "width": 1440,
+          "horizontal_scroll": false,
+          "all_scenarios_visible": true,
+          "row_content_overlaps": false
+        }
+      ],
+      "evidence_source": "unchanged saved real account/research records"
+    }
+  },
+  "build": {
+    "passed": true,
+    "command": "cd web && npm run build",
+    "log_sha256": "f8ce49184800334dd6e3f074c808ef9879212ebf70180b6013ed82521265c9e5"
+  },
+  "reproduction": [
+    "cd web && npm run build",
+    "cd web && npm run preview -- --port 5189",
+    "PLAYWRIGHT_MODULE=/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright CHROMIUM_PATH=/home/desktop/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome MONITOR_URL=http://127.0.0.1:5189/monitor.html node checks/monitor_browser.cjs",
+    "PLAYWRIGHT_MODULE=/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright CHROMIUM_PATH=/home/desktop/.cache/ms-playwright/chromium-1234/chrome-linux64/chrome MONITOR_URL=https://equitide-monitor.shenmuegm.chatgpt.site node checks/monitor_browser.cjs"
+  ],
+  "evidence_scope": "浏览器使用已保存的真实研究/账户汇总核对展示数值；公开报价为 GET。仅核对界面，不生成信号、回测或虚拟成交。",
+  "preserved_input_sha256": {
+    "research/paper10/plan.json": "383cbfe8544627e05ff498ae4f803dbc3ccfd24753311add9cba2f5aa064e34f",
+    "research/paper10/state.json": "8f886ba6a4958bd6c9e5d0defc6032229dd88beeab2681ae5cc9ea45c050c615",
+    "research/automation/registry.jsonl": "5d5153264f47baab72331dd1fa354d370b6e6b5b1293171e25ebab4a975beee2",
+    "research/monitor/latest.json": "fcb6fe381407b55d92202c5d74ec95689787f74a342ab7466f1079eab4aa4527",
+    "research/monitor/configs.json.gz": "5544ac5d336224f753837fb3e5e5f7f9d39df07836b9f433860caddeae96b488"
+  },
+  "publication": {
+    "project_id": "appgprj_6ac7113340ec8191a68e4e6a34bc44a9",
+    "version_id": "appgprj_6ac7113340ec8191a68e4e6a34bc44a9~appgver_4240a063336881918afcd3cb9f60968b",
+    "version_number": 5,
+    "deployment_id": "appgdep_6ac9a77addc8819182f49720bcccb577",
+    "status": "succeeded",
+    "url": "https://equitide-monitor.shenmuegm.chatgpt.site",
+    "source_commit": "6f946ddb1bf52bafd3c6705d426cda898db853a7",
+    "archive_sha256": "sha256:5c6ae9425c53dc16f5c0baafcbec10bdc43bb7a236fc8c8a62674f804af01f38",
+    "verified_at_utc": "2026-10-10T02:48:41.885537+00:00"
+  },
+  "visual_review": {
+    "reviewed": true,
+    "views": [
+      "paper",
+      "research"
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "local_screenshot_sha256": {
+      "after-research-375.png": "64247a048cf6e393a1d54f0048da1329d536b817933c9f9baf3cc2dd44d1ea4e",
+      "after-paper-1440.png": "f90b52587f5de2840f2bb43b82dc11408c8adb6f78edab05931131e8c3a45512",
+      "after-paper-375.png": "33b2edf13a61c2c49bb949a3e6d7dcd0e8211953f576e4c2b7f05fe186eaaf38",
+      "after-research-1440.png": "1c356fb9bb1298c996d895ead6920aec4ed733c21d4be7c34ac2277c80364417"
+    }
+  },
+  "source_sha256": {
+    "web/src/monitor/Monitor.tsx": "6746566bcfa3dfd731b4608e3770abea7d34cc5bb3da766ffb12dc938852918a",
+    "web/src/monitor/monitor.css": "1df10ac4bc2faa52f7a594fec3cc38337608028c968182841327f05f722bef28",
+    "checks/monitor_browser.cjs": "bf034896915c69b42fcc7207b06d1c1cd37dcabaf041e58b0e3e96a52c7e6602"
+  }
+}

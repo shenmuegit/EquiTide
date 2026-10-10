@@ -138,6 +138,12 @@ function EvidenceLink({ path, children = '查看证据' }: { path: string; child
   return <a className="text-link" href={evidenceUrl(path)} target="_blank" rel="noreferrer">{children}<ArrowUpRight size={14} /></a>;
 }
 
+function WeightList({ items }: { items: Weight[] }) {
+  return items.length ? <span className="weight-list">{items.map(w => <span className="weight-line" key={w.asset}>
+    <span>{w.asset}</span><span className="mono">{number(w.weight * 100, w.weight * 100 % 1 ? 1 : 0)}%</span>
+  </span>)}</span> : <span className="muted">独立单币配置</span>;
+}
+
 function Position({ scene }: { scene: PaperAccount['scenes']['1'] }) {
   const held = Object.entries(scene.positions).filter(([, p]) => Number(p.units) > 0);
   return held.length ? <span className="positions">{held.map(([asset, p]) => <span key={asset}><b>{asset}</b> <span className="mono">{number(p.units, asset === 'BTC' ? 5 : 4)}</span></span>)}</span> : <span className="cash-label">USDT 空仓</span>;
@@ -174,13 +180,13 @@ function PaperView({ paper, now, onSelect }: { paper: Paper; now: number; onSele
     <section className="panel account-panel"><PanelHeading title="10组固定策略" sub="1×、2×、3×列依次展示收益、盈亏 USDT、采样回撤。按主账户排序，初始分仓不再平衡。" />
       <div className="table-scroll" aria-label="模拟账户表"><Table size="xl" className="account-table scenario-table">
         <colgroup><col className="identity-col" /><col className="weight-col" />{COSTS.map(c => <col className="scenario-col" key={c} />)}<col className="context-col" /><col className="context-col" /><col className="detail-col" /></colgroup>
-        <TableHead><TableRow><TableHeader>策略 / 技术指标</TableHeader><TableHeader>BTC / ETH<br />初始权重</TableHeader>
-          {COSTS.map(c => <TableHeader className="right scenario-header" key={c}>{c}×{c === '1' ? ' 主账户 ↓' : ' 成本'}<small>净收益 / 盈亏 USDT / 采样回撤</small></TableHeader>)}
-          <TableHeader>主账户持仓</TableHeader><TableHeader className="right">主账户成交</TableHeader><TableHeader><span className="sr-only">账户详情</span></TableHeader>
+        <TableHead><TableRow><TableHeader><span className="identity-header"><span>策略</span><span>技术指标 / 参数</span></span></TableHeader><TableHeader>初始权重</TableHeader>
+          {COSTS.map(c => <TableHeader className="right scenario-header" key={c}>{c}×{c === '1' ? ' 主账户 ↓' : ' 成本'}<small>收益 / 盈亏 / 回撤</small></TableHeader>)}
+          <TableHeader>主账户持仓</TableHeader><TableHeader className="right">主账户成交</TableHeader><TableHeader className="detail-header">详情</TableHeader>
         </TableRow></TableHead>
         <TableBody>{accounts.map(a => <TableRow key={a.id}>
           <TableCell className="identity-cell"><div className="strategy-cell"><span className="strategy-id mono">{a.id}</span><span><b>{a.label}</b></span></div></TableCell>
-          <TableCell data-label="BTC / ETH 初始权重" className="weight-cell mono muted">{a.weights.map(w => number(w.weight * 100, 1).replace('.0', '')).join(' / ')}<small className="percent-unit">%</small></TableCell>
+          <TableCell data-label="初始权重" className="weight-cell muted"><WeightList items={a.weights} /></TableCell>
           {COSTS.map(c => { const scene = a.scenes[c]; return <TableCell key={c} data-label={`${c}×${c === '1' ? ' 主账户' : ' 成本'}`} className={`right scenario-cell scenario-${c}`}>
             <span className={`scenario-return mono ${tone(scene.return_pct)}`}>{signed(scene.return_pct, 4)}%</span>
             <span className={`scenario-pnl mono ${tone(scene.pnl)}`} title="成本后累计盈亏，单位 USDT">{signed(scene.pnl, 4)}</span>
@@ -228,7 +234,7 @@ function ResearchView({ snapshot, configs, error, onSelect }: { snapshot: Snapsh
       <Metric label="跨2025/2026通过" value={configs.length ? number(cross, 0) : "读取中"} unit="配置" sub="两个时期均通过历史门槛 · 非独立最终测试集" />
     </div>
     <div className="research-context"><div><Flask size={20} /><span>这些历史区间已反复用于研究。参数敏感性以原批次报告为准；历史通过不代表稳定实盘盈利。</span></div>{latest && <EvidenceLink path={latest.result}>最新中文结论</EvidenceLink>}</div>
-    <section className="panel research-panel"><PanelHeading title="收益排名" sub={kind === 'combination' ? '同区间、初始本金2,000 USDT的组合比较；配置不按指标族合并。' : '同区间的单币组件比较；各组件原始本金见详情。'}><span className="ranking-note">1× / 2× / 3× 同时比较</span></PanelHeading>
+    <section className="panel research-panel"><PanelHeading title="收益排名" sub={kind === 'combination' ? '同区间、初始本金2,000 USDT的组合比较；配置不按指标族合并。' : '同区间的单币组件比较；各组件原始本金见详情。'} />
       <div className="research-filters">
         <div className="search-box"><span className="field-label">指标、参数或权重</span><Search id="monitor-research-search" size="md" labelText="搜索技术指标、参数或权重" closeButtonLabelText="清除搜索" placeholder="例如 EMA29、0.75" value={query} onChange={e => { setQuery(e.target.value); setPage(1); }} /></div>
         <FilterSelect label="回测区间" value={period} onChange={v => { setPeriod(v); setPage(1); }}>{research.periods.map(p => <option key={p.start_utc + p.end_utc} value={`${p.start_utc}|${p.end_utc}`}>{p.start_utc.slice(0, 10)} 至 {p.end_utc.slice(0, 10)} UTC</option>)}</FilterSelect>
@@ -239,13 +245,13 @@ function ResearchView({ snapshot, configs, error, onSelect }: { snapshot: Snapsh
       <div className="research-summary"><span>当前筛选 <b>{filtered.length}</b> 个配置</span><span>正收益 {positive} · 通过 {passed} · 未通过 {comparable.length - passed}</span></div>
       <div className="table-scroll" aria-label="研究收益榜"><Table size="xl" className="research-table scenario-table">
         <colgroup><col className="identity-col" /><col className="weight-col" />{COSTS.map(c => <col className="scenario-col" key={c} />)}<col className="context-col" /><col className="context-col" /><col className="detail-col" /></colgroup>
-        <TableHead><TableRow><TableHeader>排名 / 技术指标 / 参数</TableHeader><TableHeader>原始权重</TableHeader>
-          {COSTS.map(c => <TableHeader key={c} className="right scenario-header">{c}×{c === '1' ? ' 基准' : ' 成本'}{c === '3' ? sort === 'return' ? ' ↓' : ' ↑' : ''}<small>净收益 / 整体回撤</small></TableHeader>)}
-          <TableHeader className="right">1×盈利折</TableHeader><TableHeader>验证状态</TableHeader><TableHeader><span className="sr-only">配置详情</span></TableHeader>
+        <TableHead><TableRow><TableHeader><span className="identity-header"><span>排名</span><span>技术指标 / 参数</span></span></TableHeader><TableHeader>原始权重</TableHeader>
+          {COSTS.map(c => <TableHeader key={c} className="right scenario-header">{c}×{c === '1' ? ' 基准' : ' 成本'}{c === '3' ? sort === 'return' ? ' ↓' : ' ↑' : ''}<small>净收益 / 回撤</small></TableHeader>)}
+          <TableHeader className="right">1×盈利折</TableHeader><TableHeader>验证状态</TableHeader><TableHeader className="detail-header">详情</TableHeader>
         </TableRow></TableHead>
         <TableBody>{rows.map((r, i) => <TableRow key={r.fingerprint}>
           <TableCell className="identity-cell"><div className="strategy-cell"><span className="strategy-id mono">{(safePage - 1) * 25 + i + 1}</span><span><button className="strategy-link" onClick={() => onSelect(r)}>{r.indicator}</button><small className="config-name mono">{r.name}</small></span></div></TableCell>
-          <TableCell data-label="原始权重" className="weight-text weight-cell">{weights(r.weights)}</TableCell>
+          <TableCell data-label="原始权重" className="weight-text weight-cell"><WeightList items={r.weights} /></TableCell>
           {COSTS.map(c => { const scene = r.scenes[c]; return <TableCell key={c} data-label={`${c}×${c === '1' ? ' 基准' : ' 成本'}`} className={`right scenario-cell scenario-${c}`}>
             {scene ? <><span className={`scenario-return mono ${tone(scene.return_pct)}`}>{signed(scene.return_pct)}%</span><small className="scenario-note">回撤 <span className="mono">{number(scene.drawdown_pct)}%</span></small></> : <span className="muted">暂无</span>}
           </TableCell>; })}
