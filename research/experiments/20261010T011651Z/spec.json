@@ -1,0 +1,524 @@
+{
+  "periods": {
+    "2025": {
+      "source_round": "20261001T173606Z",
+      "report": "research/experiments/20261001T173606Z/report.json",
+      "sha256": "745c852f97b5ab37c63a16e55b513193c5a5b64c02c9f02e17b741d227316ed0",
+      "oos_start_utc": "2025-03-18T00:01:00Z",
+      "terminal_exit_utc": "2025-09-14T00:01:00Z",
+      "normalized_data": {
+        "BTC": {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6",
+          "minutes": 525600,
+          "first_open_ns": 1726444800000000000,
+          "last_available_ns": 1757980800000000000
+        },
+        "ETH": {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57",
+          "minutes": 525600,
+          "first_open_ns": 1726444800000000000,
+          "last_available_ns": 1757980800000000000
+        }
+      }
+    },
+    "2026": {
+      "source_round": "20261001T133655Z",
+      "report": "research/experiments/20261001T133655Z/report.json",
+      "sha256": "5349e614e7d42c2e2bed6ad42c72dcce7c768b7e73c3816ff943082f2a4c8116",
+      "oos_start_utc": "2026-03-18T00:01:00Z",
+      "terminal_exit_utc": "2026-09-14T00:01:00Z",
+      "normalized_data": {
+        "BTC": {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16",
+          "minutes": 525600,
+          "first_open_ns": 1757980800000000000,
+          "last_available_ns": 1789516800000000000
+        },
+        "ETH": {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584",
+          "minutes": 525600,
+          "first_open_ns": 1757980800000000000,
+          "last_available_ns": 1789516800000000000
+        }
+      }
+    }
+  },
+  "execution": {
+    "metadata_path": "research/experiments/20261001T053425Z/spot_metadata_snapshot.json",
+    "metadata_sha256": "857af9870c57ad05e50a5ee6fad92240b384b99cc22e9ae8cece0e6f94e2d033",
+    "filters": {
+      "BTCUSDT": {
+        "PRICE_FILTER": {
+          "filterType": "PRICE_FILTER",
+          "minPrice": "0.01000000",
+          "maxPrice": "1000000.00000000",
+          "tickSize": "0.01000000"
+        },
+        "LOT_SIZE": {
+          "filterType": "LOT_SIZE",
+          "minQty": "0.00001000",
+          "maxQty": "9000.00000000",
+          "stepSize": "0.00001000"
+        },
+        "ICEBERG_PARTS": {
+          "filterType": "ICEBERG_PARTS",
+          "limit": 100
+        },
+        "MARKET_LOT_SIZE": {
+          "filterType": "MARKET_LOT_SIZE",
+          "minQty": "0.00000000",
+          "maxQty": "128.92264677",
+          "stepSize": "0.00000000"
+        },
+        "TRAILING_DELTA": {
+          "filterType": "TRAILING_DELTA",
+          "minTrailingAboveDelta": 10,
+          "maxTrailingAboveDelta": 2000,
+          "minTrailingBelowDelta": 10,
+          "maxTrailingBelowDelta": 2000
+        },
+        "PERCENT_PRICE_BY_SIDE": {
+          "filterType": "PERCENT_PRICE_BY_SIDE",
+          "bidMultiplierUp": "1.2",
+          "bidMultiplierDown": "0.5",
+          "askMultiplierUp": "2",
+          "askMultiplierDown": "0.8",
+          "avgPriceMins": 5
+        },
+        "NOTIONAL": {
+          "filterType": "NOTIONAL",
+          "minNotional": "5.00000000",
+          "applyMinToMarket": true,
+          "maxNotional": "9000000.00000000",
+          "applyMaxToMarket": false,
+          "avgPriceMins": 5
+        },
+        "MAX_NUM_ORDERS": {
+          "filterType": "MAX_NUM_ORDERS",
+          "maxNumOrders": 200
+        },
+        "MAX_NUM_ORDER_LISTS": {
+          "filterType": "MAX_NUM_ORDER_LISTS",
+          "maxNumOrderLists": 20
+        },
+        "MAX_NUM_ALGO_ORDERS": {
+          "filterType": "MAX_NUM_ALGO_ORDERS",
+          "maxNumAlgoOrders": 5
+        },
+        "MAX_NUM_ORDER_AMENDS": {
+          "filterType": "MAX_NUM_ORDER_AMENDS",
+          "maxNumOrderAmends": 10
+        }
+      },
+      "ETHUSDT": {
+        "PRICE_FILTER": {
+          "filterType": "PRICE_FILTER",
+          "minPrice": "0.01000000",
+          "maxPrice": "1000000.00000000",
+          "tickSize": "0.01000000"
+        },
+        "LOT_SIZE": {
+          "filterType": "LOT_SIZE",
+          "minQty": "0.00010000",
+          "maxQty": "9000.00000000",
+          "stepSize": "0.00010000"
+        },
+        "ICEBERG_PARTS": {
+          "filterType": "ICEBERG_PARTS",
+          "limit": 100
+        },
+        "MARKET_LOT_SIZE": {
+          "filterType": "MARKET_LOT_SIZE",
+          "minQty": "0.00000000",
+          "maxQty": "2603.30411046",
+          "stepSize": "0.00000000"
+        },
+        "TRAILING_DELTA": {
+          "filterType": "TRAILING_DELTA",
+          "minTrailingAboveDelta": 10,
+          "maxTrailingAboveDelta": 2000,
+          "minTrailingBelowDelta": 10,
+          "maxTrailingBelowDelta": 2000
+        },
+        "PERCENT_PRICE_BY_SIDE": {
+          "filterType": "PERCENT_PRICE_BY_SIDE",
+          "bidMultiplierUp": "1.2",
+          "bidMultiplierDown": "0.5",
+          "askMultiplierUp": "2",
+          "askMultiplierDown": "0.8",
+          "avgPriceMins": 5
+        },
+        "NOTIONAL": {
+          "filterType": "NOTIONAL",
+          "minNotional": "5.00000000",
+          "applyMinToMarket": true,
+          "maxNotional": "9000000.00000000",
+          "applyMaxToMarket": false,
+          "avgPriceMins": 5
+        },
+        "MAX_NUM_ORDERS": {
+          "filterType": "MAX_NUM_ORDERS",
+          "maxNumOrders": 200
+        },
+        "MAX_NUM_ORDER_LISTS": {
+          "filterType": "MAX_NUM_ORDER_LISTS",
+          "maxNumOrderLists": 20
+        },
+        "MAX_NUM_ALGO_ORDERS": {
+          "filterType": "MAX_NUM_ALGO_ORDERS",
+          "maxNumAlgoOrders": 5
+        },
+        "MAX_NUM_ORDER_AMENDS": {
+          "filterType": "MAX_NUM_ORDER_AMENDS",
+          "maxNumOrderAmends": 10
+        }
+      }
+    },
+    "simulation": "Hypothetical immediately filled marketable LIMIT IOC at estimated adverse execution price, buy rounded up/sell down to PRICE_FILTER tick; quantity floored to LOT_SIZE. Check static price/quantity bounds and NOTIONAL. Fee paid in USDT; no fee discounts.",
+    "percent_price": "Check frozen PERCENT_PRICE_BY_SIDE against preceding5 fully closed minute quote-volume/base-volume VWAP proxy. Historical reference-price regime is unavailable; proxy is explicitly an assumption, not historical exchange order validation.",
+    "limitations": "Snapshot taken October1, applied uniformly to reused historical data as execution stress assumption, not historical filters. No L2, queue, latency, partial fills or guarantee IOC fills; MARKET_LOT_SIZE does not apply to simulated limit IOC."
+  },
+  "costs": {
+    "fee_per_side": 0.001,
+    "half_spread": 0.0001,
+    "slippage": 0.0002,
+    "impact_coefficient": 0.5,
+    "impact_inputs": "Previous20 completed UTC day quote ADV and sample stdev20 log daily returns. Buy cash before costs is conservative notional upper bound; sell uses units*reference. Decimal sqrt of budget/ADV, sigma/ADV derived from existing lagged daily function.",
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "max_lagged_ADV_participation": 0.001,
+    "all_costs_simultaneously_scaled": true,
+    "rounding_cost_separately_recorded": true,
+    "terminal_costed": true,
+    "funding_borrow": "N/A unlevered long-only spot"
+  },
+  "gates": {
+    "positive_all_costs": true,
+    "positive_1x_folds_min": 4,
+    "minute_DD3_max_pct": 25,
+    "neighbourhood_positive3_min_fraction": 0.6,
+    "round_trips1_min": 2,
+    "gross_reference_PnL_to_cost1_min": 2.5,
+    "no_balance_violations": true,
+    "terminal_flat": true
+  },
+  "walk_forward": {
+    "train_days": 180,
+    "embargo_days": 3,
+    "test_days": 30,
+    "step_days": 30,
+    "purge_days": 0,
+    "folds": 6,
+    "fit": "Fixed causal BTC prior-close channel plus preceding disjointquote-turnover mean and ETHclosechannel plus recursiveEMAconfirmation. No labels/model/OOS/perfold fitting or rerunofoldsignal/trade paths. Original180day rolling history,3daygap,purge0,sixcontinuous30dayfolds."
+  },
+  "forward_plan": {
+    "path": "research/experiments/20261001T113625Z/forward_plan.json",
+    "sha256": "2798390f02bd43059097cf16f9b8b1f30db4b96776431c18684b540130f86d81",
+    "status_at_freeze": "OriginalSMA65/1percent75/25 delayedshadow23:00 to01:00 crossesOct10UTC00:01 daily decision;paper10 observation28 preserved."
+  },
+  "round": "20261010T011651Z",
+  "trigger_utc": "2026-10-10T01:16:51.038Z",
+  "actual_first_tool_utc": "2026-10-10T01:17:01Z",
+  "frozen_at_utc": "2026-10-10T01:23:51.222468+00:00",
+  "hypothesis": "BTCclosechannel15/30 with preceding30day USDTturnover entry ratio0.9/1/1.1 crossed with ETHclosechannel15/30 jointly confirmed by EMA50/65/80 symmetric1.5percent. Raw75/25 initial1500/500USDT. Full3x3 per2025/2026,18genuinely newannualparents/54costscenes. All12funded components and12matched oldparentcontrols read-only;no oldsignals/trades reevaluated. Predeterminedfocus BTCratio1/ETHEMA65. Hypothesis: different activity/trend confirmations across assets may lower drawdown without surrendering too much growth;report alltradeoffs vs sameBTC pureETHchannel and BTC1 pureETHEMA controls. NoOOS retuning,capital scaling or fixedpaper replacement.",
+  "grid": {
+    "directions": [
+      "BTC_VOLUME_ETH_FILTERED_EMA"
+    ],
+    "BTC_minimum_volume_ratio": [
+      0.9,
+      1,
+      1.1
+    ],
+    "BTC_volume_lookback_days": 30,
+    "ETH_EMA_span_days": [
+      50,
+      65,
+      80
+    ],
+    "ETH_EMA_symmetric_band": 0.015,
+    "channel_entry_days": 15,
+    "channel_exit_days": 30,
+    "raw_weights": [
+      0.75,
+      0.25
+    ],
+    "capital_usdt": 2000,
+    "component_capitals_usdt": [
+      1500,
+      500
+    ],
+    "predeclared_center": {
+      "BTC_minimum_volume_ratio": 1,
+      "ETH_EMA_span_days": 65
+    },
+    "predeclared_focus": {
+      "BTC_minimum_volume_ratio": 1,
+      "ETH_EMA_span_days": 65
+    }
+  },
+  "rules_by_asset": {
+    "BTC": {
+      "entry": "At daily decision i,use only completed prior close C[i-1]. It must strictly exceed max(C[i-16:i-1]) AND completed prior quote volume Q[i-1]>=minimum_volume_ratio*mean(Q[i-volume_lookback_days-1:i-1]),with positive reference mean,to set desired-long. Both reference ranges end i-2 and exclude the tested close/volume i-1. Quote volume is USDT turnover,not base units.",
+      "exit": "Prior close C[i-1] strictly below min(C[i-31:i-1]) sets desired-cash regardless of quote-volume eligibility. Exit takes precedence;otherwise eligible joint entry sets long;all other cases and price equality preserve desired. Low volume alone never forces liquidation. Volume equality at threshold qualifies. No delayed arming,extra confirmation,EMA,SMA,ATR,stop or shorting.",
+      "sizing": "At next UTC00:01 real minute open,buy maximum affordable LOT_SIZE quantity and keep residue;exit all valid units on desired cash/terminal. Existing Decimal28 PRICE/LOT/NOTIONAL/5minuteVWAP/participation execution with same1500USDT funds. No leverage,borrow,transfers,rebalancing or cash yield.",
+      "state": "Start OOS183 with cash and desired-cash. Historical closes/quote volumes only warm windows;no warmup fills/state replay. Carry cash,units,desired across six folds. Zero reference quote mean disables entry;no division by zero."
+    },
+    "ETH": {
+      "EMA": "alpha=2/(span+1);E[0]=float(first completed daily close),E[j]=(1-alpha)*E[j-1]+alpha*float(C[j]);Python float,adjust=False from datasetday0;never reset across folds.",
+      "entry": "At decision i, enter only when prior completed close C[i-1] strictly exceeds max(C[i-entry-1:i-1]) AND float(C[i-1])>EMA[i-1]*(1+band).The channel reference ends at i-2;no delayed arming memory.",
+      "exit": "Set desired cash when C[i-1]<min(C[i-exit-1:i-1]) OR float(C[i-1])<EMA[i-1]*(1-band).Exit takes precedence;otherwise joint entry sets long;all other cases/equality preserve desired.",
+      "sizing": "All affordable independent sleeve cash subject to Decimal28 tick/LOT/filter/participation and next00:01-minute IOC fill assumptions;no leverage,short,stop,scale-in or rebalance.",
+      "state": "OOS183 starts with cash and desired-cash;no pending entry or warmup position;daily decisions only using closes through i-1;no fit/labels/OOS tuning."
+    }
+  },
+  "allocation": "Raw75/25 initial1500/500USDT independent sleeves of2000. Sum same-funded already-costed absolute NAV once;no normalization,capital scaling,second weighting,transfers,maintained ratio or rebalance.",
+  "sensitivity": "Two independent confirmation axes:BTC activity ratio0.9/1/1.1 with fixed30day volume mean;ETH EMA50/65/80 at symmetric1.5percent with15/30closechannel. Full9cells peryear;18newparents/54costscenes. All12same-funded source components and12matched oldparent controls read-only. Sourcefailedcomponents remain actual results,not overwritten or suppressed.",
+  "new_configs": 18,
+  "new_cost_scenes": 54,
+  "reused_grid_configs": 0,
+  "reused_cost_scenes": 0,
+  "full_grid_configs": 18,
+  "reused_component_configs": 12,
+  "prior_canonical_trials": 3025,
+  "development_history_reused": true,
+  "cross_period_confirmation": "SameBTC activity ratio/ETH EMAspan and raw75/25 must pass each reused180day/sixfold history;no pooled years or untouched final holdout.",
+  "qualification_scope": "Original eight gates retained. All18newannualparents independently evaluated;sourcegates/status and matchedoldparents preserved.",
+  "interpretation": "Positive repeated-history returns are not stable live profit;fixedP01-P10 and originalSMAplan remain separate.",
+  "forward_resume": {
+    "source_state": "research/experiments/20261009T231620Z/forward_state.json",
+    "state_sha256": "beadb1d283c3c0893286fe76cec29f5267f46ad6ebc3a4f92e226f3b9098554d",
+    "source_report": "research/experiments/20261009T231620Z/forward_report.json",
+    "report_sha256": "976a6b642995a0a842484176e78c9d886fa519813e0e25c5dd25d51795217e5d",
+    "resume_utc": "2026-10-09T23:00:00Z",
+    "cutoff_utc": "2026-10-10T01:00:00Z",
+    "daily_decision_utc": "2026-10-10T00:01:00Z",
+    "daily_overlap_source": "research/experiments/20261009T010850Z/forward_inputs.json.gz",
+    "new_minutes": 120,
+    "cumulative_minutes": 11579,
+    "prior_NAV_points": 11468,
+    "new_reference_points": 1,
+    "total_NAV_points": 11589,
+    "action": "Preserve full priorstate/prefix;processone originalfrozen dailydecision using65completedUTCdailybars,append120closedminute marks+1reference. Laterretrieval is delayedshadow,never paper10contemporaneousquoteperformance. No reset,forcedsell or retrofitrounding.",
+    "new_configs": 3,
+    "new_cost_scenes": 9
+  },
+  "read_only_comparator_refs": [
+    {
+      "name": "transfer2025_rounded_combo_n65_btc0.75",
+      "year": "2025",
+      "kind": "SMA_or_hold",
+      "report": "research/experiments/20261001T173606Z/report.json",
+      "report_sha256": "745c852f97b5ab37c63a16e55b513193c5a5b64c02c9f02e17b741d227316ed0"
+    },
+    {
+      "name": "transfer2025_rounded_hold_equal2000",
+      "year": "2025",
+      "kind": "SMA_or_hold",
+      "report": "research/experiments/20261001T173606Z/report.json",
+      "report_sha256": "745c852f97b5ab37c63a16e55b513193c5a5b64c02c9f02e17b741d227316ed0"
+    },
+    {
+      "name": "rounded_combo_n65_btc0.75",
+      "year": "2026",
+      "kind": "SMA_or_hold",
+      "report": "research/experiments/20261001T133655Z/report.json",
+      "report_sha256": "5349e614e7d42c2e2bed6ad42c72dcce7c768b7e73c3816ff943082f2a4c8116"
+    },
+    {
+      "name": "rounded_hold_equal2000",
+      "year": "2026",
+      "kind": "SMA_or_hold",
+      "report": "research/experiments/20261001T133655Z/report.json",
+      "report_sha256": "5349e614e7d42c2e2bed6ad42c72dcce7c768b7e73c3816ff943082f2a4c8116"
+    },
+    {
+      "BTC_minimum_volume_ratio": 0.9,
+      "archive": "research/experiments/20261009T111450Z/results/volratio_channel_2025_n30_r0.9_btc0.75.json.gz",
+      "archive_sha256": "cc5a19caf2c665cc41a875491f86250f16059b97f511b9f2936d4f5384fd24e1",
+      "fingerprint": "6bf27efd7d3760a85dc73e92e27de4949a06bfa3b8bbf7d0f870a4872c4a37ac",
+      "kind": "MATCHED_BTC_VOLUME_PURE_ETH_CHANNEL",
+      "name": "volratio_channel_2025_n30_r0.9_btc0.75",
+      "report": "research/experiments/20261009T111450Z/report.json",
+      "report_sha256": "55f23f9e978ac5f31214a56bc8f5626d523764ec8616e3573df90a3cd69e3abe",
+      "source_round": "20261009T111450Z",
+      "spec": "research/experiments/20261009T111450Z/specs/volratio_channel_2025_n30_r0.9_btc0.75.json",
+      "spec_sha256": "0895e19e9fd847b237ac5826ca9be47066c1493524933480b0f23aaa5ba503fa",
+      "year": "2025"
+    },
+    {
+      "BTC_minimum_volume_ratio": 1,
+      "archive": "research/experiments/20261009T091020Z/results/volratio_channel_2025_n30_r1_btc0.75.json.gz",
+      "archive_sha256": "5f328cd98787d9b14a0f2bb2974b15a6b078ae59cf2a3594fc7f7a7313465830",
+      "fingerprint": "9cab3516c8cfb063faf56c7fe772c3de0389b81f965cdf57bdf3077a3b9a2c36",
+      "kind": "MATCHED_BTC_VOLUME_PURE_ETH_CHANNEL",
+      "name": "volratio_channel_2025_n30_r1_btc0.75",
+      "report": "research/experiments/20261009T091020Z/report.json",
+      "report_sha256": "8f3b6b5d0e1d6cf5074b8436d0fb40d2fe3614a64cade5b24ce05c9d27b0fa21",
+      "source_round": "20261009T091020Z",
+      "spec": "research/experiments/20261009T091020Z/specs/volratio_channel_2025_n30_r1_btc0.75.json",
+      "spec_sha256": "5259696e4ca3a60e6141869a1681ae4602ca69f937e5e49621c86540e3a18da8",
+      "year": "2025"
+    },
+    {
+      "BTC_minimum_volume_ratio": 1.1,
+      "archive": "research/experiments/20261009T111450Z/results/volratio_channel_2025_n30_r1.1_btc0.75.json.gz",
+      "archive_sha256": "aedc49710775dabe1ab2a9dc0f7c26262713401eb1abfb82d334096ad290e8d9",
+      "fingerprint": "7ca109be0ff3c6cb2490f1037c7466382d066035a66cc6297cd73d6770f49181",
+      "kind": "MATCHED_BTC_VOLUME_PURE_ETH_CHANNEL",
+      "name": "volratio_channel_2025_n30_r1.1_btc0.75",
+      "report": "research/experiments/20261009T111450Z/report.json",
+      "report_sha256": "55f23f9e978ac5f31214a56bc8f5626d523764ec8616e3573df90a3cd69e3abe",
+      "source_round": "20261009T111450Z",
+      "spec": "research/experiments/20261009T111450Z/specs/volratio_channel_2025_n30_r1.1_btc0.75.json",
+      "spec_sha256": "ccb1adf14d33ee9645c62e0a200f93eb2c789a3c9237634b61f98b95c9a95648",
+      "year": "2025"
+    },
+    {
+      "ETH_EMA_span_days": 50,
+      "archive": "research/experiments/20261009T151420Z/results/volratio_ema_2025_btc_n30_r1_eth_s50_b0.015_btc0.75.json.gz",
+      "archive_sha256": "3a14f6e82f8a73cf9b723d3b0bec0d93fd81829778547fe191b3fd587911e92f",
+      "fingerprint": "c21eb51a818f1f49401231121b37ca5f2479775ab6aadd2bf2922beb3a5f69df",
+      "kind": "BTC_R1_PURE_ETH_EMA_SAME_SPAN",
+      "name": "volratio_ema_2025_btc_n30_r1_eth_s50_b0.015_btc0.75",
+      "report": "research/experiments/20261009T151420Z/report.json",
+      "report_sha256": "32a1806a3594ae2a4852f6cc58aa8d0bdaaa85363e83a9ed4a140d93a9187a4e",
+      "source_round": "20261009T151420Z",
+      "spec": "research/experiments/20261009T151420Z/specs/volratio_ema_2025_btc_n30_r1_eth_s50_b0.015_btc0.75.json",
+      "spec_sha256": "c782ddecdb3b91d45a7bb8a5299d74001319121fb5bd9ef7a48a7b55ee610be4",
+      "year": "2025"
+    },
+    {
+      "ETH_EMA_span_days": 65,
+      "archive": "research/experiments/20261009T151420Z/results/volratio_ema_2025_btc_n30_r1_eth_s65_b0.015_btc0.75.json.gz",
+      "archive_sha256": "b0bb18b89c1c56b60243f7adf40226e225d5554984162f19364cea702734033f",
+      "fingerprint": "e60686e8d95924dcd614ca91fa881f7227bd4e5fa6bc5634a8a4bbac2a34d5a7",
+      "kind": "BTC_R1_PURE_ETH_EMA_SAME_SPAN",
+      "name": "volratio_ema_2025_btc_n30_r1_eth_s65_b0.015_btc0.75",
+      "report": "research/experiments/20261009T151420Z/report.json",
+      "report_sha256": "32a1806a3594ae2a4852f6cc58aa8d0bdaaa85363e83a9ed4a140d93a9187a4e",
+      "source_round": "20261009T151420Z",
+      "spec": "research/experiments/20261009T151420Z/specs/volratio_ema_2025_btc_n30_r1_eth_s65_b0.015_btc0.75.json",
+      "spec_sha256": "153304378fcb3287ec761a28ba81542e4b317289261e259cd13d1ecbc93b0620",
+      "year": "2025"
+    },
+    {
+      "ETH_EMA_span_days": 80,
+      "archive": "research/experiments/20261009T151420Z/results/volratio_ema_2025_btc_n30_r1_eth_s80_b0.015_btc0.75.json.gz",
+      "archive_sha256": "ec43589a2777661ae854bd5b849f272bf6bd3cc97a244cf859901a23eb414e56",
+      "fingerprint": "44fda14e90f5d4d5c9d915e7ce225b2fe6916043a5e9029a04d8713f0d022bd2",
+      "kind": "BTC_R1_PURE_ETH_EMA_SAME_SPAN",
+      "name": "volratio_ema_2025_btc_n30_r1_eth_s80_b0.015_btc0.75",
+      "report": "research/experiments/20261009T151420Z/report.json",
+      "report_sha256": "32a1806a3594ae2a4852f6cc58aa8d0bdaaa85363e83a9ed4a140d93a9187a4e",
+      "source_round": "20261009T151420Z",
+      "spec": "research/experiments/20261009T151420Z/specs/volratio_ema_2025_btc_n30_r1_eth_s80_b0.015_btc0.75.json",
+      "spec_sha256": "b31737ff21a95c239340897c831e29032d5407234c33ae96045f5aa56186d080",
+      "year": "2025"
+    },
+    {
+      "BTC_minimum_volume_ratio": 0.9,
+      "archive": "research/experiments/20261009T111450Z/results/volratio_channel_2026_n30_r0.9_btc0.75.json.gz",
+      "archive_sha256": "6bf23e99122b807c54a0abe937243cc51e202f379609d7e91fd9f9be3e7e78a8",
+      "fingerprint": "8f19289c3603a9e8f46c521a5930b5a85995baae45f9f586dd99f78ddb9e3519",
+      "kind": "MATCHED_BTC_VOLUME_PURE_ETH_CHANNEL",
+      "name": "volratio_channel_2026_n30_r0.9_btc0.75",
+      "report": "research/experiments/20261009T111450Z/report.json",
+      "report_sha256": "55f23f9e978ac5f31214a56bc8f5626d523764ec8616e3573df90a3cd69e3abe",
+      "source_round": "20261009T111450Z",
+      "spec": "research/experiments/20261009T111450Z/specs/volratio_channel_2026_n30_r0.9_btc0.75.json",
+      "spec_sha256": "ec37b30a6aeeb3609da653de66fc1d8ba6e119a0abf001df0b06e7b0b8d29092",
+      "year": "2026"
+    },
+    {
+      "BTC_minimum_volume_ratio": 1,
+      "archive": "research/experiments/20261009T091020Z/results/volratio_channel_2026_n30_r1_btc0.75.json.gz",
+      "archive_sha256": "176d9f0fc7531f49ec56cc30ffe0a851faedffdf9f06cefcb8befcb5b0771d21",
+      "fingerprint": "94b40e756cbeb8fdc5ffeb4faec5422d7bab42748e706eaa5199012c5f5367da",
+      "kind": "MATCHED_BTC_VOLUME_PURE_ETH_CHANNEL",
+      "name": "volratio_channel_2026_n30_r1_btc0.75",
+      "report": "research/experiments/20261009T091020Z/report.json",
+      "report_sha256": "8f3b6b5d0e1d6cf5074b8436d0fb40d2fe3614a64cade5b24ce05c9d27b0fa21",
+      "source_round": "20261009T091020Z",
+      "spec": "research/experiments/20261009T091020Z/specs/volratio_channel_2026_n30_r1_btc0.75.json",
+      "spec_sha256": "2309e7e0c45aae680ca80fc8b030b03c5d9ae98897cba4265eb7a9beb0a5ec8c",
+      "year": "2026"
+    },
+    {
+      "BTC_minimum_volume_ratio": 1.1,
+      "archive": "research/experiments/20261009T111450Z/results/volratio_channel_2026_n30_r1.1_btc0.75.json.gz",
+      "archive_sha256": "fae8369fc87a3a98b308fd22690a167a4f212a6cffbd8e9f8dd50da2d3847de7",
+      "fingerprint": "41e73de9ddff403192bac7ef4657cf85696d537141234d53002d6f3dae783cc8",
+      "kind": "MATCHED_BTC_VOLUME_PURE_ETH_CHANNEL",
+      "name": "volratio_channel_2026_n30_r1.1_btc0.75",
+      "report": "research/experiments/20261009T111450Z/report.json",
+      "report_sha256": "55f23f9e978ac5f31214a56bc8f5626d523764ec8616e3573df90a3cd69e3abe",
+      "source_round": "20261009T111450Z",
+      "spec": "research/experiments/20261009T111450Z/specs/volratio_channel_2026_n30_r1.1_btc0.75.json",
+      "spec_sha256": "e6f977fed2f4fa5217adcc9d866fff271cf10b8a7e8360cba26551f325848cbd",
+      "year": "2026"
+    },
+    {
+      "ETH_EMA_span_days": 50,
+      "archive": "research/experiments/20261009T151420Z/results/volratio_ema_2026_btc_n30_r1_eth_s50_b0.015_btc0.75.json.gz",
+      "archive_sha256": "229d995dcb9757be154b005749a94ff00012e62a258d13aa17370dc826b12ecf",
+      "fingerprint": "52cf0a169cef263d4152ee5a0586458286f4baea7c9debf6e1c64164551f1175",
+      "kind": "BTC_R1_PURE_ETH_EMA_SAME_SPAN",
+      "name": "volratio_ema_2026_btc_n30_r1_eth_s50_b0.015_btc0.75",
+      "report": "research/experiments/20261009T151420Z/report.json",
+      "report_sha256": "32a1806a3594ae2a4852f6cc58aa8d0bdaaa85363e83a9ed4a140d93a9187a4e",
+      "source_round": "20261009T151420Z",
+      "spec": "research/experiments/20261009T151420Z/specs/volratio_ema_2026_btc_n30_r1_eth_s50_b0.015_btc0.75.json",
+      "spec_sha256": "4760affbe09f538077460a43ce67222b94c3884d5a51f86525bb01e6fdb5dec2",
+      "year": "2026"
+    },
+    {
+      "ETH_EMA_span_days": 65,
+      "archive": "research/experiments/20261009T151420Z/results/volratio_ema_2026_btc_n30_r1_eth_s65_b0.015_btc0.75.json.gz",
+      "archive_sha256": "110aed27423c5f2059cb05211515afaebe6d3cae9a7f00aebbcc61efb6007f18",
+      "fingerprint": "bdbfecf731e5e4b5ca64cb681bd2f1f3501526f753f598a6c2bec22fd7d17eaa",
+      "kind": "BTC_R1_PURE_ETH_EMA_SAME_SPAN",
+      "name": "volratio_ema_2026_btc_n30_r1_eth_s65_b0.015_btc0.75",
+      "report": "research/experiments/20261009T151420Z/report.json",
+      "report_sha256": "32a1806a3594ae2a4852f6cc58aa8d0bdaaa85363e83a9ed4a140d93a9187a4e",
+      "source_round": "20261009T151420Z",
+      "spec": "research/experiments/20261009T151420Z/specs/volratio_ema_2026_btc_n30_r1_eth_s65_b0.015_btc0.75.json",
+      "spec_sha256": "b9ab769dad2423f2ae609d34caeb059e31e1d813e69ab6f83fb89b3368a33c09",
+      "year": "2026"
+    },
+    {
+      "ETH_EMA_span_days": 80,
+      "archive": "research/experiments/20261009T151420Z/results/volratio_ema_2026_btc_n30_r1_eth_s80_b0.015_btc0.75.json.gz",
+      "archive_sha256": "bf5657070c76b8c5032e15c5d21c337a0f38aad94edbf9f5954aaada26e7e1cf",
+      "fingerprint": "063d5668bdb8737ea43de2d5cbc41bc00e21041a27d37ecb882c1a1decc643ef",
+      "kind": "BTC_R1_PURE_ETH_EMA_SAME_SPAN",
+      "name": "volratio_ema_2026_btc_n30_r1_eth_s80_b0.015_btc0.75",
+      "report": "research/experiments/20261009T151420Z/report.json",
+      "report_sha256": "32a1806a3594ae2a4852f6cc58aa8d0bdaaa85363e83a9ed4a140d93a9187a4e",
+      "source_round": "20261009T151420Z",
+      "spec": "research/experiments/20261009T151420Z/specs/volratio_ema_2026_btc_n30_r1_eth_s80_b0.015_btc0.75.json",
+      "spec_sha256": "9dc090abb53917b16e59acc40a79f51ee59173de7d5f8958fb1d3b4452d5f96a",
+      "year": "2026"
+    }
+  ],
+  "comparator_scope": "Primary:each newcell versus sameBTCvolumeratio andpureETH15/30channel atsame1500/500funding. Secondary:atBTCratio1 compareETHfilteredEMA to oldpureEMA atsame50/65/80span. Never tuneagainst these reused histories or countoldparents as newresults.",
+  "reused_code_sha256": {
+    "research/experiments/20261001T133655Z/evaluate.py": "ee948675d5e6695d83fdcdac96b1a8ab658829ee17b44cf7e72c1707d17087d4",
+    "research/experiments/20261001T133655Z/kernel.py": "66b8788c5d45ca2e40b8b3412d7150bc10fc7d5def521a50911d0071c68e0df0",
+    "research/experiments/20261001T213902Z/evaluate.py": "387342a60c93e7a42610276f6c8d3a53daec5d0e5c098a1e459b28725ddc4116",
+    "research/experiments/20261001T213902Z/audit.py": "69455c25ca2e870fbc084091373455d94c3148b1d10dec60f0ca80b5faa515c6",
+    "research/experiments/20261001T013355Z/evaluate.py": "9c11e327cc8965b0dbc99e533b92522ba7ab34b0e450675f32612c2ba2a11b09",
+    "research/experiments/20261001T113625Z/signals.py": "799738eda1d8c4ec8219ab7da85091ce8260e9a0c980e0b1201da427a1dc923a",
+    "research/experiments/20261009T091020Z/signals.py": "97456c1e19051aa123ffc74daa7b8a760c514b6d540224feb7946d42e6c3dda0",
+    "research/experiments/20261002T235103Z/signals.py": "5dec12bec63561d32d684870e85647ae4963849930a9d3358aea6e257dab7a8d",
+    "research/automation/registry.py": "edde322d3ca3cce26ca292cccee2f5c23c7529601b65ccf518a6f1db3f284523"
+  },
+  "preflight_sha256": "575bcf6abdeb466ee0363d36cf8c417c8ceaa83d61b20e56a9257e11a6ed89b3"
+}

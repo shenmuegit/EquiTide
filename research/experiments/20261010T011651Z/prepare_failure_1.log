@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/desktop/.local/share/equitide-research/worktree/research/experiments/20261010T011651Z/prepare.py", line 41, in <module>
+    refs=[ref_for(components[year,'BTC',ratio][0],year,'BTC'),ref_for(components[year,'ETH',span][0],year,'ETH')];save(sp,{'year':year,'role':'combination','direction':'BTC_VOLUME_ETH_FILTERED_EMA','BTC_minimum_volume_ratio':ratio,'ETH_EMA_span_days':span,'raw_weights':[.75,.25],'component_refs':refs,'is_new':True},batch)
+                                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/.local/share/equitide-research/worktree/research/experiments/20261010T011651Z/prepare.py", line 34, in save
+    fp=registry.fingerprint(sp);assert fp not in canonical;path=T/'specs'/f'{sp["name"]}.json';path.parent.mkdir(exist_ok=True);assert not path.exists();path.write_text(json.dumps(sp,indent=2)+'\n');p=subprocess.run([sys.executable,'research/automation/registry.py','reserve',str(path.relative_to(R))],cwd=R,capture_output=True,text=True);print(sp['name'],p.returncode,p.stdout.strip(),flush=True)
+       ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/.local/share/equitide-research/worktree/research/automation/registry.py", line 26, in fingerprint
+    raise ValueError("family must be a stable lowercase ID; logic must be a nonempty object")
+ValueError: family must be a stable lowercase ID; logic must be a nonempty object
