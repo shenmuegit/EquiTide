@@ -1,0 +1,54 @@
+[
+  {
+    "kind": "preexecution_fixtures",
+    "command": [
+      ".venv/bin/python",
+      "research/paper10/check.py"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"synthetic_fixture_checks\": \"PASS\", \"spread_and_fee_not_double_counted\": true, \"lot_and_balance_guard\": true, \"all_four_signal_families_causal\": true, \"same_observation_idempotent\": true, \"same_closed_day_does_not_retrade\": true, \"not_performance_evidence\": true}\n",
+    "stderr": ""
+  },
+  {
+    "kind": "actual_observation_replay",
+    "command": [
+      ".venv/bin/python",
+      "research/paper10/run.py",
+      "--reproduce",
+      "20261010T070635387549Z"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"actual_portfolios\":10,\"cost_scenes\":30,\"filled_virtual_orders\":0,\"independent_money_identities_checked\":true,\"passed\":true,\"real_orders\":0,\"receipt_times_and_raw_quotes_verified\":true,\"report_sha256\":\"c145b0d041d443f069049e30bc61e99f5c397e87099f7bde0f4ed198ce90de9b\",\"reproduced_exact_state_and_report\":true}\n",
+    "stderr": ""
+  },
+  {
+    "kind": "registry_checks",
+    "command": [
+      ".venv/bin/python",
+      "checks/strategy_registry.py"
+    ],
+    "exit_code": 0,
+    "stdout": "PASS: new parameters/weights and missing-result retries are allowed; exact/reordered completed trials stay blocked\n",
+    "stderr": ""
+  },
+  {
+    "kind": "monitor_snapshot",
+    "command": [
+      "python3",
+      "research/monitor/snapshot.py"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"output\": \"/home/desktop/.local/share/equitide-research/worktree/research/monitor/latest.json\", \"bytes\": 112425, \"paper_status\": \"ready\", \"research_configs\": 2463, \"compressed_research_bytes\": 734631}\n",
+    "stderr": ""
+  },
+  {
+    "kind": "monitor_snapshot_checks",
+    "command": [
+      "python3",
+      "checks/monitor_snapshot.py"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"ok\": true, \"paper_accounts\": 10, \"observations\": 31, \"research_configs\": 2463, \"protected_inputs_unchanged\": true}\n",
+    "stderr": ""
+  }
+]
