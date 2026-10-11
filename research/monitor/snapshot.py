@@ -56,7 +56,10 @@ def indicator(spec, records, depth=0):
         if "volume_lookback_days" in p and "minimum_volume_ratio" in p:
             text += f" + 成交额/均额{p['volume_lookback_days']}≥{float(p['minimum_volume_ratio']):g}×"
         if "EMA_span_days" in p:
-            text += f" + EMA{p['EMA_span_days']} ±{percent(p['EMA_symmetric_band'])}"
+            if "EMA_entry_band_fraction" in p and "EMA_exit_band_fraction" in p:
+                text += f" + EMA{p['EMA_span_days']} +{percent(p['EMA_entry_band_fraction'])}/−{percent(p['EMA_exit_band_fraction'])}"
+            else:
+                text += f" + EMA{p['EMA_span_days']} ±{percent(p['EMA_symmetric_band'])}"
     elif "sma" in family or "ema" in family:
         kind = "OBV SMA" if "obv" in family else "EMA" if "ema" in family else "SMA"
         text = f"{kind}{p.get('lookback_days', p.get('span_days', p.get('lookback', '?')))}"
