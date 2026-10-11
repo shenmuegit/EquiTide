@@ -1,0 +1,34 @@
+[
+  {
+    "kind": "preexecution_fixtures",
+    "command": [
+      ".venv/bin/python",
+      "research/paper10/check.py"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"synthetic_fixture_checks\": \"PASS\", \"spread_and_fee_not_double_counted\": true, \"lot_and_balance_guard\": true, \"all_four_signal_families_causal\": true, \"same_observation_idempotent\": true, \"same_closed_day_does_not_retrade\": true, \"not_performance_evidence\": true}\n",
+    "stderr": ""
+  },
+  {
+    "kind": "actual_observation_replay",
+    "command": [
+      ".venv/bin/python",
+      "research/paper10/run.py",
+      "--reproduce",
+      "20261011T001920749344Z"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"actual_portfolios\":10,\"cost_scenes\":30,\"filled_virtual_orders\":0,\"independent_money_identities_checked\":true,\"passed\":true,\"real_orders\":0,\"receipt_times_and_raw_quotes_verified\":true,\"report_sha256\":\"6096ce80c12f1bbb50fa944a5915e7bb7b077b0d1a9d967a9223ffb2378d396f\",\"reproduced_exact_state_and_report\":true}\n",
+    "stderr": ""
+  },
+  {
+    "kind": "closed_daily_signal_audit",
+    "command": [
+      ".venv/bin/python",
+      "/home/desktop/.local/share/equitide-research/worktree/research/paper10/observations/20261011T001920749344Z/daily_signal_audit.py"
+    ],
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/.local/share/equitide-research/worktree/research/paper10/observations/20261011T001920749344Z/daily_signal_audit.py\", line 28, in <module>\n    assert ctx['decision_index']==i and D(ctx['prior_close'])==last\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  }
+]

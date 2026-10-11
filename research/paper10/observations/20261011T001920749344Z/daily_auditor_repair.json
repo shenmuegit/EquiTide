@@ -1,0 +1,27 @@
+{
+  "detected_and_repaired_at_utc": "2026-10-11T00:28:49.217540+00:00",
+  "initial_exit_code": 1,
+  "phase": "Supplemental independent daily signal audit",
+  "initial_assertion": "assert ctx['decision_index']==i and D(ctx['prior_close'])==last",
+  "initial_auditor_sha256": "813954514a526b8aa015df9d55bed32e65655264f1d64a4a603db7637ab2ef41",
+  "corrected_auditor_sha256": "f929bf3a7281d428b7dea135c604eb47d37b5e3c4a63ce8c7d628cdf1d97439e",
+  "root_cause": "Frozen pure-EMA source intentionally emits prior_close as Python float;auditor incorrectly converted that binary float to exact Decimal and compared with original decimal-string close. Channel,SMA and filtered-EMA sources emit strings.",
+  "observed_example": {
+    "portfolio": "P05",
+    "asset": "ETH",
+    "prior_close_float": 2506.52,
+    "source_daily_close_string": "2506.52000000",
+    "incorrect_Decimal_float_minus_string": "-1.818989403545856475830078125E-14"
+  },
+  "repair": "For pure EMA,require exact ctx float==float(actual closed close);other three families still require exact Decimal strings.No indicator definition,threshold,execution or account rule changed.",
+  "original_failure_evidence": [
+    "supplemental_checks_initial_failure.json",
+    "checks_stdout_initial_failure.log",
+    "execution_fault.json"
+  ],
+  "actual_executor_original_audit_and_exact_replay_passed_before_supplemental_failure": true,
+  "no_HTTP_recapture_or_new_financial_execution": true,
+  "report_sha256_unchanged": "6096ce80c12f1bbb50fa944a5915e7bb7b077b0d1a9d967a9223ffb2378d396f",
+  "state_sha256_unchanged": "d912c60fbd538e61b814c70c5e04197091b15732678ab76152c627f9e3ae7cc3",
+  "final_repair_check_evidence": "supplemental_checks.json closed_daily_signal_audit must exit0;verified by verify_round.py"
+}
