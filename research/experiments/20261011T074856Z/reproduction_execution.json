@@ -1,0 +1,67 @@
+[
+  {
+    "command": [
+      ".venv/bin/python",
+      "research/experiments/20261011T074856Z/check_signals.py"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"synthetic_fixture_checks\": \"PASS\", \"BTC_joint_grid_cells\": 9, \"BTC_EMA_spans\": [20, 30, 40], \"BTC_EMA_bands\": [0.005, 0.01, 0.015], \"hand_expected_gate_differences\": true, \"EMA_only_exit_without_channel_exit\": true, \"low_volume_alone_preserves_position\": true, \"no_delayed_arming\": true, \"disjoint_volume_threshold_equality\": true, \"no_future_tail_input\": true, \"funds_fixed\": [1100, 900], \"not_performance_evidence\": true}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "research/experiments/20261011T074856Z/restore_cache.py"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"new_backtests\": 0, \"source_components\": 4, \"read_only_portfolios\": 2, \"scenes_hash_verified\": 18, \"missing_cache_files_restored\": [], \"method\": \"Reconstruct exact old cash/coin minute NAV or sum exact same-funded sources from each archived capital,using same-SHA real prices;no old signals/trades,normalization or gate/status overwrite.\"}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "research/experiments/20261011T074856Z/forward.py",
+      "--reproduce"
+    ],
+    "exit_code": 0,
+    "stdout": "PASS:all9 cumulative forward scenes exactly reproduced including13390point complete time axis and nextstate;noHTTP or ledger write\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "research/experiments/20261011T074856Z/evaluate.py",
+      "--reproduce"
+    ],
+    "exit_code": 0,
+    "stdout": "READ_ONLY_RESULT:allocvol_2025_BTC_n40_r1.1_c1100\nREAD_ONLY_RESULT:allocvol_2025_ETH_s30_b0.0125_c900\nREAD_ONLY_RESULT:allocvol_2026_BTC_n40_r1.1_c1100\nREAD_ONLY_RESULT:allocvol_2026_ETH_s30_b0.0125_c900\n{\"completed\": \"vema_2025_BTC_s20_b0.005_c1100\", \"return1_pct\": 23.12163612457272, \"return3_pct\": 20.566870802390923, \"DD3_pct\": 10.976822980137612}\n{\"completed\": \"vema_2025_BTC_s20_b0.01_c1100\", \"return1_pct\": 17.18517745284547, \"return3_pct\": 14.754790711345445, \"DD3_pct\": 15.18421228531448}\n{\"completed\": \"vema_2025_BTC_s20_b0.015_c1100\", \"return1_pct\": 14.242880542936366, \"return3_pct\": 11.876330428972736, \"DD3_pct\": 15.181663786196054}\n{\"completed\": \"vema_2025_BTC_s30_b0.005_c1100\", \"return1_pct\": 14.242880542936366, \"return3_pct\": 11.876330428972736, \"DD3_pct\": 15.181663786196054}\n{\"completed\": \"vema_2025_BTC_s30_b0.01_c1100\", \"return1_pct\": 14.242880542936366, \"return3_pct\": 11.876330428972736, \"DD3_pct\": 15.181663786196054}\n{\"completed\": \"vema_2025_BTC_s30_b0.015_c1100\", \"return1_pct\": 12.61894767770908, \"return3_pct\": 10.86420907315453, \"DD3_pct\": 14.463665518316704}\n{\"completed\": \"vema_2025_BTC_s40_b0.005_c1100\", \"return1_pct\": 14.242880542936366, \"return3_pct\": 11.876330428972736, \"DD3_pct\": 15.181663786196054}\n{\"completed\": \"vema_2025_BTC_s40_b0.01_c1100\", \"return1_pct\": 12.70077673472727, \"return3_pct\": 10.943967829618174, \"DD3_pct\": 15.062201941312225}\n{\"completed\": \"vema_2025_BTC_s40_b0.015_c1100\", \"return1_pct\": 20.560687747818186, \"return3_pct\": 19.297221672963637, \"DD3_pct\": 10.692113948490245}\n{\"completed\": \"vema_2026_BTC_s20_b0.005_c1100\", \"return1_pct\": 16.767948144518186, \"return3_pct\": 14.952637804072722, \"DD3_pct\": 9.909363598332444}\n{\"completed\": \"vema_2026_BTC_s20_b0.01_c1100\", \"return1_pct\": 15.44858348578182, \"return3_pct\": 13.65186293363636, \"DD3_pct\": 10.769209736847396}\n{\"completed\": \"vema_2026_BTC_s20_b0.015_c1100\", \"return1_pct\": 14.345798037872726, \"return3_pct\": 12.561124561763638, \"DD3_pct\": 11.623604775833495}\n{\"completed\": \"vema_2026_BTC_s30_b0.005_c1100\", \"return1_pct\": 15.931988719572733, \"return3_pct\": 14.130212890927263, \"DD3_pct\": 10.772197601231259}\n{\"completed\": \"vema_2026_BTC_s30_b0.01_c1100\", \"return1_pct\": 13.773391718890915, \"return3_pct\": 12.003688799227263, \"DD3_pct\": 12.061330901413747}\n{\"completed\": \"vema_2026_BTC_s30_b0.015_c1100\", \"return1_pct\": 11.5105302070182, \"return3_pct\": 9.771755404181825, \"DD3_pct\": 13.81411924380922}\n{\"completed\": \"vema_2026_BTC_s40_b0.005_c1100\", \"return1_pct\": 13.008753881109092, \"return3_pct\": 10.669836753454543, \"DD3_pct\": 13.109582420031451}\n{\"completed\": \"vema_2026_BTC_s40_b0.01_c1100\", \"return1_pct\": 13.06093940716364, \"return3_pct\": 11.299713347299999, \"DD3_pct\": 12.983868357399986}\n{\"completed\": \"vema_2026_BTC_s40_b0.015_c1100\", \"return1_pct\": 8.985486930854547, \"return3_pct\": 7.284717977090915, \"DD3_pct\": 15.76517128136069}\nREAD_ONLY_RESULT:allocvol_2025_btcN40r1.1_ethS30_b0.0125_btc0.55\nREAD_ONLY_RESULT:allocvol_2026_btcN40r1.1_ethS30_b0.0125_btc0.55\n{\"completed\": \"vema_2025_btcS20_b0.005_btc0.55\", \"return1_pct\": 78.60477590711501, \"return3_pct\": 76.03309568496502, \"DD3_pct\": 12.355202740890704}\n{\"completed\": \"vema_2025_btcS20_b0.01_btc0.55\", \"return1_pct\": 75.33972363766502, \"return3_pct\": 72.83645163489001, \"DD3_pct\": 12.714333564556634}\n{\"completed\": \"vema_2025_btcS20_b0.015_btc0.55\", \"return1_pct\": 73.721460337215, \"return3_pct\": 71.25329847958501, \"DD3_pct\": 13.501582807787882}\n{\"completed\": \"vema_2025_btcS30_b0.005_btc0.55\", \"return1_pct\": 73.721460337215, \"return3_pct\": 71.25329847958501, \"DD3_pct\": 13.501582807787882}\n{\"completed\": \"vema_2025_btcS30_b0.01_btc0.55\", \"return1_pct\": 73.721460337215, \"return3_pct\": 71.25329847958501, \"DD3_pct\": 13.501582807787882}\n{\"completed\": \"vema_2025_btcS30_b0.015_btc0.55\", \"return1_pct\": 72.82829726134001, \"return3_pct\": 70.69663173388498, \"DD3_pct\": 13.501582807787882}\n{\"completed\": \"vema_2025_btcS40_b0.005_btc0.55\", \"return1_pct\": 73.721460337215, \"return3_pct\": 71.25329847958501, \"DD3_pct\": 13.501582807787882}\n{\"completed\": \"vema_2025_btcS40_b0.01_btc0.55\", \"return1_pct\": 72.8733032427, \"return3_pct\": 70.74049904994, \"DD3_pct\": 14.808213138646998}\n{\"completed\": \"vema_2025_btcS40_b0.015_btc0.55\", \"return1_pct\": 77.1962542999, \"return3_pct\": 75.33478866378, \"DD3_pct\": 14.808213138646998}\n{\"completed\": \"vema_2026_btcS20_b0.005_btc0.55\", \"return1_pct\": 27.745413629184988, \"return3_pct\": 26.08032624704002, \"DD3_pct\": 7.748136587957932}\n{\"completed\": \"vema_2026_btcS20_b0.01_btc0.55\", \"return1_pct\": 27.01976306688001, \"return3_pct\": 25.36490006829999, \"DD3_pct\": 7.748136587957932}\n{\"completed\": \"vema_2026_btcS20_b0.015_btc0.55\", \"return1_pct\": 26.413231070529996, \"return3_pct\": 24.76499396377001, \"DD3_pct\": 8.236438070314843}\n{\"completed\": \"vema_2026_btcS30_b0.005_btc0.55\", \"return1_pct\": 27.285635945464982, \"return3_pct\": 25.627992544810006, \"DD3_pct\": 8.236438070314843}\n{\"completed\": \"vema_2026_btcS30_b0.01_btc0.55\", \"return1_pct\": 26.098407595089988, \"return3_pct\": 24.45840429437498, \"DD3_pct\": 8.486538113343522}\n{\"completed\": \"vema_2026_btcS30_b0.015_btc0.55\", \"return1_pct\": 24.853833763559983, \"return3_pct\": 23.230840927100015, \"DD3_pct\": 9.488069797272958}\n{\"completed\": \"vema_2026_btcS40_b0.005_btc0.55\", \"return1_pct\": 25.677856784310006, \"return3_pct\": 23.7247856692, \"DD3_pct\": 8.625607222303167}\n{\"completed\": \"vema_2026_btcS40_b0.01_btc0.55\", \"return1_pct\": 25.70655882363999, \"return3_pct\": 24.071217795815002, \"DD3_pct\": 9.488069797272958}\n{\"completed\": \"vema_2026_btcS40_b0.015_btc0.55\", \"return1_pct\": 23.465059961670008, \"return3_pct\": 21.862970342200015, \"DD3_pct\": 10.144652401114762}\nPASS:all108 NEW BTC-volume-EMA scenes and full report exactly reproduced;18oldsource/portfolio scenes read-only verified,noHTTP/ledger write\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "research/experiments/20261011T074856Z/audit.py"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"passed\": true, \"actual_scenes_audited\": 108, \"NAV_points_audited\": 28013256, \"total_causal_decisions\": 9720, \"ETH_pandasEMA_causal_decisions\": 0, \"BTC_pandasEMA_causal_decisions\": 9720, \"BTC_disjoint_quote_volume_causal_decisions\": 9720, \"Decimal_fills_independently_checked\": 360, \"real_minute_data_hashes\": 4, \"read_only_component_scenes\": 12, \"read_only_portfolio_scenes\": 6, \"report_sha256\": \"9b613fd518380224bd60a039ea9ff97a35fcd4ee08d0f8f5c89277d8c0f4b2ab\", \"forward_plan_unchanged\": true}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "research/experiments/20261011T074856Z/audit_forward.py"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"passed\": true, \"forward_scenes\": 9, \"new_closed_marks_per_asset\": 120, \"cumulative_minutes\": 13379, \"complete_days\": 9, \"NAV_points_per_scene\": 13390, \"original_NAV_prefix\": 13270, \"new_daily_decisions\": 0, \"new_reference_points\": 0, \"new_executions\": 0, \"original_cash_units_desired_trades_costs_unchanged\": true, \"next_daily_decision_utc\": \"2026-10-12T00:01:00Z\", \"report_sha256\": \"99c7f40d996fff4d54564287c58b1be7ef89bb1eb87a9ef4f781da7dd8aab095\"}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "checks/strategy_registry.py"
+    ],
+    "exit_code": 0,
+    "stdout": "PASS: new parameters/weights and missing-result retries are allowed; exact/reordered completed trials stay blocked\n",
+    "stderr": ""
+  }
+]
