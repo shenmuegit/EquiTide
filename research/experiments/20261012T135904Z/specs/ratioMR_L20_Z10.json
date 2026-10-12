@@ -1,0 +1,36 @@
+{
+  "kind": "strategy",
+  "family": "spot-ratio-zscore-mean-reversion-rotation",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "name": "ratioMR_L20_Z10",
+  "logic": {
+    "ratio": "x_j=ln(completed_close_BTC[j]/completed_close_ETH[j]). At signal j use sample mean/std of the prior L completed x values x[j-L:j]; exclude current x_j. z=(x_j-mean)/sample_std; if std==0 use 0.",
+    "entry": "When in cash, z>entry_zscore_threshold targets ETH (BTC relatively rich); z<-entry_zscore_threshold targets BTC (ETH relatively rich); else remain in cash. Boundaries are strict.",
+    "exit_and_switch": "While holding ETH, hold if z>0.5; exit to cash when z<=0.5; directly switch to BTC if z<-entry threshold. While holding BTC, hold if z<-0.5; exit when z>=-0.5; directly switch to ETH if z>entry threshold. Extreme opposite entry has priority. Trade only on target changes.",
+    "timing": "Use only completed UTC daily closes. Execute at next UTC day 00:01 one-minute open; a switch sells then buys at that same timestamp and charges both legs.",
+    "sizing": "Independent $2,000 long-only spot account, at most one coin held at a time or cash. No shorting, leverage, yield, transfer, or pre-OOS holding."
+  },
+  "parameters": {
+    "lookback_days": 20,
+    "entry_zscore_threshold": 1.0,
+    "exit_abs_zscore": 0.5,
+    "initial_capital_usdt": 2000,
+    "walk_forward_train_days": 365,
+    "walk_forward_test_days": 30,
+    "walk_forward_step_days": 30,
+    "embargo_days": 3,
+    "folds": 12,
+    "oos_first_test_index": 368,
+    "oos_end_exclusive_index": 728,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  }
+}
