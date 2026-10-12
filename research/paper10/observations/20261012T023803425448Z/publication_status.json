@@ -14,6 +14,49 @@
     "ref_update_attempted": false,
     "reason": "create_blob for the full append-only research/automation/registry.jsonl (14501881 bytes) failed in the connected GitHub tool with HTTP 500 / transport send error. The ref was not changed."
   },
-  "state": "Evidence and local commit are preserved; retry publication on the next run without rebuilding or resetting the paper accounts.",
-  "no_force_update": true
+  "state": "published",
+  "no_force_update": true,
+  "local_unpublished_commit_sha": "53f255193c9060de5e47daf0cedee901214352d6",
+  "publication_events": [
+    {
+      "mechanism": "ordinary_git_push",
+      "result": "failed",
+      "reason": "HTTPS push could not read a username with terminal prompts disabled"
+    },
+    {
+      "mechanism": "github_app_git_data_create_blob",
+      "result": "failed_for_full_registry_blob",
+      "reason": "14,501,881-byte registry blob produced HTTP 500 / transport send error; no ref update occurred"
+    },
+    {
+      "mechanism": "github_app_contents_update_for_oversized_registry",
+      "result": "success",
+      "commit_sha": "4728315f81c552a85ff111cd9139e41886290d3a",
+      "note": "Used only to append the exact reserved/finish rows when the Git Data tool could not transport the large blob; ordinary fast-forward commit, no force update"
+    },
+    {
+      "mechanism": "github_app_git_data_api",
+      "result": "success",
+      "commit_sha": "6ac005c8a5eeb7a96085a4218a792849007421a6",
+      "parent_sha": "4728315f81c552a85ff111cd9139e41886290d3a",
+      "tree_sha": "e9fa9a84990d776eb84abca45fefe05e8d1615ae",
+      "ref_force": false,
+      "expected_ref_sha": "4728315f81c552a85ff111cd9139e41886290d3a"
+    },
+    {
+      "mechanism": "remote_tree_verification",
+      "result": "success",
+      "recursive_entries": 13747,
+      "tree_sha": "e9fa9a84990d776eb84abca45fefe05e8d1615ae",
+      "tree_truncated": false,
+      "matches_local_tree": true
+    },
+    {
+      "mechanism": "git_fetch_after_api",
+      "result": "failed_due_to_transport_timeout",
+      "reason": "Git HTTPS fetch timed out; the public GitHub branch API and recursive tree GET confirmed the new head and exact full tree"
+    }
+  ],
+  "remote_head": "6ac005c8a5eeb7a96085a4218a792849007421a6",
+  "remote_tree": "e9fa9a84990d776eb84abca45fefe05e8d1615ae"
 }
