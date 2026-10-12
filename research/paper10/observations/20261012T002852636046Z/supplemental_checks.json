@@ -1,0 +1,64 @@
+[
+  {
+    "kind": "preexecution_fixtures",
+    "command": [
+      ".venv/bin/python",
+      "research/paper10/check.py"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"synthetic_fixture_checks\": \"PASS\", \"spread_and_fee_not_double_counted\": true, \"lot_and_balance_guard\": true, \"all_four_signal_families_causal\": true, \"same_observation_idempotent\": true, \"same_closed_day_does_not_retrade\": true, \"not_performance_evidence\": true}\n",
+    "stderr": ""
+  },
+  {
+    "kind": "actual_observation_replay",
+    "command": [
+      ".venv/bin/python",
+      "research/paper10/run.py",
+      "--reproduce",
+      "20261012T002852636046Z"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"actual_portfolios\":10,\"cost_scenes\":30,\"filled_virtual_orders\":0,\"independent_money_identities_checked\":true,\"passed\":true,\"real_orders\":0,\"receipt_times_and_raw_quotes_verified\":true,\"report_sha256\":\"d244caa5d3cbf13792b666a1b6b3012e1503a3835dfa1591f5bfc77303b1931f\",\"reproduced_exact_state_and_report\":true}\n",
+    "stderr": ""
+  },
+  {
+    "kind": "closed_daily_signal_audit",
+    "command": [
+      ".venv/bin/python",
+      "/home/desktop/.local/share/equitide-research/worktree/research/paper10/observations/20261012T002852636046Z/daily_signal_audit.py"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"passed\": true, \"report_sha256\": \"d244caa5d3cbf13792b666a1b6b3012e1503a3835dfa1591f5bfc77303b1931f\", \"state_after_sha256\": \"b73af012271f0ec121a354cbfe06627554b4789811fd5248c2f4beb55318ce38\", \"new_closed_daily_open_ms\": 1791676800000, \"signal_available_at_utc\": \"2026-10-12T00:00:00Z\", \"unique_portfolio_cost_asset_decisions\": 60, \"source_rule_families_independently_checked\": [\"daily-channel-ema-confirmation\", \"daily-close-range-breakout\", \"daily-ema-hysteresis\", \"daily-sma-asymmetric-hysteresis\"], \"channel_reference_excludes_compared_close\": true, \"SMA_mean_includes_latest_closed_close\": true, \"EMA_seed_first_warmup_close_recursive_adjust_false\": true, \"unfinished_daily_not_used\": true, \"all60_processed_days_advanced_exactly_once\": true, \"cash_units_desired_costs_trade_counts_unchanged\": true, \"decision_actions\": {\"hold\": 60}, \"decision_delay_seconds_range\": [1740.615722, 1740.615722], \"new_virtual_fills\": 0, \"real_orders\": 0, \"scope\": \"Actual closed-day decisions audited;no fill occurred,so recorded delay is signal availability to actual decision,not execution proof.\"}\n",
+    "stderr": ""
+  },
+  {
+    "kind": "registry_checks",
+    "command": [
+      ".venv/bin/python",
+      "checks/strategy_registry.py"
+    ],
+    "exit_code": 0,
+    "stdout": "PASS: new parameters/weights and missing-result retries are allowed; exact/reordered completed trials stay blocked\n",
+    "stderr": ""
+  },
+  {
+    "kind": "monitor_snapshot",
+    "command": [
+      "python3",
+      "research/monitor/snapshot.py"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"output\": \"/home/desktop/.local/share/equitide-research/worktree/research/monitor/latest.json\", \"bytes\": 147481, \"paper_status\": \"ready\", \"research_configs\": 3049, \"compressed_research_bytes\": 887248}\n",
+    "stderr": ""
+  },
+  {
+    "kind": "monitor_snapshot_checks",
+    "command": [
+      "python3",
+      "checks/monitor_snapshot.py"
+    ],
+    "exit_code": 0,
+    "stdout": "{\"ok\": true, \"paper_accounts\": 10, \"observations\": 51, \"research_configs\": 3049, \"protected_inputs_unchanged\": true}\n",
+    "stderr": ""
+  }
+]
