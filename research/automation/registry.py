@@ -49,8 +49,7 @@ def fingerprint(spec):
     return digest(definition)
 
 
-def read_records(path):
-    records = {}
+def _ledger_paths(path):
     ledgers = [path]
     canonical = Path(__file__).with_name("registry.jsonl").resolve()
     if path.resolve() == canonical:
@@ -61,11 +60,22 @@ def read_records(path):
         ledgers.extend(sorted((root / "research/experiments").glob("*/registry_records.jsonl")))
         ledgers.extend(sorted((root / "research/paper10/registry_records").glob("*.jsonl")))
         ledgers.extend(sorted((root / "research/automation/registry_fragments").glob("*.jsonl")))
-    for ledger in ledgers:
+    return ledgers
+
+
+def read_events(path):
+    events = []
+    for ledger in _ledger_paths(path):
         if ledger.exists():
             for line in ledger.read_text(encoding="utf-8").splitlines():
-                row = json.loads(line)  # Corruption stops execution; never silently discard history.
-                records.setdefault(row["fingerprint"], {}).update(row)
+                events.append(json.loads(line))  # Corruption stops execution; never silently discard history.
+    return events
+
+
+def read_records(path):
+    records = {}
+    for row in read_events(path):
+        records.setdefault(row["fingerprint"], {}).update(row)
     return records
 
 

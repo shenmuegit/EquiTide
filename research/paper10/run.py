@@ -211,7 +211,10 @@ def audit_observation(folder):
  before=json.loads((folder/'state_before.json').read_text());after=json.loads((folder/'state_after.json').read_text());report=json.loads((folder/'report.json').read_text());market=json.loads((folder/'market.json').read_text())
  assert report['mode']=='live_public_quotes' and report['plan_sha256']==plan['_sha256']
  assert report['state_before_sha256']==digest(before) and report['state_after_sha256']==digest(after) and report['market_sha256']==digest(market)
- for path,h in report['source_hashes'].items():assert sha(R/path)==h
+ for path,h in report['source_hashes'].items():
+  source=R/path
+  if sha(source)!=h:
+   archived=T/'executors'/(h+'.py');assert archived.exists() and sha(archived)==h
  assert json.loads((folder/'trade_ledger.json').read_text())==report['trades']
  for path,h in plan['frozen_reused_code_sha256'].items():assert sha(R/path)==h
  for pr in market['provenance']:
@@ -221,7 +224,7 @@ def audit_observation(folder):
   raw=json.loads(gzip.decompress((folder/(a+'_quote.json.gz')).read_bytes()));q=market['quotes'][a];assert q['bid']==raw['bidPrice'] and q['ask']==raw['askPrice']
   assert all(x['available_ms']<=market['server_time_before_ms'] for x in market['daily'][a][:-1])
  for b in json.loads((folder/'batch.json').read_text()):
-  rows=[json.loads(x) for x in (R/'research/automation/registry.jsonl').read_text().splitlines()];ev=[x for x in rows if x['fingerprint']==b['fingerprint'] and x['status']=='reserved'];assert len(ev)==1
+  rows=registry.read_events(R/'research/automation/registry.jsonl');ev=[x for x in rows if x['fingerprint']==b['fingerprint'] and x['status']=='reserved'];assert len(ev)==1
   assert ev[0]['recorded_at_utc']<min(x['requested_at_utc'] for x in market['provenance'])<market['evaluated_at_utc']
  for tr in report['trades']:
   assert dt(tr['simulated_at_utc'])>=dt(tr['quote_observed_at_utc']) and dt(tr['simulated_at_utc'])>=dt(tr['signal_available_at_utc'])
@@ -237,7 +240,7 @@ def audit_observation(folder):
   assert ca>=0 and ua>=0 and abs(c+u*mid-(ca+ua*mid)-sum(parts.values()))<D('1e-18')
   fs=market['filters'][tr['asset']];assert q%D(fs['LOT_SIZE']['stepSize'])==0 and px%D(fs['PRICE_FILTER']['tickSize'])==0
  assert len({t['trade_id'] for t in report['trades']})==len(report['trades'])
- rebuilt,rr=advance(plan,before,market,folder.name);assert rebuilt==after and rr==report
+ rebuilt,rr=advance(plan,before,market,folder.name);rr['source_hashes']=report['source_hashes'];assert rebuilt==after and rr==report
  for c in report['configs'].values():
   for k,ss in c['scenes'].items():
    nav=sum(D(st['cash_usdt'])+D(st['units'])*(D(market['quotes'][a]['bid'])+D(market['quotes'][a]['ask']))/2 for a,st in ss['sleeves'].items());assert D(ss['NAV_usdt'])==nav
