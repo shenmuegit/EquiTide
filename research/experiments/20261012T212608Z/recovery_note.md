@@ -1,0 +1,3 @@
+# Recovery note
+
+The first evaluation process loaded and validated the historical inputs, then calculated the first candidate under its successful reservation. It stopped before persisting any scenario/report because `reserve.json` stores the registry fingerprint in its `output` field, while the evaluator initially expected a `fingerprint` field. No result was registered or presented. The existing reservation is retained and the same in-progress configuration will be resumed after fixing only this result-mapping bug; the frozen plan, specs, data window, gates, and strategy parameters are unchanged.

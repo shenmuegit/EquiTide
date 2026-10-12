@@ -1,0 +1,98 @@
+{
+  "round": "20261012T212608Z",
+  "frozen_at_utc": "2026-10-12T21:26:08Z",
+  "direction": "Daily long-only Cutler RSI(2) dip entry gated by a completed-close long SMA regime filter",
+  "economic_hypothesis": "Short-horizon weakness may mean-revert more often while the close remains above a longer trend mean; the SMA gate is intended to avoid buying persistent downtrends. Turnover, filtering and costs may erase any gross edge.",
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "entry_rsi": [
+      5,
+      10,
+      15
+    ],
+    "trend_sma_days": [
+      100,
+      150,
+      200
+    ],
+    "rsi_lookback_changes": 2,
+    "exit_rsi": 50,
+    "configs": 18,
+    "read_only_comparators": 2
+  },
+  "time_boundaries": {
+    "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+    "oos_start_utc": "2026-03-16T00:01:00Z",
+    "oos_terminal_utc": "2026-09-15T00:01:00Z",
+    "folds": "6 consecutive 30-day test windows; final 3-day remainder reported separately before common terminal liquidation",
+    "history_note": "This interval is repeatedly used repository development/validation history, not an untouched final holdout."
+  },
+  "sensitivity_axes": [
+    "entry_rsi",
+    "trend_sma_days"
+  ],
+  "costs": {
+    "fee_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact": "0.5 * previous 20 complete UTC daily log-return standard deviation * sqrt(order budget / previous 20 complete daily quote ADV)",
+    "participation_cap": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "execution_filters": "exchange-info PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick, lot floor and 5-minute pre-execution VWAP percent-price check"
+  },
+  "failure_gates": {
+    "all_1x_2x_3x_net_returns_positive": true,
+    "minimum_positive_1x_folds": 5,
+    "maximum_3x_daily_sample_drawdown_pct": 25,
+    "minimum_3x_neighbor_positive_fraction": 0.6,
+    "minimum_1x_round_trips": 2,
+    "minimum_1x_gross_reference_pnl_to_cost": 2.5,
+    "no_rejected_or_balance_violations": true,
+    "terminal_flat": true,
+    "candidate_pass_rule": "all gates must pass independently; benchmarks are descriptive only"
+  },
+  "prior16_audit": "research/experiments/20261012T035429Z/prior_evidence_audit.json confirms actual historical evidence for all original 16; none requires a missing-result retry this round.",
+  "sources": [
+    {
+      "url": "https://doi.org/10.3390/s23031664",
+      "accessed_utc": "2026-10-12"
+    },
+    {
+      "url": "https://doi.org/10.1016/j.frl.2019.07.025",
+      "accessed_utc": "2026-10-12"
+    }
+  ],
+  "specs": [
+    "research/experiments/20261012T212608Z/specs/buy_hold_btc.json",
+    "research/experiments/20261012T212608Z/specs/buy_hold_eth.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_btc_entry10_sma100.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_btc_entry10_sma150.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_btc_entry10_sma200.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_btc_entry15_sma100.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_btc_entry15_sma150.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_btc_entry15_sma200.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_btc_entry5_sma100.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_btc_entry5_sma150.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_btc_entry5_sma200.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_eth_entry10_sma100.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_eth_entry10_sma150.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_eth_entry10_sma200.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_eth_entry15_sma100.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_eth_entry15_sma150.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_eth_entry15_sma200.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_eth_entry5_sma100.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_eth_entry5_sma150.json",
+    "research/experiments/20261012T212608Z/specs/cutler_rsi2_eth_entry5_sma200.json"
+  ],
+  "comparators": [
+    "BTC independent buy-and-hold",
+    "ETH independent buy-and-hold"
+  ]
+}

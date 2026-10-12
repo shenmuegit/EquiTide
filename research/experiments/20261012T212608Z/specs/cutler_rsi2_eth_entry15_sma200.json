@@ -1,0 +1,72 @@
+{
+  "kind": "strategy",
+  "family": "daily-regime-filtered-cutler-rsi-reversal",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "name": "cutler_rsi2_eth_entry15_sma200",
+  "logic": {
+    "indicator": "Cutler RSI computed from the last 2 completed close-to-close changes: mean positive change / (mean positive + mean absolute negative); 100 if only gains, 0 if only losses, 50 if both means are zero. Regime SMA includes the signal day close and the prior lookback-1 completed closes.",
+    "entry": "While flat, after UTC day t is closed, enter long only if Cutler RSI(2) <= entry_rsi and close[t] > SMA(trend_sma_days)[t]. Execute at UTC day t+1 minute-1 open; do not trade on the signal close.",
+    "exit": "While long, after UTC day t is closed, exit if RSI(2) >= 50 or close[t] <= SMA(trend_sma_days)[t]. Exit takes priority; execute next UTC day minute-1 open. No same-day re-entry.",
+    "sizing": "Independent 2000 USDT, unlevered long-only spot account; use all available cash for a permitted entry, hold one asset, no transfers or interest. Terminal liquidation at the declared OOS terminal execution.",
+    "causality": "Signals use only closed UTC daily data available by 00:00 UTC; the next-day execution reference is the 00:01 UTC one-minute open. Prior daily closes used by the SMA/RSI and cost inputs are fully closed before order execution."
+  },
+  "parameters": {
+    "rsi_method": "Cutler simple rolling mean (not Wilder recursive smoothing)",
+    "rsi_lookback_changes": 2,
+    "entry_rsi": 15,
+    "exit_rsi": 50,
+    "trend_sma_days": 200,
+    "initial_capital_usdt": 2000,
+    "oos_start_utc": "2026-03-16T00:01:00Z",
+    "oos_terminal_utc": "2026-09-15T00:01:00Z",
+    "walk_forward_test_days": 30,
+    "walk_forward_folds": 6,
+    "walk_forward_step_days": 30,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "fee_rate_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+    "maximum_participation": 0.001,
+    "lot_tick_notional": "current frozen exchange-info filters; adverse tick rounding and lot floor; 5-minute pre-execution VWAP proxy for percent-price checks",
+    "signal_data": "Binance spot one-minute bars, collapsed to completed UTC daily close and quote volume; trade reference is next UTC day 00:01 one-minute open",
+    "history_range_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+    "sensitivity_axes": [
+      "entry_rsi",
+      "trend_sma_days"
+    ]
+  },
+  "sources": [
+    {
+      "citation": "Zatwarnicki et al. (2023), Effectiveness of the Relative Strength Index Signals in Timing the Cryptocurrency Market, Sensors 23(3):1664, DOI 10.3390/s23031664",
+      "url": "https://doi.org/10.3390/s23031664",
+      "accessed_utc": "2026-10-12",
+      "use": "Motivates testing RSI timing in crypto; does not validate this exact RSI(2), trend filter, costs, or current OOS result."
+    },
+    {
+      "citation": "Turatti, Mendes & Caldeira (2020), Testing for mean reversion in Bitcoin returns with Gibbs-sampling-augmented randomization, Finance Research Letters 34, 101252, DOI 10.1016/j.frl.2019.07.025",
+      "url": "https://doi.org/10.1016/j.frl.2019.07.025",
+      "accessed_utc": "2026-10-12",
+      "use": "Finds historical mean aversion in weekly Bitcoin returns in 2010–2019; motivation only, not evidence for the present daily rule."
+    }
+  ],
+  "failure_gates": {
+    "all_1x_2x_3x_net_returns_positive": true,
+    "minimum_positive_1x_folds": 5,
+    "maximum_3x_daily_sample_drawdown_pct": 25,
+    "minimum_3x_adjacent_neighborhood_positive_fraction": 0.6,
+    "minimum_1x_round_trips": 2,
+    "minimum_1x_gross_reference_pnl_to_cost": 2.5,
+    "no_balance_or_rejected_order_violations": true,
+    "terminal_flat": true,
+    "interpretation": "Historical screen only; this repeatedly studied period is not an untouched final holdout or live-profit evidence."
+  }
+}
