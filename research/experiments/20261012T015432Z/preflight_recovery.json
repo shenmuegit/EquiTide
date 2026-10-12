@@ -1,0 +1,18 @@
+{
+  "recorded_at_utc": "2026-10-12T02:07:57.895356+00:00",
+  "all_failures_before_config_reserve_or_financial_evaluation": [
+    {
+      "phase": "preflight adaptation 1",
+      "failure": "the inherited ledger tuple (7907,3906,3904) had advanced; the stale assertion stopped before reserve or calculation"
+    },
+    {
+      "phase": "preflight adaptation 2",
+      "failure": "the temporary design module was not in the round directory yet; import stopped before reserve or calculation"
+    },
+    {
+      "phase": "funding arithmetic fixture",
+      "failure": "initial float complement 1.0-weight represented BTC55/ETH45 as 0.44999999999999996 and floored ETH initial budget to 899; detected before reserve/calculation; changed to explicit decimal-equivalent shares and Decimal budgets. No invalid spec/result was recorded"
+    }
+  ],
+  "resolution": "Use integerized Decimal amounts from explicitly enumerated weights [.50,.55,.60] -> exact 1000/1000,1100/900,1200/800; explicitly preserve weights [.5,.5],[.55,.45],[.6,.4]. Preflight reads corpus counts/rows from actual bytes; no reset or old ledger rewrite."
+}
