@@ -1,0 +1,35 @@
+{
+  "kind": "strategy",
+  "family": "spot-4h-volume-confirmed-momentum",
+  "market": "spot",
+  "timeframe": "4h",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "name": "mom24_slotvol100_BTC",
+  "logic": {
+    "momentum_entry": "At newly closed 4h bar i, enter only if close[i-1] > close[i-1-lookback_4h_bars], strictly positive momentum.",
+    "relative_volume_entry": "On same decision, quote_volume[i-1] / arithmetic_mean(quote_volume at same UTC 4h slot from prior 20 days, indices i-7 through i-121 step -6) >= configured threshold. Current bar excluded.",
+    "exit": "If long, set desired cash whenever close[i-1] <= close[i-1-lookback_4h_bars], regardless of volume. Exit has priority; otherwise enter on both entry conditions; all other cases preserve desired state.",
+    "timing": "Signals only use completed UTC 4h bars. Execute on the next UTC 4h block first one-minute open, block_start+60 seconds.",
+    "sizing": "Independent $2,000 unlevered spot account; max affordable LOT_SIZE entry, exit all valid units; preserve cash; no rebalance, add-on, leverage, short, yield, or pre-OOS fills."
+  },
+  "parameters": {
+    "lookback_4h_bars": 24,
+    "same_slot_quote_volume_ratio_min": 1.0,
+    "same_slot_reference_days": 20,
+    "initial_capital_usdt": 2000,
+    "walk_forward_train_bars": 2190,
+    "walk_forward_test_bars": 180,
+    "walk_forward_step_bars": 180,
+    "embargo_bars": 18,
+    "folds": 12,
+    "oos_start_bar_index": 2208,
+    "oos_end_exclusive_bar_index": 4368,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  }
+}

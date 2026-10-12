@@ -1,0 +1,26 @@
+{
+  "kind": "strategy",
+  "family": "spot-4h-hold-reference",
+  "market": "spot",
+  "timeframe": "4h",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "name": "hold_360d_BTC",
+  "logic": {
+    "entry": "Buy at first OOS execution time, without a signal.",
+    "exit": "Hold until the common terminal execution time, then liquidate; reference only.",
+    "timing": "Same OOS start and end as candidate grid.",
+    "sizing": "Independent $2,000 unlevered spot reference."
+  },
+  "parameters": {
+    "initial_capital_usdt": 2000,
+    "oos_start_bar_index": 2208,
+    "oos_end_exclusive_bar_index": 4368,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  }
+}
