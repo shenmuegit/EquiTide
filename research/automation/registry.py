@@ -51,10 +51,21 @@ def fingerprint(spec):
 
 def read_records(path):
     records = {}
-    if path.exists():
-        for line in path.read_text(encoding="utf-8").splitlines():
-            row = json.loads(line)  # Corruption stops execution; never silently discard history.
-            records.setdefault(row["fingerprint"], {}).update(row)
+    ledgers = [path]
+    canonical = Path(__file__).with_name("registry.jsonl").resolve()
+    if path.resolve() == canonical:
+        # Very large append-only ledgers may be preserved as Git Data API sidecars.
+        # Merge these durable fragments into the same fingerprint index so exact
+        # repeats remain blocked after a transport fallback or branch checkout.
+        root = Path(__file__).resolve().parents[2]
+        ledgers.extend(sorted((root / "research/experiments").glob("*/registry_records.jsonl")))
+        ledgers.extend(sorted((root / "research/paper10/registry_records").glob("*.jsonl")))
+        ledgers.extend(sorted((root / "research/automation/registry_fragments").glob("*.jsonl")))
+    for ledger in ledgers:
+        if ledger.exists():
+            for line in ledger.read_text(encoding="utf-8").splitlines():
+                row = json.loads(line)  # Corruption stops execution; never silently discard history.
+                records.setdefault(row["fingerprint"], {}).update(row)
     return records
 
 

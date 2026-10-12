@@ -18,7 +18,7 @@ def loadmod(name, path):
 fillmod = loadmod("rsi_audit_kernel", ROOT / "research/experiments/20261001T133655Z/kernel.py")
 report = json.loads((R / "report.json").read_text())
 reservations = json.loads((R / "reserve.json").read_text()) + json.loads((R / "benchmark_reserve.json").read_text())
-records = [json.loads(x) for x in (ROOT / "research/automation/registry.jsonl").read_text().splitlines() if x.strip()]
+records = list(registry.read_records(ROOT / "research/automation/registry.jsonl").values())
 latest = {}
 for row in records:
     if row.get("fingerprint"):

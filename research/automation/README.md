@@ -12,6 +12,8 @@
 
 登记簿保留历史 ID 与组件引用，以当前完整规则重新核对旧配置。`result_available` 表示是否有实际回测结果；初始条目经归档证据核对后追加标记，缺结果的允许补测。完整回测 finish 为 passed/rejected 后标记有结果，无回测结果用 blocked/abandoned，可恢复或重试，历史记录不删除。
 
+如果受 Git Data API 文本载荷限制而把本轮登记追加记录保存为 `research/experiments/<轮次>/registry_records.jsonl` 或 `research/paper10/registry_records/*.jsonl`，`registry.read_records()` 会把这些追加片段和主 `registry.jsonl` 一起索引。这样 reserve 查重、monitor 摘要和重放检查仍可见已登记的 fingerprint；片段也是只追加、受版本控制的登记证据。
+
 策略 spec 格式：
 
 ```json
