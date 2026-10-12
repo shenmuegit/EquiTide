@@ -1,0 +1,26 @@
+{
+  "kind": "strategy",
+  "family": "daily-buy-hold-reference",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "logic": {
+    "entry": "At the first OOS 00:01 UTC one-minute open, enter long once and hold regardless of subsequent signals.",
+    "exit": "Scheduled terminal exit at the end of the common OOS interval.",
+    "sizing": "Independent unlevered long-only spot reference with 2000 USDT initial capital; same exchange filters, lot/notional, costs, and terminal cost as candidates.",
+    "signal_timing": "Fixed OOS start/end; historical closes are not used for a signal."
+  },
+  "parameters": {
+    "initial_capital_usdt": 2000,
+    "oos_first_test_index": 368,
+    "oos_end_exclusive_index": 728,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  },
+  "name": "buy_hold_360d_ETH"
+}

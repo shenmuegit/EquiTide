@@ -1,0 +1,34 @@
+{
+  "kind": "strategy",
+  "family": "daily-price-sma-hysteresis",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "logic": {
+    "entry": "At a newly completed UTC daily bar i, enter long only when C[i-1] > arithmetic_mean(C[i-300:i]) * (1 + 0.00%); SMA uses the 300 most recent completed daily closes including C[i-1].",
+    "exit": "When long, exit when C[i-1] < arithmetic_mean(C[i-300:i]) * (1 - 0.00%); otherwise retain prior desired state. Equality and values inside the symmetric band retain state.",
+    "sizing": "Independent unlevered long-only spot account, initial capital 2000 USDT; buy maximum affordable quantity after signal close at next UTC day 00:01 one-minute open; preserve cash/units; terminal liquidation is costed. No pre-OOS fills, leverage, shorting, rebalancing, or cross-asset transfer.",
+    "signal_timing": "Daily input is closed UTC candles only; last closed signal is available before next-day 00:01 UTC execution."
+  },
+  "parameters": {
+    "lookback_days": 300,
+    "symmetric_threshold_fraction": 0.0,
+    "initial_capital_usdt": 2000,
+    "oos_first_test_index": 368,
+    "oos_end_exclusive_index": 728,
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_terminal_execution_utc": "2026-09-14T00:01:00Z",
+    "walk_forward_train_days": 365,
+    "walk_forward_test_days": 30,
+    "walk_forward_step_days": 30,
+    "walk_forward_embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  },
+  "name": "sma300_band000_BTC"
+}

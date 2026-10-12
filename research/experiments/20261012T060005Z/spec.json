@@ -1,0 +1,106 @@
+{
+  "round": "20261012T060005Z",
+  "frozen_at_utc": "2026-10-12T06:00:05Z",
+  "direction": "Long-horizon daily BTC/ETH SMA trend-following with a symmetric hysteresis band.",
+  "hypothesis": "Longer 150-300-day trend filters may suppress short-horizon whipsaws; a predeclared 0-1% symmetric band may improve net results by reducing marginal crossings, at the cost of later entries/exits.",
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "lookback_days": [
+      150,
+      200,
+      250,
+      300
+    ],
+    "symmetric_threshold_fraction": [
+      0.0,
+      0.005,
+      0.01
+    ],
+    "initial_capital_usdt_per_config": 2000
+  },
+  "sensitivity_axes": [
+    "lookback_days",
+    "symmetric_threshold_fraction"
+  ],
+  "logic": "For daily decision index i, compare completed close C[i-1] to the arithmetic mean of C[i-lookback:i], all fully closed UTC daily bars. If flat, enter when C[i-1] > SMA*(1+band). If long, exit when C[i-1] < SMA*(1-band). Otherwise preserve the prior desired state. New OOS account starts flat; no warm-up fills or pre-OOS state replay.",
+  "allocation": "Each config is a separate 2,000 USDT account with a single BTC or ETH sleeve; the full amount is the maximum risky sleeve, no leverage, no transfers, no rebalancing, and no cross-config averaging.",
+  "evidence_review": {
+    "initial_16_actual_result_audit": "research/experiments/20261012T035429Z/prior_evidence_audit.json",
+    "initial_16_actual_result_audit_sha256": "c304ccd412a38d8158563b3f9d095b2a606bbcffc06aae5605ef0fd49cb67ec3",
+    "finding": "All 16 exact initial registry rows already have actual backtest/report evidence; do not rerun completed exact configs.",
+    "freqtrade_trial_results": "Read backtest-result metadata and three walk-forward JSON reports; their 2026-07-21 through 2026-09-15 15m results are not the present daily long-horizon configs."
+  },
+  "source": {
+    "title": "Trend-following Strategies for Crypto Investors, section 4.1",
+    "url": "https://www.monash.edu/__data/assets/pdf_file/0011/3744821/Trend-following-Strategies-for-Crypto-Investors.pdf",
+    "accessed_utc": "2026-10-12",
+    "use": "Long-only moving-average trend rule; 150/200-day horizons follow cited horizon set, 250/300 are predeclared extensions."
+  },
+  "development_data": {
+    "BTC": [
+      "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet"
+    ],
+    "ETH": [
+      "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet"
+    ],
+    "reuse_disclosure": "The same 2024-09-16 through 2026-09-16 Binance history has appeared in prior research. It is development/validation history, not an untouched final holdout."
+  },
+  "walk_forward": {
+    "engine": ".agents/skills/walk-forward-validation/scripts/walk_forward.py",
+    "window_type": "rolling",
+    "train_days": 365,
+    "test_days": 30,
+    "step_days": 30,
+    "purge_days": 0,
+    "embargo_days": 3,
+    "expected_folds": 12,
+    "continuous_oos": true,
+    "first_test_index": 368,
+    "last_test_end_exclusive_index": 728,
+    "start_equity_flat": true,
+    "parameter_fit": "None. Rules are frozen before results; prior daily closes are used only for SMA warm-up and signals.",
+    "oos_trade_dates_utc": "2025-09-19 through 2026-09-13; terminal execution at next available 00:01 UTC minute open."
+  },
+  "cost_model": {
+    "fee_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact_coefficient": 0.5,
+    "impact_formula": "0.5 * prior-20-complete-UTC-day sample volatility * sqrt(order budget / prior-20-day mean quote ADV)",
+    "max_lagged_quote_ADV_participation": 0.001,
+    "scenarios": [
+      1,
+      2,
+      3
+    ],
+    "spread_observation": "Historical one-minute OHLCV has no historical L2 quotes; half-spread is an estimate and is charged once.",
+    "filters_source": {
+      "path": "research/experiments/20261001T053425Z/spot_metadata_snapshot.json",
+      "sha256": "857af9870c57ad05e50a5ee6fad92240b384b99cc22e9ae8cece0e6f94e2d033",
+      "source_report": "research/experiments/20261012T035429Z/report.json",
+      "source_report_sha256": "383d833e5d7d9d12aac3dacdb02051fdd2a0b3b4b49c0e099ddc1b38c3c7e16e"
+    },
+    "filters_sha256_by_symbol": {
+      "BTCUSDT": "de8016b9cc00c552055dcb3c4fc87139e11ab81318ac525bd0eab69c04aa5a32",
+      "ETHUSDT": "5f5a0cc6d63cefbdabf816d51c52a67a38b1095a73f92f5e72515300b472f2d8"
+    },
+    "perpetual_funding_borrow": "Not applicable; unlevered long-only spot.",
+    "execution_model": "Historical executable reference is the next UTC day 00:01 one-minute open, after the completed prior daily close is available. Decimal28 fill, adverse tick, LOT_SIZE/NOTIONAL, 5-minute VWAP proxy, and participation checks are reused from the repository execution kernel. Simulated fills are not exchange acceptance guarantees."
+  },
+  "failure_gates": {
+    "all_cost_scenarios_positive": true,
+    "minimum_positive_1x_folds": 7,
+    "maximum_3x_minute_close_sample_drawdown_pct": 25,
+    "minimum_3x_neighbourhood_positive_fraction": 0.6,
+    "minimum_1x_round_trips": 2,
+    "minimum_1x_gross_reference_pnl_to_cost": 2.5,
+    "no_negative_balance_or_units": true,
+    "terminal_flat": true,
+    "interpretation": "Passed means this repeated historical walk-forward screen only; it is not independent or live-profit evidence."
+  }
+}

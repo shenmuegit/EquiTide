@@ -1,0 +1,40 @@
+{
+  "note": "These were failed pre-finish harness/validation attempts. They are retained alongside the successful run; no failed attempt produced result rows or changed a strategy outcome.",
+  "attempts": [
+    {
+      "stage": "first evaluator startup",
+      "outcome": "failed_before_data_load",
+      "error": "ModuleNotFoundError: No module named 'kernel'",
+      "root_cause": "Reused evaluator imports kernel by module name; its directory was not on sys.path.",
+      "correction": "Added the existing engine directory to sys.path, matching the working prior-round loader; minimal import probe confirmed access to fill and lagged_cost_inputs."
+    },
+    {
+      "stage": "second evaluator input validation",
+      "outcome": "failed_before_signal_or_fill_calculation",
+      "error": "AssertionError: prior five-minute VWAP input availability at first daily row",
+      "root_cause": "A negative slice at dataset index zero wrapped to the tail, so the causal-availability assertion correctly detected future bars.",
+      "correction": "At the data origin where five prior minute bars do not exist, store zero proxy VWAP; no strategy signal or transaction cost is evaluated until complete lagged history exists. OOS begins at daily index 368."
+    },
+    {
+      "stage": "first result-summary rendering",
+      "outcome": "failed_before_writing_result_files",
+      "error": "NameError: hashlib was not imported in the Markdown/SVG writer.",
+      "root_cause": "Presentation helper lacked a standard-library import.",
+      "correction": "Added hashlib and reran result.md/SVG generation successfully."
+    },
+    {
+      "stage": "first independent accounting audit",
+      "outcome": "failed_on_overly_strict_comparison",
+      "error": "Decimal reference-wealth check differed by 1.29e-25 on a filled BTC/ETH order.",
+      "root_cause": "Audit compared independently summed Decimal cost components with exact equality; the fill kernel itself allows rounding tolerance 1e-20.",
+      "correction": "Use 1e-20 absolute tolerance, then all 26 configs / 78 scenes passed independent balance, cost, signal, fold and NAV checks."
+    },
+    {
+      "stage": "replay invoked while rows were reserved",
+      "outcome": "blocked_by_lifecycle_guard_before_calculation",
+      "error": "Replay command requires each fingerprint to be passed/rejected; current rows were still reserved.",
+      "root_cause": "Replay mode intentionally refuses to run before finish, preventing accidental duplicate work on an active configuration.",
+      "correction": "Complete independent audit and finish the actual results first; exact replay then runs in the normal post-finish lifecycle."
+    }
+  ]
+}
