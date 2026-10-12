@@ -8,6 +8,8 @@
 .venv/bin/python research/paper10/run.py --hold-lock
 ```
 
+环境说明（2026-10-12）：连续 `SSLEOFError` 出现在 Python `urllib` TLS 握手，未取到行情的两次观察均已 `blocked` 留档、未改账户。此运行环境可由 `curl` 访问同一 Binance 数据主机；后续需使用 `./.venv/bin/python research/paper10/validation/launch_curl_transport.py` 启动同一冻结 `run.py`。传输适配器只允许 executor 已有的五个公开 GET 路径，最多重试五次 TLS/网络错误，逐请求记录时间、状态和响应 SHA256 到观察目录的 `transport.jsonl`。它不改变 `plan.json`、策略信号、成本、下单模型或持仓；`run.py` 仍负责 lock、reserve、市场校验、Decimal 核算、审计、finish 和状态提升。连接仍失败时观察按 blocked 保存，不用诊断 curl 报价替代执行器采样。
+
 看到PAPER10_READY_LOCK_HELD后，保留该进程持有的research/automation/branch.lock，完成必要检查、相关证据提交和非强制push。API上传亦在该锁的保护期内。确认远端完整树和SHA后，向原执行会话stdin发送release及换行释放锁；EOF也会安全释放。取不到锁时等待，不能覆盖并行任务。不要为新的轮询再次创建账户或改plan。
 
 日线信号仅在出现新闭合UTC日线时处理一次。真实未闭合日线只作为原信号函数的未使用尾部输入，不进入决策；EMA从2025-09-16真实数据首日递推。首次所有账户从现金和desired-cash开始，不回放历史持仓。虚拟成交用本轮实际买卖报价，记录报价收取/模拟执行/信号可用时间及延迟，不用过去分钟开盘补单。
