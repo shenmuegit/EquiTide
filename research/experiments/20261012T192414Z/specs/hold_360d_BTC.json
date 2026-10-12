@@ -1,0 +1,25 @@
+{
+  "kind": "strategy",
+  "family": "spot-intraday-hold-reference",
+  "market": "spot",
+  "timeframe": "15m",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "name": "hold_360d_BTC",
+  "logic": {
+    "entry": "Buy at first OOS next-block minute-open reference, irrespective of signal.",
+    "exit": "Hold to shared terminal execution and liquidate at cost.",
+    "sizing": "Independent $2,000 unlevered long-only spot benchmark; no cash yield."
+  },
+  "parameters": {
+    "initial_capital_usdt": 2000,
+    "oos_start_15m_index": 35328,
+    "oos_end_exclusive_15m_index": 69888,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  }
+}

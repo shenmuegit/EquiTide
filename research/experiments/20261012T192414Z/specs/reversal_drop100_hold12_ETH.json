@@ -1,0 +1,35 @@
+{
+  "kind": "strategy",
+  "family": "spot-intraday-shock-rebound",
+  "market": "spot",
+  "timeframe": "15m",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "name": "reversal_drop100_hold12_ETH",
+  "logic": {
+    "entry": "At a newly closed UTC 15m bar j, compute simple return close[j]/close[j-1]-1. If flat and return <= -entry_15m_drop_fraction (equality qualifies), enter long at next 15m block first one-minute open after one-minute availability buffer.",
+    "rebound_exit": "Store signal close[j] as recovery_reference. On later completed 15m closes, exit if close[j] >= recovery_reference (equality qualifies).",
+    "time_exit": "Also exit once j-entry_execution_bar_index >= max_holding_15m_bars. If both rebound and timeout conditions occur together, process one full exit. Exit executes at next block first minute open after a one-minute buffer.",
+    "state": "After exit, do not re-enter on the same decision bar. Retry no rejected historical fill retroactively; this is a bar-close backtest with the next-block minute-open reference. Start OOS flat.",
+    "sizing": "Independent $2,000 maximum-affordable unlevered spot; preserve USDT residue; no shorting, leverage, add-on, cross-asset exposure, cash yield, or pre-OOS fills."
+  },
+  "parameters": {
+    "entry_15m_drop_fraction": 0.01,
+    "max_holding_15m_bars": 12,
+    "exit_rebound_fraction": 0.0,
+    "initial_capital_usdt": 2000,
+    "train_15m_bars": 35040,
+    "test_15m_bars": 2880,
+    "step_15m_bars": 2880,
+    "embargo_15m_bars": 288,
+    "folds": 12,
+    "oos_start_15m_index": 35328,
+    "oos_end_exclusive_15m_index": 69888,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  }
+}
