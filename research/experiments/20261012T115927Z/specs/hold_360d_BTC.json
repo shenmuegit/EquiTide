@@ -1,0 +1,25 @@
+{
+  "kind": "strategy",
+  "family": "spot-rotation-hold-reference",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "name": "hold_360d_BTC",
+  "logic": {
+    "entry": "Buy at first OOS 00:01 execution, independent of signal.",
+    "exit": "Hold through continuous OOS, then liquidate at the common terminal execution.",
+    "sizing": "Independent $2,000 unlevered spot benchmark, no yield."
+  },
+  "parameters": {
+    "initial_capital_usdt": 2000,
+    "oos_first_test_index": 368,
+    "oos_end_exclusive_index": 728,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  }
+}

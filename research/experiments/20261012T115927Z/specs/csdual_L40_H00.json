@@ -1,0 +1,34 @@
+{
+  "kind": "strategy",
+  "family": "spot-cross-sectional-dual-momentum-rotation",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "name": "csdual_L40_H00",
+  "logic": {
+    "signal": "For a completed UTC daily close i-1, compute each asset simple return C[i-1]/C[i-1-L]-1. Select the asset with the higher return (BTC breaks exact ties); set target cash unless the winning return is strictly above the configured absolute hurdle.",
+    "rebalance": "Trade only on target change. If rotating, sell held coin completely before buying the new leader using remaining cash; if threshold is not met, sell to cash. While desired asset is unchanged, do not rebalance. A failed leg remains in current cash/coin state and the next daily decision retries only if target still differs.",
+    "timing": "Signals use completed daily closes only. Trade at next UTC day 00:01 one-minute open after signal availability; terminal close is costed at the common endpoint.",
+    "sizing": "Independent $2,000 spot account, 100% one-asset-or-cash target, no simultaneous holdings, leverage, short, interest, cross-account transfers, or pre-OOS fills."
+  },
+  "parameters": {
+    "lookback_days": 40,
+    "absolute_return_hurdle": 0.0,
+    "initial_capital_usdt": 2000,
+    "train_days": 365,
+    "test_days": 30,
+    "step_days": 30,
+    "embargo_days": 3,
+    "folds": 12,
+    "oos_first_test_index": 368,
+    "oos_end_exclusive_index": 728,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  }
+}
