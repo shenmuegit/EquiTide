@@ -1,0 +1,883 @@
+{
+  "round": "20261013T073340Z",
+  "reactivation_of_round": "20261012T232807Z",
+  "frozen_at_utc": "2026-10-13T07:33:40Z",
+  "source_plan_sha256": "095c13c88c3bb1b7360ed13085a16d35695f854576875c50653ec70ad1829351",
+  "source_definitions_sha256": "851d0cd164e37180ab446758743acdca98de097889842caaa913cbe10c3dd0a1",
+  "no_result_reconciliation": {
+    "path": "research/experiments/20261013T012732Z/pending_reservation_resolution.json",
+    "sha256": "488dc19f7c5ab863e23e8ced1e3114d65f2490b2bd88876df7cb32a9af777fc0",
+    "state": "20 exact definitions abandoned after duplicate-reserved responses; explicit reconciliation says no evaluation/report/data-run existed."
+  },
+  "direction": "Resume the exact UTC 15-minute candle-turn effect falsification batch: phase-0 events are candidates; phase +1 and +2 minute events are predeclared controls.",
+  "hypothesis": "A primary Bitcoin study reports minute returns concentrated at 15-minute candle boundaries, but its profitability depends on a Bitfinex-specific volume-based zero-fee tier around $5,000. This re-run checks the exact frozen BTC/ETH 1–3 minute long-only windows at $2,000 per account under Binance and repository costs. Falsification of transferability, not replication.",
+  "source_paper": {
+    "citation": "Shanaev et al. (2023), Turn-of-the-candle effect in bitcoin returns, Heliyon 9:e14236, DOI 10.1016/j.heliyon.2023.e14236",
+    "url": "https://doi.org/10.1016/j.heliyon.2023.e14236",
+    "accessed_utc": "2026-10-12",
+    "finding_summary": "Paper reports ~0.58 bps/minute average at exact 15-minute candle turns and a Bitfinex sample strategy that reaches zero fees at its volume tier around $5,000 starting capital; this is not assumed to transfer to Binance or $2,000 accounts."
+  },
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "phase_offsets_minutes": [
+      0,
+      1,
+      2
+    ],
+    "hold_minutes": [
+      1,
+      2,
+      3
+    ],
+    "event_minutes_utc": [
+      0,
+      15,
+      30,
+      45
+    ],
+    "candidate_configs": 6,
+    "placebo_controls": 12,
+    "comparators": 2,
+    "total_registry_definitions": 20
+  },
+  "rule": "At every UTC hour quarter-hour boundary minute {0,15,30,45} plus fixed phase offset p, schedule buy at one-minute open; sell at open exactly hold_minutes later. p ∈ {0,1,2}; hold ∈ {1,2,3}; p=0 is primary event; p=1/2 are controls. Nonoverlapping windows; flat between. Orders are scheduled before each event, signal available 60s before entry; trade at boundary open. No bar from entry/holding period used to choose trades.",
+  "time_boundaries": {
+    "input_history_utc": "2024-09-16/2026-09-16",
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "oos_start_utc": "2025-09-19T00:00:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+    "walk_forward": "12 continuous, non-overlapping 30-day windows; no model fitting; positions carry across fold boundaries.",
+    "history_note": "This range has been repeatedly used in repository research and is not an untouched final holdout."
+  },
+  "costs": {
+    "initial_capital_usdt_per_config": 2000,
+    "fee_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact": "0.5 * stddev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete daily quote ADV)",
+    "max_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "exchange_filters": "frozen Binance PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor and 5-minute pre-execution VWAP percent-price proxy."
+  },
+  "failure_gates": {
+    "all_1x_2x_3x_positive": true,
+    "min_positive_1x_folds": 8,
+    "max_3x_event_sample_drawdown_pct": 25,
+    "min_3x_neighborhood_positive_fraction": 0.6,
+    "min_1x_round_trips": 100,
+    "min_1x_gross_reference_pnl_to_cost": 2.5,
+    "no_capacity_or_balance_violations": true,
+    "terminal_flat": true,
+    "phase_specificity": "For each asset, phase-0 mean 1x net return must exceed each phase-control mean; otherwise phase-0 candidates are rejected."
+  },
+  "frozen_specs": [
+    {
+      "name": "buy_hold_btc_event_period",
+      "asset": "BTC",
+      "fingerprint": "537f5a8fc4b6e58511fabbde15096659e072be117d9a365d3827ac178134c70e",
+      "spec": "research/experiments/20261013T073340Z/specs/buy_hold_btc_event_period.json",
+      "role": "buy_hold_comparator",
+      "parameters": {
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete daily quote-volume ADV)",
+        "maximum_participation": 0.001
+      }
+    },
+    {
+      "name": "buy_hold_eth_event_period",
+      "asset": "ETH",
+      "fingerprint": "c9767a4d8f9b015df12d81551112beb81f1f6fffd04b54b73f7c641c3cf0b3b3",
+      "spec": "research/experiments/20261013T073340Z/specs/buy_hold_eth_event_period.json",
+      "role": "buy_hold_comparator",
+      "parameters": {
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete daily quote-volume ADV)",
+        "maximum_participation": 0.001
+      }
+    },
+    {
+      "name": "turn15_btc_phase0_hold1m",
+      "asset": "BTC",
+      "fingerprint": "2f77a9288b2b0064eb56b1686720aa7184270186375b9948bb7c7b4b7af16d37",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_btc_phase0_hold1m.json",
+      "role": "primary_event",
+      "parameters": {
+        "phase_offset_minutes": 0,
+        "hold_minutes": 1,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    },
+    {
+      "name": "turn15_btc_phase0_hold2m",
+      "asset": "BTC",
+      "fingerprint": "30170de54694e080db5fcf079358cd798b778aff45e55a14e8c90bc60dc05bc9",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_btc_phase0_hold2m.json",
+      "role": "primary_event",
+      "parameters": {
+        "phase_offset_minutes": 0,
+        "hold_minutes": 2,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    },
+    {
+      "name": "turn15_btc_phase0_hold3m",
+      "asset": "BTC",
+      "fingerprint": "a8fffd0f7db85eb17396665e00a8e5e8dfa12318cd1c5b994aa8a75620f66eba",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_btc_phase0_hold3m.json",
+      "role": "primary_event",
+      "parameters": {
+        "phase_offset_minutes": 0,
+        "hold_minutes": 3,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    },
+    {
+      "name": "turn15_btc_phase1_hold1m",
+      "asset": "BTC",
+      "fingerprint": "fc779e2edb65bf7fa4f59dad26383d874d5fb81c339a0d0f90e5e78830b841d6",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_btc_phase1_hold1m.json",
+      "role": "predeclared_phase_placebo_control",
+      "parameters": {
+        "phase_offset_minutes": 1,
+        "hold_minutes": 1,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    },
+    {
+      "name": "turn15_btc_phase1_hold2m",
+      "asset": "BTC",
+      "fingerprint": "170f25c236c722b49398969ea033c009601ad0bb37a9715b9cd5328fda02f07a",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_btc_phase1_hold2m.json",
+      "role": "predeclared_phase_placebo_control",
+      "parameters": {
+        "phase_offset_minutes": 1,
+        "hold_minutes": 2,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    },
+    {
+      "name": "turn15_btc_phase1_hold3m",
+      "asset": "BTC",
+      "fingerprint": "96f3d8b257dd90fceb79799bd5aa1d73b3a948d18528092681042a0cab980e60",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_btc_phase1_hold3m.json",
+      "role": "predeclared_phase_placebo_control",
+      "parameters": {
+        "phase_offset_minutes": 1,
+        "hold_minutes": 3,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    },
+    {
+      "name": "turn15_btc_phase2_hold1m",
+      "asset": "BTC",
+      "fingerprint": "b10e8c96fb1129e31fa70799afca2ee4593e8227e53870e759c9a1f5ecb0f7d8",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_btc_phase2_hold1m.json",
+      "role": "predeclared_phase_placebo_control",
+      "parameters": {
+        "phase_offset_minutes": 2,
+        "hold_minutes": 1,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    },
+    {
+      "name": "turn15_btc_phase2_hold2m",
+      "asset": "BTC",
+      "fingerprint": "9e4967e80730787b406119dc0bfafaf2945a95aeada44c4dd69988308a70beac",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_btc_phase2_hold2m.json",
+      "role": "predeclared_phase_placebo_control",
+      "parameters": {
+        "phase_offset_minutes": 2,
+        "hold_minutes": 2,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    },
+    {
+      "name": "turn15_btc_phase2_hold3m",
+      "asset": "BTC",
+      "fingerprint": "670bab25991fd4b219d8aeae8f1ea29359a06467da4fa8a6136ca54dac78f9a1",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_btc_phase2_hold3m.json",
+      "role": "predeclared_phase_placebo_control",
+      "parameters": {
+        "phase_offset_minutes": 2,
+        "hold_minutes": 3,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    },
+    {
+      "name": "turn15_eth_phase0_hold1m",
+      "asset": "ETH",
+      "fingerprint": "5f8351b2c9361282874a195143956eb542647fe382a8430ceb39d7f27d6f6f19",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_eth_phase0_hold1m.json",
+      "role": "primary_event",
+      "parameters": {
+        "phase_offset_minutes": 0,
+        "hold_minutes": 1,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    },
+    {
+      "name": "turn15_eth_phase0_hold2m",
+      "asset": "ETH",
+      "fingerprint": "f4f1783ddc14e9a042a2b4cc8a000c3d04656923700272f984363be0fe35df82",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_eth_phase0_hold2m.json",
+      "role": "primary_event",
+      "parameters": {
+        "phase_offset_minutes": 0,
+        "hold_minutes": 2,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    },
+    {
+      "name": "turn15_eth_phase0_hold3m",
+      "asset": "ETH",
+      "fingerprint": "da50ac380e8b64c684e307bf0997bfd7cd66357b38151cafd51aea45389dfbf1",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_eth_phase0_hold3m.json",
+      "role": "primary_event",
+      "parameters": {
+        "phase_offset_minutes": 0,
+        "hold_minutes": 3,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    },
+    {
+      "name": "turn15_eth_phase1_hold1m",
+      "asset": "ETH",
+      "fingerprint": "ee9050b54db65f42541a1b4bb397fb27cecd9fd14b9d8370a5d580784f4ebccb",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_eth_phase1_hold1m.json",
+      "role": "predeclared_phase_placebo_control",
+      "parameters": {
+        "phase_offset_minutes": 1,
+        "hold_minutes": 1,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    },
+    {
+      "name": "turn15_eth_phase1_hold2m",
+      "asset": "ETH",
+      "fingerprint": "0ec1b00b85794a4ea199c5c451f4dfb2f51904c0106d26e7ccbd2327e1af1550",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_eth_phase1_hold2m.json",
+      "role": "predeclared_phase_placebo_control",
+      "parameters": {
+        "phase_offset_minutes": 1,
+        "hold_minutes": 2,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    },
+    {
+      "name": "turn15_eth_phase1_hold3m",
+      "asset": "ETH",
+      "fingerprint": "49b8b77014112ff317aedb7389a1ddcad8fcf5c62efd0252f3bb10811fdd912a",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_eth_phase1_hold3m.json",
+      "role": "predeclared_phase_placebo_control",
+      "parameters": {
+        "phase_offset_minutes": 1,
+        "hold_minutes": 3,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    },
+    {
+      "name": "turn15_eth_phase2_hold1m",
+      "asset": "ETH",
+      "fingerprint": "21cbd28f04cc7019ec7411817458b4ce5429ec71fd8940300a9afeeac8c03c97",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_eth_phase2_hold1m.json",
+      "role": "predeclared_phase_placebo_control",
+      "parameters": {
+        "phase_offset_minutes": 2,
+        "hold_minutes": 1,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    },
+    {
+      "name": "turn15_eth_phase2_hold2m",
+      "asset": "ETH",
+      "fingerprint": "523d5f19b15de61151310d3c9156b6820aaef8185878ff118d4a286888d71758",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_eth_phase2_hold2m.json",
+      "role": "predeclared_phase_placebo_control",
+      "parameters": {
+        "phase_offset_minutes": 2,
+        "hold_minutes": 2,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    },
+    {
+      "name": "turn15_eth_phase2_hold3m",
+      "asset": "ETH",
+      "fingerprint": "74decf831caca9c9bd5fe8fe93b089b1a0296f815ea223dbd6e93605437aa3d7",
+      "spec": "research/experiments/20261013T073340Z/specs/turn15_eth_phase2_hold3m.json",
+      "role": "predeclared_phase_placebo_control",
+      "parameters": {
+        "phase_offset_minutes": 2,
+        "hold_minutes": 3,
+        "event_minutes_utc": [
+          0,
+          15,
+          30,
+          45
+        ],
+        "initial_capital_usdt": 2000,
+        "oos_start_utc": "2025-09-19T00:00:00Z",
+        "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+        "walk_forward_test_days": 30,
+        "walk_forward_folds": 12,
+        "walk_forward_step_days": 30,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "fee_rate_per_side": 0.001,
+        "half_spread_estimate_per_side": 0.0001,
+        "slippage_estimate_per_side": 0.0002,
+        "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+        "maximum_participation": 0.001,
+        "exchange_filters": "Frozen Binance exchange-info snapshot with PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy for percent-price filters.",
+        "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+        "sensitivity_axes": [
+          "phase_offset_minutes",
+          "hold_minutes"
+        ]
+      }
+    }
+  ],
+  "data_files": {
+    "BTC": [
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+        "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6",
+        "bytes": 30555668
+      },
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+        "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16",
+        "bytes": 30415140
+      }
+    ],
+    "ETH": [
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+        "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57",
+        "bytes": 27110682
+      },
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+        "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584",
+        "bytes": 26332430
+      }
+    ]
+  },
+  "execution": {
+    "price_source": "Historical Binance spot 1m OHLCV open at event and scheduled exit, only for this historical backtest; never paper10 fills.",
+    "input_structure": "730 contiguous days of normalized Binance 1m bars from 2024-09-16 through 2026-09-16.",
+    "oos_start_day_index": 368,
+    "oos_end_day_index": 728,
+    "oos_days": 360,
+    "event_schedule": "UTC minute-of-hour 0/15/30/45 plus phase offset 0/1/2; hold 1/2/3 minutes; no overlap.",
+    "signal_available_seconds_before_entry": 60,
+    "exit_retry": "If a frozen filter rejects an exit, retry at each subsequent minute open until flat; no future price is used to decide the scheduled entry.",
+    "cost_engine": "research/experiments/20261001T133655Z/kernel.py::fill plus lagged_cost_inputs from 20261001T013355Z/evaluate.py.",
+    "filters_source": "research/experiments/20261012T035429Z/report.json",
+    "filters_sha256": "383d833e5d7d9d12aac3dacdb02051fdd2a0b3b4b49c0e099ddc1b38c3c7e16e",
+    "maximum_participation": 0.001,
+    "funding_borrow": "Not applicable, long-only spot."
+  },
+  "sensitivity_axes": [
+    "phase_offset_minutes: 0 primary, 1/2 placebos",
+    "hold_minutes: 1/2/3"
+  ],
+  "historical_disclosure": "The 2025-09-19/2026-09-14 OOS span is repeatedly used repository development/validation history, not an untouched final test. Preserve previous search count and report multiple-testing risk.",
+  "previous_round_reservation_note": "The source reserve.json records exit code 3 for every item because each was still reserved. A later reconciliation marks them abandoned with result_available=false. No historical calculation is claimed or reused.",
+  "reproduction": [
+    "python3 research/experiments/20261013T073340Z/prepare.py",
+    "python3 research/experiments/20261013T073340Z/evaluate.py",
+    "python3 research/experiments/20261013T073340Z/audit.py",
+    "python3 research/experiments/20261013T073340Z/result.py",
+    "python3 research/experiments/20261013T073340Z/finish.py"
+  ]
+}

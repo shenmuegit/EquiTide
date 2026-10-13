@@ -1,0 +1,30 @@
+{
+  "kind": "strategy",
+  "family": "turn15-buy-and-hold-reference",
+  "market": "spot",
+  "timeframe": "1m",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "name": "buy_hold_btc_event_period",
+  "logic": {
+    "entry": "Buy at OOS start 00:00 UTC first one-minute open.",
+    "exit": "Terminal sell at 2026-09-14T00:00:00Z first one-minute open.",
+    "sizing": "Independent 2,000 USDT unlevered buy-and-hold spot benchmark; same fees, spread, slippage, impact, filters and cost multipliers as candidates."
+  },
+  "parameters": {
+    "initial_capital_usdt": 2000,
+    "oos_start_utc": "2025-09-19T00:00:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "fee_rate_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete daily quote-volume ADV)",
+    "maximum_participation": 0.001
+  }
+}
