@@ -1,0 +1,67 @@
+{
+  "kind": "strategy",
+  "family": "spot-long-horizon-relative-strength-cash-rotation",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "name": "relstr_L126_H05",
+  "logic": {
+    "signal": "At each OOS UTC day boundary d after the previous daily candle is fully closed, compute BTC and ETH simple returns close[d-1]/close[d-1-L]-1 using L in {63,126,252}. BTC wins exact ties. Target 100 percent of the one 2000-USDT portfolio in the winner only if the winning return is strictly greater than the absolute hurdle {0,0.05,0.10}; otherwise target cash. Trade only when the actual holding asset differs from the target. At d 00:01 one-minute open, sell the full old position first, then if required buy the new winner from remaining USDT; failed legs leave actual holdings/cash unchanged and are retried only when the next daily target still differs. Never backfill missed signals or rebalance an unchanged holding. A switch uses two sequential fills and pays costs on both legs.",
+    "allocation": "Rotation account has 2000 USDT total. Target raw exposure is {BTC:1,ETH:0,cash:0}, {BTC:0,ETH:1,cash:0}, or {BTC:0,ETH:0,cash:1}; no simultaneous asset holdings, normalization, borrow, yield, or other-account transfers. Static 50/50 hold comparator starts with two separate 1000-USDT sleeves and does not rebalance.",
+    "execution": {
+      "signal": "Only fully closed daily rows; signal becomes available at new UTC day 00:00 after previous UTC day close.",
+      "entry_exit": "Historical 1m open at 00:01 UTC (60-second availability delay), full position on target changes; terminal liquidation at end UTC 00:01. Historical minute opens are used only in this research backtest, never as current paper10 fills.",
+      "filters_source_sha256": "7ffee371d9a3af4190d4dd5a0d0f662e5fae7acffeaf3982247f4a6021c1a02a",
+      "filters_received_utc": "2026-10-13T06:26:42.544995Z",
+      "accounting": "Existing Decimal kernel fill() and lagged daily cost input implementation."
+    },
+    "limitations": "Two-asset cross-section only; no shorting, leverage, transfers or yield."
+  },
+  "parameters": {
+    "lookback_days": 126,
+    "absolute_return_hurdle": 0.05,
+    "initial_capital_usdt": 2000,
+    "start_utc": "2025-09-19T00:00:00Z",
+    "end_exclusive_utc": "2026-09-14T00:00:00Z",
+    "terminal_execution_utc": "2026-09-14T00:01:00Z",
+    "start_day_index": 368,
+    "end_day_index": 728,
+    "days": 360,
+    "warmup_days": 365,
+    "fold_days": 30,
+    "folds": 12,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "sensitivity_axes": [
+      "lookback_days",
+      "absolute_return_hurdle"
+    ],
+    "exchange_filters_sha256": "7ffee371d9a3af4190d4dd5a0d0f662e5fae7acffeaf3982247f4a6021c1a02a"
+  },
+  "sources": [
+    {
+      "citation": "Shi, Y., Li, X., & Zhang, J. (2021). Up or down? Short-term reversal, momentum, and liquidity effects in cryptocurrency markets. International Review of Financial Analysis, 78, 101908. DOI:10.1016/j.irfa.2021.101908.",
+      "url": "https://doi.org/10.1016/j.irfa.2021.101908",
+      "accessed_utc": "2026-10-13",
+      "finding_summary": "The authors study daily cross-sectional cryptocurrency returns and report that very liquid large-cap assets can show daily momentum even where the broad cross-section exhibits reversal. This motivates a low-turnover BTC/ETH relative-strength allocation screen; their broad-universe result does not validate a two-asset portfolio."
+    }
+  ],
+  "failure_gates": {
+    "all_1x_2x_3x_returns_positive": true,
+    "minimum_positive_1x_folds": 8,
+    "maximum_3x_sample_drawdown_pct": 25,
+    "minimum_3x_adjacent_neighbor_positive_fraction": 0.6,
+    "minimum_1x_round_trips": 4,
+    "minimum_1x_gross_reference_pnl_to_cost": 2.5,
+    "no_capacity_filter_or_balance_violations": true,
+    "terminal_flat_all_costs": true,
+    "interpretation": "Historical validation only; does not imply live/future profit or minute-level risk bounds."
+  }
+}

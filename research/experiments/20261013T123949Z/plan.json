@@ -1,0 +1,115 @@
+{
+  "round": "20261013T123949Z",
+  "frozen_at_utc": "2026-10-13T12:39:49Z",
+  "direction": "Long-horizon cross-sectional relative-strength rotation between BTC and ETH with an absolute winner-return cash hurdle.",
+  "hypothesis": "Lower-frequency relative strength may reduce trading-cost drag compared with previously tested short-horizon rotations. Select the stronger of BTC and ETH over 63/126/252 fully closed UTC daily bars, but stay in USDT unless that winner is above a 0/5/10 percent cumulative-return hurdle.",
+  "source_paper": {
+    "citation": "Shi, Y., Li, X., & Zhang, J. (2021). Up or down? Short-term reversal, momentum, and liquidity effects in cryptocurrency markets. International Review of Financial Analysis, 78, 101908. DOI:10.1016/j.irfa.2021.101908.",
+    "url": "https://doi.org/10.1016/j.irfa.2021.101908",
+    "accessed_utc": "2026-10-13",
+    "finding_summary": "The authors study daily cross-sectional cryptocurrency returns and report that very liquid large-cap assets can show daily momentum even where the broad cross-section exhibits reversal. This motivates a low-turnover BTC/ETH relative-strength allocation screen; their broad-universe result does not validate a two-asset portfolio."
+  },
+  "grid": {
+    "lookback_days": [
+      63,
+      126,
+      252
+    ],
+    "absolute_return_hurdle": [
+      0.0,
+      0.05,
+      0.1
+    ],
+    "rotation_configs": 9,
+    "comparators": 3,
+    "total_registry_definitions": 12
+  },
+  "complete_rule": "At each OOS UTC day boundary d after the previous daily candle is fully closed, compute BTC and ETH simple returns close[d-1]/close[d-1-L]-1 using L in {63,126,252}. BTC wins exact ties. Target 100 percent of the one 2000-USDT portfolio in the winner only if the winning return is strictly greater than the absolute hurdle {0,0.05,0.10}; otherwise target cash. Trade only when the actual holding asset differs from the target. At d 00:01 one-minute open, sell the full old position first, then if required buy the new winner from remaining USDT; failed legs leave actual holdings/cash unchanged and are retried only when the next daily target still differs. Never backfill missed signals or rebalance an unchanged holding. A switch uses two sequential fills and pays costs on both legs.",
+  "allocation": "Rotation account has 2000 USDT total. Target raw exposure is {BTC:1,ETH:0,cash:0}, {BTC:0,ETH:1,cash:0}, or {BTC:0,ETH:0,cash:1}; no simultaneous asset holdings, normalization, borrow, yield, or other-account transfers. Static 50/50 hold comparator starts with two separate 1000-USDT sleeves and does not rebalance.",
+  "time_boundaries": {
+    "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+    "walk_forward": "12 contiguous fixed 30-day OOS folds; no fitted model/parameter; lookback is strictly trailing prior completed days.",
+    "history_disclosure": "This date range has been repeatedly used in repository research, not an untouched final holdout.",
+    "start_utc": "2025-09-19T00:00:00Z",
+    "end_exclusive_utc": "2026-09-14T00:00:00Z",
+    "terminal_execution_utc": "2026-09-14T00:01:00Z",
+    "start_day_index": 368,
+    "end_day_index": 728,
+    "days": 360,
+    "warmup_days": 365,
+    "fold_days": 30,
+    "folds": 12,
+    "embargo_days": 3
+  },
+  "execution": {
+    "signal": "Only fully closed daily rows; signal becomes available at new UTC day 00:00 after previous UTC day close.",
+    "entry_exit": "Historical 1m open at 00:01 UTC (60-second availability delay), full position on target changes; terminal liquidation at end UTC 00:01. Historical minute opens are used only in this research backtest, never as current paper10 fills.",
+    "filters_source_sha256": "7ffee371d9a3af4190d4dd5a0d0f662e5fae7acffeaf3982247f4a6021c1a02a",
+    "filters_received_utc": "2026-10-13T06:26:42.544995Z",
+    "accounting": "Existing Decimal kernel fill() and lagged daily cost input implementation."
+  },
+  "costs": {
+    "initial_capital_usdt": 2000,
+    "fee_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_per_side": 0.0002,
+    "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete daily quote ADV)",
+    "maximum_participation": 0.001,
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "filters_source": {
+      "path": "research/paper10/observations/20261013T062626335409Z/exchange_info.json.gz",
+      "archive_sha256": "1874be67150821947c331c240a1e057cfa7d29769ed620606dd3c76c9ace0e0c",
+      "raw_sha256": "7ffee371d9a3af4190d4dd5a0d0f662e5fae7acffeaf3982247f4a6021c1a02a",
+      "received_utc": "2026-10-13T06:26:42.544995Z"
+    },
+    "note": "No historical L2; half-spread, slippage and square-root impact are estimates. No funding or borrow: spot long-only."
+  },
+  "sensitivity_axes": [
+    "lookback_days",
+    "absolute_return_hurdle"
+  ],
+  "failure_gates": {
+    "all_1x_2x_3x_returns_positive": true,
+    "minimum_positive_1x_folds": 8,
+    "maximum_3x_sample_drawdown_pct": 25,
+    "minimum_3x_adjacent_neighbor_positive_fraction": 0.6,
+    "minimum_1x_round_trips": 4,
+    "minimum_1x_gross_reference_pnl_to_cost": 2.5,
+    "no_capacity_filter_or_balance_violations": true,
+    "terminal_flat_all_costs": true,
+    "interpretation": "Historical validation only; does not imply live/future profit or minute-level risk bounds."
+  },
+  "data_files": {
+    "BTC": [
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+        "bytes": 30555668,
+        "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6"
+      },
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+        "bytes": 30415140,
+        "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16"
+      }
+    ],
+    "ETH": [
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+        "bytes": 27110682,
+        "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57"
+      },
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+        "bytes": 26332430,
+        "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584"
+      }
+    ]
+  },
+  "prior_research": {
+    "nearest_existing_family": "spot-cross-sectional-dual-momentum-rotation; previous tested lookbacks were 20/40/60 days and hurdles 0/2/4%. These new 63/126/252 day and 0/5/10% definitions are fingerprint-distinct and were selected before results. Prior short-horizon rotations were rejected."
+  }
+}

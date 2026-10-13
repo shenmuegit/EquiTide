@@ -1,0 +1,41 @@
+{
+  "kind": "strategy",
+  "family": "spot-long-horizon-relative-strength-hold-reference",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "name": "hold_360d_btc_relative_strength_study",
+  "logic": {
+    "entry": "Buy the whole one-asset sleeve at the common first executable OOS minute open.",
+    "exit": "Hold through OOS and terminal-liquidate with the same costs.",
+    "sizing": "2000-USDT independent long-only spot comparator."
+  },
+  "parameters": {
+    "initial_capital_usdt": 2000,
+    "start_utc": "2025-09-19T00:00:00Z",
+    "end_exclusive_utc": "2026-09-14T00:00:00Z",
+    "terminal_execution_utc": "2026-09-14T00:01:00Z",
+    "start_day_index": 368,
+    "end_day_index": 728,
+    "days": 360,
+    "warmup_days": 365,
+    "fold_days": 30,
+    "folds": 12,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  },
+  "sources": [
+    {
+      "citation": "Shi, Y., Li, X., & Zhang, J. (2021). Up or down? Short-term reversal, momentum, and liquidity effects in cryptocurrency markets. International Review of Financial Analysis, 78, 101908. DOI:10.1016/j.irfa.2021.101908.",
+      "url": "https://doi.org/10.1016/j.irfa.2021.101908",
+      "accessed_utc": "2026-10-13",
+      "finding_summary": "The authors study daily cross-sectional cryptocurrency returns and report that very liquid large-cap assets can show daily momentum even where the broad cross-section exhibits reversal. This motivates a low-turnover BTC/ETH relative-strength allocation screen; their broad-universe result does not validate a two-asset portfolio."
+    }
+  ]
+}
