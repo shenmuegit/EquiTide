@@ -197,9 +197,10 @@ def metric_scene(scene):
         return None
     display = lambda value: round(float(value), 6) if value is not None else None
     return {"return_pct": display(scene["net_return_pct"]), "drawdown_pct": display(scene["max_drawdown_pct"]),
-            "sharpe": display(scene.get("sharpe_365")), "cost": display(scene.get("cost_usdt")),
+            "sharpe": display(scene.get("sharpe_365", scene.get("sharpe_annualized_daily", scene.get("sharpe_annualized")))),
+            "cost": display(scene.get("cost_usdt", scene.get("cost"))),
             "executions": scene.get("executions"), "round_trips": scene.get("round_trips"),
-            "nav_hash": scene.get("NAV_sha256_f64le"),
+            "nav_hash": scene.get("NAV_sha256_f64le", scene.get("minute_nav_sha256_f64le", scene.get("daily_nav_sha256_f64le"))),
             "fold_returns_pct": [display(f["net_return_pct"]) for f in scene.get("folds", [])],
             "fold_drawdowns_pct": [display(f.get("max_drawdown_pct")) for f in scene.get("folds", [])],
             "first_five_return_pct": display(scene.get("first_five_fold_return_pct"))}
@@ -248,9 +249,10 @@ def build_research(root):
                     and len(cfg.get("scenes", {})) >= 3 and len(other.get("scenes", {})) >= 3):
                 cross.add(fp)
         summary = report.get("summary", {})
-        new_count = summary.get("new_configs", len([c for c in cfgs.values() if isinstance(c, dict) and c.get("is_new")]))
+        new_count = summary.get("new_configs", summary.get("candidate_configs",
+                            len([c for c in cfgs.values() if isinstance(c, dict) and c.get("is_new")])))
         if new_count and path.name == "report.json":
-            passed, rejected = summary.get("passed", []), summary.get("rejected", [])
+            passed, rejected = summary.get("passed", summary.get("candidate_passed", [])), summary.get("rejected", summary.get("candidate_rejected", []))
             rounds.append({"id": path.parent.name, "at": report.get("evaluation_started_utc", report.get("created_at_utc")),
                            "new_configs": new_count, "passed": len(passed) if isinstance(passed, list) else passed,
                            "rejected": len(rejected) if isinstance(rejected, list) else rejected,
@@ -263,11 +265,13 @@ def build_research(root):
                              "result_available": record.get("result_available", False), "report": record.get("report")})
             continue
         name, cfg, report, relative = matches[fp]
-        scenes = {str(cost): metric_scene(scene) for cost, scene in cfg.get("scenes", cfg.get("cost_scenarios", {})).items()}
+        raw_scenes = cfg.get("scenes", cfg.get("scenarios", cfg.get("cost_scenarios", {})))
+        scenes = {str(cost): metric_scene(scene) for cost, scene in raw_scenes.items()}
         scenes = {cost: scene for cost, scene in scenes.items() if scene is not None}
         spec, params = record["spec"], record["spec"].get("parameters", {})
-        start = params.get("start_utc", report.get("oos_start_utc"))
-        end = params.get("end_utc", report.get("terminal_exit_utc"))
+        start = params.get("start_utc", params.get("oos_start_utc", report.get("oos_start_utc")))
+        end = params.get("end_utc", params.get("end_exclusive_utc",
+                         params.get("terminal_execution_utc", report.get("terminal_exit_utc"))))
         if not scenes or not start or not end:
             unranked.append({"fingerprint": fp, "family": spec["family"], "status": record["status"],
                              "result_available": True, "report": relative})
@@ -277,9 +281,9 @@ def build_research(root):
         rows.append({"fingerprint": fp, "name": name, "family": spec["family"], "kind": spec["kind"],
                      "indicator": indicator(spec, records), "weights": weights, "capital_usdt": params.get("initial_capital_usdt"),
                      "start_utc": start, "end_utc": end, "status": record["status"], "cross_period_passed": fp in cross,
-                     "scenes": scenes, "criteria": cfg.get("criteria", {}),
-                     "failed_criteria": cfg.get("failed_criteria", [k for k, v in cfg.get("criteria", {}).items() if v is False]),
-                     "positive_folds_1x": cfg.get("positive_folds_1x"), "report": relative,
+                     "scenes": scenes, "criteria": cfg.get("criteria", cfg.get("gates", {})),
+                     "failed_criteria": cfg.get("failed_criteria", [k for k, v in cfg.get("criteria", cfg.get("gates", {})).items() if v is False]),
+                     "positive_folds_1x": cfg.get("positive_folds_1x", cfg.get("positive_1x_folds", raw_scenes.get("1", {}).get("positive_1x_folds"))), "report": relative,
                      "validation": {"walk_forward_folds": len(scenes.get("1", {}).get("fold_returns_pct", [])),
                                     "cost_scenarios": sorted(scenes), "sensitivity_recorded": bool(report.get("sensitivity"))},
                      "spec_path": cfg.get("spec", cfg.get("spec_path")),
