@@ -1,0 +1,34 @@
+{
+  "kind": "strategy",
+  "family": "daily-spot-buy-hold-reference",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "name": "annual_hold_eth_rsi_period",
+  "logic": {
+    "entry": "Buy at the first OOS 00:01 UTC one-minute open",
+    "exit": "Terminal sell at 2026-09-15 00:01 UTC",
+    "sizing": "Independent 2000 USDT unlevered long-only spot account; same costs, tick/lot/notional and participation cap as candidates."
+  },
+  "parameters": {
+    "initial_capital_usdt": 2000,
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_terminal_utc": "2026-09-14T00:01:00Z",
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "fee_rate_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact_model": "0.5 * previous 20 complete UTC daily log-return standard deviation * sqrt(order quote budget / previous 20 complete daily quote-volume ADV)",
+    "maximum_participation": 0.001,
+    "walk_forward_folds": 12,
+    "walk_forward_test_days": 30,
+    "oos_days": 360
+  },
+  "logic_extra": "Fixed benchmark for contemporaneous comparison; does not fit or select candidate parameters."
+}

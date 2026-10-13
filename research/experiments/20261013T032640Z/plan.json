@@ -1,0 +1,101 @@
+{
+  "round": "20261013T032640Z",
+  "frozen_at_utc": "2026-10-13T03:26:40Z",
+  "direction": "Extend the preregistered daily Cutler RSI(2) pullback plus close-above-SMA filter to a full 360-day, twelve-fold OOS interval.",
+  "reason_for_extension": "The earlier 183-day screen had positive cumulative returns in some variants but zero candidates passed its six-fold consistency gate. Before selecting any parameter from those outcomes, evaluate the same frozen 3x3 RSI threshold/SMA grid over a predeclared full-year interval that includes the earlier period and the prior six months. Changed OOS boundaries/fold count make each definition distinct; no threshold, SMA length, or signal rule is selected from the earlier result.",
+  "prior_screen": {
+    "report": "research/experiments/20261012T212608Z/report.json",
+    "sha256": "4104b9708ff51ff17ddcec23891933b3c938bfe6b27f9af7a499f2fc8cdc81ab",
+    "candidate_configs": 18,
+    "candidate_passed": 0,
+    "candidate_rejected": 18,
+    "oos_days": 183,
+    "folds": 6
+  },
+  "rules_reused_from": "research/experiments/20261012T212608Z/specs/",
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "rsi_lookback_changes": 2,
+    "entry_rsi": [
+      5,
+      10,
+      15
+    ],
+    "exit_rsi": 50,
+    "trend_sma_days": [
+      100,
+      150,
+      200
+    ],
+    "candidate_configs": 18,
+    "benchmarks": 2
+  },
+  "time_boundaries": {
+    "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_terminal_utc": "2026-09-14T00:01:00Z",
+    "oos_days": 360,
+    "folds": 12,
+    "fold_days": 30,
+    "embargo_days": 3,
+    "rolling_train_days": 365,
+    "reuse_disclosure": "The full period is repeated development/validation history and is not an untouched final holdout."
+  },
+  "costs": {
+    "fee_each_side": "10bp",
+    "half_spread_estimate_each_side": "1bp",
+    "slippage_estimate_each_side": "2bp",
+    "impact": "0.5 * sample stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+    "maximum_participation": "0.1% of prior 20-day quote ADV",
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "filters_source": "research/experiments/20261012T035429Z/report.json",
+    "filters_sha256": "383d833e5d7d9d12aac3dacdb02051fdd2a0b3b4b49c0e099ddc1b38c3c7e16e",
+    "l2_data": "Unavailable; half-spread and impact are estimates.",
+    "market": "Unlevered long-only spot; no funding or borrow."
+  },
+  "source_files": [
+    {
+      "asset": "BTC",
+      "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+      "bytes": 30555668,
+      "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6"
+    },
+    {
+      "asset": "BTC",
+      "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+      "bytes": 30415140,
+      "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16"
+    },
+    {
+      "asset": "ETH",
+      "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+      "bytes": 27110682,
+      "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57"
+    },
+    {
+      "asset": "ETH",
+      "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+      "bytes": 26332430,
+      "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584"
+    }
+  ],
+  "failure_gates": {
+    "all_1x_2x_3x_net_returns_positive": true,
+    "minimum_positive_1x_folds": 8,
+    "maximum_3x_daily_sample_drawdown_pct": 25,
+    "minimum_3x_adjacent_neighborhood_positive_fraction": 0.6,
+    "minimum_1x_round_trips": 2,
+    "minimum_1x_gross_reference_pnl_to_cost": 2.5,
+    "no_balance_or_rejected_order_violations": true,
+    "terminal_flat": true
+  },
+  "bias_note": "The full year and entire 3x3 grid reuse repeatedly studied data; the prior six-month Cutler RSI screen had 18 rejected variants. Registry had 4,349 distinct fingerprints before this 20-definition batch. Substantial multiple-testing and reuse bias remain; any positive result still requires forward paper validation.",
+  "prior_unique_fingerprints_before_batch": 4349
+}
