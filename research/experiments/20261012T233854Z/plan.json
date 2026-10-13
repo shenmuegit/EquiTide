@@ -1,0 +1,175 @@
+{
+  "round": "20261012T233854Z",
+  "frozen_at_utc": "2026-10-12T23:39:57Z",
+  "direction": "Quarter-hour candle-turn long-only windows under two capital scales; hold-duration and phase-shift sensitivity.",
+  "economic_hypothesis": "The published turn-of-candle effect may extend beyond the first minute and may be sensitive to starting capital because the cited study relies on a Bitfinex volume-based fee tier. This test varies hold duration and capital while phase-shift controls test calendar specificity under fixed Binance costs.",
+  "primary_source": {
+    "citation": "Shanaev et al. (2023), Turn-of-the-candle effect in bitcoin returns, Heliyon 9:e14236, DOI 10.1016/j.heliyon.2023.e14236",
+    "url": "https://doi.org/10.1016/j.heliyon.2023.e14236",
+    "accessed_utc": "2026-10-12",
+    "limitations": "Paper reports 0.58bps/minute average on exact turn minutes and Bitfinex-specific tiered fees; our BTC/ETH Binance sample and $5k/$10k accounts use fixed repository fees and do not assume zero-fee qualification."
+  },
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "capital_usdt": [
+      5000,
+      10000
+    ],
+    "phase_offset_minutes": [
+      0,
+      1,
+      2
+    ],
+    "hold_minutes": [
+      1,
+      2,
+      3
+    ],
+    "event_minutes_utc": [
+      0,
+      15,
+      30,
+      45
+    ],
+    "phase0_candidates": 12,
+    "phase_placebo_controls": 24,
+    "capital_matched_buy_hold_references": 4,
+    "total_configurations": 40
+  },
+  "time_boundaries": {
+    "history_utc": "2024-09-16/2026-09-16",
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "oos_start_utc": "2025-09-19T00:00:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+    "walk_forward": "12 continuous 30-day folds, no fitted parameters, continuous cash across windows",
+    "reuse_note": "Repeated repository development/validation period; not an untouched final holdout."
+  },
+  "rule": "At each UTC hour minute {0,15,30,45} plus fixed phase p, buy at that minute open and sell at open exactly n minutes later (n∈{1,2,3}); phase p∈{0,1,2}. Event schedule is fixed before observations, with 60-second scheduling notice. Event windows do not overlap. Phase0 is primary and phase1/2 are placebo controls.",
+  "costs": {
+    "fee_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_per_side": 0.0002,
+    "impact": "0.5 * previous 20 complete UTC daily return standard deviation * sqrt(order quote budget / previous 20 complete daily quote ADV)",
+    "max_participation": 0.001,
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "exchange_filters": "Binance PRICE_FILTER, LOT_SIZE, NOTIONAL; adverse tick, lot floor, 5-minute VWAP proxy."
+  },
+  "gates": {
+    "all_1x_2x_3x_positive": true,
+    "minimum_positive_1x_folds": 8,
+    "max_3x_event_sample_drawdown_pct": 25,
+    "min_3x_neighbor_positive_fraction": 0.6,
+    "minimum_1x_round_trips": 100,
+    "minimum_1x_gross_pnl_to_cost": 2.5,
+    "no_capacity_or_balance_violations": true,
+    "terminal_flat": true,
+    "phase_specificity": "For each asset × capital × hold duration, exact phase0 average 1x return must exceed phase1 and phase2 averages."
+  },
+  "parallel_reservation_conflict": {
+    "attempt_round": "20261012T232807Z",
+    "registry_reserve_exit_codes": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "result_report_found": false,
+    "data_run_found": false,
+    "action": "No backtest run and no finish attempted for those 20 already-reserved definitions. Their rows and the original folder are preserved; this round uses non-overlapping capital/hold variants."
+  },
+  "initial16_audit": "research/experiments/20261012T035429Z/prior_evidence_audit.json confirms actual evidence for all 16; none needs a missing-result retry.",
+  "data_files": {
+    "BTC": [
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+        "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6",
+        "bytes": 30555668
+      },
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+        "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16",
+        "bytes": 30415140
+      }
+    ],
+    "ETH": [
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+        "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57",
+        "bytes": 27110682
+      },
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+        "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584",
+        "bytes": 26332430
+      }
+    ]
+  },
+  "filter_source": "research/experiments/20261012T035429Z/report.json",
+  "filter_source_sha256": "383d833e5d7d9d12aac3dacdb02051fdd2a0b3b4b49c0e099ddc1b38c3c7e16e",
+  "specs": [
+    "research/experiments/20261012T233854Z/specs/buy_hold_btc_cap10000_event_period.json",
+    "research/experiments/20261012T233854Z/specs/buy_hold_btc_cap5000_event_period.json",
+    "research/experiments/20261012T233854Z/specs/buy_hold_eth_cap10000_event_period.json",
+    "research/experiments/20261012T233854Z/specs/buy_hold_eth_cap5000_event_period.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap10000_phase0_hold1m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap10000_phase0_hold2m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap10000_phase0_hold3m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap10000_phase1_hold1m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap10000_phase1_hold2m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap10000_phase1_hold3m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap10000_phase2_hold1m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap10000_phase2_hold2m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap10000_phase2_hold3m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap5000_phase0_hold1m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap5000_phase0_hold2m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap5000_phase0_hold3m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap5000_phase1_hold1m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap5000_phase1_hold2m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap5000_phase1_hold3m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap5000_phase2_hold1m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap5000_phase2_hold2m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_btc_cap5000_phase2_hold3m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap10000_phase0_hold1m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap10000_phase0_hold2m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap10000_phase0_hold3m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap10000_phase1_hold1m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap10000_phase1_hold2m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap10000_phase1_hold3m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap10000_phase2_hold1m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap10000_phase2_hold2m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap10000_phase2_hold3m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap5000_phase0_hold1m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap5000_phase0_hold2m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap5000_phase0_hold3m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap5000_phase1_hold1m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap5000_phase1_hold2m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap5000_phase1_hold3m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap5000_phase2_hold1m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap5000_phase2_hold2m.json",
+    "research/experiments/20261012T233854Z/specs/turn15_eth_cap5000_phase2_hold3m.json"
+  ]
+}

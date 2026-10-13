@@ -1,0 +1,51 @@
+{
+  "round": "20261012T233854Z",
+  "report_sha256": "c2cf898e2f41a6324edfa79f3986c5261c63cb7520c4c2e5df00a35f9991db14",
+  "data_manifest_sha256": "1fb18195982a47bb9b2a5d4baf5638aa65f3a4e59926ba517edea35127f788a7",
+  "registry_records_sha256": "f9285165d1afd5fcfa13046e27fc353e4e453555f34277dd31554a541e8204b6",
+  "registry_record_count": 100,
+  "registry_record_statuses": {
+    "reserved": 60,
+    "rejected": 36,
+    "passed": 4
+  },
+  "registered_candidates": 36,
+  "registered_benchmarks": 4,
+  "candidate_passed": 0,
+  "candidate_rejected": 12,
+  "placebo_rejected": 24,
+  "cost_scenes": 120,
+  "folds": 12,
+  "actual_market_orders": 0,
+  "parallel_conflict": {
+    "round": "20261012T232807Z",
+    "duplicate_reserve_attempts": 20,
+    "no_run_or_report_at_detection": true,
+    "untouched": true
+  },
+  "checks": [
+    {
+      "name": "candle_event_financial_audit",
+      "exit_code": 0,
+      "stdout": "{\n  \"passed\": true,\n  \"candidate_configs\": 12,\n  \"placebo_controls\": 24,\n  \"benchmarks\": 4,\n  \"cost_scenes_verified\": 120,\n  \"reservations\": 40,\n  \"conflicting_reserved_trials_preserved\": 20,\n  \"finished_check\": true,\n  \"input_hashes\": \"PASS\",\n  \"cost_ledger_summaries\": \"PASS\",\n  \"folds\": 12\n}"
+    },
+    {
+      "name": "strategy_registry",
+      "exit_code": 0,
+      "stdout": "PASS: new parameters/weights and missing-result retries are allowed; exact/reordered completed trials stay blocked"
+    },
+    {
+      "name": "paper10_account_check",
+      "exit_code": 0,
+      "stdout": "{\"synthetic_fixture_checks\": \"PASS\", \"spread_and_fee_not_double_counted\": true, \"lot_and_balance_guard\": true, \"all_four_signal_families_causal\": true, \"same_observation_idempotent\": true, \"same_closed_day_does_not_retrade\": true, \"not_performance_evidence\": true}"
+    },
+    {
+      "name": "monitor_snapshot",
+      "exit_code": 0,
+      "stdout": "{\"ok\": true, \"paper_accounts\": 10, \"observations\": 59, \"research_configs\": 3171, \"protected_inputs_unchanged\": true}"
+    }
+  ],
+  "conclusion": "All 12 phase-zero candidates failed the registered gates due to net loss, drawdown/fold stability and costs; all placebo controls are also rejected.",
+  "monitor_latest_sha256": "fcf3c525c033a31294dcf606504064d41e48c7ee5c007b5eecfdb1cea4cbf94f",
+  "monitor_configs_sha256": "f76a0a48294e9b57de3130fbf1c949e9e601e8bef5d4e969258fd14eaa67d2eb"
+}

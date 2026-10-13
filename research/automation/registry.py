@@ -75,7 +75,13 @@ def read_events(path):
 def read_records(path):
     records = {}
     for row in read_events(path):
-        records.setdefault(row["fingerprint"], {}).update(row)
+        prior = records.get(row["fingerprint"])
+        if prior is None:
+            records[row["fingerprint"]] = dict(row)
+            continue
+        stamp = lambda item: datetime.fromisoformat(item.get("recorded_at_utc", "1970-01-01T00:00:00+00:00").replace("Z", "+00:00"))
+        if stamp(row) >= stamp(prior):
+            prior.update(row)
     return records
 
 
