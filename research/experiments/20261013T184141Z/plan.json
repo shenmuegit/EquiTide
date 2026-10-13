@@ -1,0 +1,146 @@
+{
+  "round": "20261013T184141Z",
+  "created_at_utc": "2026-10-13T18:43:24.306140Z",
+  "source_repository_commit": "f6b072c96ffc2b82b72b55fe55d70652d1e60f95",
+  "status": "frozen_before_evaluation",
+  "direction": "daily volatility-compression breakout with close-channel exit; long-only independent BTC/ETH spot sleeves",
+  "economic_hypothesis": "Volatility clusters and compression can precede expansion; a close-only breakout after a recent low-volatility regime may reduce false entries. This is a testable hypothesis, not an asserted crypto premium.",
+  "literature_context": [
+    {
+      "citation": "Moskowitz, Ooi & Pedersen (2012), Time series momentum, Journal of Financial Economics 104(2), 228-250",
+      "doi": "10.1016/j.jfineco.2011.11.003",
+      "url": "https://doi.org/10.1016/j.jfineco.2011.11.003",
+      "scope_note": "Motivates trend-continuation as a broad asset-class hypothesis; does not validate this spot strategy."
+    },
+    {
+      "citation": "Shen, Urquhart & Wang (2022), Bitcoin intraday time-series momentum, Financial Review 57, 319-344",
+      "doi": "10.1111/fire.12290",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1111/fire.12290",
+      "scope_note": "Finds specific intraday volume-clock predictability; used only as motivation to test regime-conditioned continuation, not replicated here."
+    },
+    {
+      "citation": "Binance Public Data documentation",
+      "url": "https://github.com/binance/binance-public-data",
+      "scope_note": "Source format reference; the backtest uses locally normalized Binance spot klines with recorded file hashes."
+    }
+  ],
+  "data": {
+    "exchange": "Binance spot",
+    "assets": [
+      "BTCUSDT",
+      "ETHUSDT"
+    ],
+    "source_version": "Normalized 1-minute OHLCV, 2024-09-16 through 2026-09-15 UTC inclusive",
+    "source_paths": [
+      "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+      "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet"
+    ],
+    "oos_signal_start_utc": "2025-09-19T00:00:00Z",
+    "oos_execution_start_utc": "2025-09-19T00:01:00Z",
+    "oos_signal_end_exclusive_utc": "2026-09-14T00:00:00Z",
+    "terminal_execution_utc": "2026-09-14T00:01:00Z",
+    "oos_days": 360,
+    "walk_forward_folds": 12,
+    "fold_days": 30,
+    "history_note": "This 2025-09-19..2026-09-14 interval is repeatedly reused development/evaluation history, not an untouched final holdout."
+  },
+  "capital_and_allocation": {
+    "capital_usdt_per_configuration": 2000,
+    "BTC_initial_sleeve_usdt": 1000,
+    "ETH_initial_sleeve_usdt": 1000,
+    "raw_weights": [
+      0.5,
+      0.5
+    ],
+    "meaning": "50/50 initial cash allocation into independent BTC and ETH sleeves; no normalization, cross-sleeve transfer, leverage or rebalancing between sleeves. Each sleeve may move between its own spot coin and USDT.",
+    "positioning": "Long-only spot; no funding or borrow."
+  },
+  "signal_definition": {
+    "timezone": "UTC",
+    "decision": "At daily decision index i, use only the fully closed daily bar i-1; its availability is 00:00 UTC and the trade reference is the 00:01 UTC 1-minute open of day i.",
+    "volatility": "For each completed daily close j, sample standard deviation (ddof=1) of the last 10 completed close-to-close log returns, ending at close j.",
+    "compression": "At close j, compare that 10-day volatility with the NumPy linear/type-7 quantile of the preceding 180 daily volatility observations (strictly through j-1); compressed if current volatility is at or below the configured percentile.",
+    "compression_recency": "An entry breakout qualifies if at least one of the last 3 completed daily closes (j-2..j) met the compression condition; all referenced values are already available at decision time.",
+    "entry": "If flat, close[j] is strictly greater than the maximum of exactly the configured N immediately preceding completed daily closes; the tested close is excluded from the channel. Require recent compression.",
+    "exit": "If long, close[j] is strictly less than the minimum of exactly the configured M immediately preceding completed daily closes; the tested close is excluded. Exit has precedence over re-entry on the same decision.",
+    "state": "Single long/cash state per asset sleeve, carried continuously across adjacent 30-day reporting folds; no fold reset or pre-OOS trades.",
+    "execution": "Marketable limit IOC estimate at the next day 00:01 UTC minute open; not an exchange fill guarantee. Terminal holdings liquidated at 2026-09-14 00:01 UTC open with costs."
+  },
+  "parameter_grid": {
+    "entry_breakout_lookback_days": [
+      10,
+      20,
+      40
+    ],
+    "exit_close_channel_lookback_days": [
+      10,
+      20,
+      30
+    ],
+    "compression_percentile": [
+      10,
+      20,
+      30
+    ],
+    "fixed_signal_parameters": {
+      "short_realized_vol_days": 10,
+      "compression_reference_days": 180,
+      "compression_recency_days": 3,
+      "quantile_method": "linear/type-7"
+    }
+  },
+  "sensitivity_protocol": "Full 3x3x3 grid frozen before outcomes; local neighbors differ by at most one grid step on every axis. Report every cell and 1x/2x/3x outcomes; no OOS parameter selection.",
+  "cost_model": {
+    "exchange_filter_snapshot": "research/experiments/20261013T164415Z/exchange_filters.json",
+    "exchange_filter_snapshot_sha256": "a7ec21af88d952df42567bd6e34b8501ccba77f75dbd3e8f4e69514862286ae1",
+    "spot_taker_fee_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact": "0.5 * sample_std(last 20 complete daily log returns) * sqrt(order budget / mean quote ADV over prior 20 complete UTC daily bars)",
+    "max_participation_of_prior_20d_quote_adv": 0.001,
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "simultaneously_scale": "fees, half-spread estimate, slippage estimate, square-root impact and adverse tick rounding",
+    "fees_and_spread": "Fee is paid once per simulated side; estimated half-spread is applied once per side and not charged a second time.",
+    "capacity_and_rounding": "Enforce frozen PRICE_FILTER, LOT_SIZE, NOTIONAL, and prior-5-closed-minute VWAP proxy for PERCENT_PRICE_BY_SIDE; quantity is floored to LOT_SIZE and price rounded adversely to tick.",
+    "data_limitations": "No historical L2 or queue position; spread, slippage, square-root impact and immediate full IOC execution are explicit estimates."
+  },
+  "predeclared_failure_criteria": {
+    "positive_net_return_at_all_cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "positive_1x_folds_at_least": 8,
+    "sampled_oos_drawdown_3x_at_most_pct": 25,
+    "local_neighborhood_3x_positive_fraction_at_least": 0.6,
+    "completed_round_trips_1x_at_least": 4,
+    "gross_reference_pnl_to_1x_cost_at_least": 2.5,
+    "zero_rejected_or_capacity_filtered_orders": true,
+    "flat_at_terminal_exit_all_scenes": true,
+    "definition": "A cell is passed only if every criterion is true; otherwise rejected after a complete historical backtest. These are screening criteria, not proof of live profitability."
+  },
+  "benchmarks": {
+    "cash": "0% yield comparator",
+    "matched_buy_hold_report": "research/experiments/20261013T123949Z/report.json",
+    "matched_buy_hold_config": "hold_360d_btc_eth_50_50_relative_strength_study",
+    "reuse_only": true,
+    "note": "Previously registered and computed on the same 360-day window, 1000 USDT per BTC/ETH sleeve and 1x/2x/3x cost model; read-only comparator."
+  },
+  "preexisting_trial_context": {
+    "registry_events_at_freeze": 8559,
+    "initial_16_status": "Repository automation history reports all initial 16 items already have real backtest evidence; no eligible missing-result retry was found in this round.",
+    "selection_bias": "Thousands of related BTC/ETH configurations and the same OOS history have already been examined; all findings are exploratory and multiple-testing biased."
+  },
+  "reproduce": [
+    ".venv/bin/python research/experiments/20261013T184141Z/prepare.py",
+    ".venv/bin/python research/experiments/20261013T184141Z/evaluate.py",
+    ".venv/bin/python research/experiments/20261013T184141Z/audit.py",
+    "python3 checks/strategy_registry.py"
+  ]
+}

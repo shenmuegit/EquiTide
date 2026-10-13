@@ -1,0 +1,49 @@
+{
+  "kind": "strategy",
+  "family": "daily-volatility-compression-breakout",
+  "market": "spot",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "timeframe": "1d",
+  "logic": {
+    "entry": "After any compression among the last 3 fully closed UTC daily bars, go long an asset sleeve when the latest completed close is strictly above the maximum of exactly N immediately preceding completed daily closes; tested close excluded.",
+    "exit": "While long, exit when latest completed close is strictly below the minimum of exactly M immediately preceding completed daily closes; tested close excluded. Exit takes precedence; no shorting.",
+    "compression": "10-day sample standard deviation of completed daily log returns <= configured linear/type-7 percentile of its preceding 180 strictly prior daily volatility observations.",
+    "sizing": "Independent 1000 USDT initial BTC and ETH spot sleeves, no cross-sleeve transfer/rebalance; each sleeve is all cash or long spot.",
+    "execution": "Signals use only the previous fully closed UTC daily close; simulated execution at the following day 00:01 UTC 1-minute open; terminal exit is costed.",
+    "costs": "Per-side fee 10bp, half-spread estimate 1bp, slippage estimate 2bp, 0.5*lagged-20d daily log volatility*sqrt(order budget/lagged-20d quote ADV); max participation 0.1%; all cost terms scaled together 1x/2x/3x; exchange tick/lot/notional filters enforced."
+  },
+  "parameters": {
+    "entry_breakout_lookback_days": 10,
+    "exit_close_channel_lookback_days": 10,
+    "compression_percentile": 30,
+    "short_realized_vol_days": 10,
+    "compression_reference_days": 180,
+    "compression_recency_days": 3,
+    "quantile_method": "linear/type-7",
+    "initial_capital_usdt": 2000,
+    "raw_asset_weights": [
+      0.5,
+      0.5
+    ],
+    "start_utc": "2025-09-19T00:01:00Z",
+    "end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "folds": 12,
+    "fold_days": 30,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "spot_taker_fee_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact_model": "0.5*previous20_closed_daily_log_return_sample_stdev*sqrt(order_budget/previous20_complete_UTC_daily_quote_ADV)",
+    "maximum_adv_participation": 0.001,
+    "exchange_filter_snapshot_sha256": "a7ec21af88d952df42567bd6e34b8501ccba77f75dbd3e8f4e69514862286ae1"
+  },
+  "name": "vbreak_e10_x10_q30",
+  "validation_plan": "research/experiments/20261013T184141Z/plan.json"
+}

@@ -4,6 +4,7 @@ No prices are downloaded, no strategies evaluated, and no account state is chang
 Run under research/automation/branch.lock before each research/paper evidence push.
 """
 import argparse
+import csv
 import gzip
 import hashlib
 import importlib.util
@@ -71,6 +72,9 @@ def indicator(spec, records, depth=0):
             text += f" 连续{p['confirmation_days']}日"
         if "annual_volatility_ceiling" in p:
             text += f" 波动率≤{percent(p['annual_volatility_ceiling'])}"
+    elif "compression-breakout" in family:
+        text = (f"波动压缩突破 E{p.get('entry_breakout_lookback_days', '?')}日/"
+                f"X{p.get('exit_close_channel_lookback_days', '?')}日/Q{p.get('compression_percentile', '?')}%")
     elif "hold" in family:
         text = "买入持有基准"
     else:
@@ -193,10 +197,13 @@ def build_paper(root):
 
 
 def metric_scene(scene):
-    if not isinstance(scene, dict) or "net_return_pct" not in scene or "max_drawdown_pct" not in scene:
+    if not isinstance(scene, dict) or "net_return_pct" not in scene:
         return None
     display = lambda value: round(float(value), 6) if value is not None else None
-    return {"return_pct": display(scene["net_return_pct"]), "drawdown_pct": display(scene["max_drawdown_pct"]),
+    drawdown = scene.get("max_drawdown_pct", scene.get("sampled_1m_nav_drawdown_pct", scene.get("daily_nav_drawdown_pct")))
+    if drawdown is None:
+        return None
+    return {"return_pct": display(scene["net_return_pct"]), "drawdown_pct": display(drawdown),
             "sharpe": display(scene.get("sharpe_365", scene.get("sharpe_annualized_daily", scene.get("sharpe_annualized")))),
             "cost": display(scene.get("cost_usdt", scene.get("cost"))),
             "executions": scene.get("executions"), "round_trips": scene.get("round_trips"),
@@ -220,7 +227,7 @@ def build_research(root):
         prior = canonical.get(fp)
         if prior is None or (record.get("result_available") and not prior.get("result_available")):
             canonical[fp] = record
-    reports, matches, cross = {}, {}, set()
+    reports, matches, cross, report_folds = {}, {}, set(), {}
     rounds = []
     experiments = root / "research/experiments"
     report_paths = set(experiments.glob("*/report.json"))
@@ -233,6 +240,22 @@ def build_research(root):
         report, relative = load(path), path.relative_to(root).as_posix()
         digest = sha(path.read_bytes())
         reports[relative] = (report, digest)
+        fold_lookup = {}
+        fold_archive = report.get("artifacts", {}).get("fold_results_csv_gz")
+        if fold_archive:
+            fold_path = root / fold_archive
+            if fold_path.is_file():
+                with gzip.open(fold_path, "rt", encoding="utf-8", newline="") as source:
+                    for fold in csv.DictReader(source):
+                        key = (fold["name"], str(fold["cost_multiplier"]))
+                        fold_lookup.setdefault(key, []).append({
+                            "fold": int(fold["fold"]),
+                            "net_return_pct": float(fold["net_return_pct"]),
+                            "max_drawdown_pct": float(fold["max_drawdown_pct"]),
+                        })
+                for values in fold_lookup.values():
+                    values.sort(key=lambda value: value["fold"])
+        report_folds[relative] = fold_lookup
         cfgs = report.get("configs", {})
         if not isinstance(cfgs, dict):
             continue
@@ -265,8 +288,14 @@ def build_research(root):
                              "result_available": record.get("result_available", False), "report": record.get("report")})
             continue
         name, cfg, report, relative = matches[fp]
+        fold_lookup = report_folds.get(relative, {})
         raw_scenes = cfg.get("scenes", cfg.get("scenarios", cfg.get("cost_scenarios", {})))
-        scenes = {str(cost): metric_scene(scene) for cost, scene in raw_scenes.items()}
+        enriched_scenes = {}
+        for cost, scene in raw_scenes.items():
+            if "folds" not in scene and report.get("artifacts", {}).get("fold_results_csv_gz"):
+                scene = {**scene, "folds": fold_lookup.get((name, str(cost)), [])}
+            enriched_scenes[str(cost)] = metric_scene(scene)
+        scenes = enriched_scenes
         scenes = {cost: scene for cost, scene in scenes.items() if scene is not None}
         spec, params = record["spec"], record["spec"].get("parameters", {})
         start = params.get("start_utc", params.get("oos_start_utc", report.get("oos_start_utc")))
@@ -278,14 +307,18 @@ def build_research(root):
             continue
         weights = [{"asset": "/".join(a.split("/")[0] for a in records.get(c["fingerprint"], {}).get("spec", {}).get("universe", [])),
                     "weight": c["weight"]} for c in spec.get("components", [])]
+        if not weights and params.get("raw_asset_weights") and len(params["raw_asset_weights"]) == len(spec.get("universe", [])):
+            weights = [{"asset": asset.split("/")[0], "weight": weight}
+                       for asset, weight in zip(spec["universe"], params["raw_asset_weights"])]
+        criteria = cfg.get("criteria", cfg.get("gates", cfg.get("sensitivity", {}).get("gates", {})))
         rows.append({"fingerprint": fp, "name": name, "family": spec["family"], "kind": spec["kind"],
                      "indicator": indicator(spec, records), "weights": weights, "capital_usdt": params.get("initial_capital_usdt"),
                      "start_utc": start, "end_utc": end, "status": record["status"], "cross_period_passed": fp in cross,
-                     "scenes": scenes, "criteria": cfg.get("criteria", cfg.get("gates", {})),
-                     "failed_criteria": cfg.get("failed_criteria", [k for k, v in cfg.get("criteria", cfg.get("gates", {})).items() if v is False]),
-                     "positive_folds_1x": cfg.get("positive_folds_1x", cfg.get("positive_1x_folds", raw_scenes.get("1", {}).get("positive_1x_folds"))), "report": relative,
+                     "scenes": scenes, "criteria": criteria,
+                     "failed_criteria": cfg.get("failed_criteria", [k for k, v in criteria.items() if v is False]),
+                     "positive_folds_1x": cfg.get("positive_folds_1x", cfg.get("positive_1x_folds", raw_scenes.get("1", {}).get("positive_1x_folds", raw_scenes.get("1", {}).get("positive_folds")))), "report": relative,
                      "validation": {"walk_forward_folds": len(scenes.get("1", {}).get("fold_returns_pct", [])),
-                                    "cost_scenarios": sorted(scenes), "sensitivity_recorded": bool(report.get("sensitivity"))},
+                                    "cost_scenarios": sorted(scenes), "sensitivity_recorded": bool(report.get("sensitivity") or cfg.get("sensitivity"))},
                      "spec_path": cfg.get("spec", cfg.get("spec_path")),
                      "spec": {"name": spec.get("name", name), "kind": spec["kind"], "family": spec["family"],
                               "parameters": {k: v for k, v in params.items()
