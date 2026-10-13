@@ -1,0 +1,143 @@
+{
+  "round": "20261013T204253Z",
+  "frozen_at_utc": "2026-10-13T20:45:07.480659Z",
+  "source_repository_commit": "bd0e10ad7ea2c591525560f646f1b4b8e9739d50",
+  "status": "frozen_before_evaluation",
+  "direction": "4-hour univariate BTC/ETH time-series momentum with long/cash hysteresis; independent spot sleeves",
+  "hypothesis": "Medium-horizon crypto returns may exhibit time-series persistence; a positive trailing return enters long and a zero/negative reversal exits. Hysteresis thresholds limit repeated turnover. This is exploratory and not assumed profitable.",
+  "literature_context": [
+    {
+      "citation": "Moskowitz, Ooi & Pedersen (2012), Time series momentum, Journal of Financial Economics 104(2), 228-250",
+      "doi": "10.1016/j.jfineco.2011.11.003",
+      "url": "https://doi.org/10.1016/j.jfineco.2011.11.003",
+      "scope": "General trend-continuation motivation; not direct validation of BTC/ETH 4h spot."
+    },
+    {
+      "citation": "Shen, Urquhart & Wang (2022), Bitcoin intraday time-series momentum, Financial Review 57, 319-344",
+      "doi": "10.1111/fire.12290",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1111/fire.12290",
+      "scope": "Intraday BTC momentum literature context; this run does not reproduce its volume-clock rule."
+    }
+  ],
+  "data": {
+    "exchange": "Binance spot",
+    "assets": [
+      "BTCUSDT",
+      "ETHUSDT"
+    ],
+    "source_interval": "1m OHLCV aggregated to UTC-aligned, fully closed 4h bars",
+    "source_paths": [
+      "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+      "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet"
+    ],
+    "source_sha256": {
+      "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16",
+      "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584"
+    },
+    "full_data_start_utc": "2024-09-16T00:00:00Z",
+    "full_data_end_exclusive_utc": "2026-09-16T00:00:00Z",
+    "oos_signal_start_utc": "2025-09-19T04:00:00Z",
+    "oos_execution_start_utc": "2025-09-19T04:01:00Z",
+    "oos_signal_end_exclusive_utc": "2026-09-14T04:00:00Z",
+    "terminal_execution_utc": "2026-09-14T04:01:00Z",
+    "decision_count": 2160,
+    "folds": 12,
+    "bars_per_fold": 180,
+    "fold_duration_days": 30,
+    "history_note": "This 2025-09-19..2026-09-14 window is reused development/evaluation history, not an untouched final holdout."
+  },
+  "portfolio": {
+    "initial_capital_usdt_per_config": 2000,
+    "raw_weights": [
+      0.5,
+      0.5
+    ],
+    "meaning": "One BTC sleeve with initial 1000 USDT and one ETH sleeve with initial 1000 USDT; no normalization, leverage, transfer or rebalancing across sleeves. Each sleeve is all-cash or long spot."
+  },
+  "signal": {
+    "bar_definition": "UTC-aligned 4h bars aggregated from 240 fully closed Binance 1m bars; 4h bar close available at the next UTC 4h boundary.",
+    "momentum": "For completed bar index i, momentum_return = close[i]/close[i-L]-1 over exactly L completed 4h bars.",
+    "entry": "If flat, buy when momentum_return is strictly greater than entry_return_threshold_fraction.",
+    "exit": "If long, sell when momentum_return is less than or equal to exit_return_threshold_fraction. Exit rule has precedence. No shorting.",
+    "state": "Per-asset long/cash state carries continuously across contiguous folds; all sleeves begin in cash at the first OOS execution.",
+    "execution": "At signal availability on a UTC 4h boundary, use the following 1m bar open one minute later. Terminal positions are liquidated with costs at 2026-09-14T04:01:00Z."
+  },
+  "parameter_grid": {
+    "lookback_4h_bars": [
+      6,
+      18,
+      42
+    ],
+    "entry_return_threshold_fraction": [
+      0.005,
+      0.01,
+      0.02
+    ],
+    "exit_return_threshold_fraction": [
+      -0.005,
+      0.0,
+      0.005
+    ],
+    "constraint": "Every exit threshold is <= every entry threshold in the fixed grid."
+  },
+  "sensitivity_protocol": "Full 3x3x3 grid; local neighbor uses at most one adjacent grid step on each of the three axes; no result-based selection.",
+  "cost_model": {
+    "fee_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact": "0.5 * sample stdev of the prior 20 complete UTC daily log returns * sqrt(order budget / mean prior 20 complete UTC daily quote ADV)",
+    "maximum_ADV_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "all_cost_terms_scaled_together": true,
+    "exchange_filters_path": "research/experiments/20261013T204253Z/exchange_filters.json",
+    "exchange_filters_sha256": "f101c7eddd0df024aca266c96b1115a422da336e5d51e5b0ec04db00b8e5b4a4",
+    "exchange_snapshot_captured_utc": "2026-10-13T20:05:05.051963Z",
+    "rounding": "PRICE_FILTER adverse tick rounding, LOT_SIZE quantity floor, NOTIONAL and PERCENT_PRICE_BY_SIDE against prior-five-closed-minute VWAP proxy.",
+    "limitations": "No historical L2/queue position. Spread/slippage/impact and immediate full IOC are modeling assumptions, not exchange fill guarantees."
+  },
+  "predeclared_gates": {
+    "positive_net_return_all_costs": [
+      1,
+      2,
+      3
+    ],
+    "positive_1x_folds_at_least": 8,
+    "max_3x_1m_sampled_drawdown_pct": 25,
+    "local_3x_positive_fraction_at_least": 0.6,
+    "round_trips_1x_at_least": 4,
+    "gross_reference_pnl_to_1x_cost_at_least": 2.5,
+    "zero_rejected_or_capacity_orders": true,
+    "terminal_flat": true
+  },
+  "benchmark": {
+    "source": "recomputed in this round; exact same 4h OOS start/end and 1000USDT per asset.",
+    "name": "hold_360d_4h_BTC_ETH_50_50",
+    "is_comparator_only": true,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  },
+  "history_audit": {
+    "main_registry_events_at_freeze": 8559,
+    "merged_registry_fingerprints_at_freeze": 4537,
+    "initial16": "Prior artifact review found actual Freqtrade/research result evidence for all; no code-only missing initial row eligible for a fresh calculation.",
+    "related_prior_study": "research/experiments/20261012T100010Z tested 4h volume-confirmed momentum (lookbacks 6/12/24 plus slot-volume threshold); this plan tests univariate hysteresis thresholds and lookbacks 6/18/42 without that volume filter.",
+    "selection_bias": "Thousands of configurations and the same historical interval have been examined repeatedly."
+  },
+  "reproduce": [
+    ".venv/bin/python research/experiments/20261013T204253Z/prepare.py",
+    ".venv/bin/python research/experiments/20261013T204253Z/evaluate.py",
+    ".venv/bin/python research/experiments/20261013T204253Z/audit.py",
+    "python3 checks/strategy_registry.py"
+  ]
+}

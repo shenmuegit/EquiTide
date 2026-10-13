@@ -1,0 +1,38 @@
+{
+  "kind": "strategy",
+  "family": "buy-hold-4h-window-comparator",
+  "market": "spot",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "timeframe": "4h",
+  "logic": {
+    "entry": "At the first OOS time, buy 50% BTC and 50% ETH in independent sleeves.",
+    "exit": "Costed terminal liquidation at the exact OOS end time.",
+    "sizing": "1000USDT BTC sleeve and 1000USDT ETH sleeve; no transfer, rebalance or leverage.",
+    "execution": "Start at 2025-09-19T04:01:00Z and exit at 2026-09-14T04:01:00Z with the same cost model."
+  },
+  "parameters": {
+    "initial_capital_usdt": 2000,
+    "raw_asset_weights": [
+      0.5,
+      0.5
+    ],
+    "start_utc": "2025-09-19T04:01:00Z",
+    "end_exclusive_utc": "2026-09-14T04:01:00Z",
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "fee_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "maximum_ADV_participation": 0.001,
+    "exchange_filters_sha256": "f101c7eddd0df024aca266c96b1115a422da336e5d51e5b0ec04db00b8e5b4a4"
+  },
+  "name": "hold_360d_4h_BTC_ETH_50_50",
+  "validation_plan": "research/experiments/20261013T204253Z/plan.json",
+  "role": "benchmark-only"
+}
