@@ -59,12 +59,16 @@ def main():
         assert records[-2]["result_available"] is True
         # A legacy status-only row with no spec must not break a valid reserved finish.
         status_only_spec = {**strategy, "family":"test-reversal", "parameters":{"entry_days":8,"exit_days":4}}
-        call("reserve", status_only_spec)
+        status_only_fp = call("reserve", status_only_spec)
         with ledger.open("a") as output:
             output.write(json.dumps({"fingerprint":"c"*64,"status":"legacy-engineering","result_available":False})+"\n")
         call("finish", status_only_spec, 0, "abandoned", str(report))
+        # Abandoned is an explicit no-result state and may be retried with the same full definition.
+        assert call("reserve", status_only_spec) == status_only_fp
+        call("finish", status_only_spec, 0, "abandoned", str(report))
         records = [json.loads(line) for line in ledger.read_text().splitlines()]
-        assert records[-1]["status"] == "abandoned" and records[-1]["fingerprint"] != "c"*64
+        assert records[-2]["status"] == "reserved" and records[-1]["status"] == "abandoned"
+        assert records[-1]["fingerprint"] == status_only_fp
     print("PASS: new parameters/weights and missing-result retries are allowed; exact/reordered completed trials stay blocked")
 
 
