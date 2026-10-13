@@ -1,0 +1,135 @@
+{
+  "round": "20261013T012732Z",
+  "frozen_at_utc": "2026-10-13T01:27:32Z",
+  "direction": "Long-only spot reversal after a completed UTC 4h downside move, with fixed rebound or time exit.",
+  "hypothesis": "Primary Bitcoin intraday research reports negative return autocorrelation at 1h, 2h and 4h horizons and stronger percentage reversal after larger moves. Test a simple 4h close-to-close downside threshold in current BTC/ETH spot data; no claim that the paper's effect persists or survives current costs.",
+  "source_paper": {
+    "citation": "De Nicola, G. (2021). On the Intraday Behavior of Bitcoin. Ledger, 6. DOI:10.5195/ledger.2021.213.",
+    "url": "https://doi.org/10.5195/ledger.2021.213",
+    "accessed_utc": "2026-10-13",
+    "reported_finding": "The paper reports significant negative first-order autocorrelation on 1h, 2h and 4h returns and stronger percentage reversals after larger moves. It uses historical BTC data; this batch separately tests Binance BTC/ETH under explicit current cost assumptions."
+  },
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "entry_drop_fraction": [
+      0.005,
+      0.01,
+      0.015
+    ],
+    "max_holding_4h_bars": [
+      1,
+      2,
+      4
+    ],
+    "candidate_configs": 18,
+    "matched_buy_hold_benchmarks": 2,
+    "total_registry_definitions": 20,
+    "cost_scenarios": [
+      1,
+      2,
+      3
+    ]
+  },
+  "rule": "For each newly completed UTC 4h bar j, calculate simple close-to-close return close[j]/close[j-1]-1. If flat and return <= -entry_drop_fraction (equality qualifies), buy at the first 1m open one minute after the next UTC 4h block begins; store close[j] as recovery_reference. While long, exit when a later completed 4h close >= recovery_reference or elapsed completed 4h bars since entry execution >= max_holding_4h_bars. Exit has priority; after an exit signal, do not re-enter on that decision bar. A rejected entry is not retried/backfilled; a rejected exit remains held and is reconsidered only at later completed 4h decisions. Force a costed terminal liquidation at the first executable minute after the common OOS end if filters permit.",
+  "time_boundaries": {
+    "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "oos_start_utc": "2025-09-19T00:00:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+    "walk_forward": "12 contiguous, non-overlapping 30-day folds (180 4h bars each); unlevered account state carries through folds; parameters are frozen before evaluation.",
+    "reuse_disclosure": "This interval is repeatedly used repository development/validation history and is not an untouched final holdout."
+  },
+  "execution": {
+    "market": "Binance spot historical 1m open as a scheduled reference, after closed 4h signal availability plus a fixed 60-second buffer.",
+    "positioning": "Independent 2,000 USDT account per asset and configuration; long-only, one position at a time, no leverage, transfers, yield, or add-ons.",
+    "terminal": "Costed liquidation at OOS end, subject to current frozen exchange filters.",
+    "source_ohlcv": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6",
+          "bytes": 30555668
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16",
+          "bytes": 30415140
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57",
+          "bytes": 27110682
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584",
+          "bytes": 26332430
+        }
+      ]
+    },
+    "filters_source": "research/experiments/20261012T035429Z/report.json",
+    "filters_source_sha256": "383d833e5d7d9d12aac3dacdb02051fdd2a0b3b4b49c0e099ddc1b38c3c7e16e"
+  },
+  "costs": {
+    "fee_each_side": "10bp",
+    "half_spread_estimate_each_side": "1bp",
+    "slippage_estimate_each_side": "2bp",
+    "impact": "0.5 × prior 20 complete UTC daily return sample standard deviation × sqrt(order quote budget / prior 20 complete UTC daily quote-volume ADV)",
+    "max_participation": "0.1% of prior 20-day quote ADV",
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "spread_counted_once": true,
+    "funding_or_borrow": "Not applicable: unlevered long-only spot.",
+    "depth_limit": "No historical L2 snapshots in this experiment; spread and impact are estimates, with exchange filters/participation explicitly enforced."
+  },
+  "sensitivity_axes": [
+    "entry_drop_fraction",
+    "max_holding_4h_bars"
+  ],
+  "failure_gates": {
+    "all_1x_2x_3x_net_returns_positive": true,
+    "minimum_positive_1x_folds": 6,
+    "maximum_3x_minute_close_sample_drawdown_pct": 25,
+    "minimum_3x_adjacent_neighborhood_positive_fraction": 0.6,
+    "minimum_1x_round_trips": 20,
+    "minimum_1x_gross_reference_pnl_to_cost": 2.5,
+    "no_balance_capacity_or_execution_filter_violations": true,
+    "terminal_flat": true,
+    "interpretation": "Any pass applies only to repeatedly used historical screening data and is not independent or live-profit evidence."
+  },
+  "data_files": {
+    "BTC": [
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+        "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6",
+        "bytes": 30555668
+      },
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+        "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16",
+        "bytes": 30415140
+      }
+    ],
+    "ETH": [
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+        "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57",
+        "bytes": 27110682
+      },
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+        "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584",
+        "bytes": 26332430
+      }
+    ]
+  }
+}

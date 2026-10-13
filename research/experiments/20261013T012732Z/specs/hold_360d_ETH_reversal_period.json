@@ -1,0 +1,33 @@
+{
+  "kind": "strategy",
+  "family": "spot-4h-reversal-hold-reference",
+  "market": "spot",
+  "timeframe": "4h",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "name": "hold_360d_ETH_reversal_period",
+  "logic": {
+    "entry": "Buy at first OOS executable 1m open, without a signal.",
+    "exit": "Hold to common OOS terminal execution and liquidate at cost.",
+    "sizing": "Independent 2,000 USDT unlevered long-only spot comparator."
+  },
+  "parameters": {
+    "initial_capital_usdt": 2000,
+    "oos_start_bar_index": 2208,
+    "oos_end_exclusive_bar_index": 4368,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  },
+  "sources": [
+    {
+      "citation": "De Nicola, G. (2021). On the Intraday Behavior of Bitcoin. Ledger, 6. DOI:10.5195/ledger.2021.213.",
+      "url": "https://doi.org/10.5195/ledger.2021.213",
+      "accessed_utc": "2026-10-13",
+      "reported_finding": "The paper reports significant negative first-order autocorrelation on 1h, 2h and 4h returns and stronger percentage reversals after larger moves. It uses historical BTC data; this batch separately tests Binance BTC/ETH under explicit current cost assumptions."
+    }
+  ]
+}

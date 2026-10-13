@@ -1,0 +1,65 @@
+{
+  "kind": "strategy",
+  "family": "spot-4h-extreme-return-reversal",
+  "market": "spot",
+  "timeframe": "4h",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "name": "rev4h_btc_drop050_hold2",
+  "logic": {
+    "entry": "At a newly completed UTC 4h bar j, simple close[j]/close[j-1]-1 <= -entry_drop_fraction; equality qualifies.",
+    "exit": "At a later completed UTC 4h close, exit when close >= the entry signal close (rebound_exit_fraction=0), or after max_holding_4h_bars have elapsed since execution. Exit takes precedence and no same-bar re-entry occurs.",
+    "timing": "Signals use completed UTC 4h bars. Simulated execution reference is the first 1m open at next 4h block start + 60 seconds; no bar from the entry or holding period determines the prior entry.",
+    "rejected_orders": "Do not backfill rejected historical entries. A rejected exit keeps the holding and is reconsidered on the next completed 4h signal bar; terminal liquidation is separately recorded.",
+    "sizing": "Independent 2,000 USDT unlevered long-only spot account; max affordable LOT_SIZE entry, whole valid-position exit, no cross-asset transfer, add-on, or cash yield."
+  },
+  "parameters": {
+    "bar_return_lookback": 1,
+    "rebound_exit_fraction": 0.0,
+    "initial_capital_usdt": 2000,
+    "oos_start_bar_index": 2208,
+    "oos_end_exclusive_bar_index": 4368,
+    "rolling_train_bars": 2190,
+    "test_bars": 180,
+    "step_bars": 180,
+    "embargo_bars": 18,
+    "folds": 12,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "fee_rate_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+    "maximum_participation": 0.001,
+    "exchange_filters": "Frozen Binance PRICE_FILTER, LOT_SIZE, NOTIONAL and PERCENT_PRICE_BY_SIDE snapshot; adverse tick rounding, lot floor, prior closed 5m VWAP proxy.",
+    "entry_drop_fraction": 0.005,
+    "max_holding_4h_bars": 2,
+    "sensitivity_axes": [
+      "entry_drop_fraction",
+      "max_holding_4h_bars"
+    ]
+  },
+  "sources": [
+    {
+      "citation": "De Nicola, G. (2021). On the Intraday Behavior of Bitcoin. Ledger, 6. DOI:10.5195/ledger.2021.213.",
+      "url": "https://doi.org/10.5195/ledger.2021.213",
+      "accessed_utc": "2026-10-13",
+      "reported_finding": "The paper reports significant negative first-order autocorrelation on 1h, 2h and 4h returns and stronger percentage reversals after larger moves. It uses historical BTC data; this batch separately tests Binance BTC/ETH under explicit current cost assumptions."
+    }
+  ],
+  "failure_gates": {
+    "all_1x_2x_3x_net_returns_positive": true,
+    "minimum_positive_1x_folds": 6,
+    "maximum_3x_minute_close_sample_drawdown_pct": 25,
+    "minimum_3x_adjacent_neighborhood_positive_fraction": 0.6,
+    "minimum_1x_round_trips": 20,
+    "minimum_1x_gross_reference_pnl_to_cost": 2.5,
+    "no_balance_capacity_or_execution_filter_violations": true,
+    "terminal_flat": true,
+    "interpretation": "Any pass applies only to repeatedly used historical screening data and is not independent or live-profit evidence."
+  }
+}
