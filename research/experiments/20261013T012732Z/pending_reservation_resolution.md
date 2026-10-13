@@ -1,0 +1,26 @@
+# 未完成预留配置状态处理
+
+- 来源轮次：`20261012T232807Z`；20次 reserve 尝试全部因已处于 reserved 返回退出码3。
+- 核验：源目录无 `report.json`，忽略运行目录无该轮 `data/runs`，共享锁取得时未有计算进程。未进行或补做任何历史计算。
+- 处理：将20条无结果预留追加状态 `abandoned`；registry 保留完整原 spec/指纹及审计历史，之后可重新 reserve。原未跟踪目录保留在本地，未修改、未纳入本轮提交。
+
+- `buy_hold_btc_event_period` · `537f5a8fc4b6e58511fabbde15096659e072be117d9a365d3827ac178134c70e` · 原预留 `2026-10-12T23:29:46.161919+00:00`
+- `buy_hold_eth_event_period` · `c9767a4d8f9b015df12d81551112beb81f1f6fffd04b54b73f7c641c3cf0b3b3` · 原预留 `2026-10-12T23:29:46.680385+00:00`
+- `turn15_btc_phase0_hold1m` · `2f77a9288b2b0064eb56b1686720aa7184270186375b9948bb7c7b4b7af16d37` · 原预留 `2026-10-12T23:29:47.197363+00:00`
+- `turn15_btc_phase0_hold2m` · `30170de54694e080db5fcf079358cd798b778aff45e55a14e8c90bc60dc05bc9` · 原预留 `2026-10-12T23:29:47.728158+00:00`
+- `turn15_btc_phase0_hold3m` · `a8fffd0f7db85eb17396665e00a8e5e8dfa12318cd1c5b994aa8a75620f66eba` · 原预留 `2026-10-12T23:29:48.250524+00:00`
+- `turn15_btc_phase1_hold1m` · `fc779e2edb65bf7fa4f59dad26383d874d5fb81c339a0d0f90e5e78830b841d6` · 原预留 `2026-10-12T23:29:48.778495+00:00`
+- `turn15_btc_phase1_hold2m` · `170f25c236c722b49398969ea033c009601ad0bb37a9715b9cd5328fda02f07a` · 原预留 `2026-10-12T23:29:49.305161+00:00`
+- `turn15_btc_phase1_hold3m` · `96f3d8b257dd90fceb79799bd5aa1d73b3a948d18528092681042a0cab980e60` · 原预留 `2026-10-12T23:29:49.836930+00:00`
+- `turn15_btc_phase2_hold1m` · `b10e8c96fb1129e31fa70799afca2ee4593e8227e53870e759c9a1f5ecb0f7d8` · 原预留 `2026-10-12T23:29:50.376585+00:00`
+- `turn15_btc_phase2_hold2m` · `9e4967e80730787b406119dc0bfafaf2945a95aeada44c4dd69988308a70beac` · 原预留 `2026-10-12T23:29:50.917212+00:00`
+- `turn15_btc_phase2_hold3m` · `670bab25991fd4b219d8aeae8f1ea29359a06467da4fa8a6136ca54dac78f9a1` · 原预留 `2026-10-12T23:29:51.439578+00:00`
+- `turn15_eth_phase0_hold1m` · `5f8351b2c9361282874a195143956eb542647fe382a8430ceb39d7f27d6f6f19` · 原预留 `2026-10-12T23:29:51.975075+00:00`
+- `turn15_eth_phase0_hold2m` · `f4f1783ddc14e9a042a2b4cc8a000c3d04656923700272f984363be0fe35df82` · 原预留 `2026-10-12T23:29:52.516678+00:00`
+- `turn15_eth_phase0_hold3m` · `da50ac380e8b64c684e307bf0997bfd7cd66357b38151cafd51aea45389dfbf1` · 原预留 `2026-10-12T23:29:53.058245+00:00`
+- `turn15_eth_phase1_hold1m` · `ee9050b54db65f42541a1b4bb397fb27cecd9fd14b9d8370a5d580784f4ebccb` · 原预留 `2026-10-12T23:29:53.584315+00:00`
+- `turn15_eth_phase1_hold2m` · `0ec1b00b85794a4ea199c5c451f4dfb2f51904c0106d26e7ccbd2327e1af1550` · 原预留 `2026-10-12T23:29:54.125799+00:00`
+- `turn15_eth_phase1_hold3m` · `49b8b77014112ff317aedb7389a1ddcad8fcf5c62efd0252f3bb10811fdd912a` · 原预留 `2026-10-12T23:29:54.678647+00:00`
+- `turn15_eth_phase2_hold1m` · `21cbd28f04cc7019ec7411817458b4ce5429ec71fd8940300a9afeeac8c03c97` · 原预留 `2026-10-12T23:29:55.244188+00:00`
+- `turn15_eth_phase2_hold2m` · `523d5f19b15de61151310d3c9156b6820aaef8185878ff118d4a286888d71758` · 原预留 `2026-10-12T23:29:55.783167+00:00`
+- `turn15_eth_phase2_hold3m` · `74decf831caca9c9bd5fe8fe93b089b1a0296f815ea223dbd6e93605437aa3d7` · 原预留 `2026-10-12T23:29:56.311562+00:00`

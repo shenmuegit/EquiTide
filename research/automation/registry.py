@@ -104,7 +104,18 @@ def main():
             fcntl.flock(lock, fcntl.LOCK_EX)
             records = read_records(args.ledger)
             # Recompute historical definitions without rewriting their IDs or losing component references.
-            matches = [(key,row) for key,row in records.items() if key == fp or fingerprint(row["spec"]) == fp]
+            # Some legacy status-only rows have no full spec. Their stored fingerprint remains usable
+            # for exact-key matches, but they cannot participate in structural fingerprint comparison.
+            matches = []
+            for key, row in records.items():
+                if key == fp:
+                    matches.append((key, row))
+                elif isinstance(row.get("spec"), dict):
+                    try:
+                        if fingerprint(row["spec"]) == fp:
+                            matches.append((key, row))
+                    except (KeyError, TypeError, ValueError):
+                        continue
             if args.command == "reserve":
                 for key,row in matches:
                     if row.get("result_available") is False and row["status"] != "reserved":
