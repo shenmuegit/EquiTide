@@ -1,0 +1,68 @@
+{
+  "kind": "strategy",
+  "family": "spot-intrahour-halfhour-momentum",
+  "market": "spot",
+  "timeframe": "1h",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "name": "hhr_eth_ret00_vol100",
+  "logic": {
+    "entry": "Using a newly completed UTC first-half-hour, compute close(minute h+29)/open(minute h)-1; enter only if return > first_half_return_threshold AND first-half quote_volume / mean(first-half quote_volume at the same UTC hour over the previous 20 fully closed UTC days) >= same_slot_quote_volume_ratio_min.",
+    "timing": "Current first-half data is closed and available at h+30. Entry reference is h+31 one-minute open (60 seconds after signal availability). Exit is scheduled at h+61 open, 30 minutes after entry; no price from the traded interval influences its entry.",
+    "exit": "Sell full position at scheduled h+61 open. If rejected by frozen exchange filters, retry next one-minute opens until filled, with no missed entry retroactively inserted; ignore any next scheduled entry while inventory remains.",
+    "sizing": "Independent 2,000 USDT long-only spot account per asset and parameter set; use currently available cash, no leverage/add-on/borrow/yield/transfers."
+  },
+  "parameters": {
+    "first_half_minutes": 30,
+    "second_half_hold_minutes": 30,
+    "same_slot_reference_days": 20,
+    "initial_capital_usdt": 2000,
+    "oos_start_utc": "2025-09-19T00:00:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+    "oos_terminal_execution_utc": "2026-09-14T00:01:00Z",
+    "oos_start_day_index": 368,
+    "oos_end_day_index": 728,
+    "walk_forward_train_days": 365,
+    "walk_forward_test_days": 30,
+    "walk_forward_step_days": 30,
+    "walk_forward_folds": 12,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "fee_rate_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete UTC daily quote-volume ADV)",
+    "maximum_participation": 0.001,
+    "exchange_filters": "Frozen Binance PRICE_FILTER, LOT_SIZE, NOTIONAL, PERCENT_PRICE_BY_SIDE; adverse tick, lot floor, previous closed 5-minute VWAP proxy.",
+    "first_half_return_threshold": 0.0,
+    "same_slot_quote_volume_ratio_min": 1.0,
+    "sensitivity_axes": [
+      "first_half_return_threshold",
+      "same_slot_quote_volume_ratio_min"
+    ]
+  },
+  "sources": [
+    {
+      "citation": "Shen, D., Urquhart, A., & Wang, P. (2022). Bitcoin intraday time-series momentum. Financial Review, 57(2), 319–344. DOI:10.1111/fire.12290.",
+      "url": "https://doi.org/10.1111/fire.12290",
+      "accessed_utc": "2026-10-13",
+      "reported_finding": "The authors report that the first half-hour positively predicts the last half-hour return and that high-volume/high-volatility first sessions show stronger predictability. This BTC study motivates, but does not validate, our fixed UTC-hour BTC/ETH spot adaptation."
+    }
+  ],
+  "failure_gates": {
+    "all_1x_2x_3x_returns_positive": true,
+    "minimum_positive_1x_folds": 8,
+    "maximum_3x_minute_close_sample_drawdown_pct": 25,
+    "minimum_3x_adjacent_neighbor_positive_fraction": 0.6,
+    "minimum_1x_round_trips": 250,
+    "minimum_1x_gross_pnl_to_cost": 2.5,
+    "no_capacity_balance_or_rejected_orders": true,
+    "terminal_flat": true,
+    "interpretation": "Positive backtest results are historical screens only and do not establish future or live profitability."
+  }
+}

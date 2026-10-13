@@ -1,0 +1,105 @@
+{
+  "round": "20261013T052946Z",
+  "frozen_at_utc": "2026-10-13T05:29:46Z",
+  "direction": "Intrahour half-hour time-series continuation, long-only Binance spot, with a same-UTC-hour first-half quote-volume gate.",
+  "hypothesis": "Primary Bitcoin research reports first-half-hour return predictiveness for the last half-hour and stronger effects in high-volume/high-volatility sessions. Test a causal next-minute-open adaptation with a predeclared same-slot quote-volume filter on BTC and ETH; the rule is not a paper replication.",
+  "source_paper": {
+    "citation": "Shen, D., Urquhart, A., & Wang, P. (2022). Bitcoin intraday time-series momentum. Financial Review, 57(2), 319–344. DOI:10.1111/fire.12290.",
+    "url": "https://doi.org/10.1111/fire.12290",
+    "accessed_utc": "2026-10-13",
+    "reported_finding": "The authors report that the first half-hour positively predicts the last half-hour return and that high-volume/high-volatility first sessions show stronger predictability. This BTC study motivates, but does not validate, our fixed UTC-hour BTC/ETH spot adaptation."
+  },
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "first_half_return_threshold": [
+      0.0,
+      0.0005,
+      0.001
+    ],
+    "same_slot_quote_volume_ratio_min": [
+      0.75,
+      1.0,
+      1.25
+    ],
+    "candidate_configs": 18,
+    "benchmarks": 2,
+    "total_registry_definitions": 20
+  },
+  "rule": "For each completed UTC hour h, calculate first-half return close(minute h+29)/open(minute h)-1 and first-half quote volume as the sum of quote_volume over the 30 closed one-minute bars h through h+29. Calculate the quote-volume ratio against the arithmetic mean of the previous 20 fully completed UTC days' first-half quote volume at the same UTC hour h; current day is excluded. If first-half return is strictly greater than the configured threshold and volume ratio is at least the configured minimum, enter long at the next one-minute open h+31 (signal availability h+30, fixed 60-second delay). Schedule full exit at the next hour's first-minute open h+61, giving a 30-minute holding window. If exit execution is rejected, retry at each next one-minute open until filled; while still holding, ignore a later entry signal rather than backfill it. No leverage, shorting, add-on or inter-asset transfer. Common OOS terminal liquidation is costed.",
+  "time_boundaries": {
+    "history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "oos_start_utc": "2025-09-19T00:00:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+    "oos_days": 360,
+    "walk_forward": "12 continuous non-overlapping 30-day folds; no fitted parameters; events are scheduled from completed first-half bars only.",
+    "history_disclosure": "Repeatedly used repository development/validation history; not an untouched final holdout."
+  },
+  "sensitivity_axes": [
+    "first_half_return_threshold",
+    "same_slot_quote_volume_ratio_min"
+  ],
+  "execution": {
+    "signal_data": "Binance spot closed 1m OHLCV aggregated into rolling UTC-hour first/second half sessions; price reference uses minute opens after signal availability.",
+    "filters_source": "research/experiments/20261012T035429Z/report.json",
+    "filters_sha256": "383d833e5d7d9d12aac3dacdb02051fdd2a0b3b4b49c0e099ddc1b38c3c7e16e",
+    "source_files": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 30555668,
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6"
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 30415140,
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16"
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 27110682,
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57"
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 26332430,
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584"
+        }
+      ]
+    },
+    "accounting": "Separate 2,000 USDT account per asset/config, cash compounds after each scheduled window; no interest/rebalance."
+  },
+  "costs": {
+    "fee_each_side": "10bp",
+    "half_spread_estimate_each_side": "1bp",
+    "slippage_each_side": "2bp",
+    "impact": "0.5 × prior 20 complete UTC day return stdev × sqrt(order quote budget / prior 20-day quote ADV)",
+    "maximum_participation": "0.1% of lagged ADV",
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "spread_counted_once": true,
+    "market_depth": "No historical L2; spread and impact are estimates.",
+    "funding_borrow": "Not applicable: long-only spot."
+  },
+  "failure_gates": {
+    "all_1x_2x_3x_returns_positive": true,
+    "minimum_positive_1x_folds": 8,
+    "maximum_3x_minute_close_sample_drawdown_pct": 25,
+    "minimum_3x_adjacent_neighbor_positive_fraction": 0.6,
+    "minimum_1x_round_trips": 250,
+    "minimum_1x_gross_pnl_to_cost": 2.5,
+    "no_capacity_balance_or_rejected_orders": true,
+    "terminal_flat": true,
+    "interpretation": "Positive backtest results are historical screens only and do not establish future or live profitability."
+  },
+  "prior_research": "The repository has tested 15m quarter-hour scheduled windows, 4h volume-confirmed momentum, and 4h/daily reversal variants. This distinct half-hour response is fixed before result calculation; all cost/volume filters and the 20-config reserve history are preserved."
+}

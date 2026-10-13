@@ -1,0 +1,34 @@
+{
+  "kind": "strategy",
+  "family": "spot-hourly-halfhour-hold-reference",
+  "market": "spot",
+  "timeframe": "1h",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "name": "hold_360d_ETH_halfhour_period",
+  "logic": {
+    "entry": "Buy at the same OOS start executable minute open irrespective of signal.",
+    "exit": "Hold to common OOS terminal execution and liquidate with the same costs.",
+    "sizing": "Independent 2,000 USDT unlevered long-only spot benchmark."
+  },
+  "parameters": {
+    "initial_capital_usdt": 2000,
+    "oos_start_utc": "2025-09-19T00:00:00Z",
+    "oos_terminal_execution_utc": "2026-09-14T00:01:00Z",
+    "oos_days": 360,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  },
+  "sources": [
+    {
+      "citation": "Shen, D., Urquhart, A., & Wang, P. (2022). Bitcoin intraday time-series momentum. Financial Review, 57(2), 319–344. DOI:10.1111/fire.12290.",
+      "url": "https://doi.org/10.1111/fire.12290",
+      "accessed_utc": "2026-10-13",
+      "reported_finding": "The authors report that the first half-hour positively predicts the last half-hour return and that high-volume/high-volatility first sessions show stronger predictability. This BTC study motivates, but does not validate, our fixed UTC-hour BTC/ETH spot adaptation."
+    }
+  ]
+}
