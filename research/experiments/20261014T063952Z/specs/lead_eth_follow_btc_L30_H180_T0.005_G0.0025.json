@@ -1,0 +1,58 @@
+{
+  "kind": "strategy",
+  "family": "spot-btc-eth-hourly-leadlag-follower-fixed-hold",
+  "market": "spot",
+  "universe": [
+    "ETH/USDT",
+    "BTC/USDT"
+  ],
+  "timeframe": "1m",
+  "name": "lead_eth_follow_btc_L30_H180_T0.005_G0.0025",
+  "logic": {
+    "decision": "At each UTC hourly boundary m use only fully closed 1m data through m-1; signal values are never computed from bar m or later.",
+    "signal": "For leader X and follower Y, rX=closeX[m-1]/closeX[m-1-L]-1 and rY analogously, with L=30 minutes. If flat, enter Y long only if rX is strictly greater than threshold T and rX-rY is strictly greater than threshold G. Parameters T and G are independently swept over the predeclared full grid.",
+    "execution": "Signal is available after close at boundary m. Historical reference is minute m+1 open, exactly 60 seconds later; this is a backtest price, not a live quote or exchange fill.",
+    "position": "At most one position per $2,000 configuration, full affordable cash; hold 180 minutes from decision boundary, then exit at the first hourly boundary at or after expiry, executing one minute later. Do not enter at an exit boundary. Do not enter when expiry would exceed terminal boundary. Rejected exits retain units and retry next eligible hourly boundary. Force terminal liquidation at 2026-09-14 00:01.",
+    "cash": "Spot long only; no shorting, leverage, borrowing, funding, transfer, yield, scale-in, or rebalancing. Each direction/threshold cell owns an independent account."
+  },
+  "parameters": {
+    "leader": "ETH",
+    "follower": "BTC",
+    "leader_lookback_minutes": 30,
+    "fixed_hold_minutes": 180,
+    "leader_return_threshold": 0.005,
+    "leader_minus_follower_gap_threshold": 0.0025,
+    "decision_interval_minutes": 60,
+    "initial_capital_usdt": 2000,
+    "start_utc": "2025-09-19T00:00:00Z",
+    "end_exclusive_utc": "2026-09-14T00:00:00Z",
+    "terminal_execution_utc": "2026-09-14T00:01:00Z",
+    "start_day_index": 368,
+    "end_day_index": 728,
+    "days": 360,
+    "fold_days": 30,
+    "folds": 12,
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "exchange_filters_sha256": "d9fc987461ea6dfa98da97cb6d3bb1ac0b13f76d060cbf90482cc3804a04c6e1",
+    "sensitivity_axes": [
+      "leader_return_threshold",
+      "leader_minus_follower_gap_threshold"
+    ]
+  },
+  "validation_plan": "research/experiments/20261014T063952Z/plan.json",
+  "sources": [
+    {
+      "citation": "Sifat, I. M., Mohamad, A., & Mohamed Shariff, M. S. B. (2019). Lead-lag relationship between Bitcoin and Ethereum: Evidence from hourly and daily data. Research in International Business and Finance, 50, 306-321. DOI:10.1016/j.ribaf.2019.06.012.",
+      "url": "https://doi.org/10.1016/j.ribaf.2019.06.012",
+      "author_page": "https://research.monash.edu/en/publications/lead-lag-relationship-between-bitcoin-and-ethereum-evidence-from-",
+      "accessed_utc": "2026-10-13",
+      "finding_summary": "The authors report largely bidirectional price discovery from 2017-2018 hourly/daily BTC and ETH data and state intraday traders could barely exploit it. This is a cost-first, two-way, current-history falsification/adaptation test, not a reproduction or edge claim."
+    }
+  ]
+}

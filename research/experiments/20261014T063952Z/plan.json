@@ -1,0 +1,194 @@
+{
+  "round": "20261014T063952Z",
+  "frozen_at_utc": "2026-10-14T06:44:45.355437Z",
+  "status": "frozen_before_evaluation",
+  "direction": "Two-way hourly cross-asset impulse follow-through; long only in the trailing asset.",
+  "hypothesis": "A short BTC/ETH impulse may transmit to the other liquid asset, but previous research found its apparent advantage was threshold/hold fragile. This round predeclares a symmetric two-way threshold surface at fixed 30m lookback and 3h hold; the aim is to test whether a broader signal-strength/gap plateau survives full costs, not to infer stable live profitability.",
+  "source_paper": {
+    "citation": "Sifat, I. M., Mohamad, A., & Mohamed Shariff, M. S. B. (2019). Lead-lag relationship between Bitcoin and Ethereum: Evidence from hourly and daily data. Research in International Business and Finance, 50, 306-321. DOI:10.1016/j.ribaf.2019.06.012.",
+    "url": "https://doi.org/10.1016/j.ribaf.2019.06.012",
+    "author_page": "https://research.monash.edu/en/publications/lead-lag-relationship-between-bitcoin-and-ethereum-evidence-from-",
+    "accessed_utc": "2026-10-14",
+    "finding_summary": "The authors report largely bidirectional price discovery from 2017-2018 hourly/daily BTC and ETH data and state intraday traders could barely exploit it. This is a cost-first, two-way, current-history falsification/adaptation test, not a reproduction or edge claim.",
+    "scope": "Motivates two-way discovery only; this grid is not a paper replication and prior results found limited intraday exploitability."
+  },
+  "prior_work": {
+    "prior_hourly_leadlag": "research/experiments/20261013T164415Z/result.md completed 18 configurations: all rejected. Best BTC→ETH L15/H240 was +8.88% 1x, +3.80% 2x, -1.03% 3x, only 6/12 positive folds and 0% positive 3x neighbors. It is context, not new evidence.",
+    "superseded_no_result_drafts": "The same round retained 18 abandoned before-compute drafts with no result; not being silently counted as tested or selected. This fresh batch is a distinct threshold sensitivity surface and will be independently reserved/finished.",
+    "initial16": "Prior evidence audit verified actual backtest reports for all 16 initial rows; there is no code-only original configuration to backfill.",
+    "history": "2025-09-16 through 2026-09-16 archived data is repeatedly reused development history, not an untouched holdout. Registry count includes extensive multiple testing; no DSR/PBO claim."
+  },
+  "data": {
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 30555668,
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6"
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 30415140,
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16"
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 27110682,
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57"
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 26332430,
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584"
+        }
+      ]
+    },
+    "source_round": "research/experiments/20261013T164415Z/plan.json",
+    "market": "Binance spot 1m archived OHLCV with continuous UTC timestamps; daily cost inputs are aggregated from the same source. Historical signal entries/exits use the specified next-minute open only in this historical backtest.",
+    "oos_start_utc": "2025-09-19T00:00:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:00:00Z",
+    "terminal_execution_utc": "2026-09-14T00:01:00Z",
+    "start_day_index": 368,
+    "end_day_index": 728,
+    "oos_days": 360,
+    "folds": 12,
+    "fold_days": 30,
+    "warmup_days": 365,
+    "history_reused": true
+  },
+  "allocation": {
+    "initial_capital_usdt": 2000,
+    "per_config_independent_account": true,
+    "directions_are_separate_configurations": true,
+    "follower_long_only": true,
+    "weight_semantics": "100% of the independent $2,000 account allocated to the follower when signaled; this is one-asset exposure, not a BTC/ETH portfolio weight. No cross-account transfers."
+  },
+  "rule": {
+    "decision": "At each UTC hourly boundary m use only fully closed 1m data through m-1; signal values are never computed from bar m or later.",
+    "signal": "For leader X and follower Y, rX=closeX[m-1]/closeX[m-1-L]-1 and rY analogously, with L=30 minutes. If flat, enter Y long only if rX is strictly greater than threshold T and rX-rY is strictly greater than threshold G. Parameters T and G are independently swept over the predeclared full grid.",
+    "execution": "Signal is available after close at boundary m. Historical reference is minute m+1 open, exactly 60 seconds later; this is a backtest price, not a live quote or exchange fill.",
+    "position": "At most one position per $2,000 configuration, full affordable cash; hold 180 minutes from decision boundary, then exit at the first hourly boundary at or after expiry, executing one minute later. Do not enter at an exit boundary. Do not enter when expiry would exceed terminal boundary. Rejected exits retain units and retry next eligible hourly boundary. Force terminal liquidation at 2026-09-14 00:01.",
+    "cash": "Spot long only; no shorting, leverage, borrowing, funding, transfer, yield, scale-in, or rebalancing. Each direction/threshold cell owns an independent account."
+  },
+  "grid": {
+    "directions": [
+      {
+        "leader": "BTC",
+        "follower": "ETH"
+      },
+      {
+        "leader": "ETH",
+        "follower": "BTC"
+      }
+    ],
+    "leader_lookback_minutes_fixed": 30,
+    "holding_minutes_fixed": 180,
+    "leader_return_threshold": [
+      0.0025,
+      0.005,
+      0.01
+    ],
+    "leader_minus_follower_gap_threshold": [
+      0.001,
+      0.0025,
+      0.005
+    ],
+    "configuration_count": 18,
+    "sensitivity_axes": [
+      "leader_return_threshold",
+      "leader_minus_follower_gap_threshold"
+    ]
+  },
+  "cost_model": {
+    "capital_usdt": 2000,
+    "fee_per_side": 0.001,
+    "estimated_half_spread_per_side": 0.0001,
+    "slippage_per_side": 0.0002,
+    "impact_model": "0.5 * sample stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete daily quote ADV)",
+    "maximum_participation": 0.001,
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "all_cost_terms_scaled_together": true,
+    "exchange_filter_snapshot_sha256": "d9fc987461ea6dfa98da97cb6d3bb1ac0b13f76d060cbf90482cc3804a04c6e1",
+    "limitations": "Historical L2 and historical exchange filter schedules are unavailable; spread/slippage are estimates. Percent price uses the preceding five 1m quote/base-volume VWAP proxy. Immediate fill is an explicit OHLCV backtest assumption."
+  },
+  "exchange_rules": {
+    "path": "research/experiments/20261014T063952Z/exchange_info_raw.json",
+    "sha256": "decb053c235091beefb2a46b5d1570bab72b72d76cc9d1946c3a452074a3af89",
+    "received_at_utc": "2026-10-14T06:44:44.777436Z",
+    "symbols": [
+      "BTCUSDT",
+      "ETHUSDT"
+    ],
+    "filters": {
+      "BTC": [
+        "PRICE_FILTER",
+        "LOT_SIZE",
+        "ICEBERG_PARTS",
+        "MARKET_LOT_SIZE",
+        "TRAILING_DELTA",
+        "PERCENT_PRICE_BY_SIDE",
+        "NOTIONAL",
+        "MAX_NUM_ORDERS",
+        "MAX_NUM_ORDER_LISTS",
+        "MAX_NUM_ALGO_ORDERS",
+        "MAX_NUM_ORDER_AMENDS"
+      ],
+      "ETH": [
+        "PRICE_FILTER",
+        "LOT_SIZE",
+        "ICEBERG_PARTS",
+        "MARKET_LOT_SIZE",
+        "TRAILING_DELTA",
+        "PERCENT_PRICE_BY_SIDE",
+        "NOTIONAL",
+        "MAX_NUM_ORDERS",
+        "MAX_NUM_ORDER_LISTS",
+        "MAX_NUM_ALGO_ORDERS",
+        "MAX_NUM_ORDER_AMENDS"
+      ]
+    }
+  },
+  "walk_forward": {
+    "fold_days": 30,
+    "folds": 12,
+    "continuous_account_state_across_folds": true,
+    "signal_uses_only_closed_bars": true,
+    "label_purge_embargo": "No fitted labels or training phase; deterministic lagged signal, so no label leakage. Warmup is prior data only.",
+    "holdout_disclosure": "Repeated historical development/OOS window, not untouched."
+  },
+  "failure_gates": {
+    "all_1x_2x_3x_net_returns_positive": true,
+    "minimum_positive_1x_folds": 8,
+    "maximum_3x_sample_drawdown_pct": 25,
+    "minimum_3x_adjacent_neighbor_positive_fraction": 0.6,
+    "minimum_1x_round_trips": 4,
+    "minimum_1x_gross_reference_pnl_to_cost": 2.5,
+    "no_rejected_or_capacity_filtered_orders": true,
+    "terminal_flat_all_scenes": true
+  },
+  "benchmark_read_only": {
+    "source_report": "research/experiments/20261013T123949Z/report.json",
+    "configurations": [
+      "hold_360d_btc_relative_strength_study",
+      "hold_360d_eth_relative_strength_study"
+    ],
+    "reuse_only": true
+  },
+  "prior_registry_snapshot": {
+    "events": 9512,
+    "unique_fingerprints": 4652,
+    "prior_leadlag_statuses": {
+      "passed": 0,
+      "rejected": 18,
+      "abandoned": 18,
+      "blocked": 0,
+      "reserved": 0
+    }
+  }
+}
