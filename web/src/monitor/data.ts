@@ -38,7 +38,6 @@ export type ResearchConfig = {
   cross_period_passed: boolean; scenes: Partial<Record<Cost, ResearchScene>>; criteria: Record<string, boolean>;
   failed_criteria: string[]; positive_folds_1x: number | null; report: string; spec_path: string | null;
   validation: { walk_forward_folds: number; cost_scenarios: string[]; sensitivity_recorded: boolean };
-  spec: { name: string; kind: string; family: string; parameters: Record<string, string | number | boolean> };
 };
 export type ResearchRound = { id: string; at: string | null; new_configs: number; passed: number; rejected: number;
   new_cross_period_pairs: number; report: string; result: string };

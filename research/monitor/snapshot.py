@@ -77,7 +77,13 @@ def indicator(spec, records, depth=0):
     elif "compression-breakout" in family:
         text = (f"波动压缩突破 E{p.get('entry_breakout_lookback_days', '?')}日/"
                 f"X{p.get('exit_close_channel_lookback_days', '?')}日/Q{p.get('compression_percentile', '?')}%")
-    elif "hold" in family:
+    elif "failed-breakdown-reclaim" in family:
+        text = (f"前{p.get('breakdown_lookback_days', '?')}日低点跌破收复"
+                f" K{p.get('reclaim_window_days', '?')}日/H{p.get('fixed_holding_days', '?')}日")
+    elif family in ("buy-hold", "buy-hold-daily-comparator", "daily-buy-hold-reference",
+                    "spot-4h-hold-reference", "spot-hold-comparator", "spot-hold-equal-capital-comparator",
+                    "spot-intraday-hold-reference", "spot-ratio-mean-reversion-hold-reference",
+                    "spot-rotation-hold-reference"):
         text = "买入持有基准"
     else:
         text = family or "组件规则见源配置"
@@ -324,11 +330,7 @@ def build_research(root):
                      "positive_folds_1x": cfg.get("positive_folds_1x", cfg.get("positive_1x_folds", raw_scenes.get("1", {}).get("positive_1x_folds", raw_scenes.get("1", {}).get("positive_folds")))), "report": relative,
                      "validation": {"walk_forward_folds": len(scenes.get("1", {}).get("fold_returns_pct", [])),
                                     "cost_scenarios": sorted(scenes), "sensitivity_recorded": bool(report.get("sensitivity") or cfg.get("sensitivity"))},
-                     "spec_path": cfg.get("spec", cfg.get("spec_path")),
-                     "spec": {"name": spec.get("name", name), "kind": spec["kind"], "family": spec["family"],
-                              "parameters": {k: v for k, v in params.items()
-                                                                         if isinstance(v, (int, float, bool))
-                                                                         or k in ("start_utc", "end_utc")}}})
+                     "spec_path": cfg.get("spec", cfg.get("spec_path"))})
     counts = Counter(record["status"] for record in canonical.values())
     period_pairs = sorted(set((r["start_utc"], r["end_utc"]) for r in rows), reverse=True)
     return {"last_run": rounds[-1] if rounds else None, "registry_sha256": sha(ledger_path.read_bytes()),

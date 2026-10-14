@@ -1,0 +1,162 @@
+{
+  "round": "20261014T043852Z",
+  "frozen_at_utc": "2026-10-14T04:43:58.391498Z",
+  "status": "frozen_before_evaluation",
+  "source_repository_commit": "deeac37a5f22590595aecb6f6de4dd2473f762f0",
+  "direction": "Long-only failed-breakdown reclaim with a fixed five-day holding period",
+  "hypothesis": "Some breaks below an established N-day low may reverse within the next K closes; entering only after a completed close reclaims the broken level may capture rebounds without buying the initial breakdown. This is a predeclared countertrend hypothesis, not a claim of an exact reproduction of the published Turtle Soup setup.",
+  "literature_context": [
+    {
+      "source": "Linda Bradford Raschke official recommended-reading list, which lists Street Smarts coauthored with Laurence A. Connors",
+      "url": "https://lindaraschke.net/recommended-reading/",
+      "accessed_utc": "2026-10-14T04:43:58.394068Z",
+      "scope": "Bibliographic origin context only; the evaluated rule below is our explicitly fixed long-only daily adaptation, not the authors’ complete setup or proof of crypto profitability."
+    },
+    {
+      "source": "Turtle Soup historical rule summary",
+      "url": "https://www.turtletrader.com/trader-raschke/",
+      "accessed_utc": "2026-10-14T04:43:58.394086Z",
+      "scope": "Secondary historical description of fading failed channel breaks; used only to motivate the idea, not as performance evidence."
+    }
+  ],
+  "prior_work": {
+    "initial16_audit": "research/experiments/20261012T035429Z/prior_evidence_audit.json found actual backtest evidence for all sixteen initial entries; no initial code-only configuration is eligible for backfill.",
+    "unavailable_registry_rows": "58 unresolved latest definitions are 40 blocked btc-eth-2 paper-live observations and 18 abandoned superseded lead-lag drafts; these are not missing initial research backtests and are left unchanged.",
+    "adjacent_work": "Daily RSI2 reversion, ratio z-score mean reversion, long-horizon relative strength, hourly lead-lag, volatility compression and channel breakout families have stored results. This grid changes the event to a one-shot close reclaim of the specific level broken earlier; it remains related countertrend research and shares repeated historical selection risk.",
+    "history_note": "2025-09-19..2026-09-14 is repeatedly reused development/OOS history, not an untouched final holdout."
+  },
+  "data": {
+    "exchange": "Binance spot archived 1-minute OHLCV aggregated into continuous UTC daily OHLCV. Execution uses the exact following-day 00:01 1m open from the same real archived data; no earlier or later bar is selected.",
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6",
+          "bytes": 30555668
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16",
+          "bytes": 30415140
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57",
+          "bytes": 27110682
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584",
+          "bytes": 26332430
+        }
+      ]
+    },
+    "exchange_info_raw_path": "research/experiments/20261014T043852Z/exchange_info_raw.json",
+    "exchange_info_raw_sha256": "8878addb95074d7b141b252372ff5d56f38421af1fe85659b40b1cfba97c05bb",
+    "start_utc": "2025-09-19T00:01:00Z",
+    "end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "oos_days": 360,
+    "folds": 12,
+    "fold_days": 30,
+    "history_reused": true
+  },
+  "portfolio": {
+    "capital_usdt": 2000,
+    "initial_capital_usdt": 2000,
+    "raw_initial_weights": {
+      "BTC": 0.5,
+      "ETH": 0.5
+    },
+    "raw_asset_weights": [
+      0.5,
+      0.5
+    ],
+    "sleeve_cash_usdt": {
+      "BTC": 1000,
+      "ETH": 1000
+    },
+    "transfer": false,
+    "leverage": false
+  },
+  "rule": {
+    "setup": "At completed UTC daily close t, when flat and no setup is pending, arm a failed-breakdown setup only if close[t] is strictly below lower[t]=min(low[t-N:t]); the N prior completed daily bars exclude t. Store that exact lower level and expiry day index t+K.",
+    "reclaim": "On one of the next K completed daily closes after the breakdown day (inclusive of day t+K), if close[j] is strictly above the stored lower[t], enter long at the next UTC day 00:01 1-minute bar open. A reclaim on breakdown day itself is not allowed. While pending, ignore any subsequent new lows and retain the first broken level. If K days pass without reclaim, disarm after the expiry day close; a new breakdown may arm from the following closed day.",
+    "hold_exit": "Hold exactly H=5 elapsed UTC daily intervals from virtual entry timestamp; exit at the 00:01 UTC minute open after five full closed daily bars. Ignore all new breakdown/reclaim signals while holding and on the exit event day; setup processing resumes the next UTC daily decision. No stop, profit target or overlapping positions.",
+    "sizing": "One 2,000-USDT portfolio with separate BTC and ETH long-only cash sleeves; raw initial weights 0.50/0.50 (1,000 USDT each). Each signal uses its sleeve only; no cross-sleeve transfers/rebalancing, leverage, shorting or cash interest. Full available sleeve cash is allocated at entry; full units sold at exit.",
+    "timing": "Only fully closed UTC daily OHLC bars can arm, reclaim or exit. Daily close becomes available at next UTC 00:00; simulated order reference is the following 00:01 1-minute open, 60 seconds later. Warmup data may form the prior N-day levels, but there are no pre-OOS positions. OOS begins 2025-09-19 00:01 UTC and terminal liquidation is 2026-09-14 00:01 UTC.",
+    "channel_extrema": "Prior-low calculation excludes the compared day. Reclaim compares against the saved breakdown-day lower level, not a moving later channel."
+  },
+  "grid": {
+    "breakdown_lookback_days": [
+      10,
+      20,
+      40
+    ],
+    "reclaim_window_days": [
+      1,
+      2,
+      3
+    ],
+    "fixed_holding_days": 5,
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "sensitivity": "Full 3x3 grid over N-day prior-low setup lookback and K-day reclaim window; all combinations retained."
+  },
+  "cost_model": {
+    "fee_per_side": 0.001,
+    "estimated_half_spread_per_side": 0.0001,
+    "slippage_per_side": 0.0002,
+    "impact": "0.5 * sample stdev of prior 20 fully closed daily log returns * sqrt(order quote budget / mean quote volume over prior 20 complete UTC days)",
+    "maximum_ADV_participation": 0.001,
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "all_cost_terms_scaled_together": true,
+    "cash_yield": 0
+  },
+  "exchange_snapshot": {
+    "captured_server_time_ms": 1791952978676,
+    "raw_sha256": "8878addb95074d7b141b252372ff5d56f38421af1fe85659b40b1cfba97c05bb",
+    "filters": [
+      "PRICE_FILTER",
+      "LOT_SIZE",
+      "NOTIONAL",
+      "PERCENT_PRICE_BY_SIDE"
+    ],
+    "percent_price_reference": "Historical order filters use mean of prior five complete 1m closes as a proxy for the current avgPriceMins reference; exact historical exchange rule and book snapshots are unavailable."
+  },
+  "time_splits": {
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "folds": 12,
+    "fold_days": 30,
+    "contiguous": true,
+    "signal_uses_only_closed_bars": true
+  },
+  "failure_gates": {
+    "all_1x_2x_3x_net_returns_positive": true,
+    "positive_1x_folds_minimum": 8,
+    "folds": 12,
+    "maximum_3x_sampled_drawdown_pct": 25,
+    "minimum_3x_local_neighbor_positive_fraction": 0.6,
+    "minimum_gross_to_cost": 2.5,
+    "zero_capacity_or_exchange_filter_rejections": true,
+    "terminal_flat_all_cost_scenes": true
+  },
+  "benchmark_read_only": {
+    "source_report": "research/experiments/20261013T224056Z/report.json",
+    "configuration": "hold_360d_BTC_ETH_50_50_monthly_volmanaged",
+    "note": "Read-only same 360-day start/end, separate 1,000-USDT BTC/ETH initial sleeves and cost scenes; do not recalculate this exact benchmark."
+  },
+  "prior_registry_snapshot": {
+    "events_before_batch": 9474,
+    "unique_fingerprints_before_batch": 4633
+  },
+  "_sha256": "6b398cb6c1dd8182ba87fca92f49e2f53f53ddbbfd017d98145e6a9ec89e6082"
+}

@@ -1,0 +1,53 @@
+{
+  "kind": "strategy",
+  "family": "spot-daily-failed-breakdown-reclaim-fixed-hold",
+  "market": "spot",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "timeframe": "1d",
+  "logic": {
+    "setup": "At completed UTC daily close t, when flat and no setup is pending, arm a failed-breakdown setup only if close[t] is strictly below lower[t]=min(low[t-N:t]); the N prior completed daily bars exclude t. Store that exact lower level and expiry day index t+K.",
+    "reclaim": "On one of the next K completed daily closes after the breakdown day (inclusive of day t+K), if close[j] is strictly above the stored lower[t], enter long at the next UTC day 00:01 1-minute bar open. A reclaim on breakdown day itself is not allowed. While pending, ignore any subsequent new lows and retain the first broken level. If K days pass without reclaim, disarm after the expiry day close; a new breakdown may arm from the following closed day.",
+    "hold_exit": "Hold exactly H=5 elapsed UTC daily intervals from virtual entry timestamp; exit at the 00:01 UTC minute open after five full closed daily bars. Ignore all new breakdown/reclaim signals while holding and on the exit event day; setup processing resumes the next UTC daily decision. No stop, profit target or overlapping positions.",
+    "sizing": "One 2,000-USDT portfolio with separate BTC and ETH long-only cash sleeves; raw initial weights 0.50/0.50 (1,000 USDT each). Each signal uses its sleeve only; no cross-sleeve transfers/rebalancing, leverage, shorting or cash interest. Full available sleeve cash is allocated at entry; full units sold at exit.",
+    "timing": "Only fully closed UTC daily OHLC bars can arm, reclaim or exit. Daily close becomes available at next UTC 00:00; simulated order reference is the following 00:01 1-minute open, 60 seconds later. Warmup data may form the prior N-day levels, but there are no pre-OOS positions. OOS begins 2025-09-19 00:01 UTC and terminal liquidation is 2026-09-14 00:01 UTC.",
+    "channel_extrema": "Prior-low calculation excludes the compared day. Reclaim compares against the saved breakdown-day lower level, not a moving later channel."
+  },
+  "parameters": {
+    "breakdown_lookback_days": 20,
+    "reclaim_window_days": 3,
+    "fixed_holding_days": 5,
+    "capital_usdt": 2000,
+    "initial_capital_usdt": 2000,
+    "raw_initial_weights": {
+      "BTC": 0.5,
+      "ETH": 0.5
+    },
+    "raw_asset_weights": [
+      0.5,
+      0.5
+    ],
+    "sleeve_cash_usdt": {
+      "BTC": 1000,
+      "ETH": 1000
+    },
+    "start_utc": "2025-09-19T00:01:00Z",
+    "end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "folds": 12,
+    "fold_days": 30,
+    "fee_per_side": 0.001,
+    "estimated_half_spread_per_side": 0.0001,
+    "slippage_per_side": 0.0002,
+    "maximum_ADV_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "exchange_info_raw_sha256": "8878addb95074d7b141b252372ff5d56f38421af1fe85659b40b1cfba97c05bb"
+  },
+  "validation_plan": "research/experiments/20261014T043852Z/plan.json",
+  "name": "failed_breakdown_N20_K3_H5"
+}

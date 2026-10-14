@@ -53,7 +53,8 @@ def main():
         if any(snapshot.metric_scene(s) for s in cfg.get("scenes", {}).values()):
             assert fp in ids, f"finished report absent from dashboard: {report_path.name} {fp}"
     assert len({r["id"] for r in data["research"]["rounds"]}) == len(data["research"]["rounds"])
-    assert all(not snapshot.is_observation(r["spec"]) for r in data["research"]["configs"])
+    assert all(not snapshot.is_observation({"family": r["family"], "name": r["name"]})
+               for r in data["research"]["configs"])
     assert any(r["status"] == "rejected" for r in data["research"]["configs"])
     assert any(s["return_pct"] < 0 for r in data["research"]["configs"] for s in r["scenes"].values()), "negative results disappeared"
     assert data["research"]["counts"]["observation_records_excluded"] > 0
