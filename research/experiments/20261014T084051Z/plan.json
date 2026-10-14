@@ -1,0 +1,192 @@
+{
+  "round": "20261014T084051Z",
+  "frozen_at_utc": "2026-10-14T08:50:52.042584Z",
+  "status": "frozen_before_evaluation",
+  "direction": "Daily long-only fast/slow recursive EMA trend-state crossover, tested separately on BTC and ETH.",
+  "hypothesis": "A faster recursive trend state above a slower one may keep the spot account invested during persistent advances and move it to cash after trend deterioration. This is a deterministic, fixed-rule stress test, not a claim of an edge. Prior 15m EMA-cross results were strongly negative; daily spans and a complete predeclared surface test a slower horizon without selecting from this OOS.",
+  "literature_context": [
+    {
+      "citation": "Technical trading rules in the cryptocurrency market (2019), daily simple moving-average rules on 11 cryptocurrencies, 2016–2018.",
+      "url": "https://www.sciencedirect.com/science/article/pii/S1544612319308852",
+      "accessed_utc": "2026-10-14",
+      "scope": "Motivates a daily trend-rule falsification test; not evidence for this EMA rule or modern OOS profitability."
+    },
+    {
+      "citation": "Technical analysis in cryptocurrency markets: Do transaction costs and bubbles matter? (2022), daily/1m moving-average and breakout rules with/without transaction costs.",
+      "url": "https://www.sciencedirect.com/science/article/pii/S1042443122000816",
+      "accessed_utc": "2026-10-14",
+      "scope": "Motivates full cost testing; not a rule replication."
+    }
+  ],
+  "prior_work": {
+    "initial16": "research/experiments/20261012T035429Z/prior_evidence_audit.json verifies actual reports for all initial 16; no engineering-only row is pending backfill.",
+    "adjacent": "Repository has daily SMA/EMA hysteresis, close-channel EMA filters, volume/channel breakouts, volatility management, compression breakouts, failed-breakdown reclaim, and BTC/ETH lead-lag studies. This round tests a simple relative recursive EMA state crossover with a new daily span grid.",
+    "legacy_ema": "The legacy 20/50 EMA crossover is a 15m config; archived 1y fixed EMA-cross returns were -34.05% BTC and -29.93% ETH. It is contextual caution, not evidence for this new daily grid.",
+    "history": "The 2025-09-16 through 2026-09-16 archive has been repeatedly reused; this OOS window is not untouched. The registry contains extensive multiple testing; no DSR/PBO claim."
+  },
+  "data": {
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 30555668,
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6"
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 30415140,
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16"
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 27110682,
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57"
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 26332430,
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584"
+        }
+      ]
+    },
+    "source_round": "research/experiments/20261013T164415Z/plan.json",
+    "exchange_info_source": "research/paper10/observations/20261014T081319010144Z/exchange_info.json.gz",
+    "exchange_info_raw_sha256": "a0dddc16d8d06971b51fa61977e71149c3e1eb92f64f48fdc93599d4ffa40788",
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "terminal_execution_utc": "2026-09-14T00:01:00Z",
+    "start_day_index": 368,
+    "end_day_index": 728,
+    "oos_days": 360,
+    "folds": 12,
+    "fold_days": 30,
+    "warmup_days": 365,
+    "history_reused": true,
+    "market": "Binance spot archived 1m OHLCV aggregated into continuous UTC daily closes; historical execution reference is next-day 00:01 1m open."
+  },
+  "portfolio": {
+    "capital_per_configuration_usdt": 2000,
+    "raw_weight": 1.0,
+    "weight_semantics": "100% single-asset sleeve for the named asset; BTC and ETH are separate configurations, not a combined portfolio.",
+    "no_transfer": true,
+    "no_rebalance": true
+  },
+  "rule": {
+    "indicator": "Recursive EMA: alpha=2/(span+1), seed EMA[0]=the first completed UTC daily close, EMA[j]=alpha*close[j]+(1-alpha)*EMA[j-1], Python float adjust=False, initialized once from the first archived daily close and never reset at folds.",
+    "entry": "At the close of a fully completed UTC daily bar j, if EMA_fast[j] is strictly greater than EMA_slow[j] and the account is flat, set desired-long. Equality preserves previous desired state.",
+    "exit": "At the close of a fully completed UTC daily bar j, if EMA_fast[j] is strictly below EMA_slow[j] while long, set desired-cash. Equality preserves prior desired. No stop, target, confirmation counter, cooldown, overlap or scale-in.",
+    "timing": "The daily close is available at the next UTC 00:00; execute at the following UTC 00:01 one-minute open, exactly 60 seconds later. That historical open is only a historical-backtest reference. Warmup establishes indicators but produces no pre-OOS trade.",
+    "account": "One separate 2,000-USDT long-only spot account per asset/span configuration. The raw weight is 100% of that account to the named single asset when long. Full affordable LOT_SIZE-floored amount is bought, all units are sold at exit. No leverage, shorting, borrowing, transfer, yield, cross-asset rebalancing or shared impact.",
+    "terminal": "Liquidate any position at the declared common terminal UTC 00:01 reference with full modeled costs."
+  },
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "fast_ema_spans_days": [
+      5,
+      10,
+      20
+    ],
+    "slow_ema_spans_days": [
+      40,
+      80,
+      160
+    ],
+    "all_fast_spans_below_slow": true,
+    "configurations_per_asset": 9,
+    "total_configurations": 18,
+    "sensitivity_axes": [
+      "fast_ema_spans_days",
+      "slow_ema_spans_days"
+    ]
+  },
+  "cost_model": {
+    "initial_capital_usdt": 2000,
+    "fee_per_side": 0.001,
+    "estimated_half_spread_per_side": 0.0001,
+    "slippage_per_side": 0.0002,
+    "impact_model": "0.5 * sample standard deviation(previous 20 complete UTC daily log returns) * sqrt(order quote budget / mean quote volume(previous 20 complete UTC days))",
+    "maximum_participation": 0.001,
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "all_cost_terms_scaled_together": true,
+    "exchange_filter_file": "research/experiments/20261014T084051Z/exchange_filters.json",
+    "exchange_info_raw_sha256": "a0dddc16d8d06971b51fa61977e71149c3e1eb92f64f48fdc93599d4ffa40788",
+    "historical_l2": "unavailable; spread, slippage and immediate fill are modeled assumptions",
+    "funding_borrow": "Not applicable to unlevered long-only spot."
+  },
+  "exchange_rules": {
+    "file": "research/experiments/20261014T084051Z/exchange_filters.json",
+    "raw_sha256": "a0dddc16d8d06971b51fa61977e71149c3e1eb92f64f48fdc93599d4ffa40788",
+    "captured_at_utc": "2026-10-14T08:13:36.062554Z",
+    "filters_by_asset": {
+      "BTC": [
+        "PRICE_FILTER",
+        "LOT_SIZE",
+        "ICEBERG_PARTS",
+        "MARKET_LOT_SIZE",
+        "TRAILING_DELTA",
+        "PERCENT_PRICE_BY_SIDE",
+        "NOTIONAL",
+        "MAX_NUM_ORDERS",
+        "MAX_NUM_ORDER_LISTS",
+        "MAX_NUM_ALGO_ORDERS",
+        "MAX_NUM_ORDER_AMENDS"
+      ],
+      "ETH": [
+        "PRICE_FILTER",
+        "LOT_SIZE",
+        "ICEBERG_PARTS",
+        "MARKET_LOT_SIZE",
+        "TRAILING_DELTA",
+        "PERCENT_PRICE_BY_SIDE",
+        "NOTIONAL",
+        "MAX_NUM_ORDERS",
+        "MAX_NUM_ORDER_LISTS",
+        "MAX_NUM_ALGO_ORDERS",
+        "MAX_NUM_ORDER_AMENDS"
+      ]
+    }
+  },
+  "walk_forward": {
+    "folds": 12,
+    "fold_days": 30,
+    "continuous_account_across_folds": true,
+    "fitted_model": false,
+    "signal_uses_only_closed_UTC_bars": true,
+    "purge_embargo": "No model fitting or forward labels; deterministic signal uses only closed bars. Warmup is strictly prior data.",
+    "holdout_disclosure": "Repeated repository development/OOS history, not an untouched final holdout."
+  },
+  "failure_gates": {
+    "all_1x_2x_3x_net_returns_positive": true,
+    "minimum_positive_1x_folds": 8,
+    "folds": 12,
+    "maximum_3x_sampled_drawdown_pct": 25,
+    "minimum_3x_adjacent_neighbor_positive_fraction": 0.6,
+    "minimum_1x_round_trips": 4,
+    "minimum_1x_gross_reference_pnl_to_cost": 2.5,
+    "zero_exchange_or_capacity_rejections": true,
+    "terminal_flat_all_scenarios": true
+  },
+  "benchmark_read_only": {
+    "source_report": "research/experiments/20261013T123949Z/report.json",
+    "configurations": {
+      "BTC": "hold_360d_btc_relative_strength_study",
+      "ETH": "hold_360d_eth_relative_strength_study"
+    },
+    "recalculate": false
+  },
+  "prior_registry_snapshot": {
+    "events": 9568,
+    "unique_fingerprints": 4680,
+    "initial16_missing": [],
+    "legacy_ema_cross_rows": 1
+  }
+}

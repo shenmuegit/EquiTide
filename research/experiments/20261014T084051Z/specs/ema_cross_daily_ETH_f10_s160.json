@@ -1,0 +1,51 @@
+{
+  "kind": "strategy",
+  "family": "spot-daily-ema-fast-slow-crossover-long-only",
+  "market": "spot",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "timeframe": "1d",
+  "name": "ema_cross_daily_ETH_f10_s160",
+  "logic": {
+    "indicator": "Recursive EMA: alpha=2/(span+1), seed EMA[0]=the first completed UTC daily close, EMA[j]=alpha*close[j]+(1-alpha)*EMA[j-1], Python float adjust=False, initialized once from the first archived daily close and never reset at folds.",
+    "entry": "At the close of a fully completed UTC daily bar j, if EMA_fast[j] is strictly greater than EMA_slow[j] and the account is flat, set desired-long. Equality preserves previous desired state.",
+    "exit": "At the close of a fully completed UTC daily bar j, if EMA_fast[j] is strictly below EMA_slow[j] while long, set desired-cash. Equality preserves prior desired. No stop, target, confirmation counter, cooldown, overlap or scale-in.",
+    "timing": "The daily close is available at the next UTC 00:00; execute at the following UTC 00:01 one-minute open, exactly 60 seconds later. That historical open is only a historical-backtest reference. Warmup establishes indicators but produces no pre-OOS trade.",
+    "account": "One separate 2,000-USDT long-only spot account per asset/span configuration. The raw weight is 100% of that account to the named single asset when long. Full affordable LOT_SIZE-floored amount is bought, all units are sold at exit. No leverage, shorting, borrowing, transfer, yield, cross-asset rebalancing or shared impact.",
+    "terminal": "Liquidate any position at the declared common terminal UTC 00:01 reference with full modeled costs."
+  },
+  "parameters": {
+    "asset": "ETH",
+    "fast_ema_span_days": 10,
+    "slow_ema_span_days": 160,
+    "initial_capital_usdt": 2000,
+    "raw_initial_weight": 1.0,
+    "start_utc": "2025-09-19T00:01:00Z",
+    "end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "terminal_execution_utc": "2026-09-14T00:01:00Z",
+    "folds": 12,
+    "fold_days": 30,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "exchange_info_raw_sha256": "a0dddc16d8d06971b51fa61977e71149c3e1eb92f64f48fdc93599d4ffa40788"
+  },
+  "validation_plan": "research/experiments/20261014T084051Z/plan.json",
+  "sources": [
+    {
+      "citation": "Technical trading rules in the cryptocurrency market (2019), daily simple moving-average rules on 11 cryptocurrencies, 2016–2018.",
+      "url": "https://www.sciencedirect.com/science/article/pii/S1544612319308852",
+      "accessed_utc": "2026-10-14",
+      "scope": "Motivates a daily trend-rule falsification test; not evidence for this EMA rule or modern OOS profitability."
+    },
+    {
+      "citation": "Technical analysis in cryptocurrency markets: Do transaction costs and bubbles matter? (2022), daily/1m moving-average and breakout rules with/without transaction costs.",
+      "url": "https://www.sciencedirect.com/science/article/pii/S1042443122000816",
+      "accessed_utc": "2026-10-14",
+      "scope": "Motivates full cost testing; not a rule replication."
+    }
+  ]
+}
