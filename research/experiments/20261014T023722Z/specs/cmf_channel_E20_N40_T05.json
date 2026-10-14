@@ -1,0 +1,49 @@
+{
+  "kind": "strategy",
+  "family": "spot-daily-cmf-confirmed-channel-breakout-paired-sleeves",
+  "market": "spot",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "timeframe": "1d",
+  "logic": {
+    "entry": "At each completed UTC daily close t, require close[t] strictly greater than max(high[t-E:t]); the E prior daily bars exclude the compared signal-day bar. Also require CMF_N[t] strictly greater than 0.05. If both pass and the sleeve is flat, desire long.",
+    "exit": "At each completed UTC daily close t, exit an existing long when close[t] is strictly less than min(low[t-30:t]); the 30 prior bars exclude the compared signal-day bar. CMF is entry confirmation only; it never independently exits.",
+    "cmf": "For each completed bar j, multiplier=(2*close[j]-high[j]-low[j])/(high[j]-low[j]); use 0 when high==low. money_flow_volume=multiplier*quote_volume[j]. CMF_N[t]=sum(money_flow_volume[t-N+1:t+1])/sum(quote_volume[t-N+1:t+1]); return 0 if denominator is 0. The signal bar is included because its full OHLCV is available at its close. Raw range is [-1,+1]; no *100 scaling.",
+    "execution": "Signal availability is daily bar open time + 86400000ms. Execute any state change only at the next UTC day 00:01 1-minute bar open, after the daily close is available. OOS begins with cash at 2025-09-19 00:01 UTC and ends by terminal liquidation at 2026-09-14 00:01 UTC. Never fill at the signal close or past historical price after a delayed decision.",
+    "allocation": "One 2,000 USDT portfolio with independent BTC and ETH long-only sleeves, raw initial weights 0.50/0.50 (1,000 USDT each). No leverage, shorting, interest, cross-sleeve transfers or rebalancing. A sleeve holds only its own coin plus residual USDT.",
+    "close_channel": "Entry and exit extrema are computed solely from completed bars before t; the signal-day close/high/low are never included in the channel being compared."
+  },
+  "parameters": {
+    "channel_entry_lookback_days": 20,
+    "cmf_lookback_days": 40,
+    "cmf_entry_threshold": 0.05,
+    "channel_exit_lookback_days": 30,
+    "capital_usdt": 2000,
+    "raw_initial_weights": {
+      "BTC": 0.5,
+      "ETH": 0.5
+    },
+    "sleeve_cash_usdt": {
+      "BTC": 1000,
+      "ETH": 1000
+    },
+    "start_utc": "2025-09-19T00:01:00Z",
+    "end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "folds": 12,
+    "fold_days": 30,
+    "fee_per_side": 0.001,
+    "estimated_half_spread_per_side": 0.0001,
+    "slippage_per_side": 0.0002,
+    "maximum_ADV_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "exchange_info_raw_sha256": "868e21e0cbd90498aba9971b2df5c800afe5bc3a68fef27eb47f169787dc8900"
+  },
+  "validation_plan": "research/experiments/20261014T023722Z/plan.json",
+  "name": "cmf_channel_E20_N40_T05"
+}

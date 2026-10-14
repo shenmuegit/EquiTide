@@ -1,0 +1,155 @@
+{
+  "round": "20261014T023722Z",
+  "frozen_at_utc": "2026-10-14T02:44:14.784565Z",
+  "status": "frozen_before_evaluation",
+  "source_repository_commit": "041de672ffa066f45bf2c937334e6f1867fa78ea",
+  "source_pin": "4e8f986601e8e0fafb15c521dcfd9d657dc7ccc2",
+  "direction": "Daily channel breakout confirmed by Chaikin Money Flow, separate BTC/ETH cash sleeves",
+  "hypothesis": "A breakout that closes in the upper part of its daily range on volume-weighted accumulation may filter low-quality price-only breakouts. This is a testable hypothesis, not an asserted edge; the indicator and thresholds are fixed before results.",
+  "literature_context": [
+    {
+      "source": "TA-Lib CMF indicator definition and implementation spec",
+      "url": "https://ta-lib.org/functions/cmf.html",
+      "accessed_utc": "2026-10-14T02:44:14.786852Z",
+      "scope": "Defines the money-flow multiplier and trailing-volume-normalized CMF calculation; does not validate this BTC/ETH trading rule."
+    },
+    {
+      "source": "Marc Chaikin, The Birth of Chaikin Money Flow",
+      "url": "https://chaikinanalytics.com/powerfeed/articles/the-birth-of-chaikin-money-flow",
+      "accessed_utc": "2026-10-14T02:44:14.786873Z",
+      "scope": "Origin context for weighting close location inside the high-low range by trading volume; not evidence of crypto profitability."
+    }
+  ],
+  "prior_work": {
+    "initial16_audit": "research/experiments/20261012T035429Z/prior_evidence_audit.json records actual backtest evidence for all 16 initial entries; no initial result-available=false research spec is eligible for backfill.",
+    "unavailable_registry_rows": "The 58 unresolved latest rows are 40 paper-live-portfolio-observation blocked rows owned by btc-eth-2 and 18 abandoned lead-lag drafts; they are not missing initial research backtests and will be left unchanged.",
+    "related_families": "Existing close-channel, OBV/SMA, volume-confirmed-channel, volatility-compression, lead-lag and momentum families were reviewed. CMF uses volume-weighted close location within each completed bar; it is economically distinct from OBV sign accumulation, though all are related volume confirmation research and share historical-selection limitations.",
+    "historical_selection": "The 2025-09-19..2026-09-14 window is repeatedly reused development/OOS history and is not an untouched holdout."
+  },
+  "data": {
+    "exchange": "Binance spot archived 1-minute OHLCV, aggregated to UTC daily OHLCV; timestamps and closed flags must be continuous and all OOS closes completed before decision.",
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6",
+          "bytes": 30555668
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16",
+          "bytes": 30415140
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57",
+          "bytes": 27110682
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584",
+          "bytes": 26332430
+        }
+      ]
+    },
+    "exchange_info_raw_path": "research/experiments/20261014T023722Z/exchange_info_raw.json",
+    "exchange_info_raw_sha256": "868e21e0cbd90498aba9971b2df5c800afe5bc3a68fef27eb47f169787dc8900",
+    "start_utc": "2025-09-19T00:01:00Z",
+    "end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "oos_days": 360,
+    "folds": 12,
+    "fold_days": 30,
+    "history_reused": true,
+    "holdout_note": "OOS data have been repeatedly searched; not a final holdout."
+  },
+  "portfolio": {
+    "capital_usdt": 2000,
+    "raw_initial_weights": [
+      0.5,
+      0.5
+    ],
+    "sleeve_cash_usdt": {
+      "BTC": 1000,
+      "ETH": 1000
+    },
+    "transfer_or_normalization": false,
+    "leverage": false
+  },
+  "rule": {
+    "entry": "At each completed UTC daily close t, require close[t] strictly greater than max(high[t-E:t]); the E prior daily bars exclude the compared signal-day bar. Also require CMF_N[t] strictly greater than 0.05. If both pass and the sleeve is flat, desire long.",
+    "exit": "At each completed UTC daily close t, exit an existing long when close[t] is strictly less than min(low[t-30:t]); the 30 prior bars exclude the compared signal-day bar. CMF is entry confirmation only; it never independently exits.",
+    "cmf": "For each completed bar j, multiplier=(2*close[j]-high[j]-low[j])/(high[j]-low[j]); use 0 when high==low. money_flow_volume=multiplier*quote_volume[j]. CMF_N[t]=sum(money_flow_volume[t-N+1:t+1])/sum(quote_volume[t-N+1:t+1]); return 0 if denominator is 0. The signal bar is included because its full OHLCV is available at its close. Raw range is [-1,+1]; no *100 scaling.",
+    "execution": "Signal availability is daily bar open time + 86400000ms. Execute any state change only at the next UTC day 00:01 1-minute bar open, after the daily close is available. OOS begins with cash at 2025-09-19 00:01 UTC and ends by terminal liquidation at 2026-09-14 00:01 UTC. Never fill at the signal close or past historical price after a delayed decision.",
+    "allocation": "One 2,000 USDT portfolio with independent BTC and ETH long-only sleeves, raw initial weights 0.50/0.50 (1,000 USDT each). No leverage, shorting, interest, cross-sleeve transfers or rebalancing. A sleeve holds only its own coin plus residual USDT.",
+    "close_channel": "Entry and exit extrema are computed solely from completed bars before t; the signal-day close/high/low are never included in the channel being compared."
+  },
+  "grid": {
+    "entry_lookback_days": [
+      10,
+      20,
+      40
+    ],
+    "cmf_lookback_days": [
+      10,
+      20,
+      40
+    ],
+    "cmf_entry_threshold": 0.05,
+    "exit_lookback_days": 30,
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "sensitivity": "Full predeclared 3x3 entry-lookback by CMF-lookback grid; the two varied axes are independent; all nine combinations retained."
+  },
+  "cost_model": {
+    "fee_per_side": 0.001,
+    "estimated_half_spread_per_side": 0.0001,
+    "slippage_per_side": 0.0002,
+    "impact": "0.5 * sample standard deviation of previous 20 complete daily log returns * sqrt(order quote budget / mean quote volume of previous 20 complete UTC days)",
+    "maximum_ADV_participation": 0.001,
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "all_cost_terms_scaled_together": true,
+    "cash_yield": 0
+  },
+  "exchange_snapshot": {
+    "captured_at_utc": "2026-10-14T02:41:23.791000Z",
+    "raw_path": "research/experiments/20261014T023722Z/exchange_info_raw.json",
+    "raw_sha256": "868e21e0cbd90498aba9971b2df5c800afe5bc3a68fef27eb47f169787dc8900",
+    "filters": "PRICE_FILTER, LOT_SIZE, NOTIONAL, and PERCENT_PRICE_BY_SIDE from current Binance spot exchangeInfo; historical percent-price reference approximated using prior five completed 1-minute closes."
+  },
+  "time_splits": {
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "folds": 12,
+    "fold_days": 30,
+    "folds_contiguous": true,
+    "signal_warmup_uses_only_prior_complete_daily_bars": true
+  },
+  "failure_gates": {
+    "all_1x_2x_3x_net_returns_positive": true,
+    "minimum_positive_1x_folds": 8,
+    "folds": 12,
+    "maximum_3x_sampled_drawdown_pct": 25,
+    "minimum_3x_local_neighbor_positive_fraction": 0.6,
+    "minimum_gross_reference_pnl_to_cost": 2.5,
+    "rejected_capacity_or_exchange_filter_orders": 0,
+    "terminal_flat_all_cost_scenes": true
+  },
+  "benchmark_read_only": {
+    "source_report": "research/experiments/20261013T224056Z/report.json",
+    "configuration": "hold_360d_BTC_ETH_50_50_monthly_volmanaged",
+    "note": "Read-only exact same dates, independent 1,000-USDT sleeves and costs; no repeated benchmark evaluation in this batch."
+  },
+  "prior_registry_snapshot": {
+    "events": 9445,
+    "unique_fingerprints": 4623
+  },
+  "_sha256": "7e10c209e2907248f9ea6c6ebd33a56f82462834fdfad7e6c29019da45abcf40"
+}

@@ -53,7 +53,9 @@ def indicator(spec, records, depth=0):
     asset = "/".join(s.split("/")[0] for s in spec.get("universe", []))
     percent = lambda value: f"{float(value) * 100:g}%"
     if "channel" in family or "close-range" in family:
-        text = f"收盘通道 {p.get('entry_lookback_days', '?')}/{p.get('exit_lookback_days', '?')}"
+        text = f"收盘通道 {p.get('channel_entry_lookback_days', p.get('entry_lookback_days', '?'))}/{p.get('channel_exit_lookback_days', p.get('exit_lookback_days', '?'))}"
+        if "cmf_lookback_days" in p:
+            text += f" + CMF{p['cmf_lookback_days']}>{p.get('cmf_entry_threshold', '?')}"
         if "volume_lookback_days" in p and "minimum_volume_ratio" in p:
             text += f" + 成交额/均额{p['volume_lookback_days']}≥{float(p['minimum_volume_ratio']):g}×"
         if "EMA_span_days" in p:
@@ -200,14 +202,14 @@ def metric_scene(scene):
     if not isinstance(scene, dict) or "net_return_pct" not in scene:
         return None
     display = lambda value: round(float(value), 6) if value is not None else None
-    drawdown = scene.get("max_drawdown_pct", scene.get("sampled_1m_nav_drawdown_pct", scene.get("daily_nav_drawdown_pct")))
+    drawdown = scene.get("max_drawdown_pct", scene.get("max_drawdown_1m_sampled_pct", scene.get("sampled_1m_nav_drawdown_pct", scene.get("daily_nav_drawdown_pct"))))
     if drawdown is None:
         return None
     return {"return_pct": display(scene["net_return_pct"]), "drawdown_pct": display(drawdown),
-            "sharpe": display(scene.get("sharpe_365", scene.get("sharpe_annualized_daily", scene.get("sharpe_annualized")))),
+            "sharpe": display(scene.get("sharpe_365", scene.get("sharpe_annualized_daily", scene.get("daily_sharpe_annualized", scene.get("sharpe_annualized"))))),
             "cost": display(scene.get("cost_usdt", scene.get("cost"))),
             "executions": scene.get("executions"), "round_trips": scene.get("round_trips"),
-            "nav_hash": scene.get("NAV_sha256_f64le", scene.get("minute_nav_sha256_f64le", scene.get("daily_nav_sha256_f64le"))),
+            "nav_hash": scene.get("NAV_sha256_f64le", scene.get("minute_nav_sha256_f64le", scene.get("minute_nav_sha256", scene.get("daily_nav_sha256_f64le", scene.get("daily_nav_sha256"))))),
             "fold_returns_pct": [display(f["net_return_pct"]) for f in scene.get("folds", [])],
             "fold_drawdowns_pct": [display(f.get("max_drawdown_pct")) for f in scene.get("folds", [])],
             "first_five_return_pct": display(scene.get("first_five_fold_return_pct"))}
@@ -310,9 +312,12 @@ def build_research(root):
         if not weights and params.get("raw_asset_weights") and len(params["raw_asset_weights"]) == len(spec.get("universe", [])):
             weights = [{"asset": asset.split("/")[0], "weight": weight}
                        for asset, weight in zip(spec["universe"], params["raw_asset_weights"])]
+        elif not weights and isinstance(params.get("raw_initial_weights"), dict):
+            weights = [{"asset": asset.split("/")[0], "weight": params["raw_initial_weights"].get(asset.split("/")[0])}
+                       for asset in spec.get("universe", [])]
         criteria = cfg.get("criteria", cfg.get("gates", cfg.get("sensitivity", {}).get("gates", {})))
         rows.append({"fingerprint": fp, "name": name, "family": spec["family"], "kind": spec["kind"],
-                     "indicator": indicator(spec, records), "weights": weights, "capital_usdt": params.get("initial_capital_usdt"),
+                     "indicator": indicator(spec, records), "weights": weights, "capital_usdt": params.get("initial_capital_usdt", params.get("capital_usdt")),
                      "start_utc": start, "end_utc": end, "status": record["status"], "cross_period_passed": fp in cross,
                      "scenes": scenes, "criteria": criteria,
                      "failed_criteria": cfg.get("failed_criteria", [k for k, v in criteria.items() if v is False]),

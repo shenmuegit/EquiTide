@@ -1,0 +1,1 @@
+This preliminary run is diagnostic only and is not the registry result: terminal liquidation used return/ADV samples from beyond the frozen OOS end. The corrected run uses only fully closed daily bars available at the terminal decision. All nine canonical configs remain reserved; this file is retained to preserve the first computed variant outputs.
