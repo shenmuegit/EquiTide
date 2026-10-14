@@ -1,0 +1,120 @@
+{
+  "round": "20261014T185725Z",
+  "frozen_at_utc": "2026-10-14T18:58:28.511255Z",
+  "direction": "Follow-up parameter neighborhood for daily close-channel entries with a Wilder ATR ratcheting close-trailing exit.",
+  "hypothesis": "The prior E=20/40 ATR channel grid produced low trade counts on reused OOS history. Predeclare shorter E=5/10/15-day entry channels with varied Wilder ATR periods and stop multiples to test whether the same volatility-scaled trend exit offers more repeated trades; this is an exploratory second-stage screen on the same reused OOS, not independent validation.",
+  "source": {
+    "citation": "TA-Lib official ATR implementation and documented Wilder recursion.",
+    "url": "https://github.com/TA-Lib/ta-lib/blob/main/src/ta_func/ta_ATR.c",
+    "accessed_utc": "2026-10-14",
+    "scope": "Defines the indicator only; no profitability claim."
+  },
+  "rule": {
+    "entry": "On closed UTC daily bar j, enter if close[j] > max(high[j-E:j]); current signal day excluded from prior channel. Next UTC day 00:01 one-minute open is the execution reference.",
+    "atr": "TR=max(H-L,abs(H-prev_close),abs(L-prev_close)); seed ATR with the arithmetic mean of first N complete TR values (indices 1..N); subsequent ATR=((N-1)*prior_ATR+TR)/N. ATR is computed causally and continuously, never reset by fold.",
+    "stop": "At entry signal freeze ATR_entry and peak_close=signal close; initial stop=peak_close-M*ATR_entry. For each later closed daily close, peak_close=max(previous_peak,close[j]); stop=max(previous_stop,peak_close-M*ATR_entry). Exit on close[j]<=stop, execute next UTC day 00:01. Close-confirmed only; no intraday stop guarantee.",
+    "account": "Each variant uses its own 2,000 USDT single-asset spot account; all capital allocated to its specified asset; long-only, no leverage, short, borrowing, add-on, transfers or interest. Do not re-enter on the exit signal day. Terminal OOS liquidation is fixed and costed."
+  },
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "entry_lookback_days": [
+      5,
+      10,
+      15
+    ],
+    "wilder_atr_periods": [
+      7,
+      14,
+      28
+    ],
+    "stop_multipliers": [
+      2,
+      3,
+      4
+    ],
+    "candidate_configs": 54,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  },
+  "followup_reference": {
+    "prior_batch": "research/experiments/20261014T165749Z/result.md",
+    "reason": "Most favorable prior E=40 ATR configurations had only 2–3 completed round trips; all 36 variants were rejected by fold/robustness/round-trip gates. This batch changes E, N and includes new configurations; it reuses the same historical interval and is not a fresh holdout."
+  },
+  "time_boundaries": {
+    "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "oos_days": 360,
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward": "12 consecutive, non-overlapping 30-day evaluation folds; continuous positions and indicator state; no fitting or fold reset.",
+    "history_note": "Repeated development/validation interval, not an untouched final test set."
+  },
+  "costs": {
+    "fee_per_side": 0.001,
+    "estimated_half_spread_per_side": 0.0001,
+    "slippage_per_side": 0.0002,
+    "impact": "0.5 × sample stdev of previous 20 complete UTC daily log returns × sqrt(order quote budget / previous 20 complete daily quote ADV)",
+    "max_participation": 0.001,
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "exchange_filters": "Fresh public GET exchangeInfo snapshot, derived PRICE_FILTER/LOT_SIZE/NOTIONAL/PERCENT_PRICE_BY_SIDE, adverse tick rounding, lot floor, 5-minute pre-execution VWAP proxy. Historical L2 and historical exchange filters unavailable."
+  },
+  "sensitivity": {
+    "axes": [
+      "entry lookback days 5/10/15",
+      "ATR periods 7/14/28",
+      "stop multiples 2/3/4"
+    ],
+    "neighbor": "Same asset; adjacent grid indices on all three axes, bounded at edges; report local 3× positivity, no OOS winner selection."
+  },
+  "failure_gates": {
+    "all_1x_2x_3x_positive": true,
+    "positive_1x_folds_min": 8,
+    "drawdown_3x_max_pct": 25,
+    "local_3x_positive_fraction_min": 0.6,
+    "round_trips_1x_min": 8,
+    "gross_reference_to_cost_min": 2.5,
+    "no_exchange_or_capacity_rejections": true,
+    "terminal_flat": true,
+    "multiple_testing": "Accumulated trial count and reused OOS invalidate untouched holdout claims; no DSR/PBO is claimed."
+  },
+  "data": {
+    "format": "Archived Binance spot 1m OHLCV aggregated to complete UTC daily OHLC/quote volume.",
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 30555668,
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6"
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 30415140,
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16"
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 27110682,
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57"
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 26332430,
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584"
+        }
+      ]
+    }
+  }
+}

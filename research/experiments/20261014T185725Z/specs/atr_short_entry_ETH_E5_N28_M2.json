@@ -1,0 +1,54 @@
+{
+  "kind": "strategy",
+  "family": "spot-daily-channel-wilder-atr-trailing-stop",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "name": "atr_short_entry_ETH_E5_N28_M2",
+  "logic": {
+    "entry": "Daily close strict breakout above max prior E daily highs (exclude current day), execute next UTC day 00:01.",
+    "exit": "Wilder ATR with exact TR definition and SMA seed then recursive smoothing. Freeze ATR on entry; long-only close-peak trailing stop ratchets up and exits when a later closed daily close <= peak_close - M*ATR_entry; next-day 00:01 execution. Terminal liquidation at OOS end.",
+    "sizing": "Independent 2,000 USDT single-asset long-only cash account; all initial capital in that asset sleeve; no leverage, borrow, short, add-on, transfer or yield.",
+    "rule_version": "Follow-up short entry-channel neighborhood; unchanged from prior ATR family except parameters."
+  },
+  "parameters": {
+    "asset": "ETH",
+    "entry_lookback_days": 5,
+    "wilder_atr_period": 28,
+    "stop_multiple": 2,
+    "initial_capital_usdt": 2000,
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward_test_days": 30,
+    "walk_forward_folds": 12,
+    "walk_forward_step_days": 30,
+    "fee_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_per_side": 0.0002,
+    "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete daily quote-volume ADV)",
+    "max_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "exchange_filters_sha256": "4c2dd58a6553442e23027d39f6a203916fe75e83ce40e92e6f3366b8aef903b2",
+    "sensitivity_axes": [
+      "entry_lookback_days",
+      "wilder_atr_period",
+      "stop_multiple"
+    ]
+  },
+  "sources": [
+    {
+      "citation": "TA-Lib official ATR implementation and documented Wilder recursion.",
+      "url": "https://github.com/TA-Lib/ta-lib/blob/main/src/ta_func/ta_ATR.c",
+      "accessed_utc": "2026-10-14",
+      "scope": "Defines the indicator only; no profitability claim."
+    }
+  ]
+}
