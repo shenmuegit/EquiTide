@@ -1,0 +1,54 @@
+{
+  "kind": "strategy",
+  "family": "spot-daily-channel-wilder-atr-trailing-stop",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "name": "atr_trailing_BTC_E40_N28_M4",
+  "logic": {
+    "entry": "On closed UTC daily candle j, close[j] > max(high[j-E:j]) with the comparison channel excluding the current signal day.",
+    "exit": "Seed Wilder ATR from the first N true ranges by arithmetic mean; update recursively ATR=((N-1)*prior_ATR+TR)/N. At entry freeze ATR_entry and peak_close=signal close. On later closed bars ratchet peak_close=max(peak_close,close); stop=max(previous_stop,peak_close-M*ATR_entry). Exit if close <= stop, next-day 00:01 minute-open reference. Stop is close-confirmed; no intraday stop fills.",
+    "sizing": "Independent 2,000 USDT single-asset long-only spot account; no leverage, short, add-on, interest or transfer.",
+    "timing": "Only complete daily bars; signal executes at next daily 00:01 one-minute open. OOS starts flat; terminal liquidation at fixed OOS end."
+  },
+  "parameters": {
+    "asset": "BTC",
+    "entry_lookback_days": 40,
+    "wilder_atr_period": 28,
+    "trailing_stop_multiple": 4,
+    "initial_capital_usdt": 2000,
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward_test_days": 30,
+    "walk_forward_folds": 12,
+    "walk_forward_step_days": 30,
+    "fee_rate_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete daily quote-volume ADV)",
+    "max_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "exchange_filters_sha256": "40780510fc4c6c9c51cfee3ceb972a270603938f8fc6632a34055d45ea930131",
+    "sensitivity_axes": [
+      "entry_lookback_days",
+      "wilder_atr_period",
+      "trailing_stop_multiple"
+    ]
+  },
+  "sources": [
+    {
+      "citation": "TA-Lib official ATR source (Wilder smoothing and true-range definition).",
+      "url": "https://github.com/TA-Lib/ta-lib/blob/main/src/ta_func/ta_ATR.c",
+      "accessed_utc": "2026-10-14",
+      "implementation": "TR=max(H-L,abs(H-prev_close),abs(L-prev_close)); ATR seed is the simple mean of the first n complete TR values; subsequent ATR=((n-1)*prior_ATR+TR)/n. Own transparent implementation is audited against these published steps."
+    }
+  ]
+}
