@@ -1,0 +1,142 @@
+{
+  "round": "20261014T003809Z",
+  "frozen_at_utc": "2026-10-14T00:39:07.140665Z",
+  "status": "frozen_before_evaluation",
+  "source_repository_commit": "975af33a8bf0a6b915ae12acfe786c4a248647a4",
+  "direction": "200-day trend eligibility gate over monthly inverse-variance BTC/ETH cash sleeves",
+  "hypothesis": "A slow absolute trend gate may prevent a monthly volatility-managed long-only sleeve from carrying exposure through a sustained bearish regime. The sizing and gate are fixed before results and are not assumed to create positive alpha.",
+  "literature_context": [
+    {
+      "citation": "Moreira & Muir, Volatility Managed Portfolios, NBER Working Paper 22208 (2016).",
+      "url": "https://www.nber.org/papers/w22208",
+      "accessed_utc": "2026-10-13",
+      "scope": "Motivates inverse-variance exposure scaling in equity portfolios; not evidence for BTC/ETH spot or the 200-day gate."
+    }
+  ],
+  "prior_work": {
+    "base_strategy": "research/experiments/20261013T224056Z tested the same monthly inverse-variance sleeves without an SMA gate: 9/9 candidates rejected, best 1x return -5.23%, 5/12 positive folds. This batch changes the economic rule by adding fixed SMA200 exposure eligibility; prior outputs are retained, not tuned.",
+    "other_related_families": "Daily SMA volatility ceilings are indicator entry filters, not monthly continuous inverse-variance sizing with a trend eligibility overlay. Relative strength, ratio mean reversion, volatility compression, and 4h momentum were rejected in their stored reports.",
+    "initial16_audit": "research/experiments/20261012T035429Z/prior_evidence_audit.json found actual backtest evidence for all initial 16; no eligible code-only configuration remains."
+  },
+  "data": {
+    "exchange": "Binance spot archived 1m OHLCV aggregated into UTC daily closes/volumes; input series hashes in data_manifest.json",
+    "assets": {
+      "BTC": {
+        "files": [
+          {
+            "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+            "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6",
+            "bytes": 30555668,
+            "rows": 525600
+          },
+          {
+            "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+            "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16",
+            "bytes": 30415140,
+            "rows": 525600
+          }
+        ],
+        "total_1m_rows": 1051200,
+        "series_start_utc": "2024-09-16T00:00:00Z",
+        "series_end_exclusive_utc": "2026-09-16T00:00:00Z"
+      },
+      "ETH": {
+        "files": [
+          {
+            "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+            "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57",
+            "bytes": 27110682,
+            "rows": 525600
+          },
+          {
+            "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+            "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584",
+            "bytes": 26332430,
+            "rows": 525600
+          }
+        ],
+        "total_1m_rows": 1051200,
+        "series_start_utc": "2024-09-16T00:00:00Z",
+        "series_end_exclusive_utc": "2026-09-16T00:00:00Z"
+      }
+    },
+    "start_utc": "2025-09-19T00:01:00Z",
+    "end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "oos_days": 360,
+    "folds": 12,
+    "fold_days": 30,
+    "history_reused": true,
+    "holdout_note": "2025-09-19..2026-09-14 has been reused extensively and is not an untouched final holdout. No model is fitted."
+  },
+  "portfolio": {
+    "capital_per_configuration_usdt": 2000,
+    "raw_initial_weights": [
+      0.5,
+      0.5
+    ],
+    "initial_cash_per_sleeve_usdt": 1000,
+    "meaning": "Independent BTC/ETH initial cash sleeves; SMA and volatility exposure scales each sleeve’s current NAV only. No transfer, normalization across sleeves, leverage, shorting or interest on cash."
+  },
+  "rule": {
+    "eligibility_gate": "At each scheduled UTC monthly decision, require the previous fully closed UTC daily close to be strictly greater than the simple arithmetic mean of that close and exactly 199 immediately preceding fully closed daily closes (SMA200 includes the signal day). If false, target 0% crypto exposure and hold cash.",
+    "volatility_rule": "If eligible, estimate sample stdev of exactly L previous fully closed daily log returns, ending at the previous daily close, and set target asset fraction = min(1, (target annualized volatility / (daily stdev * sqrt(365)))^2). If ineligible, target fraction is 0. No leverage.",
+    "schedule": "Initial OOS execution at 2025-09-19T00:01:00Z, then rebalance only at the 00:01 UTC minute on each first UTC calendar day. No intermediate trades; terminal liquidation at 2026-09-14T00:01:00Z.",
+    "sizing": "Each 2,000 USDT configuration has independent 1,000-USDT BTC and ETH cash sleeves (raw initial weights 0.5/0.5). Each sleeve targets exposure within its own current NAV and cannot transfer to the other sleeve; each holds only its asset plus residual USDT.",
+    "signal_timing": "All calculations use completed UTC daily bars only; the previous day close is available at 00:00 UTC and execution reference is the next 1m open at 00:01 UTC. Historical prices are used only for this offline research backtest, never for current paper10 fills.",
+    "execution": "Trade only target delta at scheduled dates. Fee, spread, slippage, impact, filters, participation, tick rounding and lot flooring apply to each partial rebalance. Terminal position is costed to cash."
+  },
+  "grid": {
+    "sma_gate_days": 200,
+    "realized_vol_lookback_days": [
+      20,
+      60,
+      120
+    ],
+    "target_annual_volatility": [
+      0.2,
+      0.3,
+      0.4
+    ],
+    "monthly_rebalance_only": true,
+    "parameter_sensitivity": "Full 3x3 grid over realized volatility lookback and target annualized volatility; local neighbors are one adjacent grid step."
+  },
+  "cost_model": {
+    "fee_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact_model": "0.5 * sample stdev of previous 20 complete UTC daily log returns * sqrt(order quote budget / mean previous 20 complete UTC daily quote ADV)",
+    "maximum_ADV_participation": 0.001,
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "all_terms_scaled_together": true,
+    "cash_yield": 0
+  },
+  "exchange_snapshot": {
+    "snapshot_at_utc": "2026-10-14T00:38:22.717984Z",
+    "path": "research/experiments/20261014T003809Z/exchange_filters.json",
+    "raw_path": "research/experiments/20261014T003809Z/exchange_info_raw.json",
+    "raw_sha256": "6044d3a6d1f587a5057c52cad6a2d69677788312b702b5aa410673d852f8b8ea"
+  },
+  "predeclared_failure_gates": {
+    "positive_net_return_all_cost_scenes": true,
+    "positive_1x_folds_minimum": 8,
+    "folds": 12,
+    "fold_days": 30,
+    "max_3x_sampled_drawdown_pct": 25,
+    "3x_neighbor_positive_fraction_minimum": 0.6,
+    "neighbor_definition": "At most one adjacent grid step on each axis, center included.",
+    "minimum_1x_rebalance_fills": 4,
+    "gross_reference_pnl_to_1x_cost_minimum": 2.5,
+    "zero_rejected_or_capacity_orders": true,
+    "terminal_flat_all_scenes": true
+  },
+  "benchmark_read_only": {
+    "source_report": "research/experiments/20261013T224056Z/report.json",
+    "configuration": "hold_360d_BTC_ETH_50_50_monthly_volmanaged",
+    "note": "Exact same dates, starting sleeves, fees and 50/50 buy-and-hold method; reuse completed comparator instead of repeating the same config."
+  },
+  "_sha256": "a8ffa5daf9c7179110658c2fcb535fe913ceeaf1ec170916693e79f601442e3e"
+}

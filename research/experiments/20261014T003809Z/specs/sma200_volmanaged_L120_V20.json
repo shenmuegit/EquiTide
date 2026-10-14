@@ -1,0 +1,46 @@
+{
+  "kind": "strategy",
+  "family": "spot-sma-gated-monthly-volatility-managed-sleeves",
+  "market": "spot",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "timeframe": "1d",
+  "logic": {
+    "eligibility_gate": "At each scheduled UTC monthly decision, require the previous fully closed UTC daily close to be strictly greater than the simple arithmetic mean of that close and exactly 199 immediately preceding fully closed daily closes (SMA200 includes the signal day). If false, target 0% crypto exposure and hold cash.",
+    "volatility_rule": "If eligible, estimate sample stdev of exactly L previous fully closed daily log returns, ending at the previous daily close, and set target asset fraction = min(1, (target annualized volatility / (daily stdev * sqrt(365)))^2). If ineligible, target fraction is 0. No leverage.",
+    "schedule": "Initial OOS execution at 2025-09-19T00:01:00Z, then rebalance only at the 00:01 UTC minute on each first UTC calendar day. No intermediate trades; terminal liquidation at 2026-09-14T00:01:00Z.",
+    "sizing": "Each 2,000 USDT configuration has independent 1,000-USDT BTC and ETH cash sleeves (raw initial weights 0.5/0.5). Each sleeve targets exposure within its own current NAV and cannot transfer to the other sleeve; each holds only its asset plus residual USDT.",
+    "signal_timing": "All calculations use completed UTC daily bars only; the previous day close is available at 00:00 UTC and execution reference is the next 1m open at 00:01 UTC. Historical prices are used only for this offline research backtest, never for current paper10 fills.",
+    "execution": "Trade only target delta at scheduled dates. Fee, spread, slippage, impact, filters, participation, tick rounding and lot flooring apply to each partial rebalance. Terminal position is costed to cash."
+  },
+  "parameters": {
+    "sma_gate_days": 200,
+    "realized_vol_lookback_days": 120,
+    "target_annual_volatility": 0.2,
+    "rebalance_schedule": "initial OOS then first UTC calendar day at 00:01; no intermediate orders",
+    "initial_capital_usdt": 2000,
+    "raw_initial_weights": [
+      0.5,
+      0.5
+    ],
+    "per_asset_initial_cash_usdt": 1000,
+    "start_utc": "2025-09-19T00:01:00Z",
+    "end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "folds": 12,
+    "fold_days": 30,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "fee_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "maximum_ADV_participation": 0.001,
+    "exchange_info_raw_sha256": "6044d3a6d1f587a5057c52cad6a2d69677788312b702b5aa410673d852f8b8ea"
+  },
+  "name": "sma200_volmanaged_L120_V20",
+  "validation_plan": "research/experiments/20261014T003809Z/plan.json"
+}
