@@ -1,0 +1,58 @@
+{
+  "kind": "strategy",
+  "family": "utc-weekday-scheduled-long-window",
+  "market": "spot",
+  "timeframe": "1m",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "name": "weekday_window_BTC_dow1_hold3d",
+  "logic": {
+    "entry": "Once per UTC week on the specified weekday, deterministic schedule known at least 60 seconds beforehand; buy at 00:01 UTC minute open.",
+    "exit": "Sell at 00:01 UTC after fixed holding_days; retry each minute after a rejected exit; no overlapping/re-entry before exit.",
+    "sizing": "Independent 2,000 USDT cash account; use available cash; long-only unlevered spot; no transfers or interest.",
+    "time_availability": "Calendar event is known before its scheduled minute; all price-driven cost inputs are lagged completed-day observations."
+  },
+  "parameters": {
+    "asset": "BTC",
+    "entry_weekday_utc": 1,
+    "holding_days": 3,
+    "initial_capital_usdt": 2000,
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "walk_forward_test_days": 30,
+    "walk_forward_folds": 12,
+    "walk_forward_step_days": 30,
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "fee_rate_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete daily quote-volume ADV)",
+    "maximum_participation": 0.001,
+    "exchange_filters_sha256": "a6a32ff4d9b6c7d179ec564cad9d0dae47ff0fca0e1970eccecceac663945712",
+    "sensitivity_axes": [
+      "entry_weekday_utc",
+      "holding_days"
+    ]
+  },
+  "sources": [
+    {
+      "citation": "The day of the week effect in the cryptocurrency market (Finance Research Letters, 2019)",
+      "url": "https://doi.org/10.1016/j.frl.2018.12.005",
+      "accessed_utc": "2026-10-14",
+      "use": "Motivation only. This experiment is not a replication; older findings do not establish a current edge."
+    },
+    {
+      "citation": "Bitcoin time-of-day, day-of-week and month-of-year effects in returns and trading volume (2019)",
+      "url": "https://www.sciencedirect.com/science/article/pii/S1544612319301710",
+      "accessed_utc": "2026-10-14",
+      "use": "Motivation only; prior sample/exchange differs."
+    }
+  ]
+}
