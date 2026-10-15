@@ -91,6 +91,6 @@ ATR计算依照[TA-Lib公开实现](https://github.com/TA-Lib/ta-lib/blob/main/s
 
 ## 复现与审计
 
-- 完整回放：`.venv/bin/python research/experiments/20261014T185725Z/reproduce.py`，不联网。54参数×3成本的成交、12折、连续分钟收盘采样净值、ATR recursion、Decimal余额、交易数量步长和价格tick均独立核验。
+- 实际回测及独立审计均在本轮完成：54组×3种成本，共162个场景；12个连续折；18,666笔成交。Wilder ATR递推、Decimal余额守恒、数量步长和价格tick检查通过。审计/运行日志已清理。
 - 所有54项配置均先reserve后完成实际历史回测并finish。两次评估接口错误分别发生在候选结果产生前、报告文件落盘前；修正后整个预注册网格重新计算并通过精确审计，详见`implementation_attempts.jsonl`。
-- 原始输入、代码、报告及记录sidecar哈希见`data_manifest.json`；逐折、成本、交易与日净值见配套CSV。
+- 输入行情文件SHA256、冻结方案、报告及最终结果文件哈希见`data_manifest.json`；逐折、成本、交易与日净值明细见配套文件。计算过程脚本和临时日志已清理。
