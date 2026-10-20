@@ -1,5 +1,6 @@
 """Read-only dashboard evidence checks; run from the repository root."""
 import importlib.util
+import copy
 import gzip
 import json
 from decimal import Decimal
@@ -78,10 +79,18 @@ def main():
             raise AssertionError("torn report accepted")
     with TemporaryDirectory() as tmp:
         target = Path(tmp) / "latest.json"
-        snapshot.atomic_write(target, data)
+        payload = copy.deepcopy(data)
+        configs = payload["research"].pop("configs")
+        config_raw = json.dumps(configs, ensure_ascii=False, allow_nan=False, separators=(",", ":")).encode()
+        config_gzip = gzip.compress(config_raw, mtime=0)
+        payload["research"].update({"configs_sha256": snapshot.sha(config_raw), "configs_path": "configs.json.gz"})
+        snapshot.atomic_bytes(target.with_name("configs.json.gz"), config_gzip)
+        snapshot.atomic_write(target, payload)
         restored = json.loads(target.read_text())
         assert restored["paper"]["state_sha256"] == paper["state_sha256"]
         assert len(gzip.compress(target.read_bytes(), mtime=0)) < 1_000_000, "monitor feed contains bulky raw evidence"
+        assert len(config_gzip) < 1_000_000, "compressed monitor configs exceed size limit"
+        assert restored["research"]["configs_sha256"] == snapshot.sha(config_raw)
     print(json.dumps({"ok": True, "paper_accounts": 10, "observations": len(paper["history"]),
                       "research_configs": len(ids), "protected_inputs_unchanged": True}))
 
