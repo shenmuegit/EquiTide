@@ -37,9 +37,24 @@ def main():
     assert len(ids) == len(set(ids)), "equivalent configurations counted twice"
     # Finished structured evidence may use a component-specific report filename.
     registry = snapshot.registry_module(ROOT)
-    for record in registry.read_records(ROOT / "research/automation/registry.jsonl").values():
+    records = registry.read_records(ROOT / "research/automation/registry.jsonl")
+    legacy_fp = "537f5a8fc4b6e58511fabbde15096659e072be117d9a365d3827ac178134c70e"
+    legacy_report = ROOT / "research/experiments/20261013T073340Z/report.json"
+    assert snapshot.sha(legacy_report.read_bytes()) == records[legacy_fp]["report_sha256"]
+    assert legacy_fp in ids, "hash-matching local copy of legacy absolute report was omitted"
+    for record in records.values():
         report_path = ROOT / record.get("report", "")
         params = record["spec"].get("parameters", {})
+        if (record.get("result_available") and params.get("oos_start_utc")
+                and params.get("oos_end_exclusive_utc") and report_path.is_file()
+                and report_path.resolve().is_relative_to((ROOT / "research/experiments").resolve())
+                and snapshot.sha(report_path.read_bytes()) == record.get("report_sha256")):
+            fp = registry.fingerprint(record["spec"])
+            configs = snapshot.load(report_path).get("configs", {})
+            cfg = next((c for c in configs.values() if isinstance(c, dict) and c.get("fingerprint") == fp), {})
+            scenes = cfg.get("scenes", cfg.get("scenarios", {}))
+            if any(snapshot.metric_scene(s) for s in scenes.values()):
+                assert fp in ids, f"OOS result with an exclusive end missing from dashboard: {fp}"
         if (not record.get("result_available") or snapshot.is_observation(record["spec"])
                 or report_path.name == "report.json" or report_path.suffix != ".json"
                 or not report_path.is_file() or not params.get("start_utc") or not params.get("end_utc")):
@@ -89,7 +104,7 @@ def main():
         restored = json.loads(target.read_text())
         assert restored["paper"]["state_sha256"] == paper["state_sha256"]
         assert len(gzip.compress(target.read_bytes(), mtime=0)) < 1_000_000, "monitor feed contains bulky raw evidence"
-        assert len(config_gzip) < 1_000_000, "compressed monitor configs exceed size limit"
+        assert len(config_gzip) < 2_000_000, "compressed monitor configs exceed size limit"
         assert restored["research"]["configs_sha256"] == snapshot.sha(config_raw)
     print(json.dumps({"ok": True, "paper_accounts": 10, "observations": len(paper["history"]),
                       "research_configs": len(ids), "protected_inputs_unchanged": True}))

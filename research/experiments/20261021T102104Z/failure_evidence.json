@@ -1,0 +1,51 @@
+{
+  "historical_results_changed": false,
+  "monitor_failures": [
+    {
+      "log": "monitor_check_before.log",
+      "actual_status": "exit1: OOS end field unsupported",
+      "sha256": "95a4745b69ad44330942e117389a43ec8b968d3f4affb411647b3aef5e76eeb4",
+      "output": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 108, in <module>\n    main()\n    ~~~~^^\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 51, in main\n    assert fp in ids, f\"OOS result with an exclusive end missing from dashboard: {fp}\"\n           ^^^^^^^^^\nAssertionError: OOS result with an exclusive end missing from dashboard: ddfcca6920bcc086fc21d40a11cb21e19f3e3bf126149c49858f5fd9d971631d\n"
+    },
+    {
+      "log": "monitor_check_after.log",
+      "actual_status": "exit1: legacy absolute-path report absent",
+      "sha256": "147fb3497d07fbe57f05083214cf26fbaa325a0f56ad625f5d87ce9e71f332e9",
+      "output": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 108, in <module>\n    main()\n    ~~~~^^\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 51, in main\n    assert fp in ids, f\"OOS result with an exclusive end missing from dashboard: {fp}\"\n           ^^^^^^^^^\nAssertionError: OOS result with an exclusive end missing from dashboard: 537f5a8fc4b6e58511fabbde15096659e072be117d9a365d3827ac178134c70e\n"
+    },
+    {
+      "log": "monitor_check_after_scoped.log",
+      "actual_status": "exit1: valid compressed results exceeded old1MB budget",
+      "sha256": "12907cbd7fbce815ba20724085e971005ab7dff616eea0620dca4b8145d71d91",
+      "output": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 109, in <module>\n    main()\n    ~~~~^^\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 102, in main\n    assert len(config_gzip) < 1_000_000, \"compressed monitor configs exceed size limit\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: compressed monitor configs exceed size limit\n"
+    },
+    {
+      "log": "monitor_alias_before.log",
+      "actual_status": "exit1: SHA-matching local legacy copy not mapped",
+      "sha256": "50de10d085cf51002d591575b737dd6145965d30d56f7ccd11dad8729cd813b9",
+      "output": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 114, in <module>\n    main()\n    ~~~~^^\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 44, in main\n    assert legacy_fp in ids, \"hash-matching local copy of legacy absolute report was omitted\"\n           ^^^^^^^^^^^^^^^^\nAssertionError: hash-matching local copy of legacy absolute report was omitted\n"
+    },
+    {
+      "log": "monitor_check_final_failure.log",
+      "actual_status": "exit1: legacy cost-scenario container mixed scalar metadata with scene dictionaries",
+      "sha256": "fff194c1b70c9ec180790c7dc03822f994d5fa9b33abb27b4e9c92f0045c5e1c",
+      "output": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 114, in <module>\n    main()\n    ~~~~^^\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 24, in main\n    data = snapshot.build_snapshot(ROOT)\n  File \"/home/desktop/Documents/Codex/EquiTide/research/monitor/snapshot.py\", line 357, in build_snapshot\n    \"paper\": build_paper(root), \"research\": build_research(root)}\n                                            ~~~~~~~~~~~~~~^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/monitor/snapshot.py\", line 308, in build_research\n    if \"folds\" not in scene and report.get(\"artifacts\", {}).get(\"fold_results_csv_gz\"):\n       ^^^^^^^^^^^^^^^^^^^^\nTypeError: argument of type 'float' is not iterable\n"
+    }
+  ],
+  "network_capture": {
+    "recorded_at_utc": "2026-10-21T10:58:56.895516+00:00",
+    "stage": "forward_public_data_capture",
+    "status": "failed_before_account_calculation",
+    "completed_response_pages": 29,
+    "last_completed_page": {
+      "asset": "ETH",
+      "interval": "1m",
+      "page": 11,
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1792353540000&endTime=1792407539999&limit=1000"
+    },
+    "error": "urllib.error.URLError: SSL UNEXPECTED_EOF_WHILE_READING; 25-second public HTTPS request failed",
+    "log": "forward_capture.log",
+    "recovery": "Reuse only raw pages whose saved SHA256 and original request URL match; request missing pages under the same existing reservations. Original account stays unchanged until validated replay."
+  },
+  "resolution": "Read-only SHA-verified local report-path aliases, exclusive OOS end field, dict-only scene processing; retain all valid results under documented2MB gzip budget. Real final check exit codes are in final_gates.json; current monitor_check_final.log is from the successful final execution."
+}

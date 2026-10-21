@@ -232,6 +232,11 @@ def build_research(root):
         if is_observation(record["spec"]):
             excluded += 1
             continue
+        reference = Path(record.get("report", ""))
+        if reference.is_absolute() and reference.parts[-4:-2] == ("research", "experiments"):
+            local = root.joinpath(*reference.parts[-4:])
+            if local.is_file() and sha(local.read_bytes()) == record.get("report_sha256"):
+                record = {**record, "report": local.relative_to(root).as_posix()}
         prior = canonical.get(fp)
         if prior is None or (record.get("result_available") and not prior.get("result_available")):
             canonical[fp] = record
@@ -300,6 +305,8 @@ def build_research(root):
         raw_scenes = cfg.get("scenes", cfg.get("scenarios", cfg.get("cost_scenarios", {})))
         enriched_scenes = {}
         for cost, scene in raw_scenes.items():
+            if not isinstance(scene, dict):
+                continue
             if "folds" not in scene and report.get("artifacts", {}).get("fold_results_csv_gz"):
                 scene = {**scene, "folds": fold_lookup.get((name, str(cost)), [])}
             enriched_scenes[str(cost)] = metric_scene(scene)
@@ -308,7 +315,8 @@ def build_research(root):
         spec, params = record["spec"], record["spec"].get("parameters", {})
         start = params.get("start_utc", params.get("oos_start_utc", report.get("oos_start_utc")))
         end = params.get("end_utc", params.get("end_exclusive_utc",
-                         params.get("terminal_execution_utc", report.get("terminal_exit_utc"))))
+                         params.get("oos_end_exclusive_utc",
+                         params.get("terminal_execution_utc", report.get("terminal_exit_utc")))))
         if not scenes or not start or not end:
             unranked.append({"fingerprint": fp, "family": spec["family"], "status": record["status"],
                              "result_available": True, "report": relative})

@@ -1,0 +1,9 @@
+# 本轮真实门禁及失败说明
+
+18项研究回测未重跑；三成本精确核验与原shadow9场景重放通过。全部21项均reserve后finish rejected且result_available=true，报告SHA与登记逐项一致。
+
+最终实际执行结果：checks/strategy_registry.py、research/monitor/snapshot.py、checks/monitor_snapshot.py及git diff --check均exit0，完整命令/返回码/输出见final_gates.json；当前monitor_check_final.log为真实成功输出。旧同名失败日志保存在monitor_check_final_failure.log，所有失败及原因保存在failure_evidence.json。读取日志文件的cat退出码未用作gate判定。
+
+最初结束时间字段缺失导致18个新结果未展示；随后核对537f5a8f历史绝对路径发现当前仓库副本SHA完全相同，改为只读别名匹配。旧成本容器同时有gates/status及浮点元数据，按metric_scene原有口径只处理dict，不改原收益。新增有效历史结果使gzip从964,249字节增至1,062,050字节；保留全部结果，将文档容量预算改为2MB，没有删负收益或重写历史。最终3577个展示配置，18新配置与目标历史三档收益逐一对照原报告一致。
+
+旧SMA公共下载发生一次真实SSL EOF，29页留存后按原URL和SHA续传；34页最终完整核验、原始重叠不变，未重启账户或影响paper10。仅清理54份可重建checkpoint及本轮Python字节码；保留必要代码、完整账户与原始证据。

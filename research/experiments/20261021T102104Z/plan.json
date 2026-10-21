@@ -1,0 +1,128 @@
+{
+  "round": "20261021T102104Z",
+  "frozen_at_utc": "2026-10-21T10:36:56.967061Z",
+  "direction": "Longer daily absolute momentum; only lookback and entry hurdle vary.",
+  "hypothesis": "Test whether 8/12/16-week momentum avoids costly switching in the previously rejected 7/14/28-day batch. This is another development batch on reused history, not independent evidence.",
+  "sources": [
+    {
+      "citation": "Yukun Liu and Aleh Tsyvinski, Risks and Returns of Cryptocurrency, NBER Working Paper 24877, August 2018.",
+      "url": "https://www.nber.org/papers/w24877",
+      "accessed_utc": "2026-10-21",
+      "scope": "Motivation only; this longer-lookback long-only rule is not a replication."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/products/spot/filters",
+      "accessed_utc": "2026-10-21",
+      "scope": "Official execution filter definitions; historical filters remain unavailable."
+    }
+  ],
+  "rule": {
+    "signal": "On each newly closed UTC daily candle j, calculate ROC_L=close[j]/close[j-L]-1 using only that candle and the close L complete daily bars earlier.",
+    "entry": "If cash and ROC_L is strictly greater than the frozen entry hurdle, target long.",
+    "exit": "If long and ROC_L is less than or equal to zero, target cash. Between thresholds, keep the previous target. Equality at entry does not enter; equality at exit exits.",
+    "execution": "Signal becomes available at the signal candle close; if target changes, simulate an order at the next UTC day 00:01 one-minute open (60-second delay). Rejected orders are not backfilled; the same desired state may be tried on a later new daily decision. At the frozen OOS terminal timestamp, liquidate any open lot with costs.",
+    "account": "Independent 2,000 USDT single-asset cash account for every asset×parameter combination; all initial capital assigned to the specified asset sleeve, no leverage, borrowing, shorting, transfer or cash interest."
+  },
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "lookback_days": [
+      56,
+      84,
+      112
+    ],
+    "entry_hurdle_pct": [
+      0,
+      2.5,
+      5.0
+    ],
+    "exit_hurdle_pct": 0,
+    "candidate_configurations": 18,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  },
+  "time_boundaries": {
+    "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "oos_days": 360,
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward": "12 consecutive, non-overlapping 30-day evaluation windows; account remains continuous across windows; no fitting, parameter selection or fold reset.",
+    "history_note": "The 2025–2026 OOS window has been reused extensively in this repository and is not an untouched final holdout."
+  },
+  "validation": {
+    "parameter_sensitivity_axes": [
+      "lookback_days",
+      "entry_hurdle_pct"
+    ],
+    "neighborhood": "Same asset, adjacent lookback index and adjacent hurdle index in the frozen 3×3 grid; 3×3 neighborhood including center.",
+    "round_trip_minimum": 8,
+    "positive_1x_folds_minimum": 8,
+    "all_cost_scenarios_positive": true,
+    "max_3x_minute_sample_drawdown_pct": 25,
+    "minimum_3x_positive_neighborhood_fraction": 0.6,
+    "gross_reference_pnl_to_cost_minimum": 2.5,
+    "capacity_or_filter_rejections": 0,
+    "terminal_flat": true,
+    "multiple_testing": "No DSR/PBO claim: repeated reused-OOS history and many prior strategy trials create material selection bias.",
+    "purging": "No fitted model, labels or OOS parameter selection; label purge is inapplicable. Fixed signals use prior closed bars; account state is continuous across 12 chronological windows."
+  },
+  "costs": {
+    "per_side_fee": 0.001,
+    "estimated_half_spread_per_side": 0.0001,
+    "estimated_slippage_per_side": 0.0002,
+    "impact": "0.5 × sample stdev of previous 20 complete UTC daily log returns × sqrt(order quote budget / previous 20 complete daily quote ADV)",
+    "maximum_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "filters_source": "Unchanged 2026-10-14 frozen public exchangeInfo proxy, checked against the current public response in filter_check.json. Reuse the original hash so retrieval timestamps cannot manufacture novelty. Historical L2 and historical filters are unavailable."
+  },
+  "data": {
+    "format": "Archived Binance spot 1m OHLCV; daily closes and quote ADV are aggregated from fully closed UTC days.",
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 30555668,
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6"
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 30415140,
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16"
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 27110682,
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57"
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 26332430,
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584"
+        }
+      ]
+    }
+  },
+  "prior_results": {
+    "source_report": "research/experiments/20261014T125820Z/report.json",
+    "source_sha256": "a66f3a11337e789fae0d0fd562c83c29c8d9e9d216f8e1c52da47ada1e4c8511",
+    "initial_16_missing_actual_results": 0,
+    "canonical_prior_research_definitions": 3810,
+    "old_7_14_28_grid": "18 rejected; 3/1/0 positive at 1x/2x/3x. Read-only; not recomputed.",
+    "distinction": "Only lookbacks 56/84/112 replace 7/14/28. Full rule, capital, time boundaries, cost proxy and failure gates stay identical."
+  },
+  "trigger_utc": "2026-10-21T10:21:04.244Z",
+  "account_scope": "Offline research only. Read existing paper10 and delayed SMA-shadow accounts without reset, replacement, new paper observations or real orders."
+}

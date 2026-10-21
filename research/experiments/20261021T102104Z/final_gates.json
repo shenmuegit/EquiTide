@@ -1,0 +1,43 @@
+[
+  {
+    "command": [
+      "python3",
+      "checks/strategy_registry.py"
+    ],
+    "exit_code": 0,
+    "log": "registry_gate.log",
+    "stdout": "PASS: new parameters/weights and missing-result retries are allowed; exact/reordered completed trials stay blocked",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "research/monitor/snapshot.py"
+    ],
+    "exit_code": 0,
+    "log": "snapshot.log",
+    "stdout": "{\"output\": \"/home/desktop/Documents/Codex/EquiTide/research/monitor/latest.json\", \"bytes\": 224047, \"paper_status\": \"ready\", \"research_configs\": 3577, \"compressed_research_bytes\": 1062050}",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "checks/monitor_snapshot.py"
+    ],
+    "exit_code": 0,
+    "log": "monitor_check_final.log",
+    "stdout": "{\"ok\": true, \"paper_accounts\": 10, \"observations\": 79, \"research_configs\": 3577, \"protected_inputs_unchanged\": true}",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log": "diff_check.log",
+    "stdout": "",
+    "stderr": ""
+  }
+]
