@@ -1,0 +1,59 @@
+{
+  "kind": "strategy",
+  "family": "spot-daily-directional-efficiency-hysteresis",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "name": "daily_efficiency_BTC_L63_H30",
+  "logic": {
+    "entry": "On a newly closed UTC daily bar j, signed efficiency=(close[j]-close[j-L])/sum(abs(close[k]-close[k-1]), k=j-L+1..j); flat denominator yields0. If flat, enter only when signed efficiency > entry_hurdle_fraction; strict inequality.",
+    "exit": "When long, exit when signed efficiency<=0; otherwise preserve prior target. Entry and exit depend only on L+1 completed daily closes.",
+    "sizing": "Independent 2,000 USDT cash account; all original capital allocated to this asset; long-only, no leverage, no borrowing, no cross-asset transfer or add-on.",
+    "timing": "Close-based signal only from a closed UTC daily bar, next day 00:01 UTC one-minute open (60-second delay); no historical fill before OOS."
+  },
+  "parameters": {
+    "asset": "BTC",
+    "lookback_days": 63,
+    "entry_hurdle_fraction": 0.3,
+    "exit_hurdle_fraction": 0.0,
+    "initial_capital_usdt": 2000,
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward_test_days": 30,
+    "walk_forward_folds": 12,
+    "walk_forward_step_days": 30,
+    "fee_rate_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete daily quote-volume ADV)",
+    "max_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "exchange_filters_sha256": "62fd0bbbd4226161cc7b34f0b1bcc9552eb7efc51d96c4d41d6afff04380c851",
+    "sensitivity_axes": [
+      "lookback_days",
+      "entry_hurdle_fraction"
+    ]
+  },
+  "sources": [
+    {
+      "citation": "TA-Lib KAMA source: net movement / accumulated absolute one-bar movement efficiency construction.",
+      "url": "https://github.com/TA-Lib/ta-lib/blob/59489444d4f5a659fc35cfd918a0a6ce5bc875c2/src/ta_func/ta_KAMA.c",
+      "version_commit": "59489444d4f5a659fc35cfd918a0a6ce5bc875c2",
+      "accessed_utc": "2026-10-21",
+      "scope": "Motivation and denominator definition only. This signed flat=0 trading filter is an explicit adaptation, not KAMA smoothing or a profitability replication."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/products/spot/filters",
+      "accessed_utc": "2026-10-21",
+      "scope": "Official execution filter definitions; current filters are historical proxies."
+    }
+  ]
+}

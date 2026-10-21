@@ -1,0 +1,9 @@
+# 本轮实际核验与失败留档
+
+18个配置先成功reserve再计算54场景，结果完成后逐项finish rejected；19,440条效率比/时序、498笔余额守恒、54条初始本金锚定分钟回撤及完整成本/净值回放通过。原SMA另3个实际截止先reserve，追加120分钟、0新决策/成交，9场景独立审计及离线重放通过后finish rejected，仅因19天尚未成熟，不取消原冻结计划。
+
+最终门禁全部真实exit0，命令、返回码、stdout见final_gates.json，监控3595配置/80观察。feed_verification.json逐项比对18新配置的54档收益与回撤，源码/登记报告SHA及全部受保护原账户源字节保持。没有把cat日志退出码当gate。
+
+准备阶段一次模板路径误改导致FileNotFoundError，当时回测和reserve均为0；错误日志reserve.log及implementation_attempts.jsonl保留。修正历史模板路径后只恢复登记尾段，冻结计划SHA未变，18项全部成功reserve后才执行收益计算。
+
+仅清理54份可重建checkpoint及本轮字节码；保留已finish报告原字节、完整源状态连续性、必要输入与两份原始分钟响应，不另做格式迁移、不改历史结果、不重置账户。

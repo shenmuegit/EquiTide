@@ -1,0 +1,54 @@
+[
+  {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "research/experiments/20261021T122150Z/forward.py",
+      "--reproduce"
+    ],
+    "exit_code": 0,
+    "log": "forward_replay.log",
+    "stdout": "PASS:all9 cumulative forward scenes exactly reproduced including28100point complete time axis and nextstate;noHTTP or ledger write",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "checks/strategy_registry.py"
+    ],
+    "exit_code": 0,
+    "log": "registry_gate.log",
+    "stdout": "PASS: new parameters/weights and missing-result retries are allowed; exact/reordered completed trials stay blocked",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "research/monitor/snapshot.py"
+    ],
+    "exit_code": 0,
+    "log": "snapshot.log",
+    "stdout": "{\"output\": \"/home/desktop/Documents/Codex/EquiTide/research/monitor/latest.json\", \"bytes\": 215975, \"paper_status\": \"ready\", \"research_configs\": 3595, \"compressed_research_bytes\": 1068435}",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "checks/monitor_snapshot.py"
+    ],
+    "exit_code": 0,
+    "log": "monitor_check_final.log",
+    "stdout": "{\"ok\": true, \"paper_accounts\": 10, \"observations\": 80, \"research_configs\": 3595, \"protected_inputs_unchanged\": true}",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log": "diff_check.log",
+    "stdout": "",
+    "stderr": ""
+  }
+]
