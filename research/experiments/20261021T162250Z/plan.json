@@ -1,0 +1,134 @@
+{
+  "round": "20261021T162250Z",
+  "frozen_at_utc": "2026-10-21T16:31:30.537528Z",
+  "direction": "Daily log-price OLS slope divided by its residual standard error.",
+  "hypothesis": "A positive log-price slope that is large relative to past path residuals may distinguish smooth trends from noisy endpoint momentum. Test net performance without claiming statistical significance under serially correlated crypto prices.",
+  "sources": [
+    {
+      "url": "https://www.itl.nist.gov/div898/handbook/pmd/section4/pmd431.htm",
+      "accessed_utc": "2026-10-21",
+      "scope": "Primary definition of OLS slope and residual SD, n-2 degrees of freedom for slope plus intercept."
+    },
+    {
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.linregress.html",
+      "accessed_utc": "2026-10-21",
+      "version_observed": "1.18.0",
+      "scope": "Slope standard error assumes residual normality. We use only the score formula, no p-values or statistical-significance claims; SciPy is not a runtime dependency."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/products/spot/filters",
+      "accessed_utc": "2026-10-21",
+      "scope": "Official filter definitions; historical filters remain unavailable."
+    }
+  ],
+  "rule": {
+    "signal": "Use lastL completed daily closes includingj. Forx=0..L-1,y=ln(close),fit intercept+slope by OLS. Sxx=sum((x-meanx)^2);beta=sum((x-meanx)*(y-meany))/Sxx;residual_sd=sqrt(sum((y-meany-beta*(x-meanx))^2)/(L-2));score=beta*sqrt(Sxx)/max(residual_sd,1e-12). Constant prices give0; floor handles degenerate perfect fits. Score is dimensionless and is not a calibrated significance test.",
+    "entry": "When flat, enter iff score>entry_t_stat; equality remains cash.",
+    "exit": "When long, exit iff score<=0; score>0 preserves long. No extra threshold or stop; no future-return target.",
+    "execution": "Signal becomes available at the signal candle close; if target changes, simulate an order at the next UTC day 00:01 one-minute open (60-second delay). Rejected orders are not backfilled; the same desired state may be tried on a later new daily decision. At the frozen OOS terminal timestamp, liquidate any open lot with costs.",
+    "account": "Independent 2,000 USDT single-asset cash account for every asset×parameter combination; all initial capital assigned to the specified asset sleeve, no leverage, borrowing, shorting, transfer or cash interest."
+  },
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "lookback_days": [
+      21,
+      42,
+      63
+    ],
+    "candidate_configurations": 18,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "entry_t_stat": [
+      1,
+      2,
+      3
+    ],
+    "exit_t_stat": 0.0
+  },
+  "time_boundaries": {
+    "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "oos_days": 360,
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward": "12 consecutive, non-overlapping 30-day evaluation windows; account remains continuous across windows; no fitting, parameter selection or fold reset.",
+    "history_note": "The 2025–2026 OOS window has been reused extensively in this repository and is not an untouched final holdout."
+  },
+  "validation": {
+    "parameter_sensitivity_axes": [
+      "lookback_days",
+      "entry_t_stat"
+    ],
+    "neighborhood": "Same asset, adjacent lookback index and adjacent hurdle index in the frozen 3×3 grid; 3×3 neighborhood including center.",
+    "round_trip_minimum": 8,
+    "positive_1x_folds_minimum": 8,
+    "all_cost_scenarios_positive": true,
+    "max_3x_minute_sample_drawdown_pct": 25,
+    "minimum_3x_positive_neighborhood_fraction": 0.6,
+    "gross_reference_pnl_to_cost_minimum": 2.5,
+    "capacity_or_filter_rejections": 0,
+    "terminal_flat": true,
+    "multiple_testing": "No DSR/PBO claim: repeated reused-OOS history and many prior strategy trials create material selection bias.",
+    "purging": "OLS is refit causally within each lastL completed-close window, including past bars from earlier validation folds. There are no future-return labels, supervised preprocessing or OOS-selected hyperparameters; label purge is inapplicable. Initial context365days plus3day gap; signals and positions carry continuously across12folds.",
+    "continuous_drawdown": "Initial capital plus all OOS minute-close and immediate post-fill marks; no fold reset or intraminute extrema."
+  },
+  "costs": {
+    "per_side_fee": 0.001,
+    "estimated_half_spread_per_side": 0.0001,
+    "estimated_slippage_per_side": 0.0002,
+    "impact": "0.5 × sample stdev of previous 20 complete UTC daily log returns × sqrt(order quote budget / previous 20 complete daily quote ADV)",
+    "maximum_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "filters_source": "Unchanged 2026-10-14 frozen public exchangeInfo proxy, checked against the current public response in filter_check.json. Reuse the original hash so retrieval timestamps cannot manufacture novelty. Historical L2 and historical filters are unavailable."
+  },
+  "data": {
+    "format": "Archived Binance spot 1m OHLCV; daily closes and quote ADV are aggregated from fully closed UTC days.",
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 30555668,
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6"
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 30415140,
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16"
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 27110682,
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57"
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 26332430,
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584"
+        }
+      ]
+    }
+  },
+  "prior_results": {
+    "source_report": "research/experiments/20261021T142125Z/report.json",
+    "source_sha256": "e56ac9f3b04978a228f61ec209984e80aaf1dd3c7b371f1e5ff95dcb398ca4a6",
+    "initial_16_missing_actual_results": 0,
+    "canonical_prior_research_definitions": 3864,
+    "last_batch": "18 rolling-median configurations rejected; read-only reference.",
+    "distinction": "Use OLS path slope standardized by within-window residuals, rather than endpoint ROC, signed path efficiency, or price distance from a median."
+  },
+  "trigger_utc": "2026-10-21T16:22:50.501Z",
+  "account_scope": "Offline research only. Read existing paper10 and delayed SMA-shadow accounts without reset, replacement, new paper observations or real orders."
+}
