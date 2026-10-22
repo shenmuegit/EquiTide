@@ -1,0 +1,63 @@
+{
+  "kind": "strategy",
+  "family": "spot-daily-wilder-rsi-momentum-hysteresis",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "name": "daily_rsi_momentum_ETH_N7_E60",
+  "logic": {
+    "entry": "From dataset day0 completed closes, seed average gain/loss with simple means of firstL close changes, first score at dayL. Thereafter avg_t=((L-1)*avg_previous+new_gain_or_loss)/L, Decimal28. RSI=100*avg_gain/(avg_gain+avg_loss); both zero use50. No OOS/fold resets or future values. When flat, enter iff RSI>entry_rsi; equality remains cash.",
+    "exit": "When long, exit iff RSI<exit_rsi=45; equality/deadband preserves actual long state. No SMA filter, time cap or same-decision re-entry; terminal liquidation stays costed.",
+    "sizing": "Independent 2,000 USDT cash account; all original capital allocated to this asset; long-only, no leverage, no borrowing, no cross-asset transfer or add-on.",
+    "timing": "Close-based signal only from a closed UTC daily bar, next day 00:01 UTC one-minute open (60-second delay); no historical fill before OOS."
+  },
+  "parameters": {
+    "asset": "ETH",
+    "initial_capital_usdt": 2000,
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward_test_days": 30,
+    "walk_forward_folds": 12,
+    "walk_forward_step_days": 30,
+    "fee_rate_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete daily quote-volume ADV)",
+    "max_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "exchange_filters_sha256": "62fd0bbbd4226161cc7b34f0b1bcc9552eb7efc51d96c4d41d6afff04380c851",
+    "sensitivity_axes": [
+      "rsi_period",
+      "entry_rsi"
+    ],
+    "rsi_period": 7,
+    "entry_rsi": 60,
+    "exit_rsi": 45
+  },
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/TA-Lib/ta-lib/v0.6.4/src/ta_func/ta_RSI.c",
+      "version": "v0.6.4",
+      "accessed_utc": "2026-10-22",
+      "scope": "Wilder initialization/recursion only. Reuse our tested Decimal28 implementation; neutral50 for zero gain+loss is our explicit convention instead of that version zero."
+    },
+    {
+      "url": "https://www.tradingview.com/support/solutions/43000502338-relative-strength-index-rsi/",
+      "accessed_utc": "2026-10-22",
+      "scope": "Primary momentum oscillator context, not proof for this generated strength-entry45exit strategy."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/products/spot/filters",
+      "accessed_utc": "2026-10-22",
+      "scope": "Official filter definitions; historical filters remain unavailable."
+    }
+  ]
+}

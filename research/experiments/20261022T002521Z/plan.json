@@ -1,0 +1,137 @@
+{
+  "round": "20261022T002521Z",
+  "frozen_at_utc": "2026-10-22T00:31:31.082791Z",
+  "direction": "Wilder daily RSI momentum with a fixed45 exit.",
+  "hypothesis": "Persistent excess of smoothed gains over losses may define a momentum regime. Test buying strength rather than the previously rejected oversold pullback rule; a45exit provides a fixed deadband. There is no SMA filter, no fit or hindsight-selected threshold.",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/TA-Lib/ta-lib/v0.6.4/src/ta_func/ta_RSI.c",
+      "version": "v0.6.4",
+      "accessed_utc": "2026-10-22",
+      "scope": "Wilder initialization/recursion only. Reuse our tested Decimal28 implementation; neutral50 for zero gain+loss is our explicit convention instead of that version zero."
+    },
+    {
+      "url": "https://www.tradingview.com/support/solutions/43000502338-relative-strength-index-rsi/",
+      "accessed_utc": "2026-10-22",
+      "scope": "Primary momentum oscillator context, not proof for this generated strength-entry45exit strategy."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/products/spot/filters",
+      "accessed_utc": "2026-10-22",
+      "scope": "Official filter definitions; historical filters remain unavailable."
+    }
+  ],
+  "rule": {
+    "signal": "From dataset day0 completed closes, seed average gain/loss with simple means of firstL close changes, first score at dayL. Thereafter avg_t=((L-1)*avg_previous+new_gain_or_loss)/L, Decimal28. RSI=100*avg_gain/(avg_gain+avg_loss); both zero use50. No OOS/fold resets or future values.",
+    "entry": "When flat, enter iff RSI>entry_rsi; equality remains cash.",
+    "exit": "When long, exit iff RSI<exit_rsi=45; equality/deadband preserves long. No SMA filter or time cap, no same-decision re-entry.",
+    "execution": "Signal becomes available at the signal candle close; if target changes, simulate an order at the next UTC day 00:01 one-minute open (60-second delay). Rejected orders are not backfilled; the same desired state may be tried on a later new daily decision. At the frozen OOS terminal timestamp, liquidate any open lot with costs.",
+    "account": "Independent 2,000 USDT single-asset cash account for every asset×parameter combination; all initial capital assigned to the specified asset sleeve, no leverage, borrowing, shorting, transfer or cash interest."
+  },
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "candidate_configurations": 18,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "rsi_period": [
+      7,
+      14,
+      28
+    ],
+    "entry_rsi": [
+      55,
+      60,
+      65
+    ],
+    "exit_rsi": 45
+  },
+  "time_boundaries": {
+    "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "oos_days": 360,
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward": "12 consecutive, non-overlapping 30-day evaluation windows; account remains continuous across windows; no fitting, parameter selection or fold reset.",
+    "history_note": "The 2025–2026 OOS window has been reused extensively in this repository and is not an untouched final holdout."
+  },
+  "validation": {
+    "parameter_sensitivity_axes": [
+      "rsi_period",
+      "entry_rsi"
+    ],
+    "neighborhood": "Same asset, adjacent lookback index and adjacent hurdle index in the frozen 3×3 grid; 3×3 neighborhood including center.",
+    "round_trip_minimum": 8,
+    "positive_1x_folds_minimum": 8,
+    "all_cost_scenarios_positive": true,
+    "max_3x_minute_sample_drawdown_pct": 25,
+    "minimum_3x_positive_neighborhood_fraction": 0.6,
+    "gross_reference_pnl_to_cost_minimum": 2.5,
+    "capacity_or_filter_rejections": 0,
+    "terminal_flat": true,
+    "multiple_testing": "No DSR/PBO claim: repeated reused-OOS history and many prior strategy trials create material selection bias.",
+    "purging": "No predictive fit or future-return labels; label purge inapplicable. Seed Wilder averages from the firstL actual daily changes at dataset start and carry causal state without resets through365day context,3day initial gap and12folds. No OOS parameter selection.",
+    "continuous_drawdown": "Initial capital plus all OOS minute-close and immediate post-fill marks; no fold reset or intraminute extrema."
+  },
+  "costs": {
+    "per_side_fee": 0.001,
+    "estimated_half_spread_per_side": 0.0001,
+    "estimated_slippage_per_side": 0.0002,
+    "impact": "0.5 × sample stdev of previous 20 complete UTC daily log returns × sqrt(order quote budget / previous 20 complete daily quote ADV)",
+    "maximum_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "filters_source": "Unchanged 2026-10-14 frozen public exchangeInfo proxy, checked against the current public response in filter_check.json. Reuse the original hash so retrieval timestamps cannot manufacture novelty. Historical L2 and historical filters are unavailable."
+  },
+  "data": {
+    "format": "Archived Binance spot 1m OHLCV; daily closes and quote ADV are aggregated from fully closed UTC days.",
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 30555668,
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6"
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 30415140,
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16"
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 27110682,
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57"
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 26332430,
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584"
+        }
+      ]
+    }
+  },
+  "prior_results": {
+    "source_report": "research/experiments/20261021T222421Z/report.json",
+    "source_sha256": "33c652ca0334b74e374b5f1010bfe55332dde046860ef79fe78a977fe84fc482",
+    "initial_16_missing_actual_results": 0,
+    "canonical_prior_research_definitions": 3936,
+    "last_batch": "18 close-range configurations rejected, including a1x-positive case that lost at3x.",
+    "related_Wilder_source_report": "research/experiments/20261021T182350Z/report.json",
+    "related_Wilder_source_sha256": "e5c5b8ad4f292ac1a822eb143f4680fb20888ef976ec5bc87bffea85e1c4d89d",
+    "distinction": "Same independently checked Wilder formula, but enter RSI>55/60/65, exit RSI<45, with no SMA filter. Prior oversold rule entered RSI<20/30/40 aboveSMA200 and exited at50 or loss of SMA."
+  },
+  "trigger_utc": "2026-10-22T00:25:21.223Z",
+  "source_access_failures": [],
+  "account_scope": "Offline research only. Read existing paper10 and delayed SMA-shadow accounts without reset, replacement, new paper observations or real orders."
+}
