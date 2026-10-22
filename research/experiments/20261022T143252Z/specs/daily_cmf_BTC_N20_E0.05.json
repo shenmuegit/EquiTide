@@ -1,0 +1,64 @@
+{
+  "kind": "strategy",
+  "family": "spot-daily-cmf-hysteresis",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "name": "daily_cmf_BTC_N20_E0.05",
+  "logic": {
+    "entry": "Aggregate UTC daily high/low,last close and base volume over1440closed minutes. CLV=(2*C-H-L)/(H-L);if H=L,set CLV0,retain volume in denominator. CMF=sum(CLV*base_volume)/sum(base_volume) overNcomplete days j-N+1..j;if total volume0,set CMF0. Exact Fraction from encoded daily Float64 decimal strings;no rounding for thresholds,Decimal60 display,canonical ratio SHA for decisions. Original accounting kernel remainsDecimal28. No price-gap adjustment,seed or fold reset. When flat,enter iff CMF>entry_cmf_threshold_fraction;exact rational strict comparison,no prior-cross requirement.",
+    "exit": "While long,exit iff CMF<-0.05. Equality-0.05and zero-volume0keep long;flat stays cash at or below entry threshold. No future padding,fold reset,short,hold cap or same-decision re-entry. Costed terminal liquidation.",
+    "sizing": "Independent 2,000 USDT cash account; all original capital allocated to this asset; long-only, no leverage, no borrowing, no cross-asset transfer or add-on.",
+    "timing": "Close-based signal only from a closed UTC daily bar, next day 00:01 UTC one-minute open (60-second delay); no historical fill before OOS."
+  },
+  "parameters": {
+    "asset": "BTC",
+    "initial_capital_usdt": 2000,
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward_test_days": 30,
+    "walk_forward_folds": 12,
+    "walk_forward_step_days": 30,
+    "fee_rate_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete daily quote-volume ADV)",
+    "max_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "exchange_filters_sha256": "62fd0bbbd4226161cc7b34f0b1bcc9552eb7efc51d96c4d41d6afff04380c851",
+    "sensitivity_axes": [
+      "cmf_lookback_days",
+      "entry_cmf_threshold_fraction"
+    ],
+    "cmf_lookback_days": 20,
+    "entry_cmf_threshold_fraction": 0.05,
+    "exit_cmf_threshold_fraction": -0.05,
+    "zero_total_volume_CMF": 0,
+    "flat_range_money_flow_volume": 0,
+    "flow_arithmetic": "exact Fraction from daily Float64 decimal-string encoding",
+    "display_precision": 60,
+    "window": "Ncomplete ranges:j-N+1..j",
+    "volume_units": "base asset units,sum of1440closed minutes",
+    "threshold_arithmetic": "exact rational comparisons;decision CSV canonical ratio SHA"
+  },
+  "sources": [
+    {
+      "url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/chaikin-money-flow-cmf",
+      "accessed_utc": "2026-10-22",
+      "scope": "Primary provider definition:range close location times period volume,rolling sum divided by volume;documents plus/minus0.05 buffer and gap caveat. Our window grid,entry0/0.05/0.10,exit-0.05,flat-range and zero-volume conventions are frozen independent choices,not profitability endorsement."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/products/spot/filters",
+      "accessed_utc": "2026-10-22",
+      "scope": "Official spot filter definitions;historical filters unavailable."
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "stage": "Read-only feed structure inspection after successful gates",
+  "actual_exit_code": 1,
+  "failed_expression": "next(x for x in items if x['id']==fp)",
+  "actual_stderr": "KeyError: 'id'",
+  "cause": "The inspection used id;the existing dashboard feed uses fingerprint. It failed without writing account,registry,report or feed.",
+  "recovery": "Read actual row keys and use fingerprint in feed_verification.json assertions;no monitor code or historical returns changed.",
+  "gate_status": "Actual checks/strategy_registry.py and checks/monitor_snapshot.py processes had already exited0;this is a separate diagnostic probe failure."
+}
