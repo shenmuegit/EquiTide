@@ -1,0 +1,69 @@
+{
+  "kind": "strategy",
+  "family": "spot-daily-cci-momentum",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "name": "daily_cci_ETH_N40_E150",
+  "logic": {
+    "entry": "Use UTC daily high/low extrema and final close from1440completed minute bars. TP=(H+L+C)/3;CCI=(TP_j-mean(TP,N))/(0.015*mean(abs(TP-meanTP),N)),window j-N+1..j. Zero mean deviation=>CCI0. To avoid division-rounding decisions,let X=H+L+C,S=sumX,r_i=N*X_i-S,num=200*N*r_j,den=3*sum(abs(r_i));CCI=num/den. Compare num>E*den for entry and num<0 for exit using unrounded Decimal28 factors;save displayed CCI rounded only by Decimal division. No seed/fold reset. When flat,enter iff num>entry_cci_threshold*den;strict comparison,no prior-cross requirement.",
+    "exit": "While long,exit iff num<0. ZeroCCI/zero deviation preserve long;flat stays cash at or below entry threshold. No future padding,fold reset,short,hold cap or same-decision re-entry. Costed terminal liquidation.",
+    "sizing": "Independent 2,000 USDT cash account; all original capital allocated to this asset; long-only, no leverage, no borrowing, no cross-asset transfer or add-on.",
+    "timing": "Close-based signal only from a closed UTC daily bar, next day 00:01 UTC one-minute open (60-second delay); no historical fill before OOS."
+  },
+  "parameters": {
+    "asset": "ETH",
+    "initial_capital_usdt": 2000,
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward_test_days": 30,
+    "walk_forward_folds": 12,
+    "walk_forward_step_days": 30,
+    "fee_rate_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete daily quote-volume ADV)",
+    "max_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "exchange_filters_sha256": "62fd0bbbd4226161cc7b34f0b1bcc9552eb7efc51d96c4d41d6afff04380c851",
+    "sensitivity_axes": [
+      "cci_lookback_days",
+      "entry_cci_threshold"
+    ],
+    "cci_lookback_days": 40,
+    "entry_cci_threshold": 150,
+    "exit_cci_threshold": 0,
+    "scaling_constant": 0.015,
+    "zero_deviation_CCI": 0,
+    "window": "j-N+1..j inclusive;Ncomplete daily HLC bars",
+    "threshold_arithmetic": "unrounded num>E*den",
+    "daily_high_low": "UTC extrema over1440closed minute ranges"
+  },
+  "sources": [
+    {
+      "url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/commodity-channel-index-cci",
+      "accessed_utc": "2026-10-22",
+      "version_observed": "Current official StockCharts ChartSchool documentation",
+      "scope": "Primary platform formula:typical price,SMA and mean absolute deviation with0.015 scaling. Our exact entry/exit and arithmetic rules are independently frozen, without profitability endorsement."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/TA-Lib/ta-lib/v0.6.4/src/ta_func/ta_CCI.c",
+      "accessed_utc": "2026-10-22",
+      "version_observed": "TA-Lib v0.6.4",
+      "scope": "Primary implementation confirms N complete HLC bars and zero-deviation zero output. Own Decimal and Fraction implementations; no copied C source or library installation."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/products/spot/filters",
+      "accessed_utc": "2026-10-22",
+      "scope": "Official spot filter definitions; historical filters unavailable."
+    }
+  ]
+}
