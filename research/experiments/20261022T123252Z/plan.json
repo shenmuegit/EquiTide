@@ -1,0 +1,140 @@
+{
+  "round": "20261022T123252Z",
+  "frozen_at_utc": "2026-10-22T12:42:04.869524Z",
+  "direction": "Daily base-volume Money Flow Index momentum with fixed45exit,unlevered spot long/cash.",
+  "hypothesis": "Weight typical-price directional days by raw base-volume money flow. Test whether positive flow dominance with a lower exit boundary survives costs and varied regimes. This is our momentum hypothesis;source documentation cautions against assuming that MFI centerline bias is a reliable trend signal.",
+  "sources": [
+    {
+      "url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/money-flow-index-mfi",
+      "accessed_utc": "2026-10-22",
+      "version_observed": "Current official StockCharts ChartSchool documentation",
+      "scope": "Primary definition TP*volume,positive/negative TP-direction flows and exclusion of unchangedTP. Our momentum rules and neutral50zero-flow convention are independent choices,not profitability endorsement."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/TA-Lib/ta-lib/v0.6.4/src/ta_func/ta_MFI.c",
+      "accessed_utc": "2026-10-22",
+      "version_observed": "TA-Lib v0.6.4",
+      "scope": "Primary implementation confirms Nflows with an earlierTP and unchanged-price exclusion. We do not use its total-flow<1 zero guard:exact total-flow0 is independently fixed to50. No equivalence claim,library install or copied C source."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/products/spot/filters",
+      "accessed_utc": "2026-10-22",
+      "scope": "Official spot filter definitions;historical filters unavailable."
+    }
+  ],
+  "rule": {
+    "signal": "Aggregate UTC daily high/low,last close and base volume over1440closed minutes. TP=(H+L+C)/3. Raw flow=TP*base_volume;assign to positive ifTP rises,negative ifTP falls,zero to both whenTP ties. Sum Nflows overj-N+1..j,using earlierTP atj-N. MFI=100*positive/(positive+negative);if total exactly0,set50. For exact thresholds use TP3=H+L+C,flow3=TP3*volume,which cancels the common3. Local Decimal60 flow arithmetic and cross-multiplied thresholds;accounting kernel remainsDecimal28. No seed/fold reset.",
+    "entry": "When flat,enter iff MFI>E;strict boundary,no prior-cross requirement,including first OOS decision. Zero total flow yields neutral50.",
+    "exit": "When long,exit iff MFI<45;equality45keeps long. Zero total flow50keeps long. No short,hold cap or same-decision re-entry;costed terminal liquidation.",
+    "execution": "Signal becomes available at the signal candle close; if target changes, simulate an order at the next UTC day 00:01 one-minute open (60-second delay). Rejected orders are not backfilled; the same desired state may be tried on a later new daily decision. At the frozen OOS terminal timestamp, liquidate any open lot with costs.",
+    "account": "Independent 2,000 USDT single-asset cash account for every asset×parameter combination; all initial capital assigned to the specified asset sleeve, no leverage, borrowing, shorting, transfer or cash interest."
+  },
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "candidate_configurations": 18,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "mfi_lookback_days": [
+      10,
+      20,
+      40
+    ],
+    "entry_mfi_threshold": [
+      50,
+      60,
+      70
+    ],
+    "exit_mfi_threshold": 45,
+    "flow_window": "j-N+1..j:Ndirectional flows requiringN+1daily prices",
+    "zero_total_flow_MFI": 50,
+    "flow_arithmetic_precision": 60,
+    "volume_units": "base asset units,sum of1440closed minutes"
+  },
+  "time_boundaries": {
+    "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "oos_days": 360,
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward": "12 consecutive, non-overlapping 30-day evaluation windows; account remains continuous across windows; no fitting, parameter selection or fold reset.",
+    "history_note": "The 2025–2026 OOS window has been reused extensively in this repository and is not an untouched final holdout."
+  },
+  "validation": {
+    "parameter_sensitivity_axes": [
+      "mfi_lookback_days",
+      "entry_mfi_threshold"
+    ],
+    "neighborhood": "Same asset, adjacent lookback index and adjacent hurdle index in the frozen 3×3 grid; 3×3 neighborhood including center.",
+    "round_trip_minimum": 8,
+    "positive_1x_folds_minimum": 8,
+    "all_cost_scenarios_positive": true,
+    "max_3x_minute_sample_drawdown_pct": 25,
+    "minimum_3x_positive_neighborhood_fraction": 0.6,
+    "gross_reference_pnl_to_cost_minimum": 2.5,
+    "capacity_or_filter_rejections": 0,
+    "terminal_flat": true,
+    "multiple_testing": "No DSR/PBO claim: repeated reused-OOS history and many prior strategy trials create material selection bias.",
+    "purging": "No fitted model or future-return labels;label purge inapplicable. Ncomplete directional flows requireN+1completed daily prices;first valid indexN. No future padding,seed,OOS/fold reset or parameter selection.365day context and3day initial gap precede12continuous folds.",
+    "continuous_drawdown": "Initial capital plus all OOS minute-close and immediate post-fill marks; no fold reset or intraminute extrema."
+  },
+  "costs": {
+    "per_side_fee": 0.001,
+    "estimated_half_spread_per_side": 0.0001,
+    "estimated_slippage_per_side": 0.0002,
+    "impact": "0.5 × sample stdev of previous 20 complete UTC daily log returns × sqrt(order quote budget / previous 20 complete daily quote ADV)",
+    "maximum_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "filters_source": "Unchanged 2026-10-14 frozen public exchangeInfo proxy, checked against the current public response in filter_check.json. Reuse the original hash so retrieval timestamps cannot manufacture novelty. Historical L2 and historical filters are unavailable."
+  },
+  "data": {
+    "format": "Archived Binance spot 1m OHLCV; daily closes and quote ADV are aggregated from fully closed UTC days.",
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 30555668,
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6"
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 30415140,
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16"
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 27110682,
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57"
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 26332430,
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584"
+        }
+      ]
+    }
+  },
+  "prior_results": {
+    "source_report": "research/experiments/20261022T103152Z/report.json",
+    "source_sha256": "a26af1184d43837f03ca0ba5474d19f3481e9bf310de7a4bf8c6e0ea579c0170",
+    "initial_16_missing_actual_results": 0,
+    "canonical_prior_research_definitions": 4044,
+    "last_batch": "18 CCI candidates rejected;two all-cost positive cells did not meet fold breadth or full robustness.",
+    "distinction": "MFI weights typical-price direction by actual daily base volume,not a price-only mean-deviation score or extrema age."
+  },
+  "trigger_utc": "2026-10-22T12:32:52.305Z",
+  "source_access_failures": [],
+  "account_scope": "Offline research only. Read existing paper10 and delayed SMA-shadow accounts without reset, replacement, new paper observations or real orders."
+}
