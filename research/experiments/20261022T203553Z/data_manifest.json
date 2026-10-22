@@ -1,0 +1,859 @@
+{
+  "round": "20261022T203553Z",
+  "recorded_at_utc": "2026-10-22T20:52:22.239153+00:00",
+  "working_directory": "/home/desktop/Documents/Codex/EquiTide",
+  "branch": "codex/strategy-research",
+  "base_commit": "342a58272bc41a3b6575e2cb708502b07865c7bf",
+  "frozen_plan_sha256": "12357dca6c9d99e55f615f5110fbaac635e8d780b2254f28281464a6a915b696",
+  "finished_report_sha256": "ffcab8d34fbb50293152de15e64607f1edc11abc01a76a5ac7925bd2b02fac3d",
+  "finished_forward_report_sha256": "024542979f2486794312deccfbd1d02de5c3c00c5bd82ab7886aac6dec1b735b",
+  "frozen_original_SMA_plan": {
+    "path": "research/experiments/20261001T113625Z/forward_plan.json",
+    "sha256": "2798390f02bd43059097cf16f9b8b1f30db4b96776431c18684b540130f86d81"
+  },
+  "real_market_inputs": {
+    "assets": {
+      "BTC": {
+        "source_files": [
+          {
+            "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+            "bytes": 30555668,
+            "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6",
+            "minute_bars": 525600,
+            "first_open_ns": 1726444800000000000,
+            "last_open_ns": 1757980740000000000
+          },
+          {
+            "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+            "bytes": 30415140,
+            "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16",
+            "minute_bars": 525600,
+            "first_open_ns": 1757980800000000000,
+            "last_open_ns": 1789516740000000000
+          }
+        ],
+        "minute_bars": 1051200,
+        "daily_bars": 730,
+        "daily_close_sha256_f64le": "dda99992578d206c35e19e48b0ae1f27d59461b967dc470781d6ddf62f54060a",
+        "daily_high_sha256_f64le": "a24026b13bb1b63e997d039c5910b176a4c66a6c8926444080c31242f5815154",
+        "daily_low_sha256_f64le": "0b5318fb06b22d829ae01016a6c145f9c3795d208e36dc3a84ee39e20a057127",
+        "daily_base_volume_sha256_f64le": "fda80ff5eec2b8dcabc362698413977d23f912e5ad01c62560c3743d315bf300"
+      },
+      "ETH": {
+        "source_files": [
+          {
+            "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+            "bytes": 27110682,
+            "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57",
+            "minute_bars": 525600,
+            "first_open_ns": 1726444800000000000,
+            "last_open_ns": 1757980740000000000
+          },
+          {
+            "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+            "bytes": 26332430,
+            "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584",
+            "minute_bars": 525600,
+            "first_open_ns": 1757980800000000000,
+            "last_open_ns": 1789516740000000000
+          }
+        ],
+        "minute_bars": 1051200,
+        "daily_bars": 730,
+        "daily_close_sha256_f64le": "637309dd02557fbf31d6a4fd58c3e04681dfca44ad5b22e16182fbd2717adcd4",
+        "daily_high_sha256_f64le": "19482d1638f96e0ae1b7cc7c4176f94a0fd83db637e4deef8622a8d9f2d8b246",
+        "daily_low_sha256_f64le": "ee817a248a22210624e5aa3e1f2ba9ec6e37ae0a37fb59b54681f209d2d9ee21",
+        "daily_base_volume_sha256_f64le": "8058db00a230f29a799487634f72b063c92d81c39c25968e780ca72558a7f6a0"
+      }
+    }
+  },
+  "large_market_data_policy": "Four original Parquets remain at existing data/normalized paths with size/SHA and replay code;not staged. Necessary finished reports/full cumulative NAV original bytes retained;no format migration.",
+  "forward_source_continuity": {
+    "frozen_at_utc": "2026-10-22T20:43:57.707980+00:00",
+    "forward_resume": {
+      "source_report": "research/experiments/20261022T183553Z/forward_report.json",
+      "report_sha256": "1bae7aaf8bc5e6428250e579464bea0fd7444021ed94bee8f94780773dd1aabe",
+      "source_state": "research/experiments/20261022T183553Z/forward_state.json",
+      "state_sha256": "9e9eedeeaf32d8005102d418b0f10af8427e335fa07bdc0b682fdab68e62a9e1",
+      "resume_utc": "2026-10-22T18:00:00Z",
+      "cutoff_utc": "2026-10-22T20:00:00Z",
+      "new_minutes": 120,
+      "prior_NAV_points": 29901,
+      "total_NAV_points": 30021,
+      "cumulative_minutes": 29999
+    },
+    "scope": "Original frozenSMA65±1%,raw75/25;append120closedminute marks only. No daily decision/fill/reset/transfers/rebalancing/forced exit. Next daily event2026-10-23UTC00:01,terminal2027-03-31 unchanged. Delayed shadow stays separate from paper10 real-quote accounts.",
+    "frozen_original_plan": "research/experiments/20261001T113625Z/forward_plan.json",
+    "frozen_original_plan_sha256": "2798390f02bd43059097cf16f9b8b1f30db4b96776431c18684b540130f86d81",
+    "failure_criteria": "Stop on source SHA,raw overlap,closed-time continuity,NAV prefix,cash/units/desired/cost/trade mismatch;never synthesize prices."
+  },
+  "forward_previous_inputs": {
+    "path": "research/experiments/20261022T183553Z/forward_inputs.json.gz",
+    "sha256": "ef6da7e8aa977c2ec0c7a7282962df47c329a88a69bcc5997a8fdc4ebdd7250f",
+    "bytes": 12313
+  },
+  "forward_closed_minute_sources": [
+    {
+      "asset": "BTC",
+      "interval": "1m",
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=BTCUSDT&interval=1m&startTime=1792691940000&endTime=1792699199999&limit=1000",
+      "status": 200,
+      "retrieved_utc": "2026-10-22T20:44:55.594017+00:00",
+      "raw_response_sha256": "c0eec9f919ff6ef127622e77aea0e9f0cf108ae415982acac19d62d42a8a8467",
+      "raw_gzip_path": "research/experiments/20261022T203553Z/forward_response_BTC_1m.json.gz",
+      "raw_gzip_sha256": "e19aa10a0da533b7148c753b39f33d04391d51c1d329544454c7a9aa6fa392b0",
+      "bars": 121,
+      "timestamp_unit": "milliseconds",
+      "closed_by_fixed_cutoff": true,
+      "delayed_shadow_reconstruction": true
+    },
+    {
+      "asset": "ETH",
+      "interval": "1m",
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1792691940000&endTime=1792699199999&limit=1000",
+      "status": 200,
+      "retrieved_utc": "2026-10-22T20:45:04.327860+00:00",
+      "raw_response_sha256": "430a1829cfea9f4d62735ed655593aeebdec516c34167b95314c9a01898c6f44",
+      "raw_gzip_path": "research/experiments/20261022T203553Z/forward_response_ETH_1m.json.gz",
+      "raw_gzip_sha256": "6f2a516f569b8f0675b4b171484f9f4af0ad4eeaa1f00708e108830ce3673581",
+      "bars": 121,
+      "timestamp_unit": "milliseconds",
+      "closed_by_fixed_cutoff": true,
+      "delayed_shadow_reconstruction": true
+    }
+  ],
+  "forward_combined_inputs": {
+    "path": "research/experiments/20261022T203553Z/forward_inputs.json.gz",
+    "sha256": "8f746becaae995ddb192cf742c7e31efdde5d90da49d10c86bf12c000d28e6b3",
+    "bytes": 12108
+  },
+  "registry": {
+    "path": "research/automation/registry.jsonl",
+    "before_reserve_sha256": "4824c68fb9e39abcbe7cf45157f209897797b6f170d8d0888df1c3e3046c175b",
+    "after_finish_sha256": "ed0aad571a3474795c53c209795b497dc84b4e6c0f5c824b6efdb6050ea2d2a4",
+    "append_only_lines": 42,
+    "total_events": 11152,
+    "latest_ids": 5472,
+    "new_finished_configs": 21
+  },
+  "history": {
+    "events_before": 11110,
+    "ids_before": 5451,
+    "canonical_research_before": 4116,
+    "prior_conclusions_read": 148,
+    "initial_16_missing_actual_results": 0
+  },
+  "runtime": {
+    "python_executable": "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "polars": "1.44.2",
+    "matplotlib": "3.10.8",
+    "new_dependencies": false
+  },
+  "code_and_frozen_source_sha256": {
+    "research/experiments/20261022T203553Z/audit_forward.py": "38f0805bd6c2a815fa7201b43ddafb527e588d41551a6e4cb51c90311c20ece8",
+    "research/experiments/20261022T203553Z/evaluate.py": "a48e4bcd180cb6c6585d3c9f5203ef3e592db1aa991808606b4ee0b013f36d37",
+    "research/experiments/20261022T203553Z/audit.py": "19636700f04b0b5f174475a89187054222c7fd79d3c64f8915b1db00a30286ec",
+    "research/experiments/20261022T203553Z/forward.py": "c9107273bbfb7d2d76224329fc2b5ba5feb53eb0a78a372147283aa29a6ea0f5",
+    "research/experiments/20261022T203553Z/signal_checks.py": "16983e75d165e751c2693250f5770825b34ff59bf565f3c03423813ac706ca11",
+    "research/experiments/20261022T203553Z/summarize.py": "7aed4a681047a27414349267c90853ebb83b033567f22173dffadcc694536e30",
+    "research/experiments/20261022T203553Z/run.py": "6b70bd2d829e28dab65de5d1953b36699412ca9e9a672f41a3555de03772e836",
+    "AGENTS.md": "a66ff35facb73cb864c1015889f049cdf297e841e4b5d877c34cf12d584a4ef0",
+    "research/automation/task.md": "46388e8aab81ddbb82fbb2bb7d6ccfea4640d9abfe42d93dc0b9dbee8c7c8ced",
+    "research/automation/README.md": "e15378cf3e9f3d25d8e523409c71cde2360083940bc7efac70169be6f593c272",
+    "research/automation/registry.py": "04d52db6029229680d2202caff3fea0dcc3528e0a9447e6be7ca9ab29930807b",
+    "research/monitor/README.md": "fa26c3149b80a1e5af160ad570a3e50caf63824de70c44991fda16acbef07b98",
+    "research/monitor/snapshot.py": "a0221c8aadc02f74045ff39a978485ec87c298dad860468c39e8e9455b1b9c62",
+    "checks/strategy_registry.py": "2f967932dd81deb02ccbbf05fe0ae1d3e0c3ac050c03493eb34e3745891d1fe6",
+    "checks/monitor_snapshot.py": "c81beaf3b0787c84b86aafc5127c96cddb59849a477e0279fd9ad5ed8e8ae49b",
+    "research/experiments/20261014T125820Z/plan.json": "83c2ccb9a9af69d2c334c92c83da7018f37a68a24453f7ebfd03b15917107b2b",
+    "research/experiments/20261014T125820Z/specs/daily_roc_momentum_BTC_L7_H0.json": "a6a2105118e7a649d381c0c678e7aca2995c8112a720f7fa5039c4fa75c70c92",
+    "research/experiments/20261001T133655Z/kernel.py": "66b8788c5d45ca2e40b8b3412d7150bc10fc7d5def521a50911d0071c68e0df0",
+    "research/experiments/20261001T013355Z/evaluate.py": "9c11e327cc8965b0dbc99e533b92522ba7ab34b0e450675f32612c2ba2a11b09",
+    "research/experiments/20261022T002521Z/forward.py": "1ed470dcbbedc9ad77a2351c645baa8c888aed9b3cb7061eddbbe932f29b9635",
+    "research/experiments/20261022T183553Z/report.json": "aa277cd8181636e9269f393bb207a616c91053791d955e45354761953da84628",
+    "research/experiments/20261022T183553Z/plan.json": "92524c7bb5b8c4b9a8c50a10fcaa3367ff1f757be7c112c7e567f6288f6b0c1a",
+    "research/experiments/20261022T183553Z/evaluate.py": "9cc9f1aaba872143f8b46d02c68e1e252269985ed3e36d7d9ee3282be4e958cc",
+    "research/experiments/20261022T183553Z/run.py": "aca9d79b8eac77a8c2a479dbd32bba11baa5dcd962cf8ef30f6af3b43ebdd993",
+    "research/experiments/20261022T183553Z/audit.py": "51db5c7aca5e4dc64d94b15c2bcd2c08243c4af8b0e536f538c17b41dc4f84f9",
+    "research/experiments/20261022T183553Z/summarize.py": "7804709d2bf7a5deb80750cb4bc7fc1e5f33400a431bb1f6072ebde3c1afd844",
+    "research/experiments/20261022T183553Z/signal_checks.py": "a619b44bbe90ccb9ac427843ea768d6c2a6235a78513c6a56abc50edb6f1b01d",
+    "research/experiments/20261022T183553Z/forward.py": "c9107273bbfb7d2d76224329fc2b5ba5feb53eb0a78a372147283aa29a6ea0f5",
+    "research/experiments/20261022T183553Z/audit_forward.py": "38f0805bd6c2a815fa7201b43ddafb527e588d41551a6e4cb51c90311c20ece8",
+    ".agents/skills/walk-forward-validation/SKILL.md": "4b291994d2e4d68a5821122c4fcc2cf8ea9996f87b11a44eef8461a8a890b32f",
+    ".agents/skills/ml4t-sensitivity-analysis/SKILL.md": "a90f8df8edc8555a7643b9dfc5354f784322d18c77bce7b11626003f689e2fb7",
+    ".agents/skills/ml4t-transaction-costs/SKILL.md": "d05ca6174949ff57f4bae3b99550a5a00c4a065c9946a9f1a34ca1898afe2c1c"
+  },
+  "benchmark_read_only": {
+    "path": "research/experiments/20261014T084051Z/report.json",
+    "sha256": "1d54cf6fa25bada7eb13d758a9d88beb6440d1198540840a017812658214ed15",
+    "rerun": false
+  },
+  "protected_inputs_sha256": {
+    "research/paper10/plan.json": "383cbfe8544627e05ff498ae4f803dbc3ccfd24753311add9cba2f5aa064e34f",
+    "research/paper10/state.json": "f59524b728cdeb987842605ebb5f58e9aef37b7dfae6c08ccd88daf4d681a0be",
+    "research/experiments/20261022T183553Z/forward_state.json": "9e9eedeeaf32d8005102d418b0f10af8427e335fa07bdc0b682fdab68e62a9e1",
+    "research/experiments/20261022T183553Z/forward_report.json": "1bae7aaf8bc5e6428250e579464bea0fd7444021ed94bee8f94780773dd1aabe"
+  },
+  "shared_state_verification_scope": "Branch lock held;all4protected hashes unchanged;paper10 read only.",
+  "monitor_feeds": {
+    "research/monitor/latest.json": {
+      "sha256": "fd1f727b741db2a86fd891675b8f3469370187f024045a5310087b3f26c8ba89",
+      "bytes": 236079
+    },
+    "research/monitor/configs.json.gz": {
+      "sha256": "c6e0b59ad2685ed760444116c21159a935eae8ce602d0b3a7d6ac66c596e51ea",
+      "bytes": 1181982
+    }
+  },
+  "monitor_validation": {
+    "passed": true,
+    "research_configs": 3883,
+    "observations": 96,
+    "paper_accounts": 10,
+    "new_configs_and_report_mapping": 18,
+    "cost_scenes_return_global_minute_drawdown_NAV_hash_trips_fold_returns_matched": 54,
+    "finished_records_verified": 21,
+    "feed_numbers_precision_decimals": 6,
+    "regression_exclusive_end_fingerprint_present": true,
+    "protected_inputs_unchanged": true,
+    "note": "Generic feed leaves executions and per-fold daily-sampled drawdown null;the original full report retains both. No historical result rewritten."
+  },
+  "cleanup": {
+    "after_financial_verification_finish_and_actual_gates": true,
+    "removed_checkpoint_count": 54,
+    "removed_checkpoint_bytes": 3555877,
+    "removed_files": [
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.6_E0.2_1.json.gz",
+        "bytes": 67696
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.7_E0.3_1.json.gz",
+        "bytes": 82029
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.7_E0.2_1.json.gz",
+        "bytes": 68862
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.8_E0.2_3.json.gz",
+        "bytes": 60847
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.6_E0.1_2.json.gz",
+        "bytes": 56407
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.6_E0.2_3.json.gz",
+        "bytes": 67877
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.6_E0.3_2.json.gz",
+        "bytes": 87383
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.6_E0.1_3.json.gz",
+        "bytes": 56491
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.8_E0.3_1.json.gz",
+        "bytes": 69428
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.7_E0.1_1.json.gz",
+        "bytes": 55796
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.6_E0.2_2.json.gz",
+        "bytes": 70038
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.8_E0.1_1.json.gz",
+        "bytes": 49769
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.8_E0.3_2.json.gz",
+        "bytes": 69539
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.6_E0.2_1.json.gz",
+        "bytes": 69910
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.7_E0.3_2.json.gz",
+        "bytes": 79255
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.8_E0.1_3.json.gz",
+        "bytes": 54990
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.6_E0.3_2.json.gz",
+        "bytes": 84037
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.7_E0.2_3.json.gz",
+        "bytes": 69099
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.6_E0.1_1.json.gz",
+        "bytes": 56371
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.7_E0.1_1.json.gz",
+        "bytes": 49586
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.8_E0.2_1.json.gz",
+        "bytes": 62483
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.8_E0.2_2.json.gz",
+        "bytes": 60732
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.7_E0.3_3.json.gz",
+        "bytes": 79419
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.7_E0.2_3.json.gz",
+        "bytes": 66757
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.8_E0.2_3.json.gz",
+        "bytes": 62581
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.6_E0.3_3.json.gz",
+        "bytes": 87495
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.7_E0.1_2.json.gz",
+        "bytes": 55849
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.7_E0.1_2.json.gz",
+        "bytes": 49606
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.8_E0.1_2.json.gz",
+        "bytes": 49823
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.7_E0.2_1.json.gz",
+        "bytes": 66625
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.6_E0.2_2.json.gz",
+        "bytes": 67829
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.7_E0.1_3.json.gz",
+        "bytes": 55882
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.8_E0.3_3.json.gz",
+        "bytes": 70012
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.8_E0.3_2.json.gz",
+        "bytes": 69937
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.7_E0.2_2.json.gz",
+        "bytes": 68946
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.8_E0.3_1.json.gz",
+        "bytes": 69869
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.6_E0.1_1.json.gz",
+        "bytes": 49540
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.6_E0.1_3.json.gz",
+        "bytes": 49588
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.8_E0.2_1.json.gz",
+        "bytes": 60642
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.7_E0.3_1.json.gz",
+        "bytes": 79168
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.8_E0.3_3.json.gz",
+        "bytes": 69670
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.6_E0.3_1.json.gz",
+        "bytes": 87255
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.6_E0.2_3.json.gz",
+        "bytes": 70099
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.6_E0.3_1.json.gz",
+        "bytes": 83863
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.6_E0.3_3.json.gz",
+        "bytes": 84174
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.7_E0.2_2.json.gz",
+        "bytes": 66704
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.8_E0.1_1.json.gz",
+        "bytes": 54882
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.8_E0.2_2.json.gz",
+        "bytes": 62512
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.7_E0.1_3.json.gz",
+        "bytes": 49673
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.8_E0.1_3.json.gz",
+        "bytes": 49791
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.8_E0.1_2.json.gz",
+        "bytes": 54907
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_ETH_X0.6_E0.1_2.json.gz",
+        "bytes": 49548
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.7_E0.3_3.json.gz",
+        "bytes": 82415
+      },
+      {
+        "path": "research/experiments/20261022T203553Z/checkpoints/daily_ibs_reversal_BTC_X0.7_E0.3_2.json.gz",
+        "bytes": 82191
+      }
+    ],
+    "removed_bytecode": [],
+    "retained": "All completed report original bytes,specs,full cumulative SMA NAV,forward state,ledger,inputs,2original HTTP responses,hashes and replay code. Four large original Parquets stay in data/normalized with hashes and paths;no migration."
+  },
+  "final_gates": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "research/experiments/20261022T203553Z/forward.py",
+        "--reproduce"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-22T20:48:19.930841+00:00",
+      "finished_utc": "2026-10-22T20:48:20.668750+00:00"
+    },
+    {
+      "command": [
+        "python3",
+        "checks/strategy_registry.py"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-22T20:48:20.668923+00:00",
+      "finished_utc": "2026-10-22T20:48:21.911970+00:00"
+    },
+    {
+      "command": [
+        "python3",
+        "research/monitor/snapshot.py"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-22T20:48:21.912180+00:00",
+      "finished_utc": "2026-10-22T20:48:26.468337+00:00"
+    },
+    {
+      "command": [
+        "python3",
+        "checks/monitor_snapshot.py"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-22T20:48:26.468646+00:00",
+      "finished_utc": "2026-10-22T20:48:34.977538+00:00"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "started_utc": "2026-10-22T20:48:34.977751+00:00",
+      "finished_utc": "2026-10-22T20:48:35.141538+00:00"
+    }
+  ],
+  "failures_retained": [],
+  "reproduce_workdir": "/home/desktop/Documents/Codex/EquiTide",
+  "reproduce_commands": [
+    [
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "research/experiments/20261022T203553Z/signal_checks.py"
+    ],
+    [
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "research/experiments/20261022T203553Z/run.py",
+      "verify"
+    ],
+    [
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "research/experiments/20261022T203553Z/forward.py",
+      "--reproduce"
+    ],
+    [
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "research/experiments/20261022T203553Z/audit_forward.py"
+    ],
+    [
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "python3",
+      "checks/strategy_registry.py"
+    ],
+    [
+      "env",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "python3",
+      "checks/monitor_snapshot.py"
+    ]
+  ],
+  "reproduction_limit": "Read-only verification uses original data paths. Never rerun freeze/evaluate or reserve completed definitions. Forward replay has no HTTP or ledger writes.",
+  "artifacts": {
+    "audit.py": {
+      "sha256": "19636700f04b0b5f174475a89187054222c7fd79d3c64f8915b1db00a30286ec",
+      "bytes": 5451
+    },
+    "audit_forward.py": {
+      "sha256": "38f0805bd6c2a815fa7201b43ddafb527e588d41551a6e4cb51c90311c20ece8",
+      "bytes": 6649
+    },
+    "batch.json": {
+      "sha256": "4c2d39afd8eca796ebb182b2b2f25fa881f65cce7d5fc8166f4fbd94f1b53902",
+      "bytes": 5817
+    },
+    "checks.md": {
+      "sha256": "64e50f35d20ee7c8681bbdacc6591d87d5033bb922cd467417a3306927273ab4",
+      "bytes": 4448
+    },
+    "cleanup.json": {
+      "sha256": "74b494d0620d10f409985c499c34c9d6c4f9b33959ba1d4dac1842a96c888c4b",
+      "bytes": 8216
+    },
+    "context.json": {
+      "sha256": "cc1c16dd87045135b1f03afc8157ec73b047cf39e573081baf2bf0085d3d9e16",
+      "bytes": 100372
+    },
+    "cost_scenarios.csv": {
+      "sha256": "48fe27a00f43820221816a3ca37bae159d384461f12d75d5d59ba023b6b2cccf",
+      "bytes": 14390
+    },
+    "daily_equity.csv.gz": {
+      "sha256": "122726412992d5138ceb6defc15f591cebfbef42cde7282b8e84c76f18a29740",
+      "bytes": 121484
+    },
+    "decisions.csv.gz": {
+      "sha256": "9632b1fe25b45d2eaf3e24c3a5cb12514df950eb16eb1e425f87e43a416836cf",
+      "bytes": 2061347
+    },
+    "diff_check.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "evaluate.log": {
+      "sha256": "82199649e794b395acf1389139a944c22642fc07ec49a613072d4cfa211b25ba",
+      "bytes": 3622
+    },
+    "evaluate.py": {
+      "sha256": "a48e4bcd180cb6c6585d3c9f5203ef3e592db1aa991808606b4ee0b013f36d37",
+      "bytes": 19406
+    },
+    "exchange_filters.json": {
+      "sha256": "62fd0bbbd4226161cc7b34f0b1bcc9552eb7efc51d96c4d41d6afff04380c851",
+      "bytes": 2029
+    },
+    "exchange_info_raw.json": {
+      "sha256": "3339ea00f27b156399c6b0058b085e08d5f736062009fd7e9301a2f00cafb88c",
+      "bytes": 10273
+    },
+    "feed_verification.json": {
+      "sha256": "e52a1e4ea8b3e2aff3e5467eb6770a35aeab84f89cc1b5b572a6ebf6dd5ee78f",
+      "bytes": 547
+    },
+    "filter_check.json": {
+      "sha256": "fef1f4637d0092d30c54ded4a4de75a0c3a655ecfd53a99d14ac904c987f5589",
+      "bytes": 2049
+    },
+    "final_gates.json": {
+      "sha256": "cf019c31175c982b21a9eccf811f4cbc19aebe1f36144467e2960216c5f838cf",
+      "bytes": 1937
+    },
+    "finish.json": {
+      "sha256": "4f19438ca7f316c125f18982e28ef50c9b97d7958f98383ab45d9ce368c6ba6c",
+      "bytes": 13251
+    },
+    "fold_results.csv": {
+      "sha256": "d9b5c947ba1d8d9f7f4abe588e5145ae747c3126349cfecddc49c79c727dcbcc",
+      "bytes": 104030
+    },
+    "forward.log": {
+      "sha256": "eb6069d212f9c65e3fea01315fc70f783174dd464b7d26a434b6639a460e9f94",
+      "bytes": 280
+    },
+    "forward.py": {
+      "sha256": "c9107273bbfb7d2d76224329fc2b5ba5feb53eb0a78a372147283aa29a6ea0f5",
+      "bytes": 8737
+    },
+    "forward_audit.log": {
+      "sha256": "3d145444c229f64926f58b215896162c0b72a09e8d1b523b4675d89101684179",
+      "bytes": 454
+    },
+    "forward_batch.json": {
+      "sha256": "1eceaa23d6ec334568db15112ffb140ff021163d79b0f3134ce0bf992ea15048",
+      "bytes": 772
+    },
+    "forward_commands.json": {
+      "sha256": "f2435a23e8c98898edba34124c205803123fd27f5babfd96ac6e0e2e42de8e86",
+      "bytes": 1471
+    },
+    "forward_finish.json": {
+      "sha256": "6f99c4f802809ebb814c85c777e8690b62a4b51980d02d82b656a629758452e0",
+      "bytes": 2001
+    },
+    "forward_inputs.json.gz": {
+      "sha256": "8f746becaae995ddb192cf742c7e31efdde5d90da49d10c86bf12c000d28e6b3",
+      "bytes": 12108
+    },
+    "forward_replay.log": {
+      "sha256": "cf86c813e07605a138c57cb2063b23796b3e9b8717d552e9f7cff7b7fc6e7b01",
+      "bytes": 131
+    },
+    "forward_report.json": {
+      "sha256": "024542979f2486794312deccfbd1d02de5c3c00c5bd82ab7886aac6dec1b735b",
+      "bytes": 5045776
+    },
+    "forward_reserve.json": {
+      "sha256": "d7c22aa0502be770d568acddf9e5093ae0a189faac37e6ad8505b7fa5f70953b",
+      "bytes": 1216
+    },
+    "forward_response_BTC_1m.json.gz": {
+      "sha256": "e19aa10a0da533b7148c753b39f33d04391d51c1d329544454c7a9aa6fa392b0",
+      "bytes": 6212
+    },
+    "forward_response_ETH_1m.json.gz": {
+      "sha256": "6f2a516f569b8f0675b4b171484f9f4af0ad4eeaa1f00708e108830ce3673581",
+      "bytes": 5938
+    },
+    "forward_result.md": {
+      "sha256": "399be579b40318b8edfe2ba8fba15a084bc530ed8bbe2dbaebabfc08c3fd5578",
+      "bytes": 2445
+    },
+    "forward_resume_plan.json": {
+      "sha256": "a6ec7e934ffe3d0c326576adeea45469a417fdf6a552b338253a23b92a02c550",
+      "bytes": 1241
+    },
+    "forward_state.json": {
+      "sha256": "fa07448f7c0a6728b6055e84784b911c5ffc0ed118cd1dc3bfab125d92b0a9f7",
+      "bytes": 1741
+    },
+    "forward_verification.json": {
+      "sha256": "a7e0e1922f44a5e7f8b5c33cdc0468adf0d833f170358bfeadf1afd0df6e6a5b",
+      "bytes": 482
+    },
+    "initial_commands.json": {
+      "sha256": "eef00eba04a998b7622020244de86b4f1b0eff5ab048bbd781b2c43d187108fa",
+      "bytes": 6141
+    },
+    "monitor_check_final.log": {
+      "sha256": "1d6775e1bd3f23b1adbdbbc57e14c780cc8e7552b0a5784be97fef7f3ac007ac",
+      "bytes": 117
+    },
+    "network_events.json": {
+      "sha256": "d3980bbe9205e4c3cadc1b3fa8495aad442a73a038553024cbc699278afe34b2",
+      "bytes": 209
+    },
+    "path_equivalence.json": {
+      "sha256": "8c4f28096908479aebc47bac07549060bc5e3db8dc3c70d69ea142a1323f7651",
+      "bytes": 7125
+    },
+    "plan.json": {
+      "sha256": "12357dca6c9d99e55f615f5110fbaac635e8d780b2254f28281464a6a915b696",
+      "bytes": 7730
+    },
+    "registry_gate.log": {
+      "sha256": "e1202339f70b645c4e31e8a290019b5b8c278abd19f13399198224dfcfed101a",
+      "bytes": 115
+    },
+    "report.json": {
+      "sha256": "ffcab8d34fbb50293152de15e64607f1edc11abc01a76a5ac7925bd2b02fac3d",
+      "bytes": 441979
+    },
+    "research_commands.json": {
+      "sha256": "7d85c3d61a3a9109d19bb9fa583201362e4a91655b70cf70257523ed7db11f21",
+      "bytes": 6825
+    },
+    "reserve.json": {
+      "sha256": "c8765e2eb846908446777774bca615c724507a85b32907e1db53e5121ab14d2e",
+      "bytes": 5367
+    },
+    "reserve.log": {
+      "sha256": "af9aef43d45096d8dc7f62573798bd93165c0f6a98d985d693b4ea58b3e9ba26",
+      "bytes": 4894
+    },
+    "result.md": {
+      "sha256": "101636ff99b6b7007afb63a42a4c8417cbe47596cecbe06f41f22c7cc2dfbd8a",
+      "bytes": 7831
+    },
+    "run.py": {
+      "sha256": "6b70bd2d829e28dab65de5d1953b36699412ca9e9a672f41a3555de03772e836",
+      "bytes": 17998
+    },
+    "sensitivity.csv": {
+      "sha256": "e275a3467c4fc20246246dde763cd38532d42871f17257c7d4624e662b5672fc",
+      "bytes": 11325
+    },
+    "sensitivity_surface.png": {
+      "sha256": "477c968cef303c7b32e43aef5204ec0d54ca8b613e112ca0104a9e4f78cc250a",
+      "bytes": 65771
+    },
+    "signal_checks.log": {
+      "sha256": "5a6edf5b6b0f5c7ef01d7ff98e92a2058ff0d24a9366384798727a5d5c92051e",
+      "bytes": 138
+    },
+    "signal_checks.py": {
+      "sha256": "16983e75d165e751c2693250f5770825b34ff59bf565f3c03423813ac706ca11",
+      "bytes": 1907
+    },
+    "snapshot.log": {
+      "sha256": "3bb6d679feceb974fe611740a5c5d9367c34eac5a400fc8c203dc7e873b61ff6",
+      "bytes": 188
+    },
+    "spec.json": {
+      "sha256": "32dec3209d4f2556cd73a649a46f5ff20f7f3b65e6278da064891bedcd4e84a5",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_BTC_X0.6_E0.1.json": {
+      "sha256": "4a4f3a7f406dcdb75da268848dcabe0d3c4e342cb0af085a958a8e0295d1e1c6",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_BTC_X0.6_E0.2.json": {
+      "sha256": "0cafbc750a5f2b6a3e7a7425dd97b814283c26d10498abfb9a58d6bd7f4b4f48",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_BTC_X0.6_E0.3.json": {
+      "sha256": "bd2bd13c4b5164ad34328c89f57a67ee7a0965d50da68f20cc97faaec5ac7370",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_BTC_X0.7_E0.1.json": {
+      "sha256": "fc9570814e2ec8e0bc9b66a13aeafaacd45286a223e81e32ac992c533b134f63",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_BTC_X0.7_E0.2.json": {
+      "sha256": "32dec3209d4f2556cd73a649a46f5ff20f7f3b65e6278da064891bedcd4e84a5",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_BTC_X0.7_E0.3.json": {
+      "sha256": "efa37853730b509ac029ded3b075bbfb76eb9c5bd3a102852356b41f2b66e88e",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_BTC_X0.8_E0.1.json": {
+      "sha256": "92156e5d84ddc752b1cfc8e5eaa07b5caff0017b29bbe1f3efc0da77d637208e",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_BTC_X0.8_E0.2.json": {
+      "sha256": "288ab20af63a5c15133cdfec5f9c118c4bb471ae027b0102d5eba97e988abf10",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_BTC_X0.8_E0.3.json": {
+      "sha256": "4dff38a931657a103d82c312303349b17532051b6662c140576a4b703892416d",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_ETH_X0.6_E0.1.json": {
+      "sha256": "6511cbe445926890c5d4a4de8f2de4ca133d406aae915e4cd5a829cd13666067",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_ETH_X0.6_E0.2.json": {
+      "sha256": "db4c9e7ed55f1d1e1d9711767217a2e13a6c05a1e6e2c8dd872660eaa22f2a76",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_ETH_X0.6_E0.3.json": {
+      "sha256": "e5603ef51bd50fddbb2bc8d76d51bacb477ed7e295bd70a3e56415b7e8ef2b56",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_ETH_X0.7_E0.1.json": {
+      "sha256": "0308889a1a50d2b15996d3b53d9c11e85c763d1ed881483d6599dfcb8da5f3c3",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_ETH_X0.7_E0.2.json": {
+      "sha256": "1191755d5f25c1259279cf286485807ae91cc37de96c1d96e222c256947eb627",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_ETH_X0.7_E0.3.json": {
+      "sha256": "66c974071a26dc56a2a8e6ab7f7f68276ea061ea6fe3e64475c210ec0b0be619",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_ETH_X0.8_E0.1.json": {
+      "sha256": "b4a7bc02e9df15f0cbae6e9c9c241c959592f2ce7dfca8a2dd47050af5f1edeb",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_ETH_X0.8_E0.2.json": {
+      "sha256": "fa5fb123dff7afb771042f4827233b63f2e63ecfae43f861b54a9e72ad6fbf98",
+      "bytes": 3361
+    },
+    "specs/daily_ibs_reversal_ETH_X0.8_E0.3.json": {
+      "sha256": "3e809be0cff84ea5e3915684bc1aaee0c94feb3655175112a2cf892496f0b8e7",
+      "bytes": 3361
+    },
+    "specs/forward_snapshot_BTC.json": {
+      "sha256": "cda412cf6c91f2438351069b7e4585547683cd0176535730bf3b6f21dc78017a",
+      "bytes": 1921
+    },
+    "specs/forward_snapshot_ETH.json": {
+      "sha256": "5c7a141d913c10de413aa0e746fd5acd2bb3c0c54dcb321158f1790c796c0273",
+      "bytes": 1920
+    },
+    "specs/forward_snapshot_combo.json": {
+      "sha256": "41ca140e799962dfb6890ca7e21d304392b21c55632ebc3176fc97cda4f9bf53",
+      "bytes": 1135
+    },
+    "summarize.log": {
+      "sha256": "bf9ac1cfc4bd92020b513eec365f1e9f45ffc1f3e951cd409c2eeca3beaf7ad7",
+      "bytes": 1139
+    },
+    "summarize.py": {
+      "sha256": "7aed4a681047a27414349267c90853ebb83b033567f22173dffadcc694536e30",
+      "bytes": 11250
+    },
+    "trades.csv.gz": {
+      "sha256": "6b7af0b6fc7d1855f9520a543fb9113f484986bf2754e79ce488f41a89e4c007",
+      "bytes": 986221
+    },
+    "verification.json": {
+      "sha256": "2d6a68ecbcc95944bcbda1d01196f0012624887dc8fef1171fb085cceb802747",
+      "bytes": 822
+    },
+    "verify.log": {
+      "sha256": "aa911257ddff8b623f15956afd4abcd28c9f103c81d1593fc8e9f3da211c0e3a",
+      "bytes": 796
+    }
+  },
+  "IBS_input_encoding": "Daily Float64 HLC decimal-string encoding explicit. Exact Fraction(C-L)/(H-L),zero-range0.5;exact threshold comparisons,Decimal60display. Independent scaled-integer signed-location transform and canonical ratioSHA. OriginalaccountingDecimal28 unchanged."
+}

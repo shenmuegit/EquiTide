@@ -1,0 +1,137 @@
+{
+  "round": "20261022T203553Z",
+  "frozen_at_utc": "2026-10-22T20:42:51.676479Z",
+  "direction": "Daily Internal Bar Strength reversal,low-position entry/high-position exit,unlevered spot long/cash.",
+  "hypothesis": "Test whether a daily close near the low predicts enough subsequent rebound to cover trading costs,without a slow-trend filter. IBS is same-day price-location,not aggressor flow;it ignores prior-close gaps and depends on fixed UTC day boundaries.",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/QuantConnect/Lean/master/Indicators/InternalBarStrength.cs",
+      "accessed_utc": "2026-10-22",
+      "version_observed": "LEAN master/InternalBarStrength.cs as read on2026-10-22",
+      "scope": "Primary implementation defines(C-L)/(H-L),flat-range0.5and1bar readiness. Our entry/exit grid and long/cash rule are independently frozen;no library install,copied source or profitability endorsement."
+    },
+    {
+      "url": "https://www.quantconnect.com/docs/v2/writing-algorithms/indicators/supported-indicators/internal-bar-strength",
+      "accessed_utc": "2026-10-22",
+      "scope": "Official indicator documentation;our exact Fraction computation over encoded bars is not a decimal-library bitwise-equivalence claim."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/products/spot/filters",
+      "accessed_utc": "2026-10-22",
+      "scope": "Official spot filter definitions;historical filters unavailable."
+    }
+  ],
+  "rule": {
+    "signal": "Aggregate UTC daily high,low andlast close over1440closed minutes. IBS=(C-L)/(H-L);ifH=L,set0.5. One completed bar,no smoothing or prior-close gap term. Exact Fraction from dailyFloat64decimal strings,no threshold rounding;Decimal60display,canonical ratioSHA. AccountingDecimal28 unchanged.",
+    "entry": "When flat,enter iff IBS<entry_ibs_threshold,strict;entry equality remains cash,no prior-cross requirement.",
+    "exit": "When long,exit iff IBS>exit_ibs_threshold,strict;equality keeps long. No trend filter,RSI,short,hold cap or same-decision re-entry;costed terminal liquidation.",
+    "execution": "Signal becomes available at the signal candle close; if target changes, simulate an order at the next UTC day 00:01 one-minute open (60-second delay). Rejected orders are not backfilled; the same desired state may be tried on a later new daily decision. At the frozen OOS terminal timestamp, liquidate any open lot with costs.",
+    "account": "Independent 2,000 USDT single-asset cash account for every asset×parameter combination; all initial capital assigned to the specified asset sleeve, no leverage, borrowing, shorting, transfer or cash interest."
+  },
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "candidate_configurations": 18,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "exit_ibs_threshold": [
+      0.6,
+      0.7,
+      0.8
+    ],
+    "entry_ibs_threshold": [
+      0.1,
+      0.2,
+      0.3
+    ],
+    "indicator_period_days": 1,
+    "zero_range_IBS": 0.5,
+    "arithmetic": "exact Fraction from daily Float64 decimal-string encoding;Decimal60 display only"
+  },
+  "time_boundaries": {
+    "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "oos_days": 360,
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward": "12 consecutive, non-overlapping 30-day evaluation windows; account remains continuous across windows; no fitting, parameter selection or fold reset.",
+    "history_note": "The 2025–2026 OOS window has been reused extensively in this repository and is not an untouched final holdout."
+  },
+  "validation": {
+    "parameter_sensitivity_axes": [
+      "exit_ibs_threshold",
+      "entry_ibs_threshold"
+    ],
+    "neighborhood": "Same asset, adjacent lookback index and adjacent hurdle index in the frozen 3×3 grid; 3×3 neighborhood including center.",
+    "round_trip_minimum": 8,
+    "positive_1x_folds_minimum": 8,
+    "all_cost_scenarios_positive": true,
+    "max_3x_minute_sample_drawdown_pct": 25,
+    "minimum_3x_positive_neighborhood_fraction": 0.6,
+    "gross_reference_pnl_to_cost_minimum": 2.5,
+    "capacity_or_filter_rejections": 0,
+    "terminal_flat": true,
+    "multiple_testing": "No DSR/PBO claim: repeated reused-OOS history and many prior strategy trials create material selection bias.",
+    "purging": "No fitted model or future-return labels;label purge inapplicable. IBS uses only the completed signal-day HLC,first valid index0,no recursion or seed.365day context supports lagged cost inputs,3day initial gap,12continuous folds. No future padding,OOS/fold reset or parameter selection.",
+    "continuous_drawdown": "Initial capital plus all OOS minute-close and immediate post-fill marks; no fold reset or intraminute extrema."
+  },
+  "costs": {
+    "per_side_fee": 0.001,
+    "estimated_half_spread_per_side": 0.0001,
+    "estimated_slippage_per_side": 0.0002,
+    "impact": "0.5 × sample stdev of previous 20 complete UTC daily log returns × sqrt(order quote budget / previous 20 complete daily quote ADV)",
+    "maximum_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "filters_source": "Unchanged 2026-10-14 frozen public exchangeInfo proxy, checked against the current public response in filter_check.json. Reuse the original hash so retrieval timestamps cannot manufacture novelty. Historical L2 and historical filters are unavailable."
+  },
+  "data": {
+    "format": "Archived Binance spot 1m OHLCV; daily closes and quote ADV are aggregated from fully closed UTC days.",
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 30555668,
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6"
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 30415140,
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16"
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 27110682,
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57"
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 26332430,
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584"
+        }
+      ]
+    }
+  },
+  "prior_results": {
+    "source_report": "research/experiments/20261022T183553Z/report.json",
+    "source_sha256": "aa277cd8181636e9269f393bb207a616c91053791d955e45354761953da84628",
+    "initial_16_missing_actual_results": 0,
+    "canonical_prior_research_definitions": 4116,
+    "last_batch": "18 WilderRSI2/slowSMA/fastSMA candidates rejected;5/4/2positive bycost,all failed fold breadth/neighborhood.",
+    "distinction": "One completed daily HLC position,no rolling RSI/volume weighting or slow trend;low-entry and high-exit reversal differs from prior CMF strength momentum and longer-window stochastic rules. Full-registry search found no IBS/internalbarstrength definition."
+  },
+  "trigger_utc": "2026-10-22T20:35:53.193Z",
+  "source_access_failures": [],
+  "account_scope": "Offline research only. Read existing paper10 and delayed SMA-shadow accounts without reset,replacement,new paper observations or real orders."
+}
