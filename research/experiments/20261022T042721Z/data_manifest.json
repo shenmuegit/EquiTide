@@ -1,0 +1,573 @@
+{
+  "round": "20261022T042721Z",
+  "recorded_at_utc": "2026-10-22T04:47:06.317745+00:00",
+  "working_directory": "/home/desktop/Documents/Codex/EquiTide",
+  "branch": "codex/strategy-research",
+  "base_commit": "57aa8f25849bad87caddef7c1c92e23b0cad88b5",
+  "frozen_plan_sha256": "0824df58b7f0c92fe18975e021d66b213570761feccf58926932e4fd5fecc346",
+  "finished_report_sha256": "354ef7139a328ffb0d290e24939d6ce455cfccd8886bd7ae0ad5275057a73a6d",
+  "finished_forward_report_sha256": "0cb57ddc16a80be81d48839dbc4672c7910cbf7ab3941f02941b5dd13a2f6c36",
+  "frozen_original_SMA_plan": {
+    "path": "research/experiments/20261001T113625Z/forward_plan.json",
+    "sha256": "2798390f02bd43059097cf16f9b8b1f30db4b96776431c18684b540130f86d81"
+  },
+  "real_market_inputs": {
+    "assets": {
+      "BTC": {
+        "source_files": [
+          {
+            "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+            "bytes": 30555668,
+            "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6",
+            "minute_bars": 525600,
+            "first_open_ns": 1726444800000000000,
+            "last_open_ns": 1757980740000000000
+          },
+          {
+            "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+            "bytes": 30415140,
+            "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16",
+            "minute_bars": 525600,
+            "first_open_ns": 1757980800000000000,
+            "last_open_ns": 1789516740000000000
+          }
+        ],
+        "minute_bars": 1051200,
+        "daily_bars": 730,
+        "daily_close_sha256_f64le": "dda99992578d206c35e19e48b0ae1f27d59461b967dc470781d6ddf62f54060a"
+      },
+      "ETH": {
+        "source_files": [
+          {
+            "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+            "bytes": 27110682,
+            "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57",
+            "minute_bars": 525600,
+            "first_open_ns": 1726444800000000000,
+            "last_open_ns": 1757980740000000000
+          },
+          {
+            "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+            "bytes": 26332430,
+            "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584",
+            "minute_bars": 525600,
+            "first_open_ns": 1757980800000000000,
+            "last_open_ns": 1789516740000000000
+          }
+        ],
+        "minute_bars": 1051200,
+        "daily_bars": 730,
+        "daily_close_sha256_f64le": "637309dd02557fbf31d6a4fd58c3e04681dfca44ad5b22e16182fbd2717adcd4"
+      }
+    }
+  },
+  "large_market_data_policy": "Original Parquet files remain in ignored data/normalized with reproducible relative paths and hashes. No large market data is staged.",
+  "forward_source_continuity": {
+    "frozen_at_utc": "2026-10-22T04:35:11.077252+00:00",
+    "forward_resume": {
+      "source_report": "research/experiments/20261022T022521Z/forward_report.json",
+      "report_sha256": "6b4af44c42b8dc21698109369e2605d1723898b575a279ee28c3057836fb1a75",
+      "source_state": "research/experiments/20261022T022521Z/forward_state.json",
+      "state_sha256": "cc6f5468c8357fe4742ba37db7b6dbec91f53ef0bf0d2c8277a33295d8243e46",
+      "resume_utc": "2026-10-22T02:00:00Z",
+      "cutoff_utc": "2026-10-22T04:00:00Z",
+      "new_minutes": 120,
+      "prior_NAV_points": 28941,
+      "total_NAV_points": 29061,
+      "cumulative_minutes": 29039
+    },
+    "scope": "Original frozenSMA65±1%,raw75/25;append120closedminute marks only. No daily decision/fill/reset/transfers/rebalancing/forced exit. Next daily event2026-10-23UTC00:01, terminal2027-03-31 unchanged. Delayed shadow stays separate from paper10 real-quote accounts.",
+    "frozen_original_plan": "research/experiments/20261001T113625Z/forward_plan.json",
+    "frozen_original_plan_sha256": "2798390f02bd43059097cf16f9b8b1f30db4b96776431c18684b540130f86d81",
+    "failure_criteria": "Stop on source SHA, raw overlap, closed-time continuity, NAV prefix, cash/units/desired/cost/trade mismatch; never synthesize prices."
+  },
+  "forward_previous_inputs": {
+    "path": "research/experiments/20261022T022521Z/forward_inputs.json.gz",
+    "bytes": 10164,
+    "sha256": "7b3c7a33aac1636da383d3844d162e23f01047e9078857a6bc2ae101da8432b2",
+    "equals_original_source_report_input_sha256": true
+  },
+  "forward_closed_minute_sources": [
+    {
+      "asset": "BTC",
+      "interval": "1m",
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=BTCUSDT&interval=1m&startTime=1792634340000&endTime=1792641599999&limit=1000",
+      "status": 200,
+      "retrieved_utc": "2026-10-22T04:36:07.061389+00:00",
+      "raw_response_sha256": "7dd268372bc929dcf26781e17e36b6a29b3521213e3fe8f70cd5c6d97d26f092",
+      "raw_gzip_path": "research/experiments/20261022T042721Z/forward_response_BTC_1m.json.gz",
+      "raw_gzip_sha256": "ffc0e0cd5ebeffaa482807dce512ef4ae2b884eca5b627443a8a6bf2708825e0",
+      "bars": 121,
+      "timestamp_unit": "milliseconds",
+      "closed_by_fixed_cutoff": true,
+      "delayed_shadow_reconstruction": true
+    },
+    {
+      "asset": "ETH",
+      "interval": "1m",
+      "url": "https://data-api.binance.vision/api/v3/klines?symbol=ETHUSDT&interval=1m&startTime=1792634340000&endTime=1792641599999&limit=1000",
+      "status": 200,
+      "retrieved_utc": "2026-10-22T04:36:14.225848+00:00",
+      "raw_response_sha256": "6fb1a3aec0d274ccc39a9afc8ec0613721ee867055f3da6cb471570dc3c46ec2",
+      "raw_gzip_path": "research/experiments/20261022T042721Z/forward_response_ETH_1m.json.gz",
+      "raw_gzip_sha256": "baf9d51f86566d430fa843563aee8711cdaabdb9c51ef5806467383a3a7c75bc",
+      "bars": 121,
+      "timestamp_unit": "milliseconds",
+      "closed_by_fixed_cutoff": true,
+      "delayed_shadow_reconstruction": true
+    }
+  ],
+  "forward_combined_inputs": {
+    "path": "research/experiments/20261022T042721Z/forward_inputs.json.gz",
+    "bytes": 12347,
+    "sha256": "b67801c930213083c7a4a8e00bd6d931715b9660c3c53406edc60566bb425d23"
+  },
+  "registry": {
+    "path": "research/automation/registry.jsonl",
+    "main_sha256_before_reserve": "6fbece6717bb85255fb6410ce220409e00fe7b974249699a1f767fe88a3bd759",
+    "main_sha256_after_finish": "4a46c7ad7c221532f51efdfdd343d0baf340124e883eaf8908be750dfe6c1533",
+    "appended_events": 42,
+    "new_research_configurations": 18,
+    "new_continuous_SMA_observation_configs": 3,
+    "all_finish_result_available": true,
+    "all_finish_report_sha256_match_original_bytes": true
+  },
+  "history": {
+    "all_registry_events_read": 10614,
+    "registry_ids_before": 5203,
+    "canonical_prior_research_definitions": 3972,
+    "initial_16_missing_actual_results": 0,
+    "prior_conclusion_files_read": 140,
+    "full_context_path": "research/experiments/20261022T042721Z/context.json",
+    "history_is_reused_development_data": true
+  },
+  "runtime": {
+    "executable": "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+    "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+    "numpy": "2.3.5",
+    "polars": "1.44.2",
+    "matplotlib": "3.10.8",
+    "no_dependencies_installed": true
+  },
+  "code_and_frozen_source_sha256": {
+    "research/experiments/20261022T042721Z/run.py": "770f87eeedec51759769db9e833f947992a2765e51faad793c3c5b362e0b47cd",
+    "research/experiments/20261022T042721Z/evaluate.py": "d8f3be9966e570819ae185de6c4c36b8cc769958e5d5ced9afc1b5fbc64a4134",
+    "research/experiments/20261022T042721Z/audit.py": "1fd771e65274b955d6a363b345780061a54cd86e71ad2cb8d416b352025a2899",
+    "research/experiments/20261022T042721Z/signal_checks.py": "5c97043c864d8fd44d424deed3cfd778fa1db1364c80a8445099ea1b0e5a14f4",
+    "research/experiments/20261022T042721Z/summarize.py": "f8567e7929b7d818340a52bee401628675e3d13a0d2b941f9ad3d4bee52d2fef",
+    "research/experiments/20261022T042721Z/forward.py": "c9107273bbfb7d2d76224329fc2b5ba5feb53eb0a78a372147283aa29a6ea0f5",
+    "research/experiments/20261022T042721Z/audit_forward.py": "38f0805bd6c2a815fa7201b43ddafb527e588d41551a6e4cb51c90311c20ece8",
+    "research/experiments/20261014T125820Z/plan.json": "83c2ccb9a9af69d2c334c92c83da7018f37a68a24453f7ebfd03b15917107b2b",
+    "research/experiments/20261014T125820Z/specs/daily_roc_momentum_BTC_L7_H0.json": "a6a2105118e7a649d381c0c678e7aca2995c8112a720f7fa5039c4fa75c70c92",
+    "research/experiments/20261001T133655Z/kernel.py": "66b8788c5d45ca2e40b8b3412d7150bc10fc7d5def521a50911d0071c68e0df0",
+    "research/experiments/20261001T013355Z/evaluate.py": "9c11e327cc8965b0dbc99e533b92522ba7ab34b0e450675f32612c2ba2a11b09",
+    "research/experiments/20261022T022521Z/evaluate.py": "057e80b9616f3907266ff0ad8a86e507e57cd491b25db2ffb000adf78906bd40",
+    "research/experiments/20261022T022521Z/run.py": "6e067e79663a353b761be205f4f61ebc887826a77b48a4523e0124385910d006",
+    "research/experiments/20261022T022521Z/forward.py": "c9107273bbfb7d2d76224329fc2b5ba5feb53eb0a78a372147283aa29a6ea0f5",
+    "research/experiments/20261022T022521Z/audit_forward.py": "38f0805bd6c2a815fa7201b43ddafb527e588d41551a6e4cb51c90311c20ece8",
+    "research/experiments/20261022T002521Z/forward.py": "1ed470dcbbedc9ad77a2351c645baa8c888aed9b3cb7061eddbbe932f29b9635",
+    "research/automation/registry.py": "04d52db6029229680d2202caff3fea0dcc3528e0a9447e6be7ca9ab29930807b",
+    "research/automation/task.md": "46388e8aab81ddbb82fbb2bb7d6ccfea4640d9abfe42d93dc0b9dbee8c7c8ced",
+    "research/monitor/README.md": "fa26c3149b80a1e5af160ad570a3e50caf63824de70c44991fda16acbef07b98",
+    "research/monitor/snapshot.py": "a0221c8aadc02f74045ff39a978485ec87c298dad860468c39e8e9455b1b9c62",
+    "checks/strategy_registry.py": "2f967932dd81deb02ccbbf05fe0ae1d3e0c3ac050c03493eb34e3745891d1fe6",
+    "checks/monitor_snapshot.py": "c81beaf3b0787c84b86aafc5127c96cddb59849a477e0279fd9ad5ed8e8ae49b",
+    ".agents/skills/walk-forward-validation/SKILL.md": "4b291994d2e4d68a5821122c4fcc2cf8ea9996f87b11a44eef8461a8a890b32f",
+    ".agents/skills/ml4t-sensitivity-analysis/SKILL.md": "a90f8df8edc8555a7643b9dfc5354f784322d18c77bce7b11626003f689e2fb7",
+    ".agents/skills/ml4t-transaction-costs/SKILL.md": "d05ca6174949ff57f4bae3b99550a5a00c4a065c9946a9f1a34ca1898afe2c1c"
+  },
+  "benchmark_read_only": {
+    "path": "research/experiments/20261014T084051Z/report.json",
+    "sha256": "1d54cf6fa25bada7eb13d758a9d88beb6440d1198540840a017812658214ed15"
+  },
+  "protected_inputs_sha256": {
+    "research/paper10/plan.json": "383cbfe8544627e05ff498ae4f803dbc3ccfd24753311add9cba2f5aa064e34f",
+    "research/paper10/state.json": "9b10a30655b4d5a7034d270ab591361f8c0ada12f911f9fd255c2543fc38ab98",
+    "research/experiments/20261022T022521Z/forward_state.json": "cc6f5468c8357fe4742ba37db7b6dbec91f53ef0bf0d2c8277a33295d8243e46",
+    "research/experiments/20261022T022521Z/forward_report.json": "6b4af44c42b8dc21698109369e2605d1723898b575a279ee28c3057836fb1a75"
+  },
+  "shared_state_verification_scope": "All four current protected inputs equal pre-round hashes under held branch lock. Future replay checks within-call preservation for mutable paper10/state.json, with immutable source hashes still strict.",
+  "monitor_feeds": {
+    "research/monitor/latest.json": {
+      "bytes": 226015,
+      "sha256": "dfd454712c097c4c6438a3dceef65c6e8c098f054975f54c444900bfd5b3e39d"
+    },
+    "research/monitor/configs.json.gz": {
+      "bytes": 1124564,
+      "sha256": "45f04817d10ab34476f6339466cccc69a434fabecdff280e7ae39761769022f3"
+    }
+  },
+  "monitor_validation": {
+    "passed": true,
+    "research_configs": 3739,
+    "paper_accounts": 10,
+    "paper_observations": 88,
+    "new_configs_checked": 18,
+    "new_cost_scenes_checked": 54,
+    "fields_checked": [
+      "return_pct",
+      "global_minute_drawdown_pct",
+      "round_trips",
+      "fold_returns_pct",
+      "minute_NAV_hash",
+      "OOS_boundaries",
+      "positive_1x_folds"
+    ],
+    "configs_uncompressed_sha256": "d52ef1014a9a146973b463f84a2638615906165e9b21880837b4b286ac19df02",
+    "configs_gzip_sha256": "45f04817d10ab34476f6339466cccc69a434fabecdff280e7ae39761769022f3",
+    "latest_sha256": "dfd454712c097c4c6438a3dceef65c6e8c098f054975f54c444900bfd5b3e39d",
+    "exclusive_end_regression_fingerprint_preserved": "537f5a8fc4b6e58511fabbde15096659e072be117d9a365d3827ac178134c70e",
+    "all_21_finished_report_original_bytes_match_registry": true,
+    "protected_inputs_equal_pre_round_hashes": true
+  },
+  "cleanup": {
+    "verified_before_cleanup": [
+      "research_exact_replay",
+      "independent_variable_weight_KAMA_states",
+      "full_minute_drawdown",
+      "SMA_continuity",
+      "registry_gate_exit0",
+      "snapshot_and_monitor_gate_exit0",
+      "all_21_registry_report_sha256",
+      "new_dashboard_metrics"
+    ],
+    "removed_rebuildable_checkpoints": 54,
+    "removed_local_bytecode_files": 0,
+    "kept_original_finished_reports": true,
+    "kept_full_forward_NAV_prefix_and_state": true,
+    "kept_raw_responses_and_inputs": true,
+    "large_market_data": "Existing data/normalized Parquet files unchanged and not staged; source paths and hashes retained.",
+    "no_result_format_migration": true
+  },
+  "final_gates": {
+    "path": "research/experiments/20261022T042721Z/final_gates.json",
+    "actual_commands": 5,
+    "all_exit_zero": true,
+    "all_stdout_stderr_match_saved_logs": true,
+    "current_round_command_failures": 0
+  },
+  "reproduce_workdir": "/home/desktop/Documents/Codex/EquiTide",
+  "reproduce_commands": [
+    "PYTHONDONTWRITEBYTECODE=1 /home/desktop/.local/share/equitide-research/worktree/.venv/bin/python research/experiments/20261022T042721Z/signal_checks.py",
+    "PYTHONDONTWRITEBYTECODE=1 /home/desktop/.local/share/equitide-research/worktree/.venv/bin/python research/experiments/20261022T042721Z/run.py verify",
+    "PYTHONDONTWRITEBYTECODE=1 /home/desktop/.local/share/equitide-research/worktree/.venv/bin/python research/experiments/20261022T042721Z/forward.py --reproduce",
+    "PYTHONDONTWRITEBYTECODE=1 /home/desktop/.local/share/equitide-research/worktree/.venv/bin/python research/experiments/20261022T042721Z/audit_forward.py",
+    "PYTHONDONTWRITEBYTECODE=1 python3 checks/strategy_registry.py",
+    "PYTHONDONTWRITEBYTECODE=1 python3 checks/monitor_snapshot.py"
+  ],
+  "reproduction_limit": "Replay only completed results without registry/account/network mutation. Do not rerun freeze/evaluate for finished configurations. Continue SMA from this exact source state; do not reset or repeat completed Oct22 daily decisions; use frozen daily handler at Oct23 UTC00:01.",
+  "artifacts": {
+    "audit.py": {
+      "bytes": 5506,
+      "sha256": "1fd771e65274b955d6a363b345780061a54cd86e71ad2cb8d416b352025a2899"
+    },
+    "audit_forward.py": {
+      "bytes": 6649,
+      "sha256": "38f0805bd6c2a815fa7201b43ddafb527e588d41551a6e4cb51c90311c20ece8"
+    },
+    "batch.json": {
+      "bytes": 5457,
+      "sha256": "2f449d577c792703b01a6d0a0cdf9a4d382e6e30d306090bdb9eeeaa9cea8de1"
+    },
+    "checks.md": {
+      "bytes": 4635,
+      "sha256": "6c251534883f005d2e2c81c706ee29034bbd10027ee6588b92b84f615e53e3ff"
+    },
+    "cleanup.json": {
+      "bytes": 670,
+      "sha256": "eb9b640d6103aac90a327949b53feb26f5aa3c29742b4ae42e899670d3f344e6"
+    },
+    "context.json": {
+      "bytes": 95120,
+      "sha256": "c4467f1a48ad98174dc21a6d9a9385a7386792fa4b3c9bd11cd94912f51fc196"
+    },
+    "cost_scenarios.csv": {
+      "bytes": 13724,
+      "sha256": "3f8f6f4deb7f73e7829d7238fecfb8a43964522e0c57899052fd1ef17546f78b"
+    },
+    "daily_equity.csv.gz": {
+      "bytes": 118934,
+      "sha256": "584a5082e772a4ec9215f54bb37ba0a527fdfa6c2bb0c870f387cd1e507c1751"
+    },
+    "decisions.csv.gz": {
+      "bytes": 1517893,
+      "sha256": "c67714e1312d5bfec66a08e4ddacba585f0ab6d25574620e0208b95fed28cd02"
+    },
+    "diff_check.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "evaluate.log": {
+      "bytes": 2927,
+      "sha256": "9334d9d0cc36cdf04a1e6d91cc7e2f1c33f41966da391b8dc9f8e89bab3c7d07"
+    },
+    "evaluate.py": {
+      "bytes": 18036,
+      "sha256": "d8f3be9966e570819ae185de6c4c36b8cc769958e5d5ced9afc1b5fbc64a4134"
+    },
+    "exchange_filters.json": {
+      "bytes": 2029,
+      "sha256": "62fd0bbbd4226161cc7b34f0b1bcc9552eb7efc51d96c4d41d6afff04380c851"
+    },
+    "exchange_info_raw.json": {
+      "bytes": 10273,
+      "sha256": "3339ea00f27b156399c6b0058b085e08d5f736062009fd7e9301a2f00cafb88c"
+    },
+    "feed_verification.json": {
+      "bytes": 870,
+      "sha256": "d4b06a8f24091caff5f14dc02294dcc55da7f1f0de82ece8a65a34d39b9d9ecc"
+    },
+    "filter_check.json": {
+      "bytes": 2049,
+      "sha256": "da994a7e0a1b117c73ade3f7ba7d0be347ce4ff2415ef4ee67fc56a6486fc19b"
+    },
+    "final_gates.json": {
+      "bytes": 1967,
+      "sha256": "65ef02455c27aeaed2cfd619130fb26677a4f269e2ef42f4e1115549841b28a6"
+    },
+    "finish.json": {
+      "bytes": 9159,
+      "sha256": "f9c46c83630f06b4416a83b017edc53f4f35f8ac473b023439ecf9b7ca19a534"
+    },
+    "fold_results.csv": {
+      "bytes": 96402,
+      "sha256": "d7175dd31d52a9476073a7ff35b0979fa0b52afaaa7b2f7c485b5101fdba4b80"
+    },
+    "forward.log": {
+      "bytes": 280,
+      "sha256": "b7a2582d30c1a2316a199f2af5bd98c1928879d2998f34346ded90837facabb5"
+    },
+    "forward.py": {
+      "bytes": 8737,
+      "sha256": "c9107273bbfb7d2d76224329fc2b5ba5feb53eb0a78a372147283aa29a6ea0f5"
+    },
+    "forward_audit.log": {
+      "bytes": 454,
+      "sha256": "81f3ac3428a0727d4f153d470839e549881725f298a171874c82d5a004c79833"
+    },
+    "forward_batch.json": {
+      "bytes": 772,
+      "sha256": "825bd742d0df0ab963b623eb28134681f212ef7fb4eb6312dada14857816ae80"
+    },
+    "forward_commands.json": {
+      "bytes": 1483,
+      "sha256": "153fdaee91e130123886124bd5d129304ea01e8eedf49cc00b19b2068b751142"
+    },
+    "forward_finish.json": {
+      "bytes": 1543,
+      "sha256": "797c1a92412519116800c6a249c664bb728295d968df2c90ea382d65c2859af0"
+    },
+    "forward_inputs.json.gz": {
+      "bytes": 12347,
+      "sha256": "b67801c930213083c7a4a8e00bd6d931715b9660c3c53406edc60566bb425d23"
+    },
+    "forward_replay.log": {
+      "bytes": 131,
+      "sha256": "4e58ffd4fccc2f8b04e4ecf715db5a7cd153b86fbc7d0dfcef98632d1ae20698"
+    },
+    "forward_report.json": {
+      "bytes": 4886025,
+      "sha256": "0cb57ddc16a80be81d48839dbc4672c7910cbf7ab3941f02941b5dd13a2f6c36"
+    },
+    "forward_reserve.json": {
+      "bytes": 1291,
+      "sha256": "fa1fe9fadcefb4aa5bd0b0398472e4e04648ad1486c1df8a1c863da14fb58c0e"
+    },
+    "forward_response_BTC_1m.json.gz": {
+      "bytes": 6491,
+      "sha256": "ffc0e0cd5ebeffaa482807dce512ef4ae2b884eca5b627443a8a6bf2708825e0"
+    },
+    "forward_response_ETH_1m.json.gz": {
+      "bytes": 5924,
+      "sha256": "baf9d51f86566d430fa843563aee8711cdaabdb9c51ef5806467383a3a7c75bc"
+    },
+    "forward_result.md": {
+      "bytes": 2819,
+      "sha256": "23c716aa81a31ce05f3cefdd43bfdb2dc7cbd1bd64aa1335d6692c4370ed65fb"
+    },
+    "forward_resume_plan.json": {
+      "bytes": 1247,
+      "sha256": "54326f80a37bae075ec4f845aaed6df59c99534cad563eff0dd4e860f51e53bf"
+    },
+    "forward_state.json": {
+      "bytes": 1741,
+      "sha256": "0501e18455341259fea8ead871a1d15373653dc94ad9fd4ed1608bb5514eb631"
+    },
+    "forward_verification.json": {
+      "bytes": 482,
+      "sha256": "1abb5c982b6c0eb6de9aef53502417073f78aaf19ad9f85fc26b7334dbbfe558"
+    },
+    "initial_commands.json": {
+      "bytes": 5736,
+      "sha256": "b4741891982ba7d0f08481ebec3eb4d3f0d3fa56f0577ccae3613225a2d2d14a"
+    },
+    "monitor_check_final.log": {
+      "bytes": 117,
+      "sha256": "a04be25fc3a44bc803c1369b51b4c56b9d568c6efaab090d4208992d0bc8e833"
+    },
+    "path_equivalence.json": {
+      "bytes": 251,
+      "sha256": "c170541f76139dc79802de60a182ae6441786f6f82e332ca3153ff5be936362c"
+    },
+    "plan.json": {
+      "bytes": 7401,
+      "sha256": "0824df58b7f0c92fe18975e021d66b213570761feccf58926932e4fd5fecc346"
+    },
+    "registry_gate.log": {
+      "bytes": 115,
+      "sha256": "e1202339f70b645c4e31e8a290019b5b8c278abd19f13399198224dfcfed101a"
+    },
+    "report.json": {
+      "bytes": 442489,
+      "sha256": "354ef7139a328ffb0d290e24939d6ce455cfccd8886bd7ae0ad5275057a73a6d"
+    },
+    "research_commands.json": {
+      "bytes": 5828,
+      "sha256": "0614df39785232e7f2e270e62ff371efa81eaad31c8fdead3831055bf45ba4f8"
+    },
+    "reserve.json": {
+      "bytes": 5193,
+      "sha256": "c3cc6c21efde06400b06a809a5814ecdc6834ae1ea2411056919dfa574d56a92"
+    },
+    "reserve.log": {
+      "bytes": 4720,
+      "sha256": "b0350de45a043aa7f924e1e57a313f91764569d65352c6f687af89da190ad818"
+    },
+    "result.md": {
+      "bytes": 6530,
+      "sha256": "335bd316c2c45d3395b08d267a1ab2a50412ae8b31c9a369338414b438c1b316"
+    },
+    "run.py": {
+      "bytes": 17049,
+      "sha256": "770f87eeedec51759769db9e833f947992a2765e51faad793c3c5b362e0b47cd"
+    },
+    "sensitivity.csv": {
+      "bytes": 10691,
+      "sha256": "4b84705d610ffdc46833cd58912b9a514ecf72fe7bea02dc88cc083e71056bd6"
+    },
+    "sensitivity_surface.png": {
+      "bytes": 71013,
+      "sha256": "ee543bf84cfa9f5d75d720911a6dd886ecef7f5b1c3bd368ee76f82d69608305"
+    },
+    "signal_checks.log": {
+      "bytes": 129,
+      "sha256": "44e5579d9ef88a8191485145bf55b0f410a412ade2d4f11e36815e713140f059"
+    },
+    "signal_checks.py": {
+      "bytes": 1805,
+      "sha256": "5c97043c864d8fd44d424deed3cfd778fa1db1364c80a8445099ea1b0e5a14f4"
+    },
+    "snapshot.log": {
+      "bytes": 188,
+      "sha256": "624e4c1d9b06e984919b12a56b98495207ddf2a26b5034642d940fb140f46ed8"
+    },
+    "spec.json": {
+      "bytes": 3018,
+      "sha256": "2c5dc3489d6cf35d35329e74266c958832730064586ed904a331c78f52ce91a5"
+    },
+    "specs/daily_kama_BTC_L10_S120.json": {
+      "bytes": 3020,
+      "sha256": "3a4f2cf7bffc8e3393b07f664241729b2bc703c6b3c26cee340d9b8bd978dbd0"
+    },
+    "specs/daily_kama_BTC_L10_S30.json": {
+      "bytes": 3018,
+      "sha256": "cbfa66a30eab1822817be219d9e4d5223c0a5a6ce6cb0618c8fdc8d917ebaf46"
+    },
+    "specs/daily_kama_BTC_L10_S60.json": {
+      "bytes": 3018,
+      "sha256": "a0669d9e7e2847c62b6127a102a8ad9d17115e79e81a8af10a1c79bdd33687c6"
+    },
+    "specs/daily_kama_BTC_L20_S120.json": {
+      "bytes": 3020,
+      "sha256": "823e8229e36b0d569b0fbf9250d8eb77f542ddfcaa0441b7e0d51a2e07b379c4"
+    },
+    "specs/daily_kama_BTC_L20_S30.json": {
+      "bytes": 3018,
+      "sha256": "78ddbed7d08b9bba7e7f7e48186eea4700199d4ee9c7106eb957e77fe8c2d206"
+    },
+    "specs/daily_kama_BTC_L20_S60.json": {
+      "bytes": 3018,
+      "sha256": "2c5dc3489d6cf35d35329e74266c958832730064586ed904a331c78f52ce91a5"
+    },
+    "specs/daily_kama_BTC_L40_S120.json": {
+      "bytes": 3020,
+      "sha256": "42a25cc7d874a1082c6d616cbd6b764aafd6507ec9861dba9e8ae6c11955a936"
+    },
+    "specs/daily_kama_BTC_L40_S30.json": {
+      "bytes": 3018,
+      "sha256": "f7598c21f20facac67d09e8cc8de70b22c16300cdd09cb04f2d01e4f26639b01"
+    },
+    "specs/daily_kama_BTC_L40_S60.json": {
+      "bytes": 3018,
+      "sha256": "103cddaee2ea6ff1d442caaec0ea693660c44332bee374309ce83a09a8c5f44d"
+    },
+    "specs/daily_kama_ETH_L10_S120.json": {
+      "bytes": 3020,
+      "sha256": "e36ea981a40499acf19b80e68bc7aca4e63a523cef836f4805d6be209dd69967"
+    },
+    "specs/daily_kama_ETH_L10_S30.json": {
+      "bytes": 3018,
+      "sha256": "83ecd2217893be89ee05a86d22ed1690b95e077d29145439947898239c78d502"
+    },
+    "specs/daily_kama_ETH_L10_S60.json": {
+      "bytes": 3018,
+      "sha256": "ac770d7ce118c9bfaea322b72ec0212c5623981dd19587c0b86ff7d0da388159"
+    },
+    "specs/daily_kama_ETH_L20_S120.json": {
+      "bytes": 3020,
+      "sha256": "2bba3adf6a43cfaa7b773d478b8a2221eb8cff3a3a510268400c9f612c7b7e5d"
+    },
+    "specs/daily_kama_ETH_L20_S30.json": {
+      "bytes": 3018,
+      "sha256": "81a53b97d88ded86e8ac030e88ea7a78d6942850ad4eb3290b94d8971dfd9c09"
+    },
+    "specs/daily_kama_ETH_L20_S60.json": {
+      "bytes": 3018,
+      "sha256": "38aab85567c1c09ad4ed5d8770f20207d9a3b7a97e44da6b5ae822ec54ae4c5a"
+    },
+    "specs/daily_kama_ETH_L40_S120.json": {
+      "bytes": 3020,
+      "sha256": "cc22f5bbecd2dd62e83ac5d8ad94c248b3a013429e2c779270706b3e9f6963af"
+    },
+    "specs/daily_kama_ETH_L40_S30.json": {
+      "bytes": 3018,
+      "sha256": "cc1c8623b3083e2f6d7150203317589ae350b4f96e596f69e70cb566b4365229"
+    },
+    "specs/daily_kama_ETH_L40_S60.json": {
+      "bytes": 3018,
+      "sha256": "dd2613043a5cbdceb5753394f2b6bb901d07a567d955c03a511d0cf61db937c3"
+    },
+    "specs/forward_snapshot_BTC.json": {
+      "bytes": 1921,
+      "sha256": "6c8bd6e0385d634f2df1512a6576dc255be29b87c43f92b97668860657435897"
+    },
+    "specs/forward_snapshot_ETH.json": {
+      "bytes": 1920,
+      "sha256": "d5292178c687ebd945e88690ebc85a1d19516cc2c622ac430f0c1c3ee5c9d095"
+    },
+    "specs/forward_snapshot_combo.json": {
+      "bytes": 1135,
+      "sha256": "a7f2de760accbe90dc522b5040876f021fabb2ff701d7c3d7526e8f4b2cc2980"
+    },
+    "summarize.py": {
+      "bytes": 11062,
+      "sha256": "f8567e7929b7d818340a52bee401628675e3d13a0d2b941f9ad3d4bee52d2fef"
+    },
+    "summary.log": {
+      "bytes": 989,
+      "sha256": "ee72c00ab50d9e2ac9f9d422c4b47b9def4a848b45d54a18faee0363203429a5"
+    },
+    "trades.csv.gz": {
+      "bytes": 227222,
+      "sha256": "975adf224cc373888eca11cfa3a523321efcfcdfa3c80b808f82b6b6d130e71f"
+    },
+    "verification.json": {
+      "bytes": 646,
+      "sha256": "0abd8f00f8d8b83ca8b757e439920de60858d0d3809f614f7f17894c7658e082"
+    },
+    "verification.log": {
+      "bytes": 630,
+      "sha256": "d3cae0397efc9129af3ccf70870575f33cfc9a13dd23b7d392069e281d67ae9c"
+    }
+  }
+}
