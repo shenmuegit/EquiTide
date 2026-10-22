@@ -27,3 +27,5 @@
 完整命令和真实stdout/stderr/退出码见initial_commands.json、research_commands.json、forward_commands.json和final_gates.json。data_manifest.json核对所有本轮证据、源码、源数据、旧账户、原始响应和当前监控哈希。仅本轮目录、主登记与两份监控汇总进入提交；保留既有未跟踪data/normalized。推送后的SHA和完整树以实际终验输出为准，提交前不声称已推送。
 
 限制：重复2025–2026研发历史不是未触碰最终测试集，未计算DSR/PBO；真实历史L2/历史过滤器及实盘成交未验证。CMF是日内收盘区间压力代理，会忽略日间价格缺口；20日延迟shadow不足以证明稳定实盘盈利。
+
+推送过程真实情况：首个研究提交24d633f3e4b5467f32bd08df545d8c318cb72318普通SSH push exit0，SSH ls-remote匹配；随后HTTPS fetch因GnuTLS握手失败exit128，已记录。改用同仓库SSH fetch exit0，HEAD/origin/FETCH_HEAD与完整tree逐字节一致，远端金融报告/forward报告/主登记原字节SHA核验通过。详见push_verification.json。本轻量网络失败/恢复证据另作追加提交，分支锁仍持有至该最终提交的推送/完整树核验后。
