@@ -1,0 +1,102 @@
+{
+  "round": "20261022T223523Z",
+  "frozen_at_utc": "2026-10-22T22:53:26.704633Z",
+  "trigger_utc": "2026-10-22T22:35:23.615Z",
+  "direction": "Longer fixed-horizon B0 matched spot-long/perp-short carry",
+  "hypothesis": "Reduce repeated execution friction relative to earlier8/24/48hour carry while accruing actual funding. Do not forecast or amplify positive funding.",
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "holding_hours": [
+      672,
+      1008,
+      1344
+    ],
+    "per_leg_fraction": [
+      0.15,
+      0.25,
+      0.35
+    ],
+    "candidate_configs": 18,
+    "comparators": 2,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  },
+  "time_boundaries": {
+    "data_start_utc": "2025-09-16T00:00:00Z",
+    "data_end_exclusive_utc": "2026-09-16T00:00:00Z",
+    "first_signal_utc": "2025-10-10T00:00:00Z",
+    "last_signal_utc": "2026-09-11T00:00:00Z",
+    "oos_start_utc": "2025-10-10T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-11T00:01:00Z",
+    "oos_days": 336,
+    "warmup_days": 21,
+    "initial_gap_days": 3,
+    "folds": 12,
+    "fold_days": 28,
+    "training": "No model/labels/fitting.21days cost warmup plus3day initial gap;fixed rules and grid throughout."
+  },
+  "rule": {
+    "entry": "At each completed hourly signal T when flat and a whole H-hour horizon fits before scheduled end, force B0 entry. Known NAV is sampled after funding through T; quantity=floor(fraction*knownNAV/known spot close/commonlot)*commonlot. Funding in T..T+1minute settles old positions before execution but cannot influence sizing.",
+    "exit": "Fixed entry signal+H hours at next minute open; next hourly decision may re-enter. Costed terminal exit; no fold resets.",
+    "weights": "Fraction is raw notional/NAV PER LEG,not cash allocation or normalized portfolio weight; gross about2*f. Initial spotcash5000/perpcollateral5000,total10000. Exact matched base quantity; no transfers,rebalancing or borrow.",
+    "funding": "Actual rate*actual settlement mark*old matched quantity; actual settlement and availability ns retained; forecast feature debug only,B0 does not select on it.",
+    "margin": "Original1% hourly mark-high envelope plus independent pre/post-event whole-hour mark-high check and isolated cash checks. Conservative complete in-OOS hourly bounds can include pre-entry/post-exit extremes;terminal gap uses closed-minute traded-high proxy,never post-OOS mark high. Qualification only,never signals. No automatic liquidation model;any violation rejects."
+  },
+  "costs": {
+    "spot_fee_per_side": 0.001,
+    "perp_fee_per_side": 0.0005,
+    "half_spread_per_side": 0.0001,
+    "slippage_per_side": 0.0002,
+    "impact": "0.5*strictly previous20complete-day log-return sample sigma*sqrt(leg quote notional/leg prior20day quote ADV)",
+    "maximum_participation": 0.001,
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "funding_stress": "Paid negative receipts multiplied; positive income unchanged; actual settlement mark and millisecond jitter retained.",
+    "metadata": "Frozen20261001spot snapshot plus normalized perp metadata; historical proxy,not refreshed historical tiers.",
+    "maintenance_ratio_assumed": 0.01,
+    "borrow": "No spot short or borrowing; USDT yield0; isolated5000/5000books,no transfers."
+  },
+  "gates": {
+    "all_cost_returns_positive": true,
+    "positive_1x_folds_min": 8,
+    "max_3x_continuous_minute_traded_price_drawdown_pct": 25,
+    "local_3x_positive_fraction_min": 0.6,
+    "round_trips_1x_min": 4,
+    "gross_reference_pnl_total_cost_ratio_1x_min": 2.5,
+    "cash_margin_violations": 0,
+    "spot_cash_order_rejections": 0,
+    "terminal_flat": true
+  },
+  "sources": [
+    {
+      "url": "https://github.com/binance/binance-public-data",
+      "accessed_utc": "2026-10-22",
+      "scope": "Original real minute spot/perp and hourly mark archive provenance; normalized ns hashes checked."
+    },
+    {
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Get-Funding-Rate-History",
+      "accessed_utc": "2026-10-22",
+      "scope": "Actual realized rates,settlement marks/timestamps. Official page redirects to current market-data catalog."
+    },
+    {
+      "path": "research/experiments/20261001T053425Z/carry.py",
+      "sha256": "dbe4678aefc8512c5dc1159e070c0263b1018f96fb44d327c60135b599f50312",
+      "scope": "Existing unchanged isolated-ledger B0 engine and floating-quantity accounting;new horizon/fraction/OOS only."
+    }
+  ],
+  "history_note": "Reused2025-2026development history,not untouched finalholdout. Prior B0/B1 real results retained; no exact old configuration rerun. Many prior trials;no DSR/PBO claim.",
+  "limits": [
+    "No historical L2/TCA or exchange liquidation tiers;frozen metadata and1%maintenance are declared proxies.",
+    "Original hourly equity retained;stronger full closed-minute traded-price plus post-fill NAV reconstructed independently;not minute mark-price NAV/intraminute extrema.",
+    "No real orders or changes to originalSMA orpaper10 accounts."
+  ]
+}

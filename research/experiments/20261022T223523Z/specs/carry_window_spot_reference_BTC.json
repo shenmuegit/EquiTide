@@ -1,0 +1,50 @@
+{
+  "kind": "strategy",
+  "family": "spot-hold-fixed-notional-reference",
+  "market": "spot",
+  "timeframe": "1h",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "name": "carry_window_spot_reference_BTC",
+  "logic": {
+    "entry": "One entry at first OOS next-minute open;quantity=floor(4500/known signal spot close/spotlot)*spotlot;known sizing,no borrowing.",
+    "exit": "Hold unchanged to scheduled end,then costed liquidation.",
+    "sizing": "10000USDT total,4500reference target notional,remaining cash0yield;directional comparator,not risk-matched carry."
+  },
+  "parameters": {
+    "initial_capital_usdt": 10000,
+    "books_usdt": [
+      5000,
+      5000
+    ],
+    "oos_start_utc": "2025-10-10T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-11T00:01:00Z",
+    "warmup_days": 21,
+    "embargo_days": 3,
+    "walk_forward_folds": 12,
+    "walk_forward_test_days": 28,
+    "walk_forward_step_days": 28,
+    "costs": {
+      "spot_fee_per_side": 0.001,
+      "perp_fee_per_side": 0.0005,
+      "half_spread_per_side": 0.0001,
+      "slippage_per_side": 0.0002,
+      "impact": "0.5*strictly previous20complete-day log-return sample sigma*sqrt(leg quote notional/leg prior20day quote ADV)",
+      "maximum_participation": 0.001,
+      "multipliers": [
+        1,
+        2,
+        3
+      ],
+      "funding_stress": "Paid negative receipts multiplied; positive income unchanged; actual settlement mark and millisecond jitter retained.",
+      "metadata": "Frozen20261001spot snapshot plus normalized perp metadata; historical proxy,not refreshed historical tiers.",
+      "maintenance_ratio_assumed": 0.01,
+      "borrow": "No spot short or borrowing; USDT yield0; isolated5000/5000books,no transfers."
+    },
+    "metadata_snapshot_sha256": "857af9870c57ad05e50a5ee6fad92240b384b99cc22e9ae8cece0e6f94e2d033",
+    "role": "benchmark",
+    "reference_target_notional_usdt": 4500
+  },
+  "validation_plan": "research/experiments/20261022T223523Z/plan.json"
+}
