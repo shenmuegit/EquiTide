@@ -1,0 +1,67 @@
+{
+  "kind": "strategy",
+  "family": "spot-daily-high-low-aroon-oscillator",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "name": "daily_aroon_BTC_N20_E20",
+  "logic": {
+    "entry": "Aggregate UTC daily high=max(all1440 closed minute highs),low=min(all1440 closed minute lows). At completed dayj use j-N..j inclusive(N+1daily ranges). For equal extrema choose most recent day. ah=j-index_high,al=j-index_low. Up=100*(N-ah)/N,Down=100*(N-al)/N,osc=Up-Down,Decimal28. First valid indexN;no future padding or fold reset. When flat, enter iff oscillator>entry_oscillator_threshold; strict boundary,no prior-cross requirement.",
+    "exit": "While long, exit iff oscillator<0. Zero preserves long; flat stays cash at or below entry threshold. No future padding, fold reset, short, hold cap or same-decision re-entry. Costed terminal liquidation.",
+    "sizing": "Independent 2,000 USDT cash account; all original capital allocated to this asset; long-only, no leverage, no borrowing, no cross-asset transfer or add-on.",
+    "timing": "Close-based signal only from a closed UTC daily bar, next day 00:01 UTC one-minute open (60-second delay); no historical fill before OOS."
+  },
+  "parameters": {
+    "asset": "BTC",
+    "initial_capital_usdt": 2000,
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward_test_days": 30,
+    "walk_forward_folds": 12,
+    "walk_forward_step_days": 30,
+    "fee_rate_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete daily quote-volume ADV)",
+    "max_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "exchange_filters_sha256": "62fd0bbbd4226161cc7b34f0b1bcc9552eb7efc51d96c4d41d6afff04380c851",
+    "sensitivity_axes": [
+      "aroon_lookback_days",
+      "entry_oscillator_threshold"
+    ],
+    "aroon_lookback_days": 20,
+    "entry_oscillator_threshold": 20,
+    "exit_oscillator_threshold": 0,
+    "window": "j-N..j inclusive;N+1complete daily ranges",
+    "extrema_ties": "most recent",
+    "daily_high_low": "UTC extrema over1440closed minute ranges"
+  },
+  "sources": [
+    {
+      "url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/aroon-oscillator",
+      "accessed_utc": "2026-10-22",
+      "version_observed": "Current official StockCharts ChartSchool documentation",
+      "scope": "Primary platform formula for Up-Down oscillator and positive/negative threshold interpretation; our full rules are independently frozen, without profitability endorsement."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/TA-Lib/ta-lib/v0.6.4/src/ta_func/ta_AROONOSC.c",
+      "accessed_utc": "2026-10-22",
+      "version_observed": "TA-Lib v0.6.4",
+      "scope": "Primary implementation corroborates inclusive trailingIdx=today-N..today window and newest equal extrema. Own Python implementation; no library installation or copied source."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/products/spot/filters",
+      "accessed_utc": "2026-10-22",
+      "scope": "Official spot filter definitions; historical filters unavailable."
+    }
+  ]
+}

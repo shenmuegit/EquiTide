@@ -1,0 +1,138 @@
+{
+  "round": "20261022T083052Z",
+  "frozen_at_utc": "2026-10-22T08:38:47.001706Z",
+  "direction": "Daily high-low Aroon oscillator with positive entry threshold and zero exit, unlevered spot long/cash.",
+  "hypothesis": "Measure recency of intraday daily high and low extremes, rather than smoothing only closing prices. Test whether a stronger positive recency imbalance with a zero-line exit reduces noise sufficiently to survive costs and regimes; this remains an unproven hypothesis.",
+  "sources": [
+    {
+      "url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/aroon-oscillator",
+      "accessed_utc": "2026-10-22",
+      "version_observed": "Current official StockCharts ChartSchool documentation",
+      "scope": "Primary platform formula for Up-Down oscillator and positive/negative threshold interpretation; our full rules are independently frozen, without profitability endorsement."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/TA-Lib/ta-lib/v0.6.4/src/ta_func/ta_AROONOSC.c",
+      "accessed_utc": "2026-10-22",
+      "version_observed": "TA-Lib v0.6.4",
+      "scope": "Primary implementation corroborates inclusive trailingIdx=today-N..today window and newest equal extrema. Own Python implementation; no library installation or copied source."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/products/spot/filters",
+      "accessed_utc": "2026-10-22",
+      "scope": "Official spot filter definitions; historical filters unavailable."
+    }
+  ],
+  "rule": {
+    "signal": "Aggregate UTC daily high=max(all1440 closed minute highs),low=min(all1440 closed minute lows). At completed dayj use j-N..j inclusive(N+1daily ranges). For equal extrema choose most recent day. ah=j-index_high,al=j-index_low. Up=100*(N-ah)/N,Down=100*(N-al)/N,osc=Up-Down,Decimal28. First valid indexN;no future padding or fold reset.",
+    "entry": "When flat, enter iff completed oscillator>E; strict threshold, no previous-cross requirement, including first OOS decision.",
+    "exit": "When long, exit iff oscillator<0. Zero and nonnegative values preserve actual long state; flat remains cash at or belowE. No short, hold cap or same-decision re-entry; costed terminal liquidation.",
+    "execution": "Signal becomes available at the signal candle close; if target changes, simulate an order at the next UTC day 00:01 one-minute open (60-second delay). Rejected orders are not backfilled; the same desired state may be tried on a later new daily decision. At the frozen OOS terminal timestamp, liquidate any open lot with costs.",
+    "account": "Independent 2,000 USDT single-asset cash account for every asset×parameter combination; all initial capital assigned to the specified asset sleeve, no leverage, borrowing, shorting, transfer or cash interest."
+  },
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "candidate_configurations": 18,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "aroon_lookback_days": [
+      20,
+      40,
+      80
+    ],
+    "entry_oscillator_threshold": [
+      20,
+      40,
+      60
+    ],
+    "exit_oscillator_threshold": 0,
+    "window": "j-N..j inclusive;N+1complete daily ranges",
+    "extrema_ties": "most recent"
+  },
+  "time_boundaries": {
+    "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "oos_days": 360,
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward": "12 consecutive, non-overlapping 30-day evaluation windows; account remains continuous across windows; no fitting, parameter selection or fold reset.",
+    "history_note": "The 2025–2026 OOS window has been reused extensively in this repository and is not an untouched final holdout."
+  },
+  "validation": {
+    "parameter_sensitivity_axes": [
+      "aroon_lookback_days",
+      "entry_oscillator_threshold"
+    ],
+    "neighborhood": "Same asset, adjacent lookback index and adjacent hurdle index in the frozen 3×3 grid; 3×3 neighborhood including center.",
+    "round_trip_minimum": 8,
+    "positive_1x_folds_minimum": 8,
+    "all_cost_scenarios_positive": true,
+    "max_3x_minute_sample_drawdown_pct": 25,
+    "minimum_3x_positive_neighborhood_fraction": 0.6,
+    "gross_reference_pnl_to_cost_minimum": 2.5,
+    "capacity_or_filter_rejections": 0,
+    "terminal_flat": true,
+    "multiple_testing": "No DSR/PBO claim: repeated reused-OOS history and many prior strategy trials create material selection bias.",
+    "purging": "No fitted model or future-return labels; label purge inapplicable. Finite N+1 completed daily high/low ranges only; no future padding, smoothing seed, OOS/fold reset or parameter selection.365day context and3day initial gap precede12 continuous folds.",
+    "continuous_drawdown": "Initial capital plus all OOS minute-close and immediate post-fill marks; no fold reset or intraminute extrema."
+  },
+  "costs": {
+    "per_side_fee": 0.001,
+    "estimated_half_spread_per_side": 0.0001,
+    "estimated_slippage_per_side": 0.0002,
+    "impact": "0.5 × sample stdev of previous 20 complete UTC daily log returns × sqrt(order quote budget / previous 20 complete daily quote ADV)",
+    "maximum_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "filters_source": "Unchanged 2026-10-14 frozen public exchangeInfo proxy, checked against the current public response in filter_check.json. Reuse the original hash so retrieval timestamps cannot manufacture novelty. Historical L2 and historical filters are unavailable."
+  },
+  "data": {
+    "format": "Archived Binance spot 1m OHLCV; daily closes and quote ADV are aggregated from fully closed UTC days.",
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 30555668,
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6"
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 30415140,
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16"
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 27110682,
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57"
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 26332430,
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584"
+        }
+      ]
+    }
+  },
+  "prior_results": {
+    "source_report": "research/experiments/20261022T062921Z/report.json",
+    "source_sha256": "309d590f18fc2d707c80c37b5f7e7f87b430d9e67fb94549cf965a1f87257a69",
+    "initial_16_missing_actual_results": 0,
+    "canonical_prior_research_definitions": 4008,
+    "last_batch": "18 HMA slope candidates rejected;3 positive3x cases lacked fold breadth or other gates.",
+    "distinction": "Use actual daily highs/lows and ages of most recent equal extrema; no closing-price HMA, adaptive ER or price-band signal."
+  },
+  "trigger_utc": "2026-10-22T08:30:52.042Z",
+  "source_access_failures": [],
+  "account_scope": "Offline research only. Read existing paper10 and delayed SMA-shadow accounts without reset, replacement, new paper observations or real orders."
+}
