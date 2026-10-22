@@ -1,0 +1,146 @@
+{
+  "round": "20261022T183553Z",
+  "frozen_at_utc": "2026-10-22T18:41:42.810972Z",
+  "direction": "Daily Wilder RSI2 pullback above slow SMA,exit on fast-SMA rebound or trend loss;unlevered long/cash.",
+  "hypothesis": "Test short pullback mean reversion only while above a slow trend,with a fast-price rebound exit. This changes activity and holding horizon from prior longer-RSI recovery exits;no presumption that equity recipes transfer to BTC/ETH.",
+  "sources": [
+    {
+      "url": "https://chartschool.stockcharts.com/table-of-contents/trading-strategies-and-models/trading-strategies/rsi-2",
+      "accessed_utc": "2026-10-22",
+      "scope": "Primary publisher describes short RSI pullbacks above slow SMA and fastSMA5 rebound exit. Our100/150/200and10/20/30grid,strict trend-loss exit and next00:01execution are explicit adaptations;no claim of replicating original equity results or profitability."
+    },
+    {
+      "url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/relative-strength-index-rsi",
+      "accessed_utc": "2026-10-22",
+      "scope": "Primary Wilder simple-mean initialization and recursive gain/loss smoothing;our two-period and neutral50zero-total convention are fixed."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/TA-Lib/ta-lib/v0.6.4/src/ta_func/ta_RSI.c",
+      "accessed_utc": "2026-10-22",
+      "version_observed": "TA-Lib v0.6.4",
+      "scope": "Primary initialization/recursion reference. Exact Fraction and zero-total neutral50 differ from its float/zero convention;no bitwise-equivalence claim or copied source."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/products/spot/filters",
+      "accessed_utc": "2026-10-22",
+      "scope": "Official spot filter definitions;historical filters unavailable."
+    }
+  ],
+  "rule": {
+    "signal": "Use completed UTC daily closes. Seed avgGain/avgLoss atdatasetindex2 with simplemeans of first2changes. Eachlaterday avg=(previousavg+newgain_or_loss)/2. RSI2=100*avgGain/(avgGain+avgLoss);bothzero50. Exact Fraction from encodedFloat64decimalstrings;no rounding or OOS/fold reset. Slow SMA uses lastTcompleted closes includingj;fast exit SMA uses last5completed closes. Compare price*Twith slow sum andprice*5with fast sum,without rounded means. Decimal60display,canonical RSIratioSHA;accountingDecimal28 unchanged.",
+    "entry": "When flat,enter iff RSI2<E AND completed close>SMA(T),bothstrict;entry equality remains cash,no priorcross requirement.",
+    "exit": "When long,exit iff completed close>SMA5 OR close<SMA(T),bothstrict;equal fast/slow boundary alone preserves long. No RSI exit,short,hold cap or same-decision re-entry;costed terminal liquidation.",
+    "execution": "Signal becomes available at the signal candle close; if target changes, simulate an order at the next UTC day 00:01 one-minute open (60-second delay). Rejected orders are not backfilled; the same desired state may be tried on a later new daily decision. At the frozen OOS terminal timestamp, liquidate any open lot with costs.",
+    "account": "Independent 2,000 USDT single-asset cash account for every asset×parameter combination; all initial capital assigned to the specified asset sleeve, no leverage, borrowing, shorting, transfer or cash interest."
+  },
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "candidate_configurations": 18,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "trend_sma_days": [
+      100,
+      150,
+      200
+    ],
+    "entry_rsi_threshold": [
+      10,
+      20,
+      30
+    ],
+    "rsi_period": 2,
+    "exit_sma_days": 5,
+    "zero_gain_and_loss_RSI": 50,
+    "RSI_seed": "Datasetday2:simplemean of first2close changes;then(gain_or_loss+new)/2;no OOS/fold reset",
+    "SMA_window": "j-N+1..j including completed signal close",
+    "arithmetic": "exact Fraction from daily Float64 decimal-string encoding;Decimal60 display only"
+  },
+  "time_boundaries": {
+    "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "oos_days": 360,
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward": "12 consecutive, non-overlapping 30-day evaluation windows; account remains continuous across windows; no fitting, parameter selection or fold reset.",
+    "history_note": "The 2025–2026 OOS window has been reused extensively in this repository and is not an untouched final holdout."
+  },
+  "validation": {
+    "parameter_sensitivity_axes": [
+      "trend_sma_days",
+      "entry_rsi_threshold"
+    ],
+    "neighborhood": "Same asset, adjacent lookback index and adjacent hurdle index in the frozen 3×3 grid; 3×3 neighborhood including center.",
+    "round_trip_minimum": 8,
+    "positive_1x_folds_minimum": 8,
+    "all_cost_scenarios_positive": true,
+    "max_3x_minute_sample_drawdown_pct": 25,
+    "minimum_3x_positive_neighborhood_fraction": 0.6,
+    "gross_reference_pnl_to_cost_minimum": 2.5,
+    "capacity_or_filter_rejections": 0,
+    "terminal_flat": true,
+    "multiple_testing": "No DSR/PBO claim: repeated reused-OOS history and many prior strategy trials create material selection bias.",
+    "purging": "No fitted model/future-return labels;label purge inapplicable. Wilder2seedatdatasetday2,recursion never resets;365day context precedes OOS and covers slowSMA200. Slow and fast SMAs include only completed signal closes.3day initial gap,12continuous folds;no OOS parameter selection.",
+    "continuous_drawdown": "Initial capital plus all OOS minute-close and immediate post-fill marks; no fold reset or intraminute extrema."
+  },
+  "costs": {
+    "per_side_fee": 0.001,
+    "estimated_half_spread_per_side": 0.0001,
+    "estimated_slippage_per_side": 0.0002,
+    "impact": "0.5 × sample stdev of previous 20 complete UTC daily log returns × sqrt(order quote budget / previous 20 complete daily quote ADV)",
+    "maximum_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "filters_source": "Unchanged 2026-10-14 frozen public exchangeInfo proxy, checked against the current public response in filter_check.json. Reuse the original hash so retrieval timestamps cannot manufacture novelty. Historical L2 and historical filters are unavailable."
+  },
+  "data": {
+    "format": "Archived Binance spot 1m OHLCV; daily closes and quote ADV are aggregated from fully closed UTC days.",
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 30555668,
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6"
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 30415140,
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16"
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 27110682,
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57"
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 26332430,
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584"
+        }
+      ]
+    }
+  },
+  "prior_results": {
+    "source_report": "research/experiments/20261022T163422Z/report.json",
+    "source_sha256": "bc8a344cd41d10fd9f0e70abee84d7c6b6d56de0695b88bfa41498898163aa24",
+    "initial_16_missing_actual_results": 0,
+    "canonical_prior_research_definitions": 4098,
+    "last_batch": "18 UO momentum candidates rejected;3/3/3positive bycost,all failed fold breadth and neighborhood.",
+    "prior_Wilder_pullback": "research/experiments/20261021T182350Z/report.json",
+    "distinction": "Prior Wilder uses7/14/28days andRSI>=50orclose<=SMA200exit;oldCutlerRSI2uses finite2change sums. New Wilder2has decaying recursive memory and fastSMA5rebound/strictslowtrendexit,with100/150/200slowSMA grid. New economic rules,not name/number-format novelty."
+  },
+  "trigger_utc": "2026-10-22T18:35:53.033Z",
+  "source_access_failures": [],
+  "account_scope": "Offline research only. Read existing paper10 and delayed SMA-shadow accounts without reset,replacement,new paper observations or real orders."
+}
