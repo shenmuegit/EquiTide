@@ -1,0 +1,149 @@
+{
+  "round": "20261022T163422Z",
+  "frozen_at_utc": "2026-10-22T16:39:24.977779Z",
+  "direction": "Daily Ultimate Oscillator level momentum,unlevered spot long/cash.",
+  "hypothesis": "Combine gap-aware buying-pressure/true-range ratios overN/2N/4N to test sustained positive momentum with a fixed lower exit. This level-rule hypothesis is not the source authors retrospective divergence method or profitability evidence.",
+  "sources": [
+    {
+      "url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/ultimate-oscillator",
+      "accessed_utc": "2026-10-22",
+      "scope": "Primary provider BP/TR definition including prior close,three periods and4/2/1weights divided by7. Our fixed level rules/grid/exit are independent choices;no retrospective divergence or profitability endorsement."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/TA-Lib/ta-lib/v0.6.4/src/ta_func/ta_ULTOSC.c",
+      "accessed_utc": "2026-10-22",
+      "version_observed": "TA-Lib v0.6.4",
+      "scope": "Primary implementation confirms max-period+earlier-close warmup and zero-denominator contribution0. We use exact rational arithmetic and only exact-zero guard,not its floating near-zero guard;no bitwise-equivalence claim or copied C code."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/products/spot/filters",
+      "accessed_utc": "2026-10-22",
+      "scope": "Official spot filter definitions;historical filters unavailable."
+    }
+  ],
+  "rule": {
+    "signal": "Aggregate UTC daily H/L/lastC from1440closed minutes. BP_j=C_j-min(L_j,C_prev);TR_j=max(H_j,C_prev)-min(L_j,C_prev). A_m=sum(BP)/sum(TR) overm*Ndays endingj,for m1/2/4;if period sumTRexactly0,that ratio0. UO=100*(4*A1+2*A2+A4)/7. First valid index4N,needs prior close.4/2/1are fixed indicator weights;divisor7is formula,not capital-weight normalization. Exact Fraction from dailyFloat64decimal strings,Decimal60display andcanonical ratioSHA. Original accountingDecimal28. No retrospective divergence,seed orfoldreset.",
+    "entry": "When flat,enter iff UO>E;strict boundary,no prior-cross requirement,including first OOS decision.",
+    "exit": "When long,exit iff UO<45;equality45keeps long. AllzeroTR UO0exits. No short,hold cap or same-decision re-entry;costed terminal liquidation.",
+    "execution": "Signal becomes available at the signal candle close; if target changes, simulate an order at the next UTC day 00:01 one-minute open (60-second delay). Rejected orders are not backfilled; the same desired state may be tried on a later new daily decision. At the frozen OOS terminal timestamp, liquidate any open lot with costs.",
+    "account": "Independent 2,000 USDT single-asset cash account for every asset×parameter combination; all initial capital assigned to the specified asset sleeve, no leverage, borrowing, shorting, transfer or cash interest."
+  },
+  "grid": {
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "candidate_configurations": 18,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "ultosc_base_days": [
+      7,
+      14,
+      28
+    ],
+    "entry_ultosc_threshold": [
+      50,
+      55,
+      60
+    ],
+    "exit_ultosc_threshold": 45,
+    "period_multipliers": [
+      1,
+      2,
+      4
+    ],
+    "indicator_raw_weights": [
+      4,
+      2,
+      1
+    ],
+    "indicator_divisor": 7,
+    "window": "j-m*N+1..j with previous close atj-m*N;first valid4N",
+    "zero_period_total_true_range_ratio": 0,
+    "arithmetic": "exact Fraction from daily Float64 decimal-string encoding;Decimal60 display only"
+  },
+  "time_boundaries": {
+    "input_history_utc": "2024-09-16T00:00:00Z/2026-09-16T00:00:00Z",
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "oos_days": 360,
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward": "12 consecutive, non-overlapping 30-day evaluation windows; account remains continuous across windows; no fitting, parameter selection or fold reset.",
+    "history_note": "The 2025–2026 OOS window has been reused extensively in this repository and is not an untouched final holdout."
+  },
+  "validation": {
+    "parameter_sensitivity_axes": [
+      "ultosc_base_days",
+      "entry_ultosc_threshold"
+    ],
+    "neighborhood": "Same asset, adjacent lookback index and adjacent hurdle index in the frozen 3×3 grid; 3×3 neighborhood including center.",
+    "round_trip_minimum": 8,
+    "positive_1x_folds_minimum": 8,
+    "all_cost_scenarios_positive": true,
+    "max_3x_minute_sample_drawdown_pct": 25,
+    "minimum_3x_positive_neighborhood_fraction": 0.6,
+    "gross_reference_pnl_to_cost_minimum": 2.5,
+    "capacity_or_filter_rejections": 0,
+    "terminal_flat": true,
+    "multiple_testing": "No DSR/PBO claim: repeated reused-OOS history and many prior strategy trials create material selection bias.",
+    "purging": "No fitted model or future-return labels;label purge inapplicable.4Ncomplete BP/TR observations require4N+1daily prices;first valid index4N. No future padding,seed,OOS/fold reset or parameter selection.365day context and3day initial gap precede12continuous folds.",
+    "continuous_drawdown": "Initial capital plus all OOS minute-close and immediate post-fill marks; no fold reset or intraminute extrema."
+  },
+  "costs": {
+    "per_side_fee": 0.001,
+    "estimated_half_spread_per_side": 0.0001,
+    "estimated_slippage_per_side": 0.0002,
+    "impact": "0.5 × sample stdev of previous 20 complete UTC daily log returns × sqrt(order quote budget / previous 20 complete daily quote ADV)",
+    "maximum_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "filters_source": "Unchanged 2026-10-14 frozen public exchangeInfo proxy, checked against the current public response in filter_check.json. Reuse the original hash so retrieval timestamps cannot manufacture novelty. Historical L2 and historical filters are unavailable."
+  },
+  "data": {
+    "format": "Archived Binance spot 1m OHLCV; daily closes and quote ADV are aggregated from fully closed UTC days.",
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 30555668,
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6"
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 30415140,
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16"
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 27110682,
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57"
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 26332430,
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584"
+        }
+      ]
+    }
+  },
+  "prior_results": {
+    "source_report": "research/experiments/20261022T143252Z/report.json",
+    "source_sha256": "bc7f67749e9ea7e78c55be5e81c3a8f84bf8708744efe7e7af94533cd75d117b",
+    "initial_16_missing_actual_results": 0,
+    "canonical_prior_research_definitions": 4080,
+    "last_batch": "18 CMF candidates rejected;4/4/3positive bycost,all failed fold breadth and neighborhood.",
+    "distinction": "UO incorporates prior close and sums buying pressure/true range at3horizons,not volume-weighted same-day close location. No Ultimate Oscillator spec found in the entire registry before freeze."
+  },
+  "trigger_utc": "2026-10-22T16:34:22.885Z",
+  "source_access_failures": [],
+  "account_scope": "Offline research only. Read existing paper10 and delayed SMA-shadow accounts without reset,replacement,new paper observations or real orders."
+}

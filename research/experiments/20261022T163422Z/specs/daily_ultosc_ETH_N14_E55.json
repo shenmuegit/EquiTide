@@ -1,0 +1,79 @@
+{
+  "kind": "strategy",
+  "family": "spot-daily-ultimate-oscillator",
+  "market": "spot",
+  "timeframe": "1d",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "name": "daily_ultosc_ETH_N14_E55",
+  "logic": {
+    "entry": "Aggregate UTC daily H/L/lastC from1440closed minutes. BP_j=C_j-min(L_j,C_prev);TR_j=max(H_j,C_prev)-min(L_j,C_prev). A_m=sum(BP)/sum(TR) overm*Ndays endingj,for m1/2/4;if period sumTRexactly0,that ratio0. UO=100*(4*A1+2*A2+A4)/7. First valid index4N,needs prior close.4/2/1are fixed indicator weights;divisor7is formula,not capital-weight normalization. Exact Fraction from dailyFloat64decimal strings,Decimal60display andcanonical ratioSHA. Original accountingDecimal28. No retrospective divergence,seed orfoldreset. When flat,enter iff UO>entry_ultosc_threshold;exact rational strict comparison,no prior-cross requirement.",
+    "exit": "While long,exit iff UO<45. Equality45keeps long;allzeroTR UO0exits. Flat stays cash at or below entry threshold. No future padding,fold reset,short,hold cap or same-decision re-entry. Costed terminal liquidation.",
+    "sizing": "Independent 2,000 USDT cash account; all original capital allocated to this asset; long-only, no leverage, no borrowing, no cross-asset transfer or add-on.",
+    "timing": "Close-based signal only from a closed UTC daily bar, next day 00:01 UTC one-minute open (60-second delay); no historical fill before OOS."
+  },
+  "parameters": {
+    "asset": "ETH",
+    "initial_capital_usdt": 2000,
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward_test_days": 30,
+    "walk_forward_folds": 12,
+    "walk_forward_step_days": 30,
+    "fee_rate_per_side": 0.001,
+    "half_spread_estimate_per_side": 0.0001,
+    "slippage_estimate_per_side": 0.0002,
+    "impact_model": "0.5 * sample_stdev(previous 20 complete UTC daily log returns) * sqrt(order quote budget / previous 20 complete daily quote-volume ADV)",
+    "max_participation": 0.001,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "exchange_filters_sha256": "62fd0bbbd4226161cc7b34f0b1bcc9552eb7efc51d96c4d41d6afff04380c851",
+    "sensitivity_axes": [
+      "ultosc_base_days",
+      "entry_ultosc_threshold"
+    ],
+    "ultosc_base_days": 14,
+    "entry_ultosc_threshold": 55,
+    "exit_ultosc_threshold": 45,
+    "period_multipliers": [
+      1,
+      2,
+      4
+    ],
+    "indicator_raw_weights": [
+      4,
+      2,
+      1
+    ],
+    "indicator_divisor": 7,
+    "zero_period_total_true_range_ratio": 0,
+    "arithmetic": "exact Fraction from daily Float64 decimal-string encoding",
+    "display_precision": 60,
+    "window": "m*Ncomplete BP/TR:j-m*N+1..j,priorcloseatj-m*N;firstvalid4N",
+    "threshold_arithmetic": "exact rational comparisons;decision CSV canonical ratio SHA"
+  },
+  "sources": [
+    {
+      "url": "https://chartschool.stockcharts.com/table-of-contents/technical-indicators-and-overlays/technical-indicators/ultimate-oscillator",
+      "accessed_utc": "2026-10-22",
+      "scope": "Primary provider BP/TR definition including prior close,three periods and4/2/1weights divided by7. Our fixed level rules/grid/exit are independent choices;no retrospective divergence or profitability endorsement."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/TA-Lib/ta-lib/v0.6.4/src/ta_func/ta_ULTOSC.c",
+      "accessed_utc": "2026-10-22",
+      "version_observed": "TA-Lib v0.6.4",
+      "scope": "Primary implementation confirms max-period+earlier-close warmup and zero-denominator contribution0. We use exact rational arithmetic and only exact-zero guard,not its floating near-zero guard;no bitwise-equivalence claim or copied C code."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/products/spot/filters",
+      "accessed_utc": "2026-10-22",
+      "scope": "Official spot filter definitions;historical filters unavailable."
+    }
+  ]
+}
