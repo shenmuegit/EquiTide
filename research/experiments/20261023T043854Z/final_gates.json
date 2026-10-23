@@ -1,0 +1,76 @@
+[
+  {
+    "label": "forward_replay",
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261023T043854Z/forward.py",
+      "--reproduce"
+    ],
+    "started_utc": "2026-10-23T05:09:39.638091+00:00",
+    "ended_utc": "2026-10-23T05:09:40.373850+00:00",
+    "exit_code": 0,
+    "stdout": "PASS:all9 cumulative forward scenes exactly reproduced including30532point complete time axis and nextstate;noHTTP or ledger write\n",
+    "stderr": ""
+  },
+  {
+    "label": "registry_gate",
+    "command": [
+      "python3",
+      "checks/strategy_registry.py"
+    ],
+    "started_utc": "2026-10-23T05:09:40.374275+00:00",
+    "ended_utc": "2026-10-23T05:09:41.591895+00:00",
+    "exit_code": 0,
+    "stdout": "PASS: new parameters/weights and missing-result retries are allowed; exact/reordered completed trials stay blocked\n",
+    "stderr": ""
+  },
+  {
+    "label": "snapshot",
+    "command": [
+      "python3",
+      "research/monitor/snapshot.py"
+    ],
+    "started_utc": "2026-10-23T05:09:41.592334+00:00",
+    "ended_utc": "2026-10-23T05:09:46.250203+00:00",
+    "exit_code": 0,
+    "stdout": "{\"output\": \"/home/desktop/Documents/Codex/EquiTide/research/monitor/latest.json\", \"bytes\": 242347, \"paper_status\": \"ready\", \"research_configs\": 3957, \"compressed_research_bytes\": 1218581}\n",
+    "stderr": ""
+  },
+  {
+    "label": "monitor_check_final",
+    "command": [
+      "python3",
+      "checks/monitor_snapshot.py"
+    ],
+    "started_utc": "2026-10-23T05:09:46.250874+00:00",
+    "ended_utc": "2026-10-23T05:09:55.353350+00:00",
+    "exit_code": 0,
+    "stdout": "{\"ok\": true, \"paper_accounts\": 10, \"observations\": 100, \"research_configs\": 3957, \"protected_inputs_unchanged\": true}\n",
+    "stderr": ""
+  },
+  {
+    "label": "feed_attribution",
+    "command": [
+      "python3",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261023T043854Z/check_feed.py"
+    ],
+    "started_utc": "2026-10-23T05:09:55.353803+00:00",
+    "ended_utc": "2026-10-23T05:09:56.171011+00:00",
+    "exit_code": 0,
+    "stdout": "{\"passed\": true, \"research_configs\": 3957, \"paper_observations\": 100, \"paper_accounts\": 10, \"new_parent_configs_verified\": 18, \"new_cost_scenes_verified\": 54, \"new_actual_partial_observations\": 3, \"source_components_reused_read_only\": 12, \"passed_parent_configs\": 12, \"rejected_parent_configs\": 6, \"paired_periods_passed\": 4, \"main_registry_append_only_events\": 42, \"regression_alias_retained\": true, \"historical_reader_failure_exit1_retained_and_followed_by_real_exit0\": true, \"financial_report_sha256\": \"4abc0832fc281991676d01612a7e41848c95717ce1af1cc0848978a53aa85e7f\", \"forward_report_sha256\": \"07b35333f1e9bbc36f72bad8618d4642ab8fcfdf6e150b16cf2c143cc2773fa0\", \"protected_inputs_unchanged\": true}\n",
+    "stderr": ""
+  },
+  {
+    "label": "diff_check",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "started_utc": "2026-10-23T05:09:56.171419+00:00",
+    "ended_utc": "2026-10-23T05:09:56.343664+00:00",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

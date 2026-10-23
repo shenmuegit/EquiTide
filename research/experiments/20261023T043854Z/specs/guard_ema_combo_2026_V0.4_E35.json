@@ -1,0 +1,86 @@
+{
+  "kind": "combination",
+  "family": "volatility-guarded-sma-ema-channel-initial-capital",
+  "name": "guard_ema_combo_2026_V0.4_E35",
+  "logic": {
+    "allocation": "Raw initialBTC/ETH75/25 means actual archived1500/500USDT funds,total2000. Sum absolute already-costed component NAVs once at matched timestamps. Never normalize or weight the already-funded NAVs a second time. No transfers,rebalance,extra turnover,leverage,borrow or cash yield.",
+    "execution": "Reuse source1500BTC/500ETH absolute costed NAVs on the identical259382point180dayaxis;sum at each point,derive portfolio metrics from total NAV,never average component metrics. No extra rebalance/trades."
+  },
+  "parameters": {
+    "initial_capital_usdt": 2000,
+    "raw_initial_weights": {
+      "BTC": 0.75,
+      "ETH": 0.25
+    },
+    "component_capitals_usdt": [
+      1500,
+      500
+    ],
+    "start_utc": "2026-03-18T00:01:00Z",
+    "end_utc": "2026-09-14T00:01:00Z",
+    "BTC_SMA_days": 65,
+    "BTC_entry_band": 0.0125,
+    "BTC_exit_band": 0.005,
+    "BTC_volatility_lookback_days": 20,
+    "BTC_annual_volatility_ceiling": 0.4,
+    "ETH_entry_lookback_days": 15,
+    "ETH_exit_lookback_days": 30,
+    "ETH_EMA_span_days": 35,
+    "ETH_EMA_symmetric_band": 0.0125,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "costs": {
+      "fee_per_side": 0.001,
+      "half_spread": 0.0001,
+      "slippage": 0.0002,
+      "impact_coefficient": 0.5,
+      "impact_inputs": "Previous20 completed UTC day quote ADV and sample stdev20 log daily returns. Buy cash before costs is conservative notional upper bound; sell uses units*reference. Decimal sqrt of budget/ADV, sigma/ADV derived from existing lagged daily function.",
+      "multipliers": [
+        1,
+        2,
+        3
+      ],
+      "max_lagged_ADV_participation": 0.001,
+      "all_costs_simultaneously_scaled": true,
+      "rounding_cost_separately_recorded": true,
+      "terminal_costed": true,
+      "funding_borrow": "N/A unlevered long-only spot"
+    },
+    "metadata_sha256": "857af9870c57ad05e50a5ee6fad92240b384b99cc22e9ae8cece0e6f94e2d033",
+    "walk_forward_folds": 6,
+    "walk_forward_test_days": 30,
+    "warmup_days": 180,
+    "embargo_days": 3
+  },
+  "components": [
+    {
+      "fingerprint": "b998845dec7e0cb36a862cf9a6677db79725bb223726d50d1e82c4c43fdb93fc",
+      "weight": 0.75
+    },
+    {
+      "fingerprint": "9dafbeb62732b11df0a46ece9533b2432133eaaa6c6a4a749ab14269bfea1798",
+      "weight": 0.25
+    }
+  ],
+  "validation_plan": "research/experiments/20261023T043854Z/plan.json",
+  "sources": [
+    {
+      "url": "https://github.com/binance/binance-public-data",
+      "accessed_utc": "2026-10-23",
+      "scope": "Primary public archive provenance;four existing normalized files and original source reports rehashed,not a fresh full archive download."
+    },
+    {
+      "url": "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.ewm.html",
+      "accessed_utc": "2026-10-23",
+      "scope": "Primary EMA adjust=False recurrence reference only;existing leaf rules and archived outcomes unchanged."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/products/spot/filters",
+      "accessed_utc": "2026-10-23",
+      "scope": "Official rules;frozenOct1metadata and historical5minuteVWAP acceptance remain proxies,not current/historical real exchange proof."
+    }
+  ]
+}

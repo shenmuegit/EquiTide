@@ -1,0 +1,79 @@
+{
+  "recorded_at_utc": "2026-10-23T04:58:08.395272+00:00",
+  "failed_command": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261023T043854Z/run.py",
+      "evaluate"
+    ],
+    "started_utc": "2026-10-23T04:53:25.158933+00:00",
+    "ended_utc": "2026-10-23T04:53:26.242514+00:00",
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261023T043854Z/run.py\", line 100, in <module>\n    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()\n                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261023T043854Z/run.py\", line 84, in evaluate\n    assert not (R/'report.json').exists();plan=json.loads((R/'plan.json').read_text());batch=json.loads((R/'batch.json').read_text());records=reg.read_records(ROOT/'research/automation/registry.jsonl');assert all(records[b['fingerprint']]['status']=='reserved' for b in batch);started=now();frames,refs,arcs,vectors,folds,proof=sources(plan);configs={};(R/'results').mkdir()\n                                                                                                                                                                                                                                                                                                                                        ^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261023T043854Z/run.py\", line 70, in sources\n    v[-1]=float(D(z['terminal_cash'])+D(z['terminal_units'])*D(str(opens[363*1440+1])));assert D(z['terminal_units'])==0 and core.navhash(v)==z['summary']['NAV_sha256_f64le'];vectors[fp,k]=v;proof.append({'fingerprint':fp,'cost_multiplier':k,'NAV_sha256_f64le':core.navhash(v),'NAV_points':len(v)})\n                                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  "failed_log_path": "research/experiments/20261023T043854Z/evaluate.log",
+  "failed_log_sha256": "f83012374678233eeec609786155f91ac52f2685a2b297ecd7e68196db314e6d",
+  "failed_reader_code_sha256": "25240d26f5215f57a82387ce7d9c11e8a078aca3efc322e390e08ae20f3d1730",
+  "parent_configurations_computed_before_failure": 0,
+  "new_parent_result_files_created_before_failure": 0,
+  "hypothesis_confirmed": "Postdecision OPEN passed through Polars Decimal->Float64->string->Decimal,losing low bits before cash+qty*price. Archived source postdecision opens used native Decimal-equivalent prices. Keep minute CLOSE PolarsFloat64 encoding unchanged;use native Decimal OPEN for postdecision/terminal NAV,then float once.",
+  "source_component": {
+    "fingerprint": "8902c135dd8685eec758a0532f6debfd424d94b4216cb76b056c666127221234",
+    "name": "volguard_2025_BTC_e0.0125_v0.6",
+    "spec": "research/experiments/20261002T134733Z/specs/volguard_2025_BTC_e0.0125_v0.6.json",
+    "spec_sha256": "a2cf0d01144b8fa4e52c9f31bd3e14ed4789f20500b336726f115e480b508ba1",
+    "report": "research/experiments/20261002T134733Z/report.json",
+    "report_sha256": "3a7f7df44d197bddded765badc9f45f94a6c3bfc05d4c9659dbb9667461aa448",
+    "archive": "research/experiments/20261002T134733Z/results/volguard_2025_BTC_e0.0125_v0.6.json.gz",
+    "archive_sha256": "3ddcf840ed31cc669985a9ddbf9f1559d4a992b055e092c422b865ff6a6e3eb8",
+    "asset": "BTC",
+    "year": "2025",
+    "axis": 0.6,
+    "capital_usdt": 1500,
+    "original_status": "passed",
+    "is_new_component": false
+  },
+  "same_original_parquet_sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6",
+  "regression_case": {
+    "price": "87528.860000000000000000",
+    "cash": "0.4151601469000000000",
+    "units": "0.01711000",
+    "original_native_Decimal_NAV": 1498.0339547469,
+    "failed_float_roundtrip_NAV": 1498.0339547468998,
+    "Polars_float_price": "87528.85999999999",
+    "day_offset": 35,
+    "NAV_index": 50436
+  },
+  "diagnostic_three_cost_scenes": [
+    {
+      "cost_multiplier": "1",
+      "archived_NAV_sha256": "4ff6ea386e1edd2d4f259f3b78ab2ecdc8856102e681fdeec0067fcae5432b2b",
+      "failed_float_roundtrip_sha256": "f3c9e2694c742b1094e8e426a12b195209b5b26e94fd6a61a0b8deee8a464a5d",
+      "native_Decimal_recovery_sha256": "4ff6ea386e1edd2d4f259f3b78ab2ecdc8856102e681fdeec0067fcae5432b2b",
+      "post_decision_points_differing": 31,
+      "minute_close_encoding_unchanged": true,
+      "final_NAV_unchanged": true
+    },
+    {
+      "cost_multiplier": "2",
+      "archived_NAV_sha256": "f2dcb2a657a655d1cd7e2f75562f82fca1668d86585dbc52389a184943055ee7",
+      "failed_float_roundtrip_sha256": "ed938b119889eeaa2f2e731da4061548a0f783240ebe6dbd7f989cdb043423a4",
+      "native_Decimal_recovery_sha256": "f2dcb2a657a655d1cd7e2f75562f82fca1668d86585dbc52389a184943055ee7",
+      "post_decision_points_differing": 34,
+      "minute_close_encoding_unchanged": true,
+      "final_NAV_unchanged": true
+    },
+    {
+      "cost_multiplier": "3",
+      "archived_NAV_sha256": "ae4d67c77bae4457dda6539bd5d3916e4748c3fc996addd327441f09ab559956",
+      "failed_float_roundtrip_sha256": "8f25ed63a1c089fb06cb0960d0a1f707c90da18d319c1171e2aa9712d55af6c4",
+      "native_Decimal_recovery_sha256": "ae4d67c77bae4457dda6539bd5d3916e4748c3fc996addd327441f09ab559956",
+      "post_decision_points_differing": 29,
+      "minute_close_encoding_unchanged": true,
+      "final_NAV_unchanged": true
+    }
+  ],
+  "historical_report_or_archive_bytes_rewritten": false,
+  "diagnostic_serialization_failure_retained": "diagnostic_serialization_failure.json"
+}
