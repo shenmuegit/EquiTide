@@ -1,0 +1,75 @@
+"""Retain every real outcome;describe joint parameter grid and matched stored controls."""
+import csv,gzip,io,json,statistics,difflib
+from collections import Counter,defaultdict
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from run import ROOT,R,LOOKS,HURDLES,sha,put
+
+def csvwrite(path,rows,compressed=False):
+ fields=list(dict.fromkeys(k for x in rows for k in x));buf=io.StringIO(newline='');w=csv.DictWriter(buf,fieldnames=fields,lineterminator='\n');w.writeheader();w.writerows(rows);raw=buf.getvalue().encode();path.write_bytes(gzip.compress(raw,mtime=0) if compressed else raw)
+
+def main():
+ report=json.loads((R/'report.json').read_text());plan=json.loads((R/'plan.json').read_text());ctx=json.loads((R/'context.json').read_text());cfgs=report['configs'];assert len(cfgs)==18 and report['summary']['cost_scenarios']==54
+ src=plan['source_comparison'];assert sha(ROOT/src['report'])==src['report_sha256'];old=json.loads((ROOT/src['report']).read_text());rows=[];folds=[];daily=[];costs=[];fund=[];margins=[];comparison=[];edges=[];paths=defaultdict(list);by={(c['asset'],c['lookback_days'],c['return_hurdle']):c for c in cfgs.values()}
+ for c in cfgs.values():
+  prior=old['configs'][c['prior_cash_band_name']];assert prior['asset']==c['asset'] and prior['lookback_days']==c['lookback_days'] and prior['return_hurdle']==c['return_hurdle']
+  paths[tuple(c['scenes'][k]['NAV_sha256_f64le'] for k in ['1','2','3'])].append(c['name'])
+  for k,z in c['scenes'].items():
+   meta={'configuration':c['name'],'asset':c['asset'],'lookback_days':c['lookback_days'],'entry_hurdle':c['return_hurdle'],'exit_ROC':0,'cost_multiplier':k};rows.append({**meta,**{p:z[p] for p in ['net_return_pct','max_drawdown_pct','mark_observation_drawdown_pct','trade_proxy_drawdown_pct','daily_mark_drawdown_pct','sharpe_365','calmar','cost_usdt','cost_pct_initial','funding_usdt','gross_reference_PnL_to_execution_cost','executions','round_trips']},'positive_folds':sum(f['net_return_pct']>0 for f in z['folds']),'local3_positive_fraction':c['sensitivity']['local_3x_neighbor_positive_fraction'],'status':c['status']});folds.extend({**meta,**f} for f in z['folds']);daily.extend({**meta,'boundary_index':i,'NAV_usdt':v} for i,v in enumerate(z['daily_equity_usdt']));costs.append({**meta,'total_cost_usdt':z['cost_usdt'],**z['cost_parts_usdt']});fund.append({**meta,**{p:z[p] for p in ['funding_usdt','base_funding_same_exposure_usdt','funding_stress_increment_usdt','funding_income_usdt','funding_outflow_usdt','funding_settlements','nonzero_funding_settlements']}});margins.append({**meta,**z['margin']})
+   p=prior['scenes'][k];comparison.append({**meta,'source_configuration':prior['name'],'source_fingerprint':prior['fingerprint'],'old_net_return_pct':p['net_return_pct'],'new_net_return_pct':z['net_return_pct'],'return_difference_pct':z['net_return_pct']-p['net_return_pct'],'old_max_drawdown_pct':p['max_drawdown_pct'],'new_max_drawdown_pct':z['max_drawdown_pct'],'old_execution_cost_usdt':p['cost_usdt'],'new_execution_cost_usdt':z['cost_usdt'],'old_executions':p['executions'],'new_executions':z['executions'],'old_funding_usdt':p['funding_usdt'],'new_funding_usdt':z['funding_usdt'],'same_full_NAV_hash':z['NAV_sha256_f64le']==p['NAV_sha256_f64le']})
+ for asset in ['BTC','ETH']:
+  es=[]
+  for i,L in enumerate(LOOKS):
+   for j,H in enumerate(HURDLES):
+    a=by[asset,L,H]
+    for ni,nj,axis in [(i+1,j,'lookback_days'),(i,j+1,'return_hurdle')]:
+     if ni<3 and nj<3:
+      b=by[asset,LOOKS[ni],HURDLES[nj]];es.append({'asset':asset,'from':a['name'],'to':b['name'],'axis':axis,'absolute_3x_Sharpe_difference':abs(a['scenes']['3']['sharpe_365']-b['scenes']['3']['sharpe_365'])})
+  threshold=2*statistics.stdev(x['absolute_3x_Sharpe_difference'] for x in es)
+  for e in es:e.update(threshold=threshold,descriptive_cliff_flag=e['absolute_3x_Sharpe_difference']>threshold)
+  edges.extend(es)
+ c3=[x for x in comparison if x['cost_multiplier']=='3'];analysis={'matched_stored_cash_band_configs':18,'old_configs_recalculated_or_reserved':0,'new_3x_cost_lower':sum(x['new_execution_cost_usdt']<x['old_execution_cost_usdt'] for x in c3),'new_3x_return_higher':sum(x['return_difference_pct']>0 for x in c3),'same_full_3x_NAV_hash':sum(x['same_full_NAV_hash'] for x in c3),'matched_by_same_asset_lookback_entry_notional_costs_period':True,'source_report':src['report'],'source_report_sha256':src['report_sha256']}
+ report.update(failure_counts=dict(Counter(k for c in cfgs.values() for k,v in c['criteria'].items() if not v)),comparative_analysis=analysis,sensitivity_cliffs={'heuristic':'Adjacent3xdailySharpe difference>2sampleSDwithinasset;descriptiveonly.','edges':edges},within_batch_path_equivalence={'unique_full_three_cost_NAV_paths':len(paths),'parameter_definitions':18,'groups':[{'names':names,'NAV_sha256_by_cost':dict(zip(['1','2','3'],key))} for key,names in paths.items()],'scope':'Same reused330daymarket;new parameters/exit logic do not create independent samples.'},research_context={'prior_registry_events':ctx['registry_events'],'prior_registry_ids':ctx['registry_ids'],'prior_canonical_research_definitions':ctx['canonical_research_definitions_excluding_observations'],'prior_conclusions_read':len(ctx['prior_conclusions_read']),'initial16_missing_actual_results':0,'independent_final_holdout':False,'DSR_PBO_computed':False},artifacts={'full_results':'results/*.json.gz','all_cost_scenes':'sensitivity.csv','fold_results':'fold_results.csv','daily_NAV':'daily_equity.csv.gz','cost_parts':'cost_scenarios.csv','funding':'funding_scenarios.csv','margin':'margin_scenarios.csv','old_control_comparison':'matched_cash_band_comparison.csv','surface':'sensitivity_surface.png','verification':'verification.json'})
+ put(R/'report.json',report)
+ for name,data,compressed in [('sensitivity.csv',rows,False),('fold_results.csv',folds,False),('daily_equity.csv.gz',daily,True),('cost_scenarios.csv',costs,False),('funding_scenarios.csv',fund,False),('margin_scenarios.csv',margins,False),('matched_cash_band_comparison.csv',comparison,False)]:csvwrite(R/name,data,compressed)
+ fig,axes=plt.subplots(1,3,figsize=(15,4.5),constrained_layout=True);limit=max(abs(c['scenes']['3']['net_return_pct']) for c in cfgs.values())
+ for asset,ax in zip(['BTC','ETH'],axes):
+  vals=np.asarray([[by[asset,L,H]['scenes']['3']['net_return_pct'] for H in HURDLES] for L in LOOKS]);im=ax.imshow(vals,cmap='RdYlGn',vmin=-limit,vmax=limit);ax.set(xticks=range(3),xticklabels=['1%','2%','4%'],yticks=range(3),yticklabels=LOOKS,xlabel='Strict entry hurdle; exit at zero',ylabel='Return lookback days',title=asset+' zero-exit: 3x costs')
+  for i in range(3):
+   for j in range(3):ax.text(j,i,f'{vals[i,j]:+.2f}%',ha='center',va='center')
+ fig.colorbar(im,ax=list(axes[:2]),label='Net return % of 10000 collateral',shrink=.8)
+ for asset,color in [('BTC','tab:blue'),('ETH','tab:orange')]:
+  c=by[asset,10,.02]
+  for z,label,style in [(c['scenes']['3'],asset+' new zero-exit','-'),(old['configs'][c['prior_cash_band_name']]['scenes']['3'],asset+' old cash-band','--')]:axes[2].plot(np.arange(331),np.asarray(z['daily_equity_usdt'])/100,label=label,color=color,linestyle=style)
+ axes[2].axhline(100,color='grey',linestyle=':',label='Cash, zero yield');axes[2].set(xlabel='Continuous OOS daily boundary',ylabel='NAV / initial collateral %',title='Preset L10/H2%, stored old controls');axes[2].legend(fontsize=7);fig.savefig(R/'sensitivity_surface.png',dpi=140);plt.close(fig)
+ source_engine=ROOT/src['source_engine'];(R/'engine_change.diff').write_text(''.join(difflib.unified_diff(source_engine.read_text().splitlines(keepends=True),(R/'engine.py').read_text().splitlines(keepends=True),fromfile=src['source_engine'],tofile=str((R/'engine.py').relative_to(ROOT)),n=0)))
+ best=max(cfgs.values(),key=lambda c:c['scenes']['3']['net_return_pct']);z=best['scenes']['3'];minimum=min(c['scenes'][k]['margin']['minimum_equity_minus_maintenance_usdt'] for c in cfgs.values() for k in ['1','2','3']);s=report['summary'];fwd=json.loads((R/'forward_report.json').read_text());fs=fwd['configs']['forward_snapshot_combo']['scenes'];fv=json.loads((R/'forward_verification.json').read_text())
+ lines=['# BTC/ETH永续动量：过零退出滞回规则','',f"轮次 `{R.name}`。主计划SHA256 `{report['frozen_plan_sha256']}`。18个新配置均先成功reserve，实际完成54成本场景、594逐折；通过{len(s['passed'])}、淘汰{len(s['rejected'])}。1/2/3倍净正配置{s['positive_configs_by_cost']['1']}/{s['positive_configs_by_cost']['2']}/{s['positive_configs_by_cost']['3']}，全部正负结果完整保留。另3个原SMA新截止观察独立登记。",'',
+ '此前已测试的永续多空cash-band在动量降回入场阈值内便平仓，20日长回看出现正收益边缘，但邻域/盈利折不足。本轮固定更慢的退出条件，检验减少反复进出是否足以改善经成本稳健性。该规则是基于已见历史提出的新假设，仍有多重选择偏差。[AQR原始时序动量研究](https://www.aqr.com/Insights/Research/Journal-Article/Time-Series-Momentum)提供期货自身收益动量背景，其12月多资产结果不证明本批5/10/20日加密规则。', '',
+ '每日使用前一完整UTC永续日：r=C[i−1]/C[i−1−L]−1，L={5,10,20}，H={1%,2%,4%}。空仓仅在r>H开多、r<−H开空。已有多头在r>0期间保留，已有空头在r<0期间保留；r=0退出。越过相反入场阈值时同次执行先平旧仓再开反向仓。恰等于±H不触发新仓，但已有同向仓可保留。BTC/ETH各3×3全网格，退出固定0，无结果后扩网格或选出新规则。预设中心L10/H2%。','',
+ '信号已知后下一00:01真实分钟OPEN执行；同方向持仓数量保持。每配置独立10000USDT抵押，新仓原值名义额20%=2000USDT，数量按前日已知收盘和真实lot向下取整。该20%不自动归一，实际跳空名义额可偏离20%，另受扣费后抵押1倍上限约束。线性永续只在开仓扣费，平仓结算带符号数量×实际价差；不按现货扣名义本金，不借现货币，无现金利息或账户间调拨。','',
+ '仅修改新实验副本的退出信号和状态入参，复用已审计的Decimal28成交、资金费、时间轴和保证金代理；差异见engine_change.diff。源18个cash-band和2个恒多参考只读存储指标，未重算、未重新登记、未改原报告。相同资金/窗口/成本/资产/入场参数逐项比较见matched_cash_band_comparison.csv。', '',
+ f"匹配比较：18组中3倍执行成本降低{analysis['new_3x_cost_lower']}组，3倍净收益提高{analysis['new_3x_return_higher']}组；与原同配置3倍完整NAV哈希相同{analysis['same_full_3x_NAV_hash']}组。降成本不自动带来更好的价格盈亏、资金费或折间一致性。新批次{len(paths)}种完整三成本路径仍复用同一市场样本。",'',
+ '8份原始归一化Parquet保留在data/normalized；每币525600根分钟永续bar、8760根小时mark、1095个资金费结算及真实lot/tick/minNotional元数据，哈希/字节数/复现路径见plan和data_manifest。输入2025-09-16至2026-09-16；OOS为2025-10-19 00:01至2026-09-14 00:01 UTC，330日、11连续30日折，初始30日上下文加3日间隔。一次现金起步，跨折保持真实数量/入场价/现金/资金费，末端计成本平仓；不在折内调参，不拟合、无未来标签，purge不适用。该段历史已反复使用，不能称未触碰最终测试集。', '',
+ '[Binance资金费说明](https://www.binance.com/en/support/faq/detail/360033525031)：按归档实际结算纳秒−q×真实结算mark×真实rate记经济现金流，仅当时持仓参与；00:00或00:00.001均先于00:01变仓。available_ts实际延迟字段保留，资金费只作事后经济核算，不用来预测、选方向或定数量。1/2/3倍压力放大负支出，正收入不放大。永续空头不涉及现货借币，未虚构借币费；真实私人保证金流、历史所有风险档位尚缺。', '',
+ '[Binance Mark/Last说明](https://www.binance.com/en/support/faq/detail/360033525271)：主连续NAV是分钟成交收盘代理、真实小时mark及结算mark、成交前后参考点混合的采样风险指标，每场景486093点，另列mark观察/成交代理子曲线DD；不是逐tick标记权益。对每个状态覆盖的完整OOS小时，以多头mark低价、空头mark高价检查1%名义额维护保证金代理；首末不完整小时缺完整极值，未声称精确历史强平重建。', '',
+ '三项验证均已实际计算：11折连续walk-forward；两币各回看×阈值联合3×3敏感性，局部相邻索引矩形含自身，保存收益/DD/Sharpe/Calmar及24条邻接断崖描述；手续费5bp/侧、半价差1bp、滑点2bp，加0.5×过去20完整日日log波动×sqrt(名义额/过去20日永续quote ADV)冲击，参与率≤0.1%，实际Decimal不利tick/lot/minNotional，1/2/3倍全部执行成本及负资金费。历史L2、队列/延迟、VIP费率和实盘TCA缺失，模型条件不能冒充真实成交。', '',
+ '资格门槛事前固定：三成本净正，1倍≥8/11正折，3倍混合采样DD≤25%，局部3倍正比例≥60%，1倍≥4往返，1倍毛参考价格PnL加资金费/执行成本≥2.5，无负抵押/拒单/保证金代理越界，终点空仓。毛加回仅作已知账本归因，不是另一条未登记策略。', '',
+ '|币|L|H|1倍收益|2倍收益|3倍收益|1倍正折|3倍混合DD|3倍Sharpe|3倍Calmar|3倍费用USDT|3倍资金费USDT|邻域3倍正比例|结论|','|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|']
+ for c in cfgs.values():
+  a,b,t=[c['scenes'][k] for k in ['1','2','3']];lines.append(f"|{c['asset']}|{c['lookback_days']}|{c['return_hurdle']:.0%}|{a['net_return_pct']:+.3f}%|{b['net_return_pct']:+.3f}%|{t['net_return_pct']:+.3f}%|{c['positive_folds_1x']}/11|{t['max_drawdown_pct']:.3f}%|{t['sharpe_365']:.3f}|{t['calmar']:.3f}|{t['cost_usdt']:.3f}|{t['funding_usdt']:+.3f}|{c['sensitivity']['local_3x_neighbor_positive_fraction']:.1%}|{c['status']}|")
+ lines+=['',f"事后最高 `{best['name']}`：3倍收益{z['net_return_pct']:+.6f}%，混合DD{z['max_drawdown_pct']:.6f}%，1倍正折{best['positive_folds_1x']}/11，邻域3倍正比例{best['sensitivity']['local_3x_neighbor_positive_fraction']:.1%}；失败门槛为{', '.join(best['failed_criteria'])}。最高点只作完整结果描述，不当独立验证或未来推荐。",'',f"预设中心BTC/ETH的3倍收益分别{by['BTC',10,.02]['scenes']['3']['net_return_pct']:+.6f}%/{by['ETH',10,.02]['scenes']['3']['net_return_pct']:+.6f}%。最低不利整小时保证金代理余量{minimum:.6f}USDT；54场景均无负抵押、拒单或保证金代理越界，不代表逐tick清算安全。",'', '失败计数：`'+json.dumps(report['failure_counts'])+'`。18项全部rejected，未找到通过本轮预设门槛的新方法。','','同资金恒多原始参考（只读已有结果）：','']
+ for name,c in old['configs'].items():
+  if c.get('role')=='benchmark':lines.append(name+'：1/2/3倍收益'+ '/'.join(f"{c['scenes'][k]['net_return_pct']:+.6f}%" for k in ['1','2','3'])+'；无新增参考测试。')
+ lines+=['',f"完整读取{ctx['registry_events']}事件/{ctx['registry_ids']}ID、{ctx['canonical_research_definitions_excluding_observations']}个规范研究定义及{len(ctx['prior_conclusions_read'])}份既往结论；初始16项有真实证据。5个legacy-tested原行无新版result_available/report字段，已核对原交易ZIP和walk-forward JSON，不把缺字段当无结果重跑。",'',
+ '失败事实：读取猜测的旧check_engine.py文件不存在，cat实际exit1；随后对初始16项新版标志的只读断言过窄实际exit1，已按原始来源解析。两者均在预登记/金融计算前，真实记录见read_failures.json。新滞回合成测试先对原引擎触发预期TypeError红灯（实际exit1，synthetic_red.json/money_checks_red.log），实现后实际通过；这不是市场回测。evaluate复制模板曾把汇总场景数显示为60，留档前按18×3纠正为54，原18个金融结果子树完全一致，未重跑；更正说明见report_metadata_correction.json。', '',
+ '独立审计不用生产trade/funding/target函数，以整数交叉乘法和当前已持有数量重建滞回方向，逐笔Decimal复核有符号现金/PnL、五项费用、资金费和原始真实时间轴。已核对4116笔成交、53460条结算（含空仓零）、54条完整NAV共26249022点、648个整体/逐折指标及405075次状态—整小时保证金边界检查。报告补充描述后再运行一次最终审计，以最终SHA逐配置finish；不改任何已finish报告。', '',
+ f"原冻结SMA按{fwd['source_report']}续接，从{fwd['resume_utc']}至{fwd['cutoff_utc']}追加120闭合分钟；保留{fv['original_NAV_prefix']}旧NAV点，各场景{fv['NAV_points_per_scene']}点，累计{fv['cumulative_minutes']}分钟（21完整日）。零新日决策/参考点/成交/费用，原现金、units、desired、交易账本保持；3倍累计收益{fs['3']['net_return_pct']:+.6f}%，只是未满180日/六折的延迟shadow。下个日事件2026-10-24 00:01 UTC及原2027-03-31终止计划保持，与paper10真实报价模拟分开。", '',
+ f"复核工作目录固定/home/desktop/Documents/Codex/EquiTide。`PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 /home/desktop/.local/share/equitide-research/worktree/.venv/bin/python research/experiments/{R.name}/audit.py`。原SMA离线重放用相同解释器执行`research/experiments/{R.name}/forward.py --reproduce`。不在正式登记重复reserve已finish ID；原市场路径/哈希齐备时，完整金融重算仅在隔离审计副本和单独账本下按freeze→evaluate→summarize→audit→finish执行。", '',
+ '保留18个完整成交/资金费/状态归档、54场景594逐折和17874日NAV记录、全部正负结果、旧参考来源哈希、原SMA累计报告/状态及2份原始HTTP响应；行情留data，无新NPY/checkpoint/重复行情下载。必要大JSON保留原字节，登记report_sha256优先，不做格式迁移。未验证独立最终测试、完整365日、DSR/PBO、逐tickmark/历史阶梯强平或真实L2/TCA；不称稳定实盘盈利。','']
+ (R/'result.md').write_text('\n'.join(lines));(R/'forward_result.md').write_text('\n'.join(['# 原冻结SMA延迟shadow连续观察','',f"{fwd['resume_utc']}→{fwd['cutoff_utc']}，真实新增120闭合分钟，各币各成本旧{fv['original_NAV_prefix']}点完整前缀保持，现{fv['NAV_points_per_scene']}点。现金/units/desired/成交/费用原样续接；无新日决策或成交。",f"累计{fv['cumulative_minutes']}分钟/21完整日，组合1/2/3倍收益"+'/'.join(f"{fs[k]['net_return_pct']:+.9f}%" for k in ['1','2','3'])+'。', '三观察以真实partial结果rejected，表示未成熟180日/六折，不取消原长期计划。下次2026-10-24UTC00:01决策；原规则/计划哈希与2027-03-31终点不变。不是十策略真实报价模拟账户或真实订单。','来源、HTTP原字节、重叠bar、逐分钟闭合性、原始NAV前缀和次轮状态均独立核验；离线重放无新HTTP或登记写入。','']))
+ print(json.dumps({'financial_configs':18,'cost_scenes':len(rows),'fold_rows':len(folds),'daily_NAV_rows':len(daily),'failure_counts':report['failure_counts'],'comparative_analysis':analysis,'posthoc_best':{'name':best['name'],'return3':z['net_return_pct'],'DD3':z['max_drawdown_pct'],'positive_folds1':best['positive_folds_1x'],'neighbors3':best['sensitivity']['local_3x_neighbor_positive_fraction'],'failed':best['failed_criteria']}},ensure_ascii=False),flush=True)
+
+if __name__=='__main__':main()

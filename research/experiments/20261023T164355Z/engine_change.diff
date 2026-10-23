@@ -1,0 +1,17 @@
+--- research/experiments/20261023T124125Z/engine.py
++++ research/experiments/20261023T164355Z/engine.py
+@@ -1 +1 @@
+-"""Linear USDT perpetual ledger with actual funding and explicit sampled risk axis."""
++"""Zero-exit-hysteresis signed perpetuals;source ledger/cost/funding/risk accounting retained."""
+@@ -14,2 +14,6 @@
+-def target(values,i,look,hurdle):
+- r=F(values[i-1])/F(values[i-1-look])-1;h=F(str(hurdle));return (1 if r>h else -1 if r < -h else 0),str(r)
++def target(values,i,look,hurdle,current_direction=0):
++ r=F(values[i-1])/F(values[i-1-look])-1;h=F(str(hurdle))
++ assert current_direction in [-1,0,1]
++ # Strict entry bands;keep the existing signed exposure until its return crosses zero.
++ desired=1 if r>h else -1 if r < -h else (1 if current_direction==1 and r>0 else -1 if current_direction==-1 and r<0 else 0)
++ return desired,str(r)
+@@ -89 +93 @@
+-   wanted,r=(1,None) if p.get('signal_mode')=='constant_long_reference' else target(m['closes'],ref,p['lookback_days'],p['return_hurdle']);q=D(state['signed_units']);decisions.append({'decision_index':ref,'signal_available_ts_ns':int(m['frame']['available_ts'][ref*1440-1]),'execution_ts_ns':int(m['ts'][idx]),'lookback_return_exact':r,'desired_direction':wanted,'fixed_entry_notional_usdt':2000,'state_before':copy.deepcopy(state)})
++   wanted,r=(1,None) if p.get('signal_mode')=='constant_long_reference' else target(m['closes'],ref,p['lookback_days'],p['return_hurdle'],1 if D(state['signed_units'])>0 else -1 if D(state['signed_units'])<0 else 0);q=D(state['signed_units']);decisions.append({'decision_index':ref,'signal_available_ts_ns':int(m['frame']['available_ts'][ref*1440-1]),'execution_ts_ns':int(m['ts'][idx]),'lookback_return_exact':r,'desired_direction':wanted,'fixed_entry_notional_usdt':2000,'state_before':copy.deepcopy(state)})
