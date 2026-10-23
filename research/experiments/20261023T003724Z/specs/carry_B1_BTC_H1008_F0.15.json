@@ -1,0 +1,70 @@
+{
+  "kind": "strategy",
+  "family": "repeated-matched-carry",
+  "market": "spot-perpetual-hedge",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "timeframe": "1h",
+  "logic": {
+    "entry": "hourly when flat; B0 forced, B1 prior 21 realized hourly funding median times hold minus estimated roundtrip cost above buffer; require full horizon",
+    "exit": "B0 fixed signal+hold; B1 remaining expected funding minus future exit cost <= buffer or fixed signal+hold; next minute open; then next hourly decision may re-enter",
+    "sizing": "same floored common lot base quantity on both legs; fraction of contemporaneous known NAV per leg; separate spot cash/perp collateral; no transfers; no borrow"
+  },
+  "parameters": {
+    "baseline": "B1",
+    "holding_hours": 1008,
+    "funding_window": 21,
+    "per_leg_fraction": 0.15,
+    "buffer_usdt": 1,
+    "initial_capital_usdt": 10000,
+    "books_usdt": [
+      5000,
+      5000
+    ],
+    "oos_start_utc": "2025-10-10T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-11T00:01:00Z",
+    "warmup_days": 21,
+    "embargo_days": 3,
+    "walk_forward_folds": 12,
+    "walk_forward_test_days": 28,
+    "walk_forward_step_days": 28,
+    "costs": {
+      "spot_fee_per_side": 0.001,
+      "perp_fee_per_side": 0.0005,
+      "half_spread_per_side": 0.0001,
+      "slippage_per_side": 0.0002,
+      "impact": "0.5*strictly previous20complete-day log-return sample sigma*sqrt(leg quote notional/leg prior20day quote ADV)",
+      "maximum_participation": 0.001,
+      "multipliers": [
+        1,
+        2,
+        3
+      ],
+      "funding_stress": "Paid negative receipts multiplied; positive income unchanged; actual settlement mark and millisecond jitter retained.",
+      "metadata": "Frozen20261001spot snapshot plus normalized perp metadata; historical proxy,not refreshed historical tiers.",
+      "maintenance_ratio_assumed": 0.01,
+      "borrow": "No spot short or borrowing; USDT yield0; isolated5000/5000books,no transfers."
+    },
+    "metadata_snapshot_sha256": "857af9870c57ad05e50a5ee6fad92240b384b99cc22e9ae8cece0e6f94e2d033"
+  },
+  "name": "carry_B1_BTC_H1008_F0.15",
+  "validation_plan": "research/experiments/20261023T003724Z/plan.json",
+  "sources": [
+    {
+      "url": "https://github.com/binance/binance-public-data",
+      "accessed_utc": "2026-10-23",
+      "scope": "Original real minute spot/perp and hourly mark archive provenance; normalized ns hashes checked."
+    },
+    {
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Get-Funding-Rate-History",
+      "accessed_utc": "2026-10-23",
+      "scope": "Actual realized rates,settlement marks/timestamps. Official page redirects to current market-data catalog."
+    },
+    {
+      "path": "research/experiments/20261001T053425Z/carry.py",
+      "sha256": "dbe4678aefc8512c5dc1159e070c0263b1018f96fb44d327c60135b599f50312",
+      "scope": "Existing unchanged B1 causal funding gate and isolated-ledger accounting;longer horizons and raw per-leg fractions, unchanged kernel."
+    }
+  ]
+}

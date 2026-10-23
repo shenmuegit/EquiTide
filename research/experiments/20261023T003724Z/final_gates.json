@@ -1,0 +1,88 @@
+[
+  {
+    "label": "forward_replay",
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261023T003724Z/forward.py",
+      "verify"
+    ],
+    "started_utc": "2026-10-23T00:52:21.712625+00:00",
+    "ended_utc": "2026-10-23T00:52:23.777691+00:00",
+    "exit_code": 0,
+    "stdout": "{\"passed\": true, \"report_sha256\": \"87f6471ccf15d771e5ddf145af0897b45c25a61dcf6e40563bd3fbd8d03756dc\", \"scenes\": 9, \"closed_minutes_added_per_asset\": [1792706400000, 1792715400000, 60000], \"daily_decisions_per_asset\": 1, \"raw_response_pages_verified\": 4, \"original_NAV_prefix_and_cash_quantity_cost_trade_continuity_verified\": true, \"frozen_plan_unchanged\": true, \"paper10_unchanged\": true, \"new_virtual_component_orders_all_costs\": 0}\n",
+    "stderr": ""
+  },
+  {
+    "label": "registry_gate",
+    "command": [
+      "python3",
+      "checks/strategy_registry.py"
+    ],
+    "started_utc": "2026-10-23T00:52:23.778091+00:00",
+    "ended_utc": "2026-10-23T00:52:24.989415+00:00",
+    "exit_code": 0,
+    "stdout": "PASS: new parameters/weights and missing-result retries are allowed; exact/reordered completed trials stay blocked\n",
+    "stderr": ""
+  },
+  {
+    "label": "snapshot",
+    "command": [
+      "python3",
+      "research/monitor/snapshot.py"
+    ],
+    "started_utc": "2026-10-23T00:52:24.989914+00:00",
+    "ended_utc": "2026-10-23T00:52:29.561687+00:00",
+    "exit_code": 0,
+    "stdout": "{\"output\": \"/home/desktop/Documents/Codex/EquiTide/research/monitor/latest.json\", \"bytes\": 249403, \"paper_status\": \"ready\", \"research_configs\": 3921, \"compressed_research_bytes\": 1201065}\n",
+    "stderr": ""
+  },
+  {
+    "label": "monitor_check_final",
+    "command": [
+      "python3",
+      "checks/monitor_snapshot.py"
+    ],
+    "started_utc": "2026-10-23T00:52:29.562114+00:00",
+    "ended_utc": "2026-10-23T00:52:38.522654+00:00",
+    "exit_code": 0,
+    "stdout": "{\"ok\": true, \"paper_accounts\": 10, \"observations\": 98, \"research_configs\": 3921, \"protected_inputs_unchanged\": true}\n",
+    "stderr": ""
+  },
+  {
+    "label": "diff_check",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "started_utc": "2026-10-23T00:52:38.523098+00:00",
+    "ended_utc": "2026-10-23T00:52:38.691437+00:00",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "label": "feed_attribution",
+    "command": [
+      "python3",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261023T003724Z/check_feed.py"
+    ],
+    "started_utc": "2026-10-23T00:53:46.763468+00:00",
+    "ended_utc": "2026-10-23T00:53:47.905597+00:00",
+    "exit_code": 0,
+    "stdout": "{\"passed\": true, \"research_configs\": 3921, \"paper_observations\": 98, \"paper_accounts\": 10, \"new_configs_verified\": 18, \"new_cost_scenes_verified\": 54, \"prior_configs_reused_read_only\": 20, \"new_finished_observations\": 3, \"main_registry_append_only_events\": 42, \"regression_alias_retained\": true, \"financial_report_sha256\": \"9ddecd909ab00a6332663d18b6608a932ba9b78160462f650009ccc332fc13c5\", \"forward_report_sha256\": \"87f6471ccf15d771e5ddf145af0897b45c25a61dcf6e40563bd3fbd8d03756dc\", \"protected_inputs_unchanged\": true}\n",
+    "stderr": ""
+  },
+  {
+    "label": "feed_attribution_stable_base",
+    "command": [
+      "python3",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261023T003724Z/check_feed.py"
+    ],
+    "started_utc": "2026-10-23T00:54:50.380332+00:00",
+    "ended_utc": "2026-10-23T00:54:51.559050+00:00",
+    "exit_code": 0,
+    "stdout": "{\"passed\": true, \"research_configs\": 3921, \"paper_observations\": 98, \"paper_accounts\": 10, \"new_configs_verified\": 18, \"new_cost_scenes_verified\": 54, \"prior_configs_reused_read_only\": 20, \"new_finished_observations\": 3, \"main_registry_append_only_events\": 42, \"regression_alias_retained\": true, \"financial_report_sha256\": \"9ddecd909ab00a6332663d18b6608a932ba9b78160462f650009ccc332fc13c5\", \"forward_report_sha256\": \"87f6471ccf15d771e5ddf145af0897b45c25a61dcf6e40563bd3fbd8d03756dc\", \"protected_inputs_unchanged\": true}\n",
+    "stderr": ""
+  }
+]
