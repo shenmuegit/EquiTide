@@ -1,0 +1,62 @@
+{
+  "kind": "combination",
+  "family": "volatility-guarded-sma-ema-channel-initial-capital",
+  "name": "annual_combo_V0.5_E25",
+  "logic": {
+    "allocation": "Parent raw initialBTC/ETH75/25 means actual1500/500USDT of2000. Independent same-sized leaf NAVs summed once;never weight already-funded curves again,normalize,transfer,rebalance,borrow,short or add cash yield.",
+    "execution": "Sum aligned continuous360day exact-funded componentNAVs;derive totalportfolio risk/returns from full summed vector,never average component metrics."
+  },
+  "parameters": {
+    "initial_capital_usdt": 2000,
+    "raw_initial_weights": {
+      "BTC": 0.75,
+      "ETH": 0.25
+    },
+    "component_capitals_usdt": [
+      1500,
+      500
+    ],
+    "start_utc": "2025-09-19T00:01:00Z",
+    "end_utc": "2026-09-14T00:01:00Z",
+    "BTC_annual_volatility_ceiling": 0.5,
+    "ETH_EMA_span_days": 25,
+    "costs": {
+      "fee_per_side": 0.001,
+      "half_spread": 0.0001,
+      "slippage": 0.0002,
+      "impact_coefficient": 0.5,
+      "impact_inputs": "Previous20 completed UTC day quote ADV and sample stdev20 log daily returns. Buy cash before costs is conservative notional upper bound; sell uses units*reference. Decimal sqrt of budget/ADV, sigma/ADV derived from existing lagged daily function.",
+      "multipliers": [
+        1,
+        2,
+        3
+      ],
+      "max_lagged_ADV_participation": 0.001,
+      "all_costs_simultaneously_scaled": true,
+      "rounding_cost_separately_recorded": true,
+      "terminal_costed": true,
+      "funding_borrow": "N/A unlevered long-only spot"
+    },
+    "metadata_sha256": "857af9870c57ad05e50a5ee6fad92240b384b99cc22e9ae8cece0e6f94e2d033",
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "warmup_days": 365,
+    "embargo_days": 3,
+    "walk_forward_folds": 12,
+    "walk_forward_test_days": 30
+  },
+  "components": [
+    {
+      "fingerprint": "a89223c1a96dfa39166f59a95d4d11061cc59260f09d08c26f18c037fa5dbeed",
+      "weight": 0.75
+    },
+    {
+      "fingerprint": "b758b202c204fe5209dc6472a4b068a239efb070cb533d40a43fad7e1fe007e3",
+      "weight": 0.25
+    }
+  ],
+  "validation_plan": "research/experiments/20261023T063824Z/plan.json"
+}

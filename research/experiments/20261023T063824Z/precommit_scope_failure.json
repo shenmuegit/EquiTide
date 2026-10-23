@@ -1,0 +1,23 @@
+{
+  "stage": "Precommit scope guard before git add/commit/push",
+  "actual_exit_code": 1,
+  "stderr": "AssertionError at exact git ls-files --others --exclude-standard --directory comparison",
+  "financial_or_account_writes": false,
+  "staging_or_commit_performed_before_failure": false,
+  "actual_directory_listing": [
+    ".agents/skills/gitnexus-cli/",
+    ".agents/skills/gitnexus-debugging/",
+    ".agents/skills/gitnexus-exploring/",
+    ".agents/skills/gitnexus-guide/",
+    ".agents/skills/gitnexus-impact-analysis/",
+    ".agents/skills/gitnexus-refactoring/",
+    ".claude/",
+    ".gitnexus/",
+    "data/normalized",
+    "research/experiments/20261023T063824Z/"
+  ],
+  "cause": "--directory includes GitNexus/Claude developer directories which do not appear as actual unstaged/untracked files in git status. A directory-only exact listing was too strict.",
+  "correction": "Validated NUL-delimited git status --porcelain=v1 --untracked-files=all by actual file paths:only three shared modifications,current round files and existing data/normalized are permitted. Preserve all external directories;stage only explicit current round and three shared paths.",
+  "corrected_actual_file_scope_exit_code": 0,
+  "actual_file_scope_entries": 103
+}
