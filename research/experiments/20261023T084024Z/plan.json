@@ -1,0 +1,286 @@
+{
+  "round": "20261023T084024Z",
+  "frozen_at_utc": "2026-10-23T08:49:27.494744Z",
+  "trigger_utc": "2026-10-23T08:40:24.950Z",
+  "hypothesis": "Weekly scheduling and an explicit relative-score switching hurdle may reduce costly coin churn;skipping the most recent week tests whether short-horizon reversal contaminates relative formation. Both mechanisms are hypotheses,not evidence imported from equity papers.",
+  "grid": {
+    "formation_days": [
+      21,
+      42,
+      84
+    ],
+    "switching_return_gap": [
+      0,
+      0.02,
+      0.04
+    ],
+    "skip_recent_days": [
+      0,
+      7
+    ],
+    "financial_candidates": 18,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  },
+  "time_boundaries": {
+    "input_start_utc": "2024-09-16T00:00:00Z",
+    "input_end_exclusive_utc": "2026-09-16T00:00:00Z",
+    "oos_start_utc": "2025-09-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "oos_days": 360,
+    "warmup_days": 365,
+    "initial_gap_days": 3,
+    "folds": 12,
+    "fold_days": 30,
+    "state": "One cold cash start per configuration at OOS start,no imported spring-summer positions,no interfold resets;carry actual cash,units and desired through the missing winter period."
+  },
+  "data": {
+    "format": "Archived Binance spot 1m OHLCV; daily closes and quote ADV are aggregated from fully closed UTC days.",
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 30555668,
+          "sha256": "9a5bc556eb277db34831457d22c53f50f5b4f2c0f04f6aefe80f941e51405ba6"
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 30415140,
+          "sha256": "50983b6865dc5873afa9c4e2abb2cf73d846ec5ed98b31453fee24afef1a0d16"
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20240916T000000Z_20250916T000000Z_transfer_20261001/spot_bars.parquet",
+          "bytes": 27110682,
+          "sha256": "aaebd29868abe2ed3af3a6f3479b495e4d788385c1fb0988d5d2372a9be89d57"
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/spot_bars.parquet",
+          "bytes": 26332430,
+          "sha256": "437545ee866153d6bf31a17a021b9249e5a97cb688cf60a42a58fc8515e83584"
+        }
+      ]
+    }
+  },
+  "execution": {
+    "metadata_path": "research/experiments/20261001T053425Z/spot_metadata_snapshot.json",
+    "metadata_sha256": "857af9870c57ad05e50a5ee6fad92240b384b99cc22e9ae8cece0e6f94e2d033",
+    "filters": {
+      "BTCUSDT": {
+        "PRICE_FILTER": {
+          "filterType": "PRICE_FILTER",
+          "minPrice": "0.01000000",
+          "maxPrice": "1000000.00000000",
+          "tickSize": "0.01000000"
+        },
+        "LOT_SIZE": {
+          "filterType": "LOT_SIZE",
+          "minQty": "0.00001000",
+          "maxQty": "9000.00000000",
+          "stepSize": "0.00001000"
+        },
+        "ICEBERG_PARTS": {
+          "filterType": "ICEBERG_PARTS",
+          "limit": 100
+        },
+        "MARKET_LOT_SIZE": {
+          "filterType": "MARKET_LOT_SIZE",
+          "minQty": "0.00000000",
+          "maxQty": "128.92264677",
+          "stepSize": "0.00000000"
+        },
+        "TRAILING_DELTA": {
+          "filterType": "TRAILING_DELTA",
+          "minTrailingAboveDelta": 10,
+          "maxTrailingAboveDelta": 2000,
+          "minTrailingBelowDelta": 10,
+          "maxTrailingBelowDelta": 2000
+        },
+        "PERCENT_PRICE_BY_SIDE": {
+          "filterType": "PERCENT_PRICE_BY_SIDE",
+          "bidMultiplierUp": "1.2",
+          "bidMultiplierDown": "0.5",
+          "askMultiplierUp": "2",
+          "askMultiplierDown": "0.8",
+          "avgPriceMins": 5
+        },
+        "NOTIONAL": {
+          "filterType": "NOTIONAL",
+          "minNotional": "5.00000000",
+          "applyMinToMarket": true,
+          "maxNotional": "9000000.00000000",
+          "applyMaxToMarket": false,
+          "avgPriceMins": 5
+        },
+        "MAX_NUM_ORDERS": {
+          "filterType": "MAX_NUM_ORDERS",
+          "maxNumOrders": 200
+        },
+        "MAX_NUM_ORDER_LISTS": {
+          "filterType": "MAX_NUM_ORDER_LISTS",
+          "maxNumOrderLists": 20
+        },
+        "MAX_NUM_ALGO_ORDERS": {
+          "filterType": "MAX_NUM_ALGO_ORDERS",
+          "maxNumAlgoOrders": 5
+        },
+        "MAX_NUM_ORDER_AMENDS": {
+          "filterType": "MAX_NUM_ORDER_AMENDS",
+          "maxNumOrderAmends": 10
+        }
+      },
+      "ETHUSDT": {
+        "PRICE_FILTER": {
+          "filterType": "PRICE_FILTER",
+          "minPrice": "0.01000000",
+          "maxPrice": "1000000.00000000",
+          "tickSize": "0.01000000"
+        },
+        "LOT_SIZE": {
+          "filterType": "LOT_SIZE",
+          "minQty": "0.00010000",
+          "maxQty": "9000.00000000",
+          "stepSize": "0.00010000"
+        },
+        "ICEBERG_PARTS": {
+          "filterType": "ICEBERG_PARTS",
+          "limit": 100
+        },
+        "MARKET_LOT_SIZE": {
+          "filterType": "MARKET_LOT_SIZE",
+          "minQty": "0.00000000",
+          "maxQty": "2603.30411046",
+          "stepSize": "0.00000000"
+        },
+        "TRAILING_DELTA": {
+          "filterType": "TRAILING_DELTA",
+          "minTrailingAboveDelta": 10,
+          "maxTrailingAboveDelta": 2000,
+          "minTrailingBelowDelta": 10,
+          "maxTrailingBelowDelta": 2000
+        },
+        "PERCENT_PRICE_BY_SIDE": {
+          "filterType": "PERCENT_PRICE_BY_SIDE",
+          "bidMultiplierUp": "1.2",
+          "bidMultiplierDown": "0.5",
+          "askMultiplierUp": "2",
+          "askMultiplierDown": "0.8",
+          "avgPriceMins": 5
+        },
+        "NOTIONAL": {
+          "filterType": "NOTIONAL",
+          "minNotional": "5.00000000",
+          "applyMinToMarket": true,
+          "maxNotional": "9000000.00000000",
+          "applyMaxToMarket": false,
+          "avgPriceMins": 5
+        },
+        "MAX_NUM_ORDERS": {
+          "filterType": "MAX_NUM_ORDERS",
+          "maxNumOrders": 200
+        },
+        "MAX_NUM_ORDER_LISTS": {
+          "filterType": "MAX_NUM_ORDER_LISTS",
+          "maxNumOrderLists": 20
+        },
+        "MAX_NUM_ALGO_ORDERS": {
+          "filterType": "MAX_NUM_ALGO_ORDERS",
+          "maxNumAlgoOrders": 5
+        },
+        "MAX_NUM_ORDER_AMENDS": {
+          "filterType": "MAX_NUM_ORDER_AMENDS",
+          "maxNumOrderAmends": 10
+        }
+      }
+    },
+    "simulation": "Hypothetical immediately filled marketable LIMIT IOC at estimated adverse execution price, buy rounded up/sell down to PRICE_FILTER tick; quantity floored to LOT_SIZE. Check static price/quantity bounds and NOTIONAL. Fee paid in USDT; no fee discounts.",
+    "percent_price": "Check frozen PERCENT_PRICE_BY_SIDE against preceding5 fully closed minute quote-volume/base-volume VWAP proxy. Historical reference-price regime is unavailable; proxy is explicitly an assumption, not historical exchange order validation.",
+    "limitations": "Snapshot taken October1, applied uniformly to reused historical data as execution stress assumption, not historical filters. No L2, queue, latency, partial fills or guarantee IOC fills; MARKET_LOT_SIZE does not apply to simulated limit IOC."
+  },
+  "costs": {
+    "fee_per_side": 0.001,
+    "half_spread": 0.0001,
+    "slippage": 0.0002,
+    "impact_coefficient": 0.5,
+    "impact_inputs": "Previous20 completed UTC day quote ADV and sample stdev20 log daily returns. Buy cash before costs is conservative notional upper bound; sell uses units*reference. Decimal sqrt of budget/ADV, sigma/ADV derived from existing lagged daily function.",
+    "multipliers": [
+      1,
+      2,
+      3
+    ],
+    "max_lagged_ADV_participation": 0.001,
+    "all_costs_simultaneously_scaled": true,
+    "rounding_cost_separately_recorded": true,
+    "terminal_costed": true,
+    "funding_borrow": "N/A unlevered long-only spot"
+  },
+  "rules": {
+    "signal": "At completed UTC day j=i-1,absoluteROC_a=C_a[j]/C_a[j-L]-1;rankROC_a=C_a[j-S]/C_a[j-S-L]-1. Only assets with current absoluteROC>0 eligible. Select highest rankROC among eligible;BTC priority on exact tie.",
+    "schedule": "Only Mondays at next00:01UTC;no initial off-schedule buy. Other days keep actual holding,do not exit on new signals. Calendar from UTC date,not fold offsets.",
+    "switching": "If incumbent is eligible,retain it unless another eligible asset rankROC strictly exceeds incumbent rankROC by G. If incumbent ineligible,select best eligible without switching hurdle,or cash if none. Equality retains incumbent. S=0 is contemporaneous rank;S=7 skips exactly seven completed days in ranking,while cash gate always uses current absoluteROC.",
+    "execution": "On target change,sell all held coin before buying target at same declared next00:01 nativeDecimalOPEN. Both real legs charged separately;rejected sale prevents purchase. Quantity-rounding residue remains shared cash. No trade if target stays same.",
+    "allocation": "One shared2000USDT spot cash account;at most one BTC or ETH holding with raw target exposure1,other0. No75/25normalization,fixed-sleeve NAV sum,cashyield,borrowing,leverage,short or external transfers. Original frozen75/25SMA account unchanged.",
+    "state": "One cold cash start;carry actual cash,held asset,units across all12folds. No independent old component NAV can represent stateful shared-cash rotations,so actual new fill paths required."
+  },
+  "gates": {
+    "all_cost_returns_positive": true,
+    "positive_1x_folds_min": 8,
+    "max_3x_minute_drawdown_pct": 25,
+    "local_3x_positive_fraction_min": 0.6,
+    "round_trips_1x_min": 4,
+    "gross_reference_pnl_to_cost_min": 2.5,
+    "negative_balances": 0,
+    "rejections": 0,
+    "terminal_flat": true
+  },
+  "sensitivity": "Each S=0/7 direction has full L×G3x3;inclusive adjacent-index rectangular neighborhoods separately. All18configs,54costs,648folds disclosed;skip-pair contrasts descriptive,no OOS selection.",
+  "validation": "365day initial historical context plus3day gap;12continuous30dayfolds,no fitting or future labels,purgeNA. At each fold context rolls causally. Reused development history,not untouched final test;no DSR/PBO or live profit claim.",
+  "NAV_axis": {
+    "daily_span": 1443,
+    "points": 519483,
+    "definition": "Initial cash;each day predecisionnativeOPEN,post-saleOPEN,post-purchaseOPEN slots including duplicates when unused,then1440originalFloat64closedminute marks;at end preterminalOPEN then costed liquidation. This preserves both rotation-leg marks and gap risks."
+  },
+  "read_only_context": {
+    "prior_annual_countertest": {
+      "report": "research/experiments/20261023T063824Z/report.json",
+      "sha256": "1afd0147a48f8d039de9364cf019d3bffc7f23951808ad737af754a049c9bede"
+    },
+    "old_daily_rotation_reports": [
+      {
+        "path": "research/experiments/20261012T115927Z/report.json",
+        "sha256": "9d03b71e972a84d00bb67791a1081c6b7f650c599fe68ffd0aaa00ba97f111ed"
+      },
+      {
+        "path": "research/experiments/20261013T123949Z/report.json",
+        "sha256": "9dd264dfb8f8af79c056037c78d2f8367b648820bdbeaf815cae112e36f85289"
+      }
+    ],
+    "scope": "Old daily rotation rejected;not rerun or recast as new evidence. Same-capital360dayhold references read-only,with their original filter/metric conventions disclosed."
+  },
+  "sources": [
+    {
+      "url": "https://www.aqr.com/-/media/AQR/Documents/Insights/White-Papers/The-Case-for-Momentum-Investing.pdf",
+      "access_date": "2026-10-23",
+      "scope": "Author equity research excludes recent month;our seven-daycrypto skip and weekly hysteresis are separately tested hypotheses,not paper replication."
+    },
+    {
+      "url": "https://www.nber.org/papers/w25882",
+      "access_date": "2026-10-23",
+      "scope": "Official indexed abstract supports crypto momentum motivation only;direct page403,fulltextnotread."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/products/spot/filters",
+      "access_date": "2026-10-23",
+      "scope": "Official current filter definitions;actualhistoricalexecution uses frozenOct1snapshot proxy."
+    }
+  ],
+  "limits": [
+    "Only two liquid spot assets and reused history;no independent holdout.",
+    "FrozenOct1filters,halfspread/slippage/square-rootimpact and prior5minuteVWAP/IOC fill remain proxies,noL2,TCA,queue/latencyproof.",
+    "Weekly risk exits wait until Monday;intraweek losses intentionally retained,no implicit stop."
+  ]
+}

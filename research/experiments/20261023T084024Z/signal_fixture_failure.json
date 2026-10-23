@@ -1,0 +1,35 @@
+{
+  "actual_exit_code": 1,
+  "stage": "Synthetic fixture before any reserve or real financial calculation",
+  "failed_command": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "research/experiments/20261023T084024Z/check_signals.py"
+    ],
+    "started_utc": "2026-10-23T08:48:34.379387+00:00",
+    "ended_utc": "2026-10-23T08:48:34.640864+00:00",
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261023T084024Z/check_signals.py\", line 32, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261023T084024Z/check_signals.py\", line 18, in main\n    assert choose(c,3,2,0,0,None)[0]=='ETH' and choose(c,3,2,1,0,None)[0]=='BTC'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  "failed_log": "research/experiments/20261023T084024Z/signal_checks.log",
+  "failed_log_sha256": "a4affe9d7eb0a740292c6d9efb45e1f01c0968627b232da314d7188db2afd4ba",
+  "original_fixture_source_sha256": "7667b88fe2e945db02c738e3d74f177a7a1288fd6ca1994028709b8456a62bbf",
+  "original_ETH_fixture": [
+    100,
+    105,
+    150,
+    140
+  ],
+  "expected_targets": {
+    "0": "ETH",
+    "1": "BTC"
+  },
+  "actual_targets": {
+    "0": "ETH",
+    "1": "ETH"
+  },
+  "cause": "Synthetic skipped-rank expectation was wrong:150/100 outranks130/100,so both chooseETH. Production choose correctly followed frozen formula.",
+  "correction": "Change only synthetic ETH intermediate price150to120;currentETH140/105 still leads,skippedBTC130/100 now exceedsETH120/100. No production signal or economic rule change.",
+  "real_configurations_reserved_or_computed": 0
+}
