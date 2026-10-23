@@ -1,0 +1,184 @@
+{
+  "round": "20261023T184400Z",
+  "frozen_at_utc": "2026-10-23T18:49:58.678316Z",
+  "trigger_utc": "2026-10-23T18:44:00.920Z",
+  "hypothesis": "The previous20day boundary waspositive undercosts but lacked foldbreadth. Predeclare longer25/30daylookbacks tocheck whether that boundary extends into a robust plateau. This followsseenhistory and is not independentconfirmation.",
+  "grid": {
+    "lookback_days": [
+      20,
+      25,
+      30
+    ],
+    "return_hurdle": [
+      0.01,
+      0.02,
+      0.04
+    ],
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "new_financial_candidates": 12,
+    "read_only_anchor_configs": 6,
+    "all_grid_configs": 18,
+    "fixed_exit_ROC": 0,
+    "preset_center": {
+      "lookback_days": 25,
+      "return_hurdle": 0.02
+    }
+  },
+  "time_boundaries": {
+    "input_start_utc": "2025-09-16T00:00:00Z",
+    "input_end_exclusive_utc": "2026-09-16T00:00:00Z",
+    "oos_start_utc": "2025-10-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-09-14T00:01:00Z",
+    "oos_days": 330,
+    "warmup_days": 30,
+    "initial_gap_days": 3,
+    "folds": 11,
+    "fold_days": 30
+  },
+  "data": {
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/perp_bars.parquet",
+          "bytes": 29169324,
+          "sha256": "5de2a6fdc260a87abc39d58c251f96bf6a6d0183187a037dba0cce4f1ded3573"
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/funding_settlement.parquet",
+          "bytes": 31697,
+          "sha256": "bf6b8f83d46e128d10c0edf7ddd8404d94ef7b8249b7b24e2243ef726b878ac5"
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/mark_hour_bars.parquet",
+          "bytes": 447723,
+          "sha256": "3f6ea11c5126329d34971c6431d76f37f7d2c3ad6f862e95dd8150777241189f"
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20260916T000000Z_archive_20260929/perp_instrument_meta.parquet",
+          "bytes": 1892,
+          "sha256": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99"
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/perp_bars.parquet",
+          "bytes": 26689702,
+          "sha256": "f1dd0805de6558a6888beb15b93eab5da65db7276075d0eee1d481a82c120733"
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/funding_settlement.parquet",
+          "bytes": 30924,
+          "sha256": "34b51269537e9299819081303041c43c50fcf794e713714f065093f8f825ddc6"
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/mark_hour_bars.parquet",
+          "bytes": 418111,
+          "sha256": "59ee88ad5c9ce688ff1fdc7fda750fbe49e504fc0ef3eb5de90f3536d6954a1f"
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/perp_instrument_meta.parquet",
+          "bytes": 1892,
+          "sha256": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6"
+        }
+      ]
+    }
+  },
+  "rules": {
+    "signal": "At daily decision i,priorcompletedperpetualROC=C[i-1]/C[i-1-L]-1. Flat enterslong iff ROC>H,short iff ROC<-H. Existinglong persistswhile ROC>0;existingshort persistswhile ROC<0. At ROC=0 exit. OppositeROC crossingfullentryband closesoldthenentersopposite at00:01. At exact +/-H no newentry;an existing same-sign position remains. State is actualsignedquantity,no unpublishedprice/funding input.",
+    "execution": "At next00:01nativeperpetualOPEN,if desired direction differs,close old signed position first then enter desired if nonzero. Same direction retains actual quantity,no daily resizing. Quantity for a new entry=floor(2000USDT/priorcompletedC/lot)*lot times direction,not sized from future OPEN,NAV or unpublished funding.",
+    "allocation": "Independent10000USDT collateral account per config. Fixed raw entry notional20% of initial collateral=2000USDT;pricegap/lot can change actual entry percentage. At most one signedlinearUSDTperp position;entrynotional<=postfeecollateral (1xcap). No borrowingunderlying,spotshort,leveragefundingloan,transfer or cashyield;not normalized weights.",
+    "ledger": "Opening debitsfeeonly;unrealizedPnL=q*(price-entryexecution). Closing realizes signedq*(exitexecution-entryexecution) and paysfee. Notional is not debited as spot cash.",
+    "funding": "At actual settlementns,rawcashdelta=-signedq*actualmark*realizedrate. Only oldposition thenheld participates;funding events00:00/00:00.001 occur before00:01rotation. Negative delta multiplied by coststress;positive income not increased. Sourceavailable_ts (often+1hour) retained;rates are ex-post accounting only,never signal or size inputs.",
+    "risk": "Composite sampled NAV includes minute transaction-close proxies plus actual closed-hour mark and actualfundingsettlement marks,pre/posttrade samples and terminalcash. Report mark-only and trade-proxy DD separately. Marginproxy:1%ofnotional versus adverse full-hour markhigh/low for every overlapping state in completelyin-OOSclosedhours. No exact historicaltier/tick liquidation engine;anyproxybreachfails qualification.",
+    "state": "One cold collateral start across11continuous30dayfolds;carrycash/signedq/entryexecution/refandfunding. Known terminalcostedclose;no fold resets. OriginalSMA/paper10states unchanged."
+  },
+  "costs": {
+    "per_side_commission": 0.0005,
+    "half_spread": 0.0001,
+    "slippage": 0.0002,
+    "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+    "participation_max": 0.001,
+    "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+    "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+    "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+  },
+  "gates": {
+    "all_cost_returns_positive": true,
+    "positive_1x_folds_min": 8,
+    "max_3x_composite_drawdown_pct": 25,
+    "local_3x_positive_fraction_min": 0.6,
+    "round_trips_1x_min": 4,
+    "gross_reference_PnL_plus_funding_to_cost_min": 2.5,
+    "margin_proxy_violations": 0,
+    "negative_collateral": 0,
+    "rejections": 0,
+    "terminal_flat": true
+  },
+  "sensitivity": "Perasset20/25/30lookback x1/2/4percent entry;6old20dayanchors read-only,12new25/30configs. Full3x3neighborgrid;onlynewconfigqualificationcomputed. No retroactive rerating of anchors,no gridextensionafteroutcomes.",
+  "validation": "30daysinitialcontext+3daygap leaves actual20dayperpADV/logvolhistory. 11continuous30daytestfolds,fixedcausalruleswithoutfitting/futurelabels,purgeNA. Datasetalreadyreused,not independentfinaltest;noDSR/PBO.",
+  "NAV_axis": "Time-sorted fixedperasset axis:initial,475200minutecloseproxies,7920closedhourmarkcloses,990actualfundingsettlements×pre/post,330daily00:01×pre/postclose/postentry,terminalpre/post. Tiepriorityminuteclose,markclose,fundingpre/post,tradepre/post;486093samples. Float64NAVencodingonly;allcash/fill/fundingDecimal28.",
+  "sources": [
+    {
+      "url": "https://www.aqr.com/Insights/Research/Journal-Article/Time-Series-Momentum",
+      "access_date": "2026-10-23",
+      "scope": "Original2012multiassetfutures12monthown-returnmomentummotivation only;zeroexit hysteresis and5/10/20daycryptogrid are this experiment,not a replication or profit claim."
+    },
+    {
+      "url": "https://www.binance.com/en/support/faq/detail/360033525031",
+      "access_date": "2026-10-23",
+      "scope": "Officialfundingdirectionandposition-at-settlement;actualarchivedrates/timesused."
+    },
+    {
+      "url": "https://www.binance.com/en/support/faq/detail/360033525271",
+      "access_date": "2026-10-23",
+      "scope": "MarkvsLastpriceandmargin;hourmarkdataand1%proxyarelimited,nottruetickliquidationreconstruction."
+    }
+  ],
+  "limits": [
+    "NohistoricalL2/queue/latency/TCA,fullhistoricaltier/maxqty/percentfilterorfeeVIPschedule.",
+    "MinuteNAVusestransactionpriceproxy,markNAVobservedhourlyplussettlements;compositeDDnottruetickmarkDD. Partialfirst/lasthourlackfullmarkextrema.",
+    "Fundingavailable_tsdelayed;fixedpriorpricequantitydoesnotuseunpublishedrates/NAV. Economicsettlementsareex-postbrokeraccounting.",
+    "No actualorders,spotborrowingornewpaperaccounts;entirehistoryreused."
+  ],
+  "novelty": {
+    "initial16_missing_actual_results": 0,
+    "prior_registry_events": 11928,
+    "prior_registry_ids": 5860,
+    "prior_canonical_research_definitions": 4382,
+    "all_prior_conclusions_read": 159,
+    "multiple_testing": "Adaptive direction chosen between rounds fromseenhistory;no untouchedfinalholdout,noDSR/PBO."
+  },
+  "anchor_source": {
+    "report": "research/experiments/20261023T164355Z/report.json",
+    "report_sha256": "088aad5d26deb60a1b6138b5b3383a6734e2c0d8088ab5d2a4d6fc6c6cb796ba",
+    "plan": "research/experiments/20261023T164355Z/plan.json",
+    "plan_sha256": "71cd092f557d05ea17a31beca1489e2e7c06df49ed9fbcccc2b553c7ee8aa872",
+    "engine": "research/experiments/20261023T164355Z/engine.py",
+    "engine_sha256": "87580b48ad5145326b16dc49217c76b6f3f7fda06d775dd04cc49be869264031",
+    "policy": "Only6existingL20configs are read-only grid anchors. No oldNAV/signals/trades or qualifications recomputed. Original status and reportSHA retained."
+  },
+  "hold_reference_source": {
+    "report": "research/experiments/20261023T124125Z/report.json",
+    "report_sha256": "2c279d98f257c6a03202feb86168828e950046dc895cb4ed40a24da3b9704b84",
+    "source_plan": "research/experiments/20261023T124125Z/plan.json",
+    "source_plan_sha256": "1e2996d4c40f7ca6d5ca354edd3d233f17d253b896e33723acf0869f99eda42b",
+    "source_engine": "research/experiments/20261023T124125Z/engine.py",
+    "source_engine_sha256": "ccd36491ba04c54cea78a8cb10979a7760fd99cfe627b5b9ef3a26cc8ce145a5",
+    "policy": "All18oldcashbandand2oldconstantlongresultsread-only. No oldstrategy/NAV recomputation or re-registration;use stored metrics only. Samecosts/budget/period,sole rule changezeroexit hysteresis."
+  },
+  "lookback_availability": {
+    "first_decision_day_index": 33,
+    "maximum_lookback": 30,
+    "earliest_completed_close_index": 2,
+    "rule": "Nonnegative priorcloseindex and fixed30warmup+3initialgap;do not extendlookbacks beyond dataavailability or change originalOOS."
+  }
+}
