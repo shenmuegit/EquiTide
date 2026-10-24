@@ -1,0 +1,77 @@
+{
+  "kind": "combination",
+  "family": "two-asset-passive-perpetual-momentum-sleeves",
+  "name": "perp_zero_pair_B29H04_E32H02",
+  "logic": {
+    "allocation": "Raw weights1/1 mean one whole pre-funded10000USDT BTCbook plus one whole10000USDT ETHbook,total20000. Add absoluteNAV once;do not normalize,multiply by50%again,transfer,reinvestorrebalance. Descriptiveinitialcapitalshares50/50 do not change raw weights.",
+    "exposure": "Each sourceentry fixed2000USDT from priorclose;both sleeves grossentrynotional4000whenactive,20%ofcombinedinitialcollateral. Eachcash/marginaccountisolated,nocross-marginnettingorborrow/cashyield.",
+    "reuse": "Recover source fullNAV from savedimmutable signedcash/quantity/entry state segments and actual axis prices,verify every originalNAVSHA. Never call source simulate,trade,funding or signal functions;no old result/status rewriting.",
+    "alignment": "Unionof source (actualns,eventtype) keys;preserveeventorder atsametime. Atmissingotherassetkey carry its last completed sourceNAVobservation,never interpolate or lookahead. Relativekey=(ts-commonstart)*16+eventcode avoids epochint64overflow.",
+    "costs": "Source1/2/3xexecutionandnegativefundingoutflowstress inherited in actualmatchedcostpaths;positivefundingincomeunscaled. Sum actual fees/funding once,no portfolio turnover fees since no new trade.",
+    "risk": "Recompute return/Sharpe/Calmar/wholeOOSDDfrom combinedfullcurve,not average components. Check both originalindependentmarginproxies separately;never offset a failed sleeve with othercash. MixedsampledNAV nottruetickmarkrisk."
+  },
+  "parameters": {
+    "initial_capital_usdt": 20000,
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "component_capitals_usdt": [
+      10000,
+      10000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      2000,
+      2000
+    ],
+    "BTC_lookback_days": 29,
+    "BTC_return_hurdle": 0.04,
+    "ETH_lookback_days": 32,
+    "ETH_return_hurdle": 0.02,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-09-14T00:01:00Z",
+    "walk_forward_folds": 11,
+    "walk_forward_test_days": 30,
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "source_rules_and_costs_sha256": "2720411dad15d540ed1fe2bb89a4638858b91c79bc991ea09519f6f3197fa3bd"
+  },
+  "components": [
+    {
+      "fingerprint": "404639726bdf8ba74626838e0a96664f1db0de8f1ab389919ed5d4c3dd8083a4",
+      "weight": 1
+    },
+    {
+      "fingerprint": "135efd733830da1f041c0dce61a73a1c183f35b55c0afc805981192a1b210aa6",
+      "weight": 1
+    }
+  ],
+  "validation_plan": "research/experiments/20261024T104557Z/plan.json",
+  "sources": [
+    {
+      "url": "https://www.aqr.com/Insights/Research/Journal-Article/Time-Series-Momentum",
+      "access_date": "2026-10-24",
+      "scope": "Traditional12monthmulti-futuresmomentum background only;our local28to32daycryptopassiveportfolio is a separate developmenthypothesis."
+    },
+    {
+      "url": "https://www.aqr.com/insights/research/journal-article/a-century-of-evidence-on-trend-following-investing",
+      "access_date": "2026-10-24",
+      "scope": "Traditional12monthmulti-futuresmomentum background only;our local28to32daycryptopassiveportfolio is a separate developmenthypothesis."
+    },
+    {
+      "url": "https://www.binance.com/en/support/faq/detail/360033525031",
+      "access_date": "2026-10-24",
+      "scope": "Actualposition fundingcashflows;stored realizedrates onlyex-post accounting,not signals."
+    },
+    {
+      "url": "https://www.binance.com/en/support/faq/detail/360033525271",
+      "access_date": "2026-10-24",
+      "scope": "MarkvsLast andcollateralrisk;sourcehourlymark/1percentmarginproxy nottruetickliquidation."
+    }
+  ]
+}
