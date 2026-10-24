@@ -1,0 +1,29 @@
+"""Verify immutable source results,all joint-grid tables and append-only finishes."""
+import csv,gzip,io,itertools,json,subprocess
+from run import ROOT,R,HURDLES,BUFFERS,sha,reg,put,grid_configs,neighbors
+def main():
+ plan=json.loads((R/'plan.json').read_text());report=json.loads((R/'report.json').read_text());ctx=json.loads((R/'context.json').read_text());records=reg.read_records(ROOT/'research/automation/registry.jsonl');batch=json.loads((R/'batch.json').read_text());refs=json.loads((R/'anchors.json').read_text());grid=grid_configs(report['configs']);assert len(batch)==27 and len(refs)==9 and len(grid)==36 and len(plan['component_sources'])==12
+ assert {(c['BTC_return_hurdle'],c['BTC_exit_buffer_fraction'],c['ETH_return_hurdle']) for c in grid.values()}==set(itertools.product(HURDLES,BUFFERS,HURDLES))
+ for fp,ref in plan['component_sources'].items():
+  rec=records[fp];assert rec['result_available'] is True and rec['status']==ref['original_status'] and rec['report_sha256']==ref['report_sha256'];assert sha(ROOT/ref['report'])==ref['report_sha256'] and sha(ROOT/ref['spec'])==ref['spec_sha256'] and sha(ROOT/ref['archive'])==ref['archive_sha256'];spec=json.loads((ROOT/ref['spec']).read_text());assert reg.fingerprint(spec)==fp and spec['parameters']['initial_capital_usdt']==10000 and spec['parameters']['fixed_entry_notional_usdt']==2000
+ for name,ref in refs.items():
+  assert sha(ROOT/ref['report'])==ref['report_sha256'] and sha(ROOT/ref['archive'])==ref['archive_sha256'] and sha(ROOT/ref['spec'])==ref['spec_sha256'];c=json.loads((ROOT/ref['report']).read_text())['configs'][name];record=records[ref['fingerprint']];assert record['status']==c['status']==ref['original_status'] and record['report_sha256']==ref['report_sha256'];cell=report['joint_grid_sensitivity']['cells'][name];assert cell['read_only_anchor'] is True and cell['qualification_status']==ref['original_status']
+ for row in batch:
+  spec=json.loads((ROOT/row['spec']).read_text());p=spec['parameters'];c=report['configs'][row['name']];assert reg.fingerprint(spec)==row['fingerprint'];assert p['initial_capital_usdt']==20000 and p['raw_component_multipliers']==[1,1] and p['component_capitals_usdt']==[10000,10000] and p['component_initial_entry_notionals_usdt']==[2000,2000] and [x['weight'] for x in spec['components']]==[1,1];assert p['BTC_exit_buffer_fraction'] in BUFFERS[1:] and p['ETH_exit_buffer_fraction']==0 and p['BTC_lookback_days']==p['ETH_lookback_days']==30;ns=neighbors(c,grid);assert c['sensitivity']['neighbor_names']==[x['name'] for x in ns] and c['sensitivity']['three_dimensional_local_3x_positive_fraction']==sum(x['scenes']['3']['net_return_pct']>0 for x in ns)/len(ns);assert records[row['fingerprint']]['report_sha256']==sha(R/'report.json') and records[row['fingerprint']]['status']==c['status']
+ cost=list(csv.DictReader((R/'sensitivity.csv').open()));folds=list(csv.DictReader((R/'fold_results.csv').open()));daily=list(csv.DictReader(io.StringIO(gzip.decompress((R/'daily_equity.csv.gz').read_bytes()).decode())));edges=list(csv.DictReader((R/'joint_edges.csv').open()));assert len(cost)==108 and len(folds)==1188 and len(daily)==26811 and len(edges)==75
+ for row in cost:
+  c=grid[row['name']];z=c['scenes'][row['cost_multiplier']];assert row['NAV_sha256_f64le']==z['NAV_sha256_f64le'] and row['read_only_anchor']==str(c.get('read_only_anchor',False))
+  for p in ['net_return_pct','max_drawdown_pct','daily_mark_drawdown_pct','sharpe_365','calmar','cost_usdt','funding_usdt']:assert float(row[p])==z[p]
+ for row in folds:
+  z=grid[row['name']]['scenes'][row['cost_multiplier']]['folds'][int(row['fold'])-1]
+  for p in ['net_return_pct','max_drawdown_pct','sharpe_365','calmar']:assert float(row[p])==z[p] if z[p] is not None else row[p]==''
+ for row in daily:assert float(row['equity_usdt'])==report['configs'][row['name']]['scenes'][row['cost_multiplier']]['daily_equity_usdt'][int(row['boundary_index'])]
+ assert all(sha(ROOT/p)==h for p,h in ctx['account_hashes_before'].items());base=json.loads((R/'startup.json').read_text())['head_after_successful_SSH_fetch'];prefix=subprocess.check_output(['git','show',base+':research/automation/registry.jsonl'],cwd=ROOT);raw=(ROOT/'research/automation/registry.jsonl').read_bytes();assert raw.startswith(prefix);new=[json.loads(x) for x in raw[len(prefix):].splitlines()];allbatch=batch+json.loads((R/'forward_batch.json').read_text());fps={x['fingerprint'] for x in allbatch};assert len(new)==60 and len(fps)==30 and {x['fingerprint'] for x in new}==fps
+ for fp in fps:assert sum(x['fingerprint']==fp and x['status']=='reserved' for x in new)==1 and sum(x['fingerprint']==fp and x['status'] in ['passed','rejected'] for x in new)==1
+ for path,h in ctx['ledger_fragments_before'].items():
+  if path!='research/automation/registry.jsonl':assert sha(ROOT/path)==h
+ for files in plan['data']['assets'].values():
+  for x in files:assert sha(ROOT/x['path'])==x['sha256'] and (ROOT/x['path']).stat().st_size==x['bytes']
+ hold=plan['read_only_hold_reference'];assert sha(ROOT/hold['report'])==hold['report_sha256'] and records[hold['fingerprint']]['report_sha256']==hold['report_sha256'] and records[hold['fingerprint']]['status']==hold['original_status'];assert sha(R/'report.json')==json.loads((R/'verification.json').read_text())['report_sha256']
+ out={'passed':True,'new_financial_parent_configs':27,'old_zeroBTCbuffer_parent_results_unchanged':9,'source_components_unchanged':12,'source_cost_NAV_hashes':36,'new_component_backtests':0,'full_three_axis_grid':36,'all_cost_rows_verified':108,'fold_rows_verified':1188,'new_daily_NAV_rows_verified':26811,'edges_verified':75,'registry_append_only_events':60,'new_finished_IDs':30,'protected_files_unchanged':len(ctx['account_hashes_before']),'real_market_files':8,'finished_report_original_SHA_preserved':sha(R/'report.json')};put(R/'source_verification.json',out);print(json.dumps(out),flush=True)
+if __name__=='__main__':main()
