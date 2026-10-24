@@ -1,6 +1,6 @@
 # USDT 量化研究
 
-BTC/ETH 每两小时自动研究、查重、三项验证与结果推送，见[定时研究任务](research/automation/README.md)。研究结果维护在 `codex/strategy-research` 分支。
+BTC/ETH 每两小时自动研究、查重、三项验证与结果推送，见[定时研究任务](research/automation/README.md)。所有代码和研究结果统一维护在 `main`，本地和远端均只保留这一分支。
 
 Python 3.12、NautilusTrader 2.0.0rc5、PostgreSQL，以及 `web/` 下的 React、TypeScript、Vite 单页。当前提供历史买入分析页面、研究、回测与任务 API。自动交易和实盘管理尚未通过验收。
 

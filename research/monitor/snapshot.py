@@ -354,7 +354,7 @@ def build_snapshot(root):
     # Fail closed on malformed registry/JSON. Keep the previous atomic feed intact.
     return {"schema_version": 1, "generated_at_utc": utc_now(),
             "source_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip(),
-            "source_repository": "https://github.com/shenmuegit/EquiTide/tree/codex/strategy-research",
+            "source_repository": "https://github.com/shenmuegit/EquiTide/tree/main",
             "refresh": {"paper_seconds": 7200, "feed_seconds": 30, "quote_seconds": 10},
             "paper": build_paper(root), "research": build_research(root)}
 

@@ -2,7 +2,7 @@
 
 通过 Codex 原生定时任务在当前会话每两小时执行。使用仓库 `.agents/skills/` 中的 walk-forward-validation、ml4t-sensitivity-analysis、ml4t-transaction-costs。后两个来自 `ml4t/skills`，固定版本 `f0ea01919e0c517cd9b1e014724a520facd8a742`，已保存 Markdown 到仓库，便于后续运行读取。
 
-研究工作目录优先使用 `/home/desktop/.local/share/equitide-research/worktree`；若运行主机改变，在可访问的用户目录克隆 `https://github.com/shenmuegit/EquiTide.git` 并检出 `codex/strategy-research`。原 `/root` 工作目录不可访问时不得声称完成本地回测。
+执行工作目录固定为 `/home/desktop/Documents/Codex/EquiTide`，遵守该目录 `AGENTS.md`；执行前验证项目根目录，目录不可用时保存真实访问失败，不切换到其他工作区。本地和远端均只允许 `main`，代码、研究和模拟盘结果统一提交推送到 `main`，不得创建其他分支。
 
 ## 流程与查重
 
@@ -34,7 +34,7 @@ python3 checks/strategy_registry.py
 
 使用时间滚动验证和必要 purge/embargo；报告完整 OOS 净值回撤、至少两个参数的预设敏感性邻域、1/2/3 倍交易成本压力测试。纳入手续费、价差、滑点、冲击，空头/永续另含借币与资金费。已有 2025-09-16 至 2026-09-16 历史已反复研究，不再称为未触碰的最终测试集。
 
-只提交本轮相关的轻量证据，不提交凭据和大行情。普通 git push 不可用时，使用已连接 GitHub 应用创建 tree/commit 并以 force=false 更新研究分支。远程 tree 与本地 staged tree 完全一致后才能 soft reset 对齐 HEAD。保留冲突、未推送提交及其他人的修改，不自动合并 main、不执行真实交易。正收益回测不能替代前向模拟。
+只提交本轮相关的轻量证据，不提交凭据和大行情。普通 git push 不可用时，使用已连接 GitHub 应用创建 tree/commit 并以 force=false 更新 `main`。远程 tree 与本地 staged tree 完全一致后才能 soft reset 对齐 HEAD。保留冲突、未推送提交及其他人的修改，直接在 `main` 工作，不执行真实交易。正收益回测不能替代前向模拟。
 
 ## 最近完成的轮次
 

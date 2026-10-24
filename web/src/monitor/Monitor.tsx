@@ -346,7 +346,7 @@ export default function Monitor() {
         {tab === 'research' && <ResearchView snapshot={data.snapshot} configs={data.configs} error={data.researchError} onSelect={r => { setResearch(r); setAccount(null); }} />}
         {tab === 'activity' && <ActivityView snapshot={data.snapshot} />}
       </>}
-      <footer className="site-footer"><a href="https://github.com/shenmuegit/EquiTide/tree/codex/strategy-research" target="_blank" rel="noreferrer"><GithubLogo size={16} />研究证据<ArrowUpRight size={13} /></a><span>账本约2小时更新 / 页面30秒检查 / 北京时间</span><span title={data.receivedAt ? `最近读取 ${date(data.receivedAt)}` : ''}>数据汇总 {data.snapshot ? date(data.snapshot.generated_at_utc, true) : '暂无'}</span></footer>
+      <footer className="site-footer"><a href="https://github.com/shenmuegit/EquiTide/tree/main" target="_blank" rel="noreferrer"><GithubLogo size={16} />研究证据<ArrowUpRight size={13} /></a><span>账本约2小时更新 / 页面30秒检查 / 北京时间</span><span title={data.receivedAt ? `最近读取 ${date(data.receivedAt)}` : ''}>数据汇总 {data.snapshot ? date(data.snapshot.generated_at_utc, true) : '暂无'}</span></footer>
     </main>
     <DetailDialog account={account ? paper?.accounts?.find(a => a.id === account.id) || account : null} research={research} paper={paper} onClose={() => { setAccount(null); setResearch(null); }} />
   </div></Theme>;

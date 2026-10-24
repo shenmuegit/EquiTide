@@ -52,8 +52,8 @@ export type Snapshot = {
 };
 export type Quote = { symbol: string; bid: number; ask: number; mid: number; observedAt: string; latency: number };
 
-const REPOSITORY = 'https://github.com/shenmuegit/EquiTide/blob/codex/strategy-research/';
-export const FEED_URL = import.meta.env.VITE_MONITOR_FEED_URL || 'https://raw.githubusercontent.com/shenmuegit/EquiTide/codex/strategy-research/research/monitor/latest.json';
+const REPOSITORY = 'https://github.com/shenmuegit/EquiTide/blob/main/';
+export const FEED_URL = import.meta.env.VITE_MONITOR_FEED_URL || 'https://raw.githubusercontent.com/shenmuegit/EquiTide/main/research/monitor/latest.json';
 export const evidenceUrl = (path: string) => REPOSITORY + path.split('/').map(encodeURIComponent).join('/');
 
 export async function fetchSnapshot(signal: AbortSignal): Promise<Snapshot> {

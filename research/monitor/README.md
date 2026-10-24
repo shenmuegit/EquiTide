@@ -13,7 +13,7 @@ python3 research/monitor/snapshot.py
 python3 checks/monitor_snapshot.py
 ```
 
-将 `research/monitor/latest.json` 与 `research/monitor/configs.json.gz` 一起提交并推送至研究分支。网页每30秒检查公开分支的汇总；研究排名仅在内容哈希变化时重新下载。原任务仍约每两小时更新账户和研究证据，GitHub缓存传播可能另有短暂延迟。页面打开期间每10秒读取公开BTC/ETH买一卖一，中间价只是独立行情展示，不重估或改写模拟账户；页面隐藏或手动暂停时停止轮询。
+将 `research/monitor/latest.json` 与 `research/monitor/configs.json.gz` 一起提交并推送至 `main` 分支。网页每30秒检查公开分支的汇总；研究排名仅在内容哈希变化时重新下载。原任务仍约每两小时更新账户和研究证据，GitHub缓存传播可能另有短暂延迟。页面打开期间每10秒读取公开BTC/ETH买一卖一，中间价只是独立行情展示，不重估或改写模拟账户；页面隐藏或手动暂停时停止轮询。
 
 `latest.json` 为约85KB的状态索引；研究明细使用标准gzip压缩，浏览器通过原生解压和SHA256校验读取。2026-10-21补齐结束时间字段与历史报告路径别名后，真实可展示配置增加，gzip已超过1MB；检查预算为2MB，保留全部有效结果，不为减小文件而删去负收益或改写历史。CDN传播过程中两文件不匹配时保留已有研究榜并等待下一次刷新。已有完整原始报告是精度和复现依据，网页研究展示数字保留六位小数；账户Decimal金额原样保留。
 

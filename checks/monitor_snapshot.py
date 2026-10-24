@@ -22,6 +22,7 @@ def main():
     )]
     before = {p: snapshot.sha(p.read_bytes()) for p in protected}
     data = snapshot.build_snapshot(ROOT)
+    assert data["source_repository"] == "https://github.com/shenmuegit/EquiTide/tree/main"
     assert before == {p: snapshot.sha(p.read_bytes()) for p in protected}, "monitor changed trading/research inputs"
     paper = data["paper"]
     assert paper["status"] == "ready", paper.get("errors")

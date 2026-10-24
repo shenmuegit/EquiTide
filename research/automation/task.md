@@ -4,7 +4,7 @@
 
 ## 开始
 
-工作目录优先 `/home/desktop/.local/share/equitide-research/worktree`，研究分支 `codex/strategy-research`，远程 `shenmuegit/EquiTide`。若目录不存在/无权限，在当前用户可访问目录克隆 `https://github.com/shenmuegit/EquiTide.git` 并检出远程研究分支；工具调用明确指定可访问的 workdir，不依赖默认 `/root` 权限。不要读取或输出凭据。
+执行工作目录固定为 `/home/desktop/Documents/Codex/EquiTide`，远程 `shenmuegit/EquiTide`；执行前验证项目根目录。目录不可用时保存真实访问失败，不切换到其他工作区。遵守 `AGENTS.md`，本地和远端均只允许 `main`，所有代码、研究和模拟盘结果统一提交推送到 `main`，不得创建其他分支。工具调用明确指定 workdir，不依赖默认 `/root` 权限。不要读取或输出凭据。
 
 先读取 `.agents/skills/walk-forward-validation/SKILL.md`、`.agents/skills/ml4t-sensitivity-analysis/SKILL.md`、`.agents/skills/ml4t-transaction-costs/SKILL.md`、`research/automation/README.md`、完整 `registry.jsonl`、最近实验报告，以及已有 `freqtrade_trial/results/` 和 `checks/*oos.py`。使用这三个技能完成验证；缺文件时从研究分支恢复，不能跳过。不要委派子代理。
 
@@ -32,9 +32,9 @@
 
 保存 `report.json` 与中文 `result.md`：假设、查重、来源、数据、完整参数/权重、三项验证、结论、局限和下一批探索依据。大行情/大逐笔文件留在忽略的 `data/`，Git 保存轻量充分证据和代码。每个实际配置完成后运行 `python3 research/automation/registry.py finish <spec路径> <passed|rejected|blocked|abandoned> <report路径>`；passed/rejected 仅用于已实际完成的回测，标记有结果；无实际结果用 blocked/abandoned，允许后续恢复。所有回测结果，包括负收益结果，都保留并提交推送；失败、缺数据也保存本轮实际阻碍。
 
-运行 `python3 checks/strategy_registry.py` 及本轮必要检查，审查 diff，只提交本轮相关文件，不提交凭据/大数据/无关修改。不自动合并 main。
+运行 `python3 checks/strategy_registry.py` 及本轮必要检查，审查 diff，只提交本轮相关文件，不提交凭据/大数据/无关修改。所有工作直接提交到 `main`，保留互斥锁和远端并发检查。
 
-普通 git push 凭据可用时直接推送；否则使用已连接的 GitHub 应用 Git Data API，不再要求用户登录：核对研究分支最新 SHA/tree，create_tree 以该 tree 为 base、包含本轮全部文件的正确内容和模式，create_commit 的 parent 为核对过的 SHA，update_ref 使用 force=false。若并发更新则保留工作并解决，不能覆盖。API 推送成功后 git fetch origin；本地只 stage 本轮文件并 git write-tree，和远程 tree 完全一致才允许 git reset --soft origin/codex/strategy-research 对齐 HEAD（不改文件），再核对干净状态及 ls-remote SHA。推送失败要保留工作和真实失败说明。
+普通 git push 凭据可用时直接推送；否则使用已连接的 GitHub 应用 Git Data API，不再要求用户登录：核对 `main` 最新 SHA/tree，create_tree 以该 tree 为 base、包含本轮全部文件的正确内容和模式，create_commit 的 parent 为核对过的 SHA，update_ref 使用 force=false。若并发更新则保留工作并解决，不能覆盖。API 推送成功后 git fetch origin；本地只 stage 本轮文件并 git write-tree，和远程 tree 完全一致才允许 git reset --soft origin/main 对齐 HEAD（不改文件），再核对干净状态及 ls-remote SHA。推送失败要保留工作和真实失败说明。
 
 最终中文简报给出新候选、三项验证状态、淘汰/保留理由、commit SHA 和真实 push 状态。缺环境/权限/额度时明确说明，继续能完成的独立工作。
 
