@@ -1,0 +1,26 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261024T024326Z/forward.py",
+        "--reproduce"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-24T02:50:14.326347Z",
+      "finished_utc": "2026-10-24T02:50:14.730517Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261024T024326Z/forward_replay.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261024T024326Z/forward.py\", line 61, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261024T024326Z/forward.py\", line 20, in main\n    for b in batch:assert ledger[b['fingerprint']]['status'] in (('rejected',) if replay else ('reserved',))\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "resolution": {
+        "recovery_commands": "research/experiments/20261024T024326Z/forward_recovery_commands.json",
+        "recovery_finish_and_replay_exit_codes": [
+          0,
+          0
+        ],
+        "financial_report_original_bytes_unchanged": true,
+        "root_cause": "Mark-only replay requires rejected/finished observations;initial runner called replay before finish. Reordered runner only;no observer/backtest/report return or state rewrite."
+      }
+    }
+  ]
+}
