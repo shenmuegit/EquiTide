@@ -1,0 +1,38 @@
+"""Synthetic rule/boundary causality tests and unchanged accounting source contract."""
+import ast,hashlib,json
+from decimal import Decimal as D
+from fractions import Fraction as F
+import engine
+from run import ROOT,R,module,validate_lookback
+def main():
+ path=ROOT/'research/experiments/20261023T184400Z/engine.py';old=module(path,'old_zeroexit_contract');before=path.read_text();after=(R/'engine.py').read_text();a={x.name:ast.get_source_segment(before,x) for x in ast.parse(before).body if isinstance(x,ast.FunctionDef)};b={x.name:ast.get_source_segment(after,x) for x in ast.parse(after).body if isinstance(x,ast.FunctionDef)};assert a.keys()==b.keys()
+ for name in a.keys()-{'target','simulate'}:assert a[name]==b[name],name
+ expected=a['simulate'].replace("1 if D(state['signed_units'])>0 else -1 if D(state['signed_units'])<0 else 0);q=", "1 if D(state['signed_units'])>0 else -1 if D(state['signed_units'])<0 else 0,p['exit_buffer_fraction']);q=");assert expected==b['simulate']
+ assert hashlib.sha256((R/'engine.py').read_bytes()).hexdigest()==hashlib.sha256((ROOT/'research/experiments/20261024T024326Z/engine.py').read_bytes()).hexdigest()
+ for L in [28,29,31,32]:validate_lookback(L)
+ try:validate_lookback(33)
+ except AssertionError:pass
+ else:raise AssertionError('L33 future negative index allowed')
+ n=0
+ for H in [.02,.04]:
+  for E in [0,.0025,.005,.01,.015,.02]:
+   for current in [-1,0,1]:
+    for r in [F(-1,10),-F(str(H)),-F(str(E))-F(1,10**7),-F(str(E)),-F(str(E))+F(1,10**7),F(0),F(str(E))-F(1,10**7),F(str(E)),F(str(E))+F(1,10**7),F(str(H)),F(1,10)]:
+     values=[D(100),D(100)*(1+D(r.numerator)/D(r.denominator))];result,roc=engine.target(values,2,1,H,current,E);h,e=F(str(H)),F(str(E));want=1 if r>h else -1 if r<-h else 1 if current==1 and r>-e else -1 if current==-1 and r<e else 0;assert result==want and F(roc)==r
+     assert engine.target(values+[D('0.0000001'),D('9999999999')],2,1,H,current,E)==(result,roc)
+     if E==0:assert (result,roc)==old.target(values,2,1,H,current)
+     n+=1
+ # Entry priority, opposite transition and exact equality must not be weakened.
+ assert engine.target([D(100),D('99.5')],2,1,.02,1,.005)[0]==0
+ assert engine.target([D(100),D('99.50001')],2,1,.02,1,.005)[0]==1
+ assert engine.target([D(100),D('100.5')],2,1,.02,-1,.005)[0]==0
+ assert engine.target([D(100),D('97.99')],2,1,.02,1,.005)[0]==-1
+ assert engine.target([D(100),D('102.01')],2,1,.02,-1,.005)[0]==1
+ assert engine.target([D(100),D(98)],2,1,.02,1,.02)[0]==0
+ assert engine.target([D(100),D('97.99999')],2,1,.02,1,.02)[0]==-1
+ assert engine.target([D(100),D(102)],2,1,.02,-1,.02)[0]==0
+ try:engine.target([D(100),D(99)],2,1,.01,1,.02)
+ except AssertionError:pass
+ else:raise AssertionError('Exitbuffer exceeding entry band allowed')
+ print(json.dumps({'passed':True,'synthetic_cases':n,'zero_buffer_exactly_matches_existing_rule':True,'strict_entry_and_exit_equalities_verified':True,'future_tail_cannot_change_current_target':True,'only_target_and_parameter_passing_changed':True,'unchanged_source_functions':sorted(a.keys()-{'target','simulate'}),'source_original_sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'exit2percent_at_entry2percent_boundaries_verified':True,'exit_buffer_above_entry_prohibited':True,'synthetic_only_not_backtest_results':True}),flush=True)
+if __name__=='__main__':main()
