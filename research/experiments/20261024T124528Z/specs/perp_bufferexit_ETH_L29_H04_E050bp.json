@@ -1,0 +1,76 @@
+{
+  "kind": "strategy",
+  "family": "perpetual-daily-signed-momentum-buffered-exit-hysteresis",
+  "name": "perp_bufferexit_ETH_L29_H04_E050bp",
+  "market": "perpetual",
+  "timeframe": "1d",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "logic": {
+    "signal": "At daily decision i,priorcompletedperpetualROC=C[i-1]/C[i-1-L]-1. Flat enterslong iff ROC>H,short iff ROC<-H. Inside or on entrybands,existinglong persists strictly while ROC>-E;existingshort persists strictly while ROC<E. Long exits at ROC<=-E;short exits at ROC>=E. Crossing opposite strict fullentryband closesold then opensopposite at00:01. E<=H,at exact +/-H no newentry. State is actualsignedquantity,no unpublishedprice/funding input.",
+    "execution": "At next00:01nativeperpetualOPEN,if desired direction differs,close old signed position first then enter desired if nonzero. Same direction retains actual quantity,no daily resizing. Quantity for a new entry=floor(2000USDT/priorcompletedC/lot)*lot times direction,not sized from future OPEN,NAV or unpublished funding.",
+    "allocation": "Independent10000USDT collateral account per config. Fixed raw entry notional20% of initial collateral=2000USDT;pricegap/lot can change actual entry percentage. At most one signedlinearUSDTperp position;entrynotional<=postfeecollateral (1xcap). No borrowingunderlying,spotshort,leveragefundingloan,transfer or cashyield;not normalized weights.",
+    "ledger": "Opening debitsfeeonly;unrealizedPnL=q*(price-entryexecution). Closing realizes signedq*(exitexecution-entryexecution) and paysfee. Notional is not debited as spot cash.",
+    "funding": "At actual settlementns,rawcashdelta=-signedq*actualmark*realizedrate. Only oldposition thenheld participates;funding events00:00/00:00.001 occur before00:01rotation. Negative delta multiplied by coststress;positive income not increased. Sourceavailable_ts (often+1hour) retained;rates are ex-post accounting only,never signal or size inputs.",
+    "risk": "Composite sampled NAV includes minute transaction-close proxies plus actual closed-hour mark and actualfundingsettlement marks,pre/posttrade samples and terminalcash. Report mark-only and trade-proxy DD separately. Marginproxy:1%ofnotional versus adverse full-hour markhigh/low for every overlapping state in completelyin-OOSclosedhours. No exact historicaltier/tick liquidation engine;anyproxybreachfails qualification.",
+    "state": "One cold collateral start across11continuous30dayfolds;carrycash/signedq/entryexecution/refandfunding. Known terminalcostedclose;no fold resets. OriginalSMA/paper10states unchanged."
+  },
+  "parameters": {
+    "initial_capital_usdt": 10000,
+    "raw_entry_notional_fraction_of_initial_capital": 0.2,
+    "fixed_entry_notional_usdt": 2000,
+    "lookback_days": 29,
+    "return_hurdle": 0.04,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-09-14T00:01:00Z",
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "walk_forward_folds": 11,
+    "walk_forward_test_days": 30,
+    "maintenance_margin_proxy": 0.01,
+    "initial_notional_cap_to_collateral": 1,
+    "costs": {
+      "per_side_commission": 0.0005,
+      "half_spread": 0.0001,
+      "slippage": 0.0002,
+      "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+      "participation_max": 0.001,
+      "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+      "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+      "cost_multipliers": [
+        1,
+        2,
+        3
+      ],
+      "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+      "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+    },
+    "input_hashes": {
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/perp_bars.parquet": "f1dd0805de6558a6888beb15b93eab5da65db7276075d0eee1d481a82c120733",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/funding_settlement.parquet": "34b51269537e9299819081303041c43c50fcf794e713714f065093f8f825ddc6",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/mark_hour_bars.parquet": "59ee88ad5c9ce688ff1fdc7fda750fbe49e504fc0ef3eb5de90f3536d6954a1f",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20260916T000000Z_archive_20260929/perp_instrument_meta.parquet": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6"
+    },
+    "persistence": "Keep actual long while ROC>-E or short while ROC<E inside entrybands;strict entrybands have priority,unchanged quantity.",
+    "exit_buffer_fraction": 0.005
+  },
+  "validation_plan": "research/experiments/20261024T124528Z/plan.json",
+  "sources": [
+    {
+      "url": "https://www.aqr.com/Insights/Research/Journal-Article/Time-Series-Momentum",
+      "access_date": "2026-10-24",
+      "scope": "Author2012traditional12monthmulti-futuresmomentum background only;our28to32daycrypto exit-buffer research is not a replication."
+    },
+    {
+      "url": "https://www.binance.com/en/support/faq/detail/360033525031",
+      "access_date": "2026-10-24",
+      "scope": "Officialfundingdirectionandposition-at-settlement;actualarchivedrates/timesused."
+    },
+    {
+      "url": "https://www.binance.com/en/support/faq/detail/360033525271",
+      "access_date": "2026-10-24",
+      "scope": "MarkvsLastpriceandmargin;hourmarkdataand1%proxyarelimited,nottruetickliquidationreconstruction."
+    }
+  ]
+}
