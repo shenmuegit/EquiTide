@@ -1,0 +1,85 @@
+{
+  "kind": "combination",
+  "family": "two-asset-passive-lagged-volatility-gated-perpetual-sleeves",
+  "name": "volgate370_COMBO_W20_CAP60",
+  "logic": {
+    "allocation": "Native initial10000USDT cashcollateral,fixedentryN2000 (20%initialcapital). Retain same-directionactualq;no vol-target resizing,leverage,compound size,transfer or cashyield. Parent raw1/1=twoentire10000banks,20000capital,4000combinedentrybudget (20%initialparentcapital);no normalization or rebalance.",
+    "state": "One cold native10000start2025-10-19UTC00:01,continuous370days;12complete30dayfolds+10daytail. Dailygate may close/reenter andcosts everyactualfill. OnlyOct24terminalforcedexit. Recent40diagnostic inheritsday330predecisioncash/q;neverreset or adddiagnosticorders.",
+    "components": "Eachcomponent independently applies the complete frozen lagged-vol cashgate andbufferedROC,actualnativeN2000cost/funding/risk;parent addsabsoluteNAVonce.",
+    "alignment": "Uniontime/eventkeys,lastcompletedobservation,nointerpolation;no parenttrades/rebalance orcrossmargin."
+  },
+  "parameters": {
+    "initial_capital_usdt": 20000,
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "component_capitals_usdt": [
+      10000,
+      10000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      2000,
+      2000
+    ],
+    "BTC_lookback_days": 31,
+    "BTC_return_hurdle": 0.04,
+    "ETH_lookback_days": 28,
+    "ETH_return_hurdle": 0.02,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_test_days": 30,
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "source_rules_and_costs_sha256": "6f5d48642f3990dbee5e6f70dccf67cd0c211ddcfdf805027a730c1f6efcea20",
+    "BTC_exit_buffer_fraction": 0.01,
+    "ETH_exit_buffer_fraction": 0.01,
+    "BTC_fixed_entry_notional_usdt": 2000,
+    "ETH_fixed_entry_notional_usdt": 2000,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "continuous_oos_days": 370,
+    "volatility_lookback_days": 20,
+    "annualized_volatility_cap": 0.6
+  },
+  "components": [
+    {
+      "fingerprint": "e6e088abe799449bc00e4e6afb81f4808f80f0cc05ff2b677239ab725c12ffa1",
+      "weight": 1
+    },
+    {
+      "fingerprint": "c3580d74f6f827a8f8986aa1dfb06a35fad79240a52684725d1cc0397ab412cb",
+      "weight": 1
+    }
+  ],
+  "validation_plan": "research/experiments/20261025T105436Z/plan.json",
+  "sources": [
+    {
+      "url": "https://www.aqr.com/Insights/Research/Journal-Article/Time-Series-Momentum",
+      "access_date": "2026-10-24",
+      "scope": "2012traditionalmulti-futures background from earlierUTCdate read;not requested thisround or cryptocurrency replication."
+    },
+    {
+      "url": "https://www.binance.com/en/support/faq/detail/360033525031",
+      "access_date": "2026-10-25",
+      "scope": "Officialfundingdirectionandposition-at-settlement;actualarchivedrates/timesused."
+    },
+    {
+      "url": "https://www.binance.com/en/support/faq/detail/360033525271",
+      "access_date": "2026-10-25",
+      "scope": "MarkvsLastpriceandmargin;hourmarkdataand1%proxyarelimited,nottruetickliquidationreconstruction."
+    },
+    {
+      "url": "https://www.nber.org/papers/w22208",
+      "access_date": "2026-10-25",
+      "version": "NBER22208 April2016/revisedJune2016;publishedJF2017 72(4),1611-1644",
+      "scope": "Originalauthors motivate reducingrisk at highlaggedvol. This binarydailycrypto cashgate is our inference,separatefrompaper inversevariance portfolios;notreplication orprofit guarantee."
+    }
+  ]
+}

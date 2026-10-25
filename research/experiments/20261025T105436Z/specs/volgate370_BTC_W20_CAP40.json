@@ -1,0 +1,93 @@
+{
+  "kind": "strategy",
+  "family": "lagged-volatility-cash-gate-buffered-perpetual-momentum",
+  "name": "volgate370_BTC_W20_CAP40",
+  "market": "perpetual",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT"
+  ],
+  "logic": {
+    "signal": "BTC ROC31 H4%,ETH ROC28 H2%,symmetric exitbuffer1% fixed. Strictentry+H/-H andoriginalbufferedexitpriority;laggedvolgate overridesdesiredtocash. Funding/OPEN/futureclose never enterdirection/vol.",
+    "execution": "NextUTC00:01 nativeOPEN;closeopposite first then enter. Quantity=floor(spec.fixed_entry_notional_usdt/priorcompletedC/lot)*lot times direction;fixed raw N,no future OPEN/NAV/unpublishedfunding sizing;retain actualsame-directionquantity.",
+    "allocation": "Native initial10000USDT cashcollateral,fixedentryN2000 (20%initialcapital). Retain same-directionactualq;no vol-target resizing,leverage,compound size,transfer or cashyield. Parent raw1/1=twoentire10000banks,20000capital,4000combinedentrybudget (20%initialparentcapital);no normalization or rebalance.",
+    "ledger": "Opening debitsfeeonly;unrealizedPnL=q*(price-entryexecution). Closing realizes signedq*(exitexecution-entryexecution) and paysfee. Notional is not debited as spot cash.",
+    "funding": "At actual settlementns,rawcashdelta=-signedq*actualmark*realizedrate. Only oldposition thenheld participates;funding events00:00/00:00.001 occur before00:01rotation. Negative delta multiplied by coststress;positive income not increased. Sourceavailable_ts (often+1hour) retained;rates are ex-post accounting only,never signal or size inputs.",
+    "risk": "Composite sampled NAV includes minute transaction-close proxies plus actual closed-hour mark and actualfundingsettlement marks,pre/posttrade samples and terminalcash. Report mark-only and trade-proxy DD separately. Marginproxy:1%ofnotional versus adverse full-hour markhigh/low for every overlapping state in completelyin-OOSclosedhours. No exact historicaltier/tick liquidation engine;anyproxybreachfails qualification.",
+    "state": "One cold native10000start2025-10-19UTC00:01,continuous370days;12complete30dayfolds+10daytail. Dailygate may close/reenter andcosts everyactualfill. OnlyOct24terminalforcedexit. Recent40diagnostic inheritsday330predecisioncash/q;neverreset or adddiagnosticorders.",
+    "volatility_gate": "At each00:01decision,estimate sampleSD(ddof1)of exactlyW dailylogreturns ending priorcompletedclose C[i-1],annualizedsqrt365. Returns C[j]/C[j-1],j=i-W..i-1;requiresW+1knowncloses. If sigma>cap desired=0 and close existing long/short;otherwiseuse originalbufferedROCtarget basedonactual currentdirection. Equalitysigma==cap permitsrisk. Flat reentry stillneedsstrictROCentry;no latentdesiredstate. W10/20/30,cap.4/.6/.8 fixed before evaluation."
+  },
+  "parameters": {
+    "initial_capital_usdt": 10000,
+    "raw_entry_notional_fraction_of_initial_capital": 0.2,
+    "fixed_entry_notional_usdt": 2000,
+    "lookback_days": 31,
+    "return_hurdle": 0.04,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "walk_forward_folds": 13,
+    "walk_forward_test_days": 30,
+    "maintenance_margin_proxy": 0.01,
+    "initial_notional_cap_to_collateral": 1,
+    "costs": {
+      "per_side_commission": 0.0005,
+      "half_spread": 0.0001,
+      "slippage": 0.0002,
+      "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+      "participation_max": 0.001,
+      "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+      "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+      "cost_multipliers": [
+        1,
+        2,
+        3
+      ],
+      "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+      "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+    },
+    "input_hashes": {
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "97be656cf441024101417476f8338f4d739879d3ee39bfbf2a89cf1a287b726c",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "80cd98d12fd73cb8bfcc7a4d4af65d737347c9d9b53d82ae1698a1aa15bd71ce",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "b27e8f9a078a50a9d34c034870790321e43b5d7dff74f2c2a7d0b69f3c276006",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99"
+    },
+    "persistence": "Keep actual long while ROC>-E or short while ROC<E inside entrybands;strict entrybands have priority,unchanged quantity.",
+    "exit_buffer_fraction": 0.01,
+    "complete_30day_folds": 12,
+    "tail_fold_days": 10,
+    "positive_complete30d_folds_required": 9,
+    "volatility_lookback_days": 20,
+    "annualized_volatility_cap": 0.4,
+    "volatility_ddof": 1,
+    "annualization_days": 365,
+    "volatility_high_risk_action": "target_flat",
+    "equality_at_cap": "risk_permitted",
+    "signal_mode": "lagged_volatility_gated_buffered_ROC"
+  },
+  "validation_plan": "research/experiments/20261025T105436Z/plan.json",
+  "sources": [
+    {
+      "url": "https://www.aqr.com/Insights/Research/Journal-Article/Time-Series-Momentum",
+      "access_date": "2026-10-24",
+      "scope": "2012traditionalmulti-futures background from earlierUTCdate read;not requested thisround or cryptocurrency replication."
+    },
+    {
+      "url": "https://www.binance.com/en/support/faq/detail/360033525031",
+      "access_date": "2026-10-25",
+      "scope": "Officialfundingdirectionandposition-at-settlement;actualarchivedrates/timesused."
+    },
+    {
+      "url": "https://www.binance.com/en/support/faq/detail/360033525271",
+      "access_date": "2026-10-25",
+      "scope": "MarkvsLastpriceandmargin;hourmarkdataand1%proxyarelimited,nottruetickliquidationreconstruction."
+    },
+    {
+      "url": "https://www.nber.org/papers/w22208",
+      "access_date": "2026-10-25",
+      "version": "NBER22208 April2016/revisedJune2016;publishedJF2017 72(4),1611-1644",
+      "scope": "Originalauthors motivate reducingrisk at highlaggedvol. This binarydailycrypto cashgate is our inference,separatefrompaper inversevariance portfolios;notreplication orprofit guarantee."
+    }
+  ]
+}
