@@ -1,0 +1,2756 @@
+{
+  "branch_policy": "main only locally/remotely;no branches or branch worktrees",
+  "report": "research/experiments/20261025T205634Z/report.json",
+  "report_sha256": "64bf105e433fab79b2f7af778de01bf534b38e6424267c7a7cafd0a785e56240",
+  "new_finished_financial_configs": 54,
+  "new_native_backtests": 27,
+  "new_passive_parents": 27,
+  "candidate_passed": 0,
+  "candidate_rejected": 54,
+  "frozen_grid": {
+    "native": {
+      "asset": "BTC",
+      "trend_lookback_days": [
+        7,
+        14,
+        28
+      ],
+      "lookback_days": [
+        1,
+        2,
+        3
+      ],
+      "return_hurdle": [
+        0.02,
+        0.04,
+        0.06
+      ],
+      "fixed_entry_notional_usdt": 2000,
+      "new_cells": 27
+    },
+    "parent": {
+      "trend_lookback_days": [
+        7,
+        14,
+        28
+      ],
+      "lookback_days": [
+        1,
+        2,
+        3
+      ],
+      "return_hurdle": [
+        0.02,
+        0.04,
+        0.06
+      ],
+      "coupling": "BothassetsEXACTsameS/L/H,bothzeroexit;notindependent6Dcrossgrid.",
+      "new_cells": 27
+    },
+    "new_financial_configs": 54,
+    "cost_scenes": 162,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "component_capitals_usdt": [
+      10000,
+      10000
+    ],
+    "parent_capital_usdt": 20000,
+    "entry_budget_each_usdt": 2000,
+    "entry_budget_total_usdt": 4000,
+    "readonly_ETH_native_components": 27,
+    "readonly_unfiltered_BTC_controls": 9,
+    "readonly_unfiltered_pair_controls": 9,
+    "readonly_mixed_default_controls": 27,
+    "readonly_matched_hold_controls": 2
+  },
+  "time_boundaries": {
+    "input_start_utc": "2025-09-16T00:00:00Z",
+    "input_end_exclusive_utc": "2026-10-25T00:00:00Z",
+    "oos_start_utc": "2025-10-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-10-24T00:01:00Z",
+    "context_days": 33,
+    "nominal_warmup_days": 30,
+    "initial_embargo_days": 3,
+    "continuous_oos_days": 370,
+    "walk_forward_folds": 13,
+    "complete_30day_folds": 12,
+    "tail_fold_days": 10,
+    "label_purge": "No fittedlabels/model;not applicable. Fixed rules use only priorcompleteprices,actual state carries across allfolds."
+  },
+  "normalized_inputs": {
+    "BTC": [
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet",
+        "sha256": "97be656cf441024101417476f8338f4d739879d3ee39bfbf2a89cf1a287b726c",
+        "bytes": 32143848,
+        "rows": 581760
+      },
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet",
+        "sha256": "80cd98d12fd73cb8bfcc7a4d4af65d737347c9d9b53d82ae1698a1aa15bd71ce",
+        "bytes": 494964,
+        "rows": 9696
+      },
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet",
+        "sha256": "b27e8f9a078a50a9d34c034870790321e43b5d7dff74f2c2a7d0b69f3c276006",
+        "bytes": 34756,
+        "rows": 1212
+      },
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet",
+        "sha256": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99",
+        "bytes": 1892,
+        "rows": 1
+      }
+    ],
+    "ETH": [
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet",
+        "sha256": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+        "bytes": 29255495,
+        "rows": 581760
+      },
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet",
+        "sha256": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+        "bytes": 462199,
+        "rows": 9696
+      },
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet",
+        "sha256": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+        "bytes": 33894,
+        "rows": 1212
+      },
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet",
+        "sha256": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6",
+        "bytes": 1892,
+        "rows": 1
+      }
+    ]
+  },
+  "input_provenance_manifest": "research/experiments/20261025T065405Z/extended_data_manifest.json",
+  "input_provenance_manifest_sha256": "c7f23dc091a19e9eebd90778b648d8330e7d193bdd07d4b4011cb02373235a76",
+  "component_sources_for_reuse": {
+    "c3a18a783138cab87df0344ebfdc6d3c9ba5063fbffe69661479fb64922ac3e2": {
+      "name": "gate370_ETH_S7_L1_H02",
+      "fingerprint": "c3a18a783138cab87df0344ebfdc6d3c9ba5063fbffe69661479fb64922ac3e2",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L1_H02.json.gz",
+      "archive_sha256": "79fa22a05a2988c618494d22aff30bf2e1ca88f03694d3c5cf11b5a63f27d9f8",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "b735127e819bbe9a6aa7c7f1cc15df8d9f7e88526a77618a97a071930ecd002d",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "18d01a0d58410c972de4bc9b42ff6bb561b40929335c1578c934b2a365d7a651",
+        "2": "d8d266c2fe61181145d63ccae1bd4e31d6fbba5899c8a587c43d84ae522a8767",
+        "3": "5ee38a5bc3260ee59c5909a6130921d85ce6846aece49ef988dcf0bc5bbc650c"
+      },
+      "trend_lookback_days": 7,
+      "lookback_days": 1,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "c7581e210818dba245fd2e60cb7dfb8a0adb6a9340a5fd64eadbe04e4abaecde": {
+      "name": "gate370_ETH_S7_L1_H04",
+      "fingerprint": "c7581e210818dba245fd2e60cb7dfb8a0adb6a9340a5fd64eadbe04e4abaecde",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L1_H04.json.gz",
+      "archive_sha256": "f0a9847eb5c29153e6184e23f34c9cbf8d544ab857f71e4e72e376f6b787c2b9",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "979186d7a1a3d3f6a834250fdea37cd08338d26ec85de29ee0431c45c896e3cc",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "a505c438f14ebc6690f896bb74136e33908882ad6a7fda19ebe0c1712819a801",
+        "2": "8d2fc9ff0757771ba71dbded6447818118e1c0016b62f7a6dd64892e6e2ee6e7",
+        "3": "513fbd8ef98f603bf0d57b69d355dd5b618154c89c2746938cb9b94c1714e9f6"
+      },
+      "trend_lookback_days": 7,
+      "lookback_days": 1,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "a8df3f2c96e11b0093db0c299ed8467b5b4af2036b2ee8f75d6cccbd310db093": {
+      "name": "gate370_ETH_S7_L1_H06",
+      "fingerprint": "a8df3f2c96e11b0093db0c299ed8467b5b4af2036b2ee8f75d6cccbd310db093",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L1_H06.json.gz",
+      "archive_sha256": "a55b69ce212a0ed602fa95dde51a0b66a6375b3834c8f17e14e51fe4016ab96f",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "a9bac97b08b84918024fcbe5a0b755b1967d6e2dc849d011b9f3d6064444a1ae",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "667e57a0c2b37df200cb7d93747145f8c3281c6fccae31beda3630c47a018b04",
+        "2": "999db1b6f5c294839e0288e1489e2d2f8dccde35c41ad53444d9d1198f23ede3",
+        "3": "68dcf5793a3f75ee96b2c2208c1e39415591bc16adcc9a4e93d61c14485bd6b9"
+      },
+      "trend_lookback_days": 7,
+      "lookback_days": 1,
+      "return_hurdle": 0.06,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "feed57ebe3655d91bd9f09f92dead17cd5c9756e4e9d044211d5c107309bc64c": {
+      "name": "gate370_ETH_S7_L2_H02",
+      "fingerprint": "feed57ebe3655d91bd9f09f92dead17cd5c9756e4e9d044211d5c107309bc64c",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L2_H02.json.gz",
+      "archive_sha256": "8b4cdcb4c0bf183e6744d4db61c1eb9d6769dabed21defbb8b6a675801592d54",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "9f6ad26b4f04bbe0f347162494fad2154f59ca96f7f28e1ae8e866e41537fd70",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "1b17f79546d69db5463247db36e5c9efa67f95a343df5f6ab4b82ac9ed3bfe54",
+        "2": "7a0fbdad07e6871d1cbfb523bd77462842028e73bd549abdb9422b47a3630786",
+        "3": "cabf4f184c839f0643ca190059a4b19fa142250f3897fd208dff7d46a492a2ad"
+      },
+      "trend_lookback_days": 7,
+      "lookback_days": 2,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "1bebc4596bf2ace4d6dec2f4ce7f0d5f0124d7625f95a7c8d5e5b66c10659fb3": {
+      "name": "gate370_ETH_S7_L2_H04",
+      "fingerprint": "1bebc4596bf2ace4d6dec2f4ce7f0d5f0124d7625f95a7c8d5e5b66c10659fb3",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L2_H04.json.gz",
+      "archive_sha256": "22b2fb40e121aaf08ac58ec6a8da3a8dcbcf50ac811c2040d9bb08dd37392ac2",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "9830f3fa3c819f57b0a4f50b8cb79853a7a1f62fd950e92641674532c20d0e65",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "f7a2853438c07e2a60154c38b3015687e5fd9c6de59701504bf3471219252c1d",
+        "2": "5fb01874761bc7e31c71023acf28318910e451a593e2d6718764f581ba16aa3c",
+        "3": "23207cd18aef76728535732f838cfdc98744baf8246b93f3b88785b3661f66e0"
+      },
+      "trend_lookback_days": 7,
+      "lookback_days": 2,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "f11632ed8d95e668e7e71551656c9f412729dce75ca45337731b17cd6edc3048": {
+      "name": "gate370_ETH_S7_L2_H06",
+      "fingerprint": "f11632ed8d95e668e7e71551656c9f412729dce75ca45337731b17cd6edc3048",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L2_H06.json.gz",
+      "archive_sha256": "a6b5b68f236df0d597fc1a62c13e27814f2b07c9ecf3d22230274bb68ac3a2fd",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "82495959f62e336183f1db7e40bff75198de52559876b43b21b48386fccdb868",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "047e6a98ae1391fbb3c91b46d04f4d083d7ca5309c6a4902588fbd91dbfe2c1b",
+        "2": "c18e3421806340fd938afaa8ccfc38bdaad6afcb58d21e0172f9742553e5718f",
+        "3": "31b09ff5adcb5a50b113ba19e4d48c96988dd0ae77ba654d793a80e4450062ae"
+      },
+      "trend_lookback_days": 7,
+      "lookback_days": 2,
+      "return_hurdle": 0.06,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "ca2f93ce8790a1793d57a6822d9dd3d1423c37358787099276354370a8f585dd": {
+      "name": "gate370_ETH_S7_L3_H02",
+      "fingerprint": "ca2f93ce8790a1793d57a6822d9dd3d1423c37358787099276354370a8f585dd",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L3_H02.json.gz",
+      "archive_sha256": "569111ac8aac9b756c5da0f624a15688a4614084249f15e49f26d82f15e8c048",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "2386ba1b069be8b673a1b762d5b54c68ae011bc775e86274206cb6eb1a5bf965",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "37d1315b41b174f7cee0182f2c1a04ded47292186d894b27ba90c6ce685ffd35",
+        "2": "8862cfdf19dd7dc8510f3130af6d71af43cf72e33e7651e00413e6aba46d1a09",
+        "3": "7d992d21dd929798b104a931072e64d3d5bb5871ea7c982d5b94572ee943a6f4"
+      },
+      "trend_lookback_days": 7,
+      "lookback_days": 3,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "ccdf57fd3d5e2023457520fa61c4a8c50561f5a2f214729da1992921e2a216e4": {
+      "name": "gate370_ETH_S7_L3_H04",
+      "fingerprint": "ccdf57fd3d5e2023457520fa61c4a8c50561f5a2f214729da1992921e2a216e4",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L3_H04.json.gz",
+      "archive_sha256": "6a9686d5da7ef35183fb0af2c44111cfe903f56e0c4a25ccbaaa7bc3f5942000",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "2ad126c95771ac69a51ce29f81cdc9d788a34813f58fe662eeebf88ea6c68742",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "adef585055a767a40505567e51276e994552546b25d4edd39243876c161527ff",
+        "2": "8ad4fe8a3b0ea6045d60f04b15018d02d0f41353459d6b214dc7eb80731ef558",
+        "3": "5ba3f9713ba6b8dc1fdb1829b14887d15b1f5cae93b0da24382c64497c7a3a58"
+      },
+      "trend_lookback_days": 7,
+      "lookback_days": 3,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "f2a18e0f93362f72a1bad54078e8c815d3fbfa21b2685ab7ccef69eca04fa1c0": {
+      "name": "gate370_ETH_S7_L3_H06",
+      "fingerprint": "f2a18e0f93362f72a1bad54078e8c815d3fbfa21b2685ab7ccef69eca04fa1c0",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L3_H06.json.gz",
+      "archive_sha256": "dcb4d07d2bee3f9d65f439782871b5f70f8c5ef1a1a96369e9763049866ea017",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "60c78e07b9c08e4abce5a1e57e644e9165a9ae7da042ca4afb83d4e26efd245f",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "540204606f11c089a2457c942030b3c8d1bc212b6ae98f1ad644bf05d938d2e1",
+        "2": "a85987b960067154a3a6148b0fe9ba5fe5e8d55566f5e2963f9f86fc8f510383",
+        "3": "7e13692a785d7ae9d9ecc861d231d3c25b1cdce23c0b40d08cee2cbb61d25579"
+      },
+      "trend_lookback_days": 7,
+      "lookback_days": 3,
+      "return_hurdle": 0.06,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "ee9e7cb17eecd2c0485d7d9c122033885a6f93cf280284d7d0f8936ff7aa4cb2": {
+      "name": "gate370_ETH_S14_L1_H02",
+      "fingerprint": "ee9e7cb17eecd2c0485d7d9c122033885a6f93cf280284d7d0f8936ff7aa4cb2",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L1_H02.json.gz",
+      "archive_sha256": "1de06695d71199697dddd2827c2cc94d5e9bbecd34ee01f7a2777ddc40feba3c",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "cabd6ad96b7bdb1c026bcbeda265a1761334eb29b56dc3456fdd7b373384e31d",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "c350c3ec43207717fbbf97ef216b1c5d7a0c9bd9bdb4ab40826596db398a6870",
+        "2": "0703d6aec140da97a0cecbd1fdf47ea1a314a7f86868d449b2c5e4746ad0cc6f",
+        "3": "64089a9cc9f7bfc1d04ae0cd267cc43e7714a47a4952d42a791a481aa6edd04e"
+      },
+      "trend_lookback_days": 14,
+      "lookback_days": 1,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "46dc56f1d8e3881610600130b5b06c166c7810e8d72f416481b465d9e8ff7e0a": {
+      "name": "gate370_ETH_S14_L1_H04",
+      "fingerprint": "46dc56f1d8e3881610600130b5b06c166c7810e8d72f416481b465d9e8ff7e0a",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L1_H04.json.gz",
+      "archive_sha256": "2086c59ef3e30079b071b8b3a0ac2ac9f841d3768d46d544ebb9f4205891db50",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "da50e65f9a85685b8536dfbec09f18ed88ff8248b2a353b6fe1c0f63710d1a47",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "aa646d2ea6e0c93e63e6fedb8d9823700d0e6c6d70debc6514328e7b2cc79bfa",
+        "2": "fd30a6ce2cc60d3395504f301db5044fd5f26241ecd6bdea6b527e92348555ba",
+        "3": "4b151bc428bcebd93455f735568070502c7b610a0145b721febfd90d236ff9f1"
+      },
+      "trend_lookback_days": 14,
+      "lookback_days": 1,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "d5e03e4549d9da1bc497a605a4c992db2689ae50ad0fc195c836e8e98065427f": {
+      "name": "gate370_ETH_S14_L1_H06",
+      "fingerprint": "d5e03e4549d9da1bc497a605a4c992db2689ae50ad0fc195c836e8e98065427f",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L1_H06.json.gz",
+      "archive_sha256": "d6ac6a9edc5443169db6d18c016dd887d38943643f3b8a6a3e8a081428a1b5eb",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "bd1eb03328e1f5d546cb9883153d738a551b4b800b741376ddaf98ea61730fd0",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "04c021615d0025327fce681b64710142657f271035f9eff0dfc1eadff5980e2c",
+        "2": "5119c15597fb121e743fdca339e84b68fdd97466edd13e802c41ecb9ad714f15",
+        "3": "506b2b34e743d6e9e85c4ff7329fb5a8a732efa549212a22786b4c1c207b86ad"
+      },
+      "trend_lookback_days": 14,
+      "lookback_days": 1,
+      "return_hurdle": 0.06,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "5214dbec65ba9885ee59ef531597b801a95e0d2115941066f9e645bd9fafbb57": {
+      "name": "gate370_ETH_S14_L2_H02",
+      "fingerprint": "5214dbec65ba9885ee59ef531597b801a95e0d2115941066f9e645bd9fafbb57",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L2_H02.json.gz",
+      "archive_sha256": "5bc490a6c6914a047928596c3dbcd8b876e6c9c15540a89e0a76721841a5fbbf",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "ea2d01471788ec0423ebb7b57de076656832edd64164749abf7288d9863fa8d6",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "d8b805d9b5cb466b0e8b6210cff6c974600557166436fd104face09bbd1933da",
+        "2": "d7042376dafaf565e25527b0aaf9433d7f070c60718a2c252310c7a759fa3734",
+        "3": "e7d54eedd668736f19a5f687f220b8bc93d1d0721a51af2aff1dc90382d3e21f"
+      },
+      "trend_lookback_days": 14,
+      "lookback_days": 2,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "310f486925a449d22210ca071785279187b67df87bac4837352abca00c17997f": {
+      "name": "gate370_ETH_S14_L2_H04",
+      "fingerprint": "310f486925a449d22210ca071785279187b67df87bac4837352abca00c17997f",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L2_H04.json.gz",
+      "archive_sha256": "aaf27e8e3f3b854248075e0e44e68d2ac1e179ca5fe1a79fcda7804dc12b57d9",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "ff48bf7bda0c1e55af2350269f0cc354882e85fea47aec0a6e047aaef7c4d8d8",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "d7e8cc7e9e43540e0458f5ac741ba727839fe19bba3c5bfdcdf741472b865cd6",
+        "2": "16a290029e1136895cb55f6d971a913b3dba9eaee5867f554fc5d46432332781",
+        "3": "4d5f854f40ae51d335e12d2d2bac690c4f6e3babd55667c07d5191491ed04dcf"
+      },
+      "trend_lookback_days": 14,
+      "lookback_days": 2,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "bff07415188ab6d765bb2689a110a4d5136138f095e7251eb98a8e37e021d9c0": {
+      "name": "gate370_ETH_S14_L2_H06",
+      "fingerprint": "bff07415188ab6d765bb2689a110a4d5136138f095e7251eb98a8e37e021d9c0",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L2_H06.json.gz",
+      "archive_sha256": "a50f6838b4c4e529438a6c82d93d71acdbb1e352adc19978709804c734c741ae",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "8f850aed2ad97cea02b31ec1efde2b5a16c04152d7bd5d6cb45ab35f3e157429",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "bfa81f95f758fbfe9aa95c7096932a5c19eb9e29858e01943a6315e0f2ef25be",
+        "2": "02bddf6b0a7716a6b751341de21b74be555d5d9e3f53c917b19e9106b503e8db",
+        "3": "f7b6d425c1227a58f1b5f0b3362ff63a54030fc895a20bd5f2d651453d24673f"
+      },
+      "trend_lookback_days": 14,
+      "lookback_days": 2,
+      "return_hurdle": 0.06,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "2b514514efeaa55f3223aac0c8ee484ab9d2969af752450d99fa0e489a4460a2": {
+      "name": "gate370_ETH_S14_L3_H02",
+      "fingerprint": "2b514514efeaa55f3223aac0c8ee484ab9d2969af752450d99fa0e489a4460a2",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L3_H02.json.gz",
+      "archive_sha256": "2bb4003331262080e3068b979d473a3cc8cac2c167831cc260fe4a53507d1d1a",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "0ab1e6e085f82882fa621a8137513c6472982368a170157913a85bf12e061601",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "d4a402300dcdf79725d3bbe642d349cbd64ad2c6a6b84f66c9970a22724aad5f",
+        "2": "1bdb30ec48f3669a21abfced0b20d92fc67f17bff640f7f73dc8d55a7f3b72ba",
+        "3": "e3448db16540d9520aa860cc6e5b0c0f4f29be1d3c8e05f08fe7c075aa4800c6"
+      },
+      "trend_lookback_days": 14,
+      "lookback_days": 3,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "8a2f07b4c135be95839e716111da31bf61eb22675a6016e227cc2a852d96f05a": {
+      "name": "gate370_ETH_S14_L3_H04",
+      "fingerprint": "8a2f07b4c135be95839e716111da31bf61eb22675a6016e227cc2a852d96f05a",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L3_H04.json.gz",
+      "archive_sha256": "64ee7f98320d9fca42021291e9cdb2899c80e5bfe60e3adad2bed219b240052c",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "b1377e8cf70f2e03138ff9432d3972d8f4dac626e191585c2caa4ea8b4ed2fea",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "1841a854c4e7d8ca8ba62ad59a801439cb49fd3321bfecd94ccec69f082a6c1f",
+        "2": "7c511cfef3c6549092fab1fbef0f0632cd09307e5c4943bb0ae3c629ca9f48e4",
+        "3": "85c025cdabba55043670348bb35a1236f513f0e7cc46964ab3a71c7c620eb712"
+      },
+      "trend_lookback_days": 14,
+      "lookback_days": 3,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "5e75d43bac190408c04df2271fbce176f6ba5640d1b96f485c91a557f7ba4d07": {
+      "name": "gate370_ETH_S14_L3_H06",
+      "fingerprint": "5e75d43bac190408c04df2271fbce176f6ba5640d1b96f485c91a557f7ba4d07",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L3_H06.json.gz",
+      "archive_sha256": "96b47ebace0def566abceed0e9f8622d085e49a69c262a2ab947fb22ab066217",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "234c23b60788b0e4c1a1a387d7cea89bcd54aa57bda0c822d50e46aa7eb0dd21",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "9a9a18e9bf14960497f8fcc37dee8bd09df826593efa3b2c60c9f79ed8fca650",
+        "2": "8d23215af6fe812f1d666acabba9840a4532edc565ba9e5356c66d6f69b061d7",
+        "3": "2523066aee7e670b8a9bf4b24a0ba89c3f1b38d35b72bfd39e9e502fa6187022"
+      },
+      "trend_lookback_days": 14,
+      "lookback_days": 3,
+      "return_hurdle": 0.06,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "35ea6a36576c239fa6ca1ae24aba0d46d1d4fe503626217a3e0540901ebe380a": {
+      "name": "gate370_ETH_S28_L1_H02",
+      "fingerprint": "35ea6a36576c239fa6ca1ae24aba0d46d1d4fe503626217a3e0540901ebe380a",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L1_H02.json.gz",
+      "archive_sha256": "83c9affc6b08f62c645d2c4d7a32cc357c3f032ff0de8838d635f00b9daf326b",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "064b656a1b8e5ab739910b5a5faefec6c299e4cae756c3dabc447f70531d2ece",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "efdac88c3e8b0d56539db5253b95bff5d6e3104e179858cf658b151232294736",
+        "2": "c199a8cc1186dea748df6452c976ba14bb2b1c54f0c1100ac4a7b8fe072e6d2a",
+        "3": "a60e8b53eb6fbac0327d84e21d3373b8df28909bee5fcbcdfc494c7ad034ff88"
+      },
+      "trend_lookback_days": 28,
+      "lookback_days": 1,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "ad52144ad06f80f41185e5e9d0bd2e9503199879590290f6ddedf742a6b2012d": {
+      "name": "gate370_ETH_S28_L1_H04",
+      "fingerprint": "ad52144ad06f80f41185e5e9d0bd2e9503199879590290f6ddedf742a6b2012d",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L1_H04.json.gz",
+      "archive_sha256": "88086dfca73378ba7e1024f8408835ae6ed8618cd4fc0151d32be4696fa40f46",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "209a4aa41ad1bb9fb91c1612881c2954dc2b72c2d3d3d133aadbd8b343351af8",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "69014d97b874171dcb11d0f1dbbd3d9c1e6912efc41a9a0aed1746ea8cbfda1d",
+        "2": "8097933811036361e782a869d45a340a61df296a7408796b537fd75c8df9f9c0",
+        "3": "f4f91d0ea6edd24258931c7722a7d2496ada8902f8188984c0d85cc1591ed342"
+      },
+      "trend_lookback_days": 28,
+      "lookback_days": 1,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "591797a18ea09a6359589a1c75011e116ca33afd2fe6979a02cfb79a4e8b3da6": {
+      "name": "gate370_ETH_S28_L1_H06",
+      "fingerprint": "591797a18ea09a6359589a1c75011e116ca33afd2fe6979a02cfb79a4e8b3da6",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L1_H06.json.gz",
+      "archive_sha256": "639188d4d75250cc53d2d71e44b22f7a3a2d89ea30a9f693b9510aced99abf1c",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "92ab331da1173b2e21cef4378ffdb8d8372b93007d63495c13860b949b91b18f",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "464ed26d23706c2530af4266628ca92ed7730cc8f55d5d96ca4a5b58724ee4b0",
+        "2": "1765ffe4a69db43e49100dcc1b73c648e7bffef7d89ce615137e0481dcb87c67",
+        "3": "06b75f3d4841393f41dfbf5654673c88c6d156495a171cb6cd5febcb27047dcb"
+      },
+      "trend_lookback_days": 28,
+      "lookback_days": 1,
+      "return_hurdle": 0.06,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "8515c19290b9e22ae472b22d2775ba2cc32213a52642f38e6a48d55cbb5a89db": {
+      "name": "gate370_ETH_S28_L2_H02",
+      "fingerprint": "8515c19290b9e22ae472b22d2775ba2cc32213a52642f38e6a48d55cbb5a89db",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L2_H02.json.gz",
+      "archive_sha256": "ab78ed6bf783aea1a7a0f14e2c984bfb3c400927c327776c57e4970e70dd83f5",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "e3a1deeb29f78737800bdd8c67bc3b2cd9d0edbbe0365812cc2a1e30f8c06563",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "60f0c404f2bb9c35ce33f7e2509f721849d035ed0ad6ba9f240b786e96c35fd4",
+        "2": "abfa272b91df9f97031c05a9f6d74643435b4d806571b1ff50828bfc5ca2177b",
+        "3": "8d3637f7c97094df389829d9fe3c4e4437a1880f534073f4efa68f0b7b725b8d"
+      },
+      "trend_lookback_days": 28,
+      "lookback_days": 2,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "282a66a03edc91ddad6252d1885dc3e34e6e38008a7f63af110a51786b090f14": {
+      "name": "gate370_ETH_S28_L2_H04",
+      "fingerprint": "282a66a03edc91ddad6252d1885dc3e34e6e38008a7f63af110a51786b090f14",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L2_H04.json.gz",
+      "archive_sha256": "9848a8a3211ecf3c4855f89793d2f656d2e348e46915501221521d69d14e97f2",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "85eab919b97698ddec7e5ecd6dd0ddabfc3225229460ad28c84bcd7388b4e33f",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "3a2efb203f537f534ee67fb6622d9d819c00fca4df48dce79be3299d4dd11bf7",
+        "2": "04e9b14a3f80cb9431912ab9002259cb7da20d94b46c14bd819aa3a12ccc604f",
+        "3": "ba578a00dc086e9fe28f82191a36802535038f4a492c3c67ec68928e4bb0cc36"
+      },
+      "trend_lookback_days": 28,
+      "lookback_days": 2,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "7ba8a672303e330c0f8d406c4394148e1628f5b27ec90d338bc7e32ce772b30d": {
+      "name": "gate370_ETH_S28_L2_H06",
+      "fingerprint": "7ba8a672303e330c0f8d406c4394148e1628f5b27ec90d338bc7e32ce772b30d",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L2_H06.json.gz",
+      "archive_sha256": "a758a25e23d011d795962ae5c6ecedf6f7c2a3db5c1ab0bccfc3ba65c2341b2b",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "10f624ed9f1514f19877706bd6960af2c1b563262316f3490369659aa979e68b",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "4d26d0e178e8b0bb499687c42556a1e204eefb5fd3173ed2d2e1bff6aa592219",
+        "2": "74f1d950a77733e3bc0182556d27844c0188f12a1de9b3780796d1563a046da3",
+        "3": "0b1de82ce5e7e665f7fed4d383c37aafab7a916339a8856d97772deabc69e77d"
+      },
+      "trend_lookback_days": 28,
+      "lookback_days": 2,
+      "return_hurdle": 0.06,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "292f15383730b487dd83bc4b162979efd96505b81d44cc875dfe77660600495b": {
+      "name": "gate370_ETH_S28_L3_H02",
+      "fingerprint": "292f15383730b487dd83bc4b162979efd96505b81d44cc875dfe77660600495b",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L3_H02.json.gz",
+      "archive_sha256": "7116dcd5e811044dccfef5546c639ef238c4e4da94620279b6c452dc4e082563",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "8f6b531dc4ff53d1f886ccc2f2d8aac74e1f8a9fe3e1c65b726b032bc952f7ff",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "5bf2fe7356a937623ce7bab9afd60637f676e07dc343c1e1cec7dbd5580514ec",
+        "2": "6583e2cbc6d96ca1791113f811ddf23b2306e1e6def2586d2c0f175c1f045c6f",
+        "3": "80bb4c8f3a2fa2ca9b11a7c90e91fdb63bd74e71444cf309f1f8ca6d07d080e7"
+      },
+      "trend_lookback_days": 28,
+      "lookback_days": 3,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "cf4e4b54953949e67e86f860740c35039b20b7df807ffedad2e9e6a4d20ae4ec": {
+      "name": "gate370_ETH_S28_L3_H04",
+      "fingerprint": "cf4e4b54953949e67e86f860740c35039b20b7df807ffedad2e9e6a4d20ae4ec",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L3_H04.json.gz",
+      "archive_sha256": "a545fdb82a75d20424005f082c620a85fda3189210a3d9826cf83d132edd9d46",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "cb6fdb60194672898f2113f9526d2514a39d438b29823ac01a8b005123c2ed95",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "01b354d0a3d0057a232ce3e329560096e95d3fe6a0f975a7e3728aef31328d45",
+        "2": "95d9808d58c8cee90f3d7472221fdac8b3f715d49a95a32080dc7de5c2f08b33",
+        "3": "9af78a278348c1550f79d2b61c0f363a449fb62ff291adf3588a12cd6c6f62ce"
+      },
+      "trend_lookback_days": 28,
+      "lookback_days": 3,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "a0a0c41c45767e82254490a02c7f840741e140cc5230977dd023813e20b14623": {
+      "name": "gate370_ETH_S28_L3_H06",
+      "fingerprint": "a0a0c41c45767e82254490a02c7f840741e140cc5230977dd023813e20b14623",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L3_H06.json.gz",
+      "archive_sha256": "598c0930edd7f159280cb74136e55f03f4d6775c72e1b8ba9ebdd65cecbf741e",
+      "asset": "ETH",
+      "scope": "native",
+      "reference_kind": "cached_ETH",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "32f97a9e83166ef21630db503cb505da2d96003c9fa7c825fba5f60ca2758eee",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "00d6e3d972b95038d17b9211ee20d3915e5a8254d409f9ba3c2afe0648e51cf4",
+        "2": "0d9584869779feec32e0c35fd43f049a002aa9c4aa0b939f2d9f7e6b4de77948",
+        "3": "8a798382349fb681629bb3e8c056d9b2433332435b88319231b0627ffaf65392"
+      },
+      "trend_lookback_days": 28,
+      "lookback_days": 3,
+      "return_hurdle": 0.06,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    }
+  },
+  "readonly_comparison_controls": {
+    "gate370_COMBO_E100_S7_L1_H02": {
+      "name": "gate370_COMBO_E100_S7_L1_H02",
+      "fingerprint": "40cdcb2b4eff387d3660c5a0f9ad38a70e83317092bd19e09c3a341ba6435451",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L1_H02.json.gz",
+      "archive_sha256": "59d9db7d15cdc9385c1b5c8e3a96d17f53a489d14146f665689d885afdc8806f",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "6d269c35da8d1976d71475e58b1a8f4e91cea0e062043b00a1ab97eba528fe5a",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "a1e5456f8e682b11c48140286d5f865574038bd155e3b132ab64ff692d746878",
+        "2": "8be81f0ba5936006241f04cdae3be9462c3c73db098bd7139bbcad35731ef9ac",
+        "3": "2d50df83ccfa0525eebcfad2a879fe19b5359cea9dd99b09892421e4d6cce846"
+      }
+    },
+    "gate370_COMBO_E100_S7_L1_H04": {
+      "name": "gate370_COMBO_E100_S7_L1_H04",
+      "fingerprint": "e2f88e5a2ec48c805230e1c885ca674aab81a0bec0b43c0e264311d9392a3966",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L1_H04.json.gz",
+      "archive_sha256": "3e99678c331cf6a32275e5cb4b6618324b2f59f71b9c90a4ad9dbd5e89c589f4",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "700b50f729366fb3cd1e300b87a2d21b2f706b4116b74b0166a53b1e0b801063",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "fe50f5372694dd11cf2b45712c0fb21dcfca34e6943f9c93bc4bf16dca33b257",
+        "2": "063deb3f32766088a6a471079e23b77ee7aa2c24d2c6f2d6133877e9ba856aec",
+        "3": "64efb6df205016522d6befa86a36ff4569389f8835b89482bb119ac4e95dc3f3"
+      }
+    },
+    "gate370_COMBO_E100_S7_L1_H06": {
+      "name": "gate370_COMBO_E100_S7_L1_H06",
+      "fingerprint": "e3d2ed62bcc4f20eda99d0cb0c02d53c5ed3633aa66f772f0ad29b19a9361075",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L1_H06.json.gz",
+      "archive_sha256": "7a356269a64f855f4c638462c39b75ca26ca3621d0b8e7e70f70999000a98752",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "51a492b053c7fa6ce27ec7453e81ac2f26c4efc9ec4073632ff234606288bd7d",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "0b4ad5f7254c05ffbdd97917b4ac438195b1c138bd86ce4c20e0cb19a79fc756",
+        "2": "f6659cb339d095f3a2e4f4987c3a7877eb00137c913f4a7cf98e6235fafbed5f",
+        "3": "3c53ccf99fc5b15752e649de30d8050333d60408ce771a7a24ea69790e925d38"
+      }
+    },
+    "gate370_COMBO_E100_S7_L2_H02": {
+      "name": "gate370_COMBO_E100_S7_L2_H02",
+      "fingerprint": "664fdce1f3f3718cf4790543256485a006fecc631adeefa24f8ed382e53ad475",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L2_H02.json.gz",
+      "archive_sha256": "f1f5fba5386e9c26da2c86212baf073ef3d8e858e587e68a3a4e26ffb5e9373a",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "9569effa5b11bf1c30f8893e9118dbde6a293667b86a8ecc15d38e85ff142ddc",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "7888d13390268308289dca062979146ad03b45ea70f8e76f6944dbae5c4ac939",
+        "2": "0e7338d3dcdb53389c7c6174ecd31cdaf128eaf6596baf33117b5181d88510ca",
+        "3": "f7d03ab64c8feec77f45149cc31c9c3bb23f2e664605f428e73824db6d4926e6"
+      }
+    },
+    "gate370_COMBO_E100_S7_L2_H04": {
+      "name": "gate370_COMBO_E100_S7_L2_H04",
+      "fingerprint": "ea13d0daf655adc1d9a05c2df4443bcb4eecf923bf95c0e38a41f68f6aaca024",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L2_H04.json.gz",
+      "archive_sha256": "9c4616d3e30d21935d02a544408958a44544f631369d3254d0d3f26c60821da9",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "fe1d26eb36e0047e648c681fa07acc92188aab91f4bff765c5c8a782525faa9b",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "6d1962c85fc4e522acf904d46ce5efd3a55bbb8e9633df0fc1cb96bcf26e7216",
+        "2": "3fb9df4a4536353f0cc414dbee7f42d51cc29b995fe56a8e755dd9f3983740a2",
+        "3": "e9fd1f2a97e2b5fb20981a93496316876de97952509b03206de0cf81d98c8d06"
+      }
+    },
+    "gate370_COMBO_E100_S7_L2_H06": {
+      "name": "gate370_COMBO_E100_S7_L2_H06",
+      "fingerprint": "1101e8cc28665d69584e10d29b7ce129626a56f14a1cb68519ff3780a9fa2976",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L2_H06.json.gz",
+      "archive_sha256": "e8a86d5286c30c03ce05b95452730b21fb1c347d949e1cf509578ac7d5539a02",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "b138c10ac251973abe2023810ee47e6720081bb1e8a301d622737485b634a905",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "9978bdfa24bd67d4960b95f2479a657794df32a13ef05e80bd4d11065899f40a",
+        "2": "4a93a61dad053bf34aa1bc74512c820c52577fe5ca0d185148cad2a52c9c22f9",
+        "3": "456167b57a185644af5f5aa12f8536e854273e866cf5c1cf890f33446aa1e3f3"
+      }
+    },
+    "gate370_COMBO_E100_S7_L3_H02": {
+      "name": "gate370_COMBO_E100_S7_L3_H02",
+      "fingerprint": "748bd8ef5f98f909009835ae01cb35f5a14501c96786eee88d1cfc7262cf808d",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L3_H02.json.gz",
+      "archive_sha256": "c591d59920572049bdc58135a6e93abd30f22f2fbebb4a9babc819c2d0cf8149",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "8deadf39a0b1ec50fcaff98e500478d549c3364970f2c9869a064823e5a4ab95",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "9a4d62d2075dfc7f611f0333ac6a83f1c00dc54aab7a9834462f4c57be1df9f8",
+        "2": "7614e7c502a65b72eddb0a4bed249db26477175954d54765a82631db9de0b35e",
+        "3": "d68af87aac4bb7e016966a3586a6a3909003d5b646c3429147b60ed461a868fa"
+      }
+    },
+    "gate370_COMBO_E100_S7_L3_H04": {
+      "name": "gate370_COMBO_E100_S7_L3_H04",
+      "fingerprint": "f5dacfab884eb2d3df4cd7588ef4f1de65e5c2017d71855ea3a7b2b4726ebaba",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L3_H04.json.gz",
+      "archive_sha256": "e3ed9cdf8ef345402e1b82b619259574e622781bb997d1fa62f9f57589e41bb3",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "c8d84a26d0ce0003a92828478ff04e1b90b7509fcd98253339e20bcaa7a6a4c9",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "04be1160bf79a3e673335553cafa0b6b8b007663e6423a0cccdbe09f35c0dab4",
+        "2": "4e842ecdcd43761b7a9c3086bbcacbdc77b5c10a0cedd14650879fcafa9f718b",
+        "3": "e9b8ac9bc3f05365711d6b4a8258ffdb1c8df6b5fd567038f7ed9d76fbe7e9d6"
+      }
+    },
+    "gate370_COMBO_E100_S7_L3_H06": {
+      "name": "gate370_COMBO_E100_S7_L3_H06",
+      "fingerprint": "c9c3b17124ebe179f44b62d19a10ef42260c1d22d065afe7d9e3a8df11200615",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L3_H06.json.gz",
+      "archive_sha256": "21d3cd9cdcca75717c18103c20760e60760a7508f0bbc137184968ffebce4776",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "031cdb5c4b963d4e3eb35ddaa8ac44f742f37fbc4ea09f5de004779ce33ed718",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "39394ecbeeb6d0f14a6c54ed42a4c15c928a13cd84965503493f791279475ccb",
+        "2": "b1f3514e4dde8ac33a72a370efe85a3bc1283d8c398246c083c6b39216fa40fa",
+        "3": "a8206f17b2499f4abcac35b484c8ea2f8a3bab5552763a3e54e23218b9ad7770"
+      }
+    },
+    "gate370_COMBO_E100_S14_L1_H02": {
+      "name": "gate370_COMBO_E100_S14_L1_H02",
+      "fingerprint": "89770014a67b6cb6e9c729205395c28a25664ae9abc83fe9bbc161340b77ba59",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L1_H02.json.gz",
+      "archive_sha256": "7196b60bbbdacb05ae0ed3e10ab334b3c9fadcba24daff163940e4302de48758",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "17add84d332cbb61d7deb4c0b9c65ec113ebe0aa98de694c4d79ed4b6fa8250e",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "297eaf59d8f2bfe6982a8c146dc3b57df6f5ed79facc6219431d9c338b456479",
+        "2": "f152923505bd107f29082959d6461c2a0747e0b5730e585c34b8a629cfab42fa",
+        "3": "52ce2879f231721e4da4274ad37b8d469b4a4cb309e985a57d16ef2ee655c2ac"
+      }
+    },
+    "gate370_COMBO_E100_S14_L1_H04": {
+      "name": "gate370_COMBO_E100_S14_L1_H04",
+      "fingerprint": "39a13f32657c3d37121c5f033655759c2797774137e114736afc31a12d3d0acf",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L1_H04.json.gz",
+      "archive_sha256": "a331e8cf5430b962f062eeb3ed07edc91c49fc56a62021cd305c24c541574543",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "aac7576a2f7456b214da2e28d2f19533a480f416a8649b1c0ff3168ba9e42200",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "50bf853a50897c96c016f8263ad54f834aa7392b3887b639ecce31c3a20bc8a9",
+        "2": "7393ad935b7793c38b310f7bd3666282c1d758a4d0fad7afdc46e9061753f633",
+        "3": "7524e5751c254ab58690661d5e9dbdeb37aa716970376311bea3e8fa04fffce0"
+      }
+    },
+    "gate370_COMBO_E100_S14_L1_H06": {
+      "name": "gate370_COMBO_E100_S14_L1_H06",
+      "fingerprint": "48b70201468b9e7bebb61e4ce6e9c2dd245d6a9a7eaacd128aeebb299be7fa48",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L1_H06.json.gz",
+      "archive_sha256": "e77ecccaa47f473d325210725b68e5e53239e4885a3c2c05e05c98cf40750730",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "10b2149effc476b7fe70ed3e8573d504a355c4dfa5bececd24dcaf4cc8164f1d",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "63a067bbfa1cbfe1ae63c4493b6e50993024e9e35bcc867e5cce088de5e7b362",
+        "2": "5a379a15362bafcac548e9b7e5854edaea66d3ad6cd87b6808bfb0d12540e961",
+        "3": "5d60fc349e904bb68896f9ed6afcf08c6a282eb64f455767f411dc751a3d909c"
+      }
+    },
+    "gate370_COMBO_E100_S14_L2_H02": {
+      "name": "gate370_COMBO_E100_S14_L2_H02",
+      "fingerprint": "6ce0f7119836343d18f785e441c5e327a0f6460c2f98fde62a052b146b4ee7e9",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L2_H02.json.gz",
+      "archive_sha256": "3f0cb7e99b98133cce1f408323e3967a92d35f075ad9f2913f304e6553b53cd7",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "56f375c0d2a2320c8f02a75e466b4673e7a7e1f7b37031cfb08d706117851c28",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "dfb358de10cbb88faab0e1e29a6b10beab3879550982390bce81eb22162eadb9",
+        "2": "ff00d2140250c968a1599484d842a470e24e1588f3c342613da0fd6bf46bfe85",
+        "3": "e848fd7cddf5ae2867fc663103d41c707a6c4a59d36a17c73f3c6bb3922ae237"
+      }
+    },
+    "gate370_COMBO_E100_S14_L2_H04": {
+      "name": "gate370_COMBO_E100_S14_L2_H04",
+      "fingerprint": "bab6ff3f39102ba4d891e804ecf863cd2d19e7b33e1b8903877c262e7513c21a",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L2_H04.json.gz",
+      "archive_sha256": "3d625dffff85f473cb36ddff06d61f50c4bae81940a17b198d82175afb7bb181",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "ff72c499ad5cd59d7989defd0bf295d3d7d11360bbd3f1c7c82011d1e30f629f",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "1fceeac388d44b42f77eeac01f273185e3728aff097b700d804a203e9bb7edbe",
+        "2": "da8d900b8b3b08d1009302e80841ef9b5abbf63c84d4717c25eee06728c55a7b",
+        "3": "46e90ddb5bf59402cc9cc01477f06cbf03ec5ab19023ffc712c4f1aa378772b2"
+      }
+    },
+    "gate370_COMBO_E100_S14_L2_H06": {
+      "name": "gate370_COMBO_E100_S14_L2_H06",
+      "fingerprint": "beadaca91f500a67bc21ff257758808245359db22a2c8f546ad0ab3228932600",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L2_H06.json.gz",
+      "archive_sha256": "12c03305917fb668d6488bccc995f45e839041067b1c5a4fcc6872058054b730",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "f435d8ef92d46218543e28f94d20683dbd21c4dd5af86c5c13be19eac8653d44",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "dc6d8722d1cc34f05d45e09be7c82dde6c58c5aa62c436b84338db51301d1c07",
+        "2": "b6824804b48c1a9cb9b53534adcade8669a7b0429b1ade18f94efe83ec1b4a38",
+        "3": "9d08e11a6a50578d96b678f781310f016e5a5d3f1deeaf75f4f32abebd89ead8"
+      }
+    },
+    "gate370_COMBO_E100_S14_L3_H02": {
+      "name": "gate370_COMBO_E100_S14_L3_H02",
+      "fingerprint": "c0e6ff1b2277fe18e5d4f4353f404982ca43480f01500b2efd11629cadf3cd97",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L3_H02.json.gz",
+      "archive_sha256": "5cb4d5640088c1a4c97fbbb5c561df460022b5d609e61e6e9de0cb39fa6a75c6",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "eb97c86741b0c6a5fc966b16e81b24ea9c677b03eae9622e187117d0bb0864d5",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "6caeccd3bcce51a9f4a4acf5477fee8523c625b7c157c18aa5ee1cb53d36f823",
+        "2": "ac61a7d77fbbeff6d7fb20b6deca19fc47791d22deba11d37cb5cfbe2cad955e",
+        "3": "4499021d81ab0c392abb7186d3d1cad2ee96e736063883c2333b9fa01a4a2d84"
+      }
+    },
+    "gate370_COMBO_E100_S14_L3_H04": {
+      "name": "gate370_COMBO_E100_S14_L3_H04",
+      "fingerprint": "203bfcd0ca3b0f74d3018961b7563d3f8b1349a6c22342deb966db30c79b91b3",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L3_H04.json.gz",
+      "archive_sha256": "02aac68039c922ee33ab8cb1565c865f335bb4c1180cdd30c5114485badc3290",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "97cbfd04ba7a8dce46d6bbbcd1166e7aced1e4c16a6467120d7bc0c294fcad5e",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "719a39cbbfa32b7e4dcf92c503df728233be832ded4bbeb8132e4255677e52ee",
+        "2": "20a58d0899bf43a7782880ab62a41362a5d525d12c18efb5d924b8785a140a7e",
+        "3": "4eda89e23df93b23dc61eb695dda2c69609cb298c8be4713e22f0047ca75c3c2"
+      }
+    },
+    "gate370_COMBO_E100_S14_L3_H06": {
+      "name": "gate370_COMBO_E100_S14_L3_H06",
+      "fingerprint": "acd3811273e2c13acfc0bf1d46f01d834cb273b2dd18e08805503027c5423b04",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L3_H06.json.gz",
+      "archive_sha256": "2dcca2714bf584b559f41c0a3d6715c9ea85343e512d3d646816dc94ee44f524",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "f5a733d4d9fbb355c0bc3899526c7d2bf8cc188d457237ceb2c4b9697e4fe35b",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "c10c2635959cf740b03abe8e26eddf78412c999e59afa3f1222944533180bba9",
+        "2": "73ac933bdf57f4531ef0d6d9d15e12c91950f847987da5eec44f92ff4152f3d0",
+        "3": "bacb8f8d4559615cb22f634451b8c57109b754ee468b2eb5a1a770b4fea9e520"
+      }
+    },
+    "gate370_COMBO_E100_S28_L1_H02": {
+      "name": "gate370_COMBO_E100_S28_L1_H02",
+      "fingerprint": "d26ba4e443192441f8ff563de721d2851c80240009a4965fedc9632afd6e3a9e",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L1_H02.json.gz",
+      "archive_sha256": "516de29a1b5d3325ee8d6573fd7903f7321ef5a58557f2952bffef3f80e36922",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "2ba395f8641043e93054453748e16621c1731136a806ca1afaf1c6802b7b719f",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "1aeb1f17879315fa9f5e934350c14c399dae4c742fbdcdc135ca35e05b38e69e",
+        "2": "3f5a09dcf7f35cc07f5823431747c372ab986e8cc15fef7b2bb6ccccf3b65580",
+        "3": "d27e24d49ce9f80393a9f12fd12892c676539757810ff8c405725018a6ef806f"
+      }
+    },
+    "gate370_COMBO_E100_S28_L1_H04": {
+      "name": "gate370_COMBO_E100_S28_L1_H04",
+      "fingerprint": "4d8345f91d6675732fb699839c7e4daf5fa7d74aa05e24adbbbde497e3881de9",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L1_H04.json.gz",
+      "archive_sha256": "ad406e986dae026eee905086ff1dc0b850eb990358f618bc118ec0f5c4faacf3",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "bc8c9d7d265ecfc96561f1dd69511fbae5be7c2a425042fca0f6c8732a5bd7d6",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "6fcdf2e81376cef0df682ea31bd278a7411fb4d0180e2a9a9c728a0e7d1840a2",
+        "2": "69788212fadde2e173baaf377cdb4fa67f31980d7fec183c6a27cae1c0252606",
+        "3": "faf01938c25bba5f6d76e3e188974cdbde0f193e2703f879d68850b7d95b9219"
+      }
+    },
+    "gate370_COMBO_E100_S28_L1_H06": {
+      "name": "gate370_COMBO_E100_S28_L1_H06",
+      "fingerprint": "d56f0142d0fdd5f063cff7f8ea5eded32589d3820c6c9a79a7b5bb2a46511ea4",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L1_H06.json.gz",
+      "archive_sha256": "c57e7e2a1fedf8eac27c706e410d542b71a2b617e7522807f8269fa2c1c96e99",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "3435ff699e94f24833e176941dfcaf6e18207e0b96bacb9a830f5270b72839c4",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "d172281b8caccdbde565fed525c3d0f8b2abdf88f4270f449b7d9918bf6090a3",
+        "2": "23dd0c9b3f03619781f697f78a7b126a5e5b0160a32310f2b99c68cc7a8d0de9",
+        "3": "4945e25f13266c172c13f0644be5961a76cbb04f85fd7495ce3cc6f28dd4f8c8"
+      }
+    },
+    "gate370_COMBO_E100_S28_L2_H02": {
+      "name": "gate370_COMBO_E100_S28_L2_H02",
+      "fingerprint": "b0f81cf875ff42958af449deb7034aba2741ff6610394222e81d2e1bfe25e8d2",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L2_H02.json.gz",
+      "archive_sha256": "c3e30be7d7f5bdd06681a58dcad21c06919cd94de437e90b76bc43745d1c9886",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "9637c0db998496c8246469b5053bd39d3c0c349e511e9b9313c6b6597a881dba",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "b84a25c945a3b6f4e25776d4c7d4881d399d54d394533c61ef0021a70fe6760a",
+        "2": "76d178e6e48d143d305ba575d8f96b21309472f4b8009e8408d58f7e52a7a95c",
+        "3": "ed42c1d809c1d9cb0711e52f3979e1d4b433bbb7e0ab3711b3b6844ecba3b5a8"
+      }
+    },
+    "gate370_COMBO_E100_S28_L2_H04": {
+      "name": "gate370_COMBO_E100_S28_L2_H04",
+      "fingerprint": "e29712dcf0fa7e15bd801f7a83c4932eee10193ac0b43488c13d36fa165f6226",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L2_H04.json.gz",
+      "archive_sha256": "d2c111471886be97024522c9859dc690b40c47c6a1d0360d08a4404b83ad0737",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "947214396a4280d2529678c150b97d700ad8d231755f78d0f520a1f37d384d66",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "a854445d4eba1ba606c0fee9216d435794f6fca43e40451d5a6c76b25e291667",
+        "2": "d18260a9a5dbabc67502935517bf2496b22521a01f58f06b6a0a5a16018eff4d",
+        "3": "f04a6e3d4c5d4cc90da92a5cc39fd4700723ce1c4feffd578cb7e255c672e192"
+      }
+    },
+    "gate370_COMBO_E100_S28_L2_H06": {
+      "name": "gate370_COMBO_E100_S28_L2_H06",
+      "fingerprint": "d9e80e9625825635947d0567910a9bd3409ab689daa1d62576f878962fcddaf0",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L2_H06.json.gz",
+      "archive_sha256": "f438c88dbb43e5479e47796456c1abb4bc7affd2b54301908d5454e2aa799455",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "99eb64304e65afba0156b7bc0a43dd3df05babcfff19371c8ec4acd644b747ee",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "15d2e8815b58a1f0ec465977dbb1ac80edf7c4e2873389326ed87603e41c9a55",
+        "2": "84cae108b387713af6e592bf9de437f46f55b68d74a21d3ecba3ba0b50bd4be3",
+        "3": "847e755a8c7afb3b3780da090f022cf70458ee6d9cea6231185af77a5a382da3"
+      }
+    },
+    "gate370_COMBO_E100_S28_L3_H02": {
+      "name": "gate370_COMBO_E100_S28_L3_H02",
+      "fingerprint": "f9376a563078b9b507452ddeb8a1fa3d4abc6f4b002cec04d9617afc1e198c60",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L3_H02.json.gz",
+      "archive_sha256": "4e2ce661104f5e27a64f695b91b1a174731e7c02d459606059dbfc1c81e7feec",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "0907ddbd20d5319f67eaf4e78bc925331fb330356f65a6a72c6af32ebd889474",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "aa416706d13bc3d90b75cdcff2cf95caf6077f88eb78b8890d6a847275c6c28b",
+        "2": "02aaa2450f2918956a484dfbd7abd3e71266d6d190cf45a4169aaa8d5564e5c9",
+        "3": "cf0bbc94d72e9bccb066e048c9b68498a7e96def4c41e1aa4e98f09fadb7bc8f"
+      }
+    },
+    "gate370_COMBO_E100_S28_L3_H04": {
+      "name": "gate370_COMBO_E100_S28_L3_H04",
+      "fingerprint": "62efb447e70b5df863ecb0450d0ad1477ea2c6d023014f2ba13bf71e8b9366d5",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L3_H04.json.gz",
+      "archive_sha256": "8121f54a590ae2ea4896e749c176828400b71dde9327a9ff9e7cca264b6fec5f",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "8aa2c024f6fd33479423ad93353d3d9cbed4e83e0f15a8d44429a8503cd1aeeb",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "ae240bb3d76282032ae94556356551cf475687d289b8639c207fde6373c00c22",
+        "2": "e85660c5ff8065a284a4dcaf26e41c1530fa701862f669a1087f3d0a4248d08c",
+        "3": "49085195571b15ddf60a824932cf0b888c0089f0dbce0d9a311c696712979ac6"
+      }
+    },
+    "gate370_COMBO_E100_S28_L3_H06": {
+      "name": "gate370_COMBO_E100_S28_L3_H06",
+      "fingerprint": "0eeb4bbf054d2753230daf3730ae78ae613e63a0c679ba530b6ef2aee51c3a48",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L3_H06.json.gz",
+      "archive_sha256": "c2da359f4015d621905a40b802a910161ea9f9cb681a9df138f4888f5a7af8e4",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "mixed_default",
+      "report": "research/experiments/20261025T185633Z/report.json",
+      "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+      "spec_sha256": "07bbd59b8ae7e34c27739a6b026a9873b9b49020de1abf351a6f856360ba52d4",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "d9c94e6f5136513e78a2864ec561c002da45cfdb17c8627290fcd10260fd6a64",
+        "2": "4b136e6263416e87f441881fd6e0350690e0b06face2413dc73bffe3dd44e159",
+        "3": "a2948790c4bc75b77d6228feaf224f223b188b336e185ba427f1ecb4e1fac7b5"
+      }
+    },
+    "reversal370_BTC_L1_H02": {
+      "name": "reversal370_BTC_L1_H02",
+      "fingerprint": "5176058521053ab725a68c52c107872d76f94c11b506c846065560f893b5c559",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L1_H02.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L1_H02.json.gz",
+      "archive_sha256": "2fab8d950c12658c5f481785424468d1f9734209100560e9cb4f8244affec868",
+      "asset": "BTC",
+      "scope": "native",
+      "reference_kind": "unfiltered_native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "5c8d755383065fa21fb3372d75d61a12f6208b05f9f36176a3dd4f12cf099d05",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "b7351aa3fadd409a4f612bb89c0d3d9ca2b4b87e3906036fcea87f637e714753",
+        "2": "91f4e7e5f182741bf6c0867d11a8ae555612b256480bfc9cc92cf8def41ae352",
+        "3": "30db7a23ae49252cf23e31297f95a686a18c38d17a99abf25d7771fa0da9f8f1"
+      }
+    },
+    "reversal370_BTC_L1_H04": {
+      "name": "reversal370_BTC_L1_H04",
+      "fingerprint": "60b8a21bc58c1dbf2ef1841a3d81856f3122b58f2bd64341cd06435cdc22c16f",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L1_H04.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L1_H04.json.gz",
+      "archive_sha256": "1dc2e40b5c61f08e5a7d402a9fd96921ea063e8c2b029919435982d8d929414b",
+      "asset": "BTC",
+      "scope": "native",
+      "reference_kind": "unfiltered_native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "bcd84c32e455029e772c5f3221b2f0e0c37304307756cce475ced0a6d329b082",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "e92531a310cba423bc99da52d37f3b15338e6231f0e038a8e007608b16367ea4",
+        "2": "d92e9fcf7556cfca8cf654ec70f3d8b53ebe4bb06a9720070923edb8a6307e1a",
+        "3": "13c6ef9c325b2db7936fbf6c4d6e4599cb49b5ca3ea68ac83d905c5ac2e8e255"
+      }
+    },
+    "reversal370_BTC_L1_H06": {
+      "name": "reversal370_BTC_L1_H06",
+      "fingerprint": "f811faac70d84475f260d4adb824ba7ec2f98a1f9437caac65896348ad233518",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L1_H06.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L1_H06.json.gz",
+      "archive_sha256": "f4aca59b54907682e85cbd767ea5bc9df9d543cb9688d96d909da48e1185e8a2",
+      "asset": "BTC",
+      "scope": "native",
+      "reference_kind": "unfiltered_native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "ea5d7972d4ca75507f976700e48f706ad6efd420d4d248a2842aa65bfc7b58b5",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "1cfe8214392334ea217c4959b8a5503c4f4528a150eec435bffce83b5fe88673",
+        "2": "e9309bfc62887a4954bb12a7e477335a140b54c1af1ae02ea3f9661a7abf0ccf",
+        "3": "4b50b1f64169544c6a963aa92cd165b913c3cd0aa99ffde396553ac25e27de40"
+      }
+    },
+    "reversal370_BTC_L2_H02": {
+      "name": "reversal370_BTC_L2_H02",
+      "fingerprint": "d8831168956bd776803995b52e4b9aef8ec10fa919477a3f05b0b653e4803985",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L2_H02.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L2_H02.json.gz",
+      "archive_sha256": "b30205a36be2f4853b1221b1fd4bd7aac67c390d000ac2455e9768c34fb00ae7",
+      "asset": "BTC",
+      "scope": "native",
+      "reference_kind": "unfiltered_native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "e4dab203d223cf6785f90ca4a1c1f477f0c5db22c35f945d5efac5d468c359dd",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "c943dea4bfe075d6db68c96f55a27cae68c3fd825d1a13d6571889a25277d4a9",
+        "2": "c9be489b0bc411b1adedb11dfae1bab3d6d449787ba20a3acdcf99b27ccd610c",
+        "3": "fe2dfda40c5a5a38f461cf0874b314f9047c283c009297e6856605d31d2b7498"
+      }
+    },
+    "reversal370_BTC_L2_H04": {
+      "name": "reversal370_BTC_L2_H04",
+      "fingerprint": "b539395c5de2a1a2f8e7250a7d05a2db8462e7d9c6e90053df4a1dcda416444e",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L2_H04.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L2_H04.json.gz",
+      "archive_sha256": "5b33e76fd8dcda4a23659f186c60cc4464cd4f933e95b8897b50366306f5919a",
+      "asset": "BTC",
+      "scope": "native",
+      "reference_kind": "unfiltered_native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "6ae491f5a9c641af820ea5b70afeebbdeec55864d36a2ca9bdd496582b8aa9fb",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "fb26c5b7c41944ddb9ecd11d63a546df15c24777954d6dad5f6f350b24a41b9c",
+        "2": "8aa1ec0a77d9426a6d6a468e86417117a0f6fcb9286a3d96bdb7e493d6f07bd4",
+        "3": "86a21bfb19c99da9cd8b8213a626c57222b739ba2a2ec8af5a816ee8a30004eb"
+      }
+    },
+    "reversal370_BTC_L2_H06": {
+      "name": "reversal370_BTC_L2_H06",
+      "fingerprint": "c2e8ab60514c7d9d27874bbf316d5b224e77303856cf4766a99c4106e8ed277f",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L2_H06.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L2_H06.json.gz",
+      "archive_sha256": "e241f9b683a09916b4329958bf8532493e9fba52ba49ad29fabaf809a66e5340",
+      "asset": "BTC",
+      "scope": "native",
+      "reference_kind": "unfiltered_native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "2ce34a1c43b78ec2eb2d484b8f154a2fa1f54b1a4e6aaf511543cca1d51c915d",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "13da1091b9259b8d1ad92bbe5f83c42f9a80bcaa3432b7215db55bcb8147f29a",
+        "2": "c812fe2bbd67555b6edca07f2b856362b04dcce52e56037ed877d57cc2f3718c",
+        "3": "1a1a239ba791788172360ed493324cf41f0ef13e93abc3df8d79d20415376eb0"
+      }
+    },
+    "reversal370_BTC_L3_H02": {
+      "name": "reversal370_BTC_L3_H02",
+      "fingerprint": "f359d19aabd7c749743f95097a48fc888bd3eed103186d3c59669dd50f34615a",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L3_H02.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L3_H02.json.gz",
+      "archive_sha256": "aaca51043c699f59f2089ca06f0821f055399bf9716e78959bb9c666c1d8f2c0",
+      "asset": "BTC",
+      "scope": "native",
+      "reference_kind": "unfiltered_native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "c04d2cab2717db89a8f900fd90b5827ab231e6d89ae8a3f583ca280822640c93",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "eaaf29464b07e4d97c964d45cc3c83071b00fd96a485a98380c06364c58117bd",
+        "2": "613c4fbfad5d9b25ee8c5a181407427249f869a98330e23c7a68df1a50b06182",
+        "3": "9a1c8900e791b4cc8c5585832ccee1c6a08db3c461c0548a3d6ab161e119da12"
+      }
+    },
+    "reversal370_BTC_L3_H04": {
+      "name": "reversal370_BTC_L3_H04",
+      "fingerprint": "e973ef42a0a1df9f0a094186d67f025099e8ee52bd3d44fc6ef3ff6c15dd81e9",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L3_H04.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L3_H04.json.gz",
+      "archive_sha256": "0b788be93b3d38172c614121056544ed3cd03a460fbfa14d92999bf43ac5a32c",
+      "asset": "BTC",
+      "scope": "native",
+      "reference_kind": "unfiltered_native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "29ee46d883adb0cb108533d597dff20223c7753d9b7bc6492aff0af35e7581d5",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "bc97998b69dadfe15daca632bfb129a375f8ad767a85a821769fd7142d81a4e7",
+        "2": "8b879480c115eaad2b5de398ba54b8ff780a401127bbdacb77dde6208b3fc1f1",
+        "3": "3a80d47579518e89d40173938136b98c1ab9d6f4dbf34b301e5ea368a4433c7a"
+      }
+    },
+    "reversal370_BTC_L3_H06": {
+      "name": "reversal370_BTC_L3_H06",
+      "fingerprint": "68d0c8843f4abd6892a8323b8e1f37dd8eb3f0913bea1adc67192e2bc5cdd1eb",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L3_H06.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L3_H06.json.gz",
+      "archive_sha256": "be5e5c783894aac4ede231f0374f27410a349dd813d2bdc6630340514294da7c",
+      "asset": "BTC",
+      "scope": "native",
+      "reference_kind": "unfiltered_native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "a60bdd6409fd3802040226b55cee291feec37a562e944a7cd73464dd633f7b7d",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "e196b9605b6efc6508fb0c9a3235a56480c5bd0e46eb331843aaf445384f9ab0",
+        "2": "aa67a3a9ae8e1daf2414dc8da8f81abca3c79ed6cf24b8c2d7048f42d8003a2d",
+        "3": "e7fc4a0b641e7947d2ab1094967e3dc30f1bcd23c1cfae01b5347333c2c6d6bc"
+      }
+    },
+    "reversal370_COMBO_L1_H02": {
+      "name": "reversal370_COMBO_L1_H02",
+      "fingerprint": "bb35fe53554c1cf2459e8b4420a804d92a20ff5c67a0c23f5f241fc7c4e47b4b",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_COMBO_L1_H02.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_COMBO_L1_H02.json.gz",
+      "archive_sha256": "2f5cda7028706050ba056bfddaffe15bd847f68f05deec5d69ea282261da6564",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "unfiltered_pair",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "07a2818efc5f96eaa9139badbf689d237e4607226f7e467f8b84a508319d14a7",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "47c16258ba6f9d9a9182f5001827d96bf2b9db64e0e3265a403bd2127def1816",
+        "2": "dda7f87cb54ace236246126bfdad3a5c97dbb983472be0c7f97cdd735299f48c",
+        "3": "5fa827601be837e4dbb6dacbb1299b266df0775be8023956f05075b0c29c2b1e"
+      }
+    },
+    "reversal370_COMBO_L1_H04": {
+      "name": "reversal370_COMBO_L1_H04",
+      "fingerprint": "9aba2b2a9fae2de6aca9864cecf3c6d07478ecb6f6b653f4581cb2f1e9c2486e",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_COMBO_L1_H04.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_COMBO_L1_H04.json.gz",
+      "archive_sha256": "883f5b81b232a6b94a3f6d7ba3ba3ee923368888c5c91db82e273f6f8bf265ee",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "unfiltered_pair",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "9d85024242a3510c232d6ba666e6290ec4dd5534753bc02b02632a143ae8f4c8",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "92118a8b6328494f4e50e27f6ea5f7c602bb4c1096e6836c3ecc4f6e9a5bdd56",
+        "2": "11945914a8aac5d22e6180e5dfa333c4d590bd3e99f11f3e6012068907fe622c",
+        "3": "c7571c7fd56e852bfc3aa132c56f8392d88cb2de1f79db3efa6947d09ec92cac"
+      }
+    },
+    "reversal370_COMBO_L1_H06": {
+      "name": "reversal370_COMBO_L1_H06",
+      "fingerprint": "2f5182d540cf630aa61b3b0f64ee4fdfb685d9062d38d437d5ded18f78b33b2c",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_COMBO_L1_H06.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_COMBO_L1_H06.json.gz",
+      "archive_sha256": "b6d515c11e69958a34b05bb834eddd5a5dc7c1337ad583c09052621c91f9a175",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "unfiltered_pair",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "30d525886d22e04b8eadae47e445a649583aca1aae3abb00388d45cbf0ed85a5",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "5d6960c424430219c853563fed02c62f6fa7fa78d37a0f2d37246df7ff5938ee",
+        "2": "bb9e8aa84836c0a4eda7b71f1f13830f94054fc9ced40866801e1f987cd002a1",
+        "3": "5d55965a28623de3d230186af637bc5bd76b5f05a6a30702611ea0d707f7c862"
+      }
+    },
+    "reversal370_COMBO_L2_H02": {
+      "name": "reversal370_COMBO_L2_H02",
+      "fingerprint": "f7d74d1565c97ab6baaca7d907ff9c7212187812582e92180d141049fc584de9",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_COMBO_L2_H02.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_COMBO_L2_H02.json.gz",
+      "archive_sha256": "2dfc06aa746b241aba456b1ee848d29ba1957de5486beb5c0e14e23c1393e47c",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "unfiltered_pair",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "f9ecbed69bcb6dcf77798df2a3f925dac9da0f3f713d97ec8df32e5fb16ce96d",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "7ab90c5c9943751face8948bc73337553cbd1baf80d83388a503c86e83b52139",
+        "2": "74c27d8fb0fb13ea0f7024f1f2da127b6a0f96fa84d780e6b8787c57d6b85fbc",
+        "3": "fbac64e1b54151cd21b1894c73d3d9fc0f92a66286bc941caab41beb3765de02"
+      }
+    },
+    "reversal370_COMBO_L2_H04": {
+      "name": "reversal370_COMBO_L2_H04",
+      "fingerprint": "ccadca4374b925b7709c9a9454cc7324330ad30b9468ec4319e82f48777eda14",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_COMBO_L2_H04.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_COMBO_L2_H04.json.gz",
+      "archive_sha256": "2ad7a09aebdd0ca64d894510ab80654bf9a320d758887c78c03bfe0de06e4c87",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "unfiltered_pair",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "403c8a7f7c704166c3e454ccfefa8a8d099d53375b88bf67b30d965373835807",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "66690a983eed251df09361170093288cf8dff0d3b36c3d1001a9111bd3a404f3",
+        "2": "99649fd0c23591f2ccb289ca289e18de6f72ce246c132af77f030fdf61d9be45",
+        "3": "15672126324a8d446e414ddafebb70ac0bc889b37e98fd7678b4efbf7ab6543f"
+      }
+    },
+    "reversal370_COMBO_L2_H06": {
+      "name": "reversal370_COMBO_L2_H06",
+      "fingerprint": "436f69de76f8414f1d979807ad23d505c7995af3b4103e1502c985867f8f9e45",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_COMBO_L2_H06.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_COMBO_L2_H06.json.gz",
+      "archive_sha256": "be6f0816d18c4845daea8cc3b454933a6ffe2b23c2a777de5d6d913900e2f379",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "unfiltered_pair",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "fc077e6157089c44c4381afa05e3d7f57fe7617ae20976a9cc13cb5490e16f73",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "6f1f25eeefb9ae9de2c9d1221bfbdf8746d4a926917a0d5c66eca1dbaef04c12",
+        "2": "c6533873c1e8a1cbe46cd984eda90b3f7750d3d0da7350acff84a73a81e97e75",
+        "3": "7cd20b9eceb159ec3e910d4a05cef7da12be3c1e0e478ae4b04d236aaba36d79"
+      }
+    },
+    "reversal370_COMBO_L3_H02": {
+      "name": "reversal370_COMBO_L3_H02",
+      "fingerprint": "d0611af498f77f593782c5dea4c30ad1812b88760c38f2cde951422f2be7e068",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_COMBO_L3_H02.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_COMBO_L3_H02.json.gz",
+      "archive_sha256": "70b6778b364f8cd8efa7d7828bb6e8c2ba318a6e0aebdaf931529daafc11a306",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "unfiltered_pair",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "af1a08ac2ee961d0524a00a937d42a23afb9602a5cea09e60918e87f9380cf3a",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "d5505399a08be0501ed9cd2e60a23d239e1a0b5f6e9e2d1b3896435000336f5d",
+        "2": "070a4a1224ab84fb86b3b839a17df4726534fde8435dd4f5c162b661e5246c44",
+        "3": "5f94d4b1c805b154f18892b2dc134a693a9790c8de80574afc0a21d5b5e3d9fc"
+      }
+    },
+    "reversal370_COMBO_L3_H04": {
+      "name": "reversal370_COMBO_L3_H04",
+      "fingerprint": "a8285d7539ff337991417fbb35c49a553120c0cd79d1272087036e819d56595e",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_COMBO_L3_H04.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_COMBO_L3_H04.json.gz",
+      "archive_sha256": "e0144488b97214882b995d213de1821323bb594e48cfd52030684038e207e085",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "unfiltered_pair",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "b91ebaf9e3d863adbe56dc195dc3fa7c88901c5a8bb5b6306dcaaae408dbc442",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "db35755fbd108779dc5f86d36a5b1f94c3f6b846556301743f88eef72dde199c",
+        "2": "e0846e269fe35f56267e1ad79437afabdb4f15042431a1a737483957359c8380",
+        "3": "ab68d2888c6af25fab08a9f2f287a12b574ffa9f3dcef4c4c9dd7e47a24453dd"
+      }
+    },
+    "reversal370_COMBO_L3_H06": {
+      "name": "reversal370_COMBO_L3_H06",
+      "fingerprint": "aef87a0568d72baedf9161f2d9c86afc4f394403fac64f20d6b69e457451ee4f",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_COMBO_L3_H06.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_COMBO_L3_H06.json.gz",
+      "archive_sha256": "82bc468bf33f347e33e3c17fc86b19f8d9cd8b1ede54be263826f4b018d14e18",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "unfiltered_pair",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "599fa989b93c5a1728155f93b80e86de68c5e19c45ea2efd9a34e7a82b5f15cb",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "96d11fa39f0a8b2ef8fa0d65c957a7e23bb35e637ba79ea1ba2395e6327f0409",
+        "2": "66f25de40d6a80ec8fc38a0ba4d3d59673434074589800fc3e442bb02ea4c3bc",
+        "3": "0cefb716eceb6d09bedda590b0391d5b14ad92bac9f3342e71f7c5ceb6869709"
+      }
+    }
+  },
+  "readonly_hold_controls": {
+    "native": {
+      "name": "extended370_BTC_L0_H00_E000_N2000",
+      "fingerprint": "c31aabeccae5e90da96853e94bde989f2aac7fb3df207cb1b566d8cb07593698",
+      "role": "benchmark",
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L0_H00_E000_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L0_H00_E000_N2000.json.gz",
+      "archive_sha256": "1555cff72e7357a2aafa08bb740a2bf173a012ed667ced4d44476837dc45a3f2",
+      "asset": "BTC",
+      "scope": "native",
+      "reference_kind": "hold",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "c16dc60ff36137547a711986a7ba5fb7e889db6f74f4e98664736558b4159ddf",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "842814b33f0713e00e9b25e31b045068905cf2df74eec4caf64a155882d63032",
+        "2": "aa484ee233ccdf4d8e0f4e0851db75ac5f4d91b4e42975425deb9d6f74fa1491",
+        "3": "68852590461673908bffe7c6b719876296edce1a182ed116876bc785dbf8ec62"
+      }
+    },
+    "parent": {
+      "name": "parent370_hold_B2000_E2000",
+      "fingerprint": "97f687b5fc562ebc7a442cf7ca7ff1908b1b05a2a858fdf0fcc8f1f482780d0a",
+      "role": "benchmark",
+      "spec": "research/experiments/20261025T085436Z/specs/parent370_hold_B2000_E2000.json",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_hold_B2000_E2000.json.gz",
+      "archive_sha256": "4c944d810794943d407ad545e4a32061f63c3c37be0c7d9ed7abdf83c93b9356",
+      "asset": "COMBO",
+      "scope": "parent",
+      "reference_kind": "hold",
+      "report": "research/experiments/20261025T085436Z/report.json",
+      "report_sha256": "d0bb4fbbc1f4b7e7018f38b4024f1e70f57c93528b067267441439bb4b240103",
+      "spec_sha256": "41461c1c6eb1dfe603a82a97a4f73d1d0bddcf80c09630dc5476db0eb853e90d",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "33959ccf2ebfd7645fb9d3af22b49d5f5305c92ad2792138ccd6121d7c8d2b43",
+        "2": "1b4d7e51e963cdf1b7ea12d829584fb94ded34eb3bdff3629300078016e7893e",
+        "3": "11c394f55980b2b3e0a8e45c97042ddd66dc5eeb5e55cb820e0c01bab750e063"
+      }
+    }
+  },
+  "new_results_for_reuse": [
+    {
+      "name": "gate370_BTC_S7_L1_H02",
+      "fingerprint": "322b1961fe4383be6764c819672219ec190de2993f588a95537075e09a013e05",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S7_L1_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S7_L1_H02.json.gz",
+      "archive_sha256": "19e7ac39a6fb4b12221fe3e9fdbdab6201a56ae13327eca5107d1c0a2da9161d",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S7_L1_H04",
+      "fingerprint": "5e8171bf4ed5d5e3f3404f88ba4b4348c7764ea23b2db38166df83e11373efff",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S7_L1_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S7_L1_H04.json.gz",
+      "archive_sha256": "d6830e8bdeb915f0c922dc58e8b04a18f1e977f856d42515e12328af548d159a",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S7_L1_H06",
+      "fingerprint": "87c3761f13924e486a1ca374c5ed079125601a0c0baa5d4db607db3c11b1f639",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S7_L1_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S7_L1_H06.json.gz",
+      "archive_sha256": "32cfa073fcd2ebcda4044371bc4adac47f43c0340ca15e9f3a16a3c40c48a87b",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S7_L2_H02",
+      "fingerprint": "d357844ffc6e5fb5513aeb3c5149d695e5214ff1075d8d50c7d5b15ec8f79f53",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S7_L2_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S7_L2_H02.json.gz",
+      "archive_sha256": "5687c3161bce748ac2c49314c482476b25271aca21aae7ceb029c35a69758e44",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S7_L2_H04",
+      "fingerprint": "c66dad326b579f2709ff2c41a520d77839c6eee01f1ac51a8e00a738fe2e2694",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S7_L2_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S7_L2_H04.json.gz",
+      "archive_sha256": "4f65dbee6442f3d78a43cd347a297d5bc336b37d9a6e74249f48b0eb8e1a24db",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S7_L2_H06",
+      "fingerprint": "2b5214356bae310320f643ac60509e8cecd627fc8099bd172a38d28813db6c81",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S7_L2_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S7_L2_H06.json.gz",
+      "archive_sha256": "0d18da82158289c2f58480667168339fbd46c99bd64c53648145c617d481eb05",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S7_L3_H02",
+      "fingerprint": "9f3e070b5e006c24c4e8cd5270671677e7d698870c39184d80f9099b14279144",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S7_L3_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S7_L3_H02.json.gz",
+      "archive_sha256": "63698df48fd0f47c6aafa11ef0b6dfc4b933186524242a6d50c898d6156ce431",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S7_L3_H04",
+      "fingerprint": "323789cf963acb583f9e7b5b0c2d1c7e9d54aeb435c98bc3f9b29f19b03cc89b",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S7_L3_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S7_L3_H04.json.gz",
+      "archive_sha256": "66bfc8d472a283af411187ace2ab4abded0fc3518d5f2922e07a38729bfb2486",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S7_L3_H06",
+      "fingerprint": "ba06254ad14a716f83a398a9315ab84d31d2fa1a6074b21e2d38ccefb405ef36",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S7_L3_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S7_L3_H06.json.gz",
+      "archive_sha256": "b796acf19af3d2ea071094aefbca11e6bdc7747cca46231a8fdbe7d483200a5d",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S14_L1_H02",
+      "fingerprint": "c03ea25e17ddd59d7476c52f870438a1746dfd96a34fc10495363f98236d092c",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S14_L1_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S14_L1_H02.json.gz",
+      "archive_sha256": "1fe530ff52a0e1b30e92a12cd7a5e8041b53e1b64e22a9585faebe8b9dbc646f",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S14_L1_H04",
+      "fingerprint": "0a723dc662addca032705a49200993ab701fc6d06b5f2de97ddab0d7ef217eda",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S14_L1_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S14_L1_H04.json.gz",
+      "archive_sha256": "18634405ddd62fc35653700d63dd15402ff020124dc4cccd31fe78fbf2a6c9a6",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S14_L1_H06",
+      "fingerprint": "6de62bfecd094f8542ef7b5a92877556a8401e022ff9eb2d4212a023fc268655",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S14_L1_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S14_L1_H06.json.gz",
+      "archive_sha256": "62d93956c85b0d93a5ef73c73b4388816201d99d52c3c5f4ffc5a13d3e784e00",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S14_L2_H02",
+      "fingerprint": "87e56fd9ab83cf5e6a38f72492263b2e420e293991bd279f9c2c7cfbbbe2f57d",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S14_L2_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S14_L2_H02.json.gz",
+      "archive_sha256": "86af962e856493bdae3633d2d7d996e37331e9c8ed0b1f258ef41a0655a3b626",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S14_L2_H04",
+      "fingerprint": "19cf1bb980fd9e619e1220dd4184477063cb450ea373f99dba4753e510ca3634",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S14_L2_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S14_L2_H04.json.gz",
+      "archive_sha256": "39f42d41f9e70f2ba2a0641f47f6689fc23967c6becaf9284871542343e9e38e",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S14_L2_H06",
+      "fingerprint": "ac0601b39199e8a355aed491fa76c43a78af4b4469fb0574f3bb230931a6fc7a",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S14_L2_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S14_L2_H06.json.gz",
+      "archive_sha256": "7c693462d2a0c7bb2f47d9d808eb310c6366e30b66deaf88417caf82c7301d69",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S14_L3_H02",
+      "fingerprint": "aeb21702d92f15aad925799ddfb7a53ebeeeb17cd8b028ec21bd9b66516b6bf5",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S14_L3_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S14_L3_H02.json.gz",
+      "archive_sha256": "7c0f8bb57167862a91808b8902eeb9e28a733ca6bd5fc30440c72711a899ad38",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S14_L3_H04",
+      "fingerprint": "4918bb3f695f4bff38b82011f657157374dba0b3213793957b693856dea3eca6",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S14_L3_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S14_L3_H04.json.gz",
+      "archive_sha256": "f07c91257de636fe6ec9cd82d7529e0229067da8e3eb73b384e2780fcdc04608",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S14_L3_H06",
+      "fingerprint": "e1570ba089de470a2695d05d2d865e8f98a89e7acb3c64dd566260fbc9f3f9e9",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S14_L3_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S14_L3_H06.json.gz",
+      "archive_sha256": "a8c94bae04b498e2bac299a815bb12abbc95fe351e188c888375ef09164ef97f",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S28_L1_H02",
+      "fingerprint": "639a7890aa324baab55bee3822a20fe2af0c4918044c4a532be631777a11696f",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S28_L1_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S28_L1_H02.json.gz",
+      "archive_sha256": "8cdb25189ecfab6751b5929ced23bd9232fc904073b0799c11a93c947bcbe33b",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S28_L1_H04",
+      "fingerprint": "a58db9cd31f5fdbab6715662a54b57a7e0e1f7841ae60dec3721e08755286619",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S28_L1_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S28_L1_H04.json.gz",
+      "archive_sha256": "5a6c9860e61689688320c01fb815f3b4b23972ad46382e573a5a8524f81fe3b0",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S28_L1_H06",
+      "fingerprint": "6178527f90fb222392c0e2dc42949b831ab7b5bd10cca45f9ed096ca3511efac",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S28_L1_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S28_L1_H06.json.gz",
+      "archive_sha256": "7082c308f42b1ba926a173608991eb0e08ae8184fb8a42c82a22b716b61f797c",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S28_L2_H02",
+      "fingerprint": "9cb4a56e9b42c4cfa2b88652b8babf077d23ec50bda659aad6b8b95b333ab21a",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S28_L2_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S28_L2_H02.json.gz",
+      "archive_sha256": "f16550d25d50dde04cb358095e7c4d356866995e55df07d1a2acb20a7015bf9f",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S28_L2_H04",
+      "fingerprint": "9ffe98d38675048b3ac9be99dc72f9ef3ac536fb8f5810d53f1e79e32bfd6708",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S28_L2_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S28_L2_H04.json.gz",
+      "archive_sha256": "8bd62f5cbf68446f51004df05ed912e0506758da2163183069776f6dca3ee6dc",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S28_L2_H06",
+      "fingerprint": "754b58939fdb9a9cafc4b4ce4f36e727dfc1fef6b2bad249657adf92ca26a105",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S28_L2_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S28_L2_H06.json.gz",
+      "archive_sha256": "ecd8b73d16457b9a1a55ff52622f67a60144be2172df9171eec9094ef86ee3b3",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S28_L3_H02",
+      "fingerprint": "08657ebc7f6be0ad1b36b50d97edfde5fbc13c51f0a50c11d56f19447c781347",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S28_L3_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S28_L3_H02.json.gz",
+      "archive_sha256": "492bf705e7a8fb50f726bb20b745e2aaf58b13836ae8a9097db4d21f903dc832",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S28_L3_H04",
+      "fingerprint": "6435305fe298057c659e9fb01666471ecee1f89ce9ba3caefaabf018e0c6265b",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S28_L3_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S28_L3_H04.json.gz",
+      "archive_sha256": "598c84aae2c0fcced500aafbc43bf6ab61a7ec67fe93cfa3f9ca8ef70a07f647",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_BTC_S28_L3_H06",
+      "fingerprint": "9d1ed6d234d82d4527f88f8c73e12e3bfbda41ea65da363bd8ae51db2057af6d",
+      "scope": "native",
+      "spec": "research/experiments/20261025T205634Z/specs/gate370_BTC_S28_L3_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/gate370_BTC_S28_L3_H06.json.gz",
+      "archive_sha256": "98096f0b9cf17f67b339eebf360870fa9e3c045c14116dc0821554d7f7c05d9b",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S7_L1_H02",
+      "fingerprint": "b4ae935bc82558d67bdc9f2059dcc4488e95d829728151af39851cbff6bab1e9",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S7_L1_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S7_L1_H02.json.gz",
+      "archive_sha256": "b6bf3bd799020d0ea8b08b08915a7f61b0949e9961a6af05ce97835a7a31360b",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S7_L1_H04",
+      "fingerprint": "0ea41d582808d080c7906208670a3504aa69d0a75d58aba1278a924c4b4e897d",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S7_L1_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S7_L1_H04.json.gz",
+      "archive_sha256": "c48929447f113b065e91af5895f215852736c3b74f9c1bf7a59c162026b5a58b",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S7_L1_H06",
+      "fingerprint": "78ec52065d6dbbbc99619f1cdc4feb14ef90f90315fa88407e0b19cd55218c8f",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S7_L1_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S7_L1_H06.json.gz",
+      "archive_sha256": "906d6bd5d4fe6bbd40e1f326f9485cda3cb6c56f80ece9631691027bd63ba213",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S7_L2_H02",
+      "fingerprint": "c09c123ada38f2b32e1c4a7b0094e3ffea85d7036e9ee6114a18b35dda33bbf4",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S7_L2_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S7_L2_H02.json.gz",
+      "archive_sha256": "062e6bb2eb16cfefafc74f4c7fbffa6c32a0f8eb9f98fb109eb756a1ac4471d0",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S7_L2_H04",
+      "fingerprint": "777165e47273715328f489d6a8064dbbbf5eb5ec19238a17aaf3e58ebe698409",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S7_L2_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S7_L2_H04.json.gz",
+      "archive_sha256": "c6fcdfc5157408c6f388cc67204df67355be45f2dbb07b57ac18b63ca74a8459",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S7_L2_H06",
+      "fingerprint": "13327713207725cd6ff5c098e2a38802a3a8817d4b38a97649f0dafd56f0b35e",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S7_L2_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S7_L2_H06.json.gz",
+      "archive_sha256": "e59d488266372a7bb136885573989efdf4f2c1f0b426e478ba8ca78341a11a25",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S7_L3_H02",
+      "fingerprint": "577bef7984ae4abff452159cc3753e3035cd7386d937584370a46bdf5d9d2231",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S7_L3_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S7_L3_H02.json.gz",
+      "archive_sha256": "cea9ef0cac8def0d5ab6f5c91eaa330ffdb341c2fe4723e03272f1bc9003cc6f",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S7_L3_H04",
+      "fingerprint": "3a14b746f86ca1728afa84066c82f9973b632608f99edf0d43a4cb7f96c162ab",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S7_L3_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S7_L3_H04.json.gz",
+      "archive_sha256": "22b8b73b2fcf94676ff240369b8b4a27b213286c118fe7962d637f856425946f",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S7_L3_H06",
+      "fingerprint": "1ebee40af954de7bd1241ecd04efb0c34acbf42eba5dcfdfd750b834f853594d",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S7_L3_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S7_L3_H06.json.gz",
+      "archive_sha256": "cc360dddaa45730c813aa1fdf75e2eaf64b166923abe858cbf8962d79b7d9b87",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S14_L1_H02",
+      "fingerprint": "2eb71654a470977c922af25e68c965e590fe1dfd8c7a1e2c94d3e23c17b720f4",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S14_L1_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S14_L1_H02.json.gz",
+      "archive_sha256": "d88015461c3d44e82261171c7c808753927d002b73b6c4659abddb26d85448cb",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S14_L1_H04",
+      "fingerprint": "0890abab7ebd281364a4282671c71cf0732713c1cd5395e69f673da62fa02322",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S14_L1_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S14_L1_H04.json.gz",
+      "archive_sha256": "183f5e2ed720b827bc4d1bafec81065e49c0ec3c6616f5c9730a3cfe372638db",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S14_L1_H06",
+      "fingerprint": "5ccf810d63554c74c8819d177fe53c4a103f15151c0457f6f5c7d14947e9694b",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S14_L1_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S14_L1_H06.json.gz",
+      "archive_sha256": "e621e69c24b68f1ce9e514e792f994857bf591c1bbc44fec8ebe30baa8a95485",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S14_L2_H02",
+      "fingerprint": "69c566e285e3b778280d636842e98c434eef4e2388b456dd73d981761d0f466e",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S14_L2_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S14_L2_H02.json.gz",
+      "archive_sha256": "ed10be6261f4c7625d993ec8132107bcf43f66c0da0a5b2d56af0f5fe226a5e8",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S14_L2_H04",
+      "fingerprint": "58a2b27907a4868aacc7a7c6e735b3ee891f545593f62d6092829b71d81b9e18",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S14_L2_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S14_L2_H04.json.gz",
+      "archive_sha256": "09d7a5a27766ef99438a0b886e4057bcc524245e331e3dd5d2838360251ffde4",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S14_L2_H06",
+      "fingerprint": "888c9a72f73123f44a4130539e4a078a971689d9f895708c150d576d9a822e54",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S14_L2_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S14_L2_H06.json.gz",
+      "archive_sha256": "db1d41eb04c41b6496886b397b537973fbfaa681e4026aaa75bc8667de8f8eb5",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S14_L3_H02",
+      "fingerprint": "90a4d0dbfde474ef8e88542ca0b562e2fe30018507576fe58c682f4323bdc4b3",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S14_L3_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S14_L3_H02.json.gz",
+      "archive_sha256": "8553dbc68c2fc1c29af377f34c2a92dd9cbf3188caefcc56c0e0984ebba63f14",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S14_L3_H04",
+      "fingerprint": "b0c9a582089efd22755d3deec2126e17893371a35ce55ecbeaca81ce9673085c",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S14_L3_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S14_L3_H04.json.gz",
+      "archive_sha256": "656634449c581f8f163329b349241d6535fc9731f25af9a9aacac699279c10fa",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S14_L3_H06",
+      "fingerprint": "52f96e1f57302b554e83b8ee323692b8e622cf0cebd01df587c4dac5fb2e0dc1",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S14_L3_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S14_L3_H06.json.gz",
+      "archive_sha256": "a23e6d90d7e32a533fb3718641dd656ad3a5fe083ae5675bc4462969e6e921b0",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S28_L1_H02",
+      "fingerprint": "5db2d6ac89f1871168a083cde503715153d07aff5adf0989370367a4bed25710",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S28_L1_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S28_L1_H02.json.gz",
+      "archive_sha256": "dae648497792349c97499d99ac4df9075819b980c90eece86587d8891c70b64d",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S28_L1_H04",
+      "fingerprint": "09885b4d4f827147c3b8eab0951a7b884df882246fb23c5119c332630a66be4d",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S28_L1_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S28_L1_H04.json.gz",
+      "archive_sha256": "8116e2fc63b25938df6b9ba2159d7af7b3b0ff570784c15109bfedacafaf361c",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S28_L1_H06",
+      "fingerprint": "f3aa9512bc084307eab345322e71892e1e401b665d7b886d33429fe1a635001d",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S28_L1_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S28_L1_H06.json.gz",
+      "archive_sha256": "41071e1f97be9a19cbfb9fb3adcce5dbe342569ffb7a8acb660674b75c46734f",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S28_L2_H02",
+      "fingerprint": "2f53213d0b8e400817fe5ba56317cba78175c4c707b812fb9cf6b286dc3279f0",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S28_L2_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S28_L2_H02.json.gz",
+      "archive_sha256": "44c32831be9a45b01abf137f056c2800ad16b890f4ce5825d39583054bd219a8",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S28_L2_H04",
+      "fingerprint": "497fbf1d0aeca9efbc575e7d649495bdf44441664b13c4281d63f93053797e56",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S28_L2_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S28_L2_H04.json.gz",
+      "archive_sha256": "b0cd0d9ed4bad906458a602193e839ffbdfd2b31a606f41db86141527e3911f4",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S28_L2_H06",
+      "fingerprint": "cd76c25d66bc07446b082defe2ee0723029c45023d6a077fd6f7f3e975072a02",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S28_L2_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S28_L2_H06.json.gz",
+      "archive_sha256": "8eff9eab7dcff71ebc70ad7620f197cca31e1d5cbcaae1e71efcc34332f3ce1b",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S28_L3_H02",
+      "fingerprint": "0161a44389f12ed5b3fa6af3ad593fc794200f81ebc1148e7a02040998f17e9c",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S28_L3_H02.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S28_L3_H02.json.gz",
+      "archive_sha256": "50d1656c47612757b1f932818c73c7395c96eca40a8d1a8f441aa2a6b3a3af10",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S28_L3_H04",
+      "fingerprint": "29d650a4a8613ec6e460a03c7417d762f357e3205766f44fdac5794a35e8fe0f",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S28_L3_H04.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S28_L3_H04.json.gz",
+      "archive_sha256": "bf243a9c89dbf076234715c4a84b8973c250a86febc41b89cbae723d0c997f4d",
+      "status": "rejected"
+    },
+    {
+      "name": "dualgate370_COMBO_S28_L3_H06",
+      "fingerprint": "7ca880866a6620136e4659b94ce4314fc8a51087706bcd661d571342fdfb925a",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T205634Z/specs/dualgate370_COMBO_S28_L3_H06.json",
+      "archive": "research/experiments/20261025T205634Z/results/dualgate370_COMBO_S28_L3_H06.json.gz",
+      "archive_sha256": "2ab64cbaeccc8b2556e0c66f0a11f1d4b79e6c7288ddb8960dfb7f4dfeaab36a",
+      "status": "rejected"
+    }
+  ],
+  "summary": {
+    "new_financial_configs": 54,
+    "new_native_backtests": 27,
+    "new_passive_parents": 27,
+    "source_ETH_components_reused": 27,
+    "readonly_unfiltered_native_controls": 9,
+    "readonly_unfiltered_parent_controls": 9,
+    "readonly_mixed_default_controls": 27,
+    "readonly_matched_holds": 2,
+    "passed_candidates": 0,
+    "rejected_candidates": 54,
+    "positive_configs_by_cost": {
+      "1": 35,
+      "2": 33,
+      "3": 30
+    },
+    "failed_criteria_counts": {
+      "positive_all_costs": 24,
+      "nine_of_twelve_positive_complete30d_1x_folds": 50,
+      "recent40_positive_all_costs": 41,
+      "recent40_six_of_eight_positive5d_1x_folds": 54,
+      "local_positive3_gte60pct": 33,
+      "gross_plus_funding_to_cost1_gte2_5": 21,
+      "four_round_trips1": 10
+    },
+    "rows": {
+      "cost": 162,
+      "full_folds": 2106,
+      "recent40_folds": 1296,
+      "daily_NAV": 60102,
+      "edges": 108,
+      "reference_comparisons": 405
+    },
+    "groups": {
+      "native_S7": {
+        "configs": 9,
+        "passed": 0,
+        "positive_full_by_cost": {
+          "1": 5,
+          "2": 4,
+          "3": 3
+        },
+        "positive_recent_by_cost": {
+          "1": 1,
+          "2": 1,
+          "3": 1
+        },
+        "full3_range_pct": [
+          -3.7495687085333573,
+          0.3111151525121425
+        ],
+        "recent3_range_pct": [
+          -0.11483985578208955,
+          0.24681964166965997
+        ],
+        "positive_complete30d_folds1_counts": {
+          "5": 2,
+          "3": 1,
+          "1": 2,
+          "2": 3,
+          "7": 1
+        },
+        "positive_recent5d_folds1_counts": {
+          "0": 8,
+          "1": 1
+        },
+        "best_full": {
+          "name": "gate370_BTC_S7_L3_H04",
+          "full_return3_pct": 0.3111151525121425,
+          "whole_DD3_pct": 1.399010308110793,
+          "recent_return3_pct": 0.0,
+          "recent_DD3_pct": 0.0,
+          "positive_complete30d_folds1": 2,
+          "positive_recent5d_folds1": 0,
+          "status": "rejected"
+        },
+        "best_recent": {
+          "name": "gate370_BTC_S7_L3_H02",
+          "full_return3_pct": -0.038512492783793206,
+          "whole_DD3_pct": 3.320445692628615,
+          "recent_return3_pct": 0.24681964166965997,
+          "recent_DD3_pct": 0.46616208455610986,
+          "positive_complete30d_folds1": 7,
+          "positive_recent5d_folds1": 1,
+          "status": "rejected"
+        },
+        "failed_criteria_counts": {
+          "positive_all_costs": 6,
+          "nine_of_twelve_positive_complete30d_1x_folds": 9,
+          "recent40_positive_all_costs": 8,
+          "recent40_six_of_eight_positive5d_1x_folds": 9,
+          "local_positive3_gte60pct": 9,
+          "gross_plus_funding_to_cost1_gte2_5": 5,
+          "four_round_trips1": 4
+        },
+        "versus_unfiltered3": {
+          "higher_full_return": 9,
+          "higher_recent_return": 7,
+          "fewer_executions": 9,
+          "lower_cost": 9
+        }
+      },
+      "native_S14": {
+        "configs": 9,
+        "passed": 0,
+        "positive_full_by_cost": {
+          "1": 5,
+          "2": 4,
+          "3": 4
+        },
+        "positive_recent_by_cost": {
+          "1": 1,
+          "2": 1,
+          "3": 1
+        },
+        "full3_range_pct": [
+          -1.0283884381546926,
+          2.537612524907762
+        ],
+        "recent3_range_pct": [
+          -0.11027906459150083,
+          0.24060369721361496
+        ],
+        "positive_complete30d_folds1_counts": {
+          "6": 2,
+          "3": 1,
+          "1": 2,
+          "7": 1,
+          "2": 1,
+          "0": 1,
+          "10": 1
+        },
+        "positive_recent5d_folds1_counts": {
+          "0": 8,
+          "1": 1
+        },
+        "best_full": {
+          "name": "gate370_BTC_S14_L3_H02",
+          "full_return3_pct": 2.537612524907762,
+          "whole_DD3_pct": 3.4155307258118217,
+          "recent_return3_pct": 0.24060369721361496,
+          "recent_DD3_pct": 0.4544378907160085,
+          "positive_complete30d_folds1": 10,
+          "positive_recent5d_folds1": 1,
+          "status": "rejected"
+        },
+        "best_recent": {
+          "name": "gate370_BTC_S14_L3_H02",
+          "full_return3_pct": 2.537612524907762,
+          "whole_DD3_pct": 3.4155307258118217,
+          "recent_return3_pct": 0.24060369721361496,
+          "recent_DD3_pct": 0.4544378907160085,
+          "positive_complete30d_folds1": 10,
+          "positive_recent5d_folds1": 1,
+          "status": "rejected"
+        },
+        "failed_criteria_counts": {
+          "positive_all_costs": 5,
+          "nine_of_twelve_positive_complete30d_1x_folds": 8,
+          "recent40_positive_all_costs": 8,
+          "recent40_six_of_eight_positive5d_1x_folds": 9,
+          "local_positive3_gte60pct": 8,
+          "gross_plus_funding_to_cost1_gte2_5": 5,
+          "four_round_trips1": 3
+        },
+        "versus_unfiltered3": {
+          "higher_full_return": 8,
+          "higher_recent_return": 7,
+          "fewer_executions": 9,
+          "lower_cost": 9
+        }
+      },
+      "native_S28": {
+        "configs": 9,
+        "passed": 0,
+        "positive_full_by_cost": {
+          "1": 7,
+          "2": 7,
+          "3": 7
+        },
+        "positive_recent_by_cost": {
+          "1": 5,
+          "2": 5,
+          "3": 4
+        },
+        "full3_range_pct": [
+          -3.9856786414221967,
+          2.3976956202938604
+        ],
+        "recent3_range_pct": [
+          -0.10751270629455467,
+          1.669372453484752
+        ],
+        "positive_complete30d_folds1_counts": {
+          "4": 2,
+          "5": 4,
+          "2": 1,
+          "1": 1,
+          "8": 1
+        },
+        "positive_recent5d_folds1_counts": {
+          "2": 1,
+          "0": 4,
+          "3": 1,
+          "1": 2,
+          "4": 1
+        },
+        "best_full": {
+          "name": "gate370_BTC_S28_L3_H02",
+          "full_return3_pct": 2.3976956202938604,
+          "whole_DD3_pct": 3.748965497758183,
+          "recent_return3_pct": 1.669372453484752,
+          "recent_DD3_pct": 0.970560101040574,
+          "positive_complete30d_folds1": 8,
+          "positive_recent5d_folds1": 4,
+          "status": "rejected"
+        },
+        "best_recent": {
+          "name": "gate370_BTC_S28_L3_H02",
+          "full_return3_pct": 2.3976956202938604,
+          "whole_DD3_pct": 3.748965497758183,
+          "recent_return3_pct": 1.669372453484752,
+          "recent_DD3_pct": 0.970560101040574,
+          "positive_complete30d_folds1": 8,
+          "positive_recent5d_folds1": 4,
+          "status": "rejected"
+        },
+        "failed_criteria_counts": {
+          "positive_all_costs": 2,
+          "nine_of_twelve_positive_complete30d_1x_folds": 9,
+          "recent40_positive_all_costs": 5,
+          "recent40_six_of_eight_positive5d_1x_folds": 9,
+          "local_positive3_gte60pct": 3,
+          "gross_plus_funding_to_cost1_gte2_5": 2,
+          "four_round_trips1": 2
+        },
+        "versus_unfiltered3": {
+          "higher_full_return": 9,
+          "higher_recent_return": 8,
+          "fewer_executions": 9,
+          "lower_cost": 9
+        }
+      },
+      "parent_S7": {
+        "configs": 9,
+        "passed": 0,
+        "positive_full_by_cost": {
+          "1": 5,
+          "2": 5,
+          "3": 5
+        },
+        "positive_recent_by_cost": {
+          "1": 2,
+          "2": 2,
+          "3": 2
+        },
+        "full3_range_pct": [
+          -2.72241276376064,
+          2.459283056701067
+        ],
+        "recent3_range_pct": [
+          -0.0960305531785055,
+          0.9919639915348499
+        ],
+        "positive_complete30d_folds1_counts": {
+          "5": 1,
+          "4": 4,
+          "1": 1,
+          "6": 1,
+          "3": 1,
+          "9": 1
+        },
+        "positive_recent5d_folds1_counts": {
+          "1": 1,
+          "0": 7,
+          "2": 1
+        },
+        "best_full": {
+          "name": "dualgate370_COMBO_S7_L3_H02",
+          "full_return3_pct": 2.459283056701067,
+          "whole_DD3_pct": 3.473100446105337,
+          "recent_return3_pct": 0.9919639915348499,
+          "recent_DD3_pct": 0.579478731439198,
+          "positive_complete30d_folds1": 9,
+          "positive_recent5d_folds1": 2,
+          "status": "rejected"
+        },
+        "best_recent": {
+          "name": "dualgate370_COMBO_S7_L3_H02",
+          "full_return3_pct": 2.459283056701067,
+          "whole_DD3_pct": 3.473100446105337,
+          "recent_return3_pct": 0.9919639915348499,
+          "recent_DD3_pct": 0.579478731439198,
+          "positive_complete30d_folds1": 9,
+          "positive_recent5d_folds1": 2,
+          "status": "rejected"
+        },
+        "failed_criteria_counts": {
+          "positive_all_costs": 4,
+          "nine_of_twelve_positive_complete30d_1x_folds": 8,
+          "recent40_six_of_eight_positive5d_1x_folds": 9,
+          "local_positive3_gte60pct": 5,
+          "gross_plus_funding_to_cost1_gte2_5": 4,
+          "recent40_positive_all_costs": 7,
+          "four_round_trips1": 1
+        },
+        "versus_unfiltered3": {
+          "higher_full_return": 9,
+          "higher_recent_return": 7,
+          "fewer_executions": 9,
+          "lower_cost": 9
+        }
+      },
+      "parent_S14": {
+        "configs": 9,
+        "passed": 0,
+        "positive_full_by_cost": {
+          "1": 6,
+          "2": 6,
+          "3": 5
+        },
+        "positive_recent_by_cost": {
+          "1": 2,
+          "2": 2,
+          "3": 2
+        },
+        "full3_range_pct": [
+          -2.948671026585614,
+          3.775274954032648
+        ],
+        "recent3_range_pct": [
+          -0.4471973499685311,
+          0.7363448050554666
+        ],
+        "positive_complete30d_folds1_counts": {
+          "4": 2,
+          "1": 1,
+          "7": 1,
+          "5": 1,
+          "3": 1,
+          "8": 1,
+          "6": 2
+        },
+        "positive_recent5d_folds1_counts": {
+          "1": 2,
+          "0": 6,
+          "3": 1
+        },
+        "best_full": {
+          "name": "dualgate370_COMBO_S14_L3_H02",
+          "full_return3_pct": 3.775274954032648,
+          "whole_DD3_pct": 3.864312780825474,
+          "recent_return3_pct": 0.7363448050554666,
+          "recent_DD3_pct": 0.5737960732924763,
+          "positive_complete30d_folds1": 8,
+          "positive_recent5d_folds1": 3,
+          "status": "rejected"
+        },
+        "best_recent": {
+          "name": "dualgate370_COMBO_S14_L3_H02",
+          "full_return3_pct": 3.775274954032648,
+          "whole_DD3_pct": 3.864312780825474,
+          "recent_return3_pct": 0.7363448050554666,
+          "recent_DD3_pct": 0.5737960732924763,
+          "positive_complete30d_folds1": 8,
+          "positive_recent5d_folds1": 3,
+          "status": "rejected"
+        },
+        "failed_criteria_counts": {
+          "positive_all_costs": 4,
+          "nine_of_twelve_positive_complete30d_1x_folds": 9,
+          "recent40_six_of_eight_positive5d_1x_folds": 9,
+          "local_positive3_gte60pct": 5,
+          "gross_plus_funding_to_cost1_gte2_5": 3,
+          "recent40_positive_all_costs": 7
+        },
+        "versus_unfiltered3": {
+          "higher_full_return": 9,
+          "higher_recent_return": 7,
+          "fewer_executions": 9,
+          "lower_cost": 9
+        }
+      },
+      "parent_S28": {
+        "configs": 9,
+        "passed": 0,
+        "positive_full_by_cost": {
+          "1": 7,
+          "2": 7,
+          "3": 6
+        },
+        "positive_recent_by_cost": {
+          "1": 5,
+          "2": 5,
+          "3": 3
+        },
+        "full3_range_pct": [
+          -5.509540240456879,
+          4.669047450946606
+        ],
+        "recent3_range_pct": [
+          -0.4427744066909267,
+          1.5364446284772404
+        ],
+        "positive_complete30d_folds1_counts": {
+          "5": 1,
+          "4": 1,
+          "2": 1,
+          "7": 2,
+          "6": 1,
+          "9": 2,
+          "8": 1
+        },
+        "positive_recent5d_folds1_counts": {
+          "3": 3,
+          "2": 1,
+          "0": 1,
+          "1": 3,
+          "4": 1
+        },
+        "best_full": {
+          "name": "dualgate370_COMBO_S28_L3_H02",
+          "full_return3_pct": 4.669047450946606,
+          "whole_DD3_pct": 2.836690611795689,
+          "recent_return3_pct": 1.5364446284772404,
+          "recent_DD3_pct": 1.3082334506619553,
+          "positive_complete30d_folds1": 9,
+          "positive_recent5d_folds1": 4,
+          "status": "rejected"
+        },
+        "best_recent": {
+          "name": "dualgate370_COMBO_S28_L3_H02",
+          "full_return3_pct": 4.669047450946606,
+          "whole_DD3_pct": 2.836690611795689,
+          "recent_return3_pct": 1.5364446284772404,
+          "recent_DD3_pct": 1.3082334506619553,
+          "positive_complete30d_folds1": 9,
+          "positive_recent5d_folds1": 4,
+          "status": "rejected"
+        },
+        "failed_criteria_counts": {
+          "positive_all_costs": 3,
+          "nine_of_twelve_positive_complete30d_1x_folds": 7,
+          "recent40_positive_all_costs": 6,
+          "recent40_six_of_eight_positive5d_1x_folds": 9,
+          "local_positive3_gte60pct": 3,
+          "gross_plus_funding_to_cost1_gte2_5": 2
+        },
+        "versus_unfiltered3": {
+          "higher_full_return": 9,
+          "higher_recent_return": 9,
+          "fewer_executions": 9,
+          "lower_cost": 9
+        }
+      }
+    }
+  },
+  "next_research": "All54newBTCslow-trend-conditionedreversalandpairedsameS/L/Hparents nowactual/finished. BTC27nativesS7/14/28,L1/2/3,H2/4/6,N2000;27parentsraw1/1two10000banks,total20000/entry4000,usecachedETH27exactsameS/L/H. Allreject:everyrecent1xpositive5dayfoldcount<=4/8below6/8;50/54fail9/12monthly. Fullpositive1/2/3counts35/33/30. BestparentS28L3H2full3+4.669047/DD2.836691,9/12monthlyand4/8recent. BTCbestfullS14L3H2+2.537613/DD3.415531,10/12monthlybut1/8recentandlocalrobustnessfails. Muchrecentcash:readrecent_activity.json;do notclaim0returncashalpha. Existing54BTC/ETHgatednativeledgerscompatibleforgenuinelynewpredeclaredcombinations,butdonotrepeatcurrentexactpairedconfigs,automaticallynormalizeweights,scaleNAVfornewquantity,lowergatesorcallseenhistoryuntouched. IndependentlydifferentBTC/ETHparameterswerenotevaluatedhere;anyfuturebatchmustfreezefullrules/weights/dates/gatesandreservebeforecalculation. No stableliveprofit/DSR/PBOclaim.",
+  "original_SMA_next_state": "research/experiments/20261025T205634Z/forward_state.json",
+  "original_SMA_next_state_sha256": "fadcf2172fa0e7538fec8d6ac878b46254919973efbd6579c3d1f34cb0c31782",
+  "next_daily_decision_utc": "2026-10-26T00:01:00Z",
+  "original_SMA_continuity": {
+    "cutoff_utc": "2026-10-25T20:30:00Z",
+    "NAV_points_per_scene": 34374,
+    "cumulative_minutes": 34349,
+    "policy": "ExactFloatSMA65/symmetric1percent1500/500,cash/q/desired/cost/trades/fullNAVprefix. UntilOct26UTC00:01closedmarks only;terminal2027-03-31unchanged. Partialrejectednotcancelplan."
+  },
+  "monitor_compressed_bytes": 2225337,
+  "monitor_current_byte_budget": 3000000,
+  "monitor_historical_rows_unchanged": 5844,
+  "paper10_policy": "btc-eth-2 owns frozen accounts/observations;read only here",
+  "finished_original_bytes_priority": true,
+  "registry_after": {
+    "events": 16118,
+    "IDs": 7955
+  }
+}
