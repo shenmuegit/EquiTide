@@ -1,0 +1,1692 @@
+{
+  "branch_policy": "main only locally/remotely;no branches or branch worktrees",
+  "report": "research/experiments/20261025T145537Z/report.json",
+  "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+  "new_finished_financial_configs": 54,
+  "new_native_backtests": 0,
+  "source_native_components_reused": 24,
+  "candidate_passed": 0,
+  "candidate_rejected": 54,
+  "frozen_grid": {
+    "styles": [
+      "btc_trend_eth_reversal",
+      "btc_reversal_eth_trend"
+    ],
+    "trend_exit_buffer_fraction": [
+      0.005,
+      0.01,
+      0.02
+    ],
+    "reversal_lookback_days": [
+      1,
+      2,
+      3
+    ],
+    "reversal_return_hurdle": [
+      0.02,
+      0.04,
+      0.06
+    ],
+    "candidate_parents_per_style": 27,
+    "new_parent_candidates": 54,
+    "new_component_backtests": 0,
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "component_capitals_usdt": [
+      10000,
+      10000
+    ],
+    "component_entry_notionals_usdt": [
+      2000,
+      2000
+    ],
+    "parent_capital_usdt": 20000,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  },
+  "time_boundaries": {
+    "input_start_utc": "2025-09-16T00:00:00Z",
+    "input_end_exclusive_utc": "2026-10-25T00:00:00Z",
+    "oos_start_utc": "2025-10-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-10-24T00:01:00Z",
+    "context_days": 33,
+    "nominal_warmup_days": 30,
+    "initial_embargo_days": 3,
+    "continuous_oos_days": 370,
+    "walk_forward_folds": 13,
+    "complete_30day_folds": 12,
+    "tail_fold_days": 10,
+    "label_purge": "No fittedlabels/model;not applicable. Fixed rules use only priorcompleteprices,actual state carries across allfolds."
+  },
+  "normalized_inputs": {
+    "BTC": [
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet",
+        "sha256": "97be656cf441024101417476f8338f4d739879d3ee39bfbf2a89cf1a287b726c",
+        "bytes": 32143848,
+        "rows": 581760
+      },
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet",
+        "sha256": "80cd98d12fd73cb8bfcc7a4d4af65d737347c9d9b53d82ae1698a1aa15bd71ce",
+        "bytes": 494964,
+        "rows": 9696
+      },
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet",
+        "sha256": "b27e8f9a078a50a9d34c034870790321e43b5d7dff74f2c2a7d0b69f3c276006",
+        "bytes": 34756,
+        "rows": 1212
+      },
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet",
+        "sha256": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99",
+        "bytes": 1892,
+        "rows": 1
+      }
+    ],
+    "ETH": [
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet",
+        "sha256": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+        "bytes": 29255495,
+        "rows": 581760
+      },
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet",
+        "sha256": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+        "bytes": 462199,
+        "rows": 9696
+      },
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet",
+        "sha256": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+        "bytes": 33894,
+        "rows": 1212
+      },
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet",
+        "sha256": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6",
+        "bytes": 1892,
+        "rows": 1
+      }
+    ]
+  },
+  "input_provenance_manifest": "research/experiments/20261025T065405Z/extended_data_manifest.json",
+  "input_provenance_manifest_sha256": "c7f23dc091a19e9eebd90778b648d8330e7d193bdd07d4b4011cb02373235a76",
+  "component_sources_for_reuse": {
+    "2badfab2738aebf182b6cf3790a59e42de17ef3ec4bcc45ad2ddcb69615f4470": {
+      "name": "extended370_BTC_L31_H04_E050_N2000",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 31,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0.005,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E050_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L31_H04_E050_N2000.json.gz",
+      "archive_sha256": "2b1c9152963542f56695ec8ef64cf2664696e81379dbc704246b268e603dbc9b",
+      "style": "trend",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "d0e77da32337b83feebb90e1ec42fb16e9de9bd3fe3e270d260e9d4d500cc811",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "ac7b819d027203d7b2d28f82d2cfa6d882094881ab1ef843842518dbdba3824a",
+        "2": "0b6ac4c0d272414278f653c17f08f146db9110e1fc959c255ed4e925bb3b4e60",
+        "3": "2883d014ef8ef6c0287ae046d778748fb76c52ca4eaa50b89707b500227ddb1f"
+      }
+    },
+    "2c1811fec6042d63c3260f734e6e1d6482d509c840f9d10046d13c77536c4ff0": {
+      "name": "extended370_BTC_L31_H04_E100_N2000",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 31,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0.01,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E100_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L31_H04_E100_N2000.json.gz",
+      "archive_sha256": "67166d200465f596bbe25dab947469d1bc419c8a66430341fda867f37971e600",
+      "style": "trend",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "ca69439a8fef554cca943008630c1da2900a473e4c8a9879b6db922647541b43",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "b978fceaab27b8329b6ccc454601c71ee268a461922eef4d27af7a3d5b3b2c50",
+        "2": "e9894b53020d97e24b68ddadfd5da60e22fc13cefb0d837d1e4addbf14e10a17",
+        "3": "258bffb23b90b1ab0655aae838e37231eb34f0596d68ebae25fd00fad8e4c4bd"
+      }
+    },
+    "d702b876752122be3e8ec18dbc0ad2a204a086012354561c8f99645974110421": {
+      "name": "extended370_BTC_L31_H04_E200_N2000",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 31,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0.02,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E200_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L31_H04_E200_N2000.json.gz",
+      "archive_sha256": "e908d9046ea5bf7d4de4e631a77cb166672a9f36a90a27944953a6da8f1cee1b",
+      "style": "trend",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "226d44c622b0d8148c8fe589485ba2a5a87b0044c756d25ae2610ac537fb68ba",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "475eb250d5c26ff78e5c2130e823d02e1a9ffe65420eca9c2e6d5f3971a6d95e",
+        "2": "f9f77a7c89d9618ea3dd596ac5695aea5d14935fda0e93be1de4546b607e2550",
+        "3": "04a321bf4a9807322f0bb48af19a6799b3f3c7373ba80ff7af5e80f19f42e163"
+      }
+    },
+    "a892598f8908ea6d9b2ac310fbd8a16be783e2095555aaf6aa7e25389ed8162a": {
+      "name": "extended370_ETH_L28_H02_E050_N2000",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 28,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0.005,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L28_H02_E050_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L28_H02_E050_N2000.json.gz",
+      "archive_sha256": "24ed976950f2954e0ff091496b4fb0362b6df1b7c8d26621d10d46b048c177b7",
+      "style": "trend",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "b2095d7174f70a5c0dce385f46456076e3e7534d1849b16689fb3192c0af42a4",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "e93f4ffd9d991eef6384a5b9c250fff63ddb7e5af8f6d3e0b18018b94b8098a2",
+        "2": "29bf67ca296210225b6b2b60be20eca202be0090bb750b43abee479f120e77ba",
+        "3": "01d34b43483fe6910e2bb3828b5a9581edaf2fc9dafa4eabaf4f953de2968a18"
+      }
+    },
+    "3df9b55699d79dd82707db8bf0aa126d80d28b0d4128fefb64d5593ae1f9c60f": {
+      "name": "extended370_ETH_L28_H02_E100_N2000",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 28,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0.01,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L28_H02_E100_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L28_H02_E100_N2000.json.gz",
+      "archive_sha256": "c977f72da799ce143e40c0dd57d63c12a09d81d1b6c0369380dbfe4734ddfdf2",
+      "style": "trend",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "f786938c9efffd81deb5913ebdb080901c38ae4cd3a0085141284cbf50035583",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "2071d7ac2515f6519e6d1a691a4042564b7a59b08f29d1d4dd903f03e5b20d38",
+        "2": "81621a2fd5a0bea00baa1c91115bb1e260f5bd279164f11c122c0ba7276280b4",
+        "3": "70e385ae92d34bc413485dffecf3e3f314dcec0fcfa931a1839d3458a4aa476b"
+      }
+    },
+    "a2e795e476afd2480968c10f7aa7bf73f45d443e83544ed5b34795d3643c8fb4": {
+      "name": "extended370_ETH_L28_H02_E200_N2000",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 28,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0.02,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L28_H02_E200_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L28_H02_E200_N2000.json.gz",
+      "archive_sha256": "fff03c1ae7db756e73606dc5d8792ad4446f39d99afeb2c0258ccfb328b40680",
+      "style": "trend",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "392dc1de65fb5391ebee5cc43837e63f4132d201ca21c3bfea250edda49f682e",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "f0da9f11102fc34bde6264b53b7b1f7a3dea60efc32d8bb1be87300004c5bb5d",
+        "2": "237bdae358ba4520a2777f5cd4fe47f65bf811aba07c149d7182a10131315ea4",
+        "3": "b47d8780a49c5e3382ca7afc1f7a55f6eff084f60b0af3cab326d49740510763"
+      }
+    },
+    "5176058521053ab725a68c52c107872d76f94c11b506c846065560f893b5c559": {
+      "name": "reversal370_BTC_L1_H02",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 1,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L1_H02.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L1_H02.json.gz",
+      "archive_sha256": "2fab8d950c12658c5f481785424468d1f9734209100560e9cb4f8244affec868",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "5c8d755383065fa21fb3372d75d61a12f6208b05f9f36176a3dd4f12cf099d05",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "b7351aa3fadd409a4f612bb89c0d3d9ca2b4b87e3906036fcea87f637e714753",
+        "2": "91f4e7e5f182741bf6c0867d11a8ae555612b256480bfc9cc92cf8def41ae352",
+        "3": "30db7a23ae49252cf23e31297f95a686a18c38d17a99abf25d7771fa0da9f8f1"
+      }
+    },
+    "60b8a21bc58c1dbf2ef1841a3d81856f3122b58f2bd64341cd06435cdc22c16f": {
+      "name": "reversal370_BTC_L1_H04",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 1,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L1_H04.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L1_H04.json.gz",
+      "archive_sha256": "1dc2e40b5c61f08e5a7d402a9fd96921ea063e8c2b029919435982d8d929414b",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "bcd84c32e455029e772c5f3221b2f0e0c37304307756cce475ced0a6d329b082",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "e92531a310cba423bc99da52d37f3b15338e6231f0e038a8e007608b16367ea4",
+        "2": "d92e9fcf7556cfca8cf654ec70f3d8b53ebe4bb06a9720070923edb8a6307e1a",
+        "3": "13c6ef9c325b2db7936fbf6c4d6e4599cb49b5ca3ea68ac83d905c5ac2e8e255"
+      }
+    },
+    "f811faac70d84475f260d4adb824ba7ec2f98a1f9437caac65896348ad233518": {
+      "name": "reversal370_BTC_L1_H06",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 1,
+      "return_hurdle": 0.06,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L1_H06.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L1_H06.json.gz",
+      "archive_sha256": "f4aca59b54907682e85cbd767ea5bc9df9d543cb9688d96d909da48e1185e8a2",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "ea5d7972d4ca75507f976700e48f706ad6efd420d4d248a2842aa65bfc7b58b5",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "1cfe8214392334ea217c4959b8a5503c4f4528a150eec435bffce83b5fe88673",
+        "2": "e9309bfc62887a4954bb12a7e477335a140b54c1af1ae02ea3f9661a7abf0ccf",
+        "3": "4b50b1f64169544c6a963aa92cd165b913c3cd0aa99ffde396553ac25e27de40"
+      }
+    },
+    "d8831168956bd776803995b52e4b9aef8ec10fa919477a3f05b0b653e4803985": {
+      "name": "reversal370_BTC_L2_H02",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 2,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L2_H02.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L2_H02.json.gz",
+      "archive_sha256": "b30205a36be2f4853b1221b1fd4bd7aac67c390d000ac2455e9768c34fb00ae7",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "e4dab203d223cf6785f90ca4a1c1f477f0c5db22c35f945d5efac5d468c359dd",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "c943dea4bfe075d6db68c96f55a27cae68c3fd825d1a13d6571889a25277d4a9",
+        "2": "c9be489b0bc411b1adedb11dfae1bab3d6d449787ba20a3acdcf99b27ccd610c",
+        "3": "fe2dfda40c5a5a38f461cf0874b314f9047c283c009297e6856605d31d2b7498"
+      }
+    },
+    "b539395c5de2a1a2f8e7250a7d05a2db8462e7d9c6e90053df4a1dcda416444e": {
+      "name": "reversal370_BTC_L2_H04",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 2,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L2_H04.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L2_H04.json.gz",
+      "archive_sha256": "5b33e76fd8dcda4a23659f186c60cc4464cd4f933e95b8897b50366306f5919a",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "6ae491f5a9c641af820ea5b70afeebbdeec55864d36a2ca9bdd496582b8aa9fb",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "fb26c5b7c41944ddb9ecd11d63a546df15c24777954d6dad5f6f350b24a41b9c",
+        "2": "8aa1ec0a77d9426a6d6a468e86417117a0f6fcb9286a3d96bdb7e493d6f07bd4",
+        "3": "86a21bfb19c99da9cd8b8213a626c57222b739ba2a2ec8af5a816ee8a30004eb"
+      }
+    },
+    "c2e8ab60514c7d9d27874bbf316d5b224e77303856cf4766a99c4106e8ed277f": {
+      "name": "reversal370_BTC_L2_H06",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 2,
+      "return_hurdle": 0.06,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L2_H06.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L2_H06.json.gz",
+      "archive_sha256": "e241f9b683a09916b4329958bf8532493e9fba52ba49ad29fabaf809a66e5340",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "2ce34a1c43b78ec2eb2d484b8f154a2fa1f54b1a4e6aaf511543cca1d51c915d",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "13da1091b9259b8d1ad92bbe5f83c42f9a80bcaa3432b7215db55bcb8147f29a",
+        "2": "c812fe2bbd67555b6edca07f2b856362b04dcce52e56037ed877d57cc2f3718c",
+        "3": "1a1a239ba791788172360ed493324cf41f0ef13e93abc3df8d79d20415376eb0"
+      }
+    },
+    "f359d19aabd7c749743f95097a48fc888bd3eed103186d3c59669dd50f34615a": {
+      "name": "reversal370_BTC_L3_H02",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 3,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L3_H02.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L3_H02.json.gz",
+      "archive_sha256": "aaca51043c699f59f2089ca06f0821f055399bf9716e78959bb9c666c1d8f2c0",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "c04d2cab2717db89a8f900fd90b5827ab231e6d89ae8a3f583ca280822640c93",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "eaaf29464b07e4d97c964d45cc3c83071b00fd96a485a98380c06364c58117bd",
+        "2": "613c4fbfad5d9b25ee8c5a181407427249f869a98330e23c7a68df1a50b06182",
+        "3": "9a1c8900e791b4cc8c5585832ccee1c6a08db3c461c0548a3d6ab161e119da12"
+      }
+    },
+    "e973ef42a0a1df9f0a094186d67f025099e8ee52bd3d44fc6ef3ff6c15dd81e9": {
+      "name": "reversal370_BTC_L3_H04",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 3,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L3_H04.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L3_H04.json.gz",
+      "archive_sha256": "0b788be93b3d38172c614121056544ed3cd03a460fbfa14d92999bf43ac5a32c",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "29ee46d883adb0cb108533d597dff20223c7753d9b7bc6492aff0af35e7581d5",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "bc97998b69dadfe15daca632bfb129a375f8ad767a85a821769fd7142d81a4e7",
+        "2": "8b879480c115eaad2b5de398ba54b8ff780a401127bbdacb77dde6208b3fc1f1",
+        "3": "3a80d47579518e89d40173938136b98c1ab9d6f4dbf34b301e5ea368a4433c7a"
+      }
+    },
+    "68d0c8843f4abd6892a8323b8e1f37dd8eb3f0913bea1adc67192e2bc5cdd1eb": {
+      "name": "reversal370_BTC_L3_H06",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 3,
+      "return_hurdle": 0.06,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_BTC_L3_H06.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_BTC_L3_H06.json.gz",
+      "archive_sha256": "be5e5c783894aac4ede231f0374f27410a349dd813d2bdc6630340514294da7c",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "a60bdd6409fd3802040226b55cee291feec37a562e944a7cd73464dd633f7b7d",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "e196b9605b6efc6508fb0c9a3235a56480c5bd0e46eb331843aaf445384f9ab0",
+        "2": "aa67a3a9ae8e1daf2414dc8da8f81abca3c79ed6cf24b8c2d7048f42d8003a2d",
+        "3": "e7fc4a0b641e7947d2ab1094967e3dc30f1bcd23c1cfae01b5347333c2c6d6bc"
+      }
+    },
+    "7696753da6b02ae13889a1f8b5773424f9408c8fcb13cfc4d4b2e0061f68b991": {
+      "name": "reversal370_ETH_L1_H02",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 1,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L1_H02.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L1_H02.json.gz",
+      "archive_sha256": "6ad3d9bd44b61c8b41fba4e5993972ead1422b92c4b4028603b6f240483a97bd",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "76327ab4a0c9801eacc7c433a9bfae0ecd53bb0596e40002fba11ca42ae67da0",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "16d209c1c1d4db5da92df894fe8f6ca0109ef2995d77ea04af99e8748466646a",
+        "2": "65133f17f4d14b77e9dcce1bec8dd0ac20e81e106fdd53ac087a05c6796993c6",
+        "3": "31e4d333c023f8e4e32c8f410b22095317c5e30c06ae8d6ff19227f94b38ffe4"
+      }
+    },
+    "4db6f1454ee6ded57bc7ad74495b9b81ca8f128adcff714eaae1eee7133ab7df": {
+      "name": "reversal370_ETH_L1_H04",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 1,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L1_H04.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L1_H04.json.gz",
+      "archive_sha256": "df2d7028a90446ebb4c344c0456737a51d6c49e3f6ef8f4225c165f75db79d85",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "6524ae802e2e45fcbab8fe0d3714313ec7428d3396f9f6ac3adf3e463d133b98",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "9d1e8853b96b78bafc9c0c1324c65d38371e45b76f325105b351a957b7744295",
+        "2": "4c8e4510362c90c8be28abaff0c131d0bed98c330ec38f6d9c8a67cfb59f57d2",
+        "3": "06c52eb5d0303a872bbf583342b46185088f20ec8adbfe13f877578d3d7ddfc6"
+      }
+    },
+    "b45a17b8fe4f052b7b1222b1cbf6c00735d547c3119b045c858c277c86e32cb4": {
+      "name": "reversal370_ETH_L1_H06",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 1,
+      "return_hurdle": 0.06,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L1_H06.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L1_H06.json.gz",
+      "archive_sha256": "85b55aed03c6cb77fa6f5b0165829adb122df7d8dde403e5198b124b6406ec29",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "b78fb95266d24adf4aa412cc98db1758e075263ed941d86b8c8e0464b5cd5183",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "a5caa99abdff7fd6473030ab795c69ea30a7f4b100b2d8708a07e4bb88a5661a",
+        "2": "ff261d6e5da8ddb93ccbe1e3d35f5f0ee290048f8570d1adc668c806e5ab9850",
+        "3": "af19097703ad83c089ec00c000083ecbe7247cb0b332d3129efdc14031d0ea75"
+      }
+    },
+    "65050f9028cf1a75461fd7f85f227273c47fdf81b486f67afbef57c875df7620": {
+      "name": "reversal370_ETH_L2_H02",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 2,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L2_H02.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L2_H02.json.gz",
+      "archive_sha256": "b0f98d9a2c99047701f0fa8761ba64261ac64ee2d813db3e67993e4fa2dec8eb",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "76af4fd1f8ab445331d134b964288b8e1153c2e0a9ffce57f2adc64ed8fc21df",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "284e5e4659a427927b087586ee05e0dfad4ee209079233d64e8e24703abea6b8",
+        "2": "09ee99ee2f2ae04ed8f8180a31838da69136bd98bf30d83f3a3478dde3680842",
+        "3": "5094a6a99661dd5fd3cbb28b6c388ef6005901a4c72105549dd02a55400a4070"
+      }
+    },
+    "56e9fd0745f261d4670f0bdc7cc61d757288f9e50e975c9d91a3b15ba1445ad6": {
+      "name": "reversal370_ETH_L2_H04",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 2,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L2_H04.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L2_H04.json.gz",
+      "archive_sha256": "f5551f11e2e1699e4d6c75622b0e840c02efbf3f5d76f836e763842283c19c4c",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "15117d777e45d4f1321275c166cbc296e5f2ae022e9f38b37216351fe3be1a10",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "d29cef356995b356e180fb8dc964ab28fb6f23780945f65ce0517ae35f663174",
+        "2": "0e9522d5a7cd6db83d00b5261d8084d423ad809c4fe864ba71d04b03d5c493ca",
+        "3": "72eabe9d72761ad57d545f055a4065bfbf37247514ed1a00443a9d911a20d0d1"
+      }
+    },
+    "113390955395260d188eec0b0f7348a31c1399c383c8869ec5fcdf5d31c68e72": {
+      "name": "reversal370_ETH_L2_H06",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 2,
+      "return_hurdle": 0.06,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L2_H06.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L2_H06.json.gz",
+      "archive_sha256": "9a6305096a69a0cb381ee42be2d82226fa87973247723479928074ff7967cd9c",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "243dfbf3896143a91883293f7c9755c96f093036bfbfd56cece4e75f00ca1437",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "33ffd48475a83a38863087471bc76217a8c20e53bfefcf1f314817e750e67b53",
+        "2": "c0d3f63b7b394ed1b80a1c2c8fe254e7c503c68806e4752776ad77a717f4c0d3",
+        "3": "79dbd330e8777aa5223d677e61d3214ad6129b3920e7a8439e0d153afba302f7"
+      }
+    },
+    "a2faa709d5e9b7c7d44505c22487144acf736bacdd92738d253969ac913b6017": {
+      "name": "reversal370_ETH_L3_H02",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 3,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L3_H02.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L3_H02.json.gz",
+      "archive_sha256": "298cec177449170448f9e1b30d36f754439af129ca63efa989b275e122ece78a",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "aaef0cb5e6021f1f5d3ba9cff40f9d00f931be52a58c67b520e1693e7bc76d3f",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "2b77fe4b72470c09c633eca74e4aaaf62badb0296387a369a99a809a385ea531",
+        "2": "ff803073983f04ec37e4ea80b85a6c6a25336faf1dcc5a05e83da170d1170e86",
+        "3": "bd3c4cc7cd48fc2d58d6989d3d60560c07bc6d7cebf184b4df775b8475eeff24"
+      }
+    },
+    "3b7f0d6abf5770fec1041a6afaef3d16b732ae3c5486984f026870812fd067be": {
+      "name": "reversal370_ETH_L3_H04",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 3,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L3_H04.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L3_H04.json.gz",
+      "archive_sha256": "c832eed39393e4182f6509b389549af516387baeb3d6564c2682d9d2a491b376",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "296e8aad49439aa12baa2c68c49f67e398b6a40223aeb87817c7361d1b3124f8",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "4357eea4832228659f65e4577885f967242e81afe22c611cf37d5239decce2ba",
+        "2": "1955c6046481dce94097076e24c17ffabd4f34705ae3083dee34a1449307878a",
+        "3": "0df53769c4625bda38c3fbd6846149aace1cc520685bc4e8186256ae64d40ba3"
+      }
+    },
+    "87bfc907130daff4ef215acf068cd4c308422e7e977341e1fc87584406a30cdc": {
+      "name": "reversal370_ETH_L3_H06",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 3,
+      "return_hurdle": 0.06,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L3_H06.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L3_H06.json.gz",
+      "archive_sha256": "900a08a08e2cef2b42f11ed3215596d1be0426a8185bf71d7c364c71ee5fb208",
+      "style": "reversal",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "a0006e6b58536d12a711f39a10cdbe6a6f61e128db8f048929228f44632880f6",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "bf14ebf87c166dd577f0ebf485ba55e1488642a8f433cd04d5b7e59f19a88872",
+        "2": "7d6761fffc7a6dbb1404db36ea08dbf7750b58c9f3fe19c485993856c07199e8",
+        "3": "8ac40ca4966930669edadcfcb9e1d32a10d8729c55520a9adac3a759a2de99e3"
+      }
+    }
+  },
+  "new_parent_results": [
+    {
+      "name": "mixed370_BT_ER_E050_L1_H02",
+      "fingerprint": "5384a9f406ca8643ada20cdbd182b97882e0080016f155cbfb5bfc7ba93d6efc",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "2badfab2738aebf182b6cf3790a59e42de17ef3ec4bcc45ad2ddcb69615f4470",
+        "7696753da6b02ae13889a1f8b5773424f9408c8fcb13cfc4d4b2e0061f68b991"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L1_H02.json.gz",
+      "archive_sha256": "06f47790dca8efd98d1620bdb2c5c2454a13877d354974e1db3caafc95dc07b9",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E050_L1_H04",
+      "fingerprint": "c335cf9e2eb4f974fee3cfba1a83b457036a348595abf62d295027be11baf9a8",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "2badfab2738aebf182b6cf3790a59e42de17ef3ec4bcc45ad2ddcb69615f4470",
+        "4db6f1454ee6ded57bc7ad74495b9b81ca8f128adcff714eaae1eee7133ab7df"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L1_H04.json.gz",
+      "archive_sha256": "f5b4b024a39e97e934bd36608c24009329cb0cab0840459a4139401253e06d4d",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E050_L1_H06",
+      "fingerprint": "de5d97bbdeaccd8408f941c2ee507986d0b3c0a813c1ba5ae74336c3e5cebc6b",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "2badfab2738aebf182b6cf3790a59e42de17ef3ec4bcc45ad2ddcb69615f4470",
+        "b45a17b8fe4f052b7b1222b1cbf6c00735d547c3119b045c858c277c86e32cb4"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L1_H06.json.gz",
+      "archive_sha256": "807a0b0716cc0b007c91aaf1d1ff6ebe2ad6b1823cdb79ba02624c294e1714b8",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E050_L2_H02",
+      "fingerprint": "2757b27774c520e83e9e5663395a3c20c46beeff7055c472a5423c4393427da3",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "2badfab2738aebf182b6cf3790a59e42de17ef3ec4bcc45ad2ddcb69615f4470",
+        "65050f9028cf1a75461fd7f85f227273c47fdf81b486f67afbef57c875df7620"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L2_H02.json.gz",
+      "archive_sha256": "0ca497c7a4030b0e5aa66d08ceacc8a223b31e7c339ae7531fb87498999030d3",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E050_L2_H04",
+      "fingerprint": "571948c070d453beaf4440ead665b08cb988b45ec30e539bd6a241a03a356e81",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "2badfab2738aebf182b6cf3790a59e42de17ef3ec4bcc45ad2ddcb69615f4470",
+        "56e9fd0745f261d4670f0bdc7cc61d757288f9e50e975c9d91a3b15ba1445ad6"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L2_H04.json.gz",
+      "archive_sha256": "d5e552bd123a40439642c17c339b4af20d2967b184a2b91ab1543e32ff93f938",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E050_L2_H06",
+      "fingerprint": "912e45db0241ff1292ae66f23cde0413af01a4f1f53c799f851b96d7c31658b6",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "2badfab2738aebf182b6cf3790a59e42de17ef3ec4bcc45ad2ddcb69615f4470",
+        "113390955395260d188eec0b0f7348a31c1399c383c8869ec5fcdf5d31c68e72"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L2_H06.json.gz",
+      "archive_sha256": "190e58225e80866875c13e4969142ccb2c35a4bd19e8249e3a59d1c3fb96b0f2",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E050_L3_H02",
+      "fingerprint": "aa062b8de3bdb1815d83b91397ae4f556754ef1990be35fc24fa41722ea8e41d",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "2badfab2738aebf182b6cf3790a59e42de17ef3ec4bcc45ad2ddcb69615f4470",
+        "a2faa709d5e9b7c7d44505c22487144acf736bacdd92738d253969ac913b6017"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L3_H02.json.gz",
+      "archive_sha256": "c21bb7b07f30065d220c8727be2711200ff890e8efa13de281031cc7c9113839",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E050_L3_H04",
+      "fingerprint": "d81ea1d12570f3427eb5ac8761347706ca26ac58db1856be4a233de7c06cbea6",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "2badfab2738aebf182b6cf3790a59e42de17ef3ec4bcc45ad2ddcb69615f4470",
+        "3b7f0d6abf5770fec1041a6afaef3d16b732ae3c5486984f026870812fd067be"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L3_H04.json.gz",
+      "archive_sha256": "cb0b9f8d92ee5eccd74d6455205df5b5672bf9e14a61cd3e6f05934ee61b7473",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E050_L3_H06",
+      "fingerprint": "a19d50a614a8b8a23af52f232a4a7bb6a5cb344f2098ff3983ed73815f12f0f8",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "2badfab2738aebf182b6cf3790a59e42de17ef3ec4bcc45ad2ddcb69615f4470",
+        "87bfc907130daff4ef215acf068cd4c308422e7e977341e1fc87584406a30cdc"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L3_H06.json.gz",
+      "archive_sha256": "64745e64f246cc5734d1c42bcfd0cffb454142549a2636681b4ad01152f87e5b",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E100_L1_H02",
+      "fingerprint": "d61614ba01f4136c8386c81fabf2bdbc322910b2a457aaa7d1b058fc5c16927b",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "2c1811fec6042d63c3260f734e6e1d6482d509c840f9d10046d13c77536c4ff0",
+        "7696753da6b02ae13889a1f8b5773424f9408c8fcb13cfc4d4b2e0061f68b991"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L1_H02.json.gz",
+      "archive_sha256": "0de4049fb6f012c9b6922aea3126117f70f26356ed3a06e648b30c50eadbcac2",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E100_L1_H04",
+      "fingerprint": "50b5665c72e52cfd98dc683d890ac04125ab86f9d47f3ea882851e4b79d2ee04",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "2c1811fec6042d63c3260f734e6e1d6482d509c840f9d10046d13c77536c4ff0",
+        "4db6f1454ee6ded57bc7ad74495b9b81ca8f128adcff714eaae1eee7133ab7df"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L1_H04.json.gz",
+      "archive_sha256": "a0dd617a5bf16f7e10e5d96db2ec5ec1df7f4035f5ed206585c16e41629f53cd",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E100_L1_H06",
+      "fingerprint": "d80ce0393867d270cadc0ca50981313651ff932ad1401924e2f08c333aeded3f",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "2c1811fec6042d63c3260f734e6e1d6482d509c840f9d10046d13c77536c4ff0",
+        "b45a17b8fe4f052b7b1222b1cbf6c00735d547c3119b045c858c277c86e32cb4"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L1_H06.json.gz",
+      "archive_sha256": "783e34f8c7bb92ccbd78acffc813ddcc2eb79ddf8d905ff75df791a345d19bf1",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E100_L2_H02",
+      "fingerprint": "3b8aca358618232f21e1e2dcb7890b026b5e9975e7d95f7dff22897c27cb02dd",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "2c1811fec6042d63c3260f734e6e1d6482d509c840f9d10046d13c77536c4ff0",
+        "65050f9028cf1a75461fd7f85f227273c47fdf81b486f67afbef57c875df7620"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L2_H02.json.gz",
+      "archive_sha256": "fe41ce51bc24f5ff2054e2eda251909f9b209d36a80cfd91910927f7e40baa9f",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E100_L2_H04",
+      "fingerprint": "06b811850b0f35ecbeeee89c5c32bd4652ced02c6b49390e19262748f7ec51d1",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "2c1811fec6042d63c3260f734e6e1d6482d509c840f9d10046d13c77536c4ff0",
+        "56e9fd0745f261d4670f0bdc7cc61d757288f9e50e975c9d91a3b15ba1445ad6"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L2_H04.json.gz",
+      "archive_sha256": "d3ea017b180c2097bc694ede58719f90d85919c555374d56236bea7a874ff11d",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E100_L2_H06",
+      "fingerprint": "8fdb2bc005d8355455a636cb9224648e18b93c6cbf81c55881a27a90c2b7c097",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "2c1811fec6042d63c3260f734e6e1d6482d509c840f9d10046d13c77536c4ff0",
+        "113390955395260d188eec0b0f7348a31c1399c383c8869ec5fcdf5d31c68e72"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L2_H06.json.gz",
+      "archive_sha256": "5efc6f1cb31a5783cd630def95172c49153b306afbe95c40a2d7558a36fa3ab2",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E100_L3_H02",
+      "fingerprint": "23176971804c5a2c2f395384e89a5975225cf10c8bb380f28d87660c10065727",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "2c1811fec6042d63c3260f734e6e1d6482d509c840f9d10046d13c77536c4ff0",
+        "a2faa709d5e9b7c7d44505c22487144acf736bacdd92738d253969ac913b6017"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L3_H02.json.gz",
+      "archive_sha256": "34c1796e361175bf0c7051fd481996096d9d7c55622165eda7f58540a95213b4",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E100_L3_H04",
+      "fingerprint": "b7d0717d155e736482ba6d43abb2e6c9908fd771d332086af943bb0a14696368",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "2c1811fec6042d63c3260f734e6e1d6482d509c840f9d10046d13c77536c4ff0",
+        "3b7f0d6abf5770fec1041a6afaef3d16b732ae3c5486984f026870812fd067be"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L3_H04.json.gz",
+      "archive_sha256": "db31a32fd35c6cec1fa5c76a13607bffce0de3b3dff73150ac609c0660008f88",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E100_L3_H06",
+      "fingerprint": "e75a94317733d9920429c64325bd9ad3b53d64847dc164aff3fcaa839f11f257",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "2c1811fec6042d63c3260f734e6e1d6482d509c840f9d10046d13c77536c4ff0",
+        "87bfc907130daff4ef215acf068cd4c308422e7e977341e1fc87584406a30cdc"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L3_H06.json.gz",
+      "archive_sha256": "043355bd853320b454dc8bfc884e72ec38e65432619f7d958a0540248f8d3df0",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E200_L1_H02",
+      "fingerprint": "a3183ab32504fbeac0044ba227d750f8382325619ecba65e90193dd5f1b5d708",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "d702b876752122be3e8ec18dbc0ad2a204a086012354561c8f99645974110421",
+        "7696753da6b02ae13889a1f8b5773424f9408c8fcb13cfc4d4b2e0061f68b991"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L1_H02.json.gz",
+      "archive_sha256": "49b988e038a10da097b58bfc4800b141b87384c6dce049a8e76b61cf39af2428",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E200_L1_H04",
+      "fingerprint": "b810ce6a07ae40d7f4ee0e610a77724b2ccc99dca514c8e6e0b88efbcb304830",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "d702b876752122be3e8ec18dbc0ad2a204a086012354561c8f99645974110421",
+        "4db6f1454ee6ded57bc7ad74495b9b81ca8f128adcff714eaae1eee7133ab7df"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L1_H04.json.gz",
+      "archive_sha256": "f23bda4fdb8f3af6f6156ad0c3b008ef8a9470140542e76071b3def52c8e58ce",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E200_L1_H06",
+      "fingerprint": "9aa114fb7eef8af253b4978b3972a2cb67d4478f129100c45ab649b6886fd759",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "d702b876752122be3e8ec18dbc0ad2a204a086012354561c8f99645974110421",
+        "b45a17b8fe4f052b7b1222b1cbf6c00735d547c3119b045c858c277c86e32cb4"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L1_H06.json.gz",
+      "archive_sha256": "3f90cc68895adf44210f1ef18df9ae514feb78938a32bae79f6296be7cc7ef18",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E200_L2_H02",
+      "fingerprint": "c1e814d3e1fe93ccf2f41402a9d084b26ad20f8faee37cb5768d3bf0ca5be0b1",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "d702b876752122be3e8ec18dbc0ad2a204a086012354561c8f99645974110421",
+        "65050f9028cf1a75461fd7f85f227273c47fdf81b486f67afbef57c875df7620"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L2_H02.json.gz",
+      "archive_sha256": "10c61f8c946d464d91baf1d0b26a3696b87f9e350dbedef8a04adf36ea83490c",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E200_L2_H04",
+      "fingerprint": "cea7adefa3b3ab6da9f2d38979f0396c7ab8160c0ab2771ce17af3fa04935fc2",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "d702b876752122be3e8ec18dbc0ad2a204a086012354561c8f99645974110421",
+        "56e9fd0745f261d4670f0bdc7cc61d757288f9e50e975c9d91a3b15ba1445ad6"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L2_H04.json.gz",
+      "archive_sha256": "4bf5c70c3f25ca814c9186934c74ad0506fed781cfbb11ae29159dd18251b2c4",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E200_L2_H06",
+      "fingerprint": "a319fa99fedd7be75b2151f0f0dc69a799d15099fa1231d34883362cef4b24c6",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "d702b876752122be3e8ec18dbc0ad2a204a086012354561c8f99645974110421",
+        "113390955395260d188eec0b0f7348a31c1399c383c8869ec5fcdf5d31c68e72"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L2_H06.json.gz",
+      "archive_sha256": "3a6321fcc24627a0ebe3668e5592ebe9c126234ca6f25fd66279bcbe24a10354",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E200_L3_H02",
+      "fingerprint": "f7dfcf8f7872a514aa0764f9b98b953a913852a29cb61232600c3f902e70e742",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "d702b876752122be3e8ec18dbc0ad2a204a086012354561c8f99645974110421",
+        "a2faa709d5e9b7c7d44505c22487144acf736bacdd92738d253969ac913b6017"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L3_H02.json.gz",
+      "archive_sha256": "c5431e12f68b326ca52cb69e61c370c1532baec99792fece14d683e4d41753fd",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E200_L3_H04",
+      "fingerprint": "27bb577f4099221e3ea5bd50b71c96c7398a1d6d06c67da44e2c72fd23fec262",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "d702b876752122be3e8ec18dbc0ad2a204a086012354561c8f99645974110421",
+        "3b7f0d6abf5770fec1041a6afaef3d16b732ae3c5486984f026870812fd067be"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L3_H04.json.gz",
+      "archive_sha256": "130f2a28a64db77f84b6141e58d2519bbd919fc99ff45c22e8984dfbffc94288",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BT_ER_E200_L3_H06",
+      "fingerprint": "c8a431b14cdde7c2a0408407613e067e8304bd04b7038ef0b93b466b598db5e1",
+      "style": "btc_trend_eth_reversal",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "d702b876752122be3e8ec18dbc0ad2a204a086012354561c8f99645974110421",
+        "87bfc907130daff4ef215acf068cd4c308422e7e977341e1fc87584406a30cdc"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L3_H06.json.gz",
+      "archive_sha256": "72afaf7a22e8506c2280911e50e6ffdca6edf91b4d04f4e4dab1e79ca5feb76d",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E050_L1_H02",
+      "fingerprint": "ed3297a815c362c64d3412d3ad4e84fb541cb4105d417e10bb7efdbb249270a6",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "5176058521053ab725a68c52c107872d76f94c11b506c846065560f893b5c559",
+        "a892598f8908ea6d9b2ac310fbd8a16be783e2095555aaf6aa7e25389ed8162a"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E050_L1_H02.json.gz",
+      "archive_sha256": "12a3d60f0a4364084714814b3ef3dd9874fe1d1012ab4a05cbf61af2e47215a4",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E050_L1_H04",
+      "fingerprint": "3bc35630bbdfb96386f1eee18e03cf6373a13e8bacf686bfc329f61215ea2099",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "60b8a21bc58c1dbf2ef1841a3d81856f3122b58f2bd64341cd06435cdc22c16f",
+        "a892598f8908ea6d9b2ac310fbd8a16be783e2095555aaf6aa7e25389ed8162a"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E050_L1_H04.json.gz",
+      "archive_sha256": "e53c31abc55d5fdd7ba997e95d5832b5544299ed14e3918a69432660019002bf",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E050_L1_H06",
+      "fingerprint": "65e15826af902a22a6fea2922f29031bb5686e2e93fe0179878d665bfa87c315",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "f811faac70d84475f260d4adb824ba7ec2f98a1f9437caac65896348ad233518",
+        "a892598f8908ea6d9b2ac310fbd8a16be783e2095555aaf6aa7e25389ed8162a"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E050_L1_H06.json.gz",
+      "archive_sha256": "2ce107942653f2456889fa288586d32f4b4c5e1cf11869cfb43da18de5e32c3d",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E050_L2_H02",
+      "fingerprint": "4f52f7bdf916fc8c056ef18472b40af182b71dff1b06cbfa39b0ca21310335a8",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "d8831168956bd776803995b52e4b9aef8ec10fa919477a3f05b0b653e4803985",
+        "a892598f8908ea6d9b2ac310fbd8a16be783e2095555aaf6aa7e25389ed8162a"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E050_L2_H02.json.gz",
+      "archive_sha256": "71eec09272aea61a41fbe5c3a5bf18647b84eaff886551cb3e6e2ba5f19d0028",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E050_L2_H04",
+      "fingerprint": "ac2f33677f64b4823840ac1de29ca2363210bdc1a95c5bc5d34ef35648f19820",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "b539395c5de2a1a2f8e7250a7d05a2db8462e7d9c6e90053df4a1dcda416444e",
+        "a892598f8908ea6d9b2ac310fbd8a16be783e2095555aaf6aa7e25389ed8162a"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E050_L2_H04.json.gz",
+      "archive_sha256": "378f5e90089d37924c574203b9b938810bf27bd2155d8ebab820411497f94947",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E050_L2_H06",
+      "fingerprint": "6e07900468e11dd1ba7acd9fffb93e7b50f59824437b7f90970fc8ffdae03943",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "c2e8ab60514c7d9d27874bbf316d5b224e77303856cf4766a99c4106e8ed277f",
+        "a892598f8908ea6d9b2ac310fbd8a16be783e2095555aaf6aa7e25389ed8162a"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E050_L2_H06.json.gz",
+      "archive_sha256": "c71a3dd7ef67fa271f6ab16920f403f6d46433bc49d5c4eb3a9c63c5209d92e2",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E050_L3_H02",
+      "fingerprint": "0cff83756c975f5c27addaa2e911ce3edcf197af9d455f98fed9d454509d5898",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "f359d19aabd7c749743f95097a48fc888bd3eed103186d3c59669dd50f34615a",
+        "a892598f8908ea6d9b2ac310fbd8a16be783e2095555aaf6aa7e25389ed8162a"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E050_L3_H02.json.gz",
+      "archive_sha256": "c42c0887f4801efc0f197cec3d9b79e2e01c69475be8118ef1ce15f3bf1cd4a9",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E050_L3_H04",
+      "fingerprint": "e306ea54a5133869b9f75b4c779d3cb9a37ce58e3b71594a18f310eaa80664b6",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "e973ef42a0a1df9f0a094186d67f025099e8ee52bd3d44fc6ef3ff6c15dd81e9",
+        "a892598f8908ea6d9b2ac310fbd8a16be783e2095555aaf6aa7e25389ed8162a"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E050_L3_H04.json.gz",
+      "archive_sha256": "0d1cae4504a65f65dce5e4e5455a318c8c0ac9b37b7d5d6ae63b74d80199c0b7",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E050_L3_H06",
+      "fingerprint": "6e98059b722f9b936d3dc2972ffe0e52a420b67d601df34d0bfa1d153a0d5fdc",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.005,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "68d0c8843f4abd6892a8323b8e1f37dd8eb3f0913bea1adc67192e2bc5cdd1eb",
+        "a892598f8908ea6d9b2ac310fbd8a16be783e2095555aaf6aa7e25389ed8162a"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E050_L3_H06.json.gz",
+      "archive_sha256": "8f26202fe1a3835de998f4c23b1c1ea0aa11021409f8d9d9a8538b09b570ecf3",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E100_L1_H02",
+      "fingerprint": "8d4311e14a4d0c09cee34096572b9ba33545b8bfa50da89d5770ef6900837437",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "5176058521053ab725a68c52c107872d76f94c11b506c846065560f893b5c559",
+        "3df9b55699d79dd82707db8bf0aa126d80d28b0d4128fefb64d5593ae1f9c60f"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E100_L1_H02.json.gz",
+      "archive_sha256": "21f4e9897b9c47277dc696d18724a69604663547c95f9068d525165836c97929",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E100_L1_H04",
+      "fingerprint": "35e75466a646c6ceb48ad2359bbffa4f7ef74579f55668c8ec652e2858f0ffff",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "60b8a21bc58c1dbf2ef1841a3d81856f3122b58f2bd64341cd06435cdc22c16f",
+        "3df9b55699d79dd82707db8bf0aa126d80d28b0d4128fefb64d5593ae1f9c60f"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E100_L1_H04.json.gz",
+      "archive_sha256": "8765754776de7986eaa241f03659e126563c9c26de9c6425a63ac9e6e7c72ab0",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E100_L1_H06",
+      "fingerprint": "ce1e03ee6cd5e5f7038c516ed482723016563a5e067300b5ad6bba0d2069b31e",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "f811faac70d84475f260d4adb824ba7ec2f98a1f9437caac65896348ad233518",
+        "3df9b55699d79dd82707db8bf0aa126d80d28b0d4128fefb64d5593ae1f9c60f"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E100_L1_H06.json.gz",
+      "archive_sha256": "67f81ae7537de5565b457b65d612708f97453f2a5869dcb97f0111bfde0a7e29",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E100_L2_H02",
+      "fingerprint": "43ddede2e5e16b8773d9abd2451ef1f41631b4bc9c297a31c356e280f7704ea4",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "d8831168956bd776803995b52e4b9aef8ec10fa919477a3f05b0b653e4803985",
+        "3df9b55699d79dd82707db8bf0aa126d80d28b0d4128fefb64d5593ae1f9c60f"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E100_L2_H02.json.gz",
+      "archive_sha256": "8d49f89e0c79f9049cbe1cb29b99f06000b64805721d6761646471604a545a2c",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E100_L2_H04",
+      "fingerprint": "e0cb2a5f238a74cda2e032bd24b24889d4ce3901027f848d3f2bb2b77705bcc9",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "b539395c5de2a1a2f8e7250a7d05a2db8462e7d9c6e90053df4a1dcda416444e",
+        "3df9b55699d79dd82707db8bf0aa126d80d28b0d4128fefb64d5593ae1f9c60f"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E100_L2_H04.json.gz",
+      "archive_sha256": "707b3e318e7e1793f8ab25b17b89b91bb8ddf0f57dbbbeceab87369f5067d156",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E100_L2_H06",
+      "fingerprint": "3082c577700c68370666e999bb617aa967095b22540d6fa0290f2f68631dcb8a",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "c2e8ab60514c7d9d27874bbf316d5b224e77303856cf4766a99c4106e8ed277f",
+        "3df9b55699d79dd82707db8bf0aa126d80d28b0d4128fefb64d5593ae1f9c60f"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E100_L2_H06.json.gz",
+      "archive_sha256": "d52101b7663808d3aa4a4b36b75ceb9791b3cf6402233e9b985c4580d356bca4",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E100_L3_H02",
+      "fingerprint": "0d348da7e3a2d63b836df1c41363954e6d62e15aa528a1bc23a55239a789c5e4",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "f359d19aabd7c749743f95097a48fc888bd3eed103186d3c59669dd50f34615a",
+        "3df9b55699d79dd82707db8bf0aa126d80d28b0d4128fefb64d5593ae1f9c60f"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E100_L3_H02.json.gz",
+      "archive_sha256": "59fd7cd6ea57a64f353d985423396f13db78179b9371484513b2676c80ae93c6",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E100_L3_H04",
+      "fingerprint": "709d7c9940f0eb94cce9604de7a4f93b2d712aa970a165f7f8bca9b3ae6c85ba",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "e973ef42a0a1df9f0a094186d67f025099e8ee52bd3d44fc6ef3ff6c15dd81e9",
+        "3df9b55699d79dd82707db8bf0aa126d80d28b0d4128fefb64d5593ae1f9c60f"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E100_L3_H04.json.gz",
+      "archive_sha256": "7afc4c103e19926fe7f8dea841a16c4f9c0e0049237efe0244e568469ce06a88",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E100_L3_H06",
+      "fingerprint": "6b8df59c8d9237d0ba814059632cf38ebae1f6622306796c0b3b765c10624756",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "68d0c8843f4abd6892a8323b8e1f37dd8eb3f0913bea1adc67192e2bc5cdd1eb",
+        "3df9b55699d79dd82707db8bf0aa126d80d28b0d4128fefb64d5593ae1f9c60f"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E100_L3_H06.json.gz",
+      "archive_sha256": "c8ed072ef2563aa10339e02557da353297052083d0dccda6a56cbd0b5ef9d9ce",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E200_L1_H02",
+      "fingerprint": "ce195eabe1337b8fa0c027a3affda89594f0df7ed1400f3f3dcc89562884ed18",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "5176058521053ab725a68c52c107872d76f94c11b506c846065560f893b5c559",
+        "a2e795e476afd2480968c10f7aa7bf73f45d443e83544ed5b34795d3643c8fb4"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E200_L1_H02.json.gz",
+      "archive_sha256": "b937993c7cfab28a94c23790c6322605fcb63067d6547121647efe9fe814e3ee",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E200_L1_H04",
+      "fingerprint": "26ea116586f2b419b04ab190f76c4041a9dc03b2741134dbd8c98743a9d7a85f",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "60b8a21bc58c1dbf2ef1841a3d81856f3122b58f2bd64341cd06435cdc22c16f",
+        "a2e795e476afd2480968c10f7aa7bf73f45d443e83544ed5b34795d3643c8fb4"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E200_L1_H04.json.gz",
+      "archive_sha256": "b4b7b62c87d9f06892a88d85b8adadb046040101d388d06d52a26753adcecb7c",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E200_L1_H06",
+      "fingerprint": "52a2cedd5325bbc95b78842679e9bf65808173b09101e3c7fb5f2709438d4c53",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 1,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "f811faac70d84475f260d4adb824ba7ec2f98a1f9437caac65896348ad233518",
+        "a2e795e476afd2480968c10f7aa7bf73f45d443e83544ed5b34795d3643c8fb4"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E200_L1_H06.json.gz",
+      "archive_sha256": "1c37b23cbd2ca06a7ca891357ca8d419adb60d3a768ac440b98d919999701553",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E200_L2_H02",
+      "fingerprint": "8e9059dec8ef382734e9744f00148e4c5cad4190d3e3b73c0a4fba137f8fe28b",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "d8831168956bd776803995b52e4b9aef8ec10fa919477a3f05b0b653e4803985",
+        "a2e795e476afd2480968c10f7aa7bf73f45d443e83544ed5b34795d3643c8fb4"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E200_L2_H02.json.gz",
+      "archive_sha256": "33bfc6c61594aa3e3e221b8b16853e72d3a0bc9907f759e19e38c6784c546afd",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E200_L2_H04",
+      "fingerprint": "529c39dd47e638a3ea5a0c287b0cdbcfc90816575bdac5d1317820b5e0e22a7d",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "b539395c5de2a1a2f8e7250a7d05a2db8462e7d9c6e90053df4a1dcda416444e",
+        "a2e795e476afd2480968c10f7aa7bf73f45d443e83544ed5b34795d3643c8fb4"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E200_L2_H04.json.gz",
+      "archive_sha256": "eea77d819549f2d3fe7d6ff28564a7c118c5170fa9097a3121833e145851db40",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E200_L2_H06",
+      "fingerprint": "5b7a56744884e8a6c5c10f9fd3a6627760a4396b0736aba141c411dc515796f8",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 2,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "c2e8ab60514c7d9d27874bbf316d5b224e77303856cf4766a99c4106e8ed277f",
+        "a2e795e476afd2480968c10f7aa7bf73f45d443e83544ed5b34795d3643c8fb4"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E200_L2_H06.json.gz",
+      "archive_sha256": "790a073ad9051d044638be5089b69588fb7197f53897ecb9e30008c4a518dea6",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E200_L3_H02",
+      "fingerprint": "3a99282113aa5f8ca359bc03b63e51f32b2a06f414038b451f9ff89844cffca5",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.02,
+      "source_fingerprints": [
+        "f359d19aabd7c749743f95097a48fc888bd3eed103186d3c59669dd50f34615a",
+        "a2e795e476afd2480968c10f7aa7bf73f45d443e83544ed5b34795d3643c8fb4"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E200_L3_H02.json.gz",
+      "archive_sha256": "e4edd875d2833191e5edb093a56b535fa5a15a023be7c85a632553941dc8a357",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E200_L3_H04",
+      "fingerprint": "bd843b758e1e7ac19861a11315a4d8d5c173594c5388f0d5d6abc5b789a39c3d",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.04,
+      "source_fingerprints": [
+        "e973ef42a0a1df9f0a094186d67f025099e8ee52bd3d44fc6ef3ff6c15dd81e9",
+        "a2e795e476afd2480968c10f7aa7bf73f45d443e83544ed5b34795d3643c8fb4"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E200_L3_H04.json.gz",
+      "archive_sha256": "2ce146c044f195167b24c559f98d1fe1d0cf548bbf074838a47cb7e69386f6b7",
+      "status": "rejected"
+    },
+    {
+      "name": "mixed370_BR_ET_E200_L3_H06",
+      "fingerprint": "9d20fc5acfe53bf1ff9b031486cbcef174327759e82e448532d9541512e07a6d",
+      "style": "btc_reversal_eth_trend",
+      "trend_exit_buffer_fraction": 0.02,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.06,
+      "source_fingerprints": [
+        "68d0c8843f4abd6892a8323b8e1f37dd8eb3f0913bea1adc67192e2bc5cdd1eb",
+        "a2e795e476afd2480968c10f7aa7bf73f45d443e83544ed5b34795d3643c8fb4"
+      ],
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BR_ET_E200_L3_H06.json.gz",
+      "archive_sha256": "6b003f7abd6cf015c50a82c13eace643cf7a8830dc3a76c41d38df04f5e66221",
+      "status": "rejected"
+    }
+  ],
+  "summary": {
+    "new_financial_configs": 54,
+    "new_native_backtests": 0,
+    "source_native_components_reused": 24,
+    "source_cost_NAV_hashes_verified": 72,
+    "passed_candidates": 0,
+    "rejected_candidates": 54,
+    "positive_configs_by_cost": {
+      "1": 51,
+      "2": 48,
+      "3": 41
+    },
+    "failed_criteria_counts": {
+      "positive_all_costs": 13,
+      "nine_of_twelve_positive_complete30d_1x_folds": 31,
+      "recent40_positive_all_costs": 42,
+      "recent40_six_of_eight_positive5d_1x_folds": 54,
+      "local3D_positive3_gte60pct": 16,
+      "gross_plus_funding_to_cost1_gte2_5": 7
+    },
+    "rows": {
+      "cost": 162,
+      "full_folds": 2106,
+      "recent40_folds": 1296,
+      "daily_NAV": 60102,
+      "edges": 108,
+      "reference_comparisons": 486
+    },
+    "by_style": {
+      "btc_trend_eth_reversal": {
+        "passed": 0,
+        "rejected": 27,
+        "full_positive_by_cost": {
+          "1": 24,
+          "2": 21,
+          "3": 14
+        },
+        "recent40_positive_by_cost": {
+          "1": 21,
+          "2": 15,
+          "3": 12
+        },
+        "full3_range_pct": [
+          -6.666765137373131,
+          3.9297313675413337
+        ],
+        "recent40_3_range_pct": [
+          -0.7157582823074549,
+          1.1325875827881804
+        ],
+        "recent40_positive_5d_folds1_counts": {
+          "4": 12,
+          "3": 6,
+          "5": 9
+        },
+        "full_positive_complete30d_folds1_counts": {
+          "6": 11,
+          "7": 10,
+          "8": 3,
+          "9": 2,
+          "5": 1
+        },
+        "best_full3": {
+          "name": "mixed370_BT_ER_E050_L3_H06",
+          "return3": 3.9297313675413337,
+          "DD3": 2.720910811767552,
+          "recent40_return3": 0.26293484045514237,
+          "full_positive_folds1": 9,
+          "recent_positive_folds1": 4,
+          "status": "rejected"
+        },
+        "best_recent3": {
+          "name": "mixed370_BT_ER_E200_L3_H02",
+          "return3": 1.1325875827881804,
+          "DD3": 1.5648034444817993,
+          "full_return3": 1.575109611140224,
+          "recent_positive_folds1": 5,
+          "status": "rejected"
+        },
+        "source_daily_return_correlation_ranges_3x": {
+          "source_daily_return_correlation_full370": [
+            -0.5014501782387394,
+            -0.2949779219297878
+          ],
+          "source_daily_return_correlation_recent40": [
+            -0.5450105541709759,
+            0.11794235207821968
+          ]
+        },
+        "failed_criteria_counts": {
+          "positive_all_costs": 13,
+          "nine_of_twelve_positive_complete30d_1x_folds": 25,
+          "recent40_positive_all_costs": 15,
+          "recent40_six_of_eight_positive5d_1x_folds": 27,
+          "local3D_positive3_gte60pct": 16,
+          "gross_plus_funding_to_cost1_gte2_5": 7
+        },
+        "positive3_fraction": 0.5185185185185185,
+        "recent40_positive3_fraction": 0.4444444444444444,
+        "full_sharpe_cliff_edges": 12,
+        "recent40_sharpe_cliff_edges": 6,
+        "higher_full3_than_trend": 0,
+        "higher_recent3_than_trend": 24,
+        "higher_full3_than_reversal": 27,
+        "higher_recent3_than_reversal": 24,
+        "higher_full3_than_hold": 27,
+        "higher_recent3_than_hold": 12
+      },
+      "btc_reversal_eth_trend": {
+        "passed": 0,
+        "rejected": 27,
+        "full_positive_by_cost": {
+          "1": 27,
+          "2": 27,
+          "3": 27
+        },
+        "recent40_positive_by_cost": {
+          "1": 3,
+          "2": 0,
+          "3": 0
+        },
+        "full3_range_pct": [
+          0.02278946933624848,
+          8.634166293308398
+        ],
+        "recent40_3_range_pct": [
+          -1.4327778426605153,
+          -0.29241266809778566
+        ],
+        "recent40_positive_5d_folds1_counts": {
+          "3": 10,
+          "2": 17
+        },
+        "full_positive_complete30d_folds1_counts": {
+          "8": 5,
+          "10": 7,
+          "9": 13,
+          "7": 1,
+          "11": 1
+        },
+        "best_full3": {
+          "name": "mixed370_BR_ET_E200_L1_H04",
+          "return3": 8.634166293308398,
+          "DD3": 2.896344857929789,
+          "recent40_return3": -0.8562725494611567,
+          "full_positive_folds1": 10,
+          "recent_positive_folds1": 3,
+          "status": "rejected"
+        },
+        "best_recent3": {
+          "name": "mixed370_BR_ET_E200_L3_H02",
+          "return3": -0.29241266809778566,
+          "DD3": 2.800680869219896,
+          "full_return3": 5.639536275069701,
+          "recent_positive_folds1": 3,
+          "status": "rejected"
+        },
+        "source_daily_return_correlation_ranges_3x": {
+          "source_daily_return_correlation_full370": [
+            -0.4806508385657765,
+            -0.2779561876878751
+          ],
+          "source_daily_return_correlation_recent40": [
+            -0.4310291217674774,
+            0.12823471046952337
+          ]
+        },
+        "failed_criteria_counts": {
+          "nine_of_twelve_positive_complete30d_1x_folds": 6,
+          "recent40_positive_all_costs": 27,
+          "recent40_six_of_eight_positive5d_1x_folds": 27
+        },
+        "positive3_fraction": 1.0,
+        "recent40_positive3_fraction": 0.0,
+        "full_sharpe_cliff_edges": 10,
+        "recent40_sharpe_cliff_edges": 8,
+        "higher_full3_than_trend": 0,
+        "higher_recent3_than_trend": 3,
+        "higher_full3_than_reversal": 27,
+        "higher_recent3_than_reversal": 5,
+        "higher_full3_than_hold": 27,
+        "higher_recent3_than_hold": 0
+      }
+    }
+  },
+  "next_research": "All54crossassetmixedparents nowactual/finished:BTCtrend31H4+ETHreversal andBTCreversal+ETHtrend28H2;Etrend.5/1/2percent xreversalL1/2/3 xH2/4/6percent. N2000each/raw1/1whole10000banks,total20000/entry4000. Allrejected:fullpositive1/2/3counts51/48/41,buteveryrecent1x5daypositivefoldcount2to5/8below6/8. BTCtrend+ETHrev9cells reach5/8andbestrecent3+1.132588percent,butinsufficient;BTCrev+ETHtrendall27recent3negative-1.432778to-.292413percent. Fullsourcecorrelationsnegativebutrecentcanbepositive,notguaranteeddiversification. Do not rerunexactconfigs,lowergatesorcallseenhistoryindependentholdout. All24nativecomponents and15parentcontrols unchanged;newcompatiblecombinationsmayreusewholefundedNAV,notlinearlyresizefornewquantity. Prefer prospectivelydistinctevidence or a genuinelynewpredeclared economic constraint;keepspecs/gatesbefore anyevaluation.",
+  "original_SMA_next_state": "research/experiments/20261025T145537Z/forward_state.json",
+  "original_SMA_next_state_sha256": "d7d2441fc29226fd08786e275cd31393f27dd8585306b428db43d613b017decc",
+  "next_daily_decision_utc": "2026-10-26T00:01:00Z",
+  "original_SMA_continuity": {
+    "cutoff_utc": "2026-10-25T14:30:00Z",
+    "NAV_points_per_scene": 34014,
+    "cumulative_minutes": 33989,
+    "policy": "ExactFloatSMA65/1percent1500/500,cash/units/desired/cost/trades/fullNAVprefix. BeforeOct26UTC00:01 appendclosedmarks only;terminal2027-03-31 unchanged. Partialrejecteddoesnotcancelplan."
+  },
+  "monitor_compressed_bytes": 2089029,
+  "monitor_current_byte_budget": 3000000,
+  "monitor_historical_rows_unchanged": 5610,
+  "paper10_policy": "btc-eth-2 owns frozen accounts/observations;read only here",
+  "finished_original_bytes_priority": true,
+  "registry_after": {
+    "events": 15572,
+    "IDs": 7682
+  }
+}
