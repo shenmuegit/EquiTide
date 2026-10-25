@@ -1,0 +1,41 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T065405Z/run.py",
+        "freeze"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-25T07:04:34.706559Z",
+      "finished_utc": "2026-10-25T07:04:35.977086Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261025T065405Z/reserve.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T065405Z/run.py\", line 46, in <module>\n    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()\n                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T065405Z/run.py\", line 29, in freeze\n    def freeze():module(R/'freeze_batch.py','current_buffer_freeze').main()\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T065405Z/freeze_batch.py\", line 10, in main\n    if c['role'] not in ['candidate','benchmark']:continue\n       ~^^^^^^^^\nKeyError: 'role'\n",
+      "resolution": "Old report config container included metadata dictionaries without role. Before any plan/reserve/financial computation, added actualdict/role filter;42references verified. Originalinitialexit1/log kept;initial_recovery actualexit0 with42successfulreserves."
+    },
+    {
+      "command": [
+        "python3",
+        "/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-25T07:21:22.332169Z",
+      "finished_utc": "2026-10-25T07:21:34.146041Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261025T065405Z/monitor_check_final.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 115, in <module>\n    main()\n    ~~~~^^\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 108, in main\n    assert len(config_gzip) < 2_000_000, \"compressed monitor configs exceed size limit\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: compressed monitor configs exceed size limit\n",
+      "previous_valid_monitor_pair_restored": true
+    },
+    {
+      "phase": "monitor budget maintenance preflight",
+      "at_utc": "2026-10-25T07:24:50.965922+00:00",
+      "actual_exit_code": 1,
+      "errors": [
+        "KeyError: 'previous_valid_monitor_pair_restored' (field is in failure facts, not saved command receipt)",
+        "KeyError: 'gates_recovery' (phase addition did not run after preflight failure)"
+      ],
+      "resolution": "No shared file mutation occurred. Verified actual feed bytes equal base Git blobs, then prepared maintenance and ran recovery sequentially. Financial reports and registry unchanged."
+    }
+  ]
+}
