@@ -1,0 +1,76 @@
+{
+  "kind": "combination",
+  "family": "two-asset-passive-perpetual-momentum-sleeves",
+  "name": "perp_notional_pair_B31N1000H04E200_E28N3000H02E200",
+  "logic": {
+    "allocation": "Raw1/1=one whole10000USDT BTC nativebook plus one whole10000USDT ETHbook,total20000. SourcefixedentryN pairs1000/3000,2000/2000,3000/1000 sum4000initialnominal20percent combinedcapital. Eachbookfunded10000 independently;absoluteNAV addedonce. Do not normalize/scale existingNAV,transfer collateral/reinvest/rebalance orcrossmargin.",
+    "exposure": "BTC31/ETH28 eachsourceN andallcost/funding/lot paths actually simulated previously. Static Npair changes orderexposure butbothcapitalbanks unchanged. Actualgap/lot causesnotionalratio differences;sum4000 is raw priorclose entrybudget,not guaranteed livegross. No pooledcapacity/TCA claim.",
+    "reuse": "Recover source fullNAV from savedimmutable signedcash/quantity/entry state segments and actual axis prices,verify every originalNAVSHA. Never call source simulate,trade,funding or signal functions;no old result/status rewriting.",
+    "alignment": "Unionof source (actualns,eventtype) keys;preserveeventorder atsametime. Atmissingotherassetkey carry its last completed sourceNAVobservation,never interpolate or lookahead. Relativekey=(ts-commonstart)*16+eventcode avoids epochint64overflow.",
+    "costs": "Source1/2/3xexecutionandnegativefundingoutflowstress inherited in actualmatchedcostpaths;positivefundingincomeunscaled. Sum actual fees/funding once,no portfolio turnover fees since no new trade.",
+    "risk": "Recompute return/Sharpe/Calmar/wholeOOSDDfrom combinedfullcurve,not average components. Check both originalindependentmarginproxies separately;never offset a failed sleeve with othercash. MixedsampledNAV nottruetickmarkrisk."
+  },
+  "parameters": {
+    "initial_capital_usdt": 20000,
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "component_capitals_usdt": [
+      10000,
+      10000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      1000,
+      3000
+    ],
+    "BTC_lookback_days": 31,
+    "BTC_return_hurdle": 0.04,
+    "ETH_lookback_days": 28,
+    "ETH_return_hurdle": 0.02,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-09-14T00:01:00Z",
+    "walk_forward_folds": 11,
+    "walk_forward_test_days": 30,
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "source_rules_and_costs_sha256": "35cdbd842fe220b794554fe197181c1844b5f01ef79115a1d4713db6dee74497",
+    "BTC_exit_buffer_fraction": 0.02,
+    "ETH_exit_buffer_fraction": 0.02,
+    "BTC_fixed_entry_notional_usdt": 1000,
+    "ETH_fixed_entry_notional_usdt": 3000
+  },
+  "components": [
+    {
+      "fingerprint": "8b3afe454c728d49afe961bcf38135ee271e322c2e2800a2820ab1df8a9c8fef",
+      "weight": 1
+    },
+    {
+      "fingerprint": "0b8627697a262dda437b472fbd13d9d3e4fc94c6ffe90f1098ae3f0ffc90048e",
+      "weight": 1
+    }
+  ],
+  "validation_plan": "research/experiments/20261025T025205Z/plan.json",
+  "sources": [
+    {
+      "url": "https://www.aqr.com/Insights/Research/Journal-Article/Time-Series-Momentum",
+      "access_date": "2026-10-24",
+      "scope": "Traditional2012multi-futures background reused from earlier read;not requested thisround,not crypto replication."
+    },
+    {
+      "url": "https://www.binance.com/en/support/faq/detail/360033525031",
+      "access_date": "2026-10-25",
+      "scope": "Actualposition fundingcashflows;stored realizedrates onlyex-post accounting,not signals."
+    },
+    {
+      "url": "https://www.binance.com/en/support/faq/detail/360033525271",
+      "access_date": "2026-10-25",
+      "scope": "MarkvsLast andcollateralrisk;sourcehourlymark/1percentmarginproxy nottruetickliquidation."
+    }
+  ]
+}
