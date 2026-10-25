@@ -1,0 +1,29 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/run.py",
+        "freeze"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-25T17:13:03.718776Z",
+      "finished_utc": "2026-10-25T17:13:05.723125Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261025T165608Z/reserve.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/run.py\", line 62, in <module>\n    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()\n                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/run.py\", line 42, in freeze\n    def freeze():module(R/'freeze_batch.py','new_notional_freeze').main()\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/freeze_batch.py\", line 21, in main\n    if c['role']=='benchmark' and c['BTC_fixed_entry_notional_usdt'] in NEWN:holds['parent_B'+str(c['BTC_fixed_entry_notional_usdt'])]=ref(c,'hold','parent')\n                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/freeze_batch.py\", line 10, in ref\n    folder=folders[key];fp=c['fingerprint'];rec=records[fp];assert rec['result_available'] is True and rec['status']==c['status'] and rec['report_sha256']==sha(folder/'report.json') and sha(ROOT/c['archive'])==c['archive_sha256'];return {**{p:c[p] for p in ['name','fingerprint','asset','role','spec','archive','archive_sha256']},'scope':scope,'report':rel(folder/'report.json'),'report_sha256':sha(folder/'report.json'),'spec_sha256':sha(ROOT/c['spec']),'original_status':c['status'],'NAV_sha256_by_cost':{k:z['NAV_sha256_f64le'] for k,z in c['scenes'].items()}}\n                                                                                                                                                                                                                                                   ~^^^\nKeyError: 'asset'\n"
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/summarize.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-25T17:17:05.579834Z",
+      "finished_utc": "2026-10-25T17:17:07.092714Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261025T165608Z/summary.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/summarize.py\", line 58, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/summarize.py\", line 24, in main\n    a=y['scenes'][k];comp.append({**meta,'cost_multiplier':int(k),'reference_kind':kind,'reference_name':y['name'],'reference_fingerprint':y['fingerprint'],'reference_original_status':y['status'],'new_return_pct':z['net_return_pct'],'reference_return_pct':a['net_return_pct'],'return_delta_pp':z['net_return_pct']-a['net_return_pct'],'DD_delta_pp':z['max_drawdown_pct']-a['max_drawdown_pct'],'recent40_return_delta_pp':z['recent40']['net_return_pct']-a['recent40']['net_return_pct'],'new_NAV_sha256':z['NAV_sha256_f64le'],'reference_NAV_sha256':a['NAV_sha256_f64le'],'cash_analytic_return_pct':0})\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ~^^^^^^^^^^^^\nKeyError: 'recent40'\n"
+    }
+  ]
+}

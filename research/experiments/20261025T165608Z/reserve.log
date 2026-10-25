@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/run.py", line 62, in <module>
+    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()
+                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/run.py", line 42, in freeze
+    def freeze():module(R/'freeze_batch.py','new_notional_freeze').main()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/freeze_batch.py", line 21, in main
+    if c['role']=='benchmark' and c['BTC_fixed_entry_notional_usdt'] in NEWN:holds['parent_B'+str(c['BTC_fixed_entry_notional_usdt'])]=ref(c,'hold','parent')
+                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/freeze_batch.py", line 10, in ref
+    folder=folders[key];fp=c['fingerprint'];rec=records[fp];assert rec['result_available'] is True and rec['status']==c['status'] and rec['report_sha256']==sha(folder/'report.json') and sha(ROOT/c['archive'])==c['archive_sha256'];return {**{p:c[p] for p in ['name','fingerprint','asset','role','spec','archive','archive_sha256']},'scope':scope,'report':rel(folder/'report.json'),'report_sha256':sha(folder/'report.json'),'spec_sha256':sha(ROOT/c['spec']),'original_status':c['status'],'NAV_sha256_by_cost':{k:z['NAV_sha256_f64le'] for k,z in c['scenes'].items()}}
+                                                                                                                                                                                                                                                   ~^^^
+KeyError: 'asset'

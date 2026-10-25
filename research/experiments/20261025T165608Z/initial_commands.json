@@ -1,0 +1,39 @@
+[
+  {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/check_notional.py"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-10-25T17:13:03.182406Z",
+    "finished_utc": "2026-10-25T17:13:03.438897Z",
+    "exit_code": 0,
+    "log": "research/experiments/20261025T165608Z/notional_engineering.log",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/check_alignment.py"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-10-25T17:13:03.439488Z",
+    "finished_utc": "2026-10-25T17:13:03.718237Z",
+    "exit_code": 0,
+    "log": "research/experiments/20261025T165608Z/alignment.log",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/run.py",
+      "freeze"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-10-25T17:13:03.718776Z",
+    "finished_utc": "2026-10-25T17:13:05.723125Z",
+    "exit_code": 1,
+    "log": "research/experiments/20261025T165608Z/reserve.log",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/run.py\", line 62, in <module>\n    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()\n                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/run.py\", line 42, in freeze\n    def freeze():module(R/'freeze_batch.py','new_notional_freeze').main()\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/freeze_batch.py\", line 21, in main\n    if c['role']=='benchmark' and c['BTC_fixed_entry_notional_usdt'] in NEWN:holds['parent_B'+str(c['BTC_fixed_entry_notional_usdt'])]=ref(c,'hold','parent')\n                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T165608Z/freeze_batch.py\", line 10, in ref\n    folder=folders[key];fp=c['fingerprint'];rec=records[fp];assert rec['result_available'] is True and rec['status']==c['status'] and rec['report_sha256']==sha(folder/'report.json') and sha(ROOT/c['archive'])==c['archive_sha256'];return {**{p:c[p] for p in ['name','fingerprint','asset','role','spec','archive','archive_sha256']},'scope':scope,'report':rel(folder/'report.json'),'report_sha256':sha(folder/'report.json'),'spec_sha256':sha(ROOT/c['spec']),'original_status':c['status'],'NAV_sha256_by_cost':{k:z['NAV_sha256_f64le'] for k,z in c['scenes'].items()}}\n                                                                                                                                                                                                                                                   ~^^^\nKeyError: 'asset'\n"
+  }
+]
