@@ -1,0 +1,1152 @@
+{
+  "branch_policy": "main only locally/remotely;no branches or branch worktrees",
+  "report": "research/experiments/20261025T085436Z/report.json",
+  "report_sha256": "d0bb4fbbc1f4b7e7018f38b4024f1e70f57c93528b067267441439bb4b240103",
+  "new_finished_financial_configs": 30,
+  "new_candidates": 27,
+  "new_matched_holds": 3,
+  "candidate_passed": 0,
+  "candidate_rejected": 27,
+  "frozen_grid": {
+    "BTC_lookback_days": 31,
+    "ETH_lookback_days": 28,
+    "BTC_return_hurdle": 0.04,
+    "ETH_return_hurdle": 0.02,
+    "BTC_fixed_entry_notional_usdt": [
+      1000,
+      2000,
+      3000
+    ],
+    "ETH_fixed_entry_notional_rule": "4000-BTCN",
+    "BTC_exit_buffer_fraction": [
+      0.005,
+      0.01,
+      0.02
+    ],
+    "ETH_exit_buffer_fraction": [
+      0.005,
+      0.01,
+      0.02
+    ],
+    "new_parent_candidates": 27,
+    "new_parent_holds": 3,
+    "new_component_backtests": 0,
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ]
+  },
+  "time_boundaries": {
+    "input_start_utc": "2025-09-16T00:00:00Z",
+    "input_end_exclusive_utc": "2026-10-25T00:00:00Z",
+    "oos_start_utc": "2025-10-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-10-24T00:01:00Z",
+    "context_days": 33,
+    "nominal_warmup_days": 30,
+    "initial_embargo_days": 3,
+    "continuous_oos_days": 370,
+    "walk_forward_folds": 13,
+    "complete_30day_folds": 12,
+    "tail_fold_days": 10,
+    "label_purge": "No fittedlabels/model;not applicable. Fixed rules use only priorcompleteprices,actual state carries across allfolds."
+  },
+  "normalized_inputs": {
+    "BTC": [
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet",
+        "sha256": "97be656cf441024101417476f8338f4d739879d3ee39bfbf2a89cf1a287b726c",
+        "bytes": 32143848,
+        "rows": 581760
+      },
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet",
+        "sha256": "80cd98d12fd73cb8bfcc7a4d4af65d737347c9d9b53d82ae1698a1aa15bd71ce",
+        "bytes": 494964,
+        "rows": 9696
+      },
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet",
+        "sha256": "b27e8f9a078a50a9d34c034870790321e43b5d7dff74f2c2a7d0b69f3c276006",
+        "bytes": 34756,
+        "rows": 1212
+      },
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet",
+        "sha256": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99",
+        "bytes": 1892,
+        "rows": 1
+      }
+    ],
+    "ETH": [
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet",
+        "sha256": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+        "bytes": 29255495,
+        "rows": 581760
+      },
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet",
+        "sha256": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+        "bytes": 462199,
+        "rows": 9696
+      },
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet",
+        "sha256": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+        "bytes": 33894,
+        "rows": 1212
+      },
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet",
+        "sha256": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6",
+        "bytes": 1892,
+        "rows": 1
+      }
+    ]
+  },
+  "input_provenance_manifest": "research/experiments/20261025T065405Z/extended_data_manifest.json",
+  "input_provenance_manifest_sha256": "c7f23dc091a19e9eebd90778b648d8330e7d193bdd07d4b4011cb02373235a76",
+  "reusable_native_components": {
+    "1f291616658c94482c0847e1d4ecd9c010bff2f559030dd2422974eff33e0c6c": {
+      "name": "extended370_BTC_L31_H04_E050_N1000",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 31,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0.005,
+      "fixed_entry_notional_usdt": 1000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E050_N1000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L31_H04_E050_N1000.json.gz",
+      "archive_sha256": "006e90f7fb9fbd17f17b5eaf1e804a38697cad09f03d9b13ced4d700af0f8ee8",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "99b276ee025beb0a3edc343343c14f01937a798b65f9d3e9d54c2f86af69bb90",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "2bbfe743783ebe63959960c0230681adddd4938eeb8447f8a4afabe3eaa61f03",
+        "2": "ea4475747fbd8a3a63b5a05defed2b3aaad068ff5eacd46630c4d442c88715f4",
+        "3": "18affde48c31a16a93de5288a561e0f08953d7372c80768b30c42bea436cc08d"
+      }
+    },
+    "2122c03af949f66e9ab48802b8813121b9a94f1e0a5844a712c800a026a2fd4d": {
+      "name": "extended370_BTC_L31_H04_E100_N1000",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 31,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0.01,
+      "fixed_entry_notional_usdt": 1000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E100_N1000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L31_H04_E100_N1000.json.gz",
+      "archive_sha256": "688145e111c466ac990f514a15b883d4be4769404a09d9f99141d43f27201b95",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "6a425e3e4a6c6e6aae9a3666cd4bbfe2e05791d8f1c0210629cc5a6017dd62c1",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "d6bb76457394d546d7d392ae43af5a22b951058fe797b45143ad34adf3e7dc70",
+        "2": "79087a69f08174298b2b2c773741fec71446e7ac08774194040a67b30be65c0f",
+        "3": "f40af7e3d3cf693bafc847c8536d55538e3c481f69fd710315c1a13a92b24eab"
+      }
+    },
+    "dd55e851ba39ba510746ef98af3a5507c0fa4ff4c3f9a06c99ab34ae151dc4dd": {
+      "name": "extended370_BTC_L31_H04_E200_N1000",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 31,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0.02,
+      "fixed_entry_notional_usdt": 1000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E200_N1000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L31_H04_E200_N1000.json.gz",
+      "archive_sha256": "63608636690796785372a79bd09f12e7224e1e31a38ef21fbca7bebc6e4dfb14",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "0e89feb90fa84b5f8f31d69c9058b27415c6a75be672bb673f049b2ea346bd8a",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "a56d6939299cf7d8a214612c3a3b528f9619ef73738d972702fbb2b6f33976b4",
+        "2": "2d6b63b9f5cf85c2ee8afa81e705e91e35524c0ce12e0e3c96cda7a5c2e79b63",
+        "3": "e712818e3794f342ff60d45dcfe763950d954674cd528c035dde60243cfd3fb4"
+      }
+    },
+    "2badfab2738aebf182b6cf3790a59e42de17ef3ec4bcc45ad2ddcb69615f4470": {
+      "name": "extended370_BTC_L31_H04_E050_N2000",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 31,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0.005,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E050_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L31_H04_E050_N2000.json.gz",
+      "archive_sha256": "2b1c9152963542f56695ec8ef64cf2664696e81379dbc704246b268e603dbc9b",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "d0e77da32337b83feebb90e1ec42fb16e9de9bd3fe3e270d260e9d4d500cc811",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "ac7b819d027203d7b2d28f82d2cfa6d882094881ab1ef843842518dbdba3824a",
+        "2": "0b6ac4c0d272414278f653c17f08f146db9110e1fc959c255ed4e925bb3b4e60",
+        "3": "2883d014ef8ef6c0287ae046d778748fb76c52ca4eaa50b89707b500227ddb1f"
+      }
+    },
+    "2c1811fec6042d63c3260f734e6e1d6482d509c840f9d10046d13c77536c4ff0": {
+      "name": "extended370_BTC_L31_H04_E100_N2000",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 31,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0.01,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E100_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L31_H04_E100_N2000.json.gz",
+      "archive_sha256": "67166d200465f596bbe25dab947469d1bc419c8a66430341fda867f37971e600",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "ca69439a8fef554cca943008630c1da2900a473e4c8a9879b6db922647541b43",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "b978fceaab27b8329b6ccc454601c71ee268a461922eef4d27af7a3d5b3b2c50",
+        "2": "e9894b53020d97e24b68ddadfd5da60e22fc13cefb0d837d1e4addbf14e10a17",
+        "3": "258bffb23b90b1ab0655aae838e37231eb34f0596d68ebae25fd00fad8e4c4bd"
+      }
+    },
+    "d702b876752122be3e8ec18dbc0ad2a204a086012354561c8f99645974110421": {
+      "name": "extended370_BTC_L31_H04_E200_N2000",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 31,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0.02,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E200_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L31_H04_E200_N2000.json.gz",
+      "archive_sha256": "e908d9046ea5bf7d4de4e631a77cb166672a9f36a90a27944953a6da8f1cee1b",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "226d44c622b0d8148c8fe589485ba2a5a87b0044c756d25ae2610ac537fb68ba",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "475eb250d5c26ff78e5c2130e823d02e1a9ffe65420eca9c2e6d5f3971a6d95e",
+        "2": "f9f77a7c89d9618ea3dd596ac5695aea5d14935fda0e93be1de4546b607e2550",
+        "3": "04a321bf4a9807322f0bb48af19a6799b3f3c7373ba80ff7af5e80f19f42e163"
+      }
+    },
+    "fa67e5ecd7151b0992ff9bf6e20a5e89b37d9ce4bdb59d85bfca7f0f70e79eb7": {
+      "name": "extended370_BTC_L31_H04_E050_N3000",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 31,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0.005,
+      "fixed_entry_notional_usdt": 3000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E050_N3000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L31_H04_E050_N3000.json.gz",
+      "archive_sha256": "cc91e14f423f429e76608d292a5c93e99af60129eb8372d83c77a1344bf20ad3",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "cb980c9a3266583a689d6bd02f372824a4e12c3c01f494ba8658d2f7fee32fea",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "992c20fcb8138b7ccaf68b20e60c90961908d71590aa1c01b5f6a05b6ef702c6",
+        "2": "4a6d43407dd78402f9942001dd2eb00012a4d1cb0e36d00ac2d4b5f0371def48",
+        "3": "46375d71ef9ab9d49e010e1712cb4b7246027c6f98b2d15383d739181ad6b4b0"
+      }
+    },
+    "daec96ac51105f4d830b642b31a2d22610f52e066b84adcc3f24f810f82f5228": {
+      "name": "extended370_BTC_L31_H04_E100_N3000",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 31,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0.01,
+      "fixed_entry_notional_usdt": 3000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E100_N3000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L31_H04_E100_N3000.json.gz",
+      "archive_sha256": "63f567e5b3cce5320034f3e0ccb52c9078840e65e94624852c0d4f315646d44e",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "95a51472e8af9f9c23bc2a7a27db001f6f4a125ed6a8327fe8f74217de4039d5",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "01ade3f5cceca082dbfa9d9f2be54bc346a1285e2e73dbffb2d03e8bfa4eae6d",
+        "2": "857d15d8183c6796dffe47fb79722c04f456c077784b50158b16b745e54d7a9d",
+        "3": "99fc9e9132ddc511a1f81216ddfa9220fa378ab979ed177dd0051c2dfe0ce6c1"
+      }
+    },
+    "e1a31cff43050114821033afd400186c3134af44af786e837377d8d08fa864ca": {
+      "name": "extended370_BTC_L31_H04_E200_N3000",
+      "asset": "BTC",
+      "role": "candidate",
+      "lookback_days": 31,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0.02,
+      "fixed_entry_notional_usdt": 3000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E200_N3000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L31_H04_E200_N3000.json.gz",
+      "archive_sha256": "e79fce1a2584985a6c3c55364756bf8db2a1d3cf47498c8a8aad7b6e2be25d4c",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "a5efb21bab7cc5a936199247006fcf7e492de9c38d836a257a94e9fb023e5341",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "4df59767605a5120767bc1253e43a2c3f837be0b1028e77c008b31dd5e07a643",
+        "2": "93e32f22bdff7ce30e3620ab47dbe2164add244db1218efb3e56853d35e7c2e5",
+        "3": "fd3cac4ae3c90d99dd960b1f8014ed1bbf6c31bc5bf823bbecef1c82b339424d"
+      }
+    },
+    "96b81385e5702cb53d8893206ab1a65ae100a6e26e54bd8bba4b924a9521f128": {
+      "name": "extended370_ETH_L28_H02_E050_N1000",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 28,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0.005,
+      "fixed_entry_notional_usdt": 1000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L28_H02_E050_N1000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L28_H02_E050_N1000.json.gz",
+      "archive_sha256": "3cfe64d004d265b4cd8f47d0ce756b575a4bf3afd0940957344485ff59f4025b",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "40dc16833aad21e81792abf14124e271a40ba3eb149d6e20ecd33f42b008849b",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "2e31810a9e85dd2ccc4224f4121e4161792e90c7b52b3afdbbd80642e72648e3",
+        "2": "49830818b8f996c77979a82441e469003ee9847d8812c3fe2dd3f91a56fe5f66",
+        "3": "59af27bef9ed5f8784d28299ce4716e279b934ed0d0c4280060afcc170c6edd8"
+      }
+    },
+    "918da0f83b2daba1798d34bbb215761abc8a52f4da6aff2e33a1f304168756d3": {
+      "name": "extended370_ETH_L28_H02_E100_N1000",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 28,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0.01,
+      "fixed_entry_notional_usdt": 1000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L28_H02_E100_N1000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L28_H02_E100_N1000.json.gz",
+      "archive_sha256": "3955f6eb451118f70170cbc765ddaf5d4760b5c6000f8b23258995ef0df11d80",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "dd2f8c6e226c2d13ad30e6deebe9fe57e462a03abdd7a4a68c96bd432f6a8865",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "bf6bf0a3ad945427dfa6323785296390069237e206a1c614d9a090e020dec13c",
+        "2": "22caa6f98a8711c36221f077f893f15512f2bc3dcddbf4bc3673917f5b656c0c",
+        "3": "ebe14c5d0584de7d816ff2a82b45e6ebd5efe3f889584eb2ca06202fc5b8e0eb"
+      }
+    },
+    "059926291aaf65074b22bf4495425c0a5f2e483b146d7b3493922d3acb77a661": {
+      "name": "extended370_ETH_L28_H02_E200_N1000",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 28,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0.02,
+      "fixed_entry_notional_usdt": 1000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L28_H02_E200_N1000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L28_H02_E200_N1000.json.gz",
+      "archive_sha256": "949708568f4be50a2318f717e7afe61a0b09d4aaa25257591ad9107b872faa37",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "d66d0853bfbe62b231b74c607b185f6700dda9a3f782dc80dac860073122aeb9",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "ce36c1fe3b536a40605903a7bdfaefa9995d4e2a21896d61da10de738a430135",
+        "2": "13e7df4728a43f9081a7bb1870a6a2dee1a188ddede2e7fd77544b19c50947df",
+        "3": "8880b1be188eff59f5c16e8beefd4345fecc94bcaae19ec5a61a7df31593b742"
+      }
+    },
+    "a892598f8908ea6d9b2ac310fbd8a16be783e2095555aaf6aa7e25389ed8162a": {
+      "name": "extended370_ETH_L28_H02_E050_N2000",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 28,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0.005,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L28_H02_E050_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L28_H02_E050_N2000.json.gz",
+      "archive_sha256": "24ed976950f2954e0ff091496b4fb0362b6df1b7c8d26621d10d46b048c177b7",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "b2095d7174f70a5c0dce385f46456076e3e7534d1849b16689fb3192c0af42a4",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "e93f4ffd9d991eef6384a5b9c250fff63ddb7e5af8f6d3e0b18018b94b8098a2",
+        "2": "29bf67ca296210225b6b2b60be20eca202be0090bb750b43abee479f120e77ba",
+        "3": "01d34b43483fe6910e2bb3828b5a9581edaf2fc9dafa4eabaf4f953de2968a18"
+      }
+    },
+    "3df9b55699d79dd82707db8bf0aa126d80d28b0d4128fefb64d5593ae1f9c60f": {
+      "name": "extended370_ETH_L28_H02_E100_N2000",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 28,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0.01,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L28_H02_E100_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L28_H02_E100_N2000.json.gz",
+      "archive_sha256": "c977f72da799ce143e40c0dd57d63c12a09d81d1b6c0369380dbfe4734ddfdf2",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "f786938c9efffd81deb5913ebdb080901c38ae4cd3a0085141284cbf50035583",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "2071d7ac2515f6519e6d1a691a4042564b7a59b08f29d1d4dd903f03e5b20d38",
+        "2": "81621a2fd5a0bea00baa1c91115bb1e260f5bd279164f11c122c0ba7276280b4",
+        "3": "70e385ae92d34bc413485dffecf3e3f314dcec0fcfa931a1839d3458a4aa476b"
+      }
+    },
+    "a2e795e476afd2480968c10f7aa7bf73f45d443e83544ed5b34795d3643c8fb4": {
+      "name": "extended370_ETH_L28_H02_E200_N2000",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 28,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0.02,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L28_H02_E200_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L28_H02_E200_N2000.json.gz",
+      "archive_sha256": "fff03c1ae7db756e73606dc5d8792ad4446f39d99afeb2c0258ccfb328b40680",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "392dc1de65fb5391ebee5cc43837e63f4132d201ca21c3bfea250edda49f682e",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "f0da9f11102fc34bde6264b53b7b1f7a3dea60efc32d8bb1be87300004c5bb5d",
+        "2": "237bdae358ba4520a2777f5cd4fe47f65bf811aba07c149d7182a10131315ea4",
+        "3": "b47d8780a49c5e3382ca7afc1f7a55f6eff084f60b0af3cab326d49740510763"
+      }
+    },
+    "1f3b8a65b77ff4790203bfb65e13da7c9b793441af3b076b99aa9b0e309731fa": {
+      "name": "extended370_ETH_L28_H02_E050_N3000",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 28,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0.005,
+      "fixed_entry_notional_usdt": 3000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L28_H02_E050_N3000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L28_H02_E050_N3000.json.gz",
+      "archive_sha256": "b66fdd3b1cffb7ed5a25b2b05cfbb7b828f3c19f7741e2f8ee9a80b8cd90669d",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "f4cff3dda583600c7a51bb203cbda5f067ade1a3df3151de560fabb306bfa5d9",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "b902b550a59dfed695a123bbe9759f8928262f1e3521ef070362f989a4a77888",
+        "2": "20be72179d9698c37b3d5669ae96cc3ce547c39ffb7559354f663402096d154c",
+        "3": "e5454429b749ac058b3f42716bbd76d001ca5fe894001c86fd87d6596ad09ab5"
+      }
+    },
+    "124bb1cc8a4ea378b4f9f386bbf8dc8d57c493ab6cdc5e4acdc2d8e917217258": {
+      "name": "extended370_ETH_L28_H02_E100_N3000",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 28,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0.01,
+      "fixed_entry_notional_usdt": 3000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L28_H02_E100_N3000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L28_H02_E100_N3000.json.gz",
+      "archive_sha256": "93852a77ac51d390ab79bb3a1e2525c1b8f0cf21e3d586ecbb21939513cddffe",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "1aca30514531b862f6cfa7f86e85fe321f02e58213b0cf9476614b503e15d51e",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "2daa3e18b81f8b2ca5854375998eef4c7757b89bf5d48f624c79156ea96812ff",
+        "2": "6e9a073c78fbbf406e8dd0818269cfe16a07f220f40e4ddefc25a6a890477223",
+        "3": "705507fae6079eff7b25f81e81f102ded43fd7813a221eeadb575f2d07e8a361"
+      }
+    },
+    "6119c469ce7f54449c19b58869161cbd6ab889684855143289fd4da0987c1c90": {
+      "name": "extended370_ETH_L28_H02_E200_N3000",
+      "asset": "ETH",
+      "role": "candidate",
+      "lookback_days": 28,
+      "return_hurdle": 0.02,
+      "exit_buffer_fraction": 0.02,
+      "fixed_entry_notional_usdt": 3000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L28_H02_E200_N3000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L28_H02_E200_N3000.json.gz",
+      "archive_sha256": "9db038493a4bf3bda9f0f9eeec9b7c557f27463ee6c4c4337af73a8fd720a3ba",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "a96142fb401fabd808b04f7e336ddfcae5fb5729958470cffb2dd79235c8920f",
+      "original_status": "passed",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "b9cc636359fe9fe7f1e5a005ac0d87f70a8f4119c72be25028ffe2937594001f",
+        "2": "0a53946c4a3f5fa8e4bc561de77a4293e6d19362cc8dda325177ca9856337be2",
+        "3": "46efbcb62980312588719857d7efa5e32b5d0edd31f9076408d2e0ebacde24cb"
+      }
+    },
+    "94180a4d2b7392090f52c069130bc60c7157b90c02ab7f46a853d23bf705481c": {
+      "name": "extended370_BTC_L0_H00_E000_N1000",
+      "asset": "BTC",
+      "role": "benchmark",
+      "lookback_days": 0,
+      "return_hurdle": 0,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 1000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L0_H00_E000_N1000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L0_H00_E000_N1000.json.gz",
+      "archive_sha256": "e84a527f2ca3938e59086203ab1d611b7935052a45bed96604dcc8e2544e0b8e",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "58361da3f6ae6935c40b65bcecb06d055b96d50a30bcecc4726167c1d4112de0",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "56c7406b8c9d88ddf73531056533f05211a5198c8aadaf2b496917b5b270ca89",
+        "2": "0620ee2328b9cf3929c5759a57cb50c4714f0bb840b860818cc230d87dc4be17",
+        "3": "348fc31bf574b6020f4c9aaef6f11cdf8f74bb3310afd78ac7db4a0dbaeae5c1"
+      }
+    },
+    "c31aabeccae5e90da96853e94bde989f2aac7fb3df207cb1b566d8cb07593698": {
+      "name": "extended370_BTC_L0_H00_E000_N2000",
+      "asset": "BTC",
+      "role": "benchmark",
+      "lookback_days": 0,
+      "return_hurdle": 0,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L0_H00_E000_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L0_H00_E000_N2000.json.gz",
+      "archive_sha256": "1555cff72e7357a2aafa08bb740a2bf173a012ed667ced4d44476837dc45a3f2",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "c16dc60ff36137547a711986a7ba5fb7e889db6f74f4e98664736558b4159ddf",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "842814b33f0713e00e9b25e31b045068905cf2df74eec4caf64a155882d63032",
+        "2": "aa484ee233ccdf4d8e0f4e0851db75ac5f4d91b4e42975425deb9d6f74fa1491",
+        "3": "68852590461673908bffe7c6b719876296edce1a182ed116876bc785dbf8ec62"
+      }
+    },
+    "136c811d009a91b1ec22ff4531394eea78b10904be7d8b91803080f661c19ad4": {
+      "name": "extended370_BTC_L0_H00_E000_N3000",
+      "asset": "BTC",
+      "role": "benchmark",
+      "lookback_days": 0,
+      "return_hurdle": 0,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 3000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L0_H00_E000_N3000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L0_H00_E000_N3000.json.gz",
+      "archive_sha256": "c8ce3631d9deda109094da1786b023e3bd79ba1d3366986e7c29de41d831d0a0",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "99b721f91222138d1439367b928272ee4635de206b01d1a2e8c4dab165eaab8d",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "548390134fb395f67155579b1a14b9544792554e766fc86dcf868cc2a7ea4d5b",
+        "2": "7fffe733b16b0e48b5b5df1315482f4fd082861444fd797635c859cd6882ab26",
+        "3": "aba3208592cf1dced8ea959355c02a6be9a928b0f72520099023f7d2e4596042"
+      }
+    },
+    "98dc2538c0915fb2e8ee42710d9fc352930fbd20fbcf66e4f4c155d133e8ff7a": {
+      "name": "extended370_ETH_L0_H00_E000_N1000",
+      "asset": "ETH",
+      "role": "benchmark",
+      "lookback_days": 0,
+      "return_hurdle": 0,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 1000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L0_H00_E000_N1000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L0_H00_E000_N1000.json.gz",
+      "archive_sha256": "8b2307d7aeeddec5fb699ba90b6704f8d9512cdabf7e3ca136ad625f43d3389f",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "d27ef489f6d778e76ed8060376b1c172e87d58e51f62ea7876014202893e9271",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "aed166ef95ab6456fced772320808f66809db0cc22970a976fa7b5652dc68118",
+        "2": "18aa6f82185ad8953b19838226ca62a8d908c4a85f6c28ddc33614832ffeddee",
+        "3": "938ad3c627f3f3943d16361d27967850f3cc39bb61abd6d0fcf722f7cc71eea6"
+      }
+    },
+    "cdf263cff49d32d681b465cfd64ccfde6e5c01257fbda45ab13a29a85094469b": {
+      "name": "extended370_ETH_L0_H00_E000_N2000",
+      "asset": "ETH",
+      "role": "benchmark",
+      "lookback_days": 0,
+      "return_hurdle": 0,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 2000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L0_H00_E000_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L0_H00_E000_N2000.json.gz",
+      "archive_sha256": "1fb47f08d9f9be7128b7aa0121948c938973463f7fea970765dd1437ba419e09",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "160ac1b3d629da8688bf5d5cf8c9ce60e4070ff5fb70e537a062f7be514aebf5",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "1851a43feb32a02181a1de02d14a43ca1f3a88c6365d3b1e7b7c9c0292b9055a",
+        "2": "41ced0857a4cb6af8954ecfa83dcb709bd3a19be7fda604d705c26162ca7bc2b",
+        "3": "06bcf042cab5b7577e408a2e65b8e35f242484e4cc3370650c86d3448bdf0dd3"
+      }
+    },
+    "11940b42d9d4889e36e986bcdf3c41c83a51965402854a5d9f5ea4275a749f83": {
+      "name": "extended370_ETH_L0_H00_E000_N3000",
+      "asset": "ETH",
+      "role": "benchmark",
+      "lookback_days": 0,
+      "return_hurdle": 0,
+      "exit_buffer_fraction": 0,
+      "fixed_entry_notional_usdt": 3000,
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L0_H00_E000_N3000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L0_H00_E000_N3000.json.gz",
+      "archive_sha256": "7f87dfde2a752ed7171849e856e860bd1b232aa67c788331927d8aec5fa96b81",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "9d8e23481318c8f755cec2c3d1c926228609ca7d69efac96f47a5d2a504049f3",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "db5e88fb9f411701b447f33f191e5ccd389046d92c8d1411a62958786bbb0b7c",
+        "2": "c0a6b585b818d7bec63de4b6b74242936b68fc05dd432882b64b0206c11a157e",
+        "3": "c86c069b90960dede6a5e1d76a052cc403a3bc83e85a3f8561ad173061e47f87"
+      }
+    }
+  },
+  "new_parent_results": [
+    {
+      "name": "parent370_B31N1000H04E050_E28N3000H02E050",
+      "fingerprint": "d3d63d8e2b9fa2e02d2f12d3843f92614a08f98e7edfda5b393635be8d7ee257",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N1000H04E050_E28N3000H02E050.json.gz",
+      "archive_sha256": "825d635a462d1c8b0ef938425571b72b32fb84ae83842d4a8f2da8c575d1c457",
+      "status": "rejected",
+      "source_fingerprints": [
+        "1f291616658c94482c0847e1d4ecd9c010bff2f559030dd2422974eff33e0c6c",
+        "1f3b8a65b77ff4790203bfb65e13da7c9b793441af3b076b99aa9b0e309731fa"
+      ]
+    },
+    {
+      "name": "parent370_B31N1000H04E050_E28N3000H02E100",
+      "fingerprint": "adda4c2ee1370011fba6ed7a7539780d5325149344fc4fd89c56330c94005908",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N1000H04E050_E28N3000H02E100.json.gz",
+      "archive_sha256": "c0f5e54a6fb00954d8a7c9998935e3551b43774b593ea543c5d7ae38dbe4265d",
+      "status": "rejected",
+      "source_fingerprints": [
+        "1f291616658c94482c0847e1d4ecd9c010bff2f559030dd2422974eff33e0c6c",
+        "124bb1cc8a4ea378b4f9f386bbf8dc8d57c493ab6cdc5e4acdc2d8e917217258"
+      ]
+    },
+    {
+      "name": "parent370_B31N1000H04E050_E28N3000H02E200",
+      "fingerprint": "eb9e899715953c7378d2b6c13e9a7904c22b4270e5958e1c6883b4001e32f2d7",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N1000H04E050_E28N3000H02E200.json.gz",
+      "archive_sha256": "11f6905cabde24171d858ec4c03c34339787da20c9e0fc3f1ab1e25ab27edc12",
+      "status": "rejected",
+      "source_fingerprints": [
+        "1f291616658c94482c0847e1d4ecd9c010bff2f559030dd2422974eff33e0c6c",
+        "6119c469ce7f54449c19b58869161cbd6ab889684855143289fd4da0987c1c90"
+      ]
+    },
+    {
+      "name": "parent370_B31N1000H04E100_E28N3000H02E050",
+      "fingerprint": "133fce52535bba1180a4284a10670e77708cc5abd1dc7e4f1dedd7e56ca23956",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N1000H04E100_E28N3000H02E050.json.gz",
+      "archive_sha256": "3eb6f7f6182d2dbdf007519550a8b6aeeee1627a8a5d8ca5e6d83ea7d35c9ecb",
+      "status": "rejected",
+      "source_fingerprints": [
+        "2122c03af949f66e9ab48802b8813121b9a94f1e0a5844a712c800a026a2fd4d",
+        "1f3b8a65b77ff4790203bfb65e13da7c9b793441af3b076b99aa9b0e309731fa"
+      ]
+    },
+    {
+      "name": "parent370_B31N1000H04E100_E28N3000H02E100",
+      "fingerprint": "e29b1e095cee8340529af0b4922ef62b152a0b13a67c1a1e8fa67845383ecccf",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N1000H04E100_E28N3000H02E100.json.gz",
+      "archive_sha256": "b4e720d2c8a7d7fce434360775e3706368aadbc919de4362b5c5f40960ddeb2e",
+      "status": "rejected",
+      "source_fingerprints": [
+        "2122c03af949f66e9ab48802b8813121b9a94f1e0a5844a712c800a026a2fd4d",
+        "124bb1cc8a4ea378b4f9f386bbf8dc8d57c493ab6cdc5e4acdc2d8e917217258"
+      ]
+    },
+    {
+      "name": "parent370_B31N1000H04E100_E28N3000H02E200",
+      "fingerprint": "ed256cf437bf83dee6ae7848e6b5c43a33fefd15443bee25b9143bf542ed407e",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N1000H04E100_E28N3000H02E200.json.gz",
+      "archive_sha256": "da56516e96d7d747bb9b565c7b10e71a75707b42c7ddce71fa15c7f7d42af1ca",
+      "status": "rejected",
+      "source_fingerprints": [
+        "2122c03af949f66e9ab48802b8813121b9a94f1e0a5844a712c800a026a2fd4d",
+        "6119c469ce7f54449c19b58869161cbd6ab889684855143289fd4da0987c1c90"
+      ]
+    },
+    {
+      "name": "parent370_B31N1000H04E200_E28N3000H02E050",
+      "fingerprint": "188c65f5090ad5015b39abeee4b375afacea06e90d02938abcb2b77cd184dafe",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N1000H04E200_E28N3000H02E050.json.gz",
+      "archive_sha256": "1c56c9865e3f048aae583182ac4cd5f1874f1120d299f67ef03abbc227de0dfb",
+      "status": "rejected",
+      "source_fingerprints": [
+        "dd55e851ba39ba510746ef98af3a5507c0fa4ff4c3f9a06c99ab34ae151dc4dd",
+        "1f3b8a65b77ff4790203bfb65e13da7c9b793441af3b076b99aa9b0e309731fa"
+      ]
+    },
+    {
+      "name": "parent370_B31N1000H04E200_E28N3000H02E100",
+      "fingerprint": "98c9c08400c3b46ef864200d2642ca73d096feb62144d7785bf069fac40cfd86",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N1000H04E200_E28N3000H02E100.json.gz",
+      "archive_sha256": "8c6931dcfbe35bbb534d3b63ee5ad26175210e902d59c6771a7b2f09158d1b23",
+      "status": "rejected",
+      "source_fingerprints": [
+        "dd55e851ba39ba510746ef98af3a5507c0fa4ff4c3f9a06c99ab34ae151dc4dd",
+        "124bb1cc8a4ea378b4f9f386bbf8dc8d57c493ab6cdc5e4acdc2d8e917217258"
+      ]
+    },
+    {
+      "name": "parent370_B31N1000H04E200_E28N3000H02E200",
+      "fingerprint": "cf8754571c56e2c462b2bb99611dc72396d90e769ecc9a760f51cc97fe10c988",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N1000H04E200_E28N3000H02E200.json.gz",
+      "archive_sha256": "c9f126966bf8eadc4b4830b5bd98a08c1105f40d05c5c19ce12747fbfb0828a4",
+      "status": "rejected",
+      "source_fingerprints": [
+        "dd55e851ba39ba510746ef98af3a5507c0fa4ff4c3f9a06c99ab34ae151dc4dd",
+        "6119c469ce7f54449c19b58869161cbd6ab889684855143289fd4da0987c1c90"
+      ]
+    },
+    {
+      "name": "parent370_B31N2000H04E050_E28N2000H02E050",
+      "fingerprint": "5edcee9eefdeaff21216f292501d2824bb064f5f9e0a5055fb76b70bb2760496",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N2000H04E050_E28N2000H02E050.json.gz",
+      "archive_sha256": "683184fa9775f82c27cc40ed32fc8e9496e361c0a32c183e7d3e18f37be8118b",
+      "status": "rejected",
+      "source_fingerprints": [
+        "2badfab2738aebf182b6cf3790a59e42de17ef3ec4bcc45ad2ddcb69615f4470",
+        "a892598f8908ea6d9b2ac310fbd8a16be783e2095555aaf6aa7e25389ed8162a"
+      ]
+    },
+    {
+      "name": "parent370_B31N2000H04E050_E28N2000H02E100",
+      "fingerprint": "3544dc02c92329b1b358df51126c7873eb525ecbce80906b31b36e880b0d173d",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N2000H04E050_E28N2000H02E100.json.gz",
+      "archive_sha256": "2ad411b796968d96f513580bd87051efbf8bd6da227fba4b92cbe18a662639e0",
+      "status": "rejected",
+      "source_fingerprints": [
+        "2badfab2738aebf182b6cf3790a59e42de17ef3ec4bcc45ad2ddcb69615f4470",
+        "3df9b55699d79dd82707db8bf0aa126d80d28b0d4128fefb64d5593ae1f9c60f"
+      ]
+    },
+    {
+      "name": "parent370_B31N2000H04E050_E28N2000H02E200",
+      "fingerprint": "8d8b1033f415a517da90de22f51eead4fa52bd30b381be5ae44bce47d86e77f0",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N2000H04E050_E28N2000H02E200.json.gz",
+      "archive_sha256": "8ed066e22df4ad766f32d224a938146d5212101a476956bded15d55d533d6904",
+      "status": "rejected",
+      "source_fingerprints": [
+        "2badfab2738aebf182b6cf3790a59e42de17ef3ec4bcc45ad2ddcb69615f4470",
+        "a2e795e476afd2480968c10f7aa7bf73f45d443e83544ed5b34795d3643c8fb4"
+      ]
+    },
+    {
+      "name": "parent370_B31N2000H04E100_E28N2000H02E050",
+      "fingerprint": "ccba070f02eb1282d43eb9129f54eea10744b0e66e48cdbabdf029c2137274a1",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N2000H04E100_E28N2000H02E050.json.gz",
+      "archive_sha256": "86a6c94342418f2f5753955e8ffb6ddd5d699fad336b36e2c7b8e1189f3f0b15",
+      "status": "rejected",
+      "source_fingerprints": [
+        "2c1811fec6042d63c3260f734e6e1d6482d509c840f9d10046d13c77536c4ff0",
+        "a892598f8908ea6d9b2ac310fbd8a16be783e2095555aaf6aa7e25389ed8162a"
+      ]
+    },
+    {
+      "name": "parent370_B31N2000H04E100_E28N2000H02E100",
+      "fingerprint": "196fa14e21e3414aac6992ee6268ea2514fe0a7f4025502e26adb34cbaec9d32",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N2000H04E100_E28N2000H02E100.json.gz",
+      "archive_sha256": "f57fe64cd5857b736be89e5c5402d64fbb5904eeea726b85cc6b9c941783f2be",
+      "status": "rejected",
+      "source_fingerprints": [
+        "2c1811fec6042d63c3260f734e6e1d6482d509c840f9d10046d13c77536c4ff0",
+        "3df9b55699d79dd82707db8bf0aa126d80d28b0d4128fefb64d5593ae1f9c60f"
+      ]
+    },
+    {
+      "name": "parent370_B31N2000H04E100_E28N2000H02E200",
+      "fingerprint": "4024e4e2c34faad0189117ceff5838bed1328ddc30d9b1b1f96b8cb79c6426f5",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N2000H04E100_E28N2000H02E200.json.gz",
+      "archive_sha256": "15ab20cdcabc511ad6a9f3d17de72b4da20ec4cabaea121e13678f4b7014ceb8",
+      "status": "rejected",
+      "source_fingerprints": [
+        "2c1811fec6042d63c3260f734e6e1d6482d509c840f9d10046d13c77536c4ff0",
+        "a2e795e476afd2480968c10f7aa7bf73f45d443e83544ed5b34795d3643c8fb4"
+      ]
+    },
+    {
+      "name": "parent370_B31N2000H04E200_E28N2000H02E050",
+      "fingerprint": "b190739a6efd7515cf8adf498e1cb2e99b18377767135feb42985af5e20b04f7",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N2000H04E200_E28N2000H02E050.json.gz",
+      "archive_sha256": "200137853a9ae091f80d6fafc876efcf8f5fc781ade8d8861bc020e380265c81",
+      "status": "rejected",
+      "source_fingerprints": [
+        "d702b876752122be3e8ec18dbc0ad2a204a086012354561c8f99645974110421",
+        "a892598f8908ea6d9b2ac310fbd8a16be783e2095555aaf6aa7e25389ed8162a"
+      ]
+    },
+    {
+      "name": "parent370_B31N2000H04E200_E28N2000H02E100",
+      "fingerprint": "8399c9435e8bdabc4fcfd67ea67a3e6e3db0cba44a50c1be298bd7480afae02d",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N2000H04E200_E28N2000H02E100.json.gz",
+      "archive_sha256": "d5ade3e5a668b30b02ad9f634e1e52a22db417e91ef6f930ac08c4356b1d415b",
+      "status": "rejected",
+      "source_fingerprints": [
+        "d702b876752122be3e8ec18dbc0ad2a204a086012354561c8f99645974110421",
+        "3df9b55699d79dd82707db8bf0aa126d80d28b0d4128fefb64d5593ae1f9c60f"
+      ]
+    },
+    {
+      "name": "parent370_B31N2000H04E200_E28N2000H02E200",
+      "fingerprint": "f1c92bfa5fbca0fce3d06c680d86692bee4949896ca2450db7c68a4e494aed5d",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N2000H04E200_E28N2000H02E200.json.gz",
+      "archive_sha256": "b6c8f0dd154bf046da46c033361fcd9f207dfa771d86e410befb57e37b74f89d",
+      "status": "rejected",
+      "source_fingerprints": [
+        "d702b876752122be3e8ec18dbc0ad2a204a086012354561c8f99645974110421",
+        "a2e795e476afd2480968c10f7aa7bf73f45d443e83544ed5b34795d3643c8fb4"
+      ]
+    },
+    {
+      "name": "parent370_B31N3000H04E050_E28N1000H02E050",
+      "fingerprint": "c9f80bc63c3dd989c475fdc93b6ae39cb18c0fd86e112c70f831fdcb9c270709",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N3000H04E050_E28N1000H02E050.json.gz",
+      "archive_sha256": "a7554f658cc9633794daa6de4c9b678b7ed12079c0bafb2d79fd70c55cd33c6d",
+      "status": "rejected",
+      "source_fingerprints": [
+        "fa67e5ecd7151b0992ff9bf6e20a5e89b37d9ce4bdb59d85bfca7f0f70e79eb7",
+        "96b81385e5702cb53d8893206ab1a65ae100a6e26e54bd8bba4b924a9521f128"
+      ]
+    },
+    {
+      "name": "parent370_B31N3000H04E050_E28N1000H02E100",
+      "fingerprint": "039d798c79d4f9338af5053fbbbcd3623af9a817bf62c738ffe4f51cb3dcfe4f",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N3000H04E050_E28N1000H02E100.json.gz",
+      "archive_sha256": "ab9f8feaddc61bf6db02f61928882ce6ccf6d19ca369b8fb7c776d8105d045b5",
+      "status": "rejected",
+      "source_fingerprints": [
+        "fa67e5ecd7151b0992ff9bf6e20a5e89b37d9ce4bdb59d85bfca7f0f70e79eb7",
+        "918da0f83b2daba1798d34bbb215761abc8a52f4da6aff2e33a1f304168756d3"
+      ]
+    },
+    {
+      "name": "parent370_B31N3000H04E050_E28N1000H02E200",
+      "fingerprint": "a7cfea6233696263de8c87de15c32dfe15a498c8e7e6b7ef9fa491e70d818bc2",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N3000H04E050_E28N1000H02E200.json.gz",
+      "archive_sha256": "d324f27acbd7dd6bbed92a3248e4793ec71886c36376ece4575586fb320a1778",
+      "status": "rejected",
+      "source_fingerprints": [
+        "fa67e5ecd7151b0992ff9bf6e20a5e89b37d9ce4bdb59d85bfca7f0f70e79eb7",
+        "059926291aaf65074b22bf4495425c0a5f2e483b146d7b3493922d3acb77a661"
+      ]
+    },
+    {
+      "name": "parent370_B31N3000H04E100_E28N1000H02E050",
+      "fingerprint": "9ffdd18b1aba48744b42221af0a89dc8204aa94ee787a52532621b36f0a34166",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N3000H04E100_E28N1000H02E050.json.gz",
+      "archive_sha256": "a884cc6d9033b9f3cfbc362a79a486184880d3f256a73e8d9ff886606a2c1cb3",
+      "status": "rejected",
+      "source_fingerprints": [
+        "daec96ac51105f4d830b642b31a2d22610f52e066b84adcc3f24f810f82f5228",
+        "96b81385e5702cb53d8893206ab1a65ae100a6e26e54bd8bba4b924a9521f128"
+      ]
+    },
+    {
+      "name": "parent370_B31N3000H04E100_E28N1000H02E100",
+      "fingerprint": "85fd60f26e83d7807274c07e94ad00393ceec3d38b9929231fbfd2b8f3e10f7e",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N3000H04E100_E28N1000H02E100.json.gz",
+      "archive_sha256": "af53eba5eb43444f8038bd534c8006114665cb2ea924395a4f59584676e4e153",
+      "status": "rejected",
+      "source_fingerprints": [
+        "daec96ac51105f4d830b642b31a2d22610f52e066b84adcc3f24f810f82f5228",
+        "918da0f83b2daba1798d34bbb215761abc8a52f4da6aff2e33a1f304168756d3"
+      ]
+    },
+    {
+      "name": "parent370_B31N3000H04E100_E28N1000H02E200",
+      "fingerprint": "7edecd2dd900958722a6a655f74506080fe9162604061f549474cd39871e88cf",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N3000H04E100_E28N1000H02E200.json.gz",
+      "archive_sha256": "a85dcb4b759a619e3ca908a0b64f9685eb8a1aee4405bd9ba7018f28031b54b8",
+      "status": "rejected",
+      "source_fingerprints": [
+        "daec96ac51105f4d830b642b31a2d22610f52e066b84adcc3f24f810f82f5228",
+        "059926291aaf65074b22bf4495425c0a5f2e483b146d7b3493922d3acb77a661"
+      ]
+    },
+    {
+      "name": "parent370_B31N3000H04E200_E28N1000H02E050",
+      "fingerprint": "31df78ad8bb062e72c55c491be89f9799b1a187d98f9ee090b8da273a63e974f",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N3000H04E200_E28N1000H02E050.json.gz",
+      "archive_sha256": "f01131a4d125a6ffedcb80714e12f80691c7d07344c33e779386bfc00ffbb2d3",
+      "status": "rejected",
+      "source_fingerprints": [
+        "e1a31cff43050114821033afd400186c3134af44af786e837377d8d08fa864ca",
+        "96b81385e5702cb53d8893206ab1a65ae100a6e26e54bd8bba4b924a9521f128"
+      ]
+    },
+    {
+      "name": "parent370_B31N3000H04E200_E28N1000H02E100",
+      "fingerprint": "d9b22df4f07aeb64643b021909fd16104eb323900e1f2455de42916e504ff4f6",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N3000H04E200_E28N1000H02E100.json.gz",
+      "archive_sha256": "7c27e63dd887ded1f369f9d64d16dea012f0b15512006dcf2c760fb1f056dbb6",
+      "status": "rejected",
+      "source_fingerprints": [
+        "e1a31cff43050114821033afd400186c3134af44af786e837377d8d08fa864ca",
+        "918da0f83b2daba1798d34bbb215761abc8a52f4da6aff2e33a1f304168756d3"
+      ]
+    },
+    {
+      "name": "parent370_B31N3000H04E200_E28N1000H02E200",
+      "fingerprint": "89bae875cc3c49ebdc7d9c1d0c0e484d09cff3423ad5d61621e0b08ee2bc400f",
+      "role": "candidate",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_B31N3000H04E200_E28N1000H02E200.json.gz",
+      "archive_sha256": "cf2103df966fa26fd0adb7bd66512608a356fd2f924d8bb0b9d5a0c951c009b6",
+      "status": "rejected",
+      "source_fingerprints": [
+        "e1a31cff43050114821033afd400186c3134af44af786e837377d8d08fa864ca",
+        "059926291aaf65074b22bf4495425c0a5f2e483b146d7b3493922d3acb77a661"
+      ]
+    },
+    {
+      "name": "parent370_hold_B1000_E3000",
+      "fingerprint": "7918c127fac7e5fa7e826a247307360c2103ebb81d8c89c199c41ff7c5ba4bad",
+      "role": "benchmark",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_hold_B1000_E3000.json.gz",
+      "archive_sha256": "a89c3d12498f299f3528fbf7b808bc7ac196690bad720736771fe2a11b12ec0e",
+      "status": "rejected",
+      "source_fingerprints": [
+        "94180a4d2b7392090f52c069130bc60c7157b90c02ab7f46a853d23bf705481c",
+        "11940b42d9d4889e36e986bcdf3c41c83a51965402854a5d9f5ea4275a749f83"
+      ]
+    },
+    {
+      "name": "parent370_hold_B2000_E2000",
+      "fingerprint": "97f687b5fc562ebc7a442cf7ca7ff1908b1b05a2a858fdf0fcc8f1f482780d0a",
+      "role": "benchmark",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_hold_B2000_E2000.json.gz",
+      "archive_sha256": "4c944d810794943d407ad545e4a32061f63c3c37be0c7d9ed7abdf83c93b9356",
+      "status": "rejected",
+      "source_fingerprints": [
+        "c31aabeccae5e90da96853e94bde989f2aac7fb3df207cb1b566d8cb07593698",
+        "cdf263cff49d32d681b465cfd64ccfde6e5c01257fbda45ab13a29a85094469b"
+      ]
+    },
+    {
+      "name": "parent370_hold_B3000_E1000",
+      "fingerprint": "6247060aaf40f960ae51349dcf09712f1721bc9d514cf369e961c7feaf1fd923",
+      "role": "benchmark",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_hold_B3000_E1000.json.gz",
+      "archive_sha256": "5a405ca6fda534e8744da52727bcae79e9d553cae31550eff395726d184c5f97",
+      "status": "rejected",
+      "source_fingerprints": [
+        "136c811d009a91b1ec22ff4531394eea78b10904be7d8b91803080f661c19ad4",
+        "98dc2538c0915fb2e8ee42710d9fc352930fbd20fbcf66e4f4c155d133e8ff7a"
+      ]
+    }
+  ],
+  "summary": {
+    "new_financial_configs": 30,
+    "new_candidates": 27,
+    "new_benchmarks": 3,
+    "passed_candidates": 0,
+    "rejected_candidates": 27,
+    "positive_full_by_cost": {
+      "1": 27,
+      "2": 27,
+      "3": 27
+    },
+    "positive_recent40_by_cost": {
+      "1": 9,
+      "2": 9,
+      "3": 9
+    },
+    "full3_return_range_pct": [
+      5.558766350745792,
+      13.901966333296635
+    ],
+    "recent40_3_return_range_pct": [
+      -1.1874861331849118,
+      0.19061060663001506
+    ],
+    "recent40_1x_positive_fold_counts": {
+      "4": 18,
+      "3": 9
+    },
+    "full1x_complete30d_positive_fold_counts": {
+      "9": 21,
+      "8": 6
+    },
+    "failed_criteria_counts": {
+      "recent40_positive_all_costs": 18,
+      "recent40_six_of_eight_positive5d_1x_folds": 27,
+      "nine_of_twelve_positive_complete30d_1x_folds": 6
+    },
+    "highest_full3": {
+      "name": "parent370_B31N1000H04E050_E28N3000H02E200",
+      "return3": 13.901966333296635,
+      "DD3": 5.706643718960569,
+      "recent40_return3": -0.9502456793588188,
+      "positive30d1": 8,
+      "positive5d1": 4,
+      "status": "rejected"
+    },
+    "highest_recent40_3": {
+      "name": "parent370_B31N3000H04E200_E28N1000H02E200",
+      "return3": 0.19061060663001506,
+      "full_return3": 6.912788756324195,
+      "DD3": 2.9890355313097916,
+      "positive5d1": 4,
+      "status": "rejected"
+    },
+    "rows": {
+      "cost": 90,
+      "full_folds": 1170,
+      "recent40_folds": 720,
+      "daily_NAV": 33390,
+      "edges": 54,
+      "matched_holds": 81
+    },
+    "surface": {
+      "axes": {
+        "BTC_fixed_entry_notional_usdt": [
+          1000,
+          2000,
+          3000
+        ],
+        "BTC_exit_buffer_fraction": [
+          0.005,
+          0.01,
+          0.02
+        ],
+        "ETH_exit_buffer_fraction": [
+          0.005,
+          0.01,
+          0.02
+        ]
+      },
+      "cell_count": 27,
+      "adjacent_edges": 54,
+      "positive3_fraction": 1.0,
+      "recent40_positive3_fraction": 0.3333333333333333,
+      "full_sharpe_cliff_edges": 18,
+      "recent40_sharpe_cliff_edges": 15,
+      "cliff_definition": "Absolute adjacent Sharpe delta > 2*populationSD of all54 absolute adjacent Sharpe deltas,reported descriptively; no post-result grid expansion."
+    },
+    "by_allocation": {
+      "1000": {
+        "full3_range": [
+          9.59744729652343,
+          13.901966333296635
+        ],
+        "recent40_3_range": [
+          -1.1874861331849118,
+          -0.9502456793588188
+        ],
+        "recent40_positive3": 0,
+        "passed": 0
+      },
+      "2000": {
+        "full3_range": [
+          7.570145079239232,
+          10.781421831170256
+        ],
+        "recent40_3_range": [
+          -0.5621453393677922,
+          -0.4064403419307805
+        ],
+        "recent40_positive3": 0,
+        "passed": 0
+      },
+      "3000": {
+        "full3_range": [
+          5.558766350745792,
+          7.6900093418631466
+        ],
+        "recent40_3_range": [
+          0.11470320637514408,
+          0.19061060663001506
+        ],
+        "recent40_positive3": 9,
+        "passed": 0
+      }
+    }
+  },
+  "next_research": "All27 fixedBTC31/H4 +ETH28/H2 parents over370days,Npairs1000/3000,2000/2000,3000/1000 xbothE.5/1/2 now actual/finished. Allfull3positive5.558766to13.901966percent,butrecent5daypositivefolds3or4/8(9cells3,18cells4),allbelowfrozen6/8. N3000/1000 has9recentpositive3cells0.114703to0.190611percent;other18negative-1.187486to-0.406440percent. No candidatepassesbothregimes. Do not rerun exactconfigs,lowerfoldgate,overwrite source reports or retune samehistorythenclaimindependenttest. Prefer separately accrued prospective evidence or a predeclared distinct economic direction. Use24nativewholebooks for compatiblenewparents;newNrequiresnativequantity/cost evaluation,never scaleNAV. 370day source paths remain at065405 with13folds;old330day reports unchanged.",
+  "original_SMA_next_state": "research/experiments/20261025T085436Z/forward_state.json",
+  "original_SMA_next_state_sha256": "984eaafd9ec3735f4b0162598c4c9e255a4f337c0a740b652cbe37b10fa36901",
+  "next_daily_decision_utc": "2026-10-26T00:01:00Z",
+  "original_SMA_continuity": {
+    "cutoff_utc": "2026-10-25T08:30:00Z",
+    "NAV_points_per_scene": 33654,
+    "cumulative_minutes": 33629,
+    "policy": "ExactFloatSMA65/1percent1500/500,cash/units/desired/cost/trades/fullNAVprefix. BeforeOct26UTC00:01 appendclosedmarks only;terminal2027-03-31 unchanged. Partialrejected does notcancelplan."
+  },
+  "monitor_compressed_bytes": 2022864,
+  "monitor_current_byte_budget": 3000000,
+  "monitor_historical_rows_unchanged": 5526,
+  "paper10_policy": "btc-eth-2 owns frozen accounts/observations;read only here",
+  "finished_original_bytes_priority": true,
+  "registry_after": {
+    "events": 15278,
+    "IDs": 7535
+  }
+}
