@@ -1,0 +1,2370 @@
+{
+  "branch_policy": "main only locally/remotely;no branches or branch worktrees",
+  "report": "research/experiments/20261025T185633Z/report.json",
+  "report_sha256": "2a7a595736c36d0cac23108d5c85011598e17fbdc1daecb8e2b0d46429fc982f",
+  "new_finished_financial_configs": 108,
+  "new_native_backtests": 27,
+  "new_passive_parents": 81,
+  "candidate_passed": 0,
+  "candidate_rejected": 108,
+  "frozen_grid": {
+    "native": {
+      "trend_lookback_days": [
+        7,
+        14,
+        28
+      ],
+      "lookback_days": [
+        1,
+        2,
+        3
+      ],
+      "return_hurdle": [
+        0.02,
+        0.04,
+        0.06
+      ],
+      "fixed_entry_notional_usdt": 2000,
+      "new_cells": 27
+    },
+    "parent": {
+      "trend_exit_buffer_fraction": [
+        0.005,
+        0.01,
+        0.02
+      ],
+      "trend_filter_lookback_days": [
+        7,
+        14,
+        28
+      ],
+      "reversal_lookback_days": [
+        1,
+        2,
+        3
+      ],
+      "reversal_return_hurdle": [
+        0.02,
+        0.04,
+        0.06
+      ],
+      "new_cells": 81
+    },
+    "new_financial_configs": 108,
+    "cost_scenes": 324,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "component_capitals_usdt": [
+      10000,
+      10000
+    ],
+    "parent_capital_usdt": 20000,
+    "entry_budget_each_usdt": 2000,
+    "entry_budget_total_usdt": 4000,
+    "readonly_unfiltered_native_controls": 9,
+    "readonly_unfiltered_parent_controls": 27,
+    "readonly_matched_hold_controls": 2
+  },
+  "time_boundaries": {
+    "input_start_utc": "2025-09-16T00:00:00Z",
+    "input_end_exclusive_utc": "2026-10-25T00:00:00Z",
+    "oos_start_utc": "2025-10-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-10-24T00:01:00Z",
+    "context_days": 33,
+    "nominal_warmup_days": 30,
+    "initial_embargo_days": 3,
+    "continuous_oos_days": 370,
+    "walk_forward_folds": 13,
+    "complete_30day_folds": 12,
+    "tail_fold_days": 10,
+    "label_purge": "No fittedlabels/model;not applicable. Fixed rules use only priorcompleteprices,actual state carries across allfolds."
+  },
+  "normalized_inputs": {
+    "BTC": [
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet",
+        "sha256": "97be656cf441024101417476f8338f4d739879d3ee39bfbf2a89cf1a287b726c",
+        "bytes": 32143848,
+        "rows": 581760
+      },
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet",
+        "sha256": "80cd98d12fd73cb8bfcc7a4d4af65d737347c9d9b53d82ae1698a1aa15bd71ce",
+        "bytes": 494964,
+        "rows": 9696
+      },
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet",
+        "sha256": "b27e8f9a078a50a9d34c034870790321e43b5d7dff74f2c2a7d0b69f3c276006",
+        "bytes": 34756,
+        "rows": 1212
+      },
+      {
+        "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet",
+        "sha256": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99",
+        "bytes": 1892,
+        "rows": 1
+      }
+    ],
+    "ETH": [
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet",
+        "sha256": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+        "bytes": 29255495,
+        "rows": 581760
+      },
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet",
+        "sha256": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+        "bytes": 462199,
+        "rows": 9696
+      },
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet",
+        "sha256": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+        "bytes": 33894,
+        "rows": 1212
+      },
+      {
+        "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet",
+        "sha256": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6",
+        "bytes": 1892,
+        "rows": 1
+      }
+    ]
+  },
+  "input_provenance_manifest": "research/experiments/20261025T065405Z/extended_data_manifest.json",
+  "input_provenance_manifest_sha256": "c7f23dc091a19e9eebd90778b648d8330e7d193bdd07d4b4011cb02373235a76",
+  "component_sources_for_reuse": {
+    "2badfab2738aebf182b6cf3790a59e42de17ef3ec4bcc45ad2ddcb69615f4470": {
+      "name": "extended370_BTC_L31_H04_E050_N2000",
+      "fingerprint": "2badfab2738aebf182b6cf3790a59e42de17ef3ec4bcc45ad2ddcb69615f4470",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E050_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L31_H04_E050_N2000.json.gz",
+      "archive_sha256": "2b1c9152963542f56695ec8ef64cf2664696e81379dbc704246b268e603dbc9b",
+      "asset": "BTC",
+      "scope": "native",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "d0e77da32337b83feebb90e1ec42fb16e9de9bd3fe3e270d260e9d4d500cc811",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "ac7b819d027203d7b2d28f82d2cfa6d882094881ab1ef843842518dbdba3824a",
+        "2": "0b6ac4c0d272414278f653c17f08f146db9110e1fc959c255ed4e925bb3b4e60",
+        "3": "2883d014ef8ef6c0287ae046d778748fb76c52ca4eaa50b89707b500227ddb1f"
+      },
+      "lookback_days": 31,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0.005,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "2c1811fec6042d63c3260f734e6e1d6482d509c840f9d10046d13c77536c4ff0": {
+      "name": "extended370_BTC_L31_H04_E100_N2000",
+      "fingerprint": "2c1811fec6042d63c3260f734e6e1d6482d509c840f9d10046d13c77536c4ff0",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E100_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L31_H04_E100_N2000.json.gz",
+      "archive_sha256": "67166d200465f596bbe25dab947469d1bc419c8a66430341fda867f37971e600",
+      "asset": "BTC",
+      "scope": "native",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "ca69439a8fef554cca943008630c1da2900a473e4c8a9879b6db922647541b43",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "b978fceaab27b8329b6ccc454601c71ee268a461922eef4d27af7a3d5b3b2c50",
+        "2": "e9894b53020d97e24b68ddadfd5da60e22fc13cefb0d837d1e4addbf14e10a17",
+        "3": "258bffb23b90b1ab0655aae838e37231eb34f0596d68ebae25fd00fad8e4c4bd"
+      },
+      "lookback_days": 31,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0.01,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    },
+    "d702b876752122be3e8ec18dbc0ad2a204a086012354561c8f99645974110421": {
+      "name": "extended370_BTC_L31_H04_E200_N2000",
+      "fingerprint": "d702b876752122be3e8ec18dbc0ad2a204a086012354561c8f99645974110421",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E200_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L31_H04_E200_N2000.json.gz",
+      "archive_sha256": "e908d9046ea5bf7d4de4e631a77cb166672a9f36a90a27944953a6da8f1cee1b",
+      "asset": "BTC",
+      "scope": "native",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "226d44c622b0d8148c8fe589485ba2a5a87b0044c756d25ae2610ac537fb68ba",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "475eb250d5c26ff78e5c2130e823d02e1a9ffe65420eca9c2e6d5f3971a6d95e",
+        "2": "f9f77a7c89d9618ea3dd596ac5695aea5d14935fda0e93be1de4546b607e2550",
+        "3": "04a321bf4a9807322f0bb48af19a6799b3f3c7373ba80ff7af5e80f19f42e163"
+      },
+      "lookback_days": 31,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0.02,
+      "fixed_entry_notional_usdt": 2000,
+      "capital_usdt": 10000
+    }
+  },
+  "readonly_unfiltered_controls": {
+    "reversal370_ETH_L1_H02": {
+      "name": "reversal370_ETH_L1_H02",
+      "fingerprint": "7696753da6b02ae13889a1f8b5773424f9408c8fcb13cfc4d4b2e0061f68b991",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L1_H02.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L1_H02.json.gz",
+      "archive_sha256": "6ad3d9bd44b61c8b41fba4e5993972ead1422b92c4b4028603b6f240483a97bd",
+      "asset": "ETH",
+      "scope": "native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "76327ab4a0c9801eacc7c433a9bfae0ecd53bb0596e40002fba11ca42ae67da0",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "16d209c1c1d4db5da92df894fe8f6ca0109ef2995d77ea04af99e8748466646a",
+        "2": "65133f17f4d14b77e9dcce1bec8dd0ac20e81e106fdd53ac087a05c6796993c6",
+        "3": "31e4d333c023f8e4e32c8f410b22095317c5e30c06ae8d6ff19227f94b38ffe4"
+      }
+    },
+    "reversal370_ETH_L1_H04": {
+      "name": "reversal370_ETH_L1_H04",
+      "fingerprint": "4db6f1454ee6ded57bc7ad74495b9b81ca8f128adcff714eaae1eee7133ab7df",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L1_H04.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L1_H04.json.gz",
+      "archive_sha256": "df2d7028a90446ebb4c344c0456737a51d6c49e3f6ef8f4225c165f75db79d85",
+      "asset": "ETH",
+      "scope": "native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "6524ae802e2e45fcbab8fe0d3714313ec7428d3396f9f6ac3adf3e463d133b98",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "9d1e8853b96b78bafc9c0c1324c65d38371e45b76f325105b351a957b7744295",
+        "2": "4c8e4510362c90c8be28abaff0c131d0bed98c330ec38f6d9c8a67cfb59f57d2",
+        "3": "06c52eb5d0303a872bbf583342b46185088f20ec8adbfe13f877578d3d7ddfc6"
+      }
+    },
+    "reversal370_ETH_L1_H06": {
+      "name": "reversal370_ETH_L1_H06",
+      "fingerprint": "b45a17b8fe4f052b7b1222b1cbf6c00735d547c3119b045c858c277c86e32cb4",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L1_H06.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L1_H06.json.gz",
+      "archive_sha256": "85b55aed03c6cb77fa6f5b0165829adb122df7d8dde403e5198b124b6406ec29",
+      "asset": "ETH",
+      "scope": "native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "b78fb95266d24adf4aa412cc98db1758e075263ed941d86b8c8e0464b5cd5183",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "a5caa99abdff7fd6473030ab795c69ea30a7f4b100b2d8708a07e4bb88a5661a",
+        "2": "ff261d6e5da8ddb93ccbe1e3d35f5f0ee290048f8570d1adc668c806e5ab9850",
+        "3": "af19097703ad83c089ec00c000083ecbe7247cb0b332d3129efdc14031d0ea75"
+      }
+    },
+    "reversal370_ETH_L2_H02": {
+      "name": "reversal370_ETH_L2_H02",
+      "fingerprint": "65050f9028cf1a75461fd7f85f227273c47fdf81b486f67afbef57c875df7620",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L2_H02.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L2_H02.json.gz",
+      "archive_sha256": "b0f98d9a2c99047701f0fa8761ba64261ac64ee2d813db3e67993e4fa2dec8eb",
+      "asset": "ETH",
+      "scope": "native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "76af4fd1f8ab445331d134b964288b8e1153c2e0a9ffce57f2adc64ed8fc21df",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "284e5e4659a427927b087586ee05e0dfad4ee209079233d64e8e24703abea6b8",
+        "2": "09ee99ee2f2ae04ed8f8180a31838da69136bd98bf30d83f3a3478dde3680842",
+        "3": "5094a6a99661dd5fd3cbb28b6c388ef6005901a4c72105549dd02a55400a4070"
+      }
+    },
+    "reversal370_ETH_L2_H04": {
+      "name": "reversal370_ETH_L2_H04",
+      "fingerprint": "56e9fd0745f261d4670f0bdc7cc61d757288f9e50e975c9d91a3b15ba1445ad6",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L2_H04.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L2_H04.json.gz",
+      "archive_sha256": "f5551f11e2e1699e4d6c75622b0e840c02efbf3f5d76f836e763842283c19c4c",
+      "asset": "ETH",
+      "scope": "native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "15117d777e45d4f1321275c166cbc296e5f2ae022e9f38b37216351fe3be1a10",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "d29cef356995b356e180fb8dc964ab28fb6f23780945f65ce0517ae35f663174",
+        "2": "0e9522d5a7cd6db83d00b5261d8084d423ad809c4fe864ba71d04b03d5c493ca",
+        "3": "72eabe9d72761ad57d545f055a4065bfbf37247514ed1a00443a9d911a20d0d1"
+      }
+    },
+    "reversal370_ETH_L2_H06": {
+      "name": "reversal370_ETH_L2_H06",
+      "fingerprint": "113390955395260d188eec0b0f7348a31c1399c383c8869ec5fcdf5d31c68e72",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L2_H06.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L2_H06.json.gz",
+      "archive_sha256": "9a6305096a69a0cb381ee42be2d82226fa87973247723479928074ff7967cd9c",
+      "asset": "ETH",
+      "scope": "native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "243dfbf3896143a91883293f7c9755c96f093036bfbfd56cece4e75f00ca1437",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "33ffd48475a83a38863087471bc76217a8c20e53bfefcf1f314817e750e67b53",
+        "2": "c0d3f63b7b394ed1b80a1c2c8fe254e7c503c68806e4752776ad77a717f4c0d3",
+        "3": "79dbd330e8777aa5223d677e61d3214ad6129b3920e7a8439e0d153afba302f7"
+      }
+    },
+    "reversal370_ETH_L3_H02": {
+      "name": "reversal370_ETH_L3_H02",
+      "fingerprint": "a2faa709d5e9b7c7d44505c22487144acf736bacdd92738d253969ac913b6017",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L3_H02.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L3_H02.json.gz",
+      "archive_sha256": "298cec177449170448f9e1b30d36f754439af129ca63efa989b275e122ece78a",
+      "asset": "ETH",
+      "scope": "native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "aaef0cb5e6021f1f5d3ba9cff40f9d00f931be52a58c67b520e1693e7bc76d3f",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "2b77fe4b72470c09c633eca74e4aaaf62badb0296387a369a99a809a385ea531",
+        "2": "ff803073983f04ec37e4ea80b85a6c6a25336faf1dcc5a05e83da170d1170e86",
+        "3": "bd3c4cc7cd48fc2d58d6989d3d60560c07bc6d7cebf184b4df775b8475eeff24"
+      }
+    },
+    "reversal370_ETH_L3_H04": {
+      "name": "reversal370_ETH_L3_H04",
+      "fingerprint": "3b7f0d6abf5770fec1041a6afaef3d16b732ae3c5486984f026870812fd067be",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L3_H04.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L3_H04.json.gz",
+      "archive_sha256": "c832eed39393e4182f6509b389549af516387baeb3d6564c2682d9d2a491b376",
+      "asset": "ETH",
+      "scope": "native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "296e8aad49439aa12baa2c68c49f67e398b6a40223aeb87817c7361d1b3124f8",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "4357eea4832228659f65e4577885f967242e81afe22c611cf37d5239decce2ba",
+        "2": "1955c6046481dce94097076e24c17ffabd4f34705ae3083dee34a1449307878a",
+        "3": "0df53769c4625bda38c3fbd6846149aace1cc520685bc4e8186256ae64d40ba3"
+      }
+    },
+    "reversal370_ETH_L3_H06": {
+      "name": "reversal370_ETH_L3_H06",
+      "fingerprint": "87bfc907130daff4ef215acf068cd4c308422e7e977341e1fc87584406a30cdc",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T125437Z/specs/reversal370_ETH_L3_H06.json",
+      "archive": "research/experiments/20261025T125437Z/results/reversal370_ETH_L3_H06.json.gz",
+      "archive_sha256": "900a08a08e2cef2b42f11ed3215596d1be0426a8185bf71d7c364c71ee5fb208",
+      "asset": "ETH",
+      "scope": "native",
+      "report": "research/experiments/20261025T125437Z/report.json",
+      "report_sha256": "b25a984ab6347779991ba98f42057c2b594189f7185c3b9f7589da6c356ebd69",
+      "spec_sha256": "a0006e6b58536d12a711f39a10cdbe6a6f61e128db8f048929228f44632880f6",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "bf14ebf87c166dd577f0ebf485ba55e1488642a8f433cd04d5b7e59f19a88872",
+        "2": "7d6761fffc7a6dbb1404db36ea08dbf7750b58c9f3fe19c485993856c07199e8",
+        "3": "8ac40ca4966930669edadcfcb9e1d32a10d8729c55520a9adac3a759a2de99e3"
+      }
+    },
+    "mixed370_BT_ER_E050_L1_H02": {
+      "name": "mixed370_BT_ER_E050_L1_H02",
+      "fingerprint": "5384a9f406ca8643ada20cdbd182b97882e0080016f155cbfb5bfc7ba93d6efc",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E050_L1_H02.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L1_H02.json.gz",
+      "archive_sha256": "06f47790dca8efd98d1620bdb2c5c2454a13877d354974e1db3caafc95dc07b9",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "b42da3ed64c4e4a5b5b75b7e88c6b3dc89fe3072eb85115fa23b58036f92d304",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "71c827c69867f44124f7b3f6ca5edbea6c48dcdeb4b7b56df5881f16dfefd3bb",
+        "2": "d9f495f2a1756726f290a19041420adfa0bc7aade518b0e12a4881ff78b1f57a",
+        "3": "82afc564a76fe637dc1240691494f97d3c51b186708c6fb8fd71119e62d7b429"
+      }
+    },
+    "mixed370_BT_ER_E050_L1_H04": {
+      "name": "mixed370_BT_ER_E050_L1_H04",
+      "fingerprint": "c335cf9e2eb4f974fee3cfba1a83b457036a348595abf62d295027be11baf9a8",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E050_L1_H04.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L1_H04.json.gz",
+      "archive_sha256": "f5b4b024a39e97e934bd36608c24009329cb0cab0840459a4139401253e06d4d",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "1b0a8a3b671b9bc624e64b091ef6138e97dda3f99eac1e8f6197129b7faac166",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "ed4368fe4b6b506a82f9d59dbfcfd2c9784125998c82e180adb87d35cf77fe79",
+        "2": "026e30246e55127ae479f508af1e7d0296f2ec67f074cd7bc999e6bad6268d7d",
+        "3": "24facd715d12d128d0cfa6920fbe75232bf28d30432be231bec7edf629b971d8"
+      }
+    },
+    "mixed370_BT_ER_E050_L1_H06": {
+      "name": "mixed370_BT_ER_E050_L1_H06",
+      "fingerprint": "de5d97bbdeaccd8408f941c2ee507986d0b3c0a813c1ba5ae74336c3e5cebc6b",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E050_L1_H06.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L1_H06.json.gz",
+      "archive_sha256": "807a0b0716cc0b007c91aaf1d1ff6ebe2ad6b1823cdb79ba02624c294e1714b8",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "0eebaee2a2895e0d56764da8f4bdab657d5954d740071042a475005ac04c8a6b",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "bc02ec347211381deff31e1c00805235e5f92d06826681baf99566a8affbdb51",
+        "2": "d11bc1d376a59307e973ce7819253951253fc71c7cf80cc558314b2ff11b563e",
+        "3": "0eae51e29c7c1a993e77afb710e8800e94e406144362be05e1d724cef9a3ddf6"
+      }
+    },
+    "mixed370_BT_ER_E050_L2_H02": {
+      "name": "mixed370_BT_ER_E050_L2_H02",
+      "fingerprint": "2757b27774c520e83e9e5663395a3c20c46beeff7055c472a5423c4393427da3",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E050_L2_H02.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L2_H02.json.gz",
+      "archive_sha256": "0ca497c7a4030b0e5aa66d08ceacc8a223b31e7c339ae7531fb87498999030d3",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "42e7d9541c332897677e4990ae77f438bd51656c92f153a67f8b327168a9b8ed",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "061c61f5370bf3959fe02436196d65863eeca920ddd297483f18e17355b802ff",
+        "2": "2efae9da656e28fee6d2c7a2a33c36408784a2d538e4b4170ba2dfa50a19d040",
+        "3": "bfdd28862707ad70db423d71f0e38cd0b2aee3ed066595e7e3358b3a43cb2d80"
+      }
+    },
+    "mixed370_BT_ER_E050_L2_H04": {
+      "name": "mixed370_BT_ER_E050_L2_H04",
+      "fingerprint": "571948c070d453beaf4440ead665b08cb988b45ec30e539bd6a241a03a356e81",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E050_L2_H04.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L2_H04.json.gz",
+      "archive_sha256": "d5e552bd123a40439642c17c339b4af20d2967b184a2b91ab1543e32ff93f938",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "88adaee146017ff25a4d441e7977505253b2a3301034ca9d4b42d2aa73dc2658",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "177a4097f6519553c76e58bd25502d802875aa8822bb07304d72e6517923a1f9",
+        "2": "71fb435c155e193aa0dcee2835dbe896b181f97227791de47f5755b75ffed5b2",
+        "3": "2af5450c5c2141fc4cecd227958fe102cf5bb984ab3bdbc19ec895915c5fa1de"
+      }
+    },
+    "mixed370_BT_ER_E050_L2_H06": {
+      "name": "mixed370_BT_ER_E050_L2_H06",
+      "fingerprint": "912e45db0241ff1292ae66f23cde0413af01a4f1f53c799f851b96d7c31658b6",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E050_L2_H06.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L2_H06.json.gz",
+      "archive_sha256": "190e58225e80866875c13e4969142ccb2c35a4bd19e8249e3a59d1c3fb96b0f2",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "d16eae784339e0eddf6dc4d270ddc0c24441accf3e584aff43de9a802474425f",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "f53964d31270f265791aed1fcf35a1642922eea6eba2f1709239608f1be3b7f5",
+        "2": "7b9078b381dc2588b2a72ebb106fcd96f10f63ab43b6c1cf31c588e1cd95d523",
+        "3": "7c058cde74b8bb52d7cef74f8e34d149f731334fc3f84179338a0d69504ae9ae"
+      }
+    },
+    "mixed370_BT_ER_E050_L3_H02": {
+      "name": "mixed370_BT_ER_E050_L3_H02",
+      "fingerprint": "aa062b8de3bdb1815d83b91397ae4f556754ef1990be35fc24fa41722ea8e41d",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E050_L3_H02.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L3_H02.json.gz",
+      "archive_sha256": "c21bb7b07f30065d220c8727be2711200ff890e8efa13de281031cc7c9113839",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "ce0e0057797eedafb55a1b6986baa8ae64a1a55ed5e5a73dc1bc799f39084cca",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "285e94e26070db1e94f3ae2d65607557c627709ca802f7edd566269313ef5d13",
+        "2": "52a6d0349a7db9690f38085c94a5db528cff3701a56b6954283930e067b2a5d5",
+        "3": "b3decb935c1f29866e1dab0165b1d344db837018d9b6b93325a4ffdd4a9878ad"
+      }
+    },
+    "mixed370_BT_ER_E050_L3_H04": {
+      "name": "mixed370_BT_ER_E050_L3_H04",
+      "fingerprint": "d81ea1d12570f3427eb5ac8761347706ca26ac58db1856be4a233de7c06cbea6",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E050_L3_H04.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L3_H04.json.gz",
+      "archive_sha256": "cb0b9f8d92ee5eccd74d6455205df5b5672bf9e14a61cd3e6f05934ee61b7473",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "1287dd7af244b1c721953c82a0a63d7f4fb567a97d251341dbdc347c2750f283",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "05f3520a3395d21c62bc33aa3fd205a927e2f697d4e86a84d4bbaa85e2481d67",
+        "2": "263d2431e9b85b5c0aa73d75eeee86bfd91a20e70bba5ff99dcc8d09e9821d7b",
+        "3": "c0c6612f8721aa6f879f37c5f75b1985ceb0b21115a22e26622aef2e5ad3066c"
+      }
+    },
+    "mixed370_BT_ER_E050_L3_H06": {
+      "name": "mixed370_BT_ER_E050_L3_H06",
+      "fingerprint": "a19d50a614a8b8a23af52f232a4a7bb6a5cb344f2098ff3983ed73815f12f0f8",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E050_L3_H06.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E050_L3_H06.json.gz",
+      "archive_sha256": "64745e64f246cc5734d1c42bcfd0cffb454142549a2636681b4ad01152f87e5b",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "5bbbab3a819017646bb130f26d0b33f607e1ce6052560ce0ef9d0a2ecb4656a7",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "62224d6dcd7b6b17c4a92e2963cf83438d106ab367b423b82425339cc557c05e",
+        "2": "e417fe935016a533448cbe15443efdfeb7b268062dd9f8b429d5496dc653fc7d",
+        "3": "f6013b984d07ef077cca76d30c018f41e4e62ab56f0334575fa94980084894f1"
+      }
+    },
+    "mixed370_BT_ER_E100_L1_H02": {
+      "name": "mixed370_BT_ER_E100_L1_H02",
+      "fingerprint": "d61614ba01f4136c8386c81fabf2bdbc322910b2a457aaa7d1b058fc5c16927b",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E100_L1_H02.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L1_H02.json.gz",
+      "archive_sha256": "0de4049fb6f012c9b6922aea3126117f70f26356ed3a06e648b30c50eadbcac2",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "d5bef63ceaad99c22e2623acd07ac160c5171a12ef4115ea7b689917fa7317ea",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "1f0c32f4ae6398525462b7ce3376a02249e37d08b3570b1fd25e80411c366587",
+        "2": "e6745409402c19626b844ee976d66df4976629567a46db2a983a82d3ae568587",
+        "3": "704acb528e5c2cddd111c63a1d8af61832339fb792f2d5254c717e9b5e011f50"
+      }
+    },
+    "mixed370_BT_ER_E100_L1_H04": {
+      "name": "mixed370_BT_ER_E100_L1_H04",
+      "fingerprint": "50b5665c72e52cfd98dc683d890ac04125ab86f9d47f3ea882851e4b79d2ee04",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E100_L1_H04.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L1_H04.json.gz",
+      "archive_sha256": "a0dd617a5bf16f7e10e5d96db2ec5ec1df7f4035f5ed206585c16e41629f53cd",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "c728610028178525a199f357a1298a764f2c49d5b01c12aa9439fc1aeb3f3043",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "be81bba8aaad5f106483497a76ef681cbe4d1ec48b54ac563024377c084fae3e",
+        "2": "6f021db881c0f539d15769cfacf15ea7c205862205f69719c751b21b2c41ad4d",
+        "3": "3a71178e21d2a3579e8a10194fbb15ec49b310db6840e64ebe0a93abcef1f93c"
+      }
+    },
+    "mixed370_BT_ER_E100_L1_H06": {
+      "name": "mixed370_BT_ER_E100_L1_H06",
+      "fingerprint": "d80ce0393867d270cadc0ca50981313651ff932ad1401924e2f08c333aeded3f",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E100_L1_H06.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L1_H06.json.gz",
+      "archive_sha256": "783e34f8c7bb92ccbd78acffc813ddcc2eb79ddf8d905ff75df791a345d19bf1",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "66bcfa8290a32ef627683040d77c9c9a7d380562bfd2798d4ae3871d3a9a9532",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "942c0189909f13306fefbf379762fac9c46ae568301e6efb4f8832b12a0e87e0",
+        "2": "993d63191e127be0ead1490af1eb4e673e8f5bc82cda560933013ade0feabeb9",
+        "3": "a18ede75748bf81e03991dda6471052497550777ffbc3e7162670b13032692fb"
+      }
+    },
+    "mixed370_BT_ER_E100_L2_H02": {
+      "name": "mixed370_BT_ER_E100_L2_H02",
+      "fingerprint": "3b8aca358618232f21e1e2dcb7890b026b5e9975e7d95f7dff22897c27cb02dd",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E100_L2_H02.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L2_H02.json.gz",
+      "archive_sha256": "fe41ce51bc24f5ff2054e2eda251909f9b209d36a80cfd91910927f7e40baa9f",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "40e736352620d1330ceab965112b160d636212e53a140b993567acf05249422b",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "64f9554d06b7883fecdd2578ba268ca4d7319bf54a44786f9bea2af3d316a955",
+        "2": "dc83105ba69a798ef50dc54eaf122707414041419f602cf73e612f20d98890e8",
+        "3": "553aa6cd38ba9a2021107f5175c4018f1a430e74a3ff6111543c576db09c5fe3"
+      }
+    },
+    "mixed370_BT_ER_E100_L2_H04": {
+      "name": "mixed370_BT_ER_E100_L2_H04",
+      "fingerprint": "06b811850b0f35ecbeeee89c5c32bd4652ced02c6b49390e19262748f7ec51d1",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E100_L2_H04.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L2_H04.json.gz",
+      "archive_sha256": "d3ea017b180c2097bc694ede58719f90d85919c555374d56236bea7a874ff11d",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "6d1eeec2f5643d277e493d3d669173e32f5316642356045f0d890fcf5d5fa08a",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "ba7f2a572125877c054d5c6afb7ce979976f6154e04731f744453b95d3fd8125",
+        "2": "676341cc9979dfcab251dfc22ca7dda338b4cd4474e2d8bdfc9543fd218faed7",
+        "3": "4cd81913e4cb705796befcdc8310c6fb580f4b47e0b419dfdb12fbb49264a52c"
+      }
+    },
+    "mixed370_BT_ER_E100_L2_H06": {
+      "name": "mixed370_BT_ER_E100_L2_H06",
+      "fingerprint": "8fdb2bc005d8355455a636cb9224648e18b93c6cbf81c55881a27a90c2b7c097",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E100_L2_H06.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L2_H06.json.gz",
+      "archive_sha256": "5efc6f1cb31a5783cd630def95172c49153b306afbe95c40a2d7558a36fa3ab2",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "105059a1d067aac0430fbdd791f19c79515b0ceee9db4515469314b5da6d7e00",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "d8c6883bb1ef2c686ccfafa09e148bbb2c6a194502721dae10143fef7dfff012",
+        "2": "3ae3a7e3cc68cd44cb3d141b9f0ffb2dd4cbe69722aab8d027846de81006750c",
+        "3": "66589736526a5269b619b96e49bfd4072b52c117008e27180598097483eadf12"
+      }
+    },
+    "mixed370_BT_ER_E100_L3_H02": {
+      "name": "mixed370_BT_ER_E100_L3_H02",
+      "fingerprint": "23176971804c5a2c2f395384e89a5975225cf10c8bb380f28d87660c10065727",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E100_L3_H02.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L3_H02.json.gz",
+      "archive_sha256": "34c1796e361175bf0c7051fd481996096d9d7c55622165eda7f58540a95213b4",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "54441137b024869721ea33bc6db21f540b08e362cc66c80883b8c225f12c6cb4",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "a2a1d7bbb40f919545bfdba342df30d546d39c87e25a3d2df3801528fe08d71c",
+        "2": "4f6e6458761228a04e19c96b6556457b55e5d3ff60aa5c38224479d1d26b5c9e",
+        "3": "bd3a3da01db84399506f1def80b78ecbe65389a71bcd4edfe75a284fc18a7154"
+      }
+    },
+    "mixed370_BT_ER_E100_L3_H04": {
+      "name": "mixed370_BT_ER_E100_L3_H04",
+      "fingerprint": "b7d0717d155e736482ba6d43abb2e6c9908fd771d332086af943bb0a14696368",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E100_L3_H04.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L3_H04.json.gz",
+      "archive_sha256": "db31a32fd35c6cec1fa5c76a13607bffce0de3b3dff73150ac609c0660008f88",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "4fb180598fdb3e423ed34ac7c4d14af7de71a16292a821dd40c8643063359c64",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "544ae16859d93b850d3b18d715e84ef86c778a94c8c170b89098ffad45480d46",
+        "2": "4e8c02e662e1a0f85292dd78c5fb9953b89e1a1184ca70b00b019804ad0fdda9",
+        "3": "0de02753e38f5f46194c951a261cf6e5107cb67cc9f1da542734ca08ca4210e2"
+      }
+    },
+    "mixed370_BT_ER_E100_L3_H06": {
+      "name": "mixed370_BT_ER_E100_L3_H06",
+      "fingerprint": "e75a94317733d9920429c64325bd9ad3b53d64847dc164aff3fcaa839f11f257",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E100_L3_H06.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E100_L3_H06.json.gz",
+      "archive_sha256": "043355bd853320b454dc8bfc884e72ec38e65432619f7d958a0540248f8d3df0",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "6f50a20f7ed440322988f4318e72f31c687eee593d31b238a0eddd3f47ad431f",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "d6d91f3e84750884251fdf1a28a91fbe73c30585885d37b376735796a74e2cfa",
+        "2": "f57fcc66a940b6bec33b0253171d6d748ab377ca2d648a8100e71f70bb4b6a1f",
+        "3": "b20d864c9723aa23659c06f99e95e144f527bde90d0c1527c308f8d194255b2c"
+      }
+    },
+    "mixed370_BT_ER_E200_L1_H02": {
+      "name": "mixed370_BT_ER_E200_L1_H02",
+      "fingerprint": "a3183ab32504fbeac0044ba227d750f8382325619ecba65e90193dd5f1b5d708",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E200_L1_H02.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L1_H02.json.gz",
+      "archive_sha256": "49b988e038a10da097b58bfc4800b141b87384c6dce049a8e76b61cf39af2428",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "726a344e608cb2ed0614f28f06df88d85346ad7c867e6298822ceb9d6201161e",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "62b87ff956121d95bb05ccf354a78b22f4b1b2243dc64db79ee497f3142aef9e",
+        "2": "f3274a5672a9669cd82806bcb0af97ff5748b5db5672db1f1ade8acead23d9ae",
+        "3": "01c9ba23be2b316ff46a0449b27a7fcfe27cb68ee25fb7b1ecb9a182ac01f089"
+      }
+    },
+    "mixed370_BT_ER_E200_L1_H04": {
+      "name": "mixed370_BT_ER_E200_L1_H04",
+      "fingerprint": "b810ce6a07ae40d7f4ee0e610a77724b2ccc99dca514c8e6e0b88efbcb304830",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E200_L1_H04.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L1_H04.json.gz",
+      "archive_sha256": "f23bda4fdb8f3af6f6156ad0c3b008ef8a9470140542e76071b3def52c8e58ce",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "7cdc17aa8a6541df92655548b7993871e6268894f478eaa0d5787ab2d7c56846",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "ad77546d3ed1d2327ab76b5eb19e8a1760304395d295f928e6e55d60f807d9ba",
+        "2": "c74d83c5015c4192068a65eb694aaa47d391c5c2cbe9c7925a9a675af06c5d61",
+        "3": "b410d5f9f3ad7fa82c225ecce3fe37ece0408205f4caee12bc3c87835201ca5f"
+      }
+    },
+    "mixed370_BT_ER_E200_L1_H06": {
+      "name": "mixed370_BT_ER_E200_L1_H06",
+      "fingerprint": "9aa114fb7eef8af253b4978b3972a2cb67d4478f129100c45ab649b6886fd759",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E200_L1_H06.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L1_H06.json.gz",
+      "archive_sha256": "3f90cc68895adf44210f1ef18df9ae514feb78938a32bae79f6296be7cc7ef18",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "43240fd8bf46c0f0c69ba9f4630fc02bfef3b91eb07685ca1cbb7796f3d9d9a2",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "26fd56fc0eea5b7e7fcfe42b87dab4e2fe784ac4515313f7f5d9dd74d3972773",
+        "2": "0b558b55e746f4d186fdbc7d7e5751cc94cb104a76679cf91bfec81d76710669",
+        "3": "50885881fbf8974d2f31e6b1f639bf350c5196d2ee524e1fc8d9d899a0ad91a3"
+      }
+    },
+    "mixed370_BT_ER_E200_L2_H02": {
+      "name": "mixed370_BT_ER_E200_L2_H02",
+      "fingerprint": "c1e814d3e1fe93ccf2f41402a9d084b26ad20f8faee37cb5768d3bf0ca5be0b1",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E200_L2_H02.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L2_H02.json.gz",
+      "archive_sha256": "10c61f8c946d464d91baf1d0b26a3696b87f9e350dbedef8a04adf36ea83490c",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "e869ec59ee3d51bd404bd57d40acfdf4d7e05ef021c047de17b059f518f197a6",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "891d66d67c3bb23fff91fa664ff3dd94e5acfbfbe12cd2207c48b536c931c1a6",
+        "2": "cd2458edde8f8bd2276506383875de83195ebeb24b5844d1acc18cd6ff84390a",
+        "3": "d671f27955a81b559fe389ff1d62d3348b51e537cb376ed36470f51a744c4758"
+      }
+    },
+    "mixed370_BT_ER_E200_L2_H04": {
+      "name": "mixed370_BT_ER_E200_L2_H04",
+      "fingerprint": "cea7adefa3b3ab6da9f2d38979f0396c7ab8160c0ab2771ce17af3fa04935fc2",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E200_L2_H04.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L2_H04.json.gz",
+      "archive_sha256": "4bf5c70c3f25ca814c9186934c74ad0506fed781cfbb11ae29159dd18251b2c4",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "d66a0b3725702ba37c061cf86223672545e767725dd5540a6109612c870d5904",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "dc7d582ce3fd1b5e71bd7be1b8ee16b5c045a2c9b8ea937307cabf36e0c4a1d6",
+        "2": "fd9cb37c431ae5478cacdc75bcb7d0f9b47403c96e050bcd04835f8b43c51c69",
+        "3": "d1485bed230ddbbfc3faa9ccf9becc06555aab6fcb95731b6b3d3c54527834cb"
+      }
+    },
+    "mixed370_BT_ER_E200_L2_H06": {
+      "name": "mixed370_BT_ER_E200_L2_H06",
+      "fingerprint": "a319fa99fedd7be75b2151f0f0dc69a799d15099fa1231d34883362cef4b24c6",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E200_L2_H06.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L2_H06.json.gz",
+      "archive_sha256": "3a6321fcc24627a0ebe3668e5592ebe9c126234ca6f25fd66279bcbe24a10354",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "6b7446cf73cfa7911d898abd6ee0f935d16f31dad08eca59f6a54a03572b2561",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "650b68de784accc472d1039a932ee54878b70cb0190d0bfa9ae032171d875156",
+        "2": "bc136be177f6b374984153e0a44ba655640bb6cee6c3a5f983a8bb008e0193bf",
+        "3": "038b141d55f1fc627f3147a675c9e3e3a869b5b2a7356b3bdd4adf5f1893492d"
+      }
+    },
+    "mixed370_BT_ER_E200_L3_H02": {
+      "name": "mixed370_BT_ER_E200_L3_H02",
+      "fingerprint": "f7dfcf8f7872a514aa0764f9b98b953a913852a29cb61232600c3f902e70e742",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E200_L3_H02.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L3_H02.json.gz",
+      "archive_sha256": "c5431e12f68b326ca52cb69e61c370c1532baec99792fece14d683e4d41753fd",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "11ca1e4b149db679bb60d0a48455849a7845bea2bef2419b281218b52752d98a",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "154d12b699a06113c9f7c5781fb982b0306a85c9cc4eb0b384c2f94efa6ecfda",
+        "2": "5667328b5f41d175e3edf1eac2972d2eebf436fdd47b119e98746f96ecb551f7",
+        "3": "29c15cbc517b7b8175d30e297431f4f2b778f60847235756c7e50ebf2de278f0"
+      }
+    },
+    "mixed370_BT_ER_E200_L3_H04": {
+      "name": "mixed370_BT_ER_E200_L3_H04",
+      "fingerprint": "27bb577f4099221e3ea5bd50b71c96c7398a1d6d06c67da44e2c72fd23fec262",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E200_L3_H04.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L3_H04.json.gz",
+      "archive_sha256": "130f2a28a64db77f84b6141e58d2519bbd919fc99ff45c22e8984dfbffc94288",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "e37b4735d19dcd51a5af94ecd0459ec6f1c1cbe05ed5865a4a8b4243ac5d5bb0",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "675f2fcaa52e1ba12a755c720bd711d11d685b4504ef5739a04c42677f843392",
+        "2": "fb0d8af3761f9b1c0d6e7308a476da88c121d2ebaa1143494810aaa167481cb1",
+        "3": "77f2b05385480961d04ac7066067b59351f78ad7df6db6f4778c7f8c3ff0841a"
+      }
+    },
+    "mixed370_BT_ER_E200_L3_H06": {
+      "name": "mixed370_BT_ER_E200_L3_H06",
+      "fingerprint": "c8a431b14cdde7c2a0408407613e067e8304bd04b7038ef0b93b466b598db5e1",
+      "role": "candidate",
+      "spec": "research/experiments/20261025T145537Z/specs/mixed370_BT_ER_E200_L3_H06.json",
+      "archive": "research/experiments/20261025T145537Z/results/mixed370_BT_ER_E200_L3_H06.json.gz",
+      "archive_sha256": "72afaf7a22e8506c2280911e50e6ffdca6edf91b4d04f4e4dab1e79ca5feb76d",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T145537Z/report.json",
+      "report_sha256": "b0fa51dbc3c2f3285a9905e47861505016a733f61f7697106cb79646bf80c569",
+      "spec_sha256": "d8a5b58d60df683e91da5fef85b3a18917c52f0f6231bcdb813aef5cfb61b7f1",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "88c85892675692568b6ff1bfdcd08003b283fdc5c24f7b0310328031d93f4166",
+        "2": "18e9c7d59a9ec4a7900dcbb93871b2738a85f1d5d93a98c748dcf5f8c5d319fb",
+        "3": "d96e6af09d0853a2b6ac42b33f75118ea6eeaf8164ebe5a2e08f48f1324dfe58"
+      }
+    }
+  },
+  "readonly_hold_controls": {
+    "native": {
+      "name": "extended370_ETH_L0_H00_E000_N2000",
+      "fingerprint": "cdf263cff49d32d681b465cfd64ccfde6e5c01257fbda45ab13a29a85094469b",
+      "role": "benchmark",
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L0_H00_E000_N2000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L0_H00_E000_N2000.json.gz",
+      "archive_sha256": "1fb47f08d9f9be7128b7aa0121948c938973463f7fea970765dd1437ba419e09",
+      "asset": "ETH",
+      "scope": "native",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "160ac1b3d629da8688bf5d5cf8c9ce60e4070ff5fb70e537a062f7be514aebf5",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "1851a43feb32a02181a1de02d14a43ca1f3a88c6365d3b1e7b7c9c0292b9055a",
+        "2": "41ced0857a4cb6af8954ecfa83dcb709bd3a19be7fda604d705c26162ca7bc2b",
+        "3": "06bcf042cab5b7577e408a2e65b8e35f242484e4cc3370650c86d3448bdf0dd3"
+      }
+    },
+    "parent": {
+      "name": "parent370_hold_B2000_E2000",
+      "fingerprint": "97f687b5fc562ebc7a442cf7ca7ff1908b1b05a2a858fdf0fcc8f1f482780d0a",
+      "role": "benchmark",
+      "spec": "research/experiments/20261025T085436Z/specs/parent370_hold_B2000_E2000.json",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_hold_B2000_E2000.json.gz",
+      "archive_sha256": "4c944d810794943d407ad545e4a32061f63c3c37be0c7d9ed7abdf83c93b9356",
+      "asset": "COMBO",
+      "scope": "parent",
+      "report": "research/experiments/20261025T085436Z/report.json",
+      "report_sha256": "d0bb4fbbc1f4b7e7018f38b4024f1e70f57c93528b067267441439bb4b240103",
+      "spec_sha256": "41461c1c6eb1dfe603a82a97a4f73d1d0bddcf80c09630dc5476db0eb853e90d",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "33959ccf2ebfd7645fb9d3af22b49d5f5305c92ad2792138ccd6121d7c8d2b43",
+        "2": "1b4d7e51e963cdf1b7ea12d829584fb94ded34eb3bdff3629300078016e7893e",
+        "3": "11c394f55980b2b3e0a8e45c97042ddd66dc5eeb5e55cb820e0c01bab750e063"
+      }
+    }
+  },
+  "new_results_for_reuse": [
+    {
+      "name": "gate370_ETH_S7_L1_H02",
+      "fingerprint": "c3a18a783138cab87df0344ebfdc6d3c9ba5063fbffe69661479fb64922ac3e2",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L1_H02.json.gz",
+      "archive_sha256": "79fa22a05a2988c618494d22aff30bf2e1ca88f03694d3c5cf11b5a63f27d9f8",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S7_L1_H04",
+      "fingerprint": "c7581e210818dba245fd2e60cb7dfb8a0adb6a9340a5fd64eadbe04e4abaecde",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L1_H04.json.gz",
+      "archive_sha256": "f0a9847eb5c29153e6184e23f34c9cbf8d544ab857f71e4e72e376f6b787c2b9",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S7_L1_H06",
+      "fingerprint": "a8df3f2c96e11b0093db0c299ed8467b5b4af2036b2ee8f75d6cccbd310db093",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L1_H06.json.gz",
+      "archive_sha256": "a55b69ce212a0ed602fa95dde51a0b66a6375b3834c8f17e14e51fe4016ab96f",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S7_L2_H02",
+      "fingerprint": "feed57ebe3655d91bd9f09f92dead17cd5c9756e4e9d044211d5c107309bc64c",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L2_H02.json.gz",
+      "archive_sha256": "8b4cdcb4c0bf183e6744d4db61c1eb9d6769dabed21defbb8b6a675801592d54",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S7_L2_H04",
+      "fingerprint": "1bebc4596bf2ace4d6dec2f4ce7f0d5f0124d7625f95a7c8d5e5b66c10659fb3",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L2_H04.json.gz",
+      "archive_sha256": "22b2fb40e121aaf08ac58ec6a8da3a8dcbcf50ac811c2040d9bb08dd37392ac2",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S7_L2_H06",
+      "fingerprint": "f11632ed8d95e668e7e71551656c9f412729dce75ca45337731b17cd6edc3048",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L2_H06.json.gz",
+      "archive_sha256": "a6b5b68f236df0d597fc1a62c13e27814f2b07c9ecf3d22230274bb68ac3a2fd",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S7_L3_H02",
+      "fingerprint": "ca2f93ce8790a1793d57a6822d9dd3d1423c37358787099276354370a8f585dd",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L3_H02.json.gz",
+      "archive_sha256": "569111ac8aac9b756c5da0f624a15688a4614084249f15e49f26d82f15e8c048",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S7_L3_H04",
+      "fingerprint": "ccdf57fd3d5e2023457520fa61c4a8c50561f5a2f214729da1992921e2a216e4",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L3_H04.json.gz",
+      "archive_sha256": "6a9686d5da7ef35183fb0af2c44111cfe903f56e0c4a25ccbaaa7bc3f5942000",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S7_L3_H06",
+      "fingerprint": "f2a18e0f93362f72a1bad54078e8c815d3fbfa21b2685ab7ccef69eca04fa1c0",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S7_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S7_L3_H06.json.gz",
+      "archive_sha256": "dcb4d07d2bee3f9d65f439782871b5f70f8c5ef1a1a96369e9763049866ea017",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S14_L1_H02",
+      "fingerprint": "ee9e7cb17eecd2c0485d7d9c122033885a6f93cf280284d7d0f8936ff7aa4cb2",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L1_H02.json.gz",
+      "archive_sha256": "1de06695d71199697dddd2827c2cc94d5e9bbecd34ee01f7a2777ddc40feba3c",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S14_L1_H04",
+      "fingerprint": "46dc56f1d8e3881610600130b5b06c166c7810e8d72f416481b465d9e8ff7e0a",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L1_H04.json.gz",
+      "archive_sha256": "2086c59ef3e30079b071b8b3a0ac2ac9f841d3768d46d544ebb9f4205891db50",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S14_L1_H06",
+      "fingerprint": "d5e03e4549d9da1bc497a605a4c992db2689ae50ad0fc195c836e8e98065427f",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L1_H06.json.gz",
+      "archive_sha256": "d6ac6a9edc5443169db6d18c016dd887d38943643f3b8a6a3e8a081428a1b5eb",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S14_L2_H02",
+      "fingerprint": "5214dbec65ba9885ee59ef531597b801a95e0d2115941066f9e645bd9fafbb57",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L2_H02.json.gz",
+      "archive_sha256": "5bc490a6c6914a047928596c3dbcd8b876e6c9c15540a89e0a76721841a5fbbf",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S14_L2_H04",
+      "fingerprint": "310f486925a449d22210ca071785279187b67df87bac4837352abca00c17997f",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L2_H04.json.gz",
+      "archive_sha256": "aaf27e8e3f3b854248075e0e44e68d2ac1e179ca5fe1a79fcda7804dc12b57d9",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S14_L2_H06",
+      "fingerprint": "bff07415188ab6d765bb2689a110a4d5136138f095e7251eb98a8e37e021d9c0",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L2_H06.json.gz",
+      "archive_sha256": "a50f6838b4c4e529438a6c82d93d71acdbb1e352adc19978709804c734c741ae",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S14_L3_H02",
+      "fingerprint": "2b514514efeaa55f3223aac0c8ee484ab9d2969af752450d99fa0e489a4460a2",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L3_H02.json.gz",
+      "archive_sha256": "2bb4003331262080e3068b979d473a3cc8cac2c167831cc260fe4a53507d1d1a",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S14_L3_H04",
+      "fingerprint": "8a2f07b4c135be95839e716111da31bf61eb22675a6016e227cc2a852d96f05a",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L3_H04.json.gz",
+      "archive_sha256": "64ee7f98320d9fca42021291e9cdb2899c80e5bfe60e3adad2bed219b240052c",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S14_L3_H06",
+      "fingerprint": "5e75d43bac190408c04df2271fbce176f6ba5640d1b96f485c91a557f7ba4d07",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S14_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S14_L3_H06.json.gz",
+      "archive_sha256": "96b47ebace0def566abceed0e9f8622d085e49a69c262a2ab947fb22ab066217",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S28_L1_H02",
+      "fingerprint": "35ea6a36576c239fa6ca1ae24aba0d46d1d4fe503626217a3e0540901ebe380a",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L1_H02.json.gz",
+      "archive_sha256": "83c9affc6b08f62c645d2c4d7a32cc357c3f032ff0de8838d635f00b9daf326b",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S28_L1_H04",
+      "fingerprint": "ad52144ad06f80f41185e5e9d0bd2e9503199879590290f6ddedf742a6b2012d",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L1_H04.json.gz",
+      "archive_sha256": "88086dfca73378ba7e1024f8408835ae6ed8618cd4fc0151d32be4696fa40f46",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S28_L1_H06",
+      "fingerprint": "591797a18ea09a6359589a1c75011e116ca33afd2fe6979a02cfb79a4e8b3da6",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L1_H06.json.gz",
+      "archive_sha256": "639188d4d75250cc53d2d71e44b22f7a3a2d89ea30a9f693b9510aced99abf1c",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S28_L2_H02",
+      "fingerprint": "8515c19290b9e22ae472b22d2775ba2cc32213a52642f38e6a48d55cbb5a89db",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L2_H02.json.gz",
+      "archive_sha256": "ab78ed6bf783aea1a7a0f14e2c984bfb3c400927c327776c57e4970e70dd83f5",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S28_L2_H04",
+      "fingerprint": "282a66a03edc91ddad6252d1885dc3e34e6e38008a7f63af110a51786b090f14",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L2_H04.json.gz",
+      "archive_sha256": "9848a8a3211ecf3c4855f89793d2f656d2e348e46915501221521d69d14e97f2",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S28_L2_H06",
+      "fingerprint": "7ba8a672303e330c0f8d406c4394148e1628f5b27ec90d338bc7e32ce772b30d",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L2_H06.json.gz",
+      "archive_sha256": "a758a25e23d011d795962ae5c6ecedf6f7c2a3db5c1ab0bccfc3ba65c2341b2b",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S28_L3_H02",
+      "fingerprint": "292f15383730b487dd83bc4b162979efd96505b81d44cc875dfe77660600495b",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L3_H02.json.gz",
+      "archive_sha256": "7116dcd5e811044dccfef5546c639ef238c4e4da94620279b6c452dc4e082563",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S28_L3_H04",
+      "fingerprint": "cf4e4b54953949e67e86f860740c35039b20b7df807ffedad2e9e6a4d20ae4ec",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L3_H04.json.gz",
+      "archive_sha256": "a545fdb82a75d20424005f082c620a85fda3189210a3d9826cf83d132edd9d46",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_ETH_S28_L3_H06",
+      "fingerprint": "a0a0c41c45767e82254490a02c7f840741e140cc5230977dd023813e20b14623",
+      "scope": "native",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_ETH_S28_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_ETH_S28_L3_H06.json.gz",
+      "archive_sha256": "598c0930edd7f159280cb74136e55f03f4d6775c72e1b8ba9ebdd65cecbf741e",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S7_L1_H02",
+      "fingerprint": "5f538c39eeaec301fd418570e5fb2f274baa9a55c88e89a5e90e90d287324858",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S7_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S7_L1_H02.json.gz",
+      "archive_sha256": "3b9751bc10162743388c4f5fae97b3bbb7a52cfd1d180852b2c149ce7e3f07af",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S7_L1_H04",
+      "fingerprint": "bd2384032cdf2fc3168416bd4c61c38f5760def9703bd3f942fe66c8c5dd61a6",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S7_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S7_L1_H04.json.gz",
+      "archive_sha256": "9265de8113ad103e994dca129de99d6077e66e39bfc171e2a3f31704dbc4692c",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S7_L1_H06",
+      "fingerprint": "d9948b0e2317c28753e2728cb307c25f284b32f6784fbb83fddb24c21aafa042",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S7_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S7_L1_H06.json.gz",
+      "archive_sha256": "4f98760e2c033e17bc81a900652ba3aa659980f9884d1fcae30cde52f91141f8",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S7_L2_H02",
+      "fingerprint": "6955b564c46581aafd7845d5bca86374049ff80317dce54a1d4f994ea326d49e",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S7_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S7_L2_H02.json.gz",
+      "archive_sha256": "288d9f23479e4acd84c0cb489f6809090a7b9fdbfbb48a76294c382d4f791b1a",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S7_L2_H04",
+      "fingerprint": "2f092a85bf43806dd6102808f6e2cbfe90159b7a0cb474c709be19aa817352b3",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S7_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S7_L2_H04.json.gz",
+      "archive_sha256": "cb0b7fa3c037a7e99371853f837f83986d678eaba28edb87e1380ce4ee20149e",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S7_L2_H06",
+      "fingerprint": "0a3b4af58f7e435c817c6b853437bf1ec3dc461d1182062e45a14c771e97d954",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S7_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S7_L2_H06.json.gz",
+      "archive_sha256": "c7b9bebbfe9e97a17605a2b4770a36f4abf39aebe9990ede520c5dfae5991b15",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S7_L3_H02",
+      "fingerprint": "ecbd29f3c0b52b059070e3cdc1e1e6b5949e3794e3df509ff76aa56120a9d4af",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S7_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S7_L3_H02.json.gz",
+      "archive_sha256": "bdc26ffc88b5d65fc6a596464ceca1c9897167c5a3e2a59eb922f2dd381233ed",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S7_L3_H04",
+      "fingerprint": "3f1dacca7d4661c78e5d0714028a126bd280a025b3e5340233d9abf0fdedc005",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S7_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S7_L3_H04.json.gz",
+      "archive_sha256": "7657fcdf6e22762d3625ed951cb607ba0344166df82d57e91eb43b83e3f348ff",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S7_L3_H06",
+      "fingerprint": "f9d6f1fee3dece65979b660d0b18757f13ff2872fc1f61ba1404e99545ee7f3c",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S7_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S7_L3_H06.json.gz",
+      "archive_sha256": "aac07420e377c081066bf78282c9b3eaa46e9f1640ebdc357bb45be5a0efc005",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S14_L1_H02",
+      "fingerprint": "663a22044a0e2b69403412630ca96f872b8496a87f68b30e2ec0fbb51a7caba3",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S14_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S14_L1_H02.json.gz",
+      "archive_sha256": "75ca5e12b7d673b5c050bf9489cbe2c96f7b8c900b37013a7a00fe8f7b72bbdb",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S14_L1_H04",
+      "fingerprint": "b5c1afad91c0871d6812bcdd864c963651723c2f844d47965ac6a5cd1283b66a",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S14_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S14_L1_H04.json.gz",
+      "archive_sha256": "4b7bd6b5a303dad3a255d6ca515c8d07c49d2f6893d38e938f72c93e1065a07d",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S14_L1_H06",
+      "fingerprint": "56282ecaa1e3d782bfe337edd27a538a9f797241617aad568835dda715444779",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S14_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S14_L1_H06.json.gz",
+      "archive_sha256": "d016612bfc099758323e009744cf4791b41b54e0def16a9fae35a56841883b67",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S14_L2_H02",
+      "fingerprint": "18766813a09d4894a4add7210694d5fdedfcce78d23f116d10d6c7d86dbf36ba",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S14_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S14_L2_H02.json.gz",
+      "archive_sha256": "7b2eb5fc30084e24b47c1819beb799d8a1d9ea9932097a9f25a7f8c2c19e8294",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S14_L2_H04",
+      "fingerprint": "4f3cc1f6a17bb2279428097d51dd11ed9ffbc4e0908c935e2efffdde9fadd6d9",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S14_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S14_L2_H04.json.gz",
+      "archive_sha256": "35d559914677776591e4e50a460b0bf70ce1b5ebac1effcd44b64bc4a385d144",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S14_L2_H06",
+      "fingerprint": "dd6df23ff7ca2dfa6c07dcedc9cac6dee219ff06d34b382b6ef4e3d34505ed59",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S14_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S14_L2_H06.json.gz",
+      "archive_sha256": "2140030cb70cf0eefce11311f9ac2fe06404208c2884925cf1b35e6fbdacd638",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S14_L3_H02",
+      "fingerprint": "51dc407a7e6b27fb61945d50497b7c192a91e6a8c395cd1396887ecf0f7ab2af",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S14_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S14_L3_H02.json.gz",
+      "archive_sha256": "f997b1bd31dbb4a91e83ac953a40b4bd9b1bb1b8bb4a06d589ec3b3c0ba72794",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S14_L3_H04",
+      "fingerprint": "8aa8a11ae2db94a8de739167534c00e77b1b20eed5d4f4b229792056a5b20a21",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S14_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S14_L3_H04.json.gz",
+      "archive_sha256": "b426adef73e7fcc6dbf602e2ff17c89e6942d8d58e32947e6c01a981ce8c33e5",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S14_L3_H06",
+      "fingerprint": "76186fd11f58779559e2eabad156acbe39331faec0181f222f8c6165f9194920",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S14_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S14_L3_H06.json.gz",
+      "archive_sha256": "4ebc318738430671bbf56d481b35709272cffe302cef9ad6cfe7ce982e0f4583",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S28_L1_H02",
+      "fingerprint": "c5ab464ccf98406872b812f84906f7cb97e042fd968b06fdeec9f1d4fb315022",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S28_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S28_L1_H02.json.gz",
+      "archive_sha256": "7982d9964c6faf2c59cb71641d557a358e225fd7d77c133d47f0a0952427565b",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S28_L1_H04",
+      "fingerprint": "787880eb00b83b2cc06c875ff26f707fe47577b4308066175a61dfd8de61cbd2",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S28_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S28_L1_H04.json.gz",
+      "archive_sha256": "be55e1f1f38b209083221f52aecbca71a1303d7e0f9235fae39cb2cce169de84",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S28_L1_H06",
+      "fingerprint": "796ce77a6e8252ef762926f3ac7d432c81fac595177288b5a280ca3895ef8598",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S28_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S28_L1_H06.json.gz",
+      "archive_sha256": "92f5389275c6e9611f2aa94718f02ee295bf9becb7fb9bc6b15ad710fa42442f",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S28_L2_H02",
+      "fingerprint": "3bcb3409f12ffba8bef1f8611d3f61072420813ee0a9ce7be81cb60027b95a80",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S28_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S28_L2_H02.json.gz",
+      "archive_sha256": "c2d3cedf1d9ed28638a4b6ad4128e0bec888f851106f983af20a89ce5466ad18",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S28_L2_H04",
+      "fingerprint": "fad59f52bed5cf828aee1d5697abf2c3f27802cf60a99fb536bef7e7ad39cfb7",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S28_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S28_L2_H04.json.gz",
+      "archive_sha256": "111e2f262830c923ec6a4ee007929fffb051879178a6d97d08a071f4a6a06414",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S28_L2_H06",
+      "fingerprint": "1dbf84d25a4f3cecb78d74555aa1e0f970c8abe5a5fda2589b7b51544742be49",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S28_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S28_L2_H06.json.gz",
+      "archive_sha256": "34e3e98270f6a297806177f62ceb5abf983c7fc1850408bea22a82f4469aa960",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S28_L3_H02",
+      "fingerprint": "bf581bc298f57c9f792b8b7c3389a1986e50297db7cdc34975bd2386acf45fdf",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S28_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S28_L3_H02.json.gz",
+      "archive_sha256": "77b6305a732ad6258eb17c4bdfed20ccd5122f40d2ce92931e722b2840b6ae80",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S28_L3_H04",
+      "fingerprint": "42baab780df64f593c6ed7111c38100981ca79b01d60bbfc329c64e159f4d6cb",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S28_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S28_L3_H04.json.gz",
+      "archive_sha256": "4e96f2c10c2513ec18ff1ec63d8017661f5fe778bac21782a5aa3fca8ebeb1d5",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E050_S28_L3_H06",
+      "fingerprint": "f634091b2e376bf452f28be5dbf8fb0652cf51e5e0163d7bfcede49f15366921",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E050_S28_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E050_S28_L3_H06.json.gz",
+      "archive_sha256": "5d59084e7ca019d764eb8fc99a315431296607c54c632757e2a712260e3a0aac",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S7_L1_H02",
+      "fingerprint": "40cdcb2b4eff387d3660c5a0f9ad38a70e83317092bd19e09c3a341ba6435451",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L1_H02.json.gz",
+      "archive_sha256": "59d9db7d15cdc9385c1b5c8e3a96d17f53a489d14146f665689d885afdc8806f",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S7_L1_H04",
+      "fingerprint": "e2f88e5a2ec48c805230e1c885ca674aab81a0bec0b43c0e264311d9392a3966",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L1_H04.json.gz",
+      "archive_sha256": "3e99678c331cf6a32275e5cb4b6618324b2f59f71b9c90a4ad9dbd5e89c589f4",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S7_L1_H06",
+      "fingerprint": "e3d2ed62bcc4f20eda99d0cb0c02d53c5ed3633aa66f772f0ad29b19a9361075",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L1_H06.json.gz",
+      "archive_sha256": "7a356269a64f855f4c638462c39b75ca26ca3621d0b8e7e70f70999000a98752",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S7_L2_H02",
+      "fingerprint": "664fdce1f3f3718cf4790543256485a006fecc631adeefa24f8ed382e53ad475",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L2_H02.json.gz",
+      "archive_sha256": "f1f5fba5386e9c26da2c86212baf073ef3d8e858e587e68a3a4e26ffb5e9373a",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S7_L2_H04",
+      "fingerprint": "ea13d0daf655adc1d9a05c2df4443bcb4eecf923bf95c0e38a41f68f6aaca024",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L2_H04.json.gz",
+      "archive_sha256": "9c4616d3e30d21935d02a544408958a44544f631369d3254d0d3f26c60821da9",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S7_L2_H06",
+      "fingerprint": "1101e8cc28665d69584e10d29b7ce129626a56f14a1cb68519ff3780a9fa2976",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L2_H06.json.gz",
+      "archive_sha256": "e8a86d5286c30c03ce05b95452730b21fb1c347d949e1cf509578ac7d5539a02",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S7_L3_H02",
+      "fingerprint": "748bd8ef5f98f909009835ae01cb35f5a14501c96786eee88d1cfc7262cf808d",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L3_H02.json.gz",
+      "archive_sha256": "c591d59920572049bdc58135a6e93abd30f22f2fbebb4a9babc819c2d0cf8149",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S7_L3_H04",
+      "fingerprint": "f5dacfab884eb2d3df4cd7588ef4f1de65e5c2017d71855ea3a7b2b4726ebaba",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L3_H04.json.gz",
+      "archive_sha256": "e3ed9cdf8ef345402e1b82b619259574e622781bb997d1fa62f9f57589e41bb3",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S7_L3_H06",
+      "fingerprint": "c9c3b17124ebe179f44b62d19a10ef42260c1d22d065afe7d9e3a8df11200615",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S7_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S7_L3_H06.json.gz",
+      "archive_sha256": "21d3cd9cdcca75717c18103c20760e60760a7508f0bbc137184968ffebce4776",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S14_L1_H02",
+      "fingerprint": "89770014a67b6cb6e9c729205395c28a25664ae9abc83fe9bbc161340b77ba59",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L1_H02.json.gz",
+      "archive_sha256": "7196b60bbbdacb05ae0ed3e10ab334b3c9fadcba24daff163940e4302de48758",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S14_L1_H04",
+      "fingerprint": "39a13f32657c3d37121c5f033655759c2797774137e114736afc31a12d3d0acf",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L1_H04.json.gz",
+      "archive_sha256": "a331e8cf5430b962f062eeb3ed07edc91c49fc56a62021cd305c24c541574543",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S14_L1_H06",
+      "fingerprint": "48b70201468b9e7bebb61e4ce6e9c2dd245d6a9a7eaacd128aeebb299be7fa48",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L1_H06.json.gz",
+      "archive_sha256": "e77ecccaa47f473d325210725b68e5e53239e4885a3c2c05e05c98cf40750730",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S14_L2_H02",
+      "fingerprint": "6ce0f7119836343d18f785e441c5e327a0f6460c2f98fde62a052b146b4ee7e9",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L2_H02.json.gz",
+      "archive_sha256": "3f0cb7e99b98133cce1f408323e3967a92d35f075ad9f2913f304e6553b53cd7",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S14_L2_H04",
+      "fingerprint": "bab6ff3f39102ba4d891e804ecf863cd2d19e7b33e1b8903877c262e7513c21a",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L2_H04.json.gz",
+      "archive_sha256": "3d625dffff85f473cb36ddff06d61f50c4bae81940a17b198d82175afb7bb181",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S14_L2_H06",
+      "fingerprint": "beadaca91f500a67bc21ff257758808245359db22a2c8f546ad0ab3228932600",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L2_H06.json.gz",
+      "archive_sha256": "12c03305917fb668d6488bccc995f45e839041067b1c5a4fcc6872058054b730",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S14_L3_H02",
+      "fingerprint": "c0e6ff1b2277fe18e5d4f4353f404982ca43480f01500b2efd11629cadf3cd97",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L3_H02.json.gz",
+      "archive_sha256": "5cb4d5640088c1a4c97fbbb5c561df460022b5d609e61e6e9de0cb39fa6a75c6",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S14_L3_H04",
+      "fingerprint": "203bfcd0ca3b0f74d3018961b7563d3f8b1349a6c22342deb966db30c79b91b3",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L3_H04.json.gz",
+      "archive_sha256": "02aac68039c922ee33ab8cb1565c865f335bb4c1180cdd30c5114485badc3290",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S14_L3_H06",
+      "fingerprint": "acd3811273e2c13acfc0bf1d46f01d834cb273b2dd18e08805503027c5423b04",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S14_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S14_L3_H06.json.gz",
+      "archive_sha256": "2dcca2714bf584b559f41c0a3d6715c9ea85343e512d3d646816dc94ee44f524",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S28_L1_H02",
+      "fingerprint": "d26ba4e443192441f8ff563de721d2851c80240009a4965fedc9632afd6e3a9e",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L1_H02.json.gz",
+      "archive_sha256": "516de29a1b5d3325ee8d6573fd7903f7321ef5a58557f2952bffef3f80e36922",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S28_L1_H04",
+      "fingerprint": "4d8345f91d6675732fb699839c7e4daf5fa7d74aa05e24adbbbde497e3881de9",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L1_H04.json.gz",
+      "archive_sha256": "ad406e986dae026eee905086ff1dc0b850eb990358f618bc118ec0f5c4faacf3",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S28_L1_H06",
+      "fingerprint": "d56f0142d0fdd5f063cff7f8ea5eded32589d3820c6c9a79a7b5bb2a46511ea4",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L1_H06.json.gz",
+      "archive_sha256": "c57e7e2a1fedf8eac27c706e410d542b71a2b617e7522807f8269fa2c1c96e99",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S28_L2_H02",
+      "fingerprint": "b0f81cf875ff42958af449deb7034aba2741ff6610394222e81d2e1bfe25e8d2",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L2_H02.json.gz",
+      "archive_sha256": "c3e30be7d7f5bdd06681a58dcad21c06919cd94de437e90b76bc43745d1c9886",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S28_L2_H04",
+      "fingerprint": "e29712dcf0fa7e15bd801f7a83c4932eee10193ac0b43488c13d36fa165f6226",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L2_H04.json.gz",
+      "archive_sha256": "d2c111471886be97024522c9859dc690b40c47c6a1d0360d08a4404b83ad0737",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S28_L2_H06",
+      "fingerprint": "d9e80e9625825635947d0567910a9bd3409ab689daa1d62576f878962fcddaf0",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L2_H06.json.gz",
+      "archive_sha256": "f438c88dbb43e5479e47796456c1abb4bc7affd2b54301908d5454e2aa799455",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S28_L3_H02",
+      "fingerprint": "f9376a563078b9b507452ddeb8a1fa3d4abc6f4b002cec04d9617afc1e198c60",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L3_H02.json.gz",
+      "archive_sha256": "4e2ce661104f5e27a64f695b91b1a174731e7c02d459606059dbfc1c81e7feec",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S28_L3_H04",
+      "fingerprint": "62efb447e70b5df863ecb0450d0ad1477ea2c6d023014f2ba13bf71e8b9366d5",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L3_H04.json.gz",
+      "archive_sha256": "8121f54a590ae2ea4896e749c176828400b71dde9327a9ff9e7cca264b6fec5f",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E100_S28_L3_H06",
+      "fingerprint": "0eeb4bbf054d2753230daf3730ae78ae613e63a0c679ba530b6ef2aee51c3a48",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E100_S28_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E100_S28_L3_H06.json.gz",
+      "archive_sha256": "c2da359f4015d621905a40b802a910161ea9f9cb681a9df138f4888f5a7af8e4",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S7_L1_H02",
+      "fingerprint": "1abdf1dbb20f810528bfb7bd69ac4779e75b7a78311f00029c1a4abfcb8d5276",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S7_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S7_L1_H02.json.gz",
+      "archive_sha256": "380bbc94860a76f5f452f15faf3e21e3a5b0a3c3660ba576f378362566c556b1",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S7_L1_H04",
+      "fingerprint": "c808a8994265f1ac6ecfc7cf0a80b9cb235d5fefd531b4d70ef06aa14cbf2302",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S7_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S7_L1_H04.json.gz",
+      "archive_sha256": "ec50512d6e3df2744ad1ef401921093a1027754cf8bd7a7f32b60cf19a34dcb6",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S7_L1_H06",
+      "fingerprint": "9f82478c67765c7725b620140e874aed8b1b53d47f8c3f2f6cdcd32ea46d7b8d",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S7_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S7_L1_H06.json.gz",
+      "archive_sha256": "1b909d9e3b5913873bda84d1e8d67b7f65e8ea6744c7047e71174263c08b1df3",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S7_L2_H02",
+      "fingerprint": "5df5cf7768202a620e962daddfed91f7f94dd179ce2c4cce7e643f2c196b29c0",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S7_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S7_L2_H02.json.gz",
+      "archive_sha256": "f884a9d0cba2c75deb39305193d017e000f8dd116e66abfacbf8e618ae537066",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S7_L2_H04",
+      "fingerprint": "1efcd211c6ea9519b2f192295677b99497fd6471d670ea55c65c42e40dce6526",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S7_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S7_L2_H04.json.gz",
+      "archive_sha256": "5c56f1ea59cbf0498acbd4bfec8ef22afb321b8300da05e36649a1bfb796543d",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S7_L2_H06",
+      "fingerprint": "6dd20455974595b0dcab1276dec90e4b6d68e184641370160f37beed69544339",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S7_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S7_L2_H06.json.gz",
+      "archive_sha256": "607f3034cf06c55d201636cf7a3172f985763334bb98ef34832e1f61ecf4092e",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S7_L3_H02",
+      "fingerprint": "67217dbcc06a2bf9131f0b49755ea59ada8f831f5c9d917cccbef75db8f5bb3f",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S7_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S7_L3_H02.json.gz",
+      "archive_sha256": "ffe17532d63c6c9485fe53326607d7e8309dc984af2bb0c62fa31946eaeb538c",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S7_L3_H04",
+      "fingerprint": "1ccb7f52424a5f098fb595d66c6caa8007f2d5cb96b57f1ea6a85a1501188d99",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S7_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S7_L3_H04.json.gz",
+      "archive_sha256": "4171813488f6b2146ea5e206938779e11a14a5652fbcc529b06016be4d4d4b77",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S7_L3_H06",
+      "fingerprint": "ae71c8742527e204f4084ad8a42aef1275f1e046fbf33c17bb580cee7ac38fe7",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S7_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S7_L3_H06.json.gz",
+      "archive_sha256": "74e7884347b3a1c61ebff02a1ce656298307731aa18dc4b82a4250b62eccca9b",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S14_L1_H02",
+      "fingerprint": "950898c8d43b87e13de0c0b61350e61369e3182efa7c3eecccdfbd9a2172bd54",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S14_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S14_L1_H02.json.gz",
+      "archive_sha256": "f8aa92fdb21d69ad31be43e3d7cb2f98414ca39d4b9875dee82781ccd0ca054d",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S14_L1_H04",
+      "fingerprint": "89c9058167bc693824435964181035440e9f6bb82182bb12295b8465ce5b648d",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S14_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S14_L1_H04.json.gz",
+      "archive_sha256": "fd15d19b0599615f4d7503e8faf984952ed438bf636b4e8478ac815cb09d1247",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S14_L1_H06",
+      "fingerprint": "541c1e4b0a55e47d0fcb5418ad6dbc5bbb1d12388eacd175c90826ea39be9504",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S14_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S14_L1_H06.json.gz",
+      "archive_sha256": "19e579da14be7457c60542e621337be719e6547daa63291aeffb98c88ed86a2b",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S14_L2_H02",
+      "fingerprint": "33b8150faf35eebae4d4960096a27ac5eb0d63b2b465a1315893b21a96f1d8c9",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S14_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S14_L2_H02.json.gz",
+      "archive_sha256": "b0ee67382b441b4478ff2ae09194ef47ae9bf50095ed28d1bd7c4be6d9bbc84a",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S14_L2_H04",
+      "fingerprint": "74dd32dda79f865f25fde71f2ae1b35b031a2d539a2c30da9d79f5c0948e5995",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S14_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S14_L2_H04.json.gz",
+      "archive_sha256": "ecbaf44a8d61d013c09c6e1a3f8dd1bad38980f81542a36bee92610559db2db5",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S14_L2_H06",
+      "fingerprint": "aa54e6de2926c7fb65a225f1bec66b6ae853d802fb00372418e69c33957a7ace",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S14_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S14_L2_H06.json.gz",
+      "archive_sha256": "00a1cc3da5eaa7ef7b5817df57c06acf17c1a8c0fdc5ffd68c144d62a3b2b9f1",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S14_L3_H02",
+      "fingerprint": "dca58ed2aa9761cce58f74dfa5ab246d2c7bf7befda5147643e96206fe53d362",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S14_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S14_L3_H02.json.gz",
+      "archive_sha256": "5da1d7039d89ffebd74d591efa64cebb0fbf40af44161c7920b4c4462cdb9d9e",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S14_L3_H04",
+      "fingerprint": "5be547f243dac326a751ae195821e12403e194e65080ad87ab4e9ff54ee17238",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S14_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S14_L3_H04.json.gz",
+      "archive_sha256": "ebdedb48122ebae0c9b5b36227aa73858b52ad40d3754818af2b74213c11bd4c",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S14_L3_H06",
+      "fingerprint": "1423544c160ac5ed3558f97b3970bdfae26862f6d3a84dab678e93e5e33bbe49",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S14_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S14_L3_H06.json.gz",
+      "archive_sha256": "17c4497512cf9660dff74b96090ba3cf99a67ee9dab5cf6978a1e648f662b801",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S28_L1_H02",
+      "fingerprint": "fe69e7744d605fd4ee9b354fec2816e488478f330c04b015f637ba758404d01b",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S28_L1_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S28_L1_H02.json.gz",
+      "archive_sha256": "239da85eb117089f8227cb8814c0f2670107748f726cfc9581b28fbc2deffdec",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S28_L1_H04",
+      "fingerprint": "f02419cc6b2d07ff648ea95c06d5add432c844e9f9d17e3aa539e4152b1e19be",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S28_L1_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S28_L1_H04.json.gz",
+      "archive_sha256": "9447636936acd9c4151a443e4010469cf6f9183cc28d8e823cf26f03b46608df",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S28_L1_H06",
+      "fingerprint": "a940a3eb407e3779b67f96966307b5cc8f46959865d5ff91d4c0b974377d3a5a",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S28_L1_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S28_L1_H06.json.gz",
+      "archive_sha256": "53af1e354b09b575ccb3b6e80893d71b10ad12043d494a6dd71bfc6dbc84f317",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S28_L2_H02",
+      "fingerprint": "02d0d9e4cf7e1265a32e13f484a226a6e1e6cd41926cb4e674b6948e1fbc0a9f",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S28_L2_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S28_L2_H02.json.gz",
+      "archive_sha256": "a698b1076bb7eb2ac2d67585f25e3075820345831a6eb6f7c8fbec88c12643ff",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S28_L2_H04",
+      "fingerprint": "bc95b22d6aceed49e1d83aca406c72472b092e8a089a73c130d6723e085ba84e",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S28_L2_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S28_L2_H04.json.gz",
+      "archive_sha256": "6114e4346cedc4a352f929f8b1ca3b2fce15bab5f92c2ebb039d04b84f1f7881",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S28_L2_H06",
+      "fingerprint": "2e43d54ba74cfca91368eeee3ac1290da2b875b672f02f14c19df43e8c9f0147",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S28_L2_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S28_L2_H06.json.gz",
+      "archive_sha256": "259d453c5c0240fc44157069f33d8ce20a0292d407aa23054243a6a5fb0623a1",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S28_L3_H02",
+      "fingerprint": "9ef6699571c98abede8889db5004d7d85b32596fe0ea32cee86f856c6b9e3c34",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S28_L3_H02.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S28_L3_H02.json.gz",
+      "archive_sha256": "1f6312ab757ba3ee6d196238c19d4b681aec2de72ff6a69ba78aebae94958557",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S28_L3_H04",
+      "fingerprint": "78746649e0f09e44e6bf16dade7d0e5ef628d2a146be75827f9705febac75456",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S28_L3_H04.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S28_L3_H04.json.gz",
+      "archive_sha256": "af463ab553a847174105e5bc855b044671dd6c620d1d1ccf3a2e7b751ce87cb2",
+      "status": "rejected"
+    },
+    {
+      "name": "gate370_COMBO_E200_S28_L3_H06",
+      "fingerprint": "42a8639ca9a491fe3e688674853071d7d6ea94160b6f667e11a9cd7d4aef17a9",
+      "scope": "parent",
+      "spec": "research/experiments/20261025T185633Z/specs/gate370_COMBO_E200_S28_L3_H06.json",
+      "archive": "research/experiments/20261025T185633Z/results/gate370_COMBO_E200_S28_L3_H06.json.gz",
+      "archive_sha256": "1ca41355f1046f9a78fc6efd05ee5d7bf79be88b2cc17db3e0fd1e27d2c12ce9",
+      "status": "rejected"
+    }
+  ],
+  "summary": {
+    "new_financial_configs": 108,
+    "new_native_backtests": 27,
+    "new_passive_parents": 81,
+    "source_BTC_components_reused": 3,
+    "readonly_unfiltered_native_controls": 9,
+    "readonly_unfiltered_parent_controls": 27,
+    "readonly_matched_holds": 2,
+    "passed_candidates": 0,
+    "rejected_candidates": 108,
+    "positive_configs_by_cost": {
+      "1": 104,
+      "2": 96,
+      "3": 91
+    },
+    "failed_criteria_counts": {
+      "positive_all_costs": 17,
+      "nine_of_twelve_positive_complete30d_1x_folds": 77,
+      "recent40_six_of_eight_positive5d_1x_folds": 108,
+      "local_positive3_gte60pct": 13,
+      "gross_plus_funding_to_cost1_gte2_5": 14,
+      "recent40_positive_all_costs": 20,
+      "four_round_trips1": 2
+    },
+    "rows": {
+      "cost": 324,
+      "full_folds": 4212,
+      "recent40_folds": 2592,
+      "daily_NAV": 120204,
+      "edges": 270,
+      "reference_comparisons": 648
+    },
+    "groups": {
+      "native_S7": {
+        "configs": 9,
+        "passed": 0,
+        "positive_full_by_cost": {
+          "1": 9,
+          "2": 6,
+          "3": 5
+        },
+        "positive_recent_by_cost": {
+          "1": 2,
+          "2": 2,
+          "3": 2
+        },
+        "full3_range_pct": [
+          -2.996811270010491,
+          4.957078606185905
+        ],
+        "recent3_range_pct": [
+          -0.07768952545396113,
+          1.7120146337527675
+        ],
+        "positive_complete30d_folds1_counts": {
+          "3": 2,
+          "4": 3,
+          "1": 1,
+          "7": 2,
+          "5": 1
+        },
+        "positive_recent5d_folds1_counts": {
+          "1": 1,
+          "0": 7,
+          "3": 1
+        },
+        "best_full": {
+          "name": "gate370_ETH_S7_L3_H02",
+          "full_return3_pct": 4.957078606185905,
+          "whole_DD3_pct": 4.16707697246469,
+          "recent_return3_pct": 1.7120146337527675,
+          "recent_DD3_pct": 0.7390097597424816,
+          "positive_complete30d_folds1": 7,
+          "positive_recent5d_folds1": 3,
+          "status": "rejected"
+        },
+        "best_recent": {
+          "name": "gate370_ETH_S7_L3_H02",
+          "full_return3_pct": 4.957078606185905,
+          "whole_DD3_pct": 4.16707697246469,
+          "recent_return3_pct": 1.7120146337527675,
+          "recent_DD3_pct": 0.7390097597424816,
+          "positive_complete30d_folds1": 7,
+          "positive_recent5d_folds1": 3,
+          "status": "rejected"
+        },
+        "failed_criteria_counts": {
+          "positive_all_costs": 4,
+          "nine_of_twelve_positive_complete30d_1x_folds": 9,
+          "recent40_six_of_eight_positive5d_1x_folds": 9,
+          "local_positive3_gte60pct": 5,
+          "gross_plus_funding_to_cost1_gte2_5": 4,
+          "recent40_positive_all_costs": 7,
+          "four_round_trips1": 1
+        },
+        "versus_unfiltered3": {
+          "higher_full_return": 8,
+          "higher_recent_return": 8,
+          "fewer_executions": 9,
+          "lower_cost": 9
+        }
+      },
+      "native_S14": {
+        "configs": 9,
+        "passed": 0,
+        "positive_full_by_cost": {
+          "1": 6,
+          "2": 6,
+          "3": 5
+        },
+        "positive_recent_by_cost": {
+          "1": 2,
+          "2": 2,
+          "3": 2
+        },
+        "full3_range_pct": [
+          -4.868953615016524,
+          5.012937383157534
+        ],
+        "recent3_range_pct": [
+          -0.7864040475804135,
+          1.225154829458841
+        ],
+        "positive_complete30d_folds1_counts": {
+          "4": 1,
+          "3": 2,
+          "1": 1,
+          "7": 2,
+          "5": 1,
+          "6": 2
+        },
+        "positive_recent5d_folds1_counts": {
+          "1": 2,
+          "0": 6,
+          "4": 1
+        },
+        "best_full": {
+          "name": "gate370_ETH_S14_L3_H02",
+          "full_return3_pct": 5.012937383157534,
+          "whole_DD3_pct": 4.304454818530923,
+          "recent_return3_pct": 1.225154829458841,
+          "recent_DD3_pct": 0.7457349954959502,
+          "positive_complete30d_folds1": 7,
+          "positive_recent5d_folds1": 4,
+          "status": "rejected"
+        },
+        "best_recent": {
+          "name": "gate370_ETH_S14_L3_H02",
+          "full_return3_pct": 5.012937383157534,
+          "whole_DD3_pct": 4.304454818530923,
+          "recent_return3_pct": 1.225154829458841,
+          "recent_DD3_pct": 0.7457349954959502,
+          "positive_complete30d_folds1": 7,
+          "positive_recent5d_folds1": 4,
+          "status": "rejected"
+        },
+        "failed_criteria_counts": {
+          "positive_all_costs": 4,
+          "nine_of_twelve_positive_complete30d_1x_folds": 9,
+          "recent40_six_of_eight_positive5d_1x_folds": 9,
+          "local_positive3_gte60pct": 5,
+          "gross_plus_funding_to_cost1_gte2_5": 4,
+          "recent40_positive_all_costs": 7,
+          "four_round_trips1": 1
+        },
+        "versus_unfiltered3": {
+          "higher_full_return": 9,
+          "higher_recent_return": 7,
+          "fewer_executions": 9,
+          "lower_cost": 9
+        }
+      },
+      "native_S28": {
+        "configs": 9,
+        "passed": 0,
+        "positive_full_by_cost": {
+          "1": 8,
+          "2": 6,
+          "3": 6
+        },
+        "positive_recent_by_cost": {
+          "1": 5,
+          "2": 5,
+          "3": 3
+        },
+        "full3_range_pct": [
+          -7.49337313062891,
+          6.940399281599352
+        ],
+        "recent3_range_pct": [
+          -0.7900267670914785,
+          1.4094887744690254
+        ],
+        "positive_complete30d_folds1_counts": {
+          "4": 2,
+          "2": 1,
+          "6": 2,
+          "7": 1,
+          "9": 2,
+          "8": 1
+        },
+        "positive_recent5d_folds1_counts": {
+          "3": 3,
+          "2": 1,
+          "0": 1,
+          "1": 3,
+          "5": 1
+        },
+        "best_full": {
+          "name": "gate370_ETH_S28_L3_H02",
+          "full_return3_pct": 6.940399281599352,
+          "whole_DD3_pct": 3.540399256047755,
+          "recent_return3_pct": 1.4094887744690254,
+          "recent_DD3_pct": 1.8964753834223913,
+          "positive_complete30d_folds1": 9,
+          "positive_recent5d_folds1": 5,
+          "status": "rejected"
+        },
+        "best_recent": {
+          "name": "gate370_ETH_S28_L3_H02",
+          "full_return3_pct": 6.940399281599352,
+          "whole_DD3_pct": 3.540399256047755,
+          "recent_return3_pct": 1.4094887744690254,
+          "recent_DD3_pct": 1.8964753834223913,
+          "positive_complete30d_folds1": 9,
+          "positive_recent5d_folds1": 5,
+          "status": "rejected"
+        },
+        "failed_criteria_counts": {
+          "positive_all_costs": 3,
+          "nine_of_twelve_positive_complete30d_1x_folds": 7,
+          "recent40_positive_all_costs": 6,
+          "recent40_six_of_eight_positive5d_1x_folds": 9,
+          "local_positive3_gte60pct": 3,
+          "gross_plus_funding_to_cost1_gte2_5": 3
+        },
+        "versus_unfiltered3": {
+          "higher_full_return": 9,
+          "higher_recent_return": 8,
+          "fewer_executions": 9,
+          "lower_cost": 9
+        }
+      },
+      "parent_S7": {
+        "configs": 27,
+        "passed": 0,
+        "positive_full_by_cost": {
+          "1": 27,
+          "2": 27,
+          "3": 27
+        },
+        "positive_recent_by_cost": {
+          "1": 27,
+          "2": 27,
+          "3": 27
+        },
+        "full3_range_pct": [
+          0.25084001744652973,
+          4.729259681840725
+        ],
+        "recent3_range_pct": [
+          0.3706246829832338,
+          1.2600246334361964
+        ],
+        "positive_complete30d_folds1_counts": {
+          "9": 10,
+          "10": 2,
+          "8": 14,
+          "7": 1
+        },
+        "positive_recent5d_folds1_counts": {
+          "5": 3,
+          "4": 24
+        },
+        "best_full": {
+          "name": "gate370_COMBO_E050_S7_L3_H02",
+          "full_return3_pct": 4.729259681840725,
+          "whole_DD3_pct": 4.0094888632867365,
+          "recent_return3_pct": 1.2539156087657988,
+          "recent_DD3_pct": 0.993238303388766,
+          "positive_complete30d_folds1": 8,
+          "positive_recent5d_folds1": 4,
+          "status": "rejected"
+        },
+        "best_recent": {
+          "name": "gate370_COMBO_E200_S7_L3_H02",
+          "full_return3_pct": 4.227784955544744,
+          "whole_DD3_pct": 4.221539867807078,
+          "recent_return3_pct": 1.2600246334361964,
+          "recent_DD3_pct": 0.9979836375764495,
+          "positive_complete30d_folds1": 9,
+          "positive_recent5d_folds1": 4,
+          "status": "rejected"
+        },
+        "failed_criteria_counts": {
+          "recent40_six_of_eight_positive5d_1x_folds": 27,
+          "nine_of_twelve_positive_complete30d_1x_folds": 15
+        },
+        "versus_unfiltered3": {
+          "higher_full_return": 24,
+          "higher_recent_return": 24,
+          "fewer_executions": 27,
+          "lower_cost": 27
+        }
+      },
+      "parent_S14": {
+        "configs": 27,
+        "passed": 0,
+        "positive_full_by_cost": {
+          "1": 27,
+          "2": 27,
+          "3": 24
+        },
+        "positive_recent_by_cost": {
+          "1": 27,
+          "2": 27,
+          "3": 27
+        },
+        "full3_range_pct": [
+          -0.685231155056476,
+          4.75718907032654
+        ],
+        "recent3_range_pct": [
+          0.021376981949683405,
+          1.0165396242747038
+        ],
+        "positive_complete30d_folds1_counts": {
+          "7": 10,
+          "8": 17
+        },
+        "positive_recent5d_folds1_counts": {
+          "5": 6,
+          "4": 21
+        },
+        "best_full": {
+          "name": "gate370_COMBO_E050_S14_L3_H02",
+          "full_return3_pct": 4.75718907032654,
+          "whole_DD3_pct": 2.9748375501761792,
+          "recent_return3_pct": 1.0116242014737598,
+          "recent_DD3_pct": 0.9958334925521894,
+          "positive_complete30d_folds1": 8,
+          "positive_recent5d_folds1": 5,
+          "status": "rejected"
+        },
+        "best_recent": {
+          "name": "gate370_COMBO_E200_S14_L3_H02",
+          "full_return3_pct": 4.255714344030559,
+          "whole_DD3_pct": 2.910685823507664,
+          "recent_return3_pct": 1.0165396242747038,
+          "recent_DD3_pct": 1.0006037164390413,
+          "positive_complete30d_folds1": 8,
+          "positive_recent5d_folds1": 5,
+          "status": "rejected"
+        },
+        "failed_criteria_counts": {
+          "positive_all_costs": 3,
+          "nine_of_twelve_positive_complete30d_1x_folds": 27,
+          "recent40_six_of_eight_positive5d_1x_folds": 27
+        },
+        "versus_unfiltered3": {
+          "higher_full_return": 27,
+          "higher_recent_return": 21,
+          "fewer_executions": 27,
+          "lower_cost": 27
+        }
+      },
+      "parent_S28": {
+        "configs": 27,
+        "passed": 0,
+        "positive_full_by_cost": {
+          "1": 27,
+          "2": 24,
+          "3": 24
+        },
+        "positive_recent_by_cost": {
+          "1": 27,
+          "2": 27,
+          "3": 27
+        },
+        "full3_range_pct": [
+          -1.9974409128626802,
+          5.7209200195474486
+        ],
+        "recent3_range_pct": [
+          0.028942123170905276,
+          1.11165507901958
+        ],
+        "positive_complete30d_folds1_counts": {
+          "7": 3,
+          "8": 7,
+          "9": 14,
+          "10": 3
+        },
+        "positive_recent5d_folds1_counts": {
+          "4": 21,
+          "5": 6
+        },
+        "best_full": {
+          "name": "gate370_COMBO_E050_S28_L3_H02",
+          "full_return3_pct": 5.7209200195474486,
+          "whole_DD3_pct": 3.5741236175320656,
+          "recent_return3_pct": 1.1063237376415458,
+          "recent_DD3_pct": 1.8201791083500174,
+          "positive_complete30d_folds1": 10,
+          "positive_recent5d_folds1": 5,
+          "status": "rejected"
+        },
+        "best_recent": {
+          "name": "gate370_COMBO_E200_S28_L3_H02",
+          "full_return3_pct": 5.219445293251446,
+          "whole_DD3_pct": 3.7853973800474727,
+          "recent_return3_pct": 1.11165507901958,
+          "recent_DD3_pct": 1.8287657068696284,
+          "positive_complete30d_folds1": 10,
+          "positive_recent5d_folds1": 5,
+          "status": "rejected"
+        },
+        "failed_criteria_counts": {
+          "positive_all_costs": 3,
+          "nine_of_twelve_positive_complete30d_1x_folds": 10,
+          "recent40_six_of_eight_positive5d_1x_folds": 27,
+          "gross_plus_funding_to_cost1_gte2_5": 3
+        },
+        "versus_unfiltered3": {
+          "higher_full_return": 27,
+          "higher_recent_return": 24,
+          "fewer_executions": 27,
+          "lower_cost": 27
+        }
+      }
+    }
+  },
+  "next_research": "All108slow-trend-conditionedETHreversalconfigs nowactual/finished:ETHS7/14/28,L1/2/3,H2/4/6,N2000;BTC31H4E.5/1/2withraw1/1whole10000banks,parent20000/entry4000. Allrejectbecauseeveryrecent1xpositive5dayfoldcount<6/8. Fullpositive1/2/3counts104/96/91;all81parentsrecentallcostpositive,butonly4or5recentpositivefolds. BestnativeS28L3H2full3+6.940399/DD3.540399,9/12monthlyand5/8recent;bestparentE.5S28L3H2full3+5.720920/DD3.574124,10/12monthlyand5/8recent. Bothfailrecentconsistencyonly. Gatecutsall27nativeexecutioncounts/costsvsunfiltered;manyrecentETHlegsarecash,see recent_activity.json,do notinterpretBTC-leggainsasongoingETHalpha. No exactrerun,gateweakening,untouchedholdout/DSR/PBO/liveprofitclaim. Prioritize prospectivelydifferent evidenceor genuinelynewpredeclared economicconstraint;allS/L/H/Eandweights/time/gatesreservebeforecalculation. ReusecompatiblecompleteNAV,noquantityNAVscaling.",
+  "original_SMA_next_state": "research/experiments/20261025T185633Z/forward_state.json",
+  "original_SMA_next_state_sha256": "260375f72f24aedb8dea52481b2b6c895e33d6ab2cfa4af34de38a7907a5278f",
+  "next_daily_decision_utc": "2026-10-26T00:01:00Z",
+  "original_SMA_continuity": {
+    "cutoff_utc": "2026-10-25T18:30:00Z",
+    "NAV_points_per_scene": 34254,
+    "cumulative_minutes": 34229,
+    "policy": "ExactFloatSMA65/symmetric1percent1500/500,cash/q/desired/cost/trades/fullNAVprefix. UntilOct26UTC00:01closedmarks only;terminal2027-03-31unchanged. Partialrejectednotcancelplan."
+  },
+  "monitor_compressed_bytes": 2198343,
+  "monitor_current_byte_budget": 3000000,
+  "monitor_historical_rows_unchanged": 5736,
+  "paper10_policy": "btc-eth-2 owns frozen accounts/observations;read only here",
+  "finished_original_bytes_priority": true,
+  "registry_after": {
+    "events": 15984,
+    "IDs": 7888
+  }
+}
