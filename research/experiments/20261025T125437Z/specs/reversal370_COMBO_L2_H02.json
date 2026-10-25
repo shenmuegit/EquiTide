@@ -1,0 +1,86 @@
+{
+  "kind": "combination",
+  "family": "two-asset-passive-short-roc-reversal-perpetual-sleeves",
+  "name": "reversal370_COMBO_L2_H02",
+  "logic": {
+    "allocation": "Nativeinitial10000USDT cashcollateral,N2000=20%initialcapital perentry. Parentraw1/1 sumsoneentireBTC10000bookandoneentireETH10000book,total20000capital/4000entrybudget=20%initialparentcapital. No weightnormalization,compoundresizing,transfers,cashyield,crossmargin orparentrebalancing. Bothassets mayhave same direction;no netzeroexposure restriction.",
+    "state": "One cold10000nativecashstart2025-10-19UTC00:01,continuous370days;12complete30dayfolds+10daytail. Existingcash/q/entry/cost/fundingcarryacrossfolds;onlynewOct24terminalforcesexit. Recent40diagnostic inheritsday330predecisionstate,no reset ordiagnosticorders.",
+    "components": "Eachsource independently appliescompletefrozencontrarianROC/zeroexit withactualnativeN2000cost/funding/risk. ParentaddsabsoluteNAVonce.",
+    "alignment": "Unionorderedns/eventkeys,lastcompletedobservation,nointerpolation;no parenttrades orcrossmargin."
+  },
+  "parameters": {
+    "initial_capital_usdt": 20000,
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "component_capitals_usdt": [
+      10000,
+      10000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      2000,
+      2000
+    ],
+    "BTC_lookback_days": 2,
+    "BTC_return_hurdle": 0.02,
+    "ETH_lookback_days": 2,
+    "ETH_return_hurdle": 0.02,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_test_days": 30,
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "source_rules_and_costs_sha256": "e08aedf8e68da777c1c92ea0be4c64149658e77fdd90816add70c7fd23ea7e44",
+    "BTC_exit_buffer_fraction": 0,
+    "ETH_exit_buffer_fraction": 0,
+    "BTC_fixed_entry_notional_usdt": 2000,
+    "ETH_fixed_entry_notional_usdt": 2000,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "continuous_oos_days": 370,
+    "lookback_days": 2,
+    "return_hurdle": 0.02
+  },
+  "components": [
+    {
+      "fingerprint": "d8831168956bd776803995b52e4b9aef8ec10fa919477a3f05b0b653e4803985",
+      "weight": 1
+    },
+    {
+      "fingerprint": "65050f9028cf1a75461fd7f85f227273c47fdf81b486f67afbef57c875df7620",
+      "weight": 1
+    }
+  ],
+  "validation_plan": "research/experiments/20261025T125437Z/plan.json",
+  "sources": [
+    {
+      "url": "https://www.nber.org/papers/w2533",
+      "access_date": "2026-10-25",
+      "version": "Lehmann NBER2533 March1988;QJE105(1),1-28,Feb1990",
+      "scope": "Originalprimarysearchabstract onweeklycross-sectionalequityreversals;onlyeconomicmotivation. Our1/2/3daytime-seriescrypto/perpetualzeroexit rules are independentinference,notreplication ortransferofpaperprofit."
+    },
+    {
+      "url": "https://www.aqr.com/Insights/Research/Working-Paper/Trading-Costs-of-Asset-Pricing-Anomalies",
+      "access_date": "2026-10-25",
+      "version": "Frazzini,Israel,Moskowitz originalauthorpage dated2012-12-05",
+      "scope": "Officialauthor-page actualread:short-horizonreversal implementation canbe costfragile inequities. This motivates strictexecutioncostscreen,notcrypto capacity orreturn evidence."
+    },
+    {
+      "url": "https://www.binance.com/en/support/faq/detail/360033525031",
+      "access_date": "2026-10-25",
+      "scope": "Officialfundingdirectionandposition-at-settlement;actualarchivedrates/timesused."
+    },
+    {
+      "url": "https://www.binance.com/en/support/faq/detail/360033525271",
+      "access_date": "2026-10-25",
+      "scope": "MarkvsLastpriceandmargin;hourmarkdataand1%proxyarelimited,nottruetickliquidationreconstruction."
+    }
+  ]
+}

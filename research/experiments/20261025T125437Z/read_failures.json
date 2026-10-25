@@ -1,0 +1,17 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T125437Z/run.py",
+        "freeze"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-25T13:02:13.545601Z",
+      "finished_utc": "2026-10-25T13:02:14.681208Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261025T125437Z/reserve.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T125437Z/run.py\", line 50, in <module>\n    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()\n                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T125437Z/run.py\", line 31, in freeze\n    def freeze():module(R/'freeze_batch.py','current_freeze').main()\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T125437Z/freeze_batch.py\", line 21, in main\n    spec=copy.deepcopy(templates[asset]);name=f'reversal370_{asset}_L{L}_H{int(H*100):02d}';spec.update(family='short-horizon-contrarian-perpetual-ROC-zero-exit',logic=rules);spec['parameters'].update(lookback_days=L,return_hurdle=H,exit_buffer_fraction=0,signal_mode='short_horizon_contrarian_ROC_zero_exit',persistence='RetainlongwhilepriorROC<0,retainshortwhilepriorROC>0,zeroequalityflat;oppositeextremeclosesandflips.');row={'name':name,'role':'candidate','scope':'native','asset':asset,'lookback_days':L,'return_hurdle':H,'exit_buffer_fraction':0,'fixed_entry_notional_usdt':2000,'capital_usdt':10000};by[asset,L,H]=save(spec,row)\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T125437Z/freeze_batch.py\", line 19, in save\n    p=R/'specs'/(row['name']+'.json');spec.update(name=row['name'],validation_plan=rel(R/'plan.json'),sources=sources);put(p,spec);fp=reg.fingerprint(spec);assert fp not in records or records[fp].get('result_available') is not True and records[fp]['status'] in ['blocked','abandoned'];row.update(spec=rel(p),fingerprint=fp);batch.append(row);return fp\n                                                                                                                                      ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/automation/registry.py\", line 26, in fingerprint\n    raise ValueError(\"family must be a stable lowercase ID; logic must be a nonempty object\")\nValueError: family must be a stable lowercase ID; logic must be a nonempty object\n"
+    }
+  ]
+}
