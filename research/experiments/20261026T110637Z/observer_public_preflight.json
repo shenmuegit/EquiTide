@@ -1,0 +1,117 @@
+{
+  "scope": "Read-only public metadata/time/funding-schema readiness, no candidate account, financial evaluation, simulation or reservation.",
+  "frozen_plan_sha256": "eae635155ad781983574cc0b71ed92d34b7b44df9341299790153dbf83c68c34",
+  "sources": [
+    {
+      "url": "https://fapi.binance.com/fapi/v1/exchangeInfo",
+      "started_utc": "2026-10-26T11:43:03.058991+00:00",
+      "http_status": 200,
+      "raw": "data/raw/binance/candidate_readiness/20261026T110637Z/http_0000.gz",
+      "sha256": "51ad447f9c0a14cb00f5e2ad5a56901d50104bfb87dd76548a754e94721b08ed",
+      "bytes": 1161997,
+      "raw_response_sha256": "6f3970604b3264829d27f5f1f2c298546f17c4a1b6e36b62e907ff9abe15391e"
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/time",
+      "started_utc": "2026-10-26T11:44:15.169190+00:00",
+      "http_status": 200,
+      "raw": "data/raw/binance/candidate_readiness/20261026T110637Z/http_0001.gz",
+      "sha256": "f3ef7a8624fbf4fe92057a321953dcda3d81cc588864fdfedd8f73fbdda74304",
+      "bytes": 28,
+      "raw_response_sha256": "df2b715458c17cda1c2073467eaf498e2295265de394942e52f8cbbdce434462"
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=BTCUSDT&limit=2",
+      "started_utc": "2026-10-26T11:44:18.386885+00:00",
+      "http_status": 200,
+      "raw": "data/raw/binance/candidate_readiness/20261026T110637Z/http_0002.gz",
+      "sha256": "072b8683119e8200c5f8e53216191e506f3faa82ab5ab65a099bf8fb001bf9bb",
+      "bytes": 253,
+      "raw_response_sha256": "ce016a5ce607f53540cd1e9a254e2681fd3689bf3435d37f7ea4e71693454196"
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=ETHUSDT&limit=2",
+      "started_utc": "2026-10-26T11:44:20.675085+00:00",
+      "http_status": 200,
+      "raw": "data/raw/binance/candidate_readiness/20261026T110637Z/http_0003.gz",
+      "sha256": "8fb791d953ff42e89d3933e07478127ce481e3398db7dd6468c3fc23de2b47ba",
+      "bytes": 251,
+      "raw_response_sha256": "9a49d543c6240cfc8dd715aeb2691e29f4094b948fc382449c9289b64cfe689b"
+    }
+  ],
+  "facts": [],
+  "metadata": {
+    "BTC": {
+      "current": {
+        "lot_size": "0.001",
+        "tick_size": "0.10",
+        "min_notional": "50"
+      },
+      "frozen": {
+        "lot_size": "0.001000000000000000",
+        "tick_size": "0.100000000000000000",
+        "min_notional": "50.000000000000000000"
+      },
+      "matches": true,
+      "status": "TRADING",
+      "contractType": "PERPETUAL"
+    },
+    "ETH": {
+      "current": {
+        "lot_size": "0.001",
+        "tick_size": "0.01",
+        "min_notional": "20"
+      },
+      "frozen": {
+        "lot_size": "0.001000000000000000",
+        "tick_size": "0.010000000000000000",
+        "min_notional": "20.000000000000000000"
+      },
+      "matches": true,
+      "status": "TRADING",
+      "contractType": "PERPETUAL"
+    }
+  },
+  "funding_schema": {
+    "BTC": {
+      "records": [
+        {
+          "symbol": "BTCUSDT",
+          "fundingTime": 1792972800000,
+          "fundingRate": "0.00001713",
+          "markPrice": "80114.40000000",
+          "rateType": "Regular"
+        },
+        {
+          "symbol": "BTCUSDT",
+          "fundingTime": 1793001600000,
+          "fundingRate": "0.00007945",
+          "markPrice": "80002.00000000",
+          "rateType": "Regular"
+        }
+      ],
+      "markPrice_and_realized_rate_present": true
+    },
+    "ETH": {
+      "records": [
+        {
+          "symbol": "ETHUSDT",
+          "fundingTime": 1792972800000,
+          "fundingRate": "0.00007280",
+          "markPrice": "2329.00000000",
+          "rateType": "Regular"
+        },
+        {
+          "symbol": "ETHUSDT",
+          "fundingTime": 1793001600000,
+          "fundingRate": "0.00004911",
+          "markPrice": "2317.59000000",
+          "rateType": "Regular"
+        }
+      ],
+      "markPrice_and_realized_rate_present": true
+    }
+  },
+  "server_time_ms": 1793015057965,
+  "passed": true
+}

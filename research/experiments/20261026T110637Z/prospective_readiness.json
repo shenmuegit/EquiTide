@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "status": "implemented_checked_waiting_for_frozen_start",
+  "result_available": false,
+  "new_financial_evaluations": 0,
+  "actual_candidate_observations": 0,
+  "candidate_account_created": false,
+  "canonical_pointer_present": false,
+  "original_plan": {
+    "path": "research/experiments/20261026T090537Z/candidate_prospective_plan.json",
+    "sha256": "eae635155ad781983574cc0b71ed92d34b7b44df9341299790153dbf83c68c34"
+  },
+  "frozen_binding": {
+    "plan_sha256": "eae635155ad781983574cc0b71ed92d34b7b44df9341299790153dbf83c68c34",
+    "original_candidate_fingerprint": "9bef791333b2e6fb8166f7080ddad77af1b29bd73ad870baf928dd4ce72de21c",
+    "sources_sha256": {
+      "research/experiments/20261026T090537Z/candidate_prospective_plan.json": "eae635155ad781983574cc0b71ed92d34b7b44df9341299790153dbf83c68c34",
+      "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E100_N1000.json": "6a425e3e4a6c6e6aae9a3666cd4bbfe2e05791d8f1c0210629cc5a6017dd62c1",
+      "research/experiments/20261026T070542Z/specs_corrected/gatebudget370_ETH_N3000_S28_L3_H02.json": "2489649f4ce55c39ed598017e1ac218ab354d481b7dc9a48a20c0a668441f8f5",
+      "research/experiments/20261025T065405Z/engine.py": "99b7b9ddd5dbf1bead10e7d252404196c3a32343a1203d3bac4450bee9d4740b",
+      "research/experiments/20261025T185633Z/engine.py": "bc8c987590ddf31c59e5a63f5451c4d0586c8a568171b18a539adf6149afda77"
+    },
+    "metadata": {
+      "BTC": {
+        "lot_size": "0.001000000000000000",
+        "tick_size": "0.100000000000000000",
+        "min_notional": "50.000000000000000000"
+      },
+      "ETH": {
+        "lot_size": "0.001000000000000000",
+        "tick_size": "0.010000000000000000",
+        "min_notional": "20.000000000000000000"
+      }
+    },
+    "rules": {
+      "BTC": {
+        "N": 1000,
+        "L": 31,
+        "H": 0.04,
+        "E": 0.01
+      },
+      "ETH": {
+        "N": 3000,
+        "S": 28,
+        "L": 3,
+        "H": 0.02,
+        "E": 0
+      }
+    }
+  },
+  "code_and_protocol_sha256": {
+    "research/experiments/20261026T110637Z/prospective_core.py": "70d1b07e4711530d454f2eaac088254cd3d41900f120bb7066fec0092fb8fa55",
+    "research/experiments/20261026T110637Z/prospective_observer.py": "0dac6752d6975cb71802fdb9edddc4d10aea37584e3014499b8fec80c7b3a42a",
+    "research/experiments/20261026T110637Z/check_prospective_observer.py": "80dcca81083f62b3c56e9e9b09114c96362a437fdc4c45994fb8eedd86ab32d3",
+    "research/experiments/20261026T110637Z/prospective_observer.md": "266e5dbf98e7157e79211b574405994fc2328e9054d697840efc6258089c93e9"
+  },
+  "engineering_checks": {
+    "path": "research/experiments/20261026T110637Z/observer_checks.json",
+    "sha256": "40547bc02fa626f833ed45847a75dc35d6d5d827fea236e95f570a92e4784ffb",
+    "receipt": "research/experiments/20261026T110637Z/observer_release_checks_commands.json"
+  },
+  "public_preflight": {
+    "path": "research/experiments/20261026T110637Z/observer_public_preflight.json",
+    "sha256": "306daf39913589506aff645045599ed77d326de127e64772f9380596513f8b2e",
+    "actual_HTTP_200_count": 4,
+    "first_actual_window_must_refetch_and_revalidate": true
+  },
+  "status_check_receipt": "research/experiments/20261026T110637Z/observer_status_commands.json",
+  "expected_red_before_implementation_retained": "research/experiments/20261026T110637Z/observer_expected_red.json",
+  "real_failed_readonly_assertion_retained": "research/experiments/20261026T110637Z/observer_checks_final_commands.json",
+  "recovery_receipt": "research/experiments/20261026T110637Z/observer_checks_recovery_commands.json",
+  "planned_start_utc": "2026-10-27T00:01:00Z",
+  "planned_end_exclusive_utc": "2027-04-25T00:01:00Z",
+  "future_execution": "Use this round prospective_observer.py run with actual new-data cutoff, future UTC experiment round and existing outer branch lock PID. Reserve each of3 future specs before account transitions; include newly-created shared candidate_forward_latest.json in future commit.",
+  "known_limits": [
+    "No real future window can be executed before planned start; readiness is engineering evidence only.",
+    "Delayed closed-bar/funding replay is not live quote simulation or actual execution.",
+    "Real network/data/filter changes can still block first/future window; preserve errors and state.",
+    "Fullmarkhour adverse maintenance margin is a proxy, not exact liquidation.",
+    "Use existing btc-eth heartbeat; no new schedule, deployment, branch or account reset."
+  ]
+}
