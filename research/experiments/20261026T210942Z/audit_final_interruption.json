@@ -1,0 +1,20 @@
+{
+  "observed_at_utc": "2026-10-26T21:34:32.915647Z",
+  "command": [
+    "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+    "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/commands.py",
+    "audit_final"
+  ],
+  "cwd": "/home/desktop/Documents/Codex/EquiTide",
+  "tool_session": 91327,
+  "exit_code": 143,
+  "actual_output": "",
+  "reason": "Execution session returned143 (SIGTERM); external cause not established. This was readonly final audit, not financial evaluation.",
+  "remaining_audit_processes": [
+    {
+      "pid": 2795513,
+      "argv": "/bin/bash -c PYTHONDONTWRITEBYTECODE=1 python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,os\nfrom datetime import datetime,timezone\nroot=Path('/home/desktop/Documents/Codex/EquiTide');r=root/'research/experiments/20261026T210942Z';running=[]\nfor p in Path('/proc').iterdir():\n if not p.name.isdigit():continue\n try:args=(p/'cmdline').read_bytes().replace(b'\\0',b' ').decode(errors='replace')\n except (OSError,ProcessLookupError):continue\n if str(r)+'/audit.py' in args or '20261026T210942Z/commands.py audit_final' in args:running.append({'pid':int(p.name),'argv':args})\nentry={'observed_at_utc':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'command':['/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python',str(r/'commands.py'),'audit_final'],'cwd':str(root),'tool_session':91327,'exit_code':143,'actual_output':'','reason':'Execution session returned143 (SIGTERM); external cause not established. This was readonly final audit, not financial evaluation.','remaining_audit_processes':running,'report_sha256':hashlib.sha256((r/'report.json').read_bytes()).hexdigest()};(r/'audit_final_interruption.json').write_text(json.dumps(entry,ensure_ascii=False,indent=2)+'\\n');f=json.loads((r/'read_failures.json').read_text());f['facts'].append(entry);(r/'read_failures.json').write_text(json.dumps(f,ensure_ascii=False,indent=2)+'\\n');print(json.dumps({'running':running,'effective_receipts':json.loads((r/'research_effective_commands.json').read_text()),'verification':json.loads((r/'verification.json').read_text())},ensure_ascii=False))\nPY "
+    }
+  ],
+  "report_sha256": "b02ac91b9a506d848a8430cad29686504e114a674925adca8fced405c6d53a53"
+}

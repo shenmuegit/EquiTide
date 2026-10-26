@@ -1,0 +1,77 @@
+{
+  "kind": "combination",
+  "family": "two-asset-passive-perpetual-constant-long-reference",
+  "name": "indbudget370_hold_B1000_E2000",
+  "logic": {
+    "allocation": "Raw1/1 means one whole10000BTC bank plus one whole10000ETH bank,parent20000. BTCentryNB and ETHentryNE independently1000/2000/3000;totalentry2000..6000 (10..30percent initialparent),not required4000. These are fixed entry budgets,not capitalweights;no normalization,compoundresizing,transfer,crossmargin,extra cashyield or parent rebalance.",
+    "exposure": "Use exact native sourceorderquantity,cost,funding,margin/state paths for each N. No linear rescaling or cross-sleeve collateral bailout.",
+    "reuse": "Recover source fullNAV from savedimmutable signedcash/quantity/entry state segments and actual axis prices,verify every originalNAVSHA. Never call source simulate,trade,funding or signal functions;no old result/status rewriting.",
+    "alignment": "Unionof source (actualns,eventtype) keys;preserveeventorder atsametime. Atmissingotherassetkey carry its last completed sourceNAVobservation,never interpolate or lookahead. Relativekey=(ts-commonstart)*16+eventcode avoids epochint64overflow.",
+    "costs": "Source1/2/3xexecutionandnegativefundingoutflowstress inherited in actualmatchedcostpaths;positivefundingincomeunscaled. Sum actual fees/funding once,no portfolio turnover fees since no new trade.",
+    "risk": "Recompute return/Sharpe/Calmar/wholeOOSDDfrom combinedfullcurve,not average components. Check both originalindependentmarginproxies separately;never offset a failed sleeve with othercash. MixedsampledNAV nottruetickmarkrisk.",
+    "state": "One continuous370day component path across12complete30dayfolds+10daytail. Parent initial20000=two10000 banks. No source simulation or Sep14 state reset. Recent40 is inherited segment,not a fresh allocation."
+  },
+  "parameters": {
+    "initial_capital_usdt": 20000,
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "component_capitals_usdt": [
+      10000,
+      10000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      1000,
+      2000
+    ],
+    "BTC_lookback_days": 31,
+    "BTC_return_hurdle": 0,
+    "ETH_lookback_days": 28,
+    "ETH_return_hurdle": 0,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_test_days": 30,
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "source_rules_and_costs_sha256": "e54da9ff9a9b2bb42c1d09f1c01e5281dff014434eb29dd4769342059263393a",
+    "BTC_exit_buffer_fraction": 0,
+    "ETH_exit_buffer_fraction": 0,
+    "BTC_fixed_entry_notional_usdt": 1000,
+    "ETH_fixed_entry_notional_usdt": 2000,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "continuous_oos_days": 370
+  },
+  "components": [
+    {
+      "fingerprint": "94180a4d2b7392090f52c069130bc60c7157b90c02ab7f46a853d23bf705481c",
+      "weight": 1
+    },
+    {
+      "fingerprint": "cdf263cff49d32d681b465cfd64ccfde6e5c01257fbda45ab13a29a85094469b",
+      "weight": 1
+    }
+  ],
+  "validation_plan": "research/experiments/20261026T210942Z/plan.json",
+  "sources": [
+    {
+      "url": "https://www.aqr.com/Insights/Research/Journal-Article/Time-Series-Momentum",
+      "access_date": "2026-10-26",
+      "published": "2012-05-01",
+      "scope": "Traditional own-return momentum background only;crypto budgets/gates are our development hypotheses,not replication."
+    },
+    {
+      "url": "https://www.aqr.com/Insights/Research/Working-Paper/Trading-Costs-of-Asset-Pricing-Anomalies",
+      "access_date": "2026-10-26",
+      "published": "2012-12-05",
+      "scope": "Original institutional-equity costs background;no crypto capacity/profit transfer."
+    }
+  ]
+}

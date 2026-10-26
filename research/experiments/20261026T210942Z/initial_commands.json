@@ -1,0 +1,27 @@
+[
+  {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/check_alignment.py"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-10-26T21:18:10.507360Z",
+    "finished_utc": "2026-10-26T21:18:10.799024Z",
+    "exit_code": 0,
+    "log": "research/experiments/20261026T210942Z/alignment.log",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/run.py",
+      "freeze"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-10-26T21:18:10.799555Z",
+    "finished_utc": "2026-10-26T21:18:15.291956Z",
+    "exit_code": 1,
+    "log": "research/experiments/20261026T210942Z/reserve.log",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/run.py\", line 56, in <module>\n    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()\n                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/run.py\", line 39, in freeze\n    def freeze():module(R/'freeze_batch.py','independent_budget_freeze').main()\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/freeze_batch.py\", line 32, in main\n    if pair in seen:holds[f'B{B}_E{E}']=oldparent(seen[pair])\n                                        ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/freeze_batch.py\", line 23, in oldparent\n    c=next(x for x in docs[path]['configs'].values() if x['fingerprint']==rec['fingerprint']);x=ref(c,path,'parent');x['capital_usdt']=20000;return x\n                                                                                                ^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/freeze_batch.py\", line 8, in ref\n    sp=json.loads((ROOT/c['spec']).read_text());p=sp['parameters'];return {**{k:c[k] for k in ['name','fingerprint','spec','archive','archive_sha256']},'report':path,'report_sha256':sha(ROOT/path),'spec_sha256':sha(ROOT/c['spec']),'asset':c['asset'],'scope':scope,'role':c['role'],'original_status':c['status'],'capital_usdt':10000 if scope=='native' else 20000,'NAV_sha256_by_cost':{k:z['NAV_sha256_f64le'] for k,z in c['scenes'].items()},**{k:c.get(k,p.get(k)) for k in ['fixed_entry_notional_usdt','lookback_days','return_hurdle','exit_buffer_fraction','trend_lookback_days']}}\n                                                                                                                                                                                                                                               ~^^^^^^^^^\nKeyError: 'asset'\n"
+  }
+]

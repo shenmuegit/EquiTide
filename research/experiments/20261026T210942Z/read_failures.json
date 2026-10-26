@@ -1,0 +1,53 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/run.py",
+        "freeze"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-26T21:18:10.799555Z",
+      "finished_utc": "2026-10-26T21:18:15.291956Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261026T210942Z/reserve.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/run.py\", line 56, in <module>\n    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()\n                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/run.py\", line 39, in freeze\n    def freeze():module(R/'freeze_batch.py','independent_budget_freeze').main()\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/freeze_batch.py\", line 32, in main\n    if pair in seen:holds[f'B{B}_E{E}']=oldparent(seen[pair])\n                                        ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/freeze_batch.py\", line 23, in oldparent\n    c=next(x for x in docs[path]['configs'].values() if x['fingerprint']==rec['fingerprint']);x=ref(c,path,'parent');x['capital_usdt']=20000;return x\n                                                                                                ^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/freeze_batch.py\", line 8, in ref\n    sp=json.loads((ROOT/c['spec']).read_text());p=sp['parameters'];return {**{k:c[k] for k in ['name','fingerprint','spec','archive','archive_sha256']},'report':path,'report_sha256':sha(ROOT/path),'spec_sha256':sha(ROOT/c['spec']),'asset':c['asset'],'scope':scope,'role':c['role'],'original_status':c['status'],'capital_usdt':10000 if scope=='native' else 20000,'NAV_sha256_by_cost':{k:z['NAV_sha256_f64le'] for k,z in c['scenes'].items()},**{k:c.get(k,p.get(k)) for k in ['fixed_entry_notional_usdt','lookback_days','return_hurdle','exit_buffer_fraction','trend_lookback_days']}}\n                                                                                                                                                                                                                                               ~^^^^^^^^^\nKeyError: 'asset'\n"
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/audit.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-26T21:28:10.060318Z",
+      "finished_utc": "2026-10-26T21:28:10.363308Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261026T210942Z/audit_initial.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/audit.py\", line 7, in <module>\n    base=module(ROOT/'research/experiments/20261025T205634Z/audit.py','stored_ledger_independent_helpers')\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/run.py\", line 16, in module\n    s=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(s);sys.modules[name]=m;s.loader.exec_module(m);return m\n                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap_external>\", line 999, in exec_module\n  File \"<frozen importlib._bootstrap>\", line 488, in _call_with_frames_removed\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T205634Z/audit.py\", line 7, in <module>\n    from run import ROOT,R,LOOKS,HURDLES,EXITS,sha,put,reg,grid_configs,neighbors,axes\nImportError: cannot import name 'EXITS' from 'run' (/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/run.py)\n"
+    },
+    {
+      "observed_at_utc": "2026-10-26T21:34:32.915647Z",
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/commands.py",
+        "audit_final"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "tool_session": 91327,
+      "exit_code": 143,
+      "actual_output": "",
+      "reason": "Execution session returned143 (SIGTERM); external cause not established. This was readonly final audit, not financial evaluation.",
+      "report_sha256": "b02ac91b9a506d848a8430cad29686504e114a674925adca8fced405c6d53a53",
+      "remaining_audit_processes_initial_substring_inventory": [
+        {
+          "pid": 2795513,
+          "argv": "/bin/bash -c PYTHONDONTWRITEBYTECODE=1 python3 - <<'PY'\nfrom pathlib import Path\nimport json,hashlib,os\nfrom datetime import datetime,timezone\nroot=Path('/home/desktop/Documents/Codex/EquiTide');r=root/'research/experiments/20261026T210942Z';running=[]\nfor p in Path('/proc').iterdir():\n if not p.name.isdigit():continue\n try:args=(p/'cmdline').read_bytes().replace(b'\\0',b' ').decode(errors='replace')\n except (OSError,ProcessLookupError):continue\n if str(r)+'/audit.py' in args or '20261026T210942Z/commands.py audit_final' in args:running.append({'pid':int(p.name),'argv':args})\nentry={'observed_at_utc':datetime.now(timezone.utc).isoformat().replace('+00:00','Z'),'command':['/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python',str(r/'commands.py'),'audit_final'],'cwd':str(root),'tool_session':91327,'exit_code':143,'actual_output':'','reason':'Execution session returned143 (SIGTERM); external cause not established. This was readonly final audit, not financial evaluation.','remaining_audit_processes':running,'report_sha256':hashlib.sha256((r/'report.json').read_bytes()).hexdigest()};(r/'audit_final_interruption.json').write_text(json.dumps(entry,ensure_ascii=False,indent=2)+'\\n');f=json.loads((r/'read_failures.json').read_text());f['facts'].append(entry);(r/'read_failures.json').write_text(json.dumps(f,ensure_ascii=False,indent=2)+'\\n');print(json.dumps({'running':running,'effective_receipts':json.loads((r/'research_effective_commands.json').read_text()),'verification':json.loads((r/'verification.json').read_text())},ensure_ascii=False))\nPY "
+        }
+      ],
+      "diagnostic_correction": "Exact argv recheck found no active audit; initial substring inventory included only inspector shell. Raw original retained in audit_final_interruption.json.",
+      "exact_argv_recheck_artifact": "audit_final_recovery_preflight.json",
+      "successful_recovery_receipt": "research_effective_commands.json/audit_final",
+      "successful_recovery_exit_code": 0
+    }
+  ]
+}

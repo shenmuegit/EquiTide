@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/run.py", line 56, in <module>
+    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()
+                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/run.py", line 39, in freeze
+    def freeze():module(R/'freeze_batch.py','independent_budget_freeze').main()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/freeze_batch.py", line 32, in main
+    if pair in seen:holds[f'B{B}_E{E}']=oldparent(seen[pair])
+                                        ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/freeze_batch.py", line 23, in oldparent
+    c=next(x for x in docs[path]['configs'].values() if x['fingerprint']==rec['fingerprint']);x=ref(c,path,'parent');x['capital_usdt']=20000;return x
+                                                                                                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T210942Z/freeze_batch.py", line 8, in ref
+    sp=json.loads((ROOT/c['spec']).read_text());p=sp['parameters'];return {**{k:c[k] for k in ['name','fingerprint','spec','archive','archive_sha256']},'report':path,'report_sha256':sha(ROOT/path),'spec_sha256':sha(ROOT/c['spec']),'asset':c['asset'],'scope':scope,'role':c['role'],'original_status':c['status'],'capital_usdt':10000 if scope=='native' else 20000,'NAV_sha256_by_cost':{k:z['NAV_sha256_f64le'] for k,z in c['scenes'].items()},**{k:c.get(k,p.get(k)) for k in ['fixed_entry_notional_usdt','lookback_days','return_hurdle','exit_buffer_fraction','trend_lookback_days']}}
+                                                                                                                                                                                                                                               ~^^^^^^^^^
+KeyError: 'asset'
