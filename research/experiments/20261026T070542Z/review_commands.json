@@ -1,0 +1,26 @@
+[
+  {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T070542Z/candidate_validation.py"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-10-26T07:37:39.067462Z",
+    "finished_utc": "2026-10-26T07:37:41.695570Z",
+    "exit_code": 0,
+    "log": "research/experiments/20261026T070542Z/candidate_validation.log",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T070542Z/check_sources.py"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-10-26T07:37:41.696126Z",
+    "finished_utc": "2026-10-26T07:37:55.015496Z",
+    "exit_code": 1,
+    "log": "research/experiments/20261026T070542Z/source_checks.log",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T070542Z/check_sources.py\", line 59, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T070542Z/check_sources.py\", line 47, in main\n    base=json.loads((R/'startup.json').read_text())['head_after_successful_SSH_fetch'];prefix=subprocess.check_output(['git','show',base+':research/automation/registry.jsonl'],cwd=ROOT);raw=(ROOT/'research/automation/registry.jsonl').read_bytes();assert raw.startswith(prefix);events=[json.loads(x) for x in raw[len(prefix):].splitlines()];fps={x['fingerprint'] for x in batch+bad+json.loads((R/'forward_batch.json').read_text())};assert len(events)==450 and len(fps)==219 and {x['fingerprint'] for x in events}==fps\n                                                                                                                                                                                                                                                                                                                                                                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  }
+]

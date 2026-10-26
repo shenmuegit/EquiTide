@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T070542Z/check_sources.py", line 59, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T070542Z/check_sources.py", line 47, in main
+    base=json.loads((R/'startup.json').read_text())['head_after_successful_SSH_fetch'];prefix=subprocess.check_output(['git','show',base+':research/automation/registry.jsonl'],cwd=ROOT);raw=(ROOT/'research/automation/registry.jsonl').read_bytes();assert raw.startswith(prefix);events=[json.loads(x) for x in raw[len(prefix):].splitlines()];fps={x['fingerprint'] for x in batch+bad+json.loads((R/'forward_batch.json').read_text())};assert len(events)==450 and len(fps)==219 and {x['fingerprint'] for x in events}==fps
+                                                                                                                                                                                                                                                                                                                                                                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
