@@ -1,0 +1,40 @@
+{
+  "facts": [
+    {
+      "stage": "pre_financial_registration_guard",
+      "financial_evaluations": 0,
+      "report_or_results_created": false,
+      "command_receipt": {
+        "command": [
+          "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+          "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261027T211845Z/run.py",
+          "evaluate"
+        ],
+        "cwd": "/home/desktop/Documents/Codex/EquiTide",
+        "started_utc": "2026-10-27T21:27:09.923716Z",
+        "finished_utc": "2026-10-27T21:27:10.965130Z",
+        "exit_code": 1,
+        "log": "research/experiments/20261027T211845Z/evaluate_registration_guard_failure.log",
+        "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261027T211845Z/run.py\", line 57, in <module>\n    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()\n                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261027T211845Z/run.py\", line 42, in evaluate\n    assert not(R/'report.json').exists();plan=json.loads((R/'plan.json').read_text());batch=json.loads((R/'batch.json').read_text());records=reg.read_records(ROOT/'research/automation/registry.jsonl');assert len(batch)==60 and all(records[x['fingerprint']]['status']=='reserved' for x in batch) and sha(R/'engine.py')==plan['source_engine']['sha256'];started=now();_,markets,common,vectors,ss=parent.recover(plan);configs={};(R/'results').mkdir()\n                                                                                                                                                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261027T211845Z/run.py\", line 42, in <genexpr>\n    assert not(R/'report.json').exists();plan=json.loads((R/'plan.json').read_text());batch=json.loads((R/'batch.json').read_text());records=reg.read_records(ROOT/'research/automation/registry.jsonl');assert len(batch)==60 and all(records[x['fingerprint']]['status']=='reserved' for x in batch) and sha(R/'engine.py')==plan['source_engine']['sha256'];started=now();_,markets,common,vectors,ss=parent.recover(plan);configs={};(R/'results').mkdir()\n                                                                                                                                                                                                                                       ~~~~~~~^^^^^^^^^^^^^^^^^^\nKeyError: '44515cfc4605d90b4d91ae87d2e2220b9b0fb8c2c365a8c64e3da723d1ac083d'\n"
+      },
+      "reason": "Evaluation guard called while sequential reservation process still running; KeyError before recover/financial calculation. Failure recorder also lacked initialized read_failures.json; initialized from actual receipt.",
+      "resolution": "Wait for all reserve commands actual exit0, verify every reserved fingerprint, then invoke evaluator once."
+    },
+    {
+      "stage": "candidate_public_GET_transport_attempt",
+      "financial_evaluation_before_failed_attempt": false,
+      "actual_failed_attempt": {
+        "url": "https://fapi.binance.com/fapi/v1/exchangeInfo",
+        "started_utc": "2026-10-27T21:32:14.778058+00:00",
+        "http_status": 0,
+        "raw": "data/raw/binance/candidate_forward/20261027T211845Z/http_attempt_0000.gz",
+        "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+        "bytes": 0,
+        "transport": "curl compressed verifiedTLS,separate bounded attempts",
+        "curl_exit_code": 35,
+        "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n"
+      },
+      "resolution": "Separate bounded verifiedTLS retry succeeded;all8necessaryHTTP200pages saved;original observer then reserved/evaluated/finished3partial observations with actual command exit0. Failed empty rawbody gzip and transport stderr/hash retained;no synthetic fallback."
+    }
+  ]
+}
