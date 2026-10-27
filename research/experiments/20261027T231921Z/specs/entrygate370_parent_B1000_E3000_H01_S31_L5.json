@@ -1,0 +1,101 @@
+{
+  "kind": "combination",
+  "family": "btc-trend-eth-gated-reversal-fixed-total-entry-budget",
+  "name": "entrygate370_parent_B1000_E3000_H01_S31_L5",
+  "logic": {
+    "allocation": "Raw1/1 means one entire10000USDT bank perasset,parent20000;NBandNE independently1000/2000/3000,fixednewentrybudgets,total2000..6000=10..30percent initialparent. No normalization,NAVresizing,transfer,crossmargin,cashyield or parentrebalance.",
+    "composition": "ETH H1/2/3percent xS28/31 xL3/4/5,N3000/10000bank;H2all6native+6parentcells readonly;H1/H3new12native+12parents. BTCfixedL31/H4/E1,N1000/10000bank. Raw1/1 parent20000,entrybudgets4000=20percentinitialcapital,notnormalized;noNAVresizing,transfer,crossmargin orrebalance.",
+    "native_ETH_rule": {
+      "signal": "AtUTC00:01 usepriorcompleteclose ROC L3/4/5. Strict ROC>H base short,ROC<-H base long;H=1/2/3percent exactspecparameter. Insideband retainactual longonlyROC<0,shortonlyROC>0;zeroexits. SlowROC S28/31 strictlypositive permitslong,negative permitsshort,zero/incompatibility flat. Newentryfromcash needsnewstrictextreme;closebeforeopen. No future data/hidden desired.",
+      "execution": "NextUTC00:01OPEN,closebeforeopen;fixedentrynotionalparameters1000/2000/3000per10000bank,quantityfloor(N/priorcompleteclose/lot)*lot,same-directionactualqretained. No futureOPEN/funding/currentpartialclose enterssignal orsize.",
+      "allocation": "One10000USDTbank,N3000fixednewentry=30percent initialcollateral. No NAV-based resizing,spotborrowing,transfer or leverage abovefullycollateralized entrycap.",
+      "ledger": "Opening debitsfeeonly;unrealizedPnL=q*(price-entryexecution). Closing realizes signedq*(exitexecution-entryexecution) and paysfee. Notional is not debited as spot cash.",
+      "funding": "At actual settlementns,rawcashdelta=-signedq*actualmark*realizedrate. Only oldposition thenheld participates;funding events00:00/00:00.001 occur before00:01rotation. Negative delta multiplied by coststress;positive income not increased. Sourceavailable_ts (often+1hour) retained;rates are ex-post accounting only,never signal or size inputs.",
+      "risk": "Composite sampled NAV includes minute transaction-close proxies plus actual closed-hour mark and actualfundingsettlement marks,pre/posttrade samples and terminalcash. Report mark-only and trade-proxy DD separately. Marginproxy:1%ofnotional versus adverse full-hour markhigh/low for every overlapping state in completelyin-OOSclosedhours. No exact historicaltier/tick liquidation engine;anyproxybreachfails qualification.",
+      "state": "One cold10000nativecashstart2025-10-19UTC00:01,continuous370days;12complete30dayfolds+10daytail. Existingcash/q/entry/cost/fundingcarryacrossfolds;onlynewOct24terminalforcesexit. Recent40diagnostic inheritsday330predecisionstate,no reset ordiagnosticorders."
+    },
+    "native_BTC_rule": {
+      "signal": "Priorcompleted31day ROC strict>4% long/<-4% short;insideband retainactual long iff ROC>-1%,short iff ROC<1%;oppositefull extreme closebeforeopen atUTC00:01. Native1000/10000bank actualquantity,lot/tick/funding/cost/risk paths reused unchanged.",
+      "execution": "NextUTC00:01 nativeOPEN;closeopposite first then enter. Quantity=floor(spec.fixed_entry_notional_usdt/priorcompletedC/lot)*lot times direction;fixed raw N,no future OPEN/NAV/unpublishedfunding sizing;retain actualsame-directionquantity.",
+      "allocation": "Independent10000USDT collateral;raw N1000/2000/3000 means10/20/30percent fixed initialcollateral per newentry,not targetweight rebalancing or NAV-scaled compound size. No borrowing/transfer/cashyield. Existing1x fullycollateralized postfee entrycap unchanged.",
+      "ledger": "Opening debitsfeeonly;unrealizedPnL=q*(price-entryexecution). Closing realizes signedq*(exitexecution-entryexecution) and paysfee. Notional is not debited as spot cash.",
+      "funding": "At actual settlementns,rawcashdelta=-signedq*actualmark*realizedrate. Only oldposition thenheld participates;funding events00:00/00:00.001 occur before00:01rotation. Negative delta multiplied by coststress;positive income not increased. Sourceavailable_ts (often+1hour) retained;rates are ex-post accounting only,never signal or size inputs.",
+      "risk": "Composite sampled NAV includes minute transaction-close proxies plus actual closed-hour mark and actualfundingsettlement marks,pre/posttrade samples and terminalcash. Report mark-only and trade-proxy DD separately. Marginproxy:1%ofnotional versus adverse full-hour markhigh/low for every overlapping state in completelyin-OOSclosedhours. No exact historicaltier/tick liquidation engine;anyproxybreachfails qualification.",
+      "state": "One cold10000collateral start2025-10-19 across12complete30dayfolds +10daytail. Cash,signedq,entryprice/reference,funding/costs carry continuously through formerSep14terminal;onlynewOct24terminal is costedclosed. Original330dayreports andSMA/paper10accounts unchanged."
+    },
+    "ledger": "Absoluteexisting nativeNAVs addedonce atsamecostmultiplier. Reconstructfromsavedcash/q/entrysegments andactualprices,verifyalloriginalsourcefullNAVSHA. No simulate/target/order/fundingmodelrerun;no newparentfills.",
+    "alignment": "Unionrelative-nanosecond/eventkeys,pre/postfunding/tradeorderretained. AtanyunionkeycarrylastcompletedsourceNAV;nointerpolationorlookahead.",
+    "state": "One continuous370day sourcepath persleeve,cash/q/fees/fundingcarryall13folds;onlyoriginalOct24terminal sourceclosure. Recent40diagnosticinheritsday330predecisionstatesandhas8continuous5dayfolds,nocapitalrestartornewdiagnostictrades.",
+    "risk": "Each10000bankretainsitsownoriginalconstraints/marginproxy;no crossbanknettingorcollateralbailout. Parentmayholdsameoroppositedirections;no guaranteedmarketneutrality.",
+    "interpretation": "Originalslow28sitsatpriorgridboundary. Predeclareinterior21andbeyond28at31toseeplatform/cliff,notassumeimprovement. Existing33daycontextsupports31withoutfutureindex. Keepactualqgate/nohiddenstate/cost/riskrules;noNAVresizing/weightsnormalization;originalfuturecandidateunchanged."
+  },
+  "parameters": {
+    "initial_capital_usdt": 20000,
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "component_capitals_usdt": [
+      10000,
+      10000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      1000,
+      3000
+    ],
+    "BTC_lookback_days": 31,
+    "BTC_return_hurdle": 0.04,
+    "ETH_lookback_days": 5,
+    "ETH_return_hurdle": 0.01,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_test_days": 30,
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "source_rules_and_costs_sha256": "c1c5e36a9d5d018d0eb8fcaadfda03a7e8fa9e822b6f0227cfb2abb8dd8784e3",
+    "BTC_exit_buffer_fraction": 0.01,
+    "ETH_exit_buffer_fraction": 0,
+    "BTC_fixed_entry_notional_usdt": 1000,
+    "ETH_fixed_entry_notional_usdt": 3000,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "continuous_oos_days": 370,
+    "style": "btc_trend_eth_trend_filtered_reversal",
+    "trend_exit_buffer_fraction": 0.01,
+    "reversal_lookback_days": 5,
+    "reversal_return_hurdle": 0.01,
+    "trend_filter_lookback_days": 31,
+    "ETH_trend_lookback_days": 31
+  },
+  "components": [
+    {
+      "fingerprint": "2122c03af949f66e9ab48802b8813121b9a94f1e0a5844a712c800a026a2fd4d",
+      "weight": 1
+    },
+    {
+      "fingerprint": "b8a3c3c5a8e21c2c43f52c4afd72e122315cb191e23a03c18a90a87cc338b837",
+      "weight": 1
+    }
+  ],
+  "validation_plan": "research/experiments/20261027T231921Z/plan.json",
+  "sources": [
+    {
+      "url": "https://www.aqr.com/Insights/Research/Journal-Article/Time-Series-Momentum",
+      "access_date": "2026-10-27",
+      "published": "2012-05-01",
+      "scope": "Prior actualprimaryreading reused;longercryptoROC/slowgate hypothesis is inference,not transferredfutures/equityprofit."
+    },
+    {
+      "url": "https://www.aqr.com/Insights/Research/Working-Paper/Trading-Costs-of-Asset-Pricing-Anomalies",
+      "access_date": "2026-10-27",
+      "published": "2012-12-05",
+      "scope": "Prior actualprimaryreading reused;longercryptoROC/slowgate hypothesis is inference,not transferredfutures/equityprofit."
+    }
+  ]
+}
