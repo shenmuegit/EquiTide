@@ -105,7 +105,7 @@ def main():
         restored = json.loads(target.read_text())
         assert restored["paper"]["state_sha256"] == paper["state_sha256"]
         assert len(gzip.compress(target.read_bytes(), mtime=0)) < 1_000_000, "monitor feed contains bulky raw evidence"
-        assert len(config_gzip) < 3_000_000, "compressed monitor configs exceed size limit"
+        assert len(config_gzip) < 4_000_000, "compressed monitor configs exceed size limit"
         assert restored["research"]["configs_sha256"] == snapshot.sha(config_raw)
     print(json.dumps({"ok": True, "paper_accounts": 10, "observations": len(paper["history"]),
                       "research_configs": len(ids), "protected_inputs_unchanged": True}))

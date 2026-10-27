@@ -1,0 +1,46 @@
+{
+  "read_only": true,
+  "files_sha256": {
+    "web/src/main.tsx": "2e128364c04bf0312faae33eaed017cb17701ca8fe32bfd701d3abd618e9128b",
+    "web/src/api.ts": "8e507cbb8e1e69ec32ea5f07e9d87294456174e9daed5414b46ef845cc681e05",
+    "web/src/Chart.tsx": "0585808b24cd1cfec1fa0000e158c992d5ffebdc192ff93143d977659230868a",
+    "web/src/App.tsx": "0d9d4aeff8372913943be1f8417f3b12abcec1c958ba74c76274aae32b213885",
+    "web/src/monitor/main.tsx": "47ca70339a7792cd5449fce401031d02c8d653f13ec9aea0d65e1c3d60a0479e",
+    "web/src/monitor/Monitor.tsx": "a60475a43f6583dc44900e3318960aa4fe4ad6c6c10fe2bd3e475033bd4fac63",
+    "web/src/monitor/EquityChart.tsx": "66a7b7387ee3b5a40fafff2746b685f5ee78613625b52c87ded25d68cc259504",
+    "web/src/monitor/data.ts": "26b4af7b7839f4dbd5deb1945225b38523e00a5cda53168a62eb31369c3c2922"
+  },
+  "relevant_lines": [
+    {
+      "path": "web/src/monitor/Monitor.tsx",
+      "line": 49,
+      "text": "if (includeResearch && loadedResearch.current !== next.research.configs_sha256) {"
+    },
+    {
+      "path": "web/src/monitor/Monitor.tsx",
+      "line": 53,
+      "text": "loadedResearch.current = next.research.configs_sha256;"
+    },
+    {
+      "path": "web/src/monitor/data.ts",
+      "line": 49,
+      "text": "configs_path: string; configs_sha256: string; periods: { start_utc: string; end_utc: string }[];"
+    },
+    {
+      "path": "web/src/monitor/data.ts",
+      "line": 63,
+      "text": "if (data.schema_version !== 1 || !data.paper || !data.research?.configs_sha256) throw new Error('\u7814\u7a76\u6570\u636e\u683c\u5f0f\u5f02\u5e38\uff0c\u4fdd\u7559\u4e0a\u6b21\u6709\u6548\u8bb0\u5f55');"
+    },
+    {
+      "path": "web/src/monitor/data.ts",
+      "line": 70,
+      "text": "const stream = response.body?.pipeThrough(new DecompressionStream('gzip'));"
+    },
+    {
+      "path": "web/src/monitor/data.ts",
+      "line": 74,
+      "text": "if (hash !== snapshot.research.configs_sha256) throw new Error('\u7814\u7a76\u6392\u540d\u6b63\u5728\u540c\u6b65\uff0c\u4fdd\u7559\u4e0a\u6b21\u6709\u6548\u6392\u540d');"
+    }
+  ],
+  "finding": "Existingfrontend uses nativegzipdecompression and SHA verification; no3MB runtimebound found in inspectedsource. Actual3MB check lives in checks/monitor_snapshot.py. Preserve every historicalrow;onlybudget review afteractualsnapshot limitfailure. No frontenddeploymentneeded."
+}

@@ -1,0 +1,54 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261027T031246Z/observe_candidate.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-27T03:17:06.205268Z",
+      "finished_utc": "2026-10-27T03:18:09.636899Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261027T031246Z/candidate.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261027T031246Z/observe_candidate.py\", line 18, in <module>\n    obs.main()\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 131, in main\n    packet=capture(cut,previous,binding,rawdir,receipts);packetpath=rawdir/'packet.json.gz';gzput(packetpath,packet);put(window/'input_manifest.json',{'packet':rel(packetpath),'sha256':c.sha(packetpath),'provenance':receipts,'plan_sha256':binding['plan_sha256']})\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 49, in capture\n    info=request('/fapi/v1/exchangeInfo',{},rawdir,receipts);server=request('/fapi/v1/time',{},rawdir,receipts);retrieved=min(now(),int(server['serverTime'])*c.MS)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261027T031246Z/observe_candidate.py\", line 14, in request\n    start=datetime.now(timezone.utc).isoformat();cmd=['curl','--fail','--silent','--show-error','--retry','2','--retry-all-errors','--max-time','20','--user-agent','EquiTide-ReadOnly-Research/1.0','--write-out','\\n%{http_code}',url];z=subprocess.run(cmd,cwd=ROOT,capture_output=True,timeout=65);body,code=z.stdout.rsplit(b'\\n',1) if b'\\n' in z.stdout else (z.stdout,b'000');dest=rawdir/f'http_{len(receipts):04d}.gz';dest.write_bytes(gzip.compress(body,mtime=0));item={'url':url,'started_utc':start,'http_status':int(code),'raw':str(dest.relative_to(ROOT)),'sha256':sha(dest),'bytes':len(body),'transport':'curl verifiedTLS withboundedretry','curl_exit_code':z.returncode,'stderr':z.stderr.decode(errors='replace')};receipts.append(item);print('CAPTURE_HTTP',len(receipts),int(code),z.returncode,flush=True);assert z.returncode==0 and int(code)==200,item;return json.loads(body)\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: {'url': 'https://fapi.binance.com/fapi/v1/exchangeInfo', 'started_utc': '2026-10-27T03:17:06.521306+00:00', 'http_status': 0, 'raw': 'data/raw/binance/candidate_forward/20261027T031246Z/http_0000.gz', 'sha256': '4e0a14a9ec30882824406922f03e3948f75b0f7d95caced97f289f7e01d8e0fa', 'bytes': 773770, 'transport': 'curl verifiedTLS withboundedretry', 'curl_exit_code': 28, 'stderr': 'curl: (28) Operation timed out after 20000 milliseconds with 577306 out of 1161997 bytes received\\ncurl: (28) Operation timed out after 20000 milliseconds with 196464 out of 1161997 bytes received\\ncurl: (28) Operation timed out after 20000 milliseconds with 0 bytes received\\n'}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "-"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "recorded_utc": "2026-10-27T03:19:26.490844+00:00",
+      "exit_code": 1,
+      "scope": "Read-only code inspection preparation;no financial calculation or registry mutation.",
+      "stderr": "SyntaxError: invalid syntax in inline list expression of diagnostic filter.",
+      "resolution": "Correct diagnostic syntax;do not alter results."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261027T031246Z/run.py",
+        "freeze"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-27T03:22:07.896631Z",
+      "finished_utc": "2026-10-27T03:22:08.839025Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261027T031246Z/reserve.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261027T031246Z/run.py\", line 57, in <module>\n    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()\n                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261027T031246Z/run.py\", line 40, in freeze\n    def freeze():module(R/'freeze_batch.py','independent_budget_freeze').main()\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261027T031246Z/freeze_batch.py\", line 9, in main\n    path='research/experiments/20261025T066485Z/report.json';docs[path]=json.loads((ROOT/path).read_text());b={};nativeholds={}\n                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T066485Z/report.json'\n"
+    },
+    {
+      "command": [
+        "python3",
+        "/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-27T03:33:28.763347Z",
+      "finished_utc": "2026-10-27T03:33:44.703128Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261027T031246Z/monitor_check_final.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 115, in <module>\n    main()\n    ~~~~^^\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 108, in main\n    assert len(config_gzip) < 3_000_000, \"compressed monitor configs exceed size limit\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: compressed monitor configs exceed size limit\n",
+      "previous_valid_monitor_pair_restored": true
+    }
+  ]
+}
