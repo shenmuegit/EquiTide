@@ -1,0 +1,11 @@
+"""Check all longer-speed/native/parent economic aliases before any research reservation."""
+import json
+from run import ROOT,R,reg,sha,put
+planpath=R/'plan_corrected.json' if (R/'plan_corrected.json').exists() else R/'plan.json';plan=json.loads(planpath.read_text());rows=json.loads((R/'batch.json').read_text());by={x['fingerprint']:x for x in rows};assert len(rows)==8 and sum(x['scope']=='native' for x in rows)==4
+for x in rows:
+ sp=json.loads((ROOT/x['spec']).read_text());p=sp['parameters'];assert reg.fingerprint(sp)==x['fingerprint'] and sp['validation_plan']==str((R/('plan.json' if x['scope']=='native' else 'plan_corrected.json')).relative_to(ROOT))
+ if x['scope']=='native':assert p['lookback_days']==x['lookback_days'] in [4,5] and p['trend_lookback_days']==x['trend_lookback_days'] in [28,31] and p['return_hurdle']==x['return_hurdle']==.02 and p['exit_buffer_fraction']==0 and p['fixed_entry_notional_usdt']==x['fixed_entry_notional_usdt']==3000 and p['initial_capital_usdt']==10000 and p['raw_entry_notional_fraction_of_initial_capital']==.3
+ else:
+  b,e=x['source_fingerprints'];assert b==plan['fixed_BTC']['fingerprint'] and by[e]['scope']=='native' and [z['fingerprint'] for z in sp['components']]==[b,e] and [z['weight'] for z in sp['components']]==p['raw_component_multipliers']==[1,1] and p['initial_capital_usdt']==20000 and p['component_capitals_usdt']==[10000,10000] and p['component_initial_entry_notionals_usdt']==[1000,3000]
+  assert p['BTC_lookback_days']==31 and p['BTC_return_hurdle']==.04 and p['BTC_exit_buffer_fraction']==p['trend_exit_buffer_fraction']==.01 and p['BTC_fixed_entry_notional_usdt']==1000 and p['ETH_fixed_entry_notional_usdt']==3000 and p['ETH_trend_lookback_days']==p['trend_filter_lookback_days']==x['trend_filter_lookback_days']==by[e]['trend_lookback_days'] and p['ETH_lookback_days']==p['reversal_lookback_days']==x['reversal_lookback_days']==by[e]['lookback_days'] and p['ETH_return_hurdle']==p['reversal_return_hurdle']==.02 and p['ETH_exit_buffer_fraction']==0
+put(R/'definition_check.json',{'passed':True,'checked_configs':8,'new_native':4,'new_parents':4,'plan_sha256':sha(planpath),'all_signal_budget_source_aliases_match':True,'no_financial_evaluation':True});print('PASS:8 exact new native/parent definitions,aliases/capitals andsourcefingerprints verified before reservation.')
