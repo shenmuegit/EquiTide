@@ -1,0 +1,146 @@
+{
+  "all_scene_cumulative_fills": 24,
+  "audit": {
+    "actual_portfolios": 10,
+    "cost_scenes": 30,
+    "filled_virtual_orders": 0,
+    "independent_money_identities_checked": true,
+    "passed": true,
+    "real_orders": 0,
+    "receipt_times_and_raw_quotes_verified": true,
+    "report_sha256": "f0639b494136146284fc934e3ef5fa1d2067d14ac043b6319d8e4346e54a1cc3",
+    "reproduced_exact_state_and_report": true
+  },
+  "base_commit": "be7b18534fe58e0f86b40e203ac543d688fa1a15",
+  "checks": {
+    "actual_exact_replay": "passed",
+    "frozen_portfolio_component_and_reused_code_hashes": "passed",
+    "strategy_registry": "passed",
+    "synthetic_money_timing_fixtures": "passed;not performance evidence"
+  },
+  "cleanup": [
+    "Verified batch.partial.json duplicate removed"
+  ],
+  "completed_30day_windows": 0,
+  "continuity": {
+    "continuous_completed_observations": 146,
+    "coverage_fraction": 0.6260643686246343,
+    "current_decisions": 60,
+    "current_fills": 0,
+    "elapsed_days": 19.26895854892361,
+    "new_gap": null,
+    "new_registry_events": 20,
+    "observation_id": "20261027T005845205958Z",
+    "observed_at_utc": "2026-10-27T00:59:35.664238Z",
+    "old_registry_bytes_preserved": true,
+    "passed": true,
+    "unique_all_scene_trade_ids": 24
+  },
+  "daily_decision_check": {
+    "account_executor_or_frozen_rules_changed": false,
+    "actions": {
+      "hold": 60
+    },
+    "actual_decision_at_utc": "2026-10-27T00:59:35.664238Z",
+    "all_cost_scenes_flat": true,
+    "auxiliary_check_corrections": [
+      {
+        "cause": "Auxiliary assertion mistook the compared-close index for the native decision index; frozen signal_step sets i=len(values)-1 and signal functions read values[i-1].",
+        "corrected_assertion": "decision_index == len(daily)-1; daily[i-1] is latest completed candle and daily[i] is not yet available",
+        "initial_assertion": "decision_index == len(daily)-2",
+        "initial_check_exit_code": 1,
+        "source_evidence": [
+          "research/paper10/run.py:35-43",
+          "research/experiments/20261002T174933Z/signals.py:8-14",
+          "research/experiments/20261002T094655Z/signals.py:8-12",
+          "research/experiments/20261001T234032Z/signals.py:8-12",
+          "research/experiments/20261007T123850Z/signals.py:11-16"
+        ]
+      },
+      {
+        "cause": "P05 EMA context intentionally uses float: Decimal(2324.55) exposes its binary representation, while raw Binance close is a decimal string; float(context)==float(raw_close) held in all three P05 scenes.",
+        "corrected_assertion": "Decimal(str(context_prior_close)) == Decimal(raw_close); preserve frozen source arithmetic",
+        "initial_assertion": "Decimal(context_prior_close) == Decimal(raw_close)",
+        "initial_check_exit_code": 1,
+        "source_evidence": [
+          "research/experiments/20261001T234032Z/signals.py:8-12",
+          "research/paper10/observations/20261027T005845205958Z/report.json"
+        ]
+      }
+    ],
+    "closed_day_decisions": 60,
+    "compared_close_included_only_after_UTC_close": true,
+    "daily_keys_advanced_once": true,
+    "decision_index_semantics": "Native index i is len(daily)-1; compared completed close is daily[i-1]. Actual execution uses current captured bid/ask and UTC timestamp.",
+    "final_rerun_passed": true,
+    "future_daily_bar_excluded": true,
+    "initial_auxiliary_failure_stdout_stderr": "Traceback (most recent call last):\n  File \"<string>\", line 29, in <module>\n    assert d['context']['decision_index']==len(rows)-2\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+    "missing_trades_backfilled": false,
+    "observation_id": "20261027T005845205958Z",
+    "passed": true,
+    "signal_available_at_utc": {
+      "BTC": "2026-10-27T00:00:00Z",
+      "ETH": "2026-10-27T00:00:00Z"
+    },
+    "signal_to_actual_decision_seconds": [
+      3575.664238
+    ]
+  },
+  "execution": {
+    "branch": "main",
+    "branch_lock_owner_pid": 2855995,
+    "branch_lock_session": 47655,
+    "fetch_and_fast_forward_before_capture_under_same_lock": true,
+    "same_executor": true,
+    "transport": "existing public-GET-only curl adapter",
+    "unexpected_failures": []
+  },
+  "files_sha256": {
+    "research/monitor/configs.json.gz": "e037dc3511c5378ae5f055994170a92e5b2e12891c2493e3d95629c8b12eab0b",
+    "research/monitor/latest.json": "666629c71a625fd7f504c0370e57199b9347994ffa1e4385b0319b35d4be6276",
+    "research/paper10/observations/20261027T005845205958Z/BTC_average.json.gz": "fec84b84575fe97ac5efb294da8de26bc36552d0ff5fa58d141a6af92c171fef",
+    "research/paper10/observations/20261027T005845205958Z/BTC_daily.json.gz": "c5cc76ed25d0fc8e4460bf66c41e1395901f07355d3562610fb3ad2fcf639ab2",
+    "research/paper10/observations/20261027T005845205958Z/BTC_quote.json.gz": "757759b9cf85102561d395faefb7b1502da3dd21272a50456358755e20a9378e",
+    "research/paper10/observations/20261027T005845205958Z/ETH_average.json.gz": "bacd1fa29f8bfdaf9c9cce146f7e8d9042640ca39127517bd6440f6cb18313d3",
+    "research/paper10/observations/20261027T005845205958Z/ETH_daily.json.gz": "e169aabfccc055c8cea5bc368c48e3584ceb2f1ddc9e1f67438cd1861d872093",
+    "research/paper10/observations/20261027T005845205958Z/ETH_quote.json.gz": "913bba015ab37c59d20ab3139a808f2251376f8f7e0a07b20755d2f37b0b2426",
+    "research/paper10/observations/20261027T005845205958Z/batch.json": "d954dbb3609a429552bfce316d4a057df115af95bdb6629d9259c66627710596",
+    "research/paper10/observations/20261027T005845205958Z/complete.json": "bc0be58b4534e397edf2f86efc8b3a1d564f052f571a725ca0da78182ccaba34",
+    "research/paper10/observations/20261027T005845205958Z/exchange_info.json.gz": "a5c926163ec97bca53f82c2392bf3ed61d83d94b894672a466b772c7f6e27440",
+    "research/paper10/observations/20261027T005845205958Z/http_provenance.json": "34de17e30b5f59f2e613491b11e877377d5d29eb3d9fa4789507e33bd933fc41",
+    "research/paper10/observations/20261027T005845205958Z/market.json": "4743d6e5a42107ea6caef333d14bbfd25f8553ab8b61397f3f79dd4c44491687",
+    "research/paper10/observations/20261027T005845205958Z/report.json": "f0639b494136146284fc934e3ef5fa1d2067d14ac043b6319d8e4346e54a1cc3",
+    "research/paper10/observations/20261027T005845205958Z/result.md": "b251f7e9441817a101db1fa21bb0448319bc0127245f5fd79a6b49c1353e5c2f",
+    "research/paper10/observations/20261027T005845205958Z/review.md": "559793c6c632cec0734924c5a17a1d6ae3bfc44c2aff3d7bea9776efdfa42b05",
+    "research/paper10/observations/20261027T005845205958Z/specs/P01.json": "8b6979cc35100ec99c5ca48d3744fae6b9c7366a686f23c7f9e9d9fa2774abf7",
+    "research/paper10/observations/20261027T005845205958Z/specs/P02.json": "665fc045ab4ab2a143db91182a767d4e1531af7f304f060ad844b96d68dcdc32",
+    "research/paper10/observations/20261027T005845205958Z/specs/P03.json": "ef0799e068679a6fcd3efe5ea92fefcc93614aef6085bfb93b86f98262146e1b",
+    "research/paper10/observations/20261027T005845205958Z/specs/P04.json": "965dd6f9bc6c82f5e386b30e5c9da24e661f4cb369b679966f18112e2b1ba5ec",
+    "research/paper10/observations/20261027T005845205958Z/specs/P05.json": "19400e16fbb98f98ea537251e5d0b37bbac8d78ae638950e4eadcd429c0f0ab6",
+    "research/paper10/observations/20261027T005845205958Z/specs/P06.json": "f42c0c5ee8aa4093daa72e14a9f1f9cbe4b4962d1defe1f3bde88ac964d39bda",
+    "research/paper10/observations/20261027T005845205958Z/specs/P07.json": "9b6c29764938791d948c2fae4092215c0f97520d9f8c3fbe5b163e444b8a0245",
+    "research/paper10/observations/20261027T005845205958Z/specs/P08.json": "094838a525277cb5acf9189b77407797734b398cd2ac71f3092cb10dcad72b38",
+    "research/paper10/observations/20261027T005845205958Z/specs/P09.json": "7ce3e5c8f30c2d92589bcb777f4f7ff5b7a6f0af9b46530286adfa8ee6135106",
+    "research/paper10/observations/20261027T005845205958Z/specs/P10.json": "c989db139186a1673e565b6beff7b57330d2e5f2076aee3d450485b56a5cce9a",
+    "research/paper10/observations/20261027T005845205958Z/state_after.json": "85443163fdcc422ed75193c7fadb0d18fdba686c2f20bf8fa70f30a79a112a68",
+    "research/paper10/observations/20261027T005845205958Z/state_before.json": "dfc9fd9cc65b41ef366692a2350cffb7b4dc3db4721f8fe07845c20541fe2854",
+    "research/paper10/observations/20261027T005845205958Z/time_after.json.gz": "45f329f7ae72117ee64be75481b3450719a2183067fd9dfe2497902f5bd0efc1",
+    "research/paper10/observations/20261027T005845205958Z/time_before.json.gz": "2806d8158b3011cdc5ef41995e13a383a061796d87d25fda3217701eee732ccf",
+    "research/paper10/observations/20261027T005845205958Z/trade_ledger.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "research/paper10/observations/20261027T005845205958Z/transport.jsonl": "ab23ca2aa81c4e7460781163d1216a3463495953c8ecad13e4975df1f96ff8da",
+    "research/paper10/plan.json": "383cbfe8544627e05ff498ae4f803dbc3ccfd24753311add9cba2f5aa064e34f",
+    "research/paper10/state.json": "85443163fdcc422ed75193c7fadb0d18fdba686c2f20bf8fa70f30a79a112a68",
+    "research/paper10/validation/curl_public_get.py": "bb974b39ce6c5c425090bc52897b07de1043384fc2ce19ab97235f2b58bbdea8"
+  },
+  "heartbeat_at_utc": "2026-10-27T00:58:13.634Z",
+  "monitor_check": {
+    "observations": 146,
+    "ok": true,
+    "paper_accounts": 10,
+    "protected_inputs_unchanged": true,
+    "research_configs": 7086
+  },
+  "observation_id": "20261027T005845205958Z",
+  "primary_cumulative_fills": 8,
+  "verified_at_utc": "2026-10-27T01:04:18.256694+00:00"
+}
