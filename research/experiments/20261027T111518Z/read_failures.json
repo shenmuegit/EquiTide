@@ -1,0 +1,48 @@
+{
+  "facts": [
+    {
+      "scope": "Public-read-only HTTP transport attempt;overall candidate command later succeeded with eightHTTP200pages;no completed backtest re-evaluated.",
+      "command": [
+        "curl",
+        "--compressed",
+        "--silent",
+        "--show-error",
+        "--connect-timeout",
+        "10",
+        "--max-time",
+        "60",
+        "--user-agent",
+        "EquiTide-ReadOnly-Research/1.0",
+        "--write-out",
+        "\n%{http_code}",
+        "https://fapi.binance.com/fapi/v1/exchangeInfo"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "exit_code": 35,
+      "url": "https://fapi.binance.com/fapi/v1/exchangeInfo",
+      "started_utc": "2026-10-27T11:24:31.177336+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261027T111518Z/http_attempt_0000.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "resolution": "Second separately bounded attempt succeeded using verifiedTLS;original observer/core/strategy/frozenaccount unchanged. Failed rawresponse and actualstderr retained."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261027T111518Z/check_sources.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-27T11:27:57.205134Z",
+      "finished_utc": "2026-10-27T11:27:59.371357Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261027T111518Z/source_checks.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261027T111518Z/check_sources.py\", line 44, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261027T111518Z/check_sources.py\", line 37, in main\n    base=json.loads((R/'startup.json').read_text())['head_after_successful_SSH_fetch'];prefix=subprocess.check_output(['git','show',base+':research/automation/registry.jsonl'],cwd=ROOT);raw=(ROOT/'research/automation/registry.jsonl').read_bytes();assert raw.startswith(prefix);events=[json.loads(x) for x in raw[len(prefix):].splitlines()];allrows=batch+json.loads((R/'forward_batch.json').read_text())+json.loads((R/'candidate_batch.json').read_text());assert len(events)==36 and len(allrows)==len({x['fingerprint'] for x in allrows})==18 and {x['fingerprint'] for x in events}=={x['fingerprint'] for x in allrows}\n                                                                                                                                                                                                                                                                                                                                                                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261027T111518Z/candidate_batch.json'\n",
+      "scope": "Read-only export/source integrity check;allfinancial reports,accounts andregistry alreadycorrectlyfinished.",
+      "resolution": "project_candidate_batch.py reconstructed publication index fromthree alreadyregistered/finished W specs and actual report;source check recoveryexit0. No financial result rerun oradditional registration."
+    }
+  ]
+}
