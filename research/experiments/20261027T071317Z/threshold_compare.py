@@ -1,0 +1,25 @@
+"""Read completed matched H2 parent results against the prespecified H6 batch; no new simulation."""
+import csv,hashlib,json
+from pathlib import Path
+from run import ROOT,R,reg,sha,put
+
+def main():
+ plan=json.loads((R/'plan.json').read_text());current=json.loads((R/'report.json').read_text());oldref=plan['read_only_matched_h2_report'];oldpath=ROOT/oldref['path'];assert sha(oldpath)==oldref['sha256'];old=json.loads(oldpath.read_text());records=reg.read_records(ROOT/'research/automation/registry.jsonl')
+ fields=['BTC_fixed_entry_notional_usdt','ETH_fixed_entry_notional_usdt','trend_filter_lookback_days','reversal_lookback_days','reversal_return_hurdle'];key=lambda c:tuple(c[f] for f in fields);oldby={key(c):c for c in old['configs'].values()};assert len(oldby)==90 and {key(c) for c in current['configs'].values()}==set(oldby);rows=[];refs={}
+ equal_fields=['BTC_fixed_entry_notional_usdt','ETH_fixed_entry_notional_usdt','trend_filter_lookback_days','ETH_trend_lookback_days','reversal_lookback_days','ETH_lookback_days','reversal_return_hurdle','ETH_return_hurdle','BTC_lookback_days','BTC_exit_buffer_fraction','trend_exit_buffer_fraction','ETH_exit_buffer_fraction','component_capitals_usdt','component_initial_entry_notionals_usdt','raw_component_multipliers','initial_capital_usdt','start_utc','end_utc']
+ for c in current['configs'].values():
+  y=oldby[key(c)];p=json.loads((ROOT/c['spec']).read_text());q=json.loads((ROOT/y['spec']).read_text());a,b=p['parameters'],q['parameters'];assert a['BTC_return_hurdle']==.06 and b['BTC_return_hurdle']==.02 and all(a[f]==b[f] for f in equal_fields) and a['initial_capital_usdt']==20000 and [x['weight'] for x in p['components']]==[x['weight'] for x in q['components']]==[1,1] and p['components'][1]['fingerprint']==q['components'][1]['fingerprint'];fp=y['fingerprint'];rec=records[fp];assert reg.fingerprint(q)==fp and rec['result_available'] is True and rec['status']==y['status'] and rec['report_sha256']==oldref['sha256'] and sha(ROOT/y['archive'])==y['archive_sha256']
+  refs[fp]={'name':y['name'],'fingerprint':fp,'report':oldref['path'],'report_sha256':oldref['sha256'],'spec':y['spec'],'spec_sha256':sha(ROOT/y['spec']),'archive':y['archive'],'archive_sha256':y['archive_sha256'],'original_status':y['status']}
+  for k,z in c['scenes'].items():
+   v=y['scenes'][k];assert z['initial_capital_usdt']==v['initial_capital_usdt']==20000 and z['NAV_points']==v['NAV_points']==545013
+   rows.append({'name':c['name'],'fingerprint':c['fingerprint'],'old_H2_name':y['name'],'old_H2_fingerprint':fp,'cost_multiplier':int(k),**{f:c[f] for f in fields},'new_H6_return_pct':z['net_return_pct'],'old_H2_return_pct':v['net_return_pct'],'return_delta_pp':z['net_return_pct']-v['net_return_pct'],'new_H6_DD_pct':z['max_drawdown_pct'],'old_H2_DD_pct':v['max_drawdown_pct'],'DD_delta_pp':z['max_drawdown_pct']-v['max_drawdown_pct'],'new_recent40_return_pct':z['recent40']['net_return_pct'],'old_recent40_return_pct':v['recent40']['net_return_pct'],'recent_return_delta_pp':z['recent40']['net_return_pct']-v['recent40']['net_return_pct'],'execution_delta':z['executions']-v['executions'],'cost_delta_usdt':z['cost_usdt']-v['cost_usdt'],'funding_delta_usdt':z['funding_usdt']-v['funding_usdt'],'new_NAV_sha256':z['NAV_sha256_f64le'],'old_NAV_sha256':v['NAV_sha256_f64le']})
+ assert len(rows)==270 and len(refs)==90
+ with (R/'threshold_comparisons.csv').open('w',newline='') as f:
+  w=csv.DictWriter(f,fieldnames=list(rows[0]),lineterminator='\n');w.writeheader();w.writerows(rows)
+ summary={}
+ for k in [1,2,3]:
+  z=[x for x in rows if x['cost_multiplier']==k];summary[str(k)]={'pairs':len(z),'new_full_return_better':sum(x['return_delta_pp']>0 for x in z),'new_recent_return_better':sum(x['recent_return_delta_pp']>0 for x in z),'return_delta_pp_range':[min(x['return_delta_pp'] for x in z),max(x['return_delta_pp'] for x in z)],'DD_delta_pp_range':[min(x['DD_delta_pp'] for x in z),max(x['DD_delta_pp'] for x in z)],'new_cost_lower':sum(x['cost_delta_usdt']<0 for x in z)}
+ proof={'passed':True,'new_financial_evaluations':0,'scope':'Prespecified readonly exactNB/NE/ETHsource/date/capital/raw1/1 comparisons;onlyBTC H2vsH6 differs in economic parameters. Samebudgets are not equalrealizedrisk;reusedhistory not causal/liveproof. Oldqualifications unchanged.','matched_old_H2_configs':90,'matched_cost_rows':270,'current_report_sha256':sha(R/'report.json'),'old_report_sha256':sha(oldpath),'CSV_sha256':sha(R/'threshold_comparisons.csv'),'old_matched_sources':refs,'summary':summary};put(R/'threshold_comparison_verification.json',proof)
+ with (R/'result.md').open('a') as f:f.write('\n预登记的BTC入场阈值匹配对照只读取已完成结果：同NB/NE、同ETH源指纹/速度/慢周期/阈值、同本金/区间/原1/1的90旧H2组合逐成本比较，共270行。旧H2资格与报告SHA保持；不是新回测或独立未来证据。H6相对H2汇总：'+json.dumps(summary,ensure_ascii=False)+'。完整定义/CSV/原始哈希见threshold_comparison_verification.json与threshold_comparisons.csv。\n')
+ print(json.dumps({'matched_H2_verification':True,'old_configs':90,'cost_rows':270,'summary':summary}),flush=True);return proof
+if __name__=='__main__':main()
