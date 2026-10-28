@@ -1,0 +1,78 @@
+{
+  "facts": [
+    {
+      "command": [
+        "python3",
+        "research/experiments/20261028T092048Z/inventory.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "exit_code": 1,
+      "log": "research/experiments/20261028T092048Z/inventory_first_failure.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T092048Z/inventory.py\", line 33, in <module>\n    assert len(anchors)==20 and len(new)==16\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "phase": "metadata inventory before any reserve or financial evaluation",
+      "failed_source": "research/experiments/20261028T092048Z/inventory_first_failure.py",
+      "failed_source_sha256": "953553ada0d505127a1e1dbf913126d9b5f401842b02c7478366282d1b847bb7",
+      "recorded_at_utc": "2026-10-28T09:28:11.123999+00:00"
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T092048Z/run.py",
+        "freeze"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-28T09:30:55.049913Z",
+      "finished_utc": "2026-10-28T09:30:57.032526Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261028T092048Z/reserve.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T092048Z/run.py\", line 57, in <module>\n    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()\n                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T092048Z/run.py\", line 40, in freeze\n    def freeze():module(R/'freeze_batch.py','independent_budget_freeze').main()\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T092048Z/freeze_batch.py\", line 20, in main\n    assert len(batch)==len({x['fingerprint'] for x in batch})==12;put(R/'batch.json',batch);put(R/'spec.json',json.loads((ROOT/batch[0]['spec']).read_text()));cmd=[sys.executable,str(R/'check_definitions.py')];z=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True);(R/'definition_preflight.log').write_text(z.stdout+z.stderr);put(R/'definition_preflight_command.json',{'command':cmd,'cwd':str(ROOT),'exit_code':z.returncode,'stdout':z.stdout,'stderr':z.stderr});assert z.returncode==0,z.stderr;done=[]\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ^^^^^^^^^^^^^^^\nAssertionError: Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T092048Z/check_definitions.py\", line 8, in <module>\n    assert aa['asset']=='BTC' and bb['asset']=='ETH' and aa['fixed_entry_notional_usdt']==v['BTC_fixed_entry_notional_usdt']==1000 and bb['fixed_entry_notional_usdt']==v['ETH_fixed_entry_notional_usdt']==2000 and aa['lookback_days']==v['BTC_lookback_days']==31 and aa['exit_buffer_fraction']==v['BTC_exit_buffer_fraction']==v['trend_exit_buffer_fraction']==.01 and aa['return_hurdle']==v['BTC_return_hurdle']==x['BTC_return_hurdle'] in [.02,.06]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n\n"
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1793168940000&endTime=1793176200000&limit=1500",
+      "started_utc": "2026-10-28T09:43:27.118843+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261028T092048Z/http_attempt_0002.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "exit_code": 35,
+      "phase": "public GET capture before prospective reserve/evaluation",
+      "recovery": "Next independent bounded verified-TLS attempt returned HTTP200;no insecure fallback,all raw/stderr preserved."
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/klines?symbol=ETHUSDT&interval=1m&startTime=1793168940000&endTime=1793176200000&limit=1500",
+      "started_utc": "2026-10-28T09:43:44.044707+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261028T092048Z/http_attempt_0006.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "exit_code": 35,
+      "phase": "public GET capture before prospective reserve/evaluation",
+      "recovery": "Next independent bounded verified-TLS attempt returned HTTP200;no insecure fallback,all raw/stderr preserved."
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-28T09:59:29.396723Z",
+      "finished_utc": "2026-10-28T09:59:29.623475Z",
+      "exit_code": 2,
+      "stdout": "research/experiments/20261028T092048Z/reserve.log:16: new blank line at EOF.\n",
+      "stderr": "",
+      "phase": "precommit whitespace lint of immutable raw failed command log",
+      "reason": "Trailing blank line is part of saved actual stdout/stderr;retain rawbytes. No commit/push occurred. Scope whitespace lint to nonlog code/spec/report artifacts;retain full tree/blob/hash validation for ALL files.",
+      "raw_log": "research/experiments/20261028T092048Z/reserve.log",
+      "raw_log_sha256": "69ccd4cf921cdda8ab5e1edd4293f117e84716f73732d25ad8845551d7217a14",
+      "initial_staged_tree": "417073073ff1757794262105aa6e213fa2db6843"
+    }
+  ]
+}

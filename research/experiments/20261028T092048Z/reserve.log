@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T092048Z/run.py", line 57, in <module>
+    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()
+                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T092048Z/run.py", line 40, in freeze
+    def freeze():module(R/'freeze_batch.py','independent_budget_freeze').main()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T092048Z/freeze_batch.py", line 20, in main
+    assert len(batch)==len({x['fingerprint'] for x in batch})==12;put(R/'batch.json',batch);put(R/'spec.json',json.loads((ROOT/batch[0]['spec']).read_text()));cmd=[sys.executable,str(R/'check_definitions.py')];z=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True);(R/'definition_preflight.log').write_text(z.stdout+z.stderr);put(R/'definition_preflight_command.json',{'command':cmd,'cwd':str(ROOT),'exit_code':z.returncode,'stdout':z.stdout,'stderr':z.stderr});assert z.returncode==0,z.stderr;done=[]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ^^^^^^^^^^^^^^^
+AssertionError: Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T092048Z/check_definitions.py", line 8, in <module>
+    assert aa['asset']=='BTC' and bb['asset']=='ETH' and aa['fixed_entry_notional_usdt']==v['BTC_fixed_entry_notional_usdt']==1000 and bb['fixed_entry_notional_usdt']==v['ETH_fixed_entry_notional_usdt']==2000 and aa['lookback_days']==v['BTC_lookback_days']==31 and aa['exit_buffer_fraction']==v['BTC_exit_buffer_fraction']==v['trend_exit_buffer_fraction']==.01 and aa['return_hurdle']==v['BTC_return_hurdle']==x['BTC_return_hurdle'] in [.02,.06]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
