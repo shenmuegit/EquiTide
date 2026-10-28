@@ -1,0 +1,27 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T012050Z/observe_candidate.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-28T01:25:45.592400Z",
+      "finished_utc": "2026-10-28T01:26:05.141627Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261028T012050Z/candidate.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T012050Z/observe_candidate.py\", line 19, in <module>\n    sys.argv=[str(SOURCE/'prospective_observer.py'),'run','--round',R.name,'--cutoff','2026-10-28T00:30:00Z','--lock-pid','3257307'];obs.main()\n                                                                                                                                     ^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 131, in main\n    packet=capture(cut,previous,binding,rawdir,receipts);packetpath=rawdir/'packet.json.gz';gzput(packetpath,packet);put(window/'input_manifest.json',{'packet':rel(packetpath),'sha256':c.sha(packetpath),'provenance':receipts,'plan_sha256':binding['plan_sha256']})\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 64, in capture\n    hours=bars('/fapi/v1/markPriceKlines',a,'1h',c.HOUR,(lo//c.HOUR)*c.HOUR-c.HOUR,(cutoff//c.HOUR-1)*c.HOUR)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 55, in bars\n    data=request(path,{'symbol':a+'USDT','interval':interval,'startTime':cursor,'endTime':end//c.MS,'limit':1500},rawdir,receipts);assert isinstance(data,list) and data\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T012050Z/observe_candidate.py\", line 17, in request\n    receipts.append(item);raise RuntimeError('Public GET failed both bounded attempts;original account preserved')\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Public GET failed both bounded attempts;original account preserved\n",
+      "recovery": {
+        "actual_retry_command_exit_code": 0,
+        "retry_command_receipt": "research/experiments/20261028T012050Z/candidate_retry_commands.json",
+        "first_failed_window_preserved": "research/experiments/20261028T012050Z/candidate_capture_failure",
+        "failed_transport_attempts": "research/experiments/20261028T012050Z/candidate_transport_attempts.json",
+        "first_capture_reserved_config_count": 0,
+        "successful_window": "research/experiments/20261028T012050Z/candidate_observation",
+        "successful_packet_source": "OnlyactualverifiedTLSHTTP200responses,retriedinindependentrawdirectory;originalstrategy/coreunchanged.",
+        "independent_crossday_audit_exit_code": 0,
+        "original_pointer_not_advanced_on_failure": true
+      }
+    }
+  ]
+}
