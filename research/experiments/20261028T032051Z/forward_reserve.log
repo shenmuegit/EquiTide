@@ -1,0 +1,12 @@
+{"name": "forward_snapshot_BTC", "fingerprint": "1de5715e993fe7eb7db261f79bb0c51550eaf7b674e3d13ed893c700113721d4", "command": "reserve", "exit_code": 3, "stdout": "DUPLICATE: 1de5715e993fe7eb7db261f79bb0c51550eaf7b674e3d13ed893c700113721d4 (rejected)\n", "stderr": ""}
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T032051Z/forward_registry.py", line 27, in <module>
+    p=argparse.ArgumentParser();p.add_argument('command',choices=['reserve','finish']);globals()[p.parse_args().command]()
+                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T032051Z/forward_registry.py", line 22, in reserve
+    for row in batch:done.append(call('reserve',row));put(R/'forward_reserve.json',done)
+                                 ^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T032051Z/run.py", line 21, in call
+    p=subprocess.run([sys.executable,'research/automation/registry.py',command,row['spec'],*args],cwd=ROOT,capture_output=True,text=True);x={'name':row['name'],'fingerprint':row['fingerprint'],'command':command,'exit_code':p.returncode,'stdout':p.stdout,'stderr':p.stderr};print(json.dumps(x),flush=True);assert p.returncode==0 and p.stdout.strip()==row['fingerprint'];return x
+                                                                                                                                                                                                                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
