@@ -1,0 +1,29 @@
+{
+  "facts": [
+    {
+      "stage": "initial_nonblocking_branch_lock",
+      "actual_exit_code": 1,
+      "observed_utc": "2026-10-28T17:21:33Z",
+      "error": "BlockingIOError: [Errno 11] Resource temporarily unavailable",
+      "recovery": "No research or Git mutations while busy; queued blocking stdin broker then acquired the same branch lock.",
+      "recovered": true
+    },
+    {
+      "stage": "original_frozen_candidate_public_GET",
+      "actual_attempt": {
+        "url": "https://fapi.binance.com/fapi/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1793197740000&endTime=1793205000000&limit=1500",
+        "started_utc": "2026-10-28T17:48:09.504701+00:00",
+        "http_status": 0,
+        "raw": "data/raw/binance/candidate_forward/20261028T172051Z/http_attempt_0002.gz",
+        "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+        "bytes": 0,
+        "transport": "curl compressed verifiedTLS,separate bounded attempts",
+        "curl_exit_code": 35,
+        "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n"
+      },
+      "recovered_by_next_separate_attempt": true,
+      "parent_stage_exit_code": 0,
+      "all_attempts_receipt": "research/experiments/20261028T172051Z/candidate_transport_attempts.json"
+    }
+  ]
+}
