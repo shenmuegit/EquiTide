@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T152049Z/run.py", line 76, in <module>
+    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()
+                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T152049Z/run.py", line 61, in evaluate
+    assert not(R/'report.json').exists();plan=json.loads((R/'plan.json').read_text());batch=json.loads((R/'batch.json').read_text());records=reg.read_records(ROOT/'research/automation/registry.jsonl');assert len(batch)==38 and all(records[x['fingerprint']]['status']=='reserved' for x in batch);started=now();_,markets,common,vectors,ss=parent.recover(plan);configs={};(R/'results').mkdir()
+                                                                                                                                                                                                                                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1311, in mkdir
+    os.mkdir(self, mode)
+FileExistsError: [Errno 17] File exists: '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T152049Z/results'

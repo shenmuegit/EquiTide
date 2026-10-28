@@ -1,0 +1,78 @@
+{
+  "facts": [
+    {
+      "stage": "audit_code_AST_preflight_before_reservation",
+      "actual_exit_code": 1,
+      "error": "SyntaxError: invalid syntax at audit.py line 36; replacement left a leading semicolon after loop insertion.",
+      "full_failed_source": "research/experiments/20261028T152049Z/audit_syntax_preflight_failure.txt",
+      "financial_evaluations_before_failure": 0,
+      "reservations_before_failure": 0,
+      "recovery": "Removed leading semicolon, parsed every own Python source before reserve."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T152049Z/run.py",
+        "evaluate"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-28T15:34:27.895144Z",
+      "finished_utc": "2026-10-28T15:34:33.549172Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261028T152049Z/evaluate.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T152049Z/run.py\", line 76, in <module>\n    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()\n                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T152049Z/run.py\", line 65, in evaluate\n    v=weights[0]*vectors[fps[0],k]+weights[1]*vectors[fps[1],k];z=summarize_parent(v,owned_parts([ss[fp][k] for fp in fps],weights),common,row['capital_usdt']);z['ownership_accounting']='Raw static bank units; source monetary PnL/cost/funding weighted; source execution/event counts unweighted. Original per-order impact/lot unchanged; no synthetic smaller/larger orders.';scenes[k]=z;arc['scenes'][k]={'summary':z,'source_fingerprints':fps,'source_full_NAV_sha256':[ss[fp][k]['NAV_sha256_f64le'] for fp in fps]}\n                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T152049Z/run.py\", line 24, in summarize_parent\n    daily=v[common['daily_indices']].tolist();s=metric(v,daily,370);s['folds']=[];start=datetime.fromisoformat('2025-10-19T00:01:00+00:00');bounds=[*range(0,370,30),370]\n                                                ^^^^^^\nNameError: name 'metric' is not defined\n",
+      "archived_original_log": "research/experiments/20261028T152049Z/evaluate_first_failure.log",
+      "archived_original_log_sha256": "d99d38d356d37ce4e9ec9612616ce2cd6bf72b69184870f425c2480ed8522307",
+      "recovery": "Missing imported metric alias corrected. First attempt had no complete metric/report/archive; same 38 already reserved IDs continued within own lock. No spec/rule/weight/gate changes or duplicate reservations."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T152049Z/run.py",
+        "evaluate"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-28T15:36:54.173642Z",
+      "finished_utc": "2026-10-28T15:36:59.776741Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261028T152049Z/evaluate.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T152049Z/run.py\", line 76, in <module>\n    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()\n                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T152049Z/run.py\", line 61, in evaluate\n    assert not(R/'report.json').exists();plan=json.loads((R/'plan.json').read_text());batch=json.loads((R/'batch.json').read_text());records=reg.read_records(ROOT/'research/automation/registry.jsonl');assert len(batch)==38 and all(records[x['fingerprint']]['status']=='reserved' for x in batch);started=now();_,markets,common,vectors,ss=parent.recover(plan);configs={};(R/'results').mkdir()\n                                                                                                                                                                                                                                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1311, in mkdir\n    os.mkdir(self, mode)\nFileExistsError: [Errno 17] File exists: '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T152049Z/results'\n",
+      "archived_original_log": "research/experiments/20261028T152049Z/evaluate_second_failure.log",
+      "archived_original_log_sha256": "553a60f6a51abbac9e6334572abf40f9cee047ab6442a525a66ba4a632750dd5",
+      "recovery": "Empty result directory from interrupted first attempt caused FileExistsError. Guard now accepts only absent or empty own result directory, never overwrites an actual archive; same reserved IDs preserved."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T152049Z/audit.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-28T15:40:30.938024Z",
+      "finished_utc": "2026-10-28T15:40:31.240736Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261028T152049Z/audit_initial.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T152049Z/audit.py\", line 7, in <module>\n    base=module(ROOT/'research/experiments/20261025T205634Z/audit.py','stored_ledger_independent_helpers')\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T152049Z/run.py\", line 16, in module\n    s=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(s);sys.modules[name]=m;s.loader.exec_module(m);return m\n                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen importlib._bootstrap_external>\", line 999, in exec_module\n  File \"<frozen importlib._bootstrap>\", line 488, in _call_with_frames_removed\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261025T205634Z/audit.py\", line 7, in <module>\n    from run import ROOT,R,LOOKS,HURDLES,EXITS,sha,put,reg,grid_configs,neighbors,axes\nImportError: cannot import name 'EXITS' from 'run' (/home/desktop/Documents/Codex/EquiTide/research/experiments/20261028T152049Z/run.py)\n",
+      "archived_original_log": "research/experiments/20261028T152049Z/audit_initial_failed_import.log",
+      "recovery": "Restored legacy EXITS=[.01] import interface required by readonly independent auditor. No report/spec/strategy/weights changed, no financial calculation repeated."
+    },
+    {
+      "stage": "full_spec_alias_consistency_review",
+      "finding": "24 inherited ETH_trend_gate_lookbacks_days lists disagreed with the specified slow center and actual bound component; original preserved provisional calculations not treated as exact contradictory-spec qualification.",
+      "mismatched_definitions": 24,
+      "original_report": "research/experiments/20261028T152049Z/first_calculation_report.json",
+      "retirement_status": "abandoned/result_available=false",
+      "recovery": "Reserve24 corrected exact specs before corrected component combination calculation;14 exact valid configs reused unchanged;38 financial trials total,not62 independent trials."
+    },
+    {
+      "stage": "financial_registry_finish_process",
+      "actual_tool_session_id": 39862,
+      "observed_exit_code": 143,
+      "observed_utc": "2026-10-28T15:57:14.706328+00:00",
+      "cause": "External SIGTERM; exact cause not known. No finishing process remained at inspection.",
+      "actual_registry_completed_configs_at_inspection": 37,
+      "actual_remaining_reserved_configs": 1,
+      "partial_saved_command_receipts": 36,
+      "recovery": "Verify already-finished exact report/status records read-only and finish only still-reserved IDs;no financial re-evaluation or repeated finish on completed records."
+    }
+  ]
+}
