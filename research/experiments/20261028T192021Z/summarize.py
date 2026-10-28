@@ -1,0 +1,50 @@
+"""Export all a/HA/HB/S combinations and matched single-component historical controls."""
+import copy,csv,gzip,io,itertools,json,statistics
+from collections import Counter
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from run import ROOT,R,WEIGHTS,HURDLES,SLOWS,axes,grid_configs,anchor_configs,sha,put
+
+def table(path,rows,compress=False):
+ fields=list(dict.fromkeys(k for row in rows for k in row));b=io.StringIO(newline='');w=csv.DictWriter(b,fieldnames=fields,lineterminator='\n');w.writeheader();w.writerows(rows);path.write_bytes(gzip.compress(b.getvalue().encode(),mtime=0) if compress else b.getvalue().encode())
+def all_configs(report,plan):
+ h=plan['read_only_hold_references']['COMBO'];c=copy.deepcopy(json.loads((ROOT/h['report']).read_text())['configs'][h['name']]);c.update(read_only_anchor=True,scope='parent',asset='COMBO',capital_usdt=20000);out={**anchor_configs(),**report['configs'],c['name']:c}
+ for c in out.values():
+  for z in c['scenes'].values():
+   if 'recent40' not in z:z['recent40']=copy.deepcopy(z['extension40'])
+ return out
+def main():
+ assert not(R/'finish_verification.json').exists();r=json.loads((R/'report.json').read_text());plan=json.loads((R/'plan.json').read_text());grid=grid_configs(r['configs']);controls=anchor_configs();allby=all_configs(r,plan);hold=allby[plan['read_only_hold_references']['COMBO']['name']];assert len(grid)==81 and len(allby)==100;rows=[];folds=[];recent=[];daily=[];comp=[];edges=[]
+ for c in allby.values():
+  old=c.get('read_only_anchor',False);meta={'name':c['name'],'scope':'parent','asset':'COMBO','role':c['role'],'read_only_anchor':old,'capital_usdt':20000}
+  if not old:meta.update({p:c[p] for p in axes(c)})
+  for k,z in c['scenes'].items():
+   rows.append({**meta,'cost_multiplier':int(k),'status':c['status'],**{p:z[p] for p in ['net_return_pct','max_drawdown_pct','daily_mark_drawdown_pct','sharpe_365','calmar','cost_usdt','cost_pct_initial','funding_usdt','gross_reference_PnL_to_execution_cost','executions','round_trips','NAV_sha256_f64le']},**{'recent40_'+p:z['recent40'][p] for p in ['net_return_pct','max_drawdown_pct','sharpe_365','calmar','NAV_sha256_f64le']},**{'cost_'+p:v for p,v in z['cost_parts_usdt'].items()}});folds.extend({**meta,'cost_multiplier':int(k),**f} for f in z['folds']);recent.extend({**meta,'cost_multiplier':int(k),**f} for f in z['recent40']['folds'])
+   if old:continue
+   daily.extend({**meta,'cost_multiplier':int(k),'boundary_index':j,'equity_usdt':v} for j,v in enumerate(z['daily_equity_usdt']))
+   refs=[('matched_single_A_L3',next(x for x in controls.values() if x['trend_filter_lookback_days']==c['trend_filter_lookback_days'] and x['reversal_return_hurdle']==c['ETH_A_return_hurdle'] and x['reversal_lookback_days']==3)),('matched_single_B_L4',next(x for x in controls.values() if x['trend_filter_lookback_days']==c['trend_filter_lookback_days'] and x['reversal_return_hurdle']==c['ETH_B_return_hurdle'] and x['reversal_lookback_days']==4)),('same_capital_constant_long',hold)]
+   for kind,y in refs:
+    a=y['scenes'][k];comp.append({**meta,'cost_multiplier':int(k),'reference_kind':kind,'reference_name':y['name'],'reference_fingerprint':y['fingerprint'],'reference_original_status':y['status'],'reference_capital_usdt':20000,'return_delta_pp':z['net_return_pct']-a['net_return_pct'],'DD_delta_pp':z['max_drawdown_pct']-a['max_drawdown_pct'],'recent40_return_delta_pp':z['recent40']['net_return_pct']-a['recent40']['net_return_pct'],'cost_delta_usdt':z['cost_usdt']-a['cost_usdt'],'new_NAV_sha256':z['NAV_sha256_f64le'],'reference_NAV_sha256':a['NAV_sha256_f64le'],'cash_analytic_return_pct':0,'limit':'Samecapital20000/ownedentrybudget4000;source native sizes fixed,different timing/exposure/risk,not independent new market alpha.'})
+ dims=axes(next(iter(grid.values())));fields=list(dims);by={tuple(c[p] for p in fields):c for c in grid.values()};assert len(by)==81
+ for key,c in by.items():
+  for i,(field,axis) in enumerate(dims.items()):
+   j=axis.index(key[i])
+   if j+1==len(axis):continue
+   other=list(key);other[i]=axis[j+1];y=by[tuple(other)];a,b=c['scenes']['3'],y['scenes']['3'];edges.append({'scope':'parent','axis':field,'from':c['name'],'to':y['name'],'return3_delta_pp':b['net_return_pct']-a['net_return_pct'],'DD3_delta_pp':b['max_drawdown_pct']-a['max_drawdown_pct'],'sharpe3_delta':b['sharpe_365']-a['sharpe_365'],'recent40_return3_delta_pp':b['recent40']['net_return_pct']-a['recent40']['net_return_pct']})
+ cut=2*statistics.pstdev(abs(e['sharpe3_delta']) for e in edges)
+ for e in edges:e['full_sharpe_cliff']=abs(e['sharpe3_delta'])>cut;e['cliff_threshold']=cut
+ for S,a in itertools.product(SLOWS,WEIGHTS):
+  fig,axs=plt.subplots(3,2,figsize=(12,10),layout='constrained')
+  for i,field in enumerate(['net_return_pct','sharpe_365','max_drawdown_pct']):
+   vals=[(by[a,HA,HB,S]['scenes']['3']['recent40'] if rr else by[a,HA,HB,S]['scenes']['3'])[field] for HA,HB,rr in itertools.product(HURDLES,HURDLES,[False,True])];limit=max(abs(x) for x in vals) or 1
+   for j,rr in enumerate([False,True]):
+    mat=np.asarray([[(by[a,HA,HB,S]['scenes']['3']['recent40'] if rr else by[a,HA,HB,S]['scenes']['3'])[field] for HB in HURDLES] for HA in HURDLES]);im=axs[i,j].imshow(mat,aspect='auto',cmap='RdYlGn_r' if field=='max_drawdown_pct' else 'RdYlGn',vmin=0 if field=='max_drawdown_pct' else -limit,vmax=limit);axs[i,j].set_title(('Inherited40days' if rr else '370days')+' /3x '+field);axs[i,j].set_xticks(range(3),[100*H for H in HURDLES]);axs[i,j].set_yticks(range(3),[100*H for H in HURDLES]);axs[i,j].set_xlabel('ETH_B L4 threshold HB(percent)');axs[i,j].set_ylabel('ETH_A L3 threshold HA(percent)')
+    for x,y in itertools.product(range(3),range(3)):axs[i,j].text(y,x,f'{mat[x,y]:+.3f}',ha='center',va='center')
+    fig.colorbar(im,ax=axs[i,j])
+  fig.suptitle(f'BTC1 + ETH L3({a:g}) + L4({1-a:g});common slow S{S}\ncapital20000,budget4000;source N1000/3000/3000;known development history');fig.savefig(R/f'sensitivity_S{S}_A{int(a*100):02d}.png',dpi=120);plt.close(fig)
+ counts={'cost':len(rows),'full_folds':len(folds),'recent40_folds':len(recent),'daily_NAV':len(daily),'edges':len(edges),'reference_comparisons':len(comp)};assert list(counts.values())==[300,3900,2400,90153,216,729]
+ for name,data,z in [('sensitivity.csv',rows,False),('fold_results.csv',folds,False),('recent40_fold_results.csv',recent,False),('daily_equity.csv.gz',daily,True),('joint_edges.csv',edges,False),('reference_comparisons.csv',comp,False)]:table(R/name,data,z)
+ cs=list(r['configs'].values());summary={'new_financial_configs':81,'new_native_components':0,'new_passive_parents':81,'candidate_configs':81,'benchmark_configs':0,'passed_candidates':len(r['summary']['passed']),'rejected_candidates':len(r['summary']['rejected']),'positive_configs_by_cost':r['summary']['positive_configs_by_cost'],'failed_criteria_counts':dict(Counter(p for c in cs for p in c['failed_criteria'])),'rows':counts,'by_slow_center':{str(S):{'candidates':27,'passed':sum(c['trend_filter_lookback_days']==S and c['status']=='passed' for c in cs),'recent6of8':sum(c['trend_filter_lookback_days']==S and c['recent40_positive_5d_folds_1x']>=6 for c in cs),'full3x_positive_Sharpe_fraction':sum(c['trend_filter_lookback_days']==S and c['scenes']['3']['sharpe_365']>0 for c in cs)/27} for S in SLOWS}};put(R/'summary.json',summary);ctx=json.loads((R/'context.json').read_text());lines=[f'# {R.name} ETH快周期与独立阈值分散组合验证',f'实际81个新三资金账户组合，历史通过{summary["passed_candidates"]}、淘汰{summary["rejected_candidates"]}。完整读取{ctx["registry_events"]}事件/{ctx["registry_ids"]}ID及{len(ctx["prior_conclusions_read"])}份结论；初始16项实际证据齐全。',plan['hypothesis'],plan['rules']['allocation'],plan['rules']['composition'],plan['rules']['ledger'],plan['rules']['risk'],'事前固定BTC份额1、ETH_A快周期3日份额a、ETH_B快周期4日份额1-a。a0.25/0.5/0.75、HA2/2.5/3%、HB2/2.5/3%、共同慢中心S27/28/29形成4D81格、216相邻边。两个ETH源均为S−1/S/S+1严格符号多数门控。所有spec包含三个原生的完整参数字典，reserve前核对独立HA/HB、快周期3/4及全部慢周期别名。原值权重不归一化，父本金20000、owned入场预算4000=20%，不作native750/1500/2250的新订单回测。','全期正收益源按固定所有权组合后，全期净正在数学上是预期结果；不能据此声称新增独立alpha。实际问题是逐折时间分散、风险与成本后的近期一致性，不能在本轮结果上放宽门槛或追加择优参数。','BTC固定ROC31/H4%/E1%、N1000；ETH_A/B反转ROC各自L/H严格>H空/<-H多，带内实际多且ROC<0/实际空且ROC>0才保留，零退出；与慢多数门控方向不符则平仓，现金重入需新严格极端，无隐藏desired。信号和数量只用此前完成close，UTC00:01实际OPEN执行，不读未来OPEN、资金费或未闭合数据。','21个旧原生/63成本NAV从保存现金/数量/entry片段恢复并核对原SHA，不重新生成信号、成交或资金费。父层在共同(ns,eventcode)时轴因果承接，逐点按原值相加后重新计算收益、整体回撤、Sharpe、Calmar，不平均组件指标或重置账户。','8真实合并Parquet及16年度/近期源SHA和字节固定。370日OOS2025-10-19UTC00:01至2026-10-24UTC00:01；33日上下文含30预热及3日初始embargo。静态规则无拟合/未来标签，purge不适用。12完整30日折加10日尾折连续承接现金/q/entry/费用；近期40日从day330继承，8×5日不重开本金或诊断平仓，仅原终点计费退出。反复使用历史属于开发验证，不是未触碰最终测试。','成本保留原生实际订单：每侧5bp费+1bp半价差+2bp滑点+0.5×此前20日样本日log波动×sqrt(实际源订单金额/此前20日quoteADV)冲击，参与率≤0.1%，tick/lot/最低金额和全额抵押入场约束保留。资金费=-有符号数量×实际结算mark×rate，流出乘1/2/3、收入不放大；永续不虚构现货借币。原始N3000成本按银行所有权分摊，不按owned小订单重估冲击或跨账户净额抵消。','门槛保持：全期/近期三档净正、1倍月正折≥9/12且近期≥6/8、三倍连续整体DD≤25%、4D邻域三倍净正≥60%、≥4往返、(参考毛利+资金费)/成本≥2.5、现金/拒单/独立银行风险违规0、终点空仓且≥180日。18个旧单ETH父组合及20k恒多只读，比较匹配L3/HA与L4/HB的原组合、同本金恒多和现金0，原资格保持，不把对照重新计算为新试验。',json.dumps(summary,ensure_ascii=False),'原单S28冻结候选与SMA65从UTC16:30续接至18:30。16:00:00.003资金费已在上轮入账，不能重复；本轮17:00闭合小时须检查上轮保存的16小时资金费前后两段BTC风险状态，再处理18:00闭合小时。每成本现金/数量/entry/成本/资金费/完整净值前缀承接，不换新组合、不重开本金、不强制截止平仓。下一日决策Oct29UTC00:01。延迟真实闭合行情重建，不是十策略同时报价执行或真实下单。','背景沿用2026-10-27实际访问的一手[Time Series Momentum](https://www.aqr.com/Insights/Research/Journal-Article/Time-Series-Momentum)与[Trading Costs of Asset Pricing Anomalies](https://www.aqr.com/Insights/Research/Working-Paper/Trading-Costs-of-Asset-Pricing-Anomalies)，本组合为研究推论，不是论文复现或收益移植。81个相关新试验加所有先前试验存在多重选择偏差，无DSR/PBO、独立未来验证或稳定实盘盈利证明。','复现工作目录/home/desktop/Documents/Codex/EquiTide；audit.py独立Decimal源事件播放及每条组合NAV/折/费用/资金费检查；check_sources.py、check_exports.py、audit_candidate.py、audit_forward.py、check_feed.py只读证据，forward.py --reproduce离线复现。不重新reserve/evaluate/summarize已完成配置。行情/HTTPpacket留ignoreddata绑定SHA，仅提交必要研究证据；main普通非强推并核验完整远端tree/blob/SHA后释放本轮锁。'];(R/'result.md').write_text('\n\n'.join(lines)+'\n');print(json.dumps(summary),flush=True)
+if __name__=='__main__':main()
