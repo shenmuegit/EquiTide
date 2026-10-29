@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/run.py", line 68, in <module>
+    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()
+                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/run.py", line 55, in evaluate
+    v,z=engine.simulate(sp,markets['ETH'],int(k));z['summary']['recent40']=recent(v,markets['ETH']);vectors[row['fingerprint'],k]=v[common['projections']['ETH']];ss.setdefault(row['fingerprint'],{})[k]=z['summary']
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/engine.py", line 105, in simulate
+    wanted,r,slow_r=(1,None,None) if p.get('signal_mode')=='constant_long_reference' else target_fn(m['closes'],ref,p['lookback_days'],p['return_hurdle'],1 if D(state['signed_units'])>0 else -1 if D(state['signed_units'])<0 else 0,p['exit_buffer_fraction'],p['trend_lookback_days'],**({'trend_gate_application':p.get('trend_gate_application','entries_and_retention')} if p.get('trend_gate_mode')=='adjacent_horizon_majority' else {}));q=D(state['signed_units']);decisions.append({'decision_index':ref,'signal_available_ts_ns':int(m['frame']['available_ts'][ref*1440-1]),'execution_ts_ns':int(m['ts'][idx]),'lookback_return_exact':r,'trend_return_exact':slow_r,'trend_lookback_days':p['trend_lookback_days'],'desired_direction':wanted,'fixed_entry_notional_usdt':float(notional),'state_before':copy.deepcopy(state)})
+                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/engine.py", line 23, in majority_target
+    assert look in [2,3,4,5] and trend_lookback_days in [27,28,29] and i-2-trend_lookback_days>=0 and abs(F(str(exit_buffer_fraction)))<F(str(hurdle)) and current_direction in [-1,0,1]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

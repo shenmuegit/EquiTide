@@ -1,0 +1,93 @@
+{
+  "facts": [
+    {
+      "phase": "initial_freeze",
+      "exit_code": 1,
+      "fact": "AssertionError len(holds)==3 before plan/spec/reserve/PnL. Legacy0.5hold spec omits BTC_bank_units alias;correct readonly selector uses actual raw_component_multipliers[.5,1.5].",
+      "financial_evaluations": 0
+    },
+    {
+      "phase": "freeze_retry",
+      "exit_code": 1,
+      "fact": "Legacy hold references only ETH and raw1/1;0.5hold actual result located in15:26report. Include original15:26+17:27benchmark references. No plan/spec/reserve/PnL generated."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/run.py",
+        "evaluate"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-29T19:39:40.447038Z",
+      "finished_utc": "2026-10-29T19:39:45.215666Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261029T192831Z/evaluate.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/run.py\", line 68, in <module>\n    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()\n                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/run.py\", line 55, in evaluate\n    v,z=engine.simulate(sp,markets['ETH'],int(k));z['summary']['recent40']=recent(v,markets['ETH']);vectors[row['fingerprint'],k]=v[common['projections']['ETH']];ss.setdefault(row['fingerprint'],{})[k]=z['summary']\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/engine.py\", line 105, in simulate\n    wanted,r,slow_r=(1,None,None) if p.get('signal_mode')=='constant_long_reference' else target_fn(m['closes'],ref,p['lookback_days'],p['return_hurdle'],1 if D(state['signed_units'])>0 else -1 if D(state['signed_units'])<0 else 0,p['exit_buffer_fraction'],p['trend_lookback_days'],**({'trend_gate_application':p.get('trend_gate_application','entries_and_retention')} if p.get('trend_gate_mode')=='adjacent_horizon_majority' else {}));q=D(state['signed_units']);decisions.append({'decision_index':ref,'signal_available_ts_ns':int(m['frame']['available_ts'][ref*1440-1]),'execution_ts_ns':int(m['ts'][idx]),'lookback_return_exact':r,'trend_return_exact':slow_r,'trend_lookback_days':p['trend_lookback_days'],'desired_direction':wanted,'fixed_entry_notional_usdt':float(notional),'state_before':copy.deepcopy(state)})\n                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/engine.py\", line 23, in majority_target\n    assert look in [2,3,4,5] and trend_lookback_days in [27,28,29] and i-2-trend_lookback_days>=0 and abs(F(str(exit_buffer_fraction)))<F(str(hurdle)) and current_direction in [-1,0,1]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/run.py",
+        "evaluate"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-29T19:42:24.837851Z",
+      "finished_utc": "2026-10-29T19:42:35.727529Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261029T192831Z/evaluate_retry.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/run.py\", line 68, in <module>\n    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()\n                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/run.py\", line 60, in evaluate\n    grid=grid_configs(configs)\n         ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/run.py\", line 34, in grid_configs\n    def grid_configs(configs):return {**anchor_configs(),**{n:c for n,c in configs.items() if c['role']=='candidate'}}\n                                        ^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/run.py\", line 32, in anchor_configs\n    assert len(out)==24;return out\n           ^^^^^^^^^^^^\nAssertionError\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/summarize.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-29T19:45:00.007939Z",
+      "finished_utc": "2026-10-29T19:45:01.325255Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261029T192831Z/summary.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/summarize.py\", line 17, in <module>\n    t=z.get('recent40',z.get('extension40'));cost.append({'name':c['name'],'scope':c['scope'],'role':c['role'],'old_readonly':bool(c.get('read_only_anchor')),'status':c['status'],'cost_multiplier':int(k),**{f:z[f] for f in cols},'recent_return_pct':t['net_return_pct'],'recent_DD_pct':t['max_drawdown_pct'],'recent_positive_folds':sum(f['net_return_pct']>0 for f in t['folds']),'positive_complete30d_folds':sum(f['net_return_pct']>0 for f in z['folds'][:12]),'executions':z['executions'],'round_trips':z['round_trips'],'cost_usdt':z['cost_usdt'],'funding_usdt':z['funding_usdt'],'NAV_sha256_f64le':z['NAV_sha256_f64le']})\n                                                                                   ~^^^^^^^^^\nKeyError: 'scope'\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/check_exports.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-29T19:45:21.625434Z",
+      "finished_utc": "2026-10-29T19:45:21.945179Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261029T192831Z/exports.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/check_exports.py\", line 4, in <module>\n    r=json.loads((R/'report.json').read_text());summary=json.loads((R/'sensitivity_summary.json').read_text());allc=grid_configs(r['configs'])\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/sensitivity_summary.json'\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/summarize.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-29T19:45:47.246560Z",
+      "finished_utc": "2026-10-29T19:45:48.508538Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261029T192831Z/summary.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T192831Z/summarize.py\", line 19, in <module>\n    for f in folds:dest.append({'name':c['name'],'cost_multiplier':int(k),'fold':f['fold'],'duration_days':f['duration_days'],'start_utc':f['start_utc'],'end_exclusive_utc':f['end_exclusive_utc'],**{a:f[a] for a in cols}})\n                                                                                                                                          ~^^^^^^^^^^^^^\nKeyError: 'start_utc'\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "phase": "readonly_boundary_diagnostic",
+      "exit_code": 1,
+      "fact": "KeyError BTC_bank_units in legacy raw1/1 parent alias. Default actual original units1 used on retry;no financial evaluation or state mutation."
+    },
+    {
+      "phase": "premature diagnostic summary inspection",
+      "exit_code": 1,
+      "fact": "FileNotFoundError reading sensitivity_summary.json after summary metadata failure;no evaluation or state change. Successful summary_retry2 later created it and exports_retry independently verified every CSV."
+    }
+  ],
+  "policy": "Actual failures only;stdout/stderr and bounded retries retained."
+}
