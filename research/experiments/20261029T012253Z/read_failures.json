@@ -1,0 +1,64 @@
+{
+  "facts": [
+    {
+      "phase": "readonly_context",
+      "exit_code": 1,
+      "command": "cat research/experiments/20261028T012050Z/check_funding.py",
+      "error": "No such file or directory",
+      "impact": "Optional helper lookup only;actual cross-day audits present in audit_candidate.py/audit_forward.py and will be used. No account or financial evaluation affected."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T012253Z/forward_registry.py",
+        "reserve"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-29T01:29:28.305983Z",
+      "finished_utc": "2026-10-29T01:29:28.857983Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261029T012253Z/forward_reserve.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T012253Z/forward_registry.py\", line 6, in <module>\n    getattr(m,sys.argv[1])()\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T012253Z/forward.py\", line 38, in reserve\n    put(path, spec)\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T012253Z/run.py\", line 14, in <lambda>\n    put=lambda p,x:p.write_text(json.dumps(x,ensure_ascii=False,indent=2,allow_nan=False)+'\\n')\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1047, in write_text\n    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T012253Z/specs/forward_snapshot_BTC.json'\n",
+      "recovery": "No observation IDs were reserved and no account calculation occurred. Preserve first frozen plan as forward_resume_plan_pre_specs_failure.json;create own specs directory before reserve and execute forward_recovery phase."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T012253Z/run.py",
+        "freeze"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-29T01:32:26.012495Z",
+      "finished_utc": "2026-10-29T01:32:28.789330Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261029T012253Z/freeze.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T012253Z/run.py\", line 76, in <module>\n    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()\n                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T012253Z/run.py\", line 62, in freeze\n    def freeze():module(R/'freeze_batch.py','split_eth_freeze').main()\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T012253Z/freeze_batch.py\", line 34, in main\n    assert not any(z['result_available'] is True or z['status']=='reserved' for z in matches),matches;path=R/'specs'/(name+'.json');put(path,sp);fp=reg.fingerprint(sp);assert fp not in records or records[fp]['result_available'] is False and records[fp]['status'] in ['blocked','abandoned'];batch.append({'name':name,'scope':'parent','asset':'COMBO','role':'candidate','capital_usdt':20000,'ETH_A_ownership_fraction':a,'ETH_B_ownership_fraction':1-a,'raw_component_multipliers':weights,'reversal_return_hurdle':H,'trend_filter_lookback_days':S,'ETH_A_lookback_days':LA,'ETH_B_lookback_days':5,'source_fingerprints':fps,'spec':rel(path),'fingerprint':fp});semantic.append({'name':name,'source_component_weights':pairs,'existing_equivalent_matches':matches})\n                                                                                                                                                    ^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/automation/registry.py\", line 26, in fingerprint\n    raise ValueError(\"family must be a stable lowercase ID; logic must be a nonempty object\")\nValueError: family must be a stable lowercase ID; logic must be a nonempty object\n",
+      "recovery": "Pre-reservation schema guard rejected uppercase family ID;no financial ID was reserved or evaluated. Preserve failedplan/first malformed spec,change family to stable lowercase and retry freeze only."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T012253Z/audit_candidate.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-29T01:35:22.345928Z",
+      "finished_utc": "2026-10-29T01:35:24.533937Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261029T012253Z/candidate_audit.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T012253Z/audit_candidate.py\", line 97, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T012253Z/audit_candidate.py\", line 92, in main\n    v=np.asarray([x['NAV'][a][k] for x in full]);capital=20000 if a=='COMBO' else 10000;near(z['net_return_pct'],100*(v[-1]/capital-1));near(z['max_drawdown_pct'],100*max(1-v/np.maximum.accumulate(v)));assert z['NAV_sha256_f64le']==hashlib.sha256(v.astype('<f8').tobytes()).hexdigest() and z['NAV_points']==len(full) and z['daily_equity_usdt']==daily[a][k] and len(daily[a][k])==3 and len(z['folds'])==0 and z['recent40'] is None and z['sharpe_365'] is None\n                                                                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "phase": "finalize",
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "research/experiments/20261029T012253Z/finalize.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "exit_code": 1,
+      "error": "KeyError: 'cash_and_funding_updated_only_by_actual_settlements' at finalize.py:18",
+      "root_cause": "Seal template used a mark-only auditor proof key;crossday auditor provides independently verified daily/funding/fill transitions and no-core-call proof instead.",
+      "impact": "Failed before any seal/active-state/result append;frozen financial/account report,state,pointer and registry unaffected.",
+      "recovery": "Require existing stronger crossday transition and independent-auditor proof keys;do not alter reports/accounts or fabricate a missing field."
+    }
+  ]
+}
