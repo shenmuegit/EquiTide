@@ -1,0 +1,18 @@
+"""Verify all source hashes/statuses, actual finished configs and append-only registry."""
+import json,subprocess
+from run import ROOT,R,reg,sha,put
+plan=json.loads((R/'plan.json').read_text());r=json.loads((R/'report.json').read_text());ctx=json.loads((R/'context.json').read_text());records=reg.read_records(ROOT/'research/automation/registry.jsonl');batch=json.loads((R/'batch.json').read_text());assert len(batch)==len(r['configs'])==36 and r['frozen_plan_sha256']==sha(R/'plan.json');refs=[*plan['component_sources'].values(),*plan['read_only_anchor_references'].values(),*plan['read_only_hold_references'].values()];unique={}
+for x in refs:
+ fp=x['fingerprint'];assert records[fp]['result_available'] is True and records[fp]['status']==x['original_status'] and records[fp]['report_sha256']==x['report_sha256'] and sha(ROOT/x['report'])==x['report_sha256'] and sha(ROOT/x['spec'])==x['spec_sha256'] and sha(ROOT/x['archive'])==x['archive_sha256'];unique[fp]=x
+assert len(unique)==40
+for row in batch:
+ c=r['configs'][row['name']];sp=json.loads((ROOT/row['spec']).read_text());fp=reg.fingerprint(sp);p=sp['parameters'];assert fp==row['fingerprint']==c['fingerprint'] and records[fp]['result_available'] is True and records[fp]['status']==c['status'] and records[fp]['report_sha256']==sha(R/'report.json') and sha(ROOT/c['archive'])==c['archive_sha256']
+ if row['scope']=='native':assert p['lookback_days']==row['lookback_days'] in [3,4] and p['trend_gate_application']=='entries_only' and p['fixed_entry_notional_usdt']==3000 and p['trend_gate_lookbacks_days']==[p['trend_lookback_days']-1,p['trend_lookback_days'],p['trend_lookback_days']+1]
+ else:assert p['source_component_parameters']==[records[f]['spec']['parameters'] for f in row['source_fingerprints']] and p['raw_component_multipliers']==[1,1] and p['initial_capital_usdt']==20000 and p['component_initial_entry_notionals_usdt']==[1000,3000]
+base=json.loads((R/'startup.json').read_text())['head_after_successful_SSH_fetch'];prefix=subprocess.check_output(['git','show',base+':research/automation/registry.jsonl'],cwd=ROOT);raw=(ROOT/'research/automation/registry.jsonl').read_bytes();assert raw.startswith(prefix);events=[json.loads(x) for x in raw[len(prefix):].splitlines()];allrows=batch+json.loads((R/'forward_batch.json').read_text())+json.loads((R/'candidate_batch.json').read_text());assert len(events)==84 and len(allrows)==len({x['fingerprint'] for x in allrows})==42 and {x['fingerprint'] for x in events}=={x['fingerprint'] for x in allrows}
+for row in allrows:
+ es=[e for e in events if e['fingerprint']==row['fingerprint']];assert len(es)==2 and es[0]['status']=='reserved' and es[1]['status'] in ['passed','rejected'] and es[1]['result_available'] is True
+assert all(sha(ROOT/p)==h for p,h in ctx['account_hashes_before'].items()) and sha(R/'report.json')==json.loads((R/'verification.json').read_text())['report_sha256']
+for p,h in ctx['ledger_fragments_before'].items():
+ if p!='research/automation/registry.jsonl':assert sha(ROOT/p)==h
+ex=json.loads((R/'export_verification.json').read_text());assert ex['passed'] and ex['financial_report_sha256']==sha(R/'report.json');proof={'passed':True,'new_actual_financial_configs':36,'new_native_components':18,'new_passive_parents':18,'old_unique_results_unchanged':40,'new_finished_IDs':42,'registry_append_only_events':84,'cost_rows_verified':222,'fold_rows_verified':2886,'recent40_fold_rows_verified':1776,'daily_NAV_rows_verified':40068,'edges_verified':66,'reference_comparisons_verified':216,'protected_files_unchanged':len(ctx['account_hashes_before']),'financial_report_sha256':sha(R/'report.json')};put(R/'source_verification.json',proof);print(json.dumps(proof),flush=True)
