@@ -1,0 +1,1702 @@
+{
+  "time_boundaries": {
+    "input_start_utc": "2025-09-16T00:00:00Z",
+    "input_end_exclusive_utc": "2026-10-25T00:00:00Z",
+    "oos_start_utc": "2025-10-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-10-24T00:01:00Z",
+    "context_days": 33,
+    "nominal_warmup_days": 30,
+    "initial_embargo_days": 3,
+    "continuous_oos_days": 370,
+    "walk_forward_folds": 13,
+    "complete_30day_folds": 12,
+    "tail_fold_days": 10,
+    "label_purge": "No fittedlabels/model;not applicable. Fixed rules use only priorcompleteprices,actual state carries across allfolds."
+  },
+  "data": {
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet",
+          "sha256": "97be656cf441024101417476f8338f4d739879d3ee39bfbf2a89cf1a287b726c",
+          "bytes": 32143848,
+          "rows": 581760
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet",
+          "sha256": "80cd98d12fd73cb8bfcc7a4d4af65d737347c9d9b53d82ae1698a1aa15bd71ce",
+          "bytes": 494964,
+          "rows": 9696
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet",
+          "sha256": "b27e8f9a078a50a9d34c034870790321e43b5d7dff74f2c2a7d0b69f3c276006",
+          "bytes": 34756,
+          "rows": 1212
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet",
+          "sha256": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99",
+          "bytes": 1892,
+          "rows": 1
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet",
+          "sha256": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+          "bytes": 29255495,
+          "rows": 581760
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet",
+          "sha256": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+          "bytes": 462199,
+          "rows": 9696
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet",
+          "sha256": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+          "bytes": 33894,
+          "rows": 1212
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet",
+          "sha256": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6",
+          "bytes": 1892,
+          "rows": 1
+        }
+      ]
+    },
+    "provenance_manifest": "research/experiments/20261025T065405Z/extended_data_manifest.json",
+    "provenance_manifest_sha256": "c7f23dc091a19e9eebd90778b648d8330e7d193bdd07d4b4011cb02373235a76"
+  },
+  "component_costs": {
+    "per_side_commission": 0.0005,
+    "half_spread": 0.0001,
+    "slippage": 0.0002,
+    "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+    "participation_max": 0.001,
+    "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+    "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+    "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+  },
+  "sources": [
+    {
+      "url": "https://www.aqr.com/Insights/Research/Journal-Article/Time-Series-Momentum",
+      "access_date": "2026-10-27",
+      "published": "2012-05-01",
+      "scope": "Prior actualprimaryreading reused;longercryptoROC/slowgate hypothesis is inference,not transferredfutures/equityprofit."
+    },
+    {
+      "url": "https://www.aqr.com/Insights/Research/Working-Paper/Trading-Costs-of-Asset-Pricing-Anomalies",
+      "access_date": "2026-10-27",
+      "published": "2012-12-05",
+      "scope": "Prior actualprimaryreading reused;longercryptoROC/slowgate hypothesis is inference,not transferredfutures/equityprofit."
+    }
+  ],
+  "gates": {
+    "positive_all_costs": true,
+    "positive_complete30d_1x_folds_min": 9,
+    "complete30d_folds": 12,
+    "tail10day_fold_excluded_from_positive_count": true,
+    "recent40_positive_all_costs": true,
+    "recent40_positive5d_1x_folds_min": 6,
+    "recent40_5d_folds": 8,
+    "max_3x_composite_drawdown_pct": 25,
+    "round_trips_1x_min": 4,
+    "gross_reference_PnL_plus_funding_to_cost_min": 2.5,
+    "individual_margin_cash_order_violations": 0,
+    "each_source_terminal_flat": true,
+    "minimum_evidence_days": 180,
+    "continuous_days": 370,
+    "native_3D_and_parent_4D_local_3x_positive_fraction_min": 0.6,
+    "parent_5D_local_3x_positive_fraction_min": 0.6,
+    "native_BTC_2D_local_3x_positive_fraction_min": 0.6
+  },
+  "original_candidate_preserved": {
+    "name": "gatebudget370_B1000_E3000_S28_L3_H02",
+    "fingerprint": "9bef791333b2e6fb8166f7080ddad77af1b29bd73ad870baf928dd4ce72de21c",
+    "spec": "research/experiments/20261026T070542Z/specs_corrected/gatebudget370_B1000_E3000_S28_L3_H02.json",
+    "spec_sha256": "fe8aba1bfe1961073e0965ae74c45318a27be7ca4ef3d83118d50b4e57f65d07",
+    "report": "research/experiments/20261026T070542Z/report.json",
+    "report_sha256": "31ffdbe14c7a5277ec85e49c53c13e806f04826f4b36a1dd53c7bf4ecc88def4",
+    "archive": "research/experiments/20261026T070542Z/results/gatebudget370_B1000_E3000_S28_L3_H02.json.gz",
+    "archive_sha256": "f339a182d47eb6121ffc4e7d6f940a5c4906a9f4ab62222bd0eaebb767588d66",
+    "scope": "parent",
+    "capital_usdt": 20000,
+    "parameters": {
+      "initial_capital_usdt": 20000,
+      "raw_component_multipliers": [
+        1,
+        1
+      ],
+      "component_capitals_usdt": [
+        10000,
+        10000
+      ],
+      "component_initial_entry_notionals_usdt": [
+        1000,
+        3000
+      ],
+      "BTC_lookback_days": 31,
+      "BTC_return_hurdle": 0.04,
+      "ETH_lookback_days": 3,
+      "ETH_return_hurdle": 0.02,
+      "start_utc": "2025-10-19T00:01:00Z",
+      "end_utc": "2026-10-24T00:01:00Z",
+      "walk_forward_folds": 13,
+      "walk_forward_test_days": 30,
+      "warmup_days": 30,
+      "embargo_days": 3,
+      "cost_multipliers": [
+        1,
+        2,
+        3
+      ],
+      "source_rules_and_costs_sha256": "2f7f2eeb66745b9ecc76efa31c0e983a197a3cb251612c608b9c896a301a95c3",
+      "BTC_exit_buffer_fraction": 0.01,
+      "ETH_exit_buffer_fraction": 0,
+      "BTC_fixed_entry_notional_usdt": 1000,
+      "ETH_fixed_entry_notional_usdt": 3000,
+      "walk_forward_complete30day_folds": 12,
+      "walk_forward_tail_days": 10,
+      "continuous_oos_days": 370,
+      "style": "btc_trend_eth_trend_filtered_reversal",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.02,
+      "trend_filter_lookback_days": 28,
+      "ETH_trend_lookback_days": 28
+    },
+    "components": [
+      {
+        "fingerprint": "2122c03af949f66e9ab48802b8813121b9a94f1e0a5844a712c800a026a2fd4d",
+        "weight": 1
+      },
+      {
+        "fingerprint": "d0d984ab2ae7f899c6eb6e1e680c11cf91cf47177f946a93e13a95f7a08cd82e",
+        "weight": 1
+      }
+    ],
+    "criteria": {
+      "positive_all_costs": true,
+      "nine_of_twelve_positive_complete30d_1x_folds": true,
+      "recent40_positive_all_costs": true,
+      "recent40_six_of_eight_positive5d_1x_folds": true,
+      "composite_DD3_lte25pct": true,
+      "local_positive3_gte60pct": true,
+      "four_round_trips1": true,
+      "gross_plus_funding_to_cost1_gte2_5": true,
+      "no_negative_collateral": true,
+      "no_order_rejections": true,
+      "no_margin_proxy_violations": true,
+      "terminal_flat": true,
+      "minimum180days": true
+    },
+    "passed_only_predeclared_historical_gates": true,
+    "scenes": {
+      "1": {
+        "full370_return_pct": 8.972716369844157,
+        "whole_curve_drawdown_pct": 2.872391309482647,
+        "recent40_return_pct": 1.5615814849144094,
+        "recent40_whole_drawdown_pct": 1.6258496279211054,
+        "full_NAV_sha256": "4c0038544c510d6a16bef44d01bb495049f1a50f0e84c72f0cb645df05a7e670",
+        "recent40_NAV_sha256": "c5af684026531192349da8edc9f5f60d26875f58faa69a0e078fc7ac6f76e739"
+      },
+      "2": {
+        "full370_return_pct": 7.588003796240583,
+        "whole_curve_drawdown_pct": 3.0645987775102523,
+        "recent40_return_pct": 1.412400446034412,
+        "recent40_whole_drawdown_pct": 1.7035799917191508,
+        "full_NAV_sha256": "05d8faa49b47a3421ee7f2e17e5017598dcb41848585ae4c162158783062ac7a",
+        "recent40_NAV_sha256": "d0dfc1f57425552af03a665fb37552953d4aa31cfe63b98466c5ad6f6af66ea7"
+      },
+      "3": {
+        "full370_return_pct": 6.2023392605370375,
+        "whole_curve_drawdown_pct": 3.2575347331928683,
+        "recent40_return_pct": 1.2596230399962716,
+        "recent40_whole_drawdown_pct": 1.7831634445965472,
+        "full_NAV_sha256": "6d541eab19a11906a6df39edc420a42aba0a05f75e9a019feaf0b81364398fdf",
+        "recent40_NAV_sha256": "5417274b20a1f03c2861719c3dca7b83119f0f74cd5a67a4020d6fde98690155"
+      }
+    },
+    "complete30d_positive_1x_folds": 10,
+    "recent5d_positive_1x_folds": 6,
+    "readonly_neighbor_diagnostics": {
+      "count": 16,
+      "full3x_net_positive_count": 15,
+      "recent6of8_raw_fold_count": 1,
+      "grid_boundary_axes": [
+        "ETH_fixed_entry_notional_usdt",
+        "trend_filter_lookback_days",
+        "reversal_lookback_days",
+        "reversal_return_hurdle"
+      ],
+      "policy": "Rawalreadyrecordedmetrics only,notreratingoldneighborsornewfinancialevaluation."
+    },
+    "independent_future_evidence_for_this_config": false,
+    "risk_limits": [
+      "Only1of108newactualconfigs passed in this repeatedlyusedhistory;strongselectionbias.",
+      "Four-axis boundary location and sparse recentfold consistency among neighbors limit robustness.",
+      "No DSR/PBO correction,untouchedholdout or stableliveprofit established.",
+      "Cost/mark/maintenanceproxy limitations in frozen plan remain."
+    ],
+    "next_step": "Keepthisspec/hashunchangedforindependentnewdataforwardvalidation. ExistingSMAandpaper10arenotitsforwardevidence;no newaccount/trade/resetorpostresulttuningperformedhere."
+  },
+  "helpers": {
+    "research/experiments/20261025T145537Z/run.py": "cfd78da26836ee5929cae31e266cdf8b19eba1cb8ea6d904c69b95dfccb6d423",
+    "research/experiments/20261025T085436Z/run.py": "b0c386644dfff35312455950b26a769672152aa12d4828b4fd638a11e095a1ef",
+    "research/experiments/20261023T204326Z/run.py": "3526462a590de17571cb15bde822b4b697cbb5b100afaff2016356d455b83456"
+  },
+  "round": "20261029T132528Z",
+  "trigger_utc": "2026-10-29T13:25:28.256Z",
+  "frozen_at_utc": "2026-10-29T13:42:29.249511Z",
+  "hypothesis": "Positive exit buffers improved some fullperiod returns but all36failedrecent6of8. Test the opposite native persistence hypothesis:exit actual contrarian positions before fast ROC reaches zero,Enegative but abs(E)<Hentry. Shorter holds may redistribute PnL across chronological folds and reduce exposure/funding;more churn or premature exits may erase profits after costs. Freeze negativeE/S/L batch before new PnL;qualification unchanged. Reuse old zero/positiveE results as genuine numeric neighbors and matched equal-magnitude delayed-exit controls,no old model rerun or requalification.",
+  "grid": {
+    "exit_E": [
+      -0.015,
+      -0.01,
+      -0.005,
+      0,
+      0.005,
+      0.01,
+      0.015
+    ],
+    "new_exit_E": [
+      -0.015,
+      -0.01,
+      -0.005
+    ],
+    "ETH_slow": [
+      27,
+      28,
+      29
+    ],
+    "ETH_fast": [
+      3,
+      4
+    ],
+    "ETH_entry_H": 0.025,
+    "ETH_N": 3000,
+    "trend_gate_mode": "adjacent_horizon_majority",
+    "trend_gate_application": "entries_only",
+    "slow_horizon_offsets": [
+      -1,
+      0,
+      1
+    ],
+    "strict_votes_required": 2,
+    "BTC_fixed": {
+      "N": 1000,
+      "L": 31,
+      "H": 0.04,
+      "E": 0.01
+    },
+    "new_financial_configs": 36,
+    "new_native_components": 18,
+    "new_passive_parents": 18,
+    "cost_scenes": 108,
+    "full_native_ETH_grid": 42,
+    "full_parent_grid": 42,
+    "read_only_anchor_cells": 48,
+    "read_only_hold_controls": 2,
+    "adjacent_edges_each_scope": 85,
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "component_capitals_usdt": [
+      10000,
+      10000
+    ],
+    "parent_capital_usdt": 20000,
+    "entry_budget_total_usdt": 4000
+  },
+  "component_sources": {
+    "2122c03af949f66e9ab48802b8813121b9a94f1e0a5844a712c800a026a2fd4d": {
+      "name": "extended370_BTC_L31_H04_E100_N1000",
+      "fingerprint": "2122c03af949f66e9ab48802b8813121b9a94f1e0a5844a712c800a026a2fd4d",
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E100_N1000.json",
+      "spec_sha256": "6a425e3e4a6c6e6aae9a3666cd4bbfe2e05791d8f1c0210629cc5a6017dd62c1",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L31_H04_E100_N1000.json.gz",
+      "archive_sha256": "688145e111c466ac990f514a15b883d4be4769404a09d9f99141d43f27201b95",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "scope": "native",
+      "asset": "BTC",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "d6bb76457394d546d7d392ae43af5a22b951058fe797b45143ad34adf3e7dc70",
+        "2": "79087a69f08174298b2b2c773741fec71446e7ac08774194040a67b30be65c0f",
+        "3": "f40af7e3d3cf693bafc847c8536d55538e3c481f69fd710315c1a13a92b24eab"
+      },
+      "fixed_entry_notional_usdt": 1000,
+      "lookback_days": 31,
+      "return_hurdle": 0.04,
+      "exit_buffer_fraction": 0.01,
+      "trend_lookback_days": null
+    },
+    "94180a4d2b7392090f52c069130bc60c7157b90c02ab7f46a853d23bf705481c": {
+      "name": "extended370_BTC_L0_H00_E000_N1000",
+      "fingerprint": "94180a4d2b7392090f52c069130bc60c7157b90c02ab7f46a853d23bf705481c",
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L0_H00_E000_N1000.json",
+      "spec_sha256": "58361da3f6ae6935c40b65bcecb06d055b96d50a30bcecc4726167c1d4112de0",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L0_H00_E000_N1000.json.gz",
+      "archive_sha256": "e84a527f2ca3938e59086203ab1d611b7935052a45bed96604dcc8e2544e0b8e",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "scope": "native",
+      "asset": "BTC",
+      "role": "benchmark",
+      "capital_usdt": 10000,
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "56c7406b8c9d88ddf73531056533f05211a5198c8aadaf2b496917b5b270ca89",
+        "2": "0620ee2328b9cf3929c5759a57cb50c4714f0bb840b860818cc230d87dc4be17",
+        "3": "348fc31bf574b6020f4c9aaef6f11cdf8f74bb3310afd78ac7db4a0dbaeae5c1"
+      },
+      "fixed_entry_notional_usdt": 1000,
+      "lookback_days": null,
+      "return_hurdle": null,
+      "exit_buffer_fraction": null,
+      "trend_lookback_days": null
+    },
+    "11940b42d9d4889e36e986bcdf3c41c83a51965402854a5d9f5ea4275a749f83": {
+      "name": "extended370_ETH_L0_H00_E000_N3000",
+      "fingerprint": "11940b42d9d4889e36e986bcdf3c41c83a51965402854a5d9f5ea4275a749f83",
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L0_H00_E000_N3000.json",
+      "spec_sha256": "9d8e23481318c8f755cec2c3d1c926228609ca7d69efac96f47a5d2a504049f3",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L0_H00_E000_N3000.json.gz",
+      "archive_sha256": "7f87dfde2a752ed7171849e856e860bd1b232aa67c788331927d8aec5fa96b81",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "benchmark",
+      "capital_usdt": 10000,
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "db5e88fb9f411701b447f33f191e5ccd389046d92c8d1411a62958786bbb0b7c",
+        "2": "c0a6b585b818d7bec63de4b6b74242936b68fc05dd432882b64b0206c11a157e",
+        "3": "c86c069b90960dede6a5e1d76a052cc403a3bc83e85a3f8561ad173061e47f87"
+      },
+      "fixed_entry_notional_usdt": 3000,
+      "lookback_days": null,
+      "return_hurdle": null,
+      "exit_buffer_fraction": null,
+      "trend_lookback_days": null
+    },
+    "2af0d40064ab3623a2b9b2407eab5b3c82a6360ac801889e59a7e8821e7013ef": {
+      "name": "entrygate370_ETH_H025_S27_L3_N3000",
+      "fingerprint": "2af0d40064ab3623a2b9b2407eab5b3c82a6360ac801889e59a7e8821e7013ef",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_ETH_H025_S27_L3_N3000.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_ETH_H025_S27_L3_N3000.json.gz",
+      "archive_sha256": "f8f5c76b21771dafdcea8c37de37ad741ca7af3aeb09af8cedd8a37d80fb4bb4",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "e077e50ba6c26d7caf9f78f3fdbc57050dc9f88b16acbcaf1b1459ae6a2cf879",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "65615ad3326f06d2ab12c66dd607d387d7cfbe945997692c4139a5b63009c52f",
+        "2": "7ba569465a61854e919a6f372059d7dfdfd041eec50044653ade81c4b3ae4ea5",
+        "3": "71ab219517b6a34c6b5a5721a0725fef1076ca4b0852e78a8f41564c91411206"
+      },
+      "fixed_entry_notional_usdt": 3000,
+      "lookback_days": 3,
+      "return_hurdle": 0.025,
+      "exit_buffer_fraction": 0,
+      "trend_lookback_days": 27,
+      "trend_gate_application": "entries_only"
+    },
+    "119080fd68661db1b5a7783e94aa989a9dbf316bbf6e3fdb8a0a3252796f59c3": {
+      "name": "entrygate370_ETH_H025_S27_L4_N3000",
+      "fingerprint": "119080fd68661db1b5a7783e94aa989a9dbf316bbf6e3fdb8a0a3252796f59c3",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_ETH_H025_S27_L4_N3000.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_ETH_H025_S27_L4_N3000.json.gz",
+      "archive_sha256": "0685ca9600e7fb74def9a4490823ff0f0937a9fc4ed79ee340b31775487d0ebc",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "4b0293cb003d1d7d5338d09cc816d26f03d33253e4496566e804dac650bc01eb",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "f1e9e88aa598dd5c22b1f903c3cd6129c60a9f3ae38809e372bda9662f34c2a0",
+        "2": "a90ebbc45cf4b8fa82bbd722d3ac22e1d88d41e8645f6737726b8081d140dc7f",
+        "3": "4fc12ad56f609801906e382997e60e7756f52aa8b9d4cf7d960db9f7e50fdf99"
+      },
+      "fixed_entry_notional_usdt": 3000,
+      "lookback_days": 4,
+      "return_hurdle": 0.025,
+      "exit_buffer_fraction": 0,
+      "trend_lookback_days": 27,
+      "trend_gate_application": "entries_only"
+    },
+    "9e02224964fe9187a8320eed1977e4b0e04d08a7ee028df4d7a11e0b5c7f2c00": {
+      "name": "entrygate370_ETH_H025_S28_L3_N3000",
+      "fingerprint": "9e02224964fe9187a8320eed1977e4b0e04d08a7ee028df4d7a11e0b5c7f2c00",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_ETH_H025_S28_L3_N3000.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_ETH_H025_S28_L3_N3000.json.gz",
+      "archive_sha256": "a5dc8897d63ef29cef359734fda8daf15abf889c3cda06c7cbe662c7b2d199c6",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "3e9854866805038dfc5bba5848527545e74fad5f8fd8da8febdafd140ab03793",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "307841cb2436e17300bc660b9aa1458f282c06ddee3d6dc4f0b618085f6e4c0a",
+        "2": "307c184b73d2bb3eaedb3c4b672e4e837b9efaa199b4150ae70b9f584e2f00c8",
+        "3": "453d491922a9f0df71f91cfcc0e31acaad801aa8e82a1dbe3c784472d9d13c7f"
+      },
+      "fixed_entry_notional_usdt": 3000,
+      "lookback_days": 3,
+      "return_hurdle": 0.025,
+      "exit_buffer_fraction": 0,
+      "trend_lookback_days": 28,
+      "trend_gate_application": "entries_only"
+    },
+    "ff4a0906cd07da3022a6fb1b11591cd88128242d36b08ca132eef34798489df9": {
+      "name": "entrygate370_ETH_H025_S28_L4_N3000",
+      "fingerprint": "ff4a0906cd07da3022a6fb1b11591cd88128242d36b08ca132eef34798489df9",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_ETH_H025_S28_L4_N3000.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_ETH_H025_S28_L4_N3000.json.gz",
+      "archive_sha256": "f4c77f84d30c32424eb33ad49b2df4455412482905617faf31bcfefd7f2e571d",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "275a1bd9439e7ac5e9dcad006542c4349f7e5aba7948ebe40fc7831d9be0a3e7",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "a8fae5f71675b8040d6124128b13f4812532ba3cf69e8391ed05d6cf1ef9d82f",
+        "2": "91b96cc17be1558e0495a9ac6ec9fc4066dfd1770cd76ae5765f55f1a248ccea",
+        "3": "968a7887fba9cf6130448211abc54cfcaa889a567fd86eade24d7fbbaeb068ee"
+      },
+      "fixed_entry_notional_usdt": 3000,
+      "lookback_days": 4,
+      "return_hurdle": 0.025,
+      "exit_buffer_fraction": 0,
+      "trend_lookback_days": 28,
+      "trend_gate_application": "entries_only"
+    },
+    "ce36cb85832754397afb9a484abf095e4c1ec09582734856be8d31d24705b30e": {
+      "name": "entrygate370_ETH_H025_S29_L3_N3000",
+      "fingerprint": "ce36cb85832754397afb9a484abf095e4c1ec09582734856be8d31d24705b30e",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_ETH_H025_S29_L3_N3000.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_ETH_H025_S29_L3_N3000.json.gz",
+      "archive_sha256": "ff44543a65ded800fedd4d7bc059978671688eb19f1d4ca1d079f8f42d3ce24f",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "5576f6224e72b9fc2e25e4aa56a14198f9a56e4aca1488aff54c278787b6cc8e",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "4c0a6d17badab9367e1ac9ccbd572e35732cb20d89811c438c5ce397d6457937",
+        "2": "c60754cb2e3b9927a92b6e3912ae21e27e787bd672d536cd6ea4a2b147b3c9ff",
+        "3": "f2fad9380208e20d70a8f352f57b26fcf307f6caf64fb5a4e3bfbea91e15fb9c"
+      },
+      "fixed_entry_notional_usdt": 3000,
+      "lookback_days": 3,
+      "return_hurdle": 0.025,
+      "exit_buffer_fraction": 0,
+      "trend_lookback_days": 29,
+      "trend_gate_application": "entries_only"
+    },
+    "90131a6ddea1e4a810c23f6358117d911c7783a7118cad7e0ae3a1d672c48122": {
+      "name": "entrygate370_ETH_H025_S29_L4_N3000",
+      "fingerprint": "90131a6ddea1e4a810c23f6358117d911c7783a7118cad7e0ae3a1d672c48122",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_ETH_H025_S29_L4_N3000.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_ETH_H025_S29_L4_N3000.json.gz",
+      "archive_sha256": "8102a7b190d1d928f6e71fdb79bb34c9052f27f9888d2ba2a76d761876027e8b",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "90443b5a0de37d6704523576825c0f70fb86865005b15f55da85e084f4ec28e9",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "7173fd6fedbd78d23c91d023e95517b5be30a55a4358e422c3e24a87cc2dccee",
+        "2": "b301a982bc1314e84c066718792599b1f60c87faf0551bda3b436c3f313097e2",
+        "3": "e0f6bd55034275bcec9bc00bca75e5e68e3b040a42eff2399447827ce552b1e1"
+      },
+      "fixed_entry_notional_usdt": 3000,
+      "lookback_days": 4,
+      "return_hurdle": 0.025,
+      "exit_buffer_fraction": 0,
+      "trend_lookback_days": 29,
+      "trend_gate_application": "entries_only"
+    }
+  },
+  "read_only_anchor_references": {
+    "entrygate370_ETH_H025_S27_L3_N3000": {
+      "name": "entrygate370_ETH_H025_S27_L3_N3000",
+      "fingerprint": "2af0d40064ab3623a2b9b2407eab5b3c82a6360ac801889e59a7e8821e7013ef",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_ETH_H025_S27_L3_N3000.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_ETH_H025_S27_L3_N3000.json.gz",
+      "archive_sha256": "f8f5c76b21771dafdcea8c37de37ad741ca7af3aeb09af8cedd8a37d80fb4bb4",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "e077e50ba6c26d7caf9f78f3fdbc57050dc9f88b16acbcaf1b1459ae6a2cf879",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "65615ad3326f06d2ab12c66dd607d387d7cfbe945997692c4139a5b63009c52f",
+        "2": "7ba569465a61854e919a6f372059d7dfdfd041eec50044653ade81c4b3ae4ea5",
+        "3": "71ab219517b6a34c6b5a5721a0725fef1076ca4b0852e78a8f41564c91411206"
+      },
+      "fixed_entry_notional_usdt": 3000,
+      "lookback_days": 3,
+      "return_hurdle": 0.025,
+      "exit_buffer_fraction": 0,
+      "trend_lookback_days": 27,
+      "trend_gate_application": "entries_only"
+    },
+    "entrygate370_ETH_H025_S27_L4_N3000": {
+      "name": "entrygate370_ETH_H025_S27_L4_N3000",
+      "fingerprint": "119080fd68661db1b5a7783e94aa989a9dbf316bbf6e3fdb8a0a3252796f59c3",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_ETH_H025_S27_L4_N3000.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_ETH_H025_S27_L4_N3000.json.gz",
+      "archive_sha256": "0685ca9600e7fb74def9a4490823ff0f0937a9fc4ed79ee340b31775487d0ebc",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "4b0293cb003d1d7d5338d09cc816d26f03d33253e4496566e804dac650bc01eb",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "f1e9e88aa598dd5c22b1f903c3cd6129c60a9f3ae38809e372bda9662f34c2a0",
+        "2": "a90ebbc45cf4b8fa82bbd722d3ac22e1d88d41e8645f6737726b8081d140dc7f",
+        "3": "4fc12ad56f609801906e382997e60e7756f52aa8b9d4cf7d960db9f7e50fdf99"
+      },
+      "fixed_entry_notional_usdt": 3000,
+      "lookback_days": 4,
+      "return_hurdle": 0.025,
+      "exit_buffer_fraction": 0,
+      "trend_lookback_days": 27,
+      "trend_gate_application": "entries_only"
+    },
+    "entrygate370_ETH_H025_S28_L3_N3000": {
+      "name": "entrygate370_ETH_H025_S28_L3_N3000",
+      "fingerprint": "9e02224964fe9187a8320eed1977e4b0e04d08a7ee028df4d7a11e0b5c7f2c00",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_ETH_H025_S28_L3_N3000.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_ETH_H025_S28_L3_N3000.json.gz",
+      "archive_sha256": "a5dc8897d63ef29cef359734fda8daf15abf889c3cda06c7cbe662c7b2d199c6",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "3e9854866805038dfc5bba5848527545e74fad5f8fd8da8febdafd140ab03793",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "307841cb2436e17300bc660b9aa1458f282c06ddee3d6dc4f0b618085f6e4c0a",
+        "2": "307c184b73d2bb3eaedb3c4b672e4e837b9efaa199b4150ae70b9f584e2f00c8",
+        "3": "453d491922a9f0df71f91cfcc0e31acaad801aa8e82a1dbe3c784472d9d13c7f"
+      },
+      "fixed_entry_notional_usdt": 3000,
+      "lookback_days": 3,
+      "return_hurdle": 0.025,
+      "exit_buffer_fraction": 0,
+      "trend_lookback_days": 28,
+      "trend_gate_application": "entries_only"
+    },
+    "entrygate370_ETH_H025_S28_L4_N3000": {
+      "name": "entrygate370_ETH_H025_S28_L4_N3000",
+      "fingerprint": "ff4a0906cd07da3022a6fb1b11591cd88128242d36b08ca132eef34798489df9",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_ETH_H025_S28_L4_N3000.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_ETH_H025_S28_L4_N3000.json.gz",
+      "archive_sha256": "f4c77f84d30c32424eb33ad49b2df4455412482905617faf31bcfefd7f2e571d",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "275a1bd9439e7ac5e9dcad006542c4349f7e5aba7948ebe40fc7831d9be0a3e7",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "a8fae5f71675b8040d6124128b13f4812532ba3cf69e8391ed05d6cf1ef9d82f",
+        "2": "91b96cc17be1558e0495a9ac6ec9fc4066dfd1770cd76ae5765f55f1a248ccea",
+        "3": "968a7887fba9cf6130448211abc54cfcaa889a567fd86eade24d7fbbaeb068ee"
+      },
+      "fixed_entry_notional_usdt": 3000,
+      "lookback_days": 4,
+      "return_hurdle": 0.025,
+      "exit_buffer_fraction": 0,
+      "trend_lookback_days": 28,
+      "trend_gate_application": "entries_only"
+    },
+    "entrygate370_ETH_H025_S29_L3_N3000": {
+      "name": "entrygate370_ETH_H025_S29_L3_N3000",
+      "fingerprint": "ce36cb85832754397afb9a484abf095e4c1ec09582734856be8d31d24705b30e",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_ETH_H025_S29_L3_N3000.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_ETH_H025_S29_L3_N3000.json.gz",
+      "archive_sha256": "ff44543a65ded800fedd4d7bc059978671688eb19f1d4ca1d079f8f42d3ce24f",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "5576f6224e72b9fc2e25e4aa56a14198f9a56e4aca1488aff54c278787b6cc8e",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "4c0a6d17badab9367e1ac9ccbd572e35732cb20d89811c438c5ce397d6457937",
+        "2": "c60754cb2e3b9927a92b6e3912ae21e27e787bd672d536cd6ea4a2b147b3c9ff",
+        "3": "f2fad9380208e20d70a8f352f57b26fcf307f6caf64fb5a4e3bfbea91e15fb9c"
+      },
+      "fixed_entry_notional_usdt": 3000,
+      "lookback_days": 3,
+      "return_hurdle": 0.025,
+      "exit_buffer_fraction": 0,
+      "trend_lookback_days": 29,
+      "trend_gate_application": "entries_only"
+    },
+    "entrygate370_ETH_H025_S29_L4_N3000": {
+      "name": "entrygate370_ETH_H025_S29_L4_N3000",
+      "fingerprint": "90131a6ddea1e4a810c23f6358117d911c7783a7118cad7e0ae3a1d672c48122",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_ETH_H025_S29_L4_N3000.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_ETH_H025_S29_L4_N3000.json.gz",
+      "archive_sha256": "8102a7b190d1d928f6e71fdb79bb34c9052f27f9888d2ba2a76d761876027e8b",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "90443b5a0de37d6704523576825c0f70fb86865005b15f55da85e084f4ec28e9",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "7173fd6fedbd78d23c91d023e95517b5be30a55a4358e422c3e24a87cc2dccee",
+        "2": "b301a982bc1314e84c066718792599b1f60c87faf0551bda3b436c3f313097e2",
+        "3": "e0f6bd55034275bcec9bc00bca75e5e68e3b040a42eff2399447827ce552b1e1"
+      },
+      "fixed_entry_notional_usdt": 3000,
+      "lookback_days": 4,
+      "return_hurdle": 0.025,
+      "exit_buffer_fraction": 0,
+      "trend_lookback_days": 29,
+      "trend_gate_application": "entries_only"
+    },
+    "entrygate370_parent_B1000_E3000_H025_S27_L3": {
+      "name": "entrygate370_parent_B1000_E3000_H025_S27_L3",
+      "fingerprint": "0d7199d3228933825b8e77f93fb2d16f13314f27e3e5c18769605cd64d3be39d",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_parent_B1000_E3000_H025_S27_L3.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_parent_B1000_E3000_H025_S27_L3.json.gz",
+      "archive_sha256": "9647cf3f141874e5401b8331885c47e529501f992693fc6446ffc50fa96dfb00",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "6d75bd0f88670f7b0d2457bdd4e698731cb88101edd8fcd51242df16a355305d",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "a8cbe62e6d99311fa24c202b7472335ff459591d1ce0a8a7d6b1415715c0fb69",
+        "2": "b14d394f864f0d37688f93eb67888b0e9bf21c12ad5ef7d69bd16dadc8f43751",
+        "3": "87d626127d852740d263a215981cca8cb156a88121a522ef0376ceb7c98a9d8e"
+      }
+    },
+    "entrygate370_parent_B1000_E3000_H025_S27_L4": {
+      "name": "entrygate370_parent_B1000_E3000_H025_S27_L4",
+      "fingerprint": "91126b1a9e1898321b206f90d5c899c3963de577a0bc485789cd5a3b787303d1",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_parent_B1000_E3000_H025_S27_L4.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_parent_B1000_E3000_H025_S27_L4.json.gz",
+      "archive_sha256": "ed38d38b241883106cc21aa5c0a5b87eb45c277d7f855d8343b9e7bd8ffe771f",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "ba38365c95b80fbaa7aca6ac12ffc63e95bfd9bfafc944f3b93a32e522b47516",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "036938e0999e675110d38788af1231e7c90582d2e523674241a98bb9685abcc3",
+        "2": "66080ee2fba8d470e5b676fd80d7410ecad0641d76e23d53049fa51ad8bae7d4",
+        "3": "2db734c2619e0b2a0dacb1b84cf2477f2a6c92f6ba62a2f1f00e4afaecc3cf4e"
+      }
+    },
+    "entrygate370_parent_B1000_E3000_H025_S28_L3": {
+      "name": "entrygate370_parent_B1000_E3000_H025_S28_L3",
+      "fingerprint": "c5e7eec4747d2d5faea6ea1b55772f0e5face8887add23b12b3e8d639f93c61c",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_parent_B1000_E3000_H025_S28_L3.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_parent_B1000_E3000_H025_S28_L3.json.gz",
+      "archive_sha256": "8136cbf26e145f6499b5c80883ab45c96744dd9f93b08e488be73499dad72bfa",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "8a01482dd95eb671be92cc79cd526847023480af8af712cae7910f01f3fdb030",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "9772ecd34d5e8cf593b1f02f975d3527de7fb8a8279731a77f7e0f60b3a0b6ec",
+        "2": "7d18bbb2039e1a9503128086c0082e1a8be95ad27d2c269d0ad07d4a1f8c6bb9",
+        "3": "f6c2e8afa5ddaa5e3c97b97c02181c5d08af24c717e6cc10349d646038a038c7"
+      }
+    },
+    "entrygate370_parent_B1000_E3000_H025_S28_L4": {
+      "name": "entrygate370_parent_B1000_E3000_H025_S28_L4",
+      "fingerprint": "eaf4cd118eec2945b17705c18e6b8d5cb57b69d64f84780e8f40c1d595b73684",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_parent_B1000_E3000_H025_S28_L4.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_parent_B1000_E3000_H025_S28_L4.json.gz",
+      "archive_sha256": "16c166c4fab1f92fdafac29ed718c27390ef2a3efe96273d2e9540f84ecec9d1",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "5d3711a3e42ca8f787720f10f2f8701eb51164132346a9ff581a7cc1779c5f22",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "144370fca3d04f908479ad233ec7abf5719cc4be97cbad9db228e2383514911d",
+        "2": "cfe0989b8a10a378d3c4825777208f71783a5586a48e139a207ea7d1c029ea2d",
+        "3": "2c72c9f192460eb385ae0f1bc2bab6225bf82ffb0efeeb0ddbb367ede5dc8c05"
+      }
+    },
+    "entrygate370_parent_B1000_E3000_H025_S29_L3": {
+      "name": "entrygate370_parent_B1000_E3000_H025_S29_L3",
+      "fingerprint": "685a19f72d4dcf3efcd61c4f79ddba29cdbd4317217f494e7e990038bdd28888",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_parent_B1000_E3000_H025_S29_L3.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_parent_B1000_E3000_H025_S29_L3.json.gz",
+      "archive_sha256": "044d2169e3aa94504f2a9a99f7b1ee6777407c4199713b35ed92949cf8dac246",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "a6ae10f4f6b94f0fad4156eff5db31aaab9ae7b848c26bc214d237e9405221a8",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "278602064858a19d9689149f3c96643a6d413948f8cd05ddd02cbde6d6a14f14",
+        "2": "048e36d79cf6db1983723545fce1a44368a9746cae97dee046a5a1aeb47f8871",
+        "3": "1b9289033eb44800e95f404e9c39454ca8eb352a726656e0f3fde48bd3e32802"
+      }
+    },
+    "entrygate370_parent_B1000_E3000_H025_S29_L4": {
+      "name": "entrygate370_parent_B1000_E3000_H025_S29_L4",
+      "fingerprint": "54352547aa48c0ffb819d07f1d73274e906b89915326465a011f63425442ae98",
+      "spec": "research/experiments/20261029T052355Z/specs/entrygate370_parent_B1000_E3000_H025_S29_L4.json",
+      "archive": "research/experiments/20261029T052355Z/results/entrygate370_parent_B1000_E3000_H025_S29_L4.json.gz",
+      "archive_sha256": "d4d876f56cad38fe48fa0b601e7f2c7a1bbc97d86ff043050c7a3e7907057633",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "ee89cb947f49d03eaeda1d2d32659897894ff09b093e9bde42255a5956d4c25e",
+      "report": "research/experiments/20261029T052355Z/report.json",
+      "report_sha256": "e42d73f011f9ec5cadf89cfd02076eb3b3e0dacbb7a3df597567f0f097c29f76",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "8f105c9f66746042c556f0856f7da15a560272352ab31345410612af201ba9df",
+        "2": "97f21dd07744f9640a7fee61bef3d76cfdbcee4fe8b8d20330348dc2799b79f6",
+        "3": "0c8f19e87f0360133c7a6999a96f7dbeb1048ba6ab77a3a1c70265e991376ff0"
+      }
+    },
+    "exitbuffer370_ETH_E050_S27_L3_H025_N3000": {
+      "name": "exitbuffer370_ETH_E050_S27_L3_H025_N3000",
+      "fingerprint": "3545d972b4e74c1d1cc5fbd8dc22fa9d2fc55c64d21f8cc01ed639cc6121940d",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E050_S27_L3_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E050_S27_L3_H025_N3000.json.gz",
+      "archive_sha256": "932a93dcff01acc549330529e11efe39ec5096b798eb0e34e1845b59798d6416",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "3d38f19832333d6680a73d740bbf7618ebcbf124b6e31c808e1f41ea4031d4f9",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "be2e4eabb79c27cc3a0db2d2f21a206e939ea3448de76e4b12727307716f6c56",
+        "2": "29d455a53313c96b658d2677ff23f409664784111e94139a7b610b87c0c47a7b",
+        "3": "a2b79505bec0680505c05dbfba9ece2544053d78c4a4f2694dfb26bcf3ee0e30"
+      }
+    },
+    "exitbuffer370_ETH_E050_S27_L4_H025_N3000": {
+      "name": "exitbuffer370_ETH_E050_S27_L4_H025_N3000",
+      "fingerprint": "4f3df668b70c1aa3027d90f0561fd3d7a245df5704632007271f71a0d6cf62e0",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E050_S27_L4_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E050_S27_L4_H025_N3000.json.gz",
+      "archive_sha256": "434688f2ed4b31685f256336785aad7134910c4acf278577d323b1b7a7cc03ed",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "678ac22fbf18fe6753de89ed47c824461dc01d47fb842d83ef8f1932b1388681",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "64165a081d9dfc1f945de1e9c0f520d64e44fd0ef62bb74967819b872e369fde",
+        "2": "6bdea4d4269d088bf56630af32c001a8629edeb67770219b7ace6ba208f72c9e",
+        "3": "4ffe5773dd9d5a0c80125ba8934f14ce1ca85b1a0f6015a481b7cb1992b3392e"
+      }
+    },
+    "exitbuffer370_ETH_E050_S28_L3_H025_N3000": {
+      "name": "exitbuffer370_ETH_E050_S28_L3_H025_N3000",
+      "fingerprint": "3ecf2953378131182d07d5277a650d8722dd14952dbf3a56f3e950dcb8bf1d8d",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E050_S28_L3_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E050_S28_L3_H025_N3000.json.gz",
+      "archive_sha256": "20384afed02fa81fc79e797890aea4cf3520e9cdc5cd29fd8552f17d8751e87d",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "e2b31aa097a2cd64600dc8301df87c84e9849ff86e7eac1657f7f49735864c19",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "967bc794a5a6b5e9c413c14b04df353d3e83bc1cc09db5d1c1a77c0f984dc4ca",
+        "2": "015c157d3aafaa5e5bb79a7ca782d4a00400d872f09471509f0ac07d558d1bbe",
+        "3": "66a38a415e70f91b898d4bd2927f7266551257695786e685f959af33acbe8e59"
+      }
+    },
+    "exitbuffer370_ETH_E050_S28_L4_H025_N3000": {
+      "name": "exitbuffer370_ETH_E050_S28_L4_H025_N3000",
+      "fingerprint": "bba787d6e74266656b58bd69d29a77e137cc6577585f0e34fd4c3b11064adfc2",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E050_S28_L4_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E050_S28_L4_H025_N3000.json.gz",
+      "archive_sha256": "a3abe294f12beaace5a4d65bfd141f38e3cd10078dd0752fd2542bce3b077605",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "2b670b0c7fce1e4e855e3e32be06bf9626b75ebdc678b90bc11a6f93e038d6cd",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "6058332f4ace561ba0bbe9ed2138e6bf2c649f19fbf77373d0347a45a7546bcc",
+        "2": "c1277e8c08cf94fa6782f2369d4a1b2a257ab653b8700f6d53c94c04c64e58e4",
+        "3": "7652716dd01313971b63297abeb00e8e0f8ad049b125cc71416d67f553657fd9"
+      }
+    },
+    "exitbuffer370_ETH_E050_S29_L3_H025_N3000": {
+      "name": "exitbuffer370_ETH_E050_S29_L3_H025_N3000",
+      "fingerprint": "1d62c6f13e5cd520a22c658b81e37b3459c852f7ea4806d4722a70d58ab1d0b4",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E050_S29_L3_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E050_S29_L3_H025_N3000.json.gz",
+      "archive_sha256": "7d6e060739196774a98bde87f6c2124cf294875acf13c5e3c407aaf7b730ea99",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "6cbde7d5c09f09006c155873391db5b606ef6e5c3dbc991b13a45cc9e877fd7f",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "efe1a2deaaf1bc88ec8b349edf996941ac4d9e01f8227e2d2c7904359035b6c7",
+        "2": "ca45c8a9d4eb4574a0c815634671d2cb4149d117e2b08b501ef4c83221915ddc",
+        "3": "9a7c7c1016d88ad8304a06e9fd7c27451915776690c4cfcca35c3b55c5a3085e"
+      }
+    },
+    "exitbuffer370_ETH_E050_S29_L4_H025_N3000": {
+      "name": "exitbuffer370_ETH_E050_S29_L4_H025_N3000",
+      "fingerprint": "14396512ca2e8a875178502126978a6d201dbce35f682b7b5097d81fc7a186d9",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E050_S29_L4_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E050_S29_L4_H025_N3000.json.gz",
+      "archive_sha256": "bec07ab5eac3b070afc81e45d70531025fa1eabcaed7da93842c62bdf6e6337e",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "243ce0d54905a18fab268e7026033492695c2002b46c87a9ca3610f2f010776c",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "61c78b810edae854d76e8fb61b74740e805ab1609bc9764d5c47346c20322706",
+        "2": "ea4f608bcdd57af2dc7c383ca52ed8d8191da88418ac24572288608b1d419c86",
+        "3": "16e5e6e1f0a3a4b7177982b53f2e641110e59fa4309e9e54911229c8f6eb9c96"
+      }
+    },
+    "exitbuffer370_ETH_E100_S27_L3_H025_N3000": {
+      "name": "exitbuffer370_ETH_E100_S27_L3_H025_N3000",
+      "fingerprint": "dadfa680492586a5a54a6d5758a77a068a1d5552c743f64448259d3dc75c99c0",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E100_S27_L3_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E100_S27_L3_H025_N3000.json.gz",
+      "archive_sha256": "d68adb0fa1109f506f62bb827a43866aa0be81af493512c9259ae76320e3b7b3",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "3f739ebd5d1a98173ddcfc8cca69dcfad7a6ead03470a37048ce7b313e32a89a",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "18d0f70057137bda735fb8d90284e77cc4ee3d98e1b62d9f1bfa7f272c7b4c24",
+        "2": "6668fb71af17f9890990c329a05e3a288083ccd12b3bc92844c0ecf971c470fc",
+        "3": "b195fce34dc6e93de6872aa56d4767d1cf13e6713e697ec06c4d2fce702df65e"
+      }
+    },
+    "exitbuffer370_ETH_E100_S27_L4_H025_N3000": {
+      "name": "exitbuffer370_ETH_E100_S27_L4_H025_N3000",
+      "fingerprint": "19e73b99396ba5911ef1a55abb0d84c04918d07e0bd8028d7c45b07165d97e78",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E100_S27_L4_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E100_S27_L4_H025_N3000.json.gz",
+      "archive_sha256": "29a30d4c5a5d184ac9e745fa1710c44c1e79aa4ae6727acd3bf47daef19fc8ea",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "b50fc459c93284d7771cc2d95fb9fdd6a8727f3d3da34c54756a09a9eb4e259b",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "fa1500605aa5416fc78eb4022e58ec764c42c2121f462f0a67bd70aa1a6b4fa6",
+        "2": "58f2ea30bd5f2ff04be5770e3c93e437657f3797177d5ce39a452ec18c6e1565",
+        "3": "ee4584ebf539f26c944e5de7a72ef699599f108d7da2dccf7109763d9a11bfb0"
+      }
+    },
+    "exitbuffer370_ETH_E100_S28_L3_H025_N3000": {
+      "name": "exitbuffer370_ETH_E100_S28_L3_H025_N3000",
+      "fingerprint": "9da24d5c06275f798775fb91da9885887a2b4c3515af41fe065825a23d4c5cd2",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E100_S28_L3_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E100_S28_L3_H025_N3000.json.gz",
+      "archive_sha256": "a6a82e86c24752ffaa460ea8a158aabf43992dbd670ad5d0abc182c1ad79ed7e",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "a3f340469bf703d52a7ad9087fcdac89275223ba7b6b3de792214c7b6fe06cc2",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "86d41f422600d94c1722c80dcf413f9dd1ea3a491c98aa2327a2c1152fa1fa7f",
+        "2": "58b3fbd9443a026d4cc4f9111da2344404395b87e698b09a04c9d96d42e295d6",
+        "3": "923663e2ed740b6d98589e931c9d49d586d02cc766d753af1d2beacadbd56a1d"
+      }
+    },
+    "exitbuffer370_ETH_E100_S28_L4_H025_N3000": {
+      "name": "exitbuffer370_ETH_E100_S28_L4_H025_N3000",
+      "fingerprint": "ca02db63dc971c2f387488df8973c2ba6b51c5fd4d72fa25c5d999c7a4e4cfa1",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E100_S28_L4_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E100_S28_L4_H025_N3000.json.gz",
+      "archive_sha256": "3e3ff39b02b8836ad0cd407a1f1454a6f4dca9fb37508cef4ca98e77d733c0ba",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "c77554a6072c001cafadccfa79af1bf9727ad25910cfcec64b1929102dad560e",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "d482afd87a26922f745079aae16467cf432793ea1f197d7f9e91c731b3a3b983",
+        "2": "f99be3978a527a3e3f39583ae7c693f112f5807f2fe8ae5734981766ff5b7f55",
+        "3": "e76c1513763ba34e243d1a9b912d0efe327b3468e3af351ccce335449488b63d"
+      }
+    },
+    "exitbuffer370_ETH_E100_S29_L3_H025_N3000": {
+      "name": "exitbuffer370_ETH_E100_S29_L3_H025_N3000",
+      "fingerprint": "cd9b60ae42483fcc2a0063080b8f8d2b16260d9a6af70bf363bfa0c57f3993bf",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E100_S29_L3_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E100_S29_L3_H025_N3000.json.gz",
+      "archive_sha256": "702cd60c42f5ba502ed63ae78af5f4c444d09451b75aaf57f2be24e35038e785",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "504fd68594e9b83e15c86d3c2b4550aa577935be02730ccaf7114bcfcf0badde",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "829a743d08c90f4da72240d127d2de2d3c967b73413e9772f3f4b0ea59245b86",
+        "2": "a85aff7ed080fcb1a4bf148d968bf691247f5ba61f29400a690be9fbb58cbbe3",
+        "3": "a4e41f3e4e70e83530eadf57a8b3b7182fff5904ab703fe361f47b802bd47c3b"
+      }
+    },
+    "exitbuffer370_ETH_E100_S29_L4_H025_N3000": {
+      "name": "exitbuffer370_ETH_E100_S29_L4_H025_N3000",
+      "fingerprint": "eff3e5c85e09d125bbd7a53331ca8b4c83e8e84a66d5bbc7ca326509afc9994c",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E100_S29_L4_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E100_S29_L4_H025_N3000.json.gz",
+      "archive_sha256": "59198dc9ee1832963dbe53dd8755fcd68b86d7a8a393f9d72134c51e51e69a41",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "c169162517ff9226493f901a7dc8bf80d24cbca8ba5ec4eef5e15e51104b85ef",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "dc38a99f122d05cdb5f612b5b7b7d608d4827948aba6896be8a1019c05463233",
+        "2": "815e3d07de1884b2e004509c9a10517dae8bbccb5dc6a618ac97061edcddc4e5",
+        "3": "f175fb8e1cbb752301dc8eadc7c6620e32ddce0dad8bf09e93dbbee8d0b4021d"
+      }
+    },
+    "exitbuffer370_ETH_E150_S27_L3_H025_N3000": {
+      "name": "exitbuffer370_ETH_E150_S27_L3_H025_N3000",
+      "fingerprint": "7453aeb76f280a5da035ba260073eadcd214153d6f678e300361f180d9999e77",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E150_S27_L3_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E150_S27_L3_H025_N3000.json.gz",
+      "archive_sha256": "1f5bf2a07c39f9a7b35bcf3d25c38bb106110b7cbd2433ce404bbbb6b439811b",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "5c0f49a203e07473b888f26663feccdef0a0888e94b5276f1b939f506b42749f",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "8ed6af193585618c02e02597df6dbea0dc3510f97767f1220c93c805a6056438",
+        "2": "ff20366ea310a07c79f9cb26c89f5dd60845ae76a9748809437ca05ae8207ced",
+        "3": "0633c20830fce9191366714a7cf0b10d0810fd2768f5ee533b4ae2cc731ec864"
+      }
+    },
+    "exitbuffer370_ETH_E150_S27_L4_H025_N3000": {
+      "name": "exitbuffer370_ETH_E150_S27_L4_H025_N3000",
+      "fingerprint": "e0e177b5c733a195db4e97684cd55fd17601c4f09a7f634df1a41c07526065fc",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E150_S27_L4_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E150_S27_L4_H025_N3000.json.gz",
+      "archive_sha256": "79430e078baf1ccf8fe4f3b4dd9dbd92ab12c40afa53030c86ad4046bd4ca020",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "3acc51cf7012049218bbde91302bb9fc5e13eb38ac03221b9ec9108250996e79",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "d2ea966dbb0fff87878a8e18818138fb18e1224ab1550c4fbfc9cf36f09a91cb",
+        "2": "b95e296fc99469550e7cfe52e4c44b6927e13fd9b8fb74091b40f2dae40bcae8",
+        "3": "9fc61f70392b548d91fe026dd52fd95f57eb4d6d989072e6732053175256e45f"
+      }
+    },
+    "exitbuffer370_ETH_E150_S28_L3_H025_N3000": {
+      "name": "exitbuffer370_ETH_E150_S28_L3_H025_N3000",
+      "fingerprint": "583314298be541676b7a76e412970ed1a03cc86c89f1297a28bb28f11a42b754",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E150_S28_L3_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E150_S28_L3_H025_N3000.json.gz",
+      "archive_sha256": "2625419aefcedc37d5cbb18a69dc4dfb52512b528493eef52d97048d56fc8d3b",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "42ece46f95bfe56f23dc48d09f5ba8502ea36e4134aac34387127d00761ece86",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "f21ec777f0807a549784835e3488b92e7d0f93dd75315b6d3968026115a7f15d",
+        "2": "c8d64b4073c45b739af6408ef93d060e0b00c753ff2dabbffd40a383585d8b3f",
+        "3": "2fe8c64cbff58149079c8c554f6349812b3335e6b00a1a5a8193971de241aa79"
+      }
+    },
+    "exitbuffer370_ETH_E150_S28_L4_H025_N3000": {
+      "name": "exitbuffer370_ETH_E150_S28_L4_H025_N3000",
+      "fingerprint": "23ab879095095dbb212e4fce5d63a0a2d635a93fd0f076d48bc178a278d83512",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E150_S28_L4_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E150_S28_L4_H025_N3000.json.gz",
+      "archive_sha256": "14f5a68fe6e58e21d4bf16f5e159689a1e92a7aac4d1dec66608a1d6ac842240",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "f005100968d2e230ec50b128d132bba770b302dbc8d27aca72711c7984c17e57",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "212b398f212dcc8d548ea37c3e25d39ebe1c56f678a39d931839615e0be1eab1",
+        "2": "047563f1ee0dda7a5432753dcfb561a340ebc3007ccdb52ea105e0f59bf1a7ff",
+        "3": "4af15cef98c7dbb29a41a6b20ce1166bb0fdfd539b646a72b8d82816094f499d"
+      }
+    },
+    "exitbuffer370_ETH_E150_S29_L3_H025_N3000": {
+      "name": "exitbuffer370_ETH_E150_S29_L3_H025_N3000",
+      "fingerprint": "7a86c73f9fd346745152e2c0b23a30bd6f4bae22ecc4f7cc215f1ea4944c482a",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E150_S29_L3_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E150_S29_L3_H025_N3000.json.gz",
+      "archive_sha256": "cff0fba53a2ed2897ee47908351550ac9f5500441041e9c3607965a95888c1f1",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "d5df8526f50e79f7fdceedd81017289399aed2af27f5f5542254eba2fc725d0f",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "eb148e4c2c16d06051991f9247ff36a121359e27b7c4ced6b49f79822fa02fe3",
+        "2": "e4f3cad8e52a48ebd17a52dd7653a0a872d09008d8bce44c6e74495b9f6965e7",
+        "3": "e3bb8860c0a433d39d567f0cd006a32a852c2523de9194f8846f38fd6f835110"
+      }
+    },
+    "exitbuffer370_ETH_E150_S29_L4_H025_N3000": {
+      "name": "exitbuffer370_ETH_E150_S29_L4_H025_N3000",
+      "fingerprint": "22ad261d0b66ee113b48034740f99595373f28235bc39fcdaa89d41fabbb4c5d",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_ETH_E150_S29_L4_H025_N3000.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_ETH_E150_S29_L4_H025_N3000.json.gz",
+      "archive_sha256": "b9d0509d66339b65a430b905c0b3624bb0cde54865d8733c2601d68fa9af641a",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 10000,
+      "spec_sha256": "c4eec4ea5d539f8bdc5edb7ed5e4113f8f31768f18da0dcb3cf9200fce4455f0",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "eeee7f114f0da7eb5764d3ca20de374b1276ba05dc57b52eb54190b010358b59",
+        "2": "862705ae8742a3cac780a0011aede04f901ba9b6516c65f51bb6a8da2ea907fe",
+        "3": "d6044f04fe14be944b3afe0a3e884e320c2340ca00a1ab608fb32b96b9c04307"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X050_S27_L3_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X050_S27_L3_H025",
+      "fingerprint": "bd04baceda6591790822b7a6193957deebb527a51bf32821629d0dfa381caf79",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X050_S27_L3_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X050_S27_L3_H025.json.gz",
+      "archive_sha256": "de0f7ea0cf7890c280ddbeff66396d617d79817497c78fa4cffc778e05b5eb91",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "3d1ec22618afbe231beaadcc24177a38908cee2d9bfdaaa2ecec9ac05c7c1e5e",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "07a2bbabd8aec465a9bf430d3e5eec9a6fa402c0785f1722fea16786a494307b",
+        "2": "d4e2963af83255b340707f5efa03e257ccde2036a01d774c672e8505759ad74d",
+        "3": "fe52230a7570ef6544a06238d75fbc1045ef9237dbf50371e0a3db126e926232"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X050_S27_L4_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X050_S27_L4_H025",
+      "fingerprint": "2e42b7d13e20e0126a21aa5200b2524b081166aaeafa1c2e281f8d5e90a3364c",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X050_S27_L4_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X050_S27_L4_H025.json.gz",
+      "archive_sha256": "cf1df4bf821382c054737cd4886ae46cfc1c3bd5f8665b2fcac0ac63f2215ed0",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "e90e50113d62d5a7231bf16b221d0c6edf76ff325597f75bdd67059a91d492be",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "4006f4974a31903a3b7a6ca34c942db0072578e1c2324482ca91ee78583033a6",
+        "2": "0ad1385e7e5911c1c16d1d201ba2e0675c076a543619f34cddf3359b155ff471",
+        "3": "5bf7b37f68c483e0d8a9119aa7dc64845787f48cff2e7623e970daa4268bf735"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X050_S28_L3_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X050_S28_L3_H025",
+      "fingerprint": "c420908871e4592ccce4f882c6bd0c2a819e9096f5ca945bdef89fcc10765770",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X050_S28_L3_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X050_S28_L3_H025.json.gz",
+      "archive_sha256": "afe0f6b74233284fe4fbc948c1f5c2599fa8d8e988746ed4435f0f6f2b55c0dc",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "a20f87d53adbb1d45fac4569a1cace5374975ac1a10e7a3ec032574e5d952c04",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "8e0c5407de302fa8da1153a4bf4a18e4e8dce117d19cddef44e5ea00846e1dff",
+        "2": "c7d4c03f35e9aee9ad13323428b2b7c6111afcf89595210b1afadc2f1de70b49",
+        "3": "ecfda2c5d3ac2861c1a7103db437deab1709b78cb59591088aa2133f33459478"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X050_S28_L4_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X050_S28_L4_H025",
+      "fingerprint": "5b161c633a2814bb99272c2dfaff662f63df6051d0e4a9ac90c2e72f58e76620",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X050_S28_L4_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X050_S28_L4_H025.json.gz",
+      "archive_sha256": "5f7d1af0cca3790b0fc2aa2b4f96515be68a8a3b009d1cc1907cc322e0c80eeb",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "4a2a1a46b5ad6944e7ceb9b5fcca22f9a54c31f8d83995c0c057363694ec2d2a",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "769170e684ae788f962b48211c94a3465ff01cdbbfc72e4e1fa64df89dcef045",
+        "2": "612ab7a32d1e4c9bccf69329eb1d239520cf11345f545d75244f7bb5344c16ec",
+        "3": "6985c70fa0acce33b8c5718ee300f5bd13ee9df6a4d6708dfed50b1a21cd7397"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X050_S29_L3_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X050_S29_L3_H025",
+      "fingerprint": "182e6c779bfacf8c01b9bf92dd06f553f42bdcf4895f43cf53bad3e533ab53cc",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X050_S29_L3_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X050_S29_L3_H025.json.gz",
+      "archive_sha256": "b4b5801d14c5999a5bd7f2ac361bdc7da6b72d2aad8c403708906755317579be",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "9795be5b4cbb5a5838b1c754b8066e6020a467897e2275c68c2dcb29010e967d",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "9deb1bab3bc72376aab878eb5911629eaffce014cf6e02d35e7a19aecf120915",
+        "2": "a1555860818c67bbbfd7c35270f8f0d638e2447d3eef01eee315394a37d50f10",
+        "3": "64ca1b4941a3ab6ca404db2c843489a81dcb94a8f36b31a17cbeb8373970e0cb"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X050_S29_L4_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X050_S29_L4_H025",
+      "fingerprint": "88a161d283456b1192adbbdb7631c47561631f1e3ee221aa21eb9687b1f58d73",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X050_S29_L4_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X050_S29_L4_H025.json.gz",
+      "archive_sha256": "35db41fbe661fbbc7a125ca66e54a3c649f961c1aa1865011ecbc2371ec10d2c",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "e090cb9777e095cac4bb1334ba55c63296527b102a52c182d3cc92954280cbc9",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "c85e7b71e046007dbf91e67d0ca5db6cd244c72b68a3d805f9851d153ff448bf",
+        "2": "ab0bf3671fbb3736cfbaca658fbc87a05ac690bfbed9d6d081a23d7aac9932cb",
+        "3": "e9c6ffaf54238422634e7ca9ad240a9fd1c94e62c755f3ce06cd8e1f141d17fd"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X100_S27_L3_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X100_S27_L3_H025",
+      "fingerprint": "e0dd9a45aeb55391ec6fb2fb4cbaa5aa82447f8dbf7842a4754e3b180f2d09a5",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X100_S27_L3_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X100_S27_L3_H025.json.gz",
+      "archive_sha256": "8a93be428bc9f7fbf432a58469f7500c8aa6dfc3f24394154c69ed8eec64d308",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "0b1cde33df80bcedeee8ff25bb6b9a92314765a388da50a2dc4644a06be7c626",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "b9b69d7dc75c403515205451f99002d2651363dbdd390c546cccedc486c4993e",
+        "2": "cb16939b8410f600371ff398a0d23200292ab57457a1de2e11dbc1ae4c760b49",
+        "3": "92e095b0cdf07a63291008fb0d3aaf7c9a352d73881ed86eced368c80f107c0e"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X100_S27_L4_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X100_S27_L4_H025",
+      "fingerprint": "86d60fece0946f024bc2b310d0890987e57b36f7288ba62251f6aa477b950ff9",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X100_S27_L4_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X100_S27_L4_H025.json.gz",
+      "archive_sha256": "de4e4ad28b3661e18f632ab4b72c3082896ebeadf7b2ead46c3f26054b7ec715",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "3a0e6458bc0479274a157960148119ed3411aa914713915c0c838a4b9dbcec76",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "e2fcf42284ad3655018b7ade5d8a97d0cfc6868306eb561db39d2f5ffff73aff",
+        "2": "cd194432ba7cbbcb182fa55a86282c021beb001e7906bc097701d8b5468755a5",
+        "3": "b38c2cd150c216c1df180049a6aca49605af1f847da2af2037085741f1cc9647"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X100_S28_L3_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X100_S28_L3_H025",
+      "fingerprint": "13776b0299ce18c1fabe1b1de4e1d6cb3b52dc8615753a6617110b6528df3f5a",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X100_S28_L3_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X100_S28_L3_H025.json.gz",
+      "archive_sha256": "9072d0d64ffda47d1bc1adbc3ed269142627455c6ff7747177f83847ab342274",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "3a2170c03d27a17e88c8f49236e6d6e1927a70eebcb3bb42a19f5155343f8f76",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "6a4a41c754ce18d61755ed2e94ddca784aaaeb3139352bb10ed00fdcdbc8f128",
+        "2": "221698b7afc0844856fdd4e1e4cc9e3b12788346f17cf9c6d22ec9f43504626e",
+        "3": "e3529b43cc05e1273d316793da7c0101d8554009a7786de8fb12f27a55eb35c6"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X100_S28_L4_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X100_S28_L4_H025",
+      "fingerprint": "93468cb80440d61fd66f9cec8a3ccae3553c660f7553dabf1d1a39fe7ecddd9e",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X100_S28_L4_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X100_S28_L4_H025.json.gz",
+      "archive_sha256": "9e825b304de6c05d25a2ccab36845f93dfbca1b67d8c658dec11349bb80d8db1",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "7866c60e27d025e74e39b9c33894a7a4684704c4db040a1a945801aecccc088e",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "ecc2f2a70b297810c159c0fadbc7699d0e23322704a357432b7cb15e62d340d1",
+        "2": "6ad0b3ef4975c254ae622034fd6f225f9c6577ae7b11d7b342789afae004ae43",
+        "3": "f797c05c9c2e45da649037190bc24b125c40ba8b130f81822547bfad83e41c9b"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X100_S29_L3_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X100_S29_L3_H025",
+      "fingerprint": "5ecbb77b1e7d3d2c16ac8e839e9fec6bd34a2438b644b146a5279d46c4ec3049",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X100_S29_L3_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X100_S29_L3_H025.json.gz",
+      "archive_sha256": "b00f2d74467baae0def573782b2dfea2d74bc7ca4a81d2e943d70e33990b9981",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "33215f1fe0a266d8df94b945609b54d3e6f74817d7c63986eb8e329bd11e32f9",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "f397dcc0e33cfb945c2112b9279b4aeffc7d5f411844183b9478cad8a03afb59",
+        "2": "4baf811f5bba49be2fa2cce87be86dc4d4a4eea5183757c88971cee3547363de",
+        "3": "fb228e7c045576db2c674725ee9aa6720ef2414aeab9a9e9812aafa756a8c88e"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X100_S29_L4_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X100_S29_L4_H025",
+      "fingerprint": "03a3a6cda19c92bcbdf77cad8c07361d630868d61888b73aa5c0e9d46250aa51",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X100_S29_L4_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X100_S29_L4_H025.json.gz",
+      "archive_sha256": "73eec5a43239c4b9177edb901b94da9d000087efff74f2181fbd85e14a7a57b9",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "ea5a34f3f7d51af94a749a686c57a5bd4456cbf805ebb170bec8286cf445eca7",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "f565678d3a154034ea960b5d036f05dad22dff076a0b1b5cd4588d545e26f503",
+        "2": "21a6b12edc6c1a64095db0bde24743f32d91dfcf8400c3b339638513c4b72c51",
+        "3": "b5fbe1b839e7342069c96ca0a0b0b8c2a71197134d804fc579516d0589dc7925"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X150_S27_L3_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X150_S27_L3_H025",
+      "fingerprint": "9652a3ec2b97c567d9b72db5a32da923f0358e1a5963cf4f70d0aeef2d7d38ba",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X150_S27_L3_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X150_S27_L3_H025.json.gz",
+      "archive_sha256": "09e3eb9d9fde6448eacc6bbda73b3d422e379aaec1638e6963b623ca67a47825",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "32ddab7ebea3e71fe2fd28e697113f3d2fcf4d1463bfde09ac3bf7bbb33f1a91",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "b59d97653de0d09171d16e4e4715f942c5314c1c893ba26cbc7c313da7e877f9",
+        "2": "7281b673e95645d274ea3770240c368914dc92d03ec20c42dddd58847447ae58",
+        "3": "4699139188c736b973e07db393af2e4d5da3fd54adf876c5279cc95724fe6f9f"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X150_S27_L4_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X150_S27_L4_H025",
+      "fingerprint": "2fd9e2831b8faa303d7cf20731b0a1b7f565b6a2857a35603c0927cc183e5846",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X150_S27_L4_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X150_S27_L4_H025.json.gz",
+      "archive_sha256": "cf8731ca176d2be9f0c3c54cb398a23d4ebbb6bde8508d1604c1c783b78461b2",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "bc2f62314a6c928b3022145437a4140ca4c050077b31c5697c6d439dff4e811d",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "2294188c9cd1ea0c76e40ec31a0ab366ad0371f489196ca64b9b6288100d3cd1",
+        "2": "bc2feef6a1dd43db90dcc97285dbd71de59810ff69995e2cf03bd297fc7c147a",
+        "3": "8bd2dc80070ccea21f1a3ddc939b90f37f3ee5c167466b4783a29c8d97bd5afe"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X150_S28_L3_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X150_S28_L3_H025",
+      "fingerprint": "b82b7d825267cae6f2c5847c49677c501627bb15651c121b36e3c2b3b8a958db",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X150_S28_L3_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X150_S28_L3_H025.json.gz",
+      "archive_sha256": "1cf77abd1cbdcf9569c91d4f6b8e8d2e8ffec935b35baef0eb40518af7c1f28f",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "3e1353b5d655720a9659c747e11ab3782bc7d519354ed6c7aec305297df1064d",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "76375981139c1f8fffbe4284b2e9c51e414844695482df6dc3f20f2e2a426694",
+        "2": "0b05d82ec02d5093f6954721c1fff58095236b467470fe5df5be86253e6419a6",
+        "3": "2c241557a32f52f95237a6a877223aab606d0093013accfde97985ed103c2e13"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X150_S28_L4_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X150_S28_L4_H025",
+      "fingerprint": "187b1ca97304bc849e7d09c0be2cf6b07b39ac8f367b5bd26fe3f0d624a681d0",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X150_S28_L4_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X150_S28_L4_H025.json.gz",
+      "archive_sha256": "90079d40f0f3503e0da8ce228952e8cf791e2a45a7def2e59add901365a8e16f",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "97636be19bba20683b9b1772cfb5b6dc0fc7acfb064b82bcaa978f911c63a545",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "ec88fdef8a8cdfbb8c5e64742a689de4c993f0fb47f84ec4618f58453aa7d32c",
+        "2": "8ba4d4e65af552a6ac38285cf0017e97944877202773889e7cf8bdcdbcecab7a",
+        "3": "41b6471847b5398473ebab91bd886104c818f4bf4445d2d2fa7da75b341be668"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X150_S29_L3_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X150_S29_L3_H025",
+      "fingerprint": "24c1c619ec16984674f402ff705df11371fa101469b27fc94d7c7377adbe9b68",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X150_S29_L3_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X150_S29_L3_H025.json.gz",
+      "archive_sha256": "622b669c4302b89721f8806ce0ababa516826d408068ca93037c6bb06225b3aa",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "da326b1df04d9c441d1ee52c2a3ccf50eb7a4ce14f6676e610bb8271b7934535",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "26770f79b66dfc5d3907dac99f3076a151a739443bbee7469197f78f7081880b",
+        "2": "6adebbc9ec70a02dedf9e7c3dd074122cc2c8ff4a62e7044274053f614a694c0",
+        "3": "212b0623f112c7a52f905619391fb7ef10377a7cdee80f851571b59fc860e860"
+      }
+    },
+    "exitbuffer370_parent_B1000_E3000_X150_S29_L4_H025": {
+      "name": "exitbuffer370_parent_B1000_E3000_X150_S29_L4_H025",
+      "fingerprint": "22436dec8e5d7149b85a8cd7275b9d3878693120b6dd17ca52791e15eb659032",
+      "spec": "research/experiments/20261029T112527Z/specs/exitbuffer370_parent_B1000_E3000_X150_S29_L4_H025.json",
+      "archive": "research/experiments/20261029T112527Z/results/exitbuffer370_parent_B1000_E3000_X150_S29_L4_H025.json.gz",
+      "archive_sha256": "2e0da1dcfc944e0f980cb3c0af05056fb29b8e957c6daa9ccde7d08900fba81d",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "fbce915d064ece773bc75d426bc8952f01445e552487b52e4d0fafcdeac37faa",
+      "report": "research/experiments/20261029T112527Z/report.json",
+      "report_sha256": "e925def2f7c8310a8395ed33a9b6d2f86d2bbc09032ad1c2f053cf02da72c638",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "8623aa6de7568c7465f0eec917762c2efed4055a5ed8c06024201fb8d6b72a2d",
+        "2": "40dd8710301b60c969304ac15fffe98f02ca7ed66c5a3c9e3f8c863d571c83e8",
+        "3": "71cd6cf8575e80743f179c41e9d9b9833df2714f878e1ae3e9067f70760ece7b"
+      }
+    }
+  },
+  "read_only_hold_references": {
+    "ETH": {
+      "name": "extended370_ETH_L0_H00_E000_N3000",
+      "fingerprint": "11940b42d9d4889e36e986bcdf3c41c83a51965402854a5d9f5ea4275a749f83",
+      "spec": "research/experiments/20261025T065405Z/specs/extended370_ETH_L0_H00_E000_N3000.json",
+      "archive": "research/experiments/20261025T065405Z/results/extended370_ETH_L0_H00_E000_N3000.json.gz",
+      "archive_sha256": "7f87dfde2a752ed7171849e856e860bd1b232aa67c788331927d8aec5fa96b81",
+      "report": "research/experiments/20261025T065405Z/report.json",
+      "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+      "spec_sha256": "9d8e23481318c8f755cec2c3d1c926228609ca7d69efac96f47a5d2a504049f3",
+      "asset": "ETH",
+      "scope": "native",
+      "role": "benchmark",
+      "original_status": "rejected",
+      "capital_usdt": 10000,
+      "NAV_sha256_by_cost": {
+        "1": "db5e88fb9f411701b447f33f191e5ccd389046d92c8d1411a62958786bbb0b7c",
+        "2": "c0a6b585b818d7bec63de4b6b74242936b68fc05dd432882b64b0206c11a157e",
+        "3": "c86c069b90960dede6a5e1d76a052cc403a3bc83e85a3f8561ad173061e47f87"
+      },
+      "fixed_entry_notional_usdt": 3000,
+      "lookback_days": 0,
+      "return_hurdle": 0,
+      "exit_buffer_fraction": 0,
+      "trend_lookback_days": null
+    },
+    "COMBO": {
+      "name": "parent370_hold_B1000_E3000",
+      "fingerprint": "7918c127fac7e5fa7e826a247307360c2103ebb81d8c89c199c41ff7c5ba4bad",
+      "spec": "research/experiments/20261025T085436Z/specs/parent370_hold_B1000_E3000.json",
+      "archive": "research/experiments/20261025T085436Z/results/parent370_hold_B1000_E3000.json.gz",
+      "archive_sha256": "a89c3d12498f299f3528fbf7b808bc7ac196690bad720736771fe2a11b12ec0e",
+      "report": "research/experiments/20261025T085436Z/report.json",
+      "report_sha256": "d0bb4fbbc1f4b7e7018f38b4024f1e70f57c93528b067267441439bb4b240103",
+      "spec_sha256": "af3bb9d5529271d1a189d1167b5384f7838b3ff36da3fb4cfc06fdccc7902143",
+      "asset": "COMBO",
+      "scope": "parent",
+      "role": "benchmark",
+      "original_status": "rejected",
+      "capital_usdt": 20000,
+      "NAV_sha256_by_cost": {
+        "1": "9625ab6c1989b1406984a19721a358b9a40f59b934b912c8f01e7d383ca8aaa4",
+        "2": "badcd41a45d930bd592a8b9c8e7e709f030f28f9619509e38a7cc962be2842b6",
+        "3": "4f940e361c05b19d77cd7d49071efeff7bcd1e0c65cd2eaa85cf22cf41a090b2"
+      },
+      "fixed_entry_notional_usdt": null,
+      "lookback_days": null,
+      "return_hurdle": null,
+      "exit_buffer_fraction": null,
+      "trend_lookback_days": null
+    }
+  },
+  "fixed_BTC": {
+    "name": "extended370_BTC_L31_H04_E100_N1000",
+    "fingerprint": "2122c03af949f66e9ab48802b8813121b9a94f1e0a5844a712c800a026a2fd4d",
+    "spec": "research/experiments/20261025T065405Z/specs/extended370_BTC_L31_H04_E100_N1000.json",
+    "spec_sha256": "6a425e3e4a6c6e6aae9a3666cd4bbfe2e05791d8f1c0210629cc5a6017dd62c1",
+    "archive": "research/experiments/20261025T065405Z/results/extended370_BTC_L31_H04_E100_N1000.json.gz",
+    "archive_sha256": "688145e111c466ac990f514a15b883d4be4769404a09d9f99141d43f27201b95",
+    "report": "research/experiments/20261025T065405Z/report.json",
+    "report_sha256": "dfcea947469408497dbe198924e0dc81e5fb268c276b863d129b199cdab962a8",
+    "scope": "native",
+    "asset": "BTC",
+    "role": "candidate",
+    "capital_usdt": 10000,
+    "original_status": "passed",
+    "NAV_sha256_by_cost": {
+      "1": "d6bb76457394d546d7d392ae43af5a22b951058fe797b45143ad34adf3e7dc70",
+      "2": "79087a69f08174298b2b2c773741fec71446e7ac08774194040a67b30be65c0f",
+      "3": "f40af7e3d3cf693bafc847c8536d55538e3c481f69fd710315c1a13a92b24eab"
+    },
+    "fixed_entry_notional_usdt": 1000,
+    "lookback_days": 31,
+    "return_hurdle": 0.04,
+    "exit_buffer_fraction": 0.01,
+    "trend_lookback_days": null
+  },
+  "source_engine": {
+    "path": "research/experiments/20261029T112527Z/engine.py",
+    "sha256": "aa3f1eb1174a815fe929e623d30a308df174b5fb295a340d8b0e8390e4b7ecd3"
+  },
+  "native_engine_base": {
+    "path": "research/experiments/20261029T112527Z/engine.py",
+    "sha256": "aa3f1eb1174a815fe929e623d30a308df174b5fb295a340d8b0e8390e4b7ecd3"
+  },
+  "new_engine_sha256": "7e872c018a95d91e561c7675e7d343919d177d197d20aa0fa97be1291600a289",
+  "engine_change_verification": {
+    "path": "research/experiments/20261029T132528Z/engine_change_verification.json",
+    "sha256": "283d9325fddc812a6a4d16530b0c2fbc14fd02b2ccbef971820be001d00e1f80"
+  },
+  "native_ETH_logic": {
+    "signal": "At UTC00:01 use prior completed close fast ROC L3/4 and strict entry hurdle H0.025. ROC>H proposes short,ROC<-H proposes long. Otherwise retain an actual long iff ROC<E,actual short iff ROC>-E,else flat,where E-0.015/-0.01/-0.005 with abs(E)<H. At exact E long exits;at exact -E short exits. E<0 is an early fast ROC exit threshold inside the entry band,before ROC reaches zero;not a PnL stop from entry price. Cash has no hidden desired state and enters only on a fresh strict fast extreme. If actual nonzero position and proposed direction match,retain actual quantity irrespective of slow gate. For cash/reversal entries require at least two exact ROC(S-1,S,S+1) signs match new direction, S27/28/29,zero slow magnitude hurdle,ties neutral. Opposite fast extreme has priority;close old position before any permitted opposite entry.",
+    "execution": "Next UTC00:01 actual OPEN;close before open;fixed N3000/10000bank,quantity=floor(N/prior completed close/lot)*lot. No future OPEN,funding,partial close,NAV sizing or same-direction resizing.",
+    "allocation": "Single10000USDTbank,actualnewentryN3000 usingpriorcompleteclose and native lotfloor;noNAVresizing,transfer orcrossmargin.",
+    "ledger": "Opening debitsfeeonly;unrealizedPnL=q*(price-entryexecution). Closing realizes signedq*(exitexecution-entryexecution) and paysfee. Notional is not debited as spot cash.",
+    "funding": "At actual settlementns,rawcashdelta=-signedq*actualmark*realizedrate. Only oldposition thenheld participates;funding events00:00/00:00.001 occur before00:01rotation. Negative delta multiplied by coststress;positive income not increased. Sourceavailable_ts (often+1hour) retained;rates are ex-post accounting only,never signal or size inputs.",
+    "risk": "Composite sampled NAV includes minute transaction-close proxies plus actual closed-hour mark and actualfundingsettlement marks,pre/posttrade samples and terminalcash. Report mark-only and trade-proxy DD separately. Marginproxy:1%ofnotional versus adverse full-hour markhigh/low for every overlapping state in completelyin-OOSclosedhours. No exact historicaltier/tick liquidation engine;anyproxybreachfails qualification.",
+    "state": "One cold10000nativecashstart2025-10-19UTC00:01,continuous370days;12complete30dayfolds+10daytail. Existingcash/q/entry/cost/fundingcarryacrossfolds;onlynewOct24terminalforcesexit. Recent40diagnostic inheritsday330predecisionstate,no reset ordiagnosticorders."
+  },
+  "rules": {
+    "allocation": "Raw1/1 means one entire10000bank perasset,parent20000;entrybudgets1000+3000=4000=20percentinitialparent. Not targetweights/constantrealizedrisk;no normalization,NAVresizing,transfer,crossmargin,rebalance,cashyield.",
+    "composition": "Fixed BTC ROC31/H4/E1 N1000/10000bank plus one new ETH entry-only slow-majority early-fast-exit signed E-1.5/-1/-0.5percent,S27/28/29,L3/4,H2.5percent,N3000/10000bank. Raw[1,1],capital20000,initialentrybudget4000=20percent;no normalization,NAVscaling,transfers,crossmargin or rebalance.",
+    "native_ETH_rule": {
+      "signal": "At UTC00:01 use prior completed close fast ROC L3/4 and strict entry hurdle H0.025. ROC>H proposes short,ROC<-H proposes long. Otherwise retain an actual long iff ROC<E,actual short iff ROC>-E,else flat,where E-0.015/-0.01/-0.005 with abs(E)<H. At exact E long exits;at exact -E short exits. E<0 is an early fast ROC exit threshold inside the entry band,before ROC reaches zero;not a PnL stop from entry price. Cash has no hidden desired state and enters only on a fresh strict fast extreme. If actual nonzero position and proposed direction match,retain actual quantity irrespective of slow gate. For cash/reversal entries require at least two exact ROC(S-1,S,S+1) signs match new direction, S27/28/29,zero slow magnitude hurdle,ties neutral. Opposite fast extreme has priority;close old position before any permitted opposite entry.",
+      "execution": "Next UTC00:01 actual OPEN;close before open;fixed N3000/10000bank,quantity=floor(N/prior completed close/lot)*lot. No future OPEN,funding,partial close,NAV sizing or same-direction resizing.",
+      "allocation": "Single10000USDTbank,actualnewentryN3000 usingpriorcompleteclose and native lotfloor;noNAVresizing,transfer orcrossmargin.",
+      "ledger": "Opening debitsfeeonly;unrealizedPnL=q*(price-entryexecution). Closing realizes signedq*(exitexecution-entryexecution) and paysfee. Notional is not debited as spot cash.",
+      "funding": "At actual settlementns,rawcashdelta=-signedq*actualmark*realizedrate. Only oldposition thenheld participates;funding events00:00/00:00.001 occur before00:01rotation. Negative delta multiplied by coststress;positive income not increased. Sourceavailable_ts (often+1hour) retained;rates are ex-post accounting only,never signal or size inputs.",
+      "risk": "Composite sampled NAV includes minute transaction-close proxies plus actual closed-hour mark and actualfundingsettlement marks,pre/posttrade samples and terminalcash. Report mark-only and trade-proxy DD separately. Marginproxy:1%ofnotional versus adverse full-hour markhigh/low for every overlapping state in completelyin-OOSclosedhours. No exact historicaltier/tick liquidation engine;anyproxybreachfails qualification.",
+      "state": "One cold10000nativecashstart2025-10-19UTC00:01,continuous370days;12complete30dayfolds+10daytail. Existingcash/q/entry/cost/fundingcarryacrossfolds;onlynewOct24terminalforcesexit. Recent40diagnostic inheritsday330predecisionstate,no reset ordiagnosticorders."
+    },
+    "native_BTC_rule": {
+      "signal": "Priorcomplete31dayROC strict>H long/<-H short,H2/4/6percent. InsidebandretainactuallongiffROC>-1percent,shortiffROC<1percent;oppositeextremeclosebeforeopenUTC00:01. OriginalN1000/10000lot/tick/cost/funding/riskledgersreusedunchanged.",
+      "execution": "NextUTC00:01 nativeOPEN;closeopposite first then enter. Quantity=floor(spec.fixed_entry_notional_usdt/priorcompletedC/lot)*lot times direction;fixed raw N,no future OPEN/NAV/unpublishedfunding sizing;retain actualsame-directionquantity.",
+      "allocation": "Oneindependent10000bank,N1000fixednewentry=10percentinitialbank;noNAVscaling/transfer/crossmargin.",
+      "ledger": "Opening debitsfeeonly;unrealizedPnL=q*(price-entryexecution). Closing realizes signedq*(exitexecution-entryexecution) and paysfee. Notional is not debited as spot cash.",
+      "funding": "At actual settlementns,rawcashdelta=-signedq*actualmark*realizedrate. Only oldposition thenheld participates;funding events00:00/00:00.001 occur before00:01rotation. Negative delta multiplied by coststress;positive income not increased. Sourceavailable_ts (often+1hour) retained;rates are ex-post accounting only,never signal or size inputs.",
+      "risk": "Composite sampled NAV includes minute transaction-close proxies plus actual closed-hour mark and actualfundingsettlement marks,pre/posttrade samples and terminalcash. Report mark-only and trade-proxy DD separately. Marginproxy:1%ofnotional versus adverse full-hour markhigh/low for every overlapping state in completelyin-OOSclosedhours. No exact historicaltier/tick liquidation engine;anyproxybreachfails qualification.",
+      "state": "One cold10000collateral start2025-10-19 across12complete30dayfolds +10daytail. Cash,signedq,entryprice/reference,funding/costs carry continuously through formerSep14terminal;onlynewOct24terminal is costedclosed. Original330dayreports andSMA/paper10accounts unchanged."
+    },
+    "ledger": "New ETH actually executes its own quantity-specific orders,costs,funding and risk. FixedBTC source NAV is recovered from immutable recorded ledgers,not source model rerun. Parent NAV=sum of full BTC and ETH banks at samecost on causal nanosecond/event union;no parent orders,metric averaging or resizing.",
+    "alignment": "Unionrelative-nanosecond/eventkeys,pre/postfunding/tradeorderretained. AtanyunionkeycarrylastcompletedsourceNAV;nointerpolationorlookahead.",
+    "state": "One continuous370day sourcepath persleeve,cash/q/fees/fundingcarryall13folds;onlyoriginalOct24terminal sourceclosure. Recent40diagnosticinheritsday330predecisionstatesandhas8continuous5dayfolds,nocapitalrestartornewdiagnostictrades.",
+    "risk": "Each10000bankretainsitsownoriginalconstraints/marginproxy;no crossbanknettingorcollateralbailout. Parentmayholdsameoroppositedirections;no guaranteedmarketneutrality.",
+    "interpretation": "Positive exit buffers improved some fullperiod returns but all36failedrecent6of8. Test the opposite native persistence hypothesis:exit actual contrarian positions before fast ROC reaches zero,Enegative but abs(E)<Hentry. Shorter holds may redistribute PnL across chronological folds and reduce exposure/funding;more churn or premature exits may erase profits after costs. Freeze negativeE/S/L batch before new PnL;qualification unchanged. Reuse old zero/positiveE results as genuine numeric neighbors and matched equal-magnitude delayed-exit controls,no old model rerun or requalification."
+  },
+  "recorded_source_events": {
+    "source_recorded_trades_checked": 1260,
+    "source_recorded_funding_checked": 29970
+  },
+  "validation": {
+    "walk_forward": "Staticnofitting/futurelabels,purgeNA,33contextdaysincl3initialembargo,370continuousOOS12complete30dayfolds+10tail;day330inherited recent40/8five-dayfolds.",
+    "sensitivity": "Signed E-.015/-.01/-.005/0/.005/.01/.015 xS27/28/29 xL3/4,42cells eachscope,85edges each;48old zero/positiveE results readonly genuine numeric neighbors with originalstatuses,inclusive radius1.",
+    "costs": "Actual native quantities,fees/spread/slippage/lagADVimpact/funding/lot/tick/participation/fullcollateral/hourmarginproxy;1/2/3stress,negativefund amplified,positive income unchanged."
+  },
+  "sensitivity": "New36 negativeE/S/L18eachscope;fullsigned42cells eachnative/parent with48old zero/positiveE controls,170edges. Matched E0 and equal-absolute-positiveE,plus samecapital constantlong/cash0. No oldstatus changes.",
+  "limits": [
+    "Repeated370daydevelopmenthistory,36correlatednewconfigs plus allpasttrials;not untouchedfinalholdout,DSR/PBO or stableliveprofit.",
+    "Only majority_target signed-E guard changes;exit formula and every other function including simulate,data,quantity,cost,funding,risk unchanged. All previously valid nonnegativeE entry-only and E0default behavior regressions verified.",
+    "Estimatedspread/slip/ADVimpact and1percentclosedhourmarginproxy lackL2/TCA/full historicaltiers/tickliquidation/venuecapacityproof.",
+    "Old E0 source parameter persistence prose describes the older base gating rule;explicit entries_only parameter,original executable logic and independently verified actual decisions define behavior. Preserve old bytes/statuses,document legacy prose,correct all new spec descriptions.",
+    "Original singleS28 candidate,SMA65,paper10 rules/capital/accounts unchanged. Continue originals10:30to12:30markonly;actual08funding was already credited once."
+  ],
+  "novelty": {
+    "initial16_missing_actual_results": 0,
+    "prior_registry_events": 22582,
+    "prior_registry_ids": 11187,
+    "prior_conclusions_read": 228
+  }
+}
