@@ -75,3 +75,5 @@ BTC原ROC31/H4/退出1%；ETH快L3、严格H2.5%，E负阈值在快ROC到零前�
 仅移除可重建的审计导入修复前副本，SHA及重建关系留cleanup_intermediates.json；完整账本、规则、结果、登记及必要核验代码保留。实际发布状态和commit SHA以.git/automation_proofs/20261029T152659Z.json为准，本说明不预先声称push成功。
 
 提交前Git格式门禁曾因CSV默认CRLF退出2，publisher实际退出1且未创建提交。仅将6个CSV的48072行改LF，逐行所有单元格完全相同；完整金融/账户报告、spec、结果账本、旧资格与净值哈希均未改。CSV生产器显式LF，导出、monitor及旧行一致性已实际重新检查exit0；原始失败全文、旧manifest及诊断SHA留publication_newline_recovery.json所引位置，不绕过格式门禁或重跑金融模型。
+
+第一结果提交9fb39fb423ea20da2397cb5e567a5bbfd56b888b已真实push，远端树/文件核验后在只读来源status别名处KeyError停止。修复manifest生产器，为22个original_status增加相同status字段；不改实际资格、报告、数据或账本。后续元数据修复提交和最终完整核验/实际退出证明见.git/automation_proofs/20261029T152659Z.json及post_push_verification_recovery.json。

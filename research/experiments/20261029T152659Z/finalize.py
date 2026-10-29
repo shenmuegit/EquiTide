@@ -28,7 +28,7 @@ assert read(R/'main_only_branch_check.json')['passed'] and read(R/'visual_inspec
 for path,h in ctx['account_hashes_before'].items():assert sha(ROOT/path)==h,path
 oldmanifest=read(ROOT/'research/experiments/20261029T132528Z/data_manifest.json')
 for item in oldmanifest['real_market_inputs']+oldmanifest['source_annual_and_recent_inputs']:assert sha(ROOT/item['path'])==item['sha256'] and (ROOT/item['path']).stat().st_size==item['bytes']
-refs=[*plan['component_sources'].values(),*plan['read_only_anchor_references'].values(),*plan['read_only_hold_references'].values()];unique={x['fingerprint']:x for x in refs};assert len(unique)==22
+refs=[*plan['component_sources'].values(),*plan['read_only_anchor_references'].values(),*plan['read_only_hold_references'].values()];unique={x['fingerprint']:{**x,'status':x['original_status']} for x in refs};assert len(unique)==22
 sharedpaths=['research/automation/registry.jsonl','research/automation/candidate_forward_latest.json','research/monitor/latest.json','research/monitor/configs.json.gz']
 code={p:h for p,h in oldmanifest['code_and_frozen_source_sha256'].items() if p not in sharedpaths}
 code.update(plan['helpers'])
