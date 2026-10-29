@@ -1,0 +1,25 @@
+{
+  "facts": [
+    {
+      "phase": "prepare_accounts_publication",
+      "command": [
+        "python3",
+        "research/experiments/20261029T032224Z/prepare_accounts_publication.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "exit_code": 1,
+      "error": "AssertionError: ('finalize.py', \"'new_component_backtests':18\")",
+      "root_cause": "Redundant no-op replacement referenced a feed-only metadata key in the seal template.",
+      "impact": "Preparation-only;no account execution or financial report affected.",
+      "recovery": "Remove redundant no-op replacement and rerun preparation before any account work."
+    },
+    {
+      "phase": "tool_probe",
+      "tool": "write_stdin",
+      "incorrect_session_id": 3740030,
+      "error": "Unknown process id 3740030",
+      "impact": "The OS broker PID was mistakenly supplied as a tool session identifier;no process/account/ledger change occurred.",
+      "recovery": "Use actual broker session85994 only for final release;verify heldPID3740030 using /proc/locks."
+    }
+  ]
+}
