@@ -1,0 +1,9 @@
+"""Read-only historical qualification review;preserve original forward rules."""
+import json
+from run import ROOT,R,sha,put,reg
+r=json.loads((R/'report.json').read_text());p=json.loads((R/'plan.json').read_text());s=json.loads((R/'summary.json').read_text());records=reg.read_records(ROOT/'research/automation/registry.jsonl');v=json.loads((R/'verification.json').read_text());assert v['passed'] and v['report_sha256']==sha(R/'report.json')
+for c in r['configs'].values():
+ rec=records[c['fingerprint']];assert rec['result_available'] is True and rec['status']==c['status'] and rec['report_sha256']==sha(R/'report.json') and sha(ROOT/c['archive'])==c['archive_sha256']
+assert not r['summary']['passed'] and s['passed']==0 and s['candidate_eachcost_recent6of8_count']==6 and s['failed_criteria_counts']['local_recent6of8_allcost_gte60pct']==36
+original=p['original_candidate_preserved'];assert records[original['fingerprint']]['status']=='passed' and records[original['fingerprint']]['report_sha256']==original['report_sha256'] and sha(ROOT/original['spec'])==original['spec_sha256']
+put(R/'candidate_validation.json',{'passed':True,'new_actual_financial_configs':40,'new_native':0,'new_parent':40,'passed_candidate_count':0,'rejected_candidate_count':36,'reference_only_count':4,'candidates':[],'strict_eachcost6of8_individually':6,'all36failed_predeclared_neighborhood_plateau':True,'qualification_fragility_evidence':{'path':str((R/'qualification_fragility.json').relative_to(ROOT)),'sha256':sha(R/'qualification_fragility.json')},'financial_report_sha256':sha(R/'report.json'),'original_candidate_immutable':original,'original_forward_current_observation':json.loads((R/'candidate_verification.json').read_text()),'new_candidates_not_independently_future_validated':True,'no_new_account_or_parameter_switch':True});print('PASS:0 newhistoricallyqualified;6 individualcostfold6of8 failpredeclaredneighborplateau;originalforwardcandidate retained')
