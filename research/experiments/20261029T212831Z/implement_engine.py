@@ -1,0 +1,14 @@
+"""Add only an available-funding entrycondition to the existing native accounting engine."""
+from pathlib import Path
+import ast,json,hashlib
+R=Path(__file__).resolve().parent;ROOT=R.parents[2];source=ROOT/'research/experiments/20261029T192831Z/engine.py';t=source.read_text();assert (R/'engine.py').read_text()==t
+helper='''def funding_entry_gate(parameters,m,decision_index,base_direction,signed_units):
+ if 'entry_funding_lookback_settlements' not in parameters:return base_direction,{'enabled':False}
+ n=parameters['entry_funding_lookback_settlements'];cap=F(str(parameters['entry_funding_cost_cap_per_settlement']));assert n in [3,6,9] and cap in [F(0),F('0.00005'),F('0.0001')] and parameters['entry_funding_application']=='new_and_reversal_entries_only' and parameters['entry_funding_max_age_hours']==16
+ signal_ts=int(m['frame']['available_ts'][decision_index*1440-1]);known=sorted((x for x in m['funds'] if x['available_ts']<=signal_ts and x['settlement_ts']<=signal_ts),key=lambda x:(x['settlement_ts'],x['source_index']));chosen=known[-n:];enough=len(chosen)==n;mean=sum((F(x['realized_rate']) for x in chosen),F(0))/n if enough else None;fresh=enough and signal_ts-max(x['available_ts'] for x in chosen)<=16*HOUR;actual=1 if signed_units>0 else -1 if signed_units<0 else 0;entry=bool(base_direction and (not actual or base_direction!=actual));cost=base_direction*mean if mean is not None and base_direction else F(0);allowed=bool(enough and fresh and cost<=cap);final=base_direction if not entry or allowed else 0
+ audit={'enabled':True,'signal_available_ts_ns':signal_ts,'lookback_settlements':n,'cost_cap_exact':str(cap),'source_indices':[x['source_index'] for x in chosen],'settlement_ts_ns':[x['settlement_ts'] for x in chosen],'available_ts_ns':[x['available_ts'] for x in chosen],'realized_rates':[str(x['realized_rate']) for x in chosen],'mean_realized_rate_exact':str(mean) if mean is not None else None,'directional_cost_exact':str(cost),'complete_history':enough,'fresh_16h':fresh,'applied_to_new_or_reversal_entry':entry,'entry_cost_allowed':allowed,'base_direction':base_direction,'actual_direction':actual,'final_direction':final,'stress_does_not_change_signal':True}
+ return final,audit
+'''
+pos=t.index('def simulate');t=t[:pos]+helper+'\n'+t[pos:];needle=";q=D(state['signed_units']);decisions.append(";assert t.count(needle)==1;t=t.replace(needle,";q=D(state['signed_units']);base_wanted=wanted;wanted,funding_gate_audit=funding_entry_gate(p,m,ref,base_wanted,q);decisions.append(")
+needle="   if p.get('trend_gate_mode')=='adjacent_horizon_majority':\n";assert t.count(needle)==1;t=t.replace(needle,"   decisions[-1].update(entry_funding_gate=funding_gate_audit,base_desired_direction=base_wanted)\n"+needle);(R/'engine.py').write_text(t)
+print('ENGINE_IMPLEMENTED',hashlib.sha256(t.encode()).hexdigest())

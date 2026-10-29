@@ -1,0 +1,31 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T212831Z/audit.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-29T21:42:58.628287Z",
+      "finished_utc": "2026-10-29T21:43:08.697254Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261029T212831Z/audit.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T212831Z/audit.py\", line 59, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T212831Z/audit.py\", line 28, in main\n    newvectors,native_proof=verify_native(report,plan,markets,events,records)\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T212831Z/audit_native.py\", line 40, in verify\n    candidates=[e for e in m['funds'] if int(e['settlement_ts'])<=signal_time and int(e['available_ts'])<=signal_time];candidates.sort(key=lambda e:(int(e['settlement_ts']),int(e['source_index'])));chosen=candidates[len(candidates)-NF:];assert len(chosen)==NF and max(int(e['available_ts']) for e in chosen)<=signal_time and signal_time-max(int(e['available_ts']) for e in chosen)<=16*engine.HOUR\n                                                                                                                                                                                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "phase": "candidate public verifiedTLS transport",
+      "eventual_window_successfully_audited": true,
+      "url": "https://fapi.binance.com/fapi/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1793298540000&endTime=1793305800000&limit=1500",
+      "started_utc": "2026-10-29T22:08:16.438947+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261029T212831Z/http_attempt_0002.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 28,
+      "stderr": "curl: (28) Connection timed out after 10002 milliseconds\n"
+    }
+  ],
+  "policy": "Actual failed commands/transport only;no synthetic research results."
+}

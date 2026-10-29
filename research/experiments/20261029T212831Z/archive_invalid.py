@@ -1,0 +1,15 @@
+"""Preserve every actual invalid curve and identify the exact declared-rule implementation gap."""
+import copy,gzip,hashlib,json,shutil
+from datetime import datetime,timezone
+from pathlib import Path
+R=Path(__file__).resolve().parent;ROOT=R.parents[2];read=lambda p:json.loads(p.read_text());sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();put=lambda p,x:p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n');D=R/'invalid_attempt';assert not D.exists();D.mkdir();r=read(R/'report.json');batch=read(R/'batch.json');mapping={}
+for path,h in read(R/'code_binding_before_evaluation.json')['source_sha256'].items():
+ src=ROOT/path;dest=D/src.name;shutil.copyfile(src,dest);assert sha(src)==sha(dest)==h;mapping[path]={'snapshot':str(dest.relative_to(ROOT)),'sha256':h}
+for name in ['code_binding_before_evaluation.json','evaluate_commands.json','evaluate.log','audit_commands.json','audit.log']:
+ if (R/name).exists():shutil.copyfile(R/name,D/name)
+shutil.move(str(R/'report.json'),str(D/'report_original.json'));shutil.move(str(R/'results'),str(D/'results'));arcs={};examples=[]
+for c in r['configs'].values():
+ p=D/'results'/Path(c['archive']).name;assert sha(p)==c['archive_sha256'];arcs[c['archive']]={'snapshot':str(p.relative_to(ROOT)),'sha256':sha(p),'fingerprint':c['fingerprint']}
+ if c['scope']=='native':
+  arc=json.loads(gzip.decompress(p.read_bytes()));examples.append({'name':c['name'],'first5_decisions':[{'index':x['decision_index'],'base_direction':x['base_desired_direction'],'actual_direction':x['desired_direction'],'history_complete':x['entry_funding_gate']['complete_history'],'selected_source_indices':x['entry_funding_gate']['source_indices']} for x in arc['scenes']['1']['decisions'][:5]]})
+wrapper={'round':R.name,'status':'blocked','valid_configuration_results_available':False,'actual_invalid_backtests_preserved':18,'actual_invalid_cost_scenes':54,'reason':'Declared lastNalreadyavailable fundingrecords must include pre-OOS history in frozen1212rowinput. Originalengine market.funds is1110OOSsettlementaccountingevents,not fullfeaturehistory. Usingthis list drops firstNobservations and blocks genuineearlyshortentry forN6/9(day35). This is invalid implementation evidence,not a valid completed result for the intended specs;all tentativepass/rejectclassifications void. Fix onlyfeature input warmup,keep same rules/parameters/gates/data;resume blocked IDs before recomputation.','original_report':str((D/'report_original.json').relative_to(ROOT)),'original_report_sha256':sha(D/'report_original.json'),'original_archive_path_mapping':arcs,'original_code_path_mapping':mapping,'examples':examples,'configs':{name:{'name':name,'fingerprint':c['fingerprint'],'status':'blocked','intended_spec':c['spec'],'invalid_implementation_scenes':c['scenes']} for name,c in r['configs'].items()},'recorded_utc':datetime.now(timezone.utc).isoformat()};put(D/'invalid_spec_report.json',wrapper);print('ARCHIVED18 invalid fullcurves;no valid rulebacktests completed;allvaluesandcodepreserved',sha(D/'invalid_spec_report.json'))
