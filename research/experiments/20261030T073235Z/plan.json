@@ -1,0 +1,3020 @@
+{
+  "time_boundaries": {
+    "input_start_utc": "2025-09-16T00:00:00Z",
+    "input_end_exclusive_utc": "2026-10-25T00:00:00Z",
+    "oos_start_utc": "2025-10-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-10-24T00:01:00Z",
+    "context_days": 33,
+    "nominal_warmup_days": 30,
+    "initial_embargo_days": 3,
+    "continuous_oos_days": 370,
+    "walk_forward_folds": 13,
+    "complete_30day_folds": 12,
+    "tail_fold_days": 10,
+    "label_purge": "No fittedlabels/model;not applicable. Fixed rules use only priorcompleteprices,actual state carries across allfolds."
+  },
+  "data": {
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet",
+          "sha256": "97be656cf441024101417476f8338f4d739879d3ee39bfbf2a89cf1a287b726c",
+          "bytes": 32143848,
+          "rows": 581760
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet",
+          "sha256": "80cd98d12fd73cb8bfcc7a4d4af65d737347c9d9b53d82ae1698a1aa15bd71ce",
+          "bytes": 494964,
+          "rows": 9696
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet",
+          "sha256": "b27e8f9a078a50a9d34c034870790321e43b5d7dff74f2c2a7d0b69f3c276006",
+          "bytes": 34756,
+          "rows": 1212
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet",
+          "sha256": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99",
+          "bytes": 1892,
+          "rows": 1
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet",
+          "sha256": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+          "bytes": 29255495,
+          "rows": 581760
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet",
+          "sha256": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+          "bytes": 462199,
+          "rows": 9696
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet",
+          "sha256": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+          "bytes": 33894,
+          "rows": 1212
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet",
+          "sha256": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6",
+          "bytes": 1892,
+          "rows": 1
+        }
+      ]
+    },
+    "provenance_manifest": "research/experiments/20261025T065405Z/extended_data_manifest.json",
+    "provenance_manifest_sha256": "c7f23dc091a19e9eebd90778b648d8330e7d193bdd07d4b4011cb02373235a76"
+  },
+  "component_costs": {
+    "per_side_commission": 0.0005,
+    "half_spread": 0.0001,
+    "slippage": 0.0002,
+    "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+    "participation_max": 0.001,
+    "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+    "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+    "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+  },
+  "original_candidate_preserved": {
+    "name": "gatebudget370_B1000_E3000_S28_L3_H02",
+    "fingerprint": "9bef791333b2e6fb8166f7080ddad77af1b29bd73ad870baf928dd4ce72de21c",
+    "spec": "research/experiments/20261026T070542Z/specs_corrected/gatebudget370_B1000_E3000_S28_L3_H02.json",
+    "spec_sha256": "fe8aba1bfe1961073e0965ae74c45318a27be7ca4ef3d83118d50b4e57f65d07",
+    "report": "research/experiments/20261026T070542Z/report.json",
+    "report_sha256": "31ffdbe14c7a5277ec85e49c53c13e806f04826f4b36a1dd53c7bf4ecc88def4",
+    "archive": "research/experiments/20261026T070542Z/results/gatebudget370_B1000_E3000_S28_L3_H02.json.gz",
+    "archive_sha256": "f339a182d47eb6121ffc4e7d6f940a5c4906a9f4ab62222bd0eaebb767588d66",
+    "scope": "parent",
+    "capital_usdt": 20000,
+    "parameters": {
+      "initial_capital_usdt": 20000,
+      "raw_component_multipliers": [
+        1,
+        1
+      ],
+      "component_capitals_usdt": [
+        10000,
+        10000
+      ],
+      "component_initial_entry_notionals_usdt": [
+        1000,
+        3000
+      ],
+      "BTC_lookback_days": 31,
+      "BTC_return_hurdle": 0.04,
+      "ETH_lookback_days": 3,
+      "ETH_return_hurdle": 0.02,
+      "start_utc": "2025-10-19T00:01:00Z",
+      "end_utc": "2026-10-24T00:01:00Z",
+      "walk_forward_folds": 13,
+      "walk_forward_test_days": 30,
+      "warmup_days": 30,
+      "embargo_days": 3,
+      "cost_multipliers": [
+        1,
+        2,
+        3
+      ],
+      "source_rules_and_costs_sha256": "2f7f2eeb66745b9ecc76efa31c0e983a197a3cb251612c608b9c896a301a95c3",
+      "BTC_exit_buffer_fraction": 0.01,
+      "ETH_exit_buffer_fraction": 0,
+      "BTC_fixed_entry_notional_usdt": 1000,
+      "ETH_fixed_entry_notional_usdt": 3000,
+      "walk_forward_complete30day_folds": 12,
+      "walk_forward_tail_days": 10,
+      "continuous_oos_days": 370,
+      "style": "btc_trend_eth_trend_filtered_reversal",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.02,
+      "trend_filter_lookback_days": 28,
+      "ETH_trend_lookback_days": 28
+    },
+    "components": [
+      {
+        "fingerprint": "2122c03af949f66e9ab48802b8813121b9a94f1e0a5844a712c800a026a2fd4d",
+        "weight": 1
+      },
+      {
+        "fingerprint": "d0d984ab2ae7f899c6eb6e1e680c11cf91cf47177f946a93e13a95f7a08cd82e",
+        "weight": 1
+      }
+    ],
+    "criteria": {
+      "positive_all_costs": true,
+      "nine_of_twelve_positive_complete30d_1x_folds": true,
+      "recent40_positive_all_costs": true,
+      "recent40_six_of_eight_positive5d_1x_folds": true,
+      "composite_DD3_lte25pct": true,
+      "local_positive3_gte60pct": true,
+      "four_round_trips1": true,
+      "gross_plus_funding_to_cost1_gte2_5": true,
+      "no_negative_collateral": true,
+      "no_order_rejections": true,
+      "no_margin_proxy_violations": true,
+      "terminal_flat": true,
+      "minimum180days": true
+    },
+    "passed_only_predeclared_historical_gates": true,
+    "scenes": {
+      "1": {
+        "full370_return_pct": 8.972716369844157,
+        "whole_curve_drawdown_pct": 2.872391309482647,
+        "recent40_return_pct": 1.5615814849144094,
+        "recent40_whole_drawdown_pct": 1.6258496279211054,
+        "full_NAV_sha256": "4c0038544c510d6a16bef44d01bb495049f1a50f0e84c72f0cb645df05a7e670",
+        "recent40_NAV_sha256": "c5af684026531192349da8edc9f5f60d26875f58faa69a0e078fc7ac6f76e739"
+      },
+      "2": {
+        "full370_return_pct": 7.588003796240583,
+        "whole_curve_drawdown_pct": 3.0645987775102523,
+        "recent40_return_pct": 1.412400446034412,
+        "recent40_whole_drawdown_pct": 1.7035799917191508,
+        "full_NAV_sha256": "05d8faa49b47a3421ee7f2e17e5017598dcb41848585ae4c162158783062ac7a",
+        "recent40_NAV_sha256": "d0dfc1f57425552af03a665fb37552953d4aa31cfe63b98466c5ad6f6af66ea7"
+      },
+      "3": {
+        "full370_return_pct": 6.2023392605370375,
+        "whole_curve_drawdown_pct": 3.2575347331928683,
+        "recent40_return_pct": 1.2596230399962716,
+        "recent40_whole_drawdown_pct": 1.7831634445965472,
+        "full_NAV_sha256": "6d541eab19a11906a6df39edc420a42aba0a05f75e9a019feaf0b81364398fdf",
+        "recent40_NAV_sha256": "5417274b20a1f03c2861719c3dca7b83119f0f74cd5a67a4020d6fde98690155"
+      }
+    },
+    "complete30d_positive_1x_folds": 10,
+    "recent5d_positive_1x_folds": 6,
+    "readonly_neighbor_diagnostics": {
+      "count": 16,
+      "full3x_net_positive_count": 15,
+      "recent6of8_raw_fold_count": 1,
+      "grid_boundary_axes": [
+        "ETH_fixed_entry_notional_usdt",
+        "trend_filter_lookback_days",
+        "reversal_lookback_days",
+        "reversal_return_hurdle"
+      ],
+      "policy": "Rawalreadyrecordedmetrics only,notreratingoldneighborsornewfinancialevaluation."
+    },
+    "independent_future_evidence_for_this_config": false,
+    "risk_limits": [
+      "Only1of108newactualconfigs passed in this repeatedlyusedhistory;strongselectionbias.",
+      "Four-axis boundary location and sparse recentfold consistency among neighbors limit robustness.",
+      "No DSR/PBO correction,untouchedholdout or stableliveprofit established.",
+      "Cost/mark/maintenanceproxy limitations in frozen plan remain."
+    ],
+    "next_step": "Keepthisspec/hashunchangedforindependentnewdataforwardvalidation. ExistingSMAandpaper10arenotitsforwardevidence;no newaccount/trade/resetorpostresulttuningperformedhere."
+  },
+  "helpers": {
+    "research/experiments/20261025T145537Z/run.py": "cfd78da26836ee5929cae31e266cdf8b19eba1cb8ea6d904c69b95dfccb6d423",
+    "research/experiments/20261025T085436Z/run.py": "b0c386644dfff35312455950b26a769672152aa12d4828b4fd638a11e095a1ef",
+    "research/experiments/20261023T204326Z/run.py": "3526462a590de17571cb15bde822b4b697cbb5b100afaff2016356d455b83456",
+    "research/experiments/20261029T092426Z/run.py": "b1be0ec7a1ebc5210626c2370007a8164ffe51c9ff7aae0509a49d02198dfa06"
+  },
+  "gates": {
+    "positive_all_costs": true,
+    "positive_complete30d_1x_folds_min": 9,
+    "complete30d_folds": 12,
+    "tail10day_fold_excluded_from_positive_count": true,
+    "recent40_positive_all_costs": true,
+    "recent40_positive5d_1x_folds_min": 6,
+    "recent40_5d_folds": 8,
+    "max_3x_composite_drawdown_pct": 25,
+    "round_trips_1x_min": 4,
+    "gross_reference_PnL_plus_funding_to_cost_min": 2.5,
+    "individual_margin_cash_order_violations": 0,
+    "each_source_terminal_flat": true,
+    "minimum_evidence_days": 180,
+    "continuous_days": 370,
+    "recent40_positive5d_each_cost_min": 6,
+    "old_qualifications_unchanged": true,
+    "local_3D_positive3_fraction_min": 0.6,
+    "local_recent6of8_allcost_fraction_min": 0.6
+  },
+  "sources": [
+    {
+      "url": "https://www.binance.com/en/support/faq/detail/360033525031",
+      "published": "2019-09-09",
+      "updated": "2026-03-06",
+      "role": "Funding direction,mark-based amount,interval variability and settlement timing."
+    },
+    {
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Get-Funding-Rate-History",
+      "redirected_url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "role": "Historical realized fundingTime/fundingRate/markPrice,not future predicted funding."
+    }
+  ],
+  "source_engine": {
+    "path": "research/experiments/20261029T232932Z/engine.py",
+    "sha256": "ac657cbc287ca5b225f009b568050f6b7a86896159f893c6b77b39974aaf1164"
+  },
+  "round": "20261030T073235Z",
+  "trigger_utc": "2026-10-30T07:32:35.695Z",
+  "frozen_at_utc": "2026-10-30T07:45:10.650665Z",
+  "hypothesis": "Previous fixed ownership index passed historical gates but did not demonstrate new small-bank native execution. Recompute actualquantity/LOT/tick/nonlinearimpact/funding/collateral for exactsame prespecified allocation and slowL/Hgrid;retain allresults and comparematchingoldindex. No futureclaim fromsamehistory.",
+  "grid": {
+    "fast_ETH_bank_units": [
+      0.25,
+      0.5,
+      0.75
+    ],
+    "lookback_days": [
+      20,
+      25,
+      30
+    ],
+    "return_hurdle": [
+      0.02,
+      0.04,
+      0.06
+    ],
+    "new_financial_configs": 66,
+    "new_candidates": 27,
+    "new_reference_configs": 39,
+    "new_native_components": 36,
+    "new_parent_configs": 30,
+    "cost_scenes": 198,
+    "full_grid_cells": 27,
+    "edges": 54,
+    "total_capital_usdt": 20000,
+    "component_capitals_usdt": "[5000,15000*a,15000*(1-a)]",
+    "fixed_notionals_usdt": "[500,4500*a,1500*(1-a)]",
+    "raw_weights": [
+      1,
+      1,
+      1
+    ],
+    "no_normalization": true
+  },
+  "rules": {
+    "composition": "Three independently cash-funded linear perpetual banks: BTCcapital5000/N500;ETHfastcapital15000*a/N4500*a;ETHslowcapital15000*(1-a)/N1500*(1-a),a=.25/.5/.75. Actualbankcapitalssum20000. Parentraw[1,1,1] sums actual bank NAVs,not normalized. No cash transfers,rebalance,NAVsizing,crossmargin or position/cost netting.",
+    "components": "BTC31/H4/E1/N500 actual existingbank reused readonly;fixedfastETHL3/H2.5/E-1/S28 adjacent27/28/29majority entries_only,N6available realizedfundingcap.00005,latestavailableage16h. SlowETHbuffered momentum L20/25/30,H.02/.04/.06,E.01. Full prespecified3Dgrid,no postresult parameter/weight selection.",
+    "execution": "GenuinelynewETHbankinitialcapital/notional requires native simulation,not oldcurve/q scaling. At UTC00:01 nextactualOPEN;quantityfloor(fixedN/priorcompletedclose/lot)*lot,closebeforeopen. Independentcash/funding/actualquantity/tick/ADVparticipation and collateral. Each new native cell/respectivecontrol independentlyreserved. OldBTCsamecapital/notional exact result reused.",
+    "costs": "Frozen5bpfee,1bphalfspread,2bpslip plus .5*lag20sampledailylogvol*sqrt(actualorderq*OPEN/lag20quoteADV),adversetick/lot/minnotional,participation<=.001,fullycollateralized1xpostfee;1/2/3stress all executionparts andnegativefundingoutflows,positiveincomeunamplified. Actualperpfundingcashflows inclshorts;no inventedspotborrow. 1percentclosedhourmarkadverseextrememaintenanceproxy,no crossmargin.",
+    "time": "370continuousOOS2025-10-19UTC00:01to2026-10-24UTC00:01;33contextincl3initialembargo,no fit/futurelabels.12complete30d+10tail;recent40day330inheritedstate,8x5d. Fullstructured(ns,eventcode)clock,terminalexitcosted. Repeateddevelopmenthistory,not untouchedfinaltest.",
+    "funding_feature": "Usefull1212historicalfeature records,not truncated1110OOSaccounting events. Bothsettlement_ts/available_ts<=prior00signal;current00settlementavailable01excluded. Last6mean exactsignedrate,entrydirection*mean<=.00005;holdcompatibleactualquantityexempt. Realizedfundingaccountingatactualsettlementonthenheldoldq,not featuretimestamps.",
+    "references": "Three new native-bank constantlong parents at samecapitals/N andraw[1,1,1]. Six new ETHconstantlong nativecontrols;BTC5000/N500hold exactexistingreused. Comparematchingpriorraw[1,a,1-a]ownershipindex,withoutrewritingoldqualifications. Native36component/controlresults reference-only,not standalonealpha qualification."
+  },
+  "component_sources": {
+    "f2c640ae6c1892ae78189209668b67fd27b92353d6a545f28ba9bafba22ff744": {
+      "name": "nativecapital370_BTC_W2500_momentum",
+      "fingerprint": "f2c640ae6c1892ae78189209668b67fd27b92353d6a545f28ba9bafba22ff744",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_BTC_W2500_momentum.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_BTC_W2500_momentum.json.gz",
+      "archive_sha256": "c5a5c66c0f60e9d806821660626f60987fc47e808bc0b15674d5b6995c5ce162",
+      "scope": "native",
+      "asset": "BTC",
+      "role": "component",
+      "capital_usdt": 5000.0,
+      "spec_sha256": "aecb5bb62c0b2e87d9aac59d525fea5a8b0616d8413ba75b7a50c0f61fde8945",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "bfef5ccc91b294fe76a2407ad63fab97e0040e2925bbc24775fb074124ad236e",
+        "2": "adfea61013d6897312876972ea20fd2f88482b038f8d441922851c6a5f6445b8",
+        "3": "8e16e8a1df7aa3b395775864b47e2ddcab41dd786887881bf0a3790f745aca11"
+      },
+      "fixed_entry_notional_usdt": 500.0
+    },
+    "2dcb86cbca6740649265e3bb52dd4c309fe882f439403ca309fb0145b302a3ee": {
+      "name": "nativecapital370_ETH_W2500_candidate_C50",
+      "fingerprint": "2dcb86cbca6740649265e3bb52dd4c309fe882f439403ca309fb0145b302a3ee",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_ETH_W2500_candidate_C50.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_ETH_W2500_candidate_C50.json.gz",
+      "archive_sha256": "538c21351d657e86426c4047cb282b4ea1d7118a2060b15fad090efd4cae90dd",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000.0,
+      "spec_sha256": "c58b3730e1155cde2065418aa82752653eaea5840b4ca7d281644153352968ab",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "1e8f585cf4cd2c74399bc74a8abdcf7bade777e3ccc5dd163ae60c12a3a38154",
+        "2": "2227028deec0319531f0c06435169983c662313fdc159a834e2c921019d0291f",
+        "3": "0e68446bcfc4b1e9d6fc5d330200a324c783f47a405b726e15cc45b087889511"
+      },
+      "fixed_entry_notional_usdt": 4500.0
+    },
+    "5495efd3f4fa6781b584543069b72d08b567d3d35df3495a07955d144086c5d3": {
+      "name": "nativecapital370_BTC_W2500_hold",
+      "fingerprint": "5495efd3f4fa6781b584543069b72d08b567d3d35df3495a07955d144086c5d3",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_BTC_W2500_hold.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_BTC_W2500_hold.json.gz",
+      "archive_sha256": "1da59495858f6dd97719e415f2ec4a51bf56ae864c43fe7d721463a0c7c309ac",
+      "scope": "native",
+      "asset": "BTC",
+      "role": "benchmark",
+      "capital_usdt": 5000.0,
+      "spec_sha256": "cd69e9c3c1156219ed19452c366db97545a00cecc931a8ffe51e19a299508c82",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "7a30702cf9842a549c31139652f6d01efcc0137abad711a35e6608c36e2d6ca8",
+        "2": "994d8f75bcfaf5ee7c8135e59ce54616178ca51b1bf4869d3767f15a671dc3fb",
+        "3": "e1e6714a65c4f16459ebae9b20f204ddfa0d099126cc07c31baeea1041c9c61e"
+      },
+      "fixed_entry_notional_usdt": 500.0
+    },
+    "fd96b9d8250328e033aa2b40460ef01a2d7cc57a22a12ad0f5abf111ade3323e": {
+      "name": "nativecapital370_ETH_W2500_hold",
+      "fingerprint": "fd96b9d8250328e033aa2b40460ef01a2d7cc57a22a12ad0f5abf111ade3323e",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_ETH_W2500_hold.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_ETH_W2500_hold.json.gz",
+      "archive_sha256": "b15752d16d0f9001d61d7bd2aa08ca5a4543d59f0f67a63cdca03d44c8ccbdd5",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "benchmark",
+      "capital_usdt": 15000.0,
+      "spec_sha256": "c8671c77caa632b38ce7e0f0c8ce636f4fd0a35c55ce2638535ff0a8fdf56d7f",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "06f0592be344475649ad1b3e243db8d6a076581d37c7d0d63df55de73ff1c65b",
+        "2": "3870fcbcc78d0d196a1760817bd8d94b8c5adb3305b9d0b2d2639cd668ded48c",
+        "3": "6c3cd4bde84300f42616cecc0e266bae347f7b3d591a927ebf0214bf2398f3ae"
+      },
+      "fixed_entry_notional_usdt": 4500.0
+    },
+    "ee1898ce578fce1c1f47fcf08f320d0c0eaf9ff7ba4dc78c81102d11a319bdd5": {
+      "name": "trend370_ETH_hold_N1500",
+      "fingerprint": "ee1898ce578fce1c1f47fcf08f320d0c0eaf9ff7ba4dc78c81102d11a319bdd5",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_hold_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_hold_N1500.json.gz",
+      "archive_sha256": "4d732bcdc7a9910325854852feb05878879c308cc0c97f10dce50db272556e0e",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "benchmark",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "a8be5b83823eb67f0f746d6ab06dda0afb140e682b0fdd17a89b0976b0069084",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "6c81eb1a1a9ece1cbcb579c1eedf207dc7cdc174738e4dc7c82a3f1cf20b5ff6",
+        "2": "03faf8b9ed01433b5b9c312a1b8945b7b2371cd0bc0231c49e1ba3deac3fe02d",
+        "3": "c90b0a6ed37d8d1ef4d7e4c4ec7d5c19d127c237a33323c809983cadf1e196d7"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "ea0b40e0fd6822556828d70ab8cb4a8327883f679e6dcc3e3740054aac6dd614": {
+      "name": "trend370_ETH_L20_H02_E1_N1500",
+      "fingerprint": "ea0b40e0fd6822556828d70ab8cb4a8327883f679e6dcc3e3740054aac6dd614",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H02_E1_N1500.json.gz",
+      "archive_sha256": "eac108a334ee899d8a2c353fc441462029a319599bf5ecaa44e0c30b76399374",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e804de3ff7f0434cbf5330d5f123110911292298fc01d4cab7977b69917fd644",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "43b926d7c07ba6232e0ede0d27a514f6369283972eb7c270b3ca0aa1b9bdfb60",
+        "2": "99766a4cfb3642e78de950928980c6b60233fceac4ed5d42c0313218039f299b",
+        "3": "fc4ebddb9fecddceb3a43eb6d6e1184493a7d6bf24be7e3c61ee41222989b65d"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "c91f5b3e1392605d632cd1b73cc49f069d39fd713055ad7a34e1838f70e17cb3": {
+      "name": "trend370_ETH_L20_H04_E1_N1500",
+      "fingerprint": "c91f5b3e1392605d632cd1b73cc49f069d39fd713055ad7a34e1838f70e17cb3",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H04_E1_N1500.json.gz",
+      "archive_sha256": "08a4de4fe25a6698e596b1e1d2a66ed2ea8c50b354dbe00985c33c29bce3be1d",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "c002217c108885f7234bb00cd34a69e001fed1be654eb64fa41d74eaae75d86c",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "5ae8fc1b7b75a5f12e8c76bc8108d5218cd18c460068c6c6f2f108361ae16238",
+        "2": "736ed2b6a31a86aa1aa05af8fd054a49c56ef04884c82afd52e0eb1491bdbaab",
+        "3": "102d314ebceaaa44944767120273a6dd32293f31c79b4593c5ad193941f4ade4"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "281e48e9b96d43b48516aaa9819e047fcb4d39fd79a5534a5ddfbb86441cad2f": {
+      "name": "trend370_ETH_L20_H06_E1_N1500",
+      "fingerprint": "281e48e9b96d43b48516aaa9819e047fcb4d39fd79a5534a5ddfbb86441cad2f",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H06_E1_N1500.json.gz",
+      "archive_sha256": "5e7625c880c3d875df7b3edfff087152f4990739642d8105dbef0e8e071525cd",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "4012fdb60d8cd1c1933f464a72f3d7732ec5c48772ecd91243cfa3ff10ac42ce",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "879fac44118a4424a15cbf40a4ae8fd212928654401da9a62dc8291050a24222",
+        "2": "3e65198f76770a5a2bc4e8abe297d3d0da28d6831b998882c0f1d3d54b0e1227",
+        "3": "02700ceb35d29b1a77d9da2bcd855f7a432c5f777a435672ec5a0d38ea6b7c52"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "cfebb8f763e3dd33cc371749abeab6c27643adf56087ff1c08f23f3e50873482": {
+      "name": "trend370_ETH_L25_H02_E1_N1500",
+      "fingerprint": "cfebb8f763e3dd33cc371749abeab6c27643adf56087ff1c08f23f3e50873482",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H02_E1_N1500.json.gz",
+      "archive_sha256": "0c8369973ef0ebc6d14e679d1569fc7fffd5fa730786429e07207d0fa11760e7",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "bc541156df1d93b166d98e7b4a7c494b92ff72466b119d998fe619970cd22030",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "a726b1ccfe2a36b2c89341faf3b8e516cf0ebb4ba94f4e4aee21b75bc7e19e0f",
+        "2": "3f77391d0a4aa8218b69d29dfab1489b9889c64509cdc0aa103a04ac713e1a59",
+        "3": "96333d9ab313a759e06f9a22f5b7aff23e8f75f872dd3c0e48d5886bd6bcddbe"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "1fde5e00bc48f77dd96be1d97ce6c80d0c0b7a7da0933618ece88dd10a50dc86": {
+      "name": "trend370_ETH_L25_H04_E1_N1500",
+      "fingerprint": "1fde5e00bc48f77dd96be1d97ce6c80d0c0b7a7da0933618ece88dd10a50dc86",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H04_E1_N1500.json.gz",
+      "archive_sha256": "164ec3216aa2b173aad415d66755bb5addab6a9fe3cb3c0b03acd518915bf1d6",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "a64bda6ad2f17432ee022dcae4935007f564eeffce7b5cefc7a12d803611d3fb",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "bad159e2ce6364f1e6fe16d6c5aa8f1fe96087b4e99d86d6195936067219b4c3",
+        "2": "b5fb1221ab976817b141d17c9219345c8ebf951a197482a7890330785d03127c",
+        "3": "ef5e72e15c3be5b335f254a38a3367cd8b4d7ada1cced723c2180ca06b88ad7c"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "8fa5d044908be60134b0e2d8098e6d4521dcae2026a5cc8e51f16ee0abcd21d9": {
+      "name": "trend370_ETH_L25_H06_E1_N1500",
+      "fingerprint": "8fa5d044908be60134b0e2d8098e6d4521dcae2026a5cc8e51f16ee0abcd21d9",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H06_E1_N1500.json.gz",
+      "archive_sha256": "3bdb7a664d56db07f4034c56af5a2ccf54eef9348952b2812a2238e4f03a0ac3",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e2ab1715e76f1f2a943417fe7b4272e080d061fde7af6e79c0063de129031138",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "dbaf02371ab9e77fd3338a5063c0d6e6eaa3deb77d464f30da946e8ed18365f0",
+        "2": "c16c5680ea9ba61787481d2cb4b8bb0424a74192862f404dbdc2204dfb3dc7f0",
+        "3": "e03991b8eb744ddd86668ed3304c1968c15dd9d29c7efd8a3827236def527d3f"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "ac3c6f2f08bc391f99bfbb5a9f736fb27b2d909af5a38ecef7e0a6de4ca5a98b": {
+      "name": "trend370_ETH_L30_H02_E1_N1500",
+      "fingerprint": "ac3c6f2f08bc391f99bfbb5a9f736fb27b2d909af5a38ecef7e0a6de4ca5a98b",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H02_E1_N1500.json.gz",
+      "archive_sha256": "561f7e439b4f0c25ef6148b76437672282c8cbd7620d58593b09efa8cbac6237",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "1c67ec80cd78f4d866ed5d494573d2dabd29c630ba619437a8a43c4c64d5fae4",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "c09512c91d36bd267be3e37204af80d62e0b9ca6861dea0281058cde5bfb78ad",
+        "2": "1a30ccdc0afcc0d03df843859cde78b8a19f5f1e5bcb10bffa1bb15fa42bb24b",
+        "3": "17f047647daf1a4dfcf616fd65d78d0cd3a554233d825c1dd17e4b635119a50c"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "13361ef249df4457939187ad72655b8d145a2d0e910e5e6800b6cf50b2086c19": {
+      "name": "trend370_ETH_L30_H04_E1_N1500",
+      "fingerprint": "13361ef249df4457939187ad72655b8d145a2d0e910e5e6800b6cf50b2086c19",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H04_E1_N1500.json.gz",
+      "archive_sha256": "9bdebf85f87ce6ca23b2f512b875c40306d38c1b0fe9decdb83cd844b86d49b2",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "07e4892833106a7afec001ae08258e444f320d1a6e8cb7ba17871f6d201485f2",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "74e5159d54f55525a56a5aa16475330647842fcd52f84359f963218c736597bb",
+        "2": "af3f2a2d8e558f8189a22c7e6fa41de9782cb49f6632803ee0fffa7b89657721",
+        "3": "f9ea0cc86fc60441d585ba18afc09a97d881a7580acd6243344dbb9d004c619d"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "a8600793d3e2fbaf891a302dc032efc4f72825cc487e8bb0693584efc6adcb1f": {
+      "name": "trend370_ETH_L30_H06_E1_N1500",
+      "fingerprint": "a8600793d3e2fbaf891a302dc032efc4f72825cc487e8bb0693584efc6adcb1f",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H06_E1_N1500.json.gz",
+      "archive_sha256": "e2c6f9696d3d29dec622408c724e367306aa1614fbae05885f239269f2d6d0ce",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "2bdb4c373c6f215cbbc6a3617b555f648fa9cf9f840b8cfb1d863a855b8ef24b",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "db5ab068d8d88e55749fa47388c894ea2f11d309a2ca228af1958e2dbe87f326",
+        "2": "d2fed0571988a7f97b2fc5c466706f4c5f4421d37eda10c1958f4a83b4c3416d",
+        "3": "9bf8a59c6e9c1afa4ac8e529b494f03145c64af9dc178a00f15f9e277df2ed49"
+      },
+      "fixed_entry_notional_usdt": 1500
+    }
+  },
+  "all_read_only_references": {
+    "f2c640ae6c1892ae78189209668b67fd27b92353d6a545f28ba9bafba22ff744": {
+      "name": "nativecapital370_BTC_W2500_momentum",
+      "fingerprint": "f2c640ae6c1892ae78189209668b67fd27b92353d6a545f28ba9bafba22ff744",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_BTC_W2500_momentum.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_BTC_W2500_momentum.json.gz",
+      "archive_sha256": "c5a5c66c0f60e9d806821660626f60987fc47e808bc0b15674d5b6995c5ce162",
+      "scope": "native",
+      "asset": "BTC",
+      "role": "component",
+      "capital_usdt": 5000.0,
+      "spec_sha256": "aecb5bb62c0b2e87d9aac59d525fea5a8b0616d8413ba75b7a50c0f61fde8945",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "bfef5ccc91b294fe76a2407ad63fab97e0040e2925bbc24775fb074124ad236e",
+        "2": "adfea61013d6897312876972ea20fd2f88482b038f8d441922851c6a5f6445b8",
+        "3": "8e16e8a1df7aa3b395775864b47e2ddcab41dd786887881bf0a3790f745aca11"
+      },
+      "fixed_entry_notional_usdt": 500.0
+    },
+    "2dcb86cbca6740649265e3bb52dd4c309fe882f439403ca309fb0145b302a3ee": {
+      "name": "nativecapital370_ETH_W2500_candidate_C50",
+      "fingerprint": "2dcb86cbca6740649265e3bb52dd4c309fe882f439403ca309fb0145b302a3ee",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_ETH_W2500_candidate_C50.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_ETH_W2500_candidate_C50.json.gz",
+      "archive_sha256": "538c21351d657e86426c4047cb282b4ea1d7118a2060b15fad090efd4cae90dd",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000.0,
+      "spec_sha256": "c58b3730e1155cde2065418aa82752653eaea5840b4ca7d281644153352968ab",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "1e8f585cf4cd2c74399bc74a8abdcf7bade777e3ccc5dd163ae60c12a3a38154",
+        "2": "2227028deec0319531f0c06435169983c662313fdc159a834e2c921019d0291f",
+        "3": "0e68446bcfc4b1e9d6fc5d330200a324c783f47a405b726e15cc45b087889511"
+      },
+      "fixed_entry_notional_usdt": 4500.0
+    },
+    "5495efd3f4fa6781b584543069b72d08b567d3d35df3495a07955d144086c5d3": {
+      "name": "nativecapital370_BTC_W2500_hold",
+      "fingerprint": "5495efd3f4fa6781b584543069b72d08b567d3d35df3495a07955d144086c5d3",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_BTC_W2500_hold.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_BTC_W2500_hold.json.gz",
+      "archive_sha256": "1da59495858f6dd97719e415f2ec4a51bf56ae864c43fe7d721463a0c7c309ac",
+      "scope": "native",
+      "asset": "BTC",
+      "role": "benchmark",
+      "capital_usdt": 5000.0,
+      "spec_sha256": "cd69e9c3c1156219ed19452c366db97545a00cecc931a8ffe51e19a299508c82",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "7a30702cf9842a549c31139652f6d01efcc0137abad711a35e6608c36e2d6ca8",
+        "2": "994d8f75bcfaf5ee7c8135e59ce54616178ca51b1bf4869d3767f15a671dc3fb",
+        "3": "e1e6714a65c4f16459ebae9b20f204ddfa0d099126cc07c31baeea1041c9c61e"
+      },
+      "fixed_entry_notional_usdt": 500.0
+    },
+    "fd96b9d8250328e033aa2b40460ef01a2d7cc57a22a12ad0f5abf111ade3323e": {
+      "name": "nativecapital370_ETH_W2500_hold",
+      "fingerprint": "fd96b9d8250328e033aa2b40460ef01a2d7cc57a22a12ad0f5abf111ade3323e",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_ETH_W2500_hold.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_ETH_W2500_hold.json.gz",
+      "archive_sha256": "b15752d16d0f9001d61d7bd2aa08ca5a4543d59f0f67a63cdca03d44c8ccbdd5",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "benchmark",
+      "capital_usdt": 15000.0,
+      "spec_sha256": "c8671c77caa632b38ce7e0f0c8ce636f4fd0a35c55ce2638535ff0a8fdf56d7f",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "06f0592be344475649ad1b3e243db8d6a076581d37c7d0d63df55de73ff1c65b",
+        "2": "3870fcbcc78d0d196a1760817bd8d94b8c5adb3305b9d0b2d2639cd668ded48c",
+        "3": "6c3cd4bde84300f42616cecc0e266bae347f7b3d591a927ebf0214bf2398f3ae"
+      },
+      "fixed_entry_notional_usdt": 4500.0
+    },
+    "ee1898ce578fce1c1f47fcf08f320d0c0eaf9ff7ba4dc78c81102d11a319bdd5": {
+      "name": "trend370_ETH_hold_N1500",
+      "fingerprint": "ee1898ce578fce1c1f47fcf08f320d0c0eaf9ff7ba4dc78c81102d11a319bdd5",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_hold_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_hold_N1500.json.gz",
+      "archive_sha256": "4d732bcdc7a9910325854852feb05878879c308cc0c97f10dce50db272556e0e",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "benchmark",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "a8be5b83823eb67f0f746d6ab06dda0afb140e682b0fdd17a89b0976b0069084",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "6c81eb1a1a9ece1cbcb579c1eedf207dc7cdc174738e4dc7c82a3f1cf20b5ff6",
+        "2": "03faf8b9ed01433b5b9c312a1b8945b7b2371cd0bc0231c49e1ba3deac3fe02d",
+        "3": "c90b0a6ed37d8d1ef4d7e4c4ec7d5c19d127c237a33323c809983cadf1e196d7"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "ea0b40e0fd6822556828d70ab8cb4a8327883f679e6dcc3e3740054aac6dd614": {
+      "name": "trend370_ETH_L20_H02_E1_N1500",
+      "fingerprint": "ea0b40e0fd6822556828d70ab8cb4a8327883f679e6dcc3e3740054aac6dd614",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H02_E1_N1500.json.gz",
+      "archive_sha256": "eac108a334ee899d8a2c353fc441462029a319599bf5ecaa44e0c30b76399374",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e804de3ff7f0434cbf5330d5f123110911292298fc01d4cab7977b69917fd644",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "43b926d7c07ba6232e0ede0d27a514f6369283972eb7c270b3ca0aa1b9bdfb60",
+        "2": "99766a4cfb3642e78de950928980c6b60233fceac4ed5d42c0313218039f299b",
+        "3": "fc4ebddb9fecddceb3a43eb6d6e1184493a7d6bf24be7e3c61ee41222989b65d"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "c91f5b3e1392605d632cd1b73cc49f069d39fd713055ad7a34e1838f70e17cb3": {
+      "name": "trend370_ETH_L20_H04_E1_N1500",
+      "fingerprint": "c91f5b3e1392605d632cd1b73cc49f069d39fd713055ad7a34e1838f70e17cb3",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H04_E1_N1500.json.gz",
+      "archive_sha256": "08a4de4fe25a6698e596b1e1d2a66ed2ea8c50b354dbe00985c33c29bce3be1d",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "c002217c108885f7234bb00cd34a69e001fed1be654eb64fa41d74eaae75d86c",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "5ae8fc1b7b75a5f12e8c76bc8108d5218cd18c460068c6c6f2f108361ae16238",
+        "2": "736ed2b6a31a86aa1aa05af8fd054a49c56ef04884c82afd52e0eb1491bdbaab",
+        "3": "102d314ebceaaa44944767120273a6dd32293f31c79b4593c5ad193941f4ade4"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "281e48e9b96d43b48516aaa9819e047fcb4d39fd79a5534a5ddfbb86441cad2f": {
+      "name": "trend370_ETH_L20_H06_E1_N1500",
+      "fingerprint": "281e48e9b96d43b48516aaa9819e047fcb4d39fd79a5534a5ddfbb86441cad2f",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H06_E1_N1500.json.gz",
+      "archive_sha256": "5e7625c880c3d875df7b3edfff087152f4990739642d8105dbef0e8e071525cd",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "4012fdb60d8cd1c1933f464a72f3d7732ec5c48772ecd91243cfa3ff10ac42ce",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "879fac44118a4424a15cbf40a4ae8fd212928654401da9a62dc8291050a24222",
+        "2": "3e65198f76770a5a2bc4e8abe297d3d0da28d6831b998882c0f1d3d54b0e1227",
+        "3": "02700ceb35d29b1a77d9da2bcd855f7a432c5f777a435672ec5a0d38ea6b7c52"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "cfebb8f763e3dd33cc371749abeab6c27643adf56087ff1c08f23f3e50873482": {
+      "name": "trend370_ETH_L25_H02_E1_N1500",
+      "fingerprint": "cfebb8f763e3dd33cc371749abeab6c27643adf56087ff1c08f23f3e50873482",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H02_E1_N1500.json.gz",
+      "archive_sha256": "0c8369973ef0ebc6d14e679d1569fc7fffd5fa730786429e07207d0fa11760e7",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "bc541156df1d93b166d98e7b4a7c494b92ff72466b119d998fe619970cd22030",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "a726b1ccfe2a36b2c89341faf3b8e516cf0ebb4ba94f4e4aee21b75bc7e19e0f",
+        "2": "3f77391d0a4aa8218b69d29dfab1489b9889c64509cdc0aa103a04ac713e1a59",
+        "3": "96333d9ab313a759e06f9a22f5b7aff23e8f75f872dd3c0e48d5886bd6bcddbe"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "1fde5e00bc48f77dd96be1d97ce6c80d0c0b7a7da0933618ece88dd10a50dc86": {
+      "name": "trend370_ETH_L25_H04_E1_N1500",
+      "fingerprint": "1fde5e00bc48f77dd96be1d97ce6c80d0c0b7a7da0933618ece88dd10a50dc86",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H04_E1_N1500.json.gz",
+      "archive_sha256": "164ec3216aa2b173aad415d66755bb5addab6a9fe3cb3c0b03acd518915bf1d6",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "a64bda6ad2f17432ee022dcae4935007f564eeffce7b5cefc7a12d803611d3fb",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "bad159e2ce6364f1e6fe16d6c5aa8f1fe96087b4e99d86d6195936067219b4c3",
+        "2": "b5fb1221ab976817b141d17c9219345c8ebf951a197482a7890330785d03127c",
+        "3": "ef5e72e15c3be5b335f254a38a3367cd8b4d7ada1cced723c2180ca06b88ad7c"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "8fa5d044908be60134b0e2d8098e6d4521dcae2026a5cc8e51f16ee0abcd21d9": {
+      "name": "trend370_ETH_L25_H06_E1_N1500",
+      "fingerprint": "8fa5d044908be60134b0e2d8098e6d4521dcae2026a5cc8e51f16ee0abcd21d9",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H06_E1_N1500.json.gz",
+      "archive_sha256": "3bdb7a664d56db07f4034c56af5a2ccf54eef9348952b2812a2238e4f03a0ac3",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e2ab1715e76f1f2a943417fe7b4272e080d061fde7af6e79c0063de129031138",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "dbaf02371ab9e77fd3338a5063c0d6e6eaa3deb77d464f30da946e8ed18365f0",
+        "2": "c16c5680ea9ba61787481d2cb4b8bb0424a74192862f404dbdc2204dfb3dc7f0",
+        "3": "e03991b8eb744ddd86668ed3304c1968c15dd9d29c7efd8a3827236def527d3f"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "ac3c6f2f08bc391f99bfbb5a9f736fb27b2d909af5a38ecef7e0a6de4ca5a98b": {
+      "name": "trend370_ETH_L30_H02_E1_N1500",
+      "fingerprint": "ac3c6f2f08bc391f99bfbb5a9f736fb27b2d909af5a38ecef7e0a6de4ca5a98b",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H02_E1_N1500.json.gz",
+      "archive_sha256": "561f7e439b4f0c25ef6148b76437672282c8cbd7620d58593b09efa8cbac6237",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "1c67ec80cd78f4d866ed5d494573d2dabd29c630ba619437a8a43c4c64d5fae4",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "c09512c91d36bd267be3e37204af80d62e0b9ca6861dea0281058cde5bfb78ad",
+        "2": "1a30ccdc0afcc0d03df843859cde78b8a19f5f1e5bcb10bffa1bb15fa42bb24b",
+        "3": "17f047647daf1a4dfcf616fd65d78d0cd3a554233d825c1dd17e4b635119a50c"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "13361ef249df4457939187ad72655b8d145a2d0e910e5e6800b6cf50b2086c19": {
+      "name": "trend370_ETH_L30_H04_E1_N1500",
+      "fingerprint": "13361ef249df4457939187ad72655b8d145a2d0e910e5e6800b6cf50b2086c19",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H04_E1_N1500.json.gz",
+      "archive_sha256": "9bdebf85f87ce6ca23b2f512b875c40306d38c1b0fe9decdb83cd844b86d49b2",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "07e4892833106a7afec001ae08258e444f320d1a6e8cb7ba17871f6d201485f2",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "74e5159d54f55525a56a5aa16475330647842fcd52f84359f963218c736597bb",
+        "2": "af3f2a2d8e558f8189a22c7e6fa41de9782cb49f6632803ee0fffa7b89657721",
+        "3": "f9ea0cc86fc60441d585ba18afc09a97d881a7580acd6243344dbb9d004c619d"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "a8600793d3e2fbaf891a302dc032efc4f72825cc487e8bb0693584efc6adcb1f": {
+      "name": "trend370_ETH_L30_H06_E1_N1500",
+      "fingerprint": "a8600793d3e2fbaf891a302dc032efc4f72825cc487e8bb0693584efc6adcb1f",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H06_E1_N1500.json.gz",
+      "archive_sha256": "e2c6f9696d3d29dec622408c724e367306aa1614fbae05885f239269f2d6d0ce",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "2bdb4c373c6f215cbbc6a3617b555f648fa9cf9f840b8cfb1d863a855b8ef24b",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "db5ab068d8d88e55749fa47388c894ea2f11d309a2ca228af1958e2dbe87f326",
+        "2": "d2fed0571988a7f97b2fc5c466706f4c5f4421d37eda10c1958f4a83b4c3416d",
+        "3": "9bf8a59c6e9c1afa4ac8e529b494f03145c64af9dc178a00f15f9e277df2ed49"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "46e42ce5a6e42a84616e0d77d6f367887441cbc04ba6e34f7a78bb8ddbf8ec36": {
+      "name": "mix370_A25_L20_H02",
+      "fingerprint": "46e42ce5a6e42a84616e0d77d6f367887441cbc04ba6e34f7a78bb8ddbf8ec36",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L20_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L20_H02.json.gz",
+      "archive_sha256": "bb425c3b710277fec472215bcd5399b066f462fbea32dc317abd57774a77537b",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "d23780d8f3c80637fff655008a893bc8afdff06b306d4714acbc6beb78e9e609",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "d9bca15a6a509afff3e29f733a76165d782b22233f78cd62dd8655ba0dfcc8f1",
+        "2": "25ea0df07de729fcf4a723a9d9e90adf727ef031ba56ab215bdbf67e5413a233",
+        "3": "91025e97aa8d5bdb2a2ddae6ae2088e892df1d1c2991dd1d275391238215b291"
+      }
+    },
+    "75f4477d54fc61fee51ee87d9f1a1bce59eef89f6269210a61edcba4a761a07d": {
+      "name": "mix370_A25_L20_H04",
+      "fingerprint": "75f4477d54fc61fee51ee87d9f1a1bce59eef89f6269210a61edcba4a761a07d",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L20_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L20_H04.json.gz",
+      "archive_sha256": "e9d9643dc1f733c0f064a4f0dc5bb9605b7d7d77784f155475766a7caade86f4",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "4be991d20d75c49447b386d4c4f776260ffe947f7531604d5d6e0384229357b4",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "e0ad68202da51ee2cc07e36aa2ed989afa785536576d642981f63e7507923800",
+        "2": "b84f223783adb5ad21bf47c9da50cb25e24265a9b430da779a5a180312fb6624",
+        "3": "c097a2a7f39a39dc02e4e57335b206a052213b74483c870e800a1030f34dfb4f"
+      }
+    },
+    "0f82e3916d8d0a40ac0d9c8f5b8b5eea6e11568cf6f9667c9e982fe0fdf04281": {
+      "name": "mix370_A25_L20_H06",
+      "fingerprint": "0f82e3916d8d0a40ac0d9c8f5b8b5eea6e11568cf6f9667c9e982fe0fdf04281",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L20_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L20_H06.json.gz",
+      "archive_sha256": "3e1c2f282c12da96c457da416e4f215ab3fe06a7e018822f37a5e84cbb5e1e07",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "700c866685acae509b2152bb1cbde5621ea22837b164dfac7dd48b35ee96cb4b",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "77081f3f073097c988534c1b6ebfa5e4b10b1dcde84b23cbf99b84cab241cb8e",
+        "2": "f2290601615ed00a347395a1e917cd839620d6be21b8c57885eb9f10868f1ba1",
+        "3": "019ccf15a696fdcb2fe0ccb52858697d207a56367966904ec8f85d308044a478"
+      }
+    },
+    "e7ed63ad4c330ff710bbaeddc14260831d33fbc61fc3db7e5cbe282d109ed1ab": {
+      "name": "mix370_A25_L25_H02",
+      "fingerprint": "e7ed63ad4c330ff710bbaeddc14260831d33fbc61fc3db7e5cbe282d109ed1ab",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L25_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L25_H02.json.gz",
+      "archive_sha256": "5f75443b55792dcc9b8a5aeb0c13367f950d39667768981946af23341185fcb1",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "54412853d64480b1d058c16b694738f623e04da27a2d40fc5822a6a449eeb7fc",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "8be04e0d52250273215643e9b3d6da7c79f8d043032e97e8171ce86a31a67a07",
+        "2": "05b0dad75c2b5e62d22522f2d1dbb312c4bcedad5de599945b9c4b71f3363e62",
+        "3": "f4ce09d8fcc7208b0699c222e0e7a30f0d99650bc85d51e074d52aa59075bce1"
+      }
+    },
+    "b44e9956b6d47af243274d66df382d74765282b2c1cf1b9104998bb1d42644d0": {
+      "name": "mix370_A25_L25_H04",
+      "fingerprint": "b44e9956b6d47af243274d66df382d74765282b2c1cf1b9104998bb1d42644d0",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L25_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L25_H04.json.gz",
+      "archive_sha256": "2f479ea98a1a6456949dede42fe1bc5913a83929d5dade4d06487b009a8c0ae1",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "12b6687416f7723fae3f925ee20c82c7a706be43211eff707a8671dc80db4866",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "c241a00068c5a92a984c8c3b97b3ce8c093affeb9d6d0c5061836240ca12a953",
+        "2": "62858d07f37183f3935dbe6761577e3b3cf3a1a6da54970166c451f425a2d216",
+        "3": "2dd49b5366bc1aaf50e8d8c7b3e6dd9b6df7a34d1dcb18ea795057b51321b01e"
+      }
+    },
+    "9492269b33934c66bec440fa699345591ef22a4c299753ed8be38bdbe7932011": {
+      "name": "mix370_A25_L25_H06",
+      "fingerprint": "9492269b33934c66bec440fa699345591ef22a4c299753ed8be38bdbe7932011",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L25_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L25_H06.json.gz",
+      "archive_sha256": "475e56c32c0adafa76c08ed958ca7bfc495c584623eb9367d11be1e93953bba2",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "0c538179853b6e5715fed0dfcf4d7aa566db2d524e03d728e4306b306b8cfacc",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "79278a70e7c79474cada0a48b84d401b5d08a4acdcd4c3cc3a79d075788d1261",
+        "2": "223e8bb5de619f1df72c8f54b29502e6d6d4f31a265d63a8602aa8e3ad64329b",
+        "3": "52d737f23ce6b03940fab3ae3bdf635e0354b5e7645b70aea0891c36f30d5ba0"
+      }
+    },
+    "007e900254f2fde284619a3f365dec7fd8e37c124d59dbe4ec5d9aabe939db09": {
+      "name": "mix370_A25_L30_H02",
+      "fingerprint": "007e900254f2fde284619a3f365dec7fd8e37c124d59dbe4ec5d9aabe939db09",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L30_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L30_H02.json.gz",
+      "archive_sha256": "d616178dffea297d4257661aa8efaaacda1671b17180496bbbf2a30b843b0bd8",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "1f42ecad77f19b3e0b6cf30e4b8d044758c542b45c2f2625de76dcc0b33c989c",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "a9bb6c7a52366e0c117e33ca342eeccd14b8bc04e83c099a679dc37a8172dde3",
+        "2": "9e1f52eb96ee0d50cd46004a6959770e4738b923dccba98d77ddcde4c6379461",
+        "3": "7afe3a77920f80d1cb7b3989ac6ee39f944a39bb34d766ecfc13482b77bcd5d2"
+      }
+    },
+    "d5eafeb6301d84225c380a9885b82ddf27943641a0c5c7cf9a0b4473627b8230": {
+      "name": "mix370_A25_L30_H04",
+      "fingerprint": "d5eafeb6301d84225c380a9885b82ddf27943641a0c5c7cf9a0b4473627b8230",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L30_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L30_H04.json.gz",
+      "archive_sha256": "fa8b32833cb4408c921a20b3304d27b4cd666f84150ee3cf9b8fd46ea2aae467",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "5536fbdc87006f97339dd745e4be1696e439f5d6b41c09928ad2b53757814f30",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "afbb16db506b754f048a6034688c915f39168dc82885dfa580a694bbb59071ef",
+        "2": "81393d09f3777f688a690c8234dc6918ed57c074d8bb23c26663896eb4410a46",
+        "3": "37d51c44e63351ca079865ffcfdab050310daf86d60bb51843ca058dadeb2feb"
+      }
+    },
+    "3941dcfb5b2545d11478e15354b943623c45c66c0a324593cb1346eaa0ba0092": {
+      "name": "mix370_A25_L30_H06",
+      "fingerprint": "3941dcfb5b2545d11478e15354b943623c45c66c0a324593cb1346eaa0ba0092",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L30_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L30_H06.json.gz",
+      "archive_sha256": "c2287f568bb8664c8ad4b74f5d0d56b0ea7f802c8d2f1a0d4712afa80e6bbf7f",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "e0dbc90bb59a2535dbb012ed51a592ff5a767f5a32e5112386fb3502d65eb475",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "ebb284971e8dfa27b3af3779f6cab59b8b13f96d3bfe1a7226bd62ec27666e22",
+        "2": "8bb3e1d1ada966fd482263aca47dccf990af3d49237167aa73b189dc63851969",
+        "3": "34637db47507a4f04c315f232965cc87eaa08652baf75fbaa7686ae84ca7e42f"
+      }
+    },
+    "4da0aed8ed314c6dca743cdb9f07740010f63cf244b3e2f27f63a958b3cbc46b": {
+      "name": "mix370_A50_L20_H02",
+      "fingerprint": "4da0aed8ed314c6dca743cdb9f07740010f63cf244b3e2f27f63a958b3cbc46b",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L20_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L20_H02.json.gz",
+      "archive_sha256": "e23b052414ca4dbc91f154883bd42fac6cb06b6b198c3340cb96c09bca923bb0",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "29231c9ece2bc5e5cb8eb4e8a9d96468333274643664b335685de40a468d9f46",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "93daf8573612c95fa92560a91fcd91b75e43450e4ddbe718299902f5eeb0dbba",
+        "2": "07f8942d2f0cb6cfd2b41d129a219f6919af274ee3e27ffd7145bcb06ec5c927",
+        "3": "726e5e3f811fb1868669c108bd23e51a492e3d7efff079eb72a73531e8ff5e3d"
+      }
+    },
+    "7081689d779008e715067be7f3566dd46be7ea07c2818479051ffd4eb66da9e5": {
+      "name": "mix370_A50_L20_H04",
+      "fingerprint": "7081689d779008e715067be7f3566dd46be7ea07c2818479051ffd4eb66da9e5",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L20_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L20_H04.json.gz",
+      "archive_sha256": "71ddddafccd26436e3a4adf5b6db691aea464294e39dd97f832c1dd105226f07",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "682be5230dcb424b5b404271f4cc556be4d8bcf19110aef56e7186be0cb7cdf7",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "3ed188da3d33211c4ab2f239b4cf8c3b36c9f4e89a4d493d34cc4a2f822f5b9d",
+        "2": "2186181fe52ca02ef9f93870fc2be4198ebc3e132a8b87a7cec52c7438928cd2",
+        "3": "ee61b300333b9677ee47780d5c69e5b1ec3468d23b9220e40ecb7be15dc22476"
+      }
+    },
+    "b616a49718d60e47ff248750bffeb79d18f4d6906a12cbd5601bc8ae924c1009": {
+      "name": "mix370_A50_L20_H06",
+      "fingerprint": "b616a49718d60e47ff248750bffeb79d18f4d6906a12cbd5601bc8ae924c1009",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L20_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L20_H06.json.gz",
+      "archive_sha256": "720479418ca51a0922468fc46d13c350e099805864061283ed13ef075913291b",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "37a5bee232ce5ff95f470ff2e5667e448d9af3ffaa2b9588d161174cfc3c9d9c",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "34222562256f572765d7adc9d735c0675e61ab2c865cac1c82f70e8c0ea3290f",
+        "2": "9b1d135293d4b49cd2df7764e4d419f4eb303c36e99f24e297c5a0f2901325ec",
+        "3": "d8f95518a2ed43b39c3206f51b3575a7325588b1b76821f3ae325e8cdd43385d"
+      }
+    },
+    "84456e79681021dd1a470e275a3376a9a162fcb7b7eca96713bc35daaaffe25c": {
+      "name": "mix370_A50_L25_H02",
+      "fingerprint": "84456e79681021dd1a470e275a3376a9a162fcb7b7eca96713bc35daaaffe25c",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L25_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L25_H02.json.gz",
+      "archive_sha256": "73cb7c2fb2a41fcf70e353df7fe4f21626174538cd2c6bf6cf4090e9498eaf08",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "a4e7f1ba7c7f0837aaad6a4cd7b37da910c3723790a875b8c6944296b68e2a86",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "fc0fb6f89d50f51081985344dc2740bf87fbc803a7d4eb1c14ecb3fb0ffa1dd2",
+        "2": "18c48eeb471115846d270f355dc2e553664c988ddb147555df77585e02172051",
+        "3": "091c9d3142c956d5181fa0429e8fd23fdc8b36463d76c32e1533e6a56ad481ca"
+      }
+    },
+    "023be7260ddcece6be0898e98a0cb2b07c00615a083b2f01860f38f9be51ff5f": {
+      "name": "mix370_A50_L25_H04",
+      "fingerprint": "023be7260ddcece6be0898e98a0cb2b07c00615a083b2f01860f38f9be51ff5f",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L25_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L25_H04.json.gz",
+      "archive_sha256": "06161630f856be2c3e96d26182f29396063d7bab7a6c4a47980553e460e58aca",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "4655915b0166d821bc2f17ec9cbbc81a34889605195e7a259386b1a0ba9310ba",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "0c43fbc0d0c9a8e90191e278a6751b5e624ecb5d9da8d4301c167b16e72d82c1",
+        "2": "e2558e3fe2ead9b8aec26a52a21df5b08ed0837ae4fbccecde7f2fef4a42446f",
+        "3": "04897733e6938f6ec4681badc41a26f2194d21835e564aeceab373f6d1fa538d"
+      }
+    },
+    "af62f7a5d6ba5b032ce6356b8cca9a275fa176c5d09dcc69bd697644d92b3c5d": {
+      "name": "mix370_A50_L25_H06",
+      "fingerprint": "af62f7a5d6ba5b032ce6356b8cca9a275fa176c5d09dcc69bd697644d92b3c5d",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L25_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L25_H06.json.gz",
+      "archive_sha256": "3c70c529c8c82d0cc211c72ee210708a6689d8a84cb65995350d4fbf0e98e4f5",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "b380bd65ee3df489d6cf470a63ad37a6616ee165b5d56733fe5da15e009a192e",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "2355cb24457da4e722d74f8c23453c43cffa5ad070f4a6a8bfbc8981652be01e",
+        "2": "9ecc03036f57ec0248c186fcd7791e6ad1389357915dccf526dee18603b46cf6",
+        "3": "9543f5e514e9c62b5d09063e652a60f7fd27035639f053f8ab7d80d2e91af75f"
+      }
+    },
+    "cd740c90b6773a1fb0d5a4736af56a396d38acab0e9fd54e59937d34938ec9a9": {
+      "name": "mix370_A50_L30_H02",
+      "fingerprint": "cd740c90b6773a1fb0d5a4736af56a396d38acab0e9fd54e59937d34938ec9a9",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L30_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L30_H02.json.gz",
+      "archive_sha256": "b92f15494bbd9690511ead2ac12261ec27692b58f8d5b11644a6b63a071a04e1",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "9e73c6462c81d33be9b409aa93df13f83095968c194febc81f3227be8b228807",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "7609f3e16d8f1315343f0253cf7ebf894526e310be338816accb6c8584a72fc7",
+        "2": "6dd722d9364efc51a5fd6687ea1eb87ee54041931a12c95f431a96a1b56339cc",
+        "3": "ddd37d3000de1a08e3843964447f9833ab79c0d1b24cd6397e0bbe56ee48afb4"
+      }
+    },
+    "4d5fcee1ca60e8df6d38921b77bc011bd123f79494c4536140572b92414c5423": {
+      "name": "mix370_A50_L30_H04",
+      "fingerprint": "4d5fcee1ca60e8df6d38921b77bc011bd123f79494c4536140572b92414c5423",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L30_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L30_H04.json.gz",
+      "archive_sha256": "803835195dbb7ea8329b01e6877684c0f98508ff66a119ba912aca97d15bd82e",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "24ffbc7cb454fa2a5c23035a0dcaa889e4f994965f802f1d77c19ac70fa7fa5a",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "89d5e51908b60b96dc3c9c880d5abeae6e823df3f5b0f96f7ea3d68aefbc560f",
+        "2": "b139e3c76272a652c343c8c9216fdb77cb9febe76a2534f5ff7a2eada07eafbb",
+        "3": "df44996656e77d752bda4988ea2d0ee57834d96c9bde1cddfa8173981a8f7cfa"
+      }
+    },
+    "86a10703d510ffd8062fd19b3b8d13b39c4e2659ec8c37705ca29578f1bdc424": {
+      "name": "mix370_A50_L30_H06",
+      "fingerprint": "86a10703d510ffd8062fd19b3b8d13b39c4e2659ec8c37705ca29578f1bdc424",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L30_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L30_H06.json.gz",
+      "archive_sha256": "80ac44ceae46b42b41e7db9c0ea2b6016e4699c0e8c088519e8ab03d3dd97b7b",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "2fb1a9f1b0d50b2c2442e2a0d899e31c5ad1e0c4f2d8d56c95266517ec4cf3d2",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "1b70f113dadeb00a47e0bcc8bffe6206ccc05efadc21e3bfd37910b0488d02f7",
+        "2": "6c711d127a0fcfa71d11460216edbe592198a5768edd9941d8eb8028dbf1b93a",
+        "3": "11eca38b28c15d1226cd4da2e8056572ab03eb825468525fb3321fe4d62bcff1"
+      }
+    },
+    "678043e0268c9bb508b832ee749520e7d78515ea5a8df78ca5ab033ab3b1de35": {
+      "name": "mix370_A75_L20_H02",
+      "fingerprint": "678043e0268c9bb508b832ee749520e7d78515ea5a8df78ca5ab033ab3b1de35",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L20_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L20_H02.json.gz",
+      "archive_sha256": "519595f741161b6737f6e747b47ec52717eb422f73a376de49a4893c6aad8799",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "ca285599520574fb1cf992a6ad8110eb930e04d63e56dfb59f3c912686be09e1",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "ccbf4d91aaf17329e6d21b54dc5cbd2a1b65f0df798d6176d55b502b0d26909d",
+        "2": "c38861085bb5e94b524488839f6bd10994010da1201e66d7f8d2542cfbb342e9",
+        "3": "70db63a7214f20bb1361f67460f4f57eecb2dc6a399ce1601304ce11bd9ac056"
+      }
+    },
+    "25a9e183da101051fd8db7c705f252cd6df312bb1af1b93d5036ac0c4092bfd3": {
+      "name": "mix370_A75_L20_H04",
+      "fingerprint": "25a9e183da101051fd8db7c705f252cd6df312bb1af1b93d5036ac0c4092bfd3",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L20_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L20_H04.json.gz",
+      "archive_sha256": "c7fde22d8b753552ade3c0d8d29cad9a14fbf5efcaedf645823b3b7856065f50",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "2a10477d74d6de00f757da6ee5235da5b96903743fe6cca002a825d6b56891cc",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "e6ed21e4b2352cbd6cfed7411b8eeb666d751e2b548c620de5119d65eaa9de30",
+        "2": "53032d4ce27276fc1024bafaf7203964ecb42ecb68ccf7cb61218cc2345c197a",
+        "3": "85aeaadb3cbf7d1ea15433e92312af006718f16db7b3931796320cb8d926d017"
+      }
+    },
+    "5ba18847e7352834d20ea11e9a5508589121a9537ceeb9aa90ae13c01d7c3b04": {
+      "name": "mix370_A75_L20_H06",
+      "fingerprint": "5ba18847e7352834d20ea11e9a5508589121a9537ceeb9aa90ae13c01d7c3b04",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L20_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L20_H06.json.gz",
+      "archive_sha256": "58014df77112ed7b7efc1f0157df538a84f7bb6b254ac2049cdf5d0fa48fa9e5",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "b4f4623f7d336eb4b7121d4eb679cf19045dc15f438940b4da7f04d8c4f0ee5e",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "2108fdb339882f7c795322016fbd711c81687374e27cbf385c6a3062aa6916e1",
+        "2": "56de0e0651d846195d70f23a336809bf007a4a5aae21d1d2118ee72e27d06986",
+        "3": "12e09a7094402673501bbedd28200afeedb25439d685a7797e5a9f843bcb2aeb"
+      }
+    },
+    "f2429cda98d8bdd3b838817b3f06c3c3abc69a8c7f47c098b77d5b8fd554a9c8": {
+      "name": "mix370_A75_L25_H02",
+      "fingerprint": "f2429cda98d8bdd3b838817b3f06c3c3abc69a8c7f47c098b77d5b8fd554a9c8",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L25_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L25_H02.json.gz",
+      "archive_sha256": "2b16725953e87a7a37e1c46d2b2a9f6f241bb1e8335eb3308b2954db9ca5e289",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "32c53c278a7c77f9be830d3d35ea89d1c3cf5f12bda2282ca39df80b546928b4",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "f43afbf0a063f96c9d0b38b0f76c36b025e30469823e289aa0479ae26102b48e",
+        "2": "b2c994202db173d712c04ec71aae91a35a7f2ee8be40fef75f9575296a236974",
+        "3": "528973da1a1d05583e580a15ef68241ec9bea99f5d3cd653625828a132c6816b"
+      }
+    },
+    "bdde59199bf29d3d4a1c3f312dba093e45880a29b697406ed6ad1921f13cbe7b": {
+      "name": "mix370_A75_L25_H04",
+      "fingerprint": "bdde59199bf29d3d4a1c3f312dba093e45880a29b697406ed6ad1921f13cbe7b",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L25_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L25_H04.json.gz",
+      "archive_sha256": "2f9ea057d5658b9beb62b84acbf470e1d80e1786b54d101e26c578053b719132",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "6941895ed938f737a7165e778a537fa9b6defe1279a09c9eac07f57f79fbb8cc",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "a474b7fe58790a662c390b5f10ad46aee32cc813565eeefa8e1c0717ba429b18",
+        "2": "2c5d5006b13ff6e733525ce73f55015ac3831118c7f16835724b23c574ffeed4",
+        "3": "a16581643e77bd40baf847f2249de6c2f093e7dbee48a2b7afb7c4da857468e2"
+      }
+    },
+    "c9ad7ece2731cb3c53cce01c6a5c349d5d93f5d470cb2ff5646feedd040ae6fb": {
+      "name": "mix370_A75_L25_H06",
+      "fingerprint": "c9ad7ece2731cb3c53cce01c6a5c349d5d93f5d470cb2ff5646feedd040ae6fb",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L25_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L25_H06.json.gz",
+      "archive_sha256": "292eb0d506bb44d86cf5bba9d4a9e737d5f8fbc60199a52ff770c40f1d26c76e",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "cd6ca7d19a086cfc0d658587902534121a9fc68ac9e9908c74c8b7b5e5e0bfc5",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "c95803830e4e4c95749d109288cf5b5a86e632803af8c0f92bed725cf30b188c",
+        "2": "d911910f30a9c5c6b93034d66afa7615c3e6e7e5e890d802369f861a52aaf641",
+        "3": "b941e903b24e6d3bc1c9563ed97992e8ef4a92516392ed04662f5523eb2e3415"
+      }
+    },
+    "fbc90ed5525157fd8ea8311cd657c13f045a8164b8ad4394d34a2250b521af27": {
+      "name": "mix370_A75_L30_H02",
+      "fingerprint": "fbc90ed5525157fd8ea8311cd657c13f045a8164b8ad4394d34a2250b521af27",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L30_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L30_H02.json.gz",
+      "archive_sha256": "211245346d59562a4e52334bb4afac518e45a4729cbee904b2d5c3b0f1b527aa",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "1a6cf3641dc5bfe50123d49ff6aa5e81a5a3d29470b79dd2948b44eb7d4c3a42",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "64bca4d71acdc686feda3f9ca9b6c6a22a61cddce141d23ca0d01e3cfea9ff64",
+        "2": "43df8fb93415760b7a415c8f0a4bc978172c19e0ea70feaaf23dad3be9738533",
+        "3": "b9465ec78fc4cf448e259c9a696885c814c40ef1e9496c4eae28e1458ec396e6"
+      }
+    },
+    "fc8b023c51d03f838400ce9e2d7d5a7bc1e588d964266708e7554d5130833d1c": {
+      "name": "mix370_A75_L30_H04",
+      "fingerprint": "fc8b023c51d03f838400ce9e2d7d5a7bc1e588d964266708e7554d5130833d1c",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L30_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L30_H04.json.gz",
+      "archive_sha256": "84469e2495ab06eecd1e15ea03e838dfc19aa23dc41096d62baecae88931edee",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "c1c8d9f5829dd3f85ccebb401ae04d2e51794996c981711b440d9f351773fcbc",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "eddfb0467a388a161204c3e79f63f9800d0b32e695c24ed1086e9dc9a5979297",
+        "2": "64db5ab7a4eb2630fdfcce107035f0942194c72520d5a70ecb761ec55b2610cd",
+        "3": "89ecdd74897916bfcda0673fee88de72c997b2a1db91932f72acffd3e05de5ec"
+      }
+    },
+    "8282048a58057cf56dd1e4ca196ac8d7a5df460b4d3e75ace361ae23169bcfff": {
+      "name": "mix370_A75_L30_H06",
+      "fingerprint": "8282048a58057cf56dd1e4ca196ac8d7a5df460b4d3e75ace361ae23169bcfff",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L30_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L30_H06.json.gz",
+      "archive_sha256": "d6cb5c8b41cc290cb2aa614f9dcb97c683c1873848c2bce4a1e266f72de83009",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "b2150e41e8d65ab564b2fd36b516de8325fd1500113c6872961a2424e3e85027",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "1684e2a0874b77fdd834b89d986ee5cc93d9e70bd37fe4cad524a19f911ab615",
+        "2": "c91198b307d9da866c4ebc166742d2f3591c2a7790e194248ff5fd6c4250c776",
+        "3": "c6219a46247ac4ada4ba3da40ad884d67e8190e7516d3d329ad5a46701d5d7e9"
+      }
+    },
+    "1789c0d0be2919f0ffa423bd21f611586ca00d7f4dc600a396713ba8bc80e63b": {
+      "name": "mix370_hold_A25",
+      "fingerprint": "1789c0d0be2919f0ffa423bd21f611586ca00d7f4dc600a396713ba8bc80e63b",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_hold_A25.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_hold_A25.json.gz",
+      "archive_sha256": "1f88ba804be76a0cdbce6c83d28c6e7a0f3c7528d36a22270198761bb3a232bc",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "benchmark",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "e09675afb8350f77cccc80acb34550b91556fb15066180e688fec45f6c3f6649",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "c22d0177709a447bafedb74920c061bb98121371efe5164a7a125d0779b2ae46",
+        "2": "d65201a0fe06db136f9e8bbac278f6423ab22b52b94d1f6df8c80c5cf6cce854",
+        "3": "a59c01f5c822c04aaddc90a24c89d976efd4560d60a08ae3f81d3d6d7f330fb3"
+      }
+    },
+    "9e7f52badf5c062471a3bede795e1a6f6689165e6cae96755c3d2797224b5d5f": {
+      "name": "mix370_hold_A50",
+      "fingerprint": "9e7f52badf5c062471a3bede795e1a6f6689165e6cae96755c3d2797224b5d5f",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_hold_A50.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_hold_A50.json.gz",
+      "archive_sha256": "656da25aab759c023d9381e25a89cec286e19b064ba64bc575dae8e344d8b39b",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "benchmark",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "2a22d6d2c7ab55ccf4d68c563a072831904aa3c6be8628db2514f086ac8bc518",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "811819b5dbf8c360a0da04017f498f2d45ec3098b140b087e976f87455d9bb20",
+        "2": "d8faf2d9bc9c9b3fcf28f8c1072e540a857b2a9dd0e79583013436a063a0ecb0",
+        "3": "b2cae6c08d95e451ff0211db47c3e133a73ba3100eacce0faeac38e83d6e959f"
+      }
+    },
+    "2799c2f51fcd1e784f239803aca077cdcb94ff9200223e10250fafe2bcb2ae03": {
+      "name": "mix370_hold_A75",
+      "fingerprint": "2799c2f51fcd1e784f239803aca077cdcb94ff9200223e10250fafe2bcb2ae03",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_hold_A75.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_hold_A75.json.gz",
+      "archive_sha256": "b33a0a383cfd6185809ac1589c483b4dab0fab9d6aa42a79d95f8a3461bccb54",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "benchmark",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "1953b38ff58c68a16e392d583a97f2d05f9d6251926fc4a437dd2e934a2d7f0d",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "9a290df96f17058a37acc534cab863340e8ac870b5436bd2578119660b7049e1",
+        "2": "3bce2a981a39733a1846a49c2bd1ca1f99afca036d1b1a428b40670e1b02b1d1",
+        "3": "d1934e88e52c0786f3dabc2f40e10fcb6d7580f1e9b58f3fd22e173ae93492de"
+      }
+    }
+  },
+  "read_only_anchor_references": {
+    "mix370_A25_L20_H02": {
+      "name": "mix370_A25_L20_H02",
+      "fingerprint": "46e42ce5a6e42a84616e0d77d6f367887441cbc04ba6e34f7a78bb8ddbf8ec36",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L20_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L20_H02.json.gz",
+      "archive_sha256": "bb425c3b710277fec472215bcd5399b066f462fbea32dc317abd57774a77537b",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "d23780d8f3c80637fff655008a893bc8afdff06b306d4714acbc6beb78e9e609",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "d9bca15a6a509afff3e29f733a76165d782b22233f78cd62dd8655ba0dfcc8f1",
+        "2": "25ea0df07de729fcf4a723a9d9e90adf727ef031ba56ab215bdbf67e5413a233",
+        "3": "91025e97aa8d5bdb2a2ddae6ae2088e892df1d1c2991dd1d275391238215b291"
+      }
+    },
+    "mix370_A25_L20_H04": {
+      "name": "mix370_A25_L20_H04",
+      "fingerprint": "75f4477d54fc61fee51ee87d9f1a1bce59eef89f6269210a61edcba4a761a07d",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L20_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L20_H04.json.gz",
+      "archive_sha256": "e9d9643dc1f733c0f064a4f0dc5bb9605b7d7d77784f155475766a7caade86f4",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "4be991d20d75c49447b386d4c4f776260ffe947f7531604d5d6e0384229357b4",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "e0ad68202da51ee2cc07e36aa2ed989afa785536576d642981f63e7507923800",
+        "2": "b84f223783adb5ad21bf47c9da50cb25e24265a9b430da779a5a180312fb6624",
+        "3": "c097a2a7f39a39dc02e4e57335b206a052213b74483c870e800a1030f34dfb4f"
+      }
+    },
+    "mix370_A25_L20_H06": {
+      "name": "mix370_A25_L20_H06",
+      "fingerprint": "0f82e3916d8d0a40ac0d9c8f5b8b5eea6e11568cf6f9667c9e982fe0fdf04281",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L20_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L20_H06.json.gz",
+      "archive_sha256": "3e1c2f282c12da96c457da416e4f215ab3fe06a7e018822f37a5e84cbb5e1e07",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "700c866685acae509b2152bb1cbde5621ea22837b164dfac7dd48b35ee96cb4b",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "77081f3f073097c988534c1b6ebfa5e4b10b1dcde84b23cbf99b84cab241cb8e",
+        "2": "f2290601615ed00a347395a1e917cd839620d6be21b8c57885eb9f10868f1ba1",
+        "3": "019ccf15a696fdcb2fe0ccb52858697d207a56367966904ec8f85d308044a478"
+      }
+    },
+    "mix370_A25_L25_H02": {
+      "name": "mix370_A25_L25_H02",
+      "fingerprint": "e7ed63ad4c330ff710bbaeddc14260831d33fbc61fc3db7e5cbe282d109ed1ab",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L25_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L25_H02.json.gz",
+      "archive_sha256": "5f75443b55792dcc9b8a5aeb0c13367f950d39667768981946af23341185fcb1",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "54412853d64480b1d058c16b694738f623e04da27a2d40fc5822a6a449eeb7fc",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "8be04e0d52250273215643e9b3d6da7c79f8d043032e97e8171ce86a31a67a07",
+        "2": "05b0dad75c2b5e62d22522f2d1dbb312c4bcedad5de599945b9c4b71f3363e62",
+        "3": "f4ce09d8fcc7208b0699c222e0e7a30f0d99650bc85d51e074d52aa59075bce1"
+      }
+    },
+    "mix370_A25_L25_H04": {
+      "name": "mix370_A25_L25_H04",
+      "fingerprint": "b44e9956b6d47af243274d66df382d74765282b2c1cf1b9104998bb1d42644d0",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L25_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L25_H04.json.gz",
+      "archive_sha256": "2f479ea98a1a6456949dede42fe1bc5913a83929d5dade4d06487b009a8c0ae1",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "12b6687416f7723fae3f925ee20c82c7a706be43211eff707a8671dc80db4866",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "c241a00068c5a92a984c8c3b97b3ce8c093affeb9d6d0c5061836240ca12a953",
+        "2": "62858d07f37183f3935dbe6761577e3b3cf3a1a6da54970166c451f425a2d216",
+        "3": "2dd49b5366bc1aaf50e8d8c7b3e6dd9b6df7a34d1dcb18ea795057b51321b01e"
+      }
+    },
+    "mix370_A25_L25_H06": {
+      "name": "mix370_A25_L25_H06",
+      "fingerprint": "9492269b33934c66bec440fa699345591ef22a4c299753ed8be38bdbe7932011",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L25_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L25_H06.json.gz",
+      "archive_sha256": "475e56c32c0adafa76c08ed958ca7bfc495c584623eb9367d11be1e93953bba2",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "0c538179853b6e5715fed0dfcf4d7aa566db2d524e03d728e4306b306b8cfacc",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "79278a70e7c79474cada0a48b84d401b5d08a4acdcd4c3cc3a79d075788d1261",
+        "2": "223e8bb5de619f1df72c8f54b29502e6d6d4f31a265d63a8602aa8e3ad64329b",
+        "3": "52d737f23ce6b03940fab3ae3bdf635e0354b5e7645b70aea0891c36f30d5ba0"
+      }
+    },
+    "mix370_A25_L30_H02": {
+      "name": "mix370_A25_L30_H02",
+      "fingerprint": "007e900254f2fde284619a3f365dec7fd8e37c124d59dbe4ec5d9aabe939db09",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L30_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L30_H02.json.gz",
+      "archive_sha256": "d616178dffea297d4257661aa8efaaacda1671b17180496bbbf2a30b843b0bd8",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "1f42ecad77f19b3e0b6cf30e4b8d044758c542b45c2f2625de76dcc0b33c989c",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "a9bb6c7a52366e0c117e33ca342eeccd14b8bc04e83c099a679dc37a8172dde3",
+        "2": "9e1f52eb96ee0d50cd46004a6959770e4738b923dccba98d77ddcde4c6379461",
+        "3": "7afe3a77920f80d1cb7b3989ac6ee39f944a39bb34d766ecfc13482b77bcd5d2"
+      }
+    },
+    "mix370_A25_L30_H04": {
+      "name": "mix370_A25_L30_H04",
+      "fingerprint": "d5eafeb6301d84225c380a9885b82ddf27943641a0c5c7cf9a0b4473627b8230",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L30_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L30_H04.json.gz",
+      "archive_sha256": "fa8b32833cb4408c921a20b3304d27b4cd666f84150ee3cf9b8fd46ea2aae467",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "5536fbdc87006f97339dd745e4be1696e439f5d6b41c09928ad2b53757814f30",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "afbb16db506b754f048a6034688c915f39168dc82885dfa580a694bbb59071ef",
+        "2": "81393d09f3777f688a690c8234dc6918ed57c074d8bb23c26663896eb4410a46",
+        "3": "37d51c44e63351ca079865ffcfdab050310daf86d60bb51843ca058dadeb2feb"
+      }
+    },
+    "mix370_A25_L30_H06": {
+      "name": "mix370_A25_L30_H06",
+      "fingerprint": "3941dcfb5b2545d11478e15354b943623c45c66c0a324593cb1346eaa0ba0092",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L30_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L30_H06.json.gz",
+      "archive_sha256": "c2287f568bb8664c8ad4b74f5d0d56b0ea7f802c8d2f1a0d4712afa80e6bbf7f",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "e0dbc90bb59a2535dbb012ed51a592ff5a767f5a32e5112386fb3502d65eb475",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "ebb284971e8dfa27b3af3779f6cab59b8b13f96d3bfe1a7226bd62ec27666e22",
+        "2": "8bb3e1d1ada966fd482263aca47dccf990af3d49237167aa73b189dc63851969",
+        "3": "34637db47507a4f04c315f232965cc87eaa08652baf75fbaa7686ae84ca7e42f"
+      }
+    },
+    "mix370_A50_L20_H02": {
+      "name": "mix370_A50_L20_H02",
+      "fingerprint": "4da0aed8ed314c6dca743cdb9f07740010f63cf244b3e2f27f63a958b3cbc46b",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L20_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L20_H02.json.gz",
+      "archive_sha256": "e23b052414ca4dbc91f154883bd42fac6cb06b6b198c3340cb96c09bca923bb0",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "29231c9ece2bc5e5cb8eb4e8a9d96468333274643664b335685de40a468d9f46",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "93daf8573612c95fa92560a91fcd91b75e43450e4ddbe718299902f5eeb0dbba",
+        "2": "07f8942d2f0cb6cfd2b41d129a219f6919af274ee3e27ffd7145bcb06ec5c927",
+        "3": "726e5e3f811fb1868669c108bd23e51a492e3d7efff079eb72a73531e8ff5e3d"
+      }
+    },
+    "mix370_A50_L20_H04": {
+      "name": "mix370_A50_L20_H04",
+      "fingerprint": "7081689d779008e715067be7f3566dd46be7ea07c2818479051ffd4eb66da9e5",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L20_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L20_H04.json.gz",
+      "archive_sha256": "71ddddafccd26436e3a4adf5b6db691aea464294e39dd97f832c1dd105226f07",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "682be5230dcb424b5b404271f4cc556be4d8bcf19110aef56e7186be0cb7cdf7",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "3ed188da3d33211c4ab2f239b4cf8c3b36c9f4e89a4d493d34cc4a2f822f5b9d",
+        "2": "2186181fe52ca02ef9f93870fc2be4198ebc3e132a8b87a7cec52c7438928cd2",
+        "3": "ee61b300333b9677ee47780d5c69e5b1ec3468d23b9220e40ecb7be15dc22476"
+      }
+    },
+    "mix370_A50_L20_H06": {
+      "name": "mix370_A50_L20_H06",
+      "fingerprint": "b616a49718d60e47ff248750bffeb79d18f4d6906a12cbd5601bc8ae924c1009",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L20_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L20_H06.json.gz",
+      "archive_sha256": "720479418ca51a0922468fc46d13c350e099805864061283ed13ef075913291b",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "37a5bee232ce5ff95f470ff2e5667e448d9af3ffaa2b9588d161174cfc3c9d9c",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "34222562256f572765d7adc9d735c0675e61ab2c865cac1c82f70e8c0ea3290f",
+        "2": "9b1d135293d4b49cd2df7764e4d419f4eb303c36e99f24e297c5a0f2901325ec",
+        "3": "d8f95518a2ed43b39c3206f51b3575a7325588b1b76821f3ae325e8cdd43385d"
+      }
+    },
+    "mix370_A50_L25_H02": {
+      "name": "mix370_A50_L25_H02",
+      "fingerprint": "84456e79681021dd1a470e275a3376a9a162fcb7b7eca96713bc35daaaffe25c",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L25_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L25_H02.json.gz",
+      "archive_sha256": "73cb7c2fb2a41fcf70e353df7fe4f21626174538cd2c6bf6cf4090e9498eaf08",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "a4e7f1ba7c7f0837aaad6a4cd7b37da910c3723790a875b8c6944296b68e2a86",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "fc0fb6f89d50f51081985344dc2740bf87fbc803a7d4eb1c14ecb3fb0ffa1dd2",
+        "2": "18c48eeb471115846d270f355dc2e553664c988ddb147555df77585e02172051",
+        "3": "091c9d3142c956d5181fa0429e8fd23fdc8b36463d76c32e1533e6a56ad481ca"
+      }
+    },
+    "mix370_A50_L25_H04": {
+      "name": "mix370_A50_L25_H04",
+      "fingerprint": "023be7260ddcece6be0898e98a0cb2b07c00615a083b2f01860f38f9be51ff5f",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L25_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L25_H04.json.gz",
+      "archive_sha256": "06161630f856be2c3e96d26182f29396063d7bab7a6c4a47980553e460e58aca",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "4655915b0166d821bc2f17ec9cbbc81a34889605195e7a259386b1a0ba9310ba",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "0c43fbc0d0c9a8e90191e278a6751b5e624ecb5d9da8d4301c167b16e72d82c1",
+        "2": "e2558e3fe2ead9b8aec26a52a21df5b08ed0837ae4fbccecde7f2fef4a42446f",
+        "3": "04897733e6938f6ec4681badc41a26f2194d21835e564aeceab373f6d1fa538d"
+      }
+    },
+    "mix370_A50_L25_H06": {
+      "name": "mix370_A50_L25_H06",
+      "fingerprint": "af62f7a5d6ba5b032ce6356b8cca9a275fa176c5d09dcc69bd697644d92b3c5d",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L25_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L25_H06.json.gz",
+      "archive_sha256": "3c70c529c8c82d0cc211c72ee210708a6689d8a84cb65995350d4fbf0e98e4f5",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "b380bd65ee3df489d6cf470a63ad37a6616ee165b5d56733fe5da15e009a192e",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "2355cb24457da4e722d74f8c23453c43cffa5ad070f4a6a8bfbc8981652be01e",
+        "2": "9ecc03036f57ec0248c186fcd7791e6ad1389357915dccf526dee18603b46cf6",
+        "3": "9543f5e514e9c62b5d09063e652a60f7fd27035639f053f8ab7d80d2e91af75f"
+      }
+    },
+    "mix370_A50_L30_H02": {
+      "name": "mix370_A50_L30_H02",
+      "fingerprint": "cd740c90b6773a1fb0d5a4736af56a396d38acab0e9fd54e59937d34938ec9a9",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L30_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L30_H02.json.gz",
+      "archive_sha256": "b92f15494bbd9690511ead2ac12261ec27692b58f8d5b11644a6b63a071a04e1",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "9e73c6462c81d33be9b409aa93df13f83095968c194febc81f3227be8b228807",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "7609f3e16d8f1315343f0253cf7ebf894526e310be338816accb6c8584a72fc7",
+        "2": "6dd722d9364efc51a5fd6687ea1eb87ee54041931a12c95f431a96a1b56339cc",
+        "3": "ddd37d3000de1a08e3843964447f9833ab79c0d1b24cd6397e0bbe56ee48afb4"
+      }
+    },
+    "mix370_A50_L30_H04": {
+      "name": "mix370_A50_L30_H04",
+      "fingerprint": "4d5fcee1ca60e8df6d38921b77bc011bd123f79494c4536140572b92414c5423",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L30_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L30_H04.json.gz",
+      "archive_sha256": "803835195dbb7ea8329b01e6877684c0f98508ff66a119ba912aca97d15bd82e",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "24ffbc7cb454fa2a5c23035a0dcaa889e4f994965f802f1d77c19ac70fa7fa5a",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "89d5e51908b60b96dc3c9c880d5abeae6e823df3f5b0f96f7ea3d68aefbc560f",
+        "2": "b139e3c76272a652c343c8c9216fdb77cb9febe76a2534f5ff7a2eada07eafbb",
+        "3": "df44996656e77d752bda4988ea2d0ee57834d96c9bde1cddfa8173981a8f7cfa"
+      }
+    },
+    "mix370_A50_L30_H06": {
+      "name": "mix370_A50_L30_H06",
+      "fingerprint": "86a10703d510ffd8062fd19b3b8d13b39c4e2659ec8c37705ca29578f1bdc424",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L30_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L30_H06.json.gz",
+      "archive_sha256": "80ac44ceae46b42b41e7db9c0ea2b6016e4699c0e8c088519e8ab03d3dd97b7b",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "2fb1a9f1b0d50b2c2442e2a0d899e31c5ad1e0c4f2d8d56c95266517ec4cf3d2",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "1b70f113dadeb00a47e0bcc8bffe6206ccc05efadc21e3bfd37910b0488d02f7",
+        "2": "6c711d127a0fcfa71d11460216edbe592198a5768edd9941d8eb8028dbf1b93a",
+        "3": "11eca38b28c15d1226cd4da2e8056572ab03eb825468525fb3321fe4d62bcff1"
+      }
+    },
+    "mix370_A75_L20_H02": {
+      "name": "mix370_A75_L20_H02",
+      "fingerprint": "678043e0268c9bb508b832ee749520e7d78515ea5a8df78ca5ab033ab3b1de35",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L20_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L20_H02.json.gz",
+      "archive_sha256": "519595f741161b6737f6e747b47ec52717eb422f73a376de49a4893c6aad8799",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "ca285599520574fb1cf992a6ad8110eb930e04d63e56dfb59f3c912686be09e1",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "ccbf4d91aaf17329e6d21b54dc5cbd2a1b65f0df798d6176d55b502b0d26909d",
+        "2": "c38861085bb5e94b524488839f6bd10994010da1201e66d7f8d2542cfbb342e9",
+        "3": "70db63a7214f20bb1361f67460f4f57eecb2dc6a399ce1601304ce11bd9ac056"
+      }
+    },
+    "mix370_A75_L20_H04": {
+      "name": "mix370_A75_L20_H04",
+      "fingerprint": "25a9e183da101051fd8db7c705f252cd6df312bb1af1b93d5036ac0c4092bfd3",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L20_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L20_H04.json.gz",
+      "archive_sha256": "c7fde22d8b753552ade3c0d8d29cad9a14fbf5efcaedf645823b3b7856065f50",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "2a10477d74d6de00f757da6ee5235da5b96903743fe6cca002a825d6b56891cc",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "e6ed21e4b2352cbd6cfed7411b8eeb666d751e2b548c620de5119d65eaa9de30",
+        "2": "53032d4ce27276fc1024bafaf7203964ecb42ecb68ccf7cb61218cc2345c197a",
+        "3": "85aeaadb3cbf7d1ea15433e92312af006718f16db7b3931796320cb8d926d017"
+      }
+    },
+    "mix370_A75_L20_H06": {
+      "name": "mix370_A75_L20_H06",
+      "fingerprint": "5ba18847e7352834d20ea11e9a5508589121a9537ceeb9aa90ae13c01d7c3b04",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L20_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L20_H06.json.gz",
+      "archive_sha256": "58014df77112ed7b7efc1f0157df538a84f7bb6b254ac2049cdf5d0fa48fa9e5",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "b4f4623f7d336eb4b7121d4eb679cf19045dc15f438940b4da7f04d8c4f0ee5e",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "2108fdb339882f7c795322016fbd711c81687374e27cbf385c6a3062aa6916e1",
+        "2": "56de0e0651d846195d70f23a336809bf007a4a5aae21d1d2118ee72e27d06986",
+        "3": "12e09a7094402673501bbedd28200afeedb25439d685a7797e5a9f843bcb2aeb"
+      }
+    },
+    "mix370_A75_L25_H02": {
+      "name": "mix370_A75_L25_H02",
+      "fingerprint": "f2429cda98d8bdd3b838817b3f06c3c3abc69a8c7f47c098b77d5b8fd554a9c8",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L25_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L25_H02.json.gz",
+      "archive_sha256": "2b16725953e87a7a37e1c46d2b2a9f6f241bb1e8335eb3308b2954db9ca5e289",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "32c53c278a7c77f9be830d3d35ea89d1c3cf5f12bda2282ca39df80b546928b4",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "f43afbf0a063f96c9d0b38b0f76c36b025e30469823e289aa0479ae26102b48e",
+        "2": "b2c994202db173d712c04ec71aae91a35a7f2ee8be40fef75f9575296a236974",
+        "3": "528973da1a1d05583e580a15ef68241ec9bea99f5d3cd653625828a132c6816b"
+      }
+    },
+    "mix370_A75_L25_H04": {
+      "name": "mix370_A75_L25_H04",
+      "fingerprint": "bdde59199bf29d3d4a1c3f312dba093e45880a29b697406ed6ad1921f13cbe7b",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L25_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L25_H04.json.gz",
+      "archive_sha256": "2f9ea057d5658b9beb62b84acbf470e1d80e1786b54d101e26c578053b719132",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "6941895ed938f737a7165e778a537fa9b6defe1279a09c9eac07f57f79fbb8cc",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "a474b7fe58790a662c390b5f10ad46aee32cc813565eeefa8e1c0717ba429b18",
+        "2": "2c5d5006b13ff6e733525ce73f55015ac3831118c7f16835724b23c574ffeed4",
+        "3": "a16581643e77bd40baf847f2249de6c2f093e7dbee48a2b7afb7c4da857468e2"
+      }
+    },
+    "mix370_A75_L25_H06": {
+      "name": "mix370_A75_L25_H06",
+      "fingerprint": "c9ad7ece2731cb3c53cce01c6a5c349d5d93f5d470cb2ff5646feedd040ae6fb",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L25_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L25_H06.json.gz",
+      "archive_sha256": "292eb0d506bb44d86cf5bba9d4a9e737d5f8fbc60199a52ff770c40f1d26c76e",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "cd6ca7d19a086cfc0d658587902534121a9fc68ac9e9908c74c8b7b5e5e0bfc5",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "c95803830e4e4c95749d109288cf5b5a86e632803af8c0f92bed725cf30b188c",
+        "2": "d911910f30a9c5c6b93034d66afa7615c3e6e7e5e890d802369f861a52aaf641",
+        "3": "b941e903b24e6d3bc1c9563ed97992e8ef4a92516392ed04662f5523eb2e3415"
+      }
+    },
+    "mix370_A75_L30_H02": {
+      "name": "mix370_A75_L30_H02",
+      "fingerprint": "fbc90ed5525157fd8ea8311cd657c13f045a8164b8ad4394d34a2250b521af27",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L30_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L30_H02.json.gz",
+      "archive_sha256": "211245346d59562a4e52334bb4afac518e45a4729cbee904b2d5c3b0f1b527aa",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "1a6cf3641dc5bfe50123d49ff6aa5e81a5a3d29470b79dd2948b44eb7d4c3a42",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "64bca4d71acdc686feda3f9ca9b6c6a22a61cddce141d23ca0d01e3cfea9ff64",
+        "2": "43df8fb93415760b7a415c8f0a4bc978172c19e0ea70feaaf23dad3be9738533",
+        "3": "b9465ec78fc4cf448e259c9a696885c814c40ef1e9496c4eae28e1458ec396e6"
+      }
+    },
+    "mix370_A75_L30_H04": {
+      "name": "mix370_A75_L30_H04",
+      "fingerprint": "fc8b023c51d03f838400ce9e2d7d5a7bc1e588d964266708e7554d5130833d1c",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L30_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L30_H04.json.gz",
+      "archive_sha256": "84469e2495ab06eecd1e15ea03e838dfc19aa23dc41096d62baecae88931edee",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "c1c8d9f5829dd3f85ccebb401ae04d2e51794996c981711b440d9f351773fcbc",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "eddfb0467a388a161204c3e79f63f9800d0b32e695c24ed1086e9dc9a5979297",
+        "2": "64db5ab7a4eb2630fdfcce107035f0942194c72520d5a70ecb761ec55b2610cd",
+        "3": "89ecdd74897916bfcda0673fee88de72c997b2a1db91932f72acffd3e05de5ec"
+      }
+    },
+    "mix370_A75_L30_H06": {
+      "name": "mix370_A75_L30_H06",
+      "fingerprint": "8282048a58057cf56dd1e4ca196ac8d7a5df460b4d3e75ace361ae23169bcfff",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L30_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L30_H06.json.gz",
+      "archive_sha256": "d6cb5c8b41cc290cb2aa614f9dcb97c683c1873848c2bce4a1e266f72de83009",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "b2150e41e8d65ab564b2fd36b516de8325fd1500113c6872961a2424e3e85027",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "1684e2a0874b77fdd834b89d986ee5cc93d9e70bd37fe4cad524a19f911ab615",
+        "2": "c91198b307d9da866c4ebc166742d2f3591c2a7790e194248ff5fd6c4250c776",
+        "3": "c6219a46247ac4ada4ba3da40ad884d67e8190e7516d3d329ad5a46701d5d7e9"
+      }
+    },
+    "mix370_hold_A25": {
+      "name": "mix370_hold_A25",
+      "fingerprint": "1789c0d0be2919f0ffa423bd21f611586ca00d7f4dc600a396713ba8bc80e63b",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_hold_A25.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_hold_A25.json.gz",
+      "archive_sha256": "1f88ba804be76a0cdbce6c83d28c6e7a0f3c7528d36a22270198761bb3a232bc",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "benchmark",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "e09675afb8350f77cccc80acb34550b91556fb15066180e688fec45f6c3f6649",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "c22d0177709a447bafedb74920c061bb98121371efe5164a7a125d0779b2ae46",
+        "2": "d65201a0fe06db136f9e8bbac278f6423ab22b52b94d1f6df8c80c5cf6cce854",
+        "3": "a59c01f5c822c04aaddc90a24c89d976efd4560d60a08ae3f81d3d6d7f330fb3"
+      }
+    },
+    "mix370_hold_A50": {
+      "name": "mix370_hold_A50",
+      "fingerprint": "9e7f52badf5c062471a3bede795e1a6f6689165e6cae96755c3d2797224b5d5f",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_hold_A50.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_hold_A50.json.gz",
+      "archive_sha256": "656da25aab759c023d9381e25a89cec286e19b064ba64bc575dae8e344d8b39b",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "benchmark",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "2a22d6d2c7ab55ccf4d68c563a072831904aa3c6be8628db2514f086ac8bc518",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "811819b5dbf8c360a0da04017f498f2d45ec3098b140b087e976f87455d9bb20",
+        "2": "d8faf2d9bc9c9b3fcf28f8c1072e540a857b2a9dd0e79583013436a063a0ecb0",
+        "3": "b2cae6c08d95e451ff0211db47c3e133a73ba3100eacce0faeac38e83d6e959f"
+      }
+    },
+    "mix370_hold_A75": {
+      "name": "mix370_hold_A75",
+      "fingerprint": "2799c2f51fcd1e784f239803aca077cdcb94ff9200223e10250fafe2bcb2ae03",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_hold_A75.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_hold_A75.json.gz",
+      "archive_sha256": "b33a0a383cfd6185809ac1589c483b4dab0fab9d6aa42a79d95f8a3461bccb54",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "benchmark",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "1953b38ff58c68a16e392d583a97f2d05f9d6251926fc4a437dd2e934a2d7f0d",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "9a290df96f17058a37acc534cab863340e8ac870b5436bd2578119660b7049e1",
+        "2": "3bce2a981a39733a1846a49c2bd1ca1f99afca036d1b1a428b40670e1b02b1d1",
+        "3": "d1934e88e52c0786f3dabc2f40e10fcb6d7580f1e9b58f3fd22e173ae93492de"
+      }
+    }
+  },
+  "read_only_hold_references": {
+    "BTC500.0": {
+      "name": "nativecapital370_BTC_W2500_hold",
+      "fingerprint": "5495efd3f4fa6781b584543069b72d08b567d3d35df3495a07955d144086c5d3",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_BTC_W2500_hold.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_BTC_W2500_hold.json.gz",
+      "archive_sha256": "1da59495858f6dd97719e415f2ec4a51bf56ae864c43fe7d721463a0c7c309ac",
+      "scope": "native",
+      "asset": "BTC",
+      "role": "benchmark",
+      "capital_usdt": 5000.0,
+      "spec_sha256": "cd69e9c3c1156219ed19452c366db97545a00cecc931a8ffe51e19a299508c82",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "7a30702cf9842a549c31139652f6d01efcc0137abad711a35e6608c36e2d6ca8",
+        "2": "994d8f75bcfaf5ee7c8135e59ce54616178ca51b1bf4869d3767f15a671dc3fb",
+        "3": "e1e6714a65c4f16459ebae9b20f204ddfa0d099126cc07c31baeea1041c9c61e"
+      },
+      "fixed_entry_notional_usdt": 500.0
+    },
+    "ETH4500.0": {
+      "name": "nativecapital370_ETH_W2500_hold",
+      "fingerprint": "fd96b9d8250328e033aa2b40460ef01a2d7cc57a22a12ad0f5abf111ade3323e",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_ETH_W2500_hold.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_ETH_W2500_hold.json.gz",
+      "archive_sha256": "b15752d16d0f9001d61d7bd2aa08ca5a4543d59f0f67a63cdca03d44c8ccbdd5",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "benchmark",
+      "capital_usdt": 15000.0,
+      "spec_sha256": "c8671c77caa632b38ce7e0f0c8ce636f4fd0a35c55ce2638535ff0a8fdf56d7f",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "06f0592be344475649ad1b3e243db8d6a076581d37c7d0d63df55de73ff1c65b",
+        "2": "3870fcbcc78d0d196a1760817bd8d94b8c5adb3305b9d0b2d2639cd668ded48c",
+        "3": "6c3cd4bde84300f42616cecc0e266bae347f7b3d591a927ebf0214bf2398f3ae"
+      },
+      "fixed_entry_notional_usdt": 4500.0
+    },
+    "ETH1500": {
+      "name": "trend370_ETH_hold_N1500",
+      "fingerprint": "ee1898ce578fce1c1f47fcf08f320d0c0eaf9ff7ba4dc78c81102d11a319bdd5",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_hold_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_hold_N1500.json.gz",
+      "archive_sha256": "4d732bcdc7a9910325854852feb05878879c308cc0c97f10dce50db272556e0e",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "benchmark",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "a8be5b83823eb67f0f746d6ab06dda0afb140e682b0fdd17a89b0976b0069084",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "6c81eb1a1a9ece1cbcb579c1eedf207dc7cdc174738e4dc7c82a3f1cf20b5ff6",
+        "2": "03faf8b9ed01433b5b9c312a1b8945b7b2371cd0bc0231c49e1ba3deac3fe02d",
+        "3": "c90b0a6ed37d8d1ef4d7e4c4ec7d5c19d127c237a33323c809983cadf1e196d7"
+      },
+      "fixed_entry_notional_usdt": 1500
+    }
+  },
+  "fixed_BTC": {
+    "name": "nativecapital370_BTC_W2500_momentum",
+    "fingerprint": "f2c640ae6c1892ae78189209668b67fd27b92353d6a545f28ba9bafba22ff744",
+    "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_BTC_W2500_momentum.json",
+    "archive": "research/experiments/20261029T232932Z/results/nativecapital370_BTC_W2500_momentum.json.gz",
+    "archive_sha256": "c5a5c66c0f60e9d806821660626f60987fc47e808bc0b15674d5b6995c5ce162",
+    "scope": "native",
+    "asset": "BTC",
+    "role": "component",
+    "capital_usdt": 5000.0,
+    "spec_sha256": "aecb5bb62c0b2e87d9aac59d525fea5a8b0616d8413ba75b7a50c0f61fde8945",
+    "report": "research/experiments/20261029T232932Z/report.json",
+    "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+    "original_status": "rejected",
+    "NAV_sha256_by_cost": {
+      "1": "bfef5ccc91b294fe76a2407ad63fab97e0040e2925bbc24775fb074124ad236e",
+      "2": "adfea61013d6897312876972ea20fd2f88482b038f8d441922851c6a5f6445b8",
+      "3": "8e16e8a1df7aa3b395775864b47e2ddcab41dd786887881bf0a3790f745aca11"
+    },
+    "fixed_entry_notional_usdt": 500.0
+  },
+  "fixed_fast_ETH": {
+    "name": "nativecapital370_ETH_W2500_candidate_C50",
+    "fingerprint": "2dcb86cbca6740649265e3bb52dd4c309fe882f439403ca309fb0145b302a3ee",
+    "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_ETH_W2500_candidate_C50.json",
+    "archive": "research/experiments/20261029T232932Z/results/nativecapital370_ETH_W2500_candidate_C50.json.gz",
+    "archive_sha256": "538c21351d657e86426c4047cb282b4ea1d7118a2060b15fad090efd4cae90dd",
+    "scope": "native",
+    "asset": "ETH",
+    "role": "candidate",
+    "capital_usdt": 15000.0,
+    "spec_sha256": "c58b3730e1155cde2065418aa82752653eaea5840b4ca7d281644153352968ab",
+    "report": "research/experiments/20261029T232932Z/report.json",
+    "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+    "original_status": "rejected",
+    "NAV_sha256_by_cost": {
+      "1": "1e8f585cf4cd2c74399bc74a8abdcf7bade777e3ccc5dd163ae60c12a3a38154",
+      "2": "2227028deec0319531f0c06435169983c662313fdc159a834e2c921019d0291f",
+      "3": "0e68446bcfc4b1e9d6fc5d330200a324c783f47a405b726e15cc45b087889511"
+    },
+    "fixed_entry_notional_usdt": 4500.0
+  },
+  "slow_ETH_sources": {
+    "L20_H0.02": {
+      "name": "trend370_ETH_L20_H02_E1_N1500",
+      "fingerprint": "ea0b40e0fd6822556828d70ab8cb4a8327883f679e6dcc3e3740054aac6dd614",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H02_E1_N1500.json.gz",
+      "archive_sha256": "eac108a334ee899d8a2c353fc441462029a319599bf5ecaa44e0c30b76399374",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e804de3ff7f0434cbf5330d5f123110911292298fc01d4cab7977b69917fd644",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "43b926d7c07ba6232e0ede0d27a514f6369283972eb7c270b3ca0aa1b9bdfb60",
+        "2": "99766a4cfb3642e78de950928980c6b60233fceac4ed5d42c0313218039f299b",
+        "3": "fc4ebddb9fecddceb3a43eb6d6e1184493a7d6bf24be7e3c61ee41222989b65d"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "L20_H0.04": {
+      "name": "trend370_ETH_L20_H04_E1_N1500",
+      "fingerprint": "c91f5b3e1392605d632cd1b73cc49f069d39fd713055ad7a34e1838f70e17cb3",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H04_E1_N1500.json.gz",
+      "archive_sha256": "08a4de4fe25a6698e596b1e1d2a66ed2ea8c50b354dbe00985c33c29bce3be1d",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "c002217c108885f7234bb00cd34a69e001fed1be654eb64fa41d74eaae75d86c",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "5ae8fc1b7b75a5f12e8c76bc8108d5218cd18c460068c6c6f2f108361ae16238",
+        "2": "736ed2b6a31a86aa1aa05af8fd054a49c56ef04884c82afd52e0eb1491bdbaab",
+        "3": "102d314ebceaaa44944767120273a6dd32293f31c79b4593c5ad193941f4ade4"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "L20_H0.06": {
+      "name": "trend370_ETH_L20_H06_E1_N1500",
+      "fingerprint": "281e48e9b96d43b48516aaa9819e047fcb4d39fd79a5534a5ddfbb86441cad2f",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H06_E1_N1500.json.gz",
+      "archive_sha256": "5e7625c880c3d875df7b3edfff087152f4990739642d8105dbef0e8e071525cd",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "4012fdb60d8cd1c1933f464a72f3d7732ec5c48772ecd91243cfa3ff10ac42ce",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "879fac44118a4424a15cbf40a4ae8fd212928654401da9a62dc8291050a24222",
+        "2": "3e65198f76770a5a2bc4e8abe297d3d0da28d6831b998882c0f1d3d54b0e1227",
+        "3": "02700ceb35d29b1a77d9da2bcd855f7a432c5f777a435672ec5a0d38ea6b7c52"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "L25_H0.02": {
+      "name": "trend370_ETH_L25_H02_E1_N1500",
+      "fingerprint": "cfebb8f763e3dd33cc371749abeab6c27643adf56087ff1c08f23f3e50873482",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H02_E1_N1500.json.gz",
+      "archive_sha256": "0c8369973ef0ebc6d14e679d1569fc7fffd5fa730786429e07207d0fa11760e7",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "bc541156df1d93b166d98e7b4a7c494b92ff72466b119d998fe619970cd22030",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "a726b1ccfe2a36b2c89341faf3b8e516cf0ebb4ba94f4e4aee21b75bc7e19e0f",
+        "2": "3f77391d0a4aa8218b69d29dfab1489b9889c64509cdc0aa103a04ac713e1a59",
+        "3": "96333d9ab313a759e06f9a22f5b7aff23e8f75f872dd3c0e48d5886bd6bcddbe"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "L25_H0.04": {
+      "name": "trend370_ETH_L25_H04_E1_N1500",
+      "fingerprint": "1fde5e00bc48f77dd96be1d97ce6c80d0c0b7a7da0933618ece88dd10a50dc86",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H04_E1_N1500.json.gz",
+      "archive_sha256": "164ec3216aa2b173aad415d66755bb5addab6a9fe3cb3c0b03acd518915bf1d6",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "a64bda6ad2f17432ee022dcae4935007f564eeffce7b5cefc7a12d803611d3fb",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "bad159e2ce6364f1e6fe16d6c5aa8f1fe96087b4e99d86d6195936067219b4c3",
+        "2": "b5fb1221ab976817b141d17c9219345c8ebf951a197482a7890330785d03127c",
+        "3": "ef5e72e15c3be5b335f254a38a3367cd8b4d7ada1cced723c2180ca06b88ad7c"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "L25_H0.06": {
+      "name": "trend370_ETH_L25_H06_E1_N1500",
+      "fingerprint": "8fa5d044908be60134b0e2d8098e6d4521dcae2026a5cc8e51f16ee0abcd21d9",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H06_E1_N1500.json.gz",
+      "archive_sha256": "3bdb7a664d56db07f4034c56af5a2ccf54eef9348952b2812a2238e4f03a0ac3",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e2ab1715e76f1f2a943417fe7b4272e080d061fde7af6e79c0063de129031138",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "dbaf02371ab9e77fd3338a5063c0d6e6eaa3deb77d464f30da946e8ed18365f0",
+        "2": "c16c5680ea9ba61787481d2cb4b8bb0424a74192862f404dbdc2204dfb3dc7f0",
+        "3": "e03991b8eb744ddd86668ed3304c1968c15dd9d29c7efd8a3827236def527d3f"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "L30_H0.02": {
+      "name": "trend370_ETH_L30_H02_E1_N1500",
+      "fingerprint": "ac3c6f2f08bc391f99bfbb5a9f736fb27b2d909af5a38ecef7e0a6de4ca5a98b",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H02_E1_N1500.json.gz",
+      "archive_sha256": "561f7e439b4f0c25ef6148b76437672282c8cbd7620d58593b09efa8cbac6237",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "1c67ec80cd78f4d866ed5d494573d2dabd29c630ba619437a8a43c4c64d5fae4",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "c09512c91d36bd267be3e37204af80d62e0b9ca6861dea0281058cde5bfb78ad",
+        "2": "1a30ccdc0afcc0d03df843859cde78b8a19f5f1e5bcb10bffa1bb15fa42bb24b",
+        "3": "17f047647daf1a4dfcf616fd65d78d0cd3a554233d825c1dd17e4b635119a50c"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "L30_H0.04": {
+      "name": "trend370_ETH_L30_H04_E1_N1500",
+      "fingerprint": "13361ef249df4457939187ad72655b8d145a2d0e910e5e6800b6cf50b2086c19",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H04_E1_N1500.json.gz",
+      "archive_sha256": "9bdebf85f87ce6ca23b2f512b875c40306d38c1b0fe9decdb83cd844b86d49b2",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "07e4892833106a7afec001ae08258e444f320d1a6e8cb7ba17871f6d201485f2",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "74e5159d54f55525a56a5aa16475330647842fcd52f84359f963218c736597bb",
+        "2": "af3f2a2d8e558f8189a22c7e6fa41de9782cb49f6632803ee0fffa7b89657721",
+        "3": "f9ea0cc86fc60441d585ba18afc09a97d881a7580acd6243344dbb9d004c619d"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "L30_H0.06": {
+      "name": "trend370_ETH_L30_H06_E1_N1500",
+      "fingerprint": "a8600793d3e2fbaf891a302dc032efc4f72825cc487e8bb0693584efc6adcb1f",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H06_E1_N1500.json.gz",
+      "archive_sha256": "e2c6f9696d3d29dec622408c724e367306aa1614fbae05885f239269f2d6d0ce",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "2bdb4c373c6f215cbbc6a3617b555f648fa9cf9f840b8cfb1d863a855b8ef24b",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "db5ab068d8d88e55749fa47388c894ea2f11d309a2ca228af1958e2dbe87f326",
+        "2": "d2fed0571988a7f97b2fc5c466706f4c5f4421d37eda10c1958f4a83b4c3416d",
+        "3": "9bf8a59c6e9c1afa4ac8e529b494f03145c64af9dc178a00f15f9e277df2ed49"
+      },
+      "fixed_entry_notional_usdt": 1500
+    }
+  },
+  "source_parent_references": {
+    "mix370_A25_L20_H02": {
+      "name": "mix370_A25_L20_H02",
+      "fingerprint": "46e42ce5a6e42a84616e0d77d6f367887441cbc04ba6e34f7a78bb8ddbf8ec36",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L20_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L20_H02.json.gz",
+      "archive_sha256": "bb425c3b710277fec472215bcd5399b066f462fbea32dc317abd57774a77537b",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "d23780d8f3c80637fff655008a893bc8afdff06b306d4714acbc6beb78e9e609",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "d9bca15a6a509afff3e29f733a76165d782b22233f78cd62dd8655ba0dfcc8f1",
+        "2": "25ea0df07de729fcf4a723a9d9e90adf727ef031ba56ab215bdbf67e5413a233",
+        "3": "91025e97aa8d5bdb2a2ddae6ae2088e892df1d1c2991dd1d275391238215b291"
+      }
+    },
+    "mix370_A25_L20_H04": {
+      "name": "mix370_A25_L20_H04",
+      "fingerprint": "75f4477d54fc61fee51ee87d9f1a1bce59eef89f6269210a61edcba4a761a07d",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L20_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L20_H04.json.gz",
+      "archive_sha256": "e9d9643dc1f733c0f064a4f0dc5bb9605b7d7d77784f155475766a7caade86f4",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "4be991d20d75c49447b386d4c4f776260ffe947f7531604d5d6e0384229357b4",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "e0ad68202da51ee2cc07e36aa2ed989afa785536576d642981f63e7507923800",
+        "2": "b84f223783adb5ad21bf47c9da50cb25e24265a9b430da779a5a180312fb6624",
+        "3": "c097a2a7f39a39dc02e4e57335b206a052213b74483c870e800a1030f34dfb4f"
+      }
+    },
+    "mix370_A25_L20_H06": {
+      "name": "mix370_A25_L20_H06",
+      "fingerprint": "0f82e3916d8d0a40ac0d9c8f5b8b5eea6e11568cf6f9667c9e982fe0fdf04281",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L20_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L20_H06.json.gz",
+      "archive_sha256": "3e1c2f282c12da96c457da416e4f215ab3fe06a7e018822f37a5e84cbb5e1e07",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "700c866685acae509b2152bb1cbde5621ea22837b164dfac7dd48b35ee96cb4b",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "77081f3f073097c988534c1b6ebfa5e4b10b1dcde84b23cbf99b84cab241cb8e",
+        "2": "f2290601615ed00a347395a1e917cd839620d6be21b8c57885eb9f10868f1ba1",
+        "3": "019ccf15a696fdcb2fe0ccb52858697d207a56367966904ec8f85d308044a478"
+      }
+    },
+    "mix370_A25_L25_H02": {
+      "name": "mix370_A25_L25_H02",
+      "fingerprint": "e7ed63ad4c330ff710bbaeddc14260831d33fbc61fc3db7e5cbe282d109ed1ab",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L25_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L25_H02.json.gz",
+      "archive_sha256": "5f75443b55792dcc9b8a5aeb0c13367f950d39667768981946af23341185fcb1",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "54412853d64480b1d058c16b694738f623e04da27a2d40fc5822a6a449eeb7fc",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "8be04e0d52250273215643e9b3d6da7c79f8d043032e97e8171ce86a31a67a07",
+        "2": "05b0dad75c2b5e62d22522f2d1dbb312c4bcedad5de599945b9c4b71f3363e62",
+        "3": "f4ce09d8fcc7208b0699c222e0e7a30f0d99650bc85d51e074d52aa59075bce1"
+      }
+    },
+    "mix370_A25_L25_H04": {
+      "name": "mix370_A25_L25_H04",
+      "fingerprint": "b44e9956b6d47af243274d66df382d74765282b2c1cf1b9104998bb1d42644d0",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L25_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L25_H04.json.gz",
+      "archive_sha256": "2f479ea98a1a6456949dede42fe1bc5913a83929d5dade4d06487b009a8c0ae1",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "12b6687416f7723fae3f925ee20c82c7a706be43211eff707a8671dc80db4866",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "c241a00068c5a92a984c8c3b97b3ce8c093affeb9d6d0c5061836240ca12a953",
+        "2": "62858d07f37183f3935dbe6761577e3b3cf3a1a6da54970166c451f425a2d216",
+        "3": "2dd49b5366bc1aaf50e8d8c7b3e6dd9b6df7a34d1dcb18ea795057b51321b01e"
+      }
+    },
+    "mix370_A25_L25_H06": {
+      "name": "mix370_A25_L25_H06",
+      "fingerprint": "9492269b33934c66bec440fa699345591ef22a4c299753ed8be38bdbe7932011",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L25_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L25_H06.json.gz",
+      "archive_sha256": "475e56c32c0adafa76c08ed958ca7bfc495c584623eb9367d11be1e93953bba2",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "0c538179853b6e5715fed0dfcf4d7aa566db2d524e03d728e4306b306b8cfacc",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "79278a70e7c79474cada0a48b84d401b5d08a4acdcd4c3cc3a79d075788d1261",
+        "2": "223e8bb5de619f1df72c8f54b29502e6d6d4f31a265d63a8602aa8e3ad64329b",
+        "3": "52d737f23ce6b03940fab3ae3bdf635e0354b5e7645b70aea0891c36f30d5ba0"
+      }
+    },
+    "mix370_A25_L30_H02": {
+      "name": "mix370_A25_L30_H02",
+      "fingerprint": "007e900254f2fde284619a3f365dec7fd8e37c124d59dbe4ec5d9aabe939db09",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L30_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L30_H02.json.gz",
+      "archive_sha256": "d616178dffea297d4257661aa8efaaacda1671b17180496bbbf2a30b843b0bd8",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "1f42ecad77f19b3e0b6cf30e4b8d044758c542b45c2f2625de76dcc0b33c989c",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "a9bb6c7a52366e0c117e33ca342eeccd14b8bc04e83c099a679dc37a8172dde3",
+        "2": "9e1f52eb96ee0d50cd46004a6959770e4738b923dccba98d77ddcde4c6379461",
+        "3": "7afe3a77920f80d1cb7b3989ac6ee39f944a39bb34d766ecfc13482b77bcd5d2"
+      }
+    },
+    "mix370_A25_L30_H04": {
+      "name": "mix370_A25_L30_H04",
+      "fingerprint": "d5eafeb6301d84225c380a9885b82ddf27943641a0c5c7cf9a0b4473627b8230",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L30_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L30_H04.json.gz",
+      "archive_sha256": "fa8b32833cb4408c921a20b3304d27b4cd666f84150ee3cf9b8fd46ea2aae467",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "5536fbdc87006f97339dd745e4be1696e439f5d6b41c09928ad2b53757814f30",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "afbb16db506b754f048a6034688c915f39168dc82885dfa580a694bbb59071ef",
+        "2": "81393d09f3777f688a690c8234dc6918ed57c074d8bb23c26663896eb4410a46",
+        "3": "37d51c44e63351ca079865ffcfdab050310daf86d60bb51843ca058dadeb2feb"
+      }
+    },
+    "mix370_A25_L30_H06": {
+      "name": "mix370_A25_L30_H06",
+      "fingerprint": "3941dcfb5b2545d11478e15354b943623c45c66c0a324593cb1346eaa0ba0092",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A25_L30_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A25_L30_H06.json.gz",
+      "archive_sha256": "c2287f568bb8664c8ad4b74f5d0d56b0ea7f802c8d2f1a0d4712afa80e6bbf7f",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "e0dbc90bb59a2535dbb012ed51a592ff5a767f5a32e5112386fb3502d65eb475",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "ebb284971e8dfa27b3af3779f6cab59b8b13f96d3bfe1a7226bd62ec27666e22",
+        "2": "8bb3e1d1ada966fd482263aca47dccf990af3d49237167aa73b189dc63851969",
+        "3": "34637db47507a4f04c315f232965cc87eaa08652baf75fbaa7686ae84ca7e42f"
+      }
+    },
+    "mix370_A50_L20_H02": {
+      "name": "mix370_A50_L20_H02",
+      "fingerprint": "4da0aed8ed314c6dca743cdb9f07740010f63cf244b3e2f27f63a958b3cbc46b",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L20_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L20_H02.json.gz",
+      "archive_sha256": "e23b052414ca4dbc91f154883bd42fac6cb06b6b198c3340cb96c09bca923bb0",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "29231c9ece2bc5e5cb8eb4e8a9d96468333274643664b335685de40a468d9f46",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "93daf8573612c95fa92560a91fcd91b75e43450e4ddbe718299902f5eeb0dbba",
+        "2": "07f8942d2f0cb6cfd2b41d129a219f6919af274ee3e27ffd7145bcb06ec5c927",
+        "3": "726e5e3f811fb1868669c108bd23e51a492e3d7efff079eb72a73531e8ff5e3d"
+      }
+    },
+    "mix370_A50_L20_H04": {
+      "name": "mix370_A50_L20_H04",
+      "fingerprint": "7081689d779008e715067be7f3566dd46be7ea07c2818479051ffd4eb66da9e5",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L20_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L20_H04.json.gz",
+      "archive_sha256": "71ddddafccd26436e3a4adf5b6db691aea464294e39dd97f832c1dd105226f07",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "682be5230dcb424b5b404271f4cc556be4d8bcf19110aef56e7186be0cb7cdf7",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "3ed188da3d33211c4ab2f239b4cf8c3b36c9f4e89a4d493d34cc4a2f822f5b9d",
+        "2": "2186181fe52ca02ef9f93870fc2be4198ebc3e132a8b87a7cec52c7438928cd2",
+        "3": "ee61b300333b9677ee47780d5c69e5b1ec3468d23b9220e40ecb7be15dc22476"
+      }
+    },
+    "mix370_A50_L20_H06": {
+      "name": "mix370_A50_L20_H06",
+      "fingerprint": "b616a49718d60e47ff248750bffeb79d18f4d6906a12cbd5601bc8ae924c1009",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L20_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L20_H06.json.gz",
+      "archive_sha256": "720479418ca51a0922468fc46d13c350e099805864061283ed13ef075913291b",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "37a5bee232ce5ff95f470ff2e5667e448d9af3ffaa2b9588d161174cfc3c9d9c",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "34222562256f572765d7adc9d735c0675e61ab2c865cac1c82f70e8c0ea3290f",
+        "2": "9b1d135293d4b49cd2df7764e4d419f4eb303c36e99f24e297c5a0f2901325ec",
+        "3": "d8f95518a2ed43b39c3206f51b3575a7325588b1b76821f3ae325e8cdd43385d"
+      }
+    },
+    "mix370_A50_L25_H02": {
+      "name": "mix370_A50_L25_H02",
+      "fingerprint": "84456e79681021dd1a470e275a3376a9a162fcb7b7eca96713bc35daaaffe25c",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L25_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L25_H02.json.gz",
+      "archive_sha256": "73cb7c2fb2a41fcf70e353df7fe4f21626174538cd2c6bf6cf4090e9498eaf08",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "a4e7f1ba7c7f0837aaad6a4cd7b37da910c3723790a875b8c6944296b68e2a86",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "fc0fb6f89d50f51081985344dc2740bf87fbc803a7d4eb1c14ecb3fb0ffa1dd2",
+        "2": "18c48eeb471115846d270f355dc2e553664c988ddb147555df77585e02172051",
+        "3": "091c9d3142c956d5181fa0429e8fd23fdc8b36463d76c32e1533e6a56ad481ca"
+      }
+    },
+    "mix370_A50_L25_H04": {
+      "name": "mix370_A50_L25_H04",
+      "fingerprint": "023be7260ddcece6be0898e98a0cb2b07c00615a083b2f01860f38f9be51ff5f",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L25_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L25_H04.json.gz",
+      "archive_sha256": "06161630f856be2c3e96d26182f29396063d7bab7a6c4a47980553e460e58aca",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "4655915b0166d821bc2f17ec9cbbc81a34889605195e7a259386b1a0ba9310ba",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "0c43fbc0d0c9a8e90191e278a6751b5e624ecb5d9da8d4301c167b16e72d82c1",
+        "2": "e2558e3fe2ead9b8aec26a52a21df5b08ed0837ae4fbccecde7f2fef4a42446f",
+        "3": "04897733e6938f6ec4681badc41a26f2194d21835e564aeceab373f6d1fa538d"
+      }
+    },
+    "mix370_A50_L25_H06": {
+      "name": "mix370_A50_L25_H06",
+      "fingerprint": "af62f7a5d6ba5b032ce6356b8cca9a275fa176c5d09dcc69bd697644d92b3c5d",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L25_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L25_H06.json.gz",
+      "archive_sha256": "3c70c529c8c82d0cc211c72ee210708a6689d8a84cb65995350d4fbf0e98e4f5",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "b380bd65ee3df489d6cf470a63ad37a6616ee165b5d56733fe5da15e009a192e",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "2355cb24457da4e722d74f8c23453c43cffa5ad070f4a6a8bfbc8981652be01e",
+        "2": "9ecc03036f57ec0248c186fcd7791e6ad1389357915dccf526dee18603b46cf6",
+        "3": "9543f5e514e9c62b5d09063e652a60f7fd27035639f053f8ab7d80d2e91af75f"
+      }
+    },
+    "mix370_A50_L30_H02": {
+      "name": "mix370_A50_L30_H02",
+      "fingerprint": "cd740c90b6773a1fb0d5a4736af56a396d38acab0e9fd54e59937d34938ec9a9",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L30_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L30_H02.json.gz",
+      "archive_sha256": "b92f15494bbd9690511ead2ac12261ec27692b58f8d5b11644a6b63a071a04e1",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "9e73c6462c81d33be9b409aa93df13f83095968c194febc81f3227be8b228807",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "7609f3e16d8f1315343f0253cf7ebf894526e310be338816accb6c8584a72fc7",
+        "2": "6dd722d9364efc51a5fd6687ea1eb87ee54041931a12c95f431a96a1b56339cc",
+        "3": "ddd37d3000de1a08e3843964447f9833ab79c0d1b24cd6397e0bbe56ee48afb4"
+      }
+    },
+    "mix370_A50_L30_H04": {
+      "name": "mix370_A50_L30_H04",
+      "fingerprint": "4d5fcee1ca60e8df6d38921b77bc011bd123f79494c4536140572b92414c5423",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L30_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L30_H04.json.gz",
+      "archive_sha256": "803835195dbb7ea8329b01e6877684c0f98508ff66a119ba912aca97d15bd82e",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "24ffbc7cb454fa2a5c23035a0dcaa889e4f994965f802f1d77c19ac70fa7fa5a",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "89d5e51908b60b96dc3c9c880d5abeae6e823df3f5b0f96f7ea3d68aefbc560f",
+        "2": "b139e3c76272a652c343c8c9216fdb77cb9febe76a2534f5ff7a2eada07eafbb",
+        "3": "df44996656e77d752bda4988ea2d0ee57834d96c9bde1cddfa8173981a8f7cfa"
+      }
+    },
+    "mix370_A50_L30_H06": {
+      "name": "mix370_A50_L30_H06",
+      "fingerprint": "86a10703d510ffd8062fd19b3b8d13b39c4e2659ec8c37705ca29578f1bdc424",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A50_L30_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A50_L30_H06.json.gz",
+      "archive_sha256": "80ac44ceae46b42b41e7db9c0ea2b6016e4699c0e8c088519e8ab03d3dd97b7b",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "2fb1a9f1b0d50b2c2442e2a0d899e31c5ad1e0c4f2d8d56c95266517ec4cf3d2",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "1b70f113dadeb00a47e0bcc8bffe6206ccc05efadc21e3bfd37910b0488d02f7",
+        "2": "6c711d127a0fcfa71d11460216edbe592198a5768edd9941d8eb8028dbf1b93a",
+        "3": "11eca38b28c15d1226cd4da2e8056572ab03eb825468525fb3321fe4d62bcff1"
+      }
+    },
+    "mix370_A75_L20_H02": {
+      "name": "mix370_A75_L20_H02",
+      "fingerprint": "678043e0268c9bb508b832ee749520e7d78515ea5a8df78ca5ab033ab3b1de35",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L20_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L20_H02.json.gz",
+      "archive_sha256": "519595f741161b6737f6e747b47ec52717eb422f73a376de49a4893c6aad8799",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "ca285599520574fb1cf992a6ad8110eb930e04d63e56dfb59f3c912686be09e1",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "ccbf4d91aaf17329e6d21b54dc5cbd2a1b65f0df798d6176d55b502b0d26909d",
+        "2": "c38861085bb5e94b524488839f6bd10994010da1201e66d7f8d2542cfbb342e9",
+        "3": "70db63a7214f20bb1361f67460f4f57eecb2dc6a399ce1601304ce11bd9ac056"
+      }
+    },
+    "mix370_A75_L20_H04": {
+      "name": "mix370_A75_L20_H04",
+      "fingerprint": "25a9e183da101051fd8db7c705f252cd6df312bb1af1b93d5036ac0c4092bfd3",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L20_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L20_H04.json.gz",
+      "archive_sha256": "c7fde22d8b753552ade3c0d8d29cad9a14fbf5efcaedf645823b3b7856065f50",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "2a10477d74d6de00f757da6ee5235da5b96903743fe6cca002a825d6b56891cc",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "e6ed21e4b2352cbd6cfed7411b8eeb666d751e2b548c620de5119d65eaa9de30",
+        "2": "53032d4ce27276fc1024bafaf7203964ecb42ecb68ccf7cb61218cc2345c197a",
+        "3": "85aeaadb3cbf7d1ea15433e92312af006718f16db7b3931796320cb8d926d017"
+      }
+    },
+    "mix370_A75_L20_H06": {
+      "name": "mix370_A75_L20_H06",
+      "fingerprint": "5ba18847e7352834d20ea11e9a5508589121a9537ceeb9aa90ae13c01d7c3b04",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L20_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L20_H06.json.gz",
+      "archive_sha256": "58014df77112ed7b7efc1f0157df538a84f7bb6b254ac2049cdf5d0fa48fa9e5",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "b4f4623f7d336eb4b7121d4eb679cf19045dc15f438940b4da7f04d8c4f0ee5e",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "2108fdb339882f7c795322016fbd711c81687374e27cbf385c6a3062aa6916e1",
+        "2": "56de0e0651d846195d70f23a336809bf007a4a5aae21d1d2118ee72e27d06986",
+        "3": "12e09a7094402673501bbedd28200afeedb25439d685a7797e5a9f843bcb2aeb"
+      }
+    },
+    "mix370_A75_L25_H02": {
+      "name": "mix370_A75_L25_H02",
+      "fingerprint": "f2429cda98d8bdd3b838817b3f06c3c3abc69a8c7f47c098b77d5b8fd554a9c8",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L25_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L25_H02.json.gz",
+      "archive_sha256": "2b16725953e87a7a37e1c46d2b2a9f6f241bb1e8335eb3308b2954db9ca5e289",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "32c53c278a7c77f9be830d3d35ea89d1c3cf5f12bda2282ca39df80b546928b4",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "f43afbf0a063f96c9d0b38b0f76c36b025e30469823e289aa0479ae26102b48e",
+        "2": "b2c994202db173d712c04ec71aae91a35a7f2ee8be40fef75f9575296a236974",
+        "3": "528973da1a1d05583e580a15ef68241ec9bea99f5d3cd653625828a132c6816b"
+      }
+    },
+    "mix370_A75_L25_H04": {
+      "name": "mix370_A75_L25_H04",
+      "fingerprint": "bdde59199bf29d3d4a1c3f312dba093e45880a29b697406ed6ad1921f13cbe7b",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L25_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L25_H04.json.gz",
+      "archive_sha256": "2f9ea057d5658b9beb62b84acbf470e1d80e1786b54d101e26c578053b719132",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "6941895ed938f737a7165e778a537fa9b6defe1279a09c9eac07f57f79fbb8cc",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "a474b7fe58790a662c390b5f10ad46aee32cc813565eeefa8e1c0717ba429b18",
+        "2": "2c5d5006b13ff6e733525ce73f55015ac3831118c7f16835724b23c574ffeed4",
+        "3": "a16581643e77bd40baf847f2249de6c2f093e7dbee48a2b7afb7c4da857468e2"
+      }
+    },
+    "mix370_A75_L25_H06": {
+      "name": "mix370_A75_L25_H06",
+      "fingerprint": "c9ad7ece2731cb3c53cce01c6a5c349d5d93f5d470cb2ff5646feedd040ae6fb",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L25_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L25_H06.json.gz",
+      "archive_sha256": "292eb0d506bb44d86cf5bba9d4a9e737d5f8fbc60199a52ff770c40f1d26c76e",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "cd6ca7d19a086cfc0d658587902534121a9fc68ac9e9908c74c8b7b5e5e0bfc5",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "c95803830e4e4c95749d109288cf5b5a86e632803af8c0f92bed725cf30b188c",
+        "2": "d911910f30a9c5c6b93034d66afa7615c3e6e7e5e890d802369f861a52aaf641",
+        "3": "b941e903b24e6d3bc1c9563ed97992e8ef4a92516392ed04662f5523eb2e3415"
+      }
+    },
+    "mix370_A75_L30_H02": {
+      "name": "mix370_A75_L30_H02",
+      "fingerprint": "fbc90ed5525157fd8ea8311cd657c13f045a8164b8ad4394d34a2250b521af27",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L30_H02.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L30_H02.json.gz",
+      "archive_sha256": "211245346d59562a4e52334bb4afac518e45a4729cbee904b2d5c3b0f1b527aa",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "1a6cf3641dc5bfe50123d49ff6aa5e81a5a3d29470b79dd2948b44eb7d4c3a42",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "64bca4d71acdc686feda3f9ca9b6c6a22a61cddce141d23ca0d01e3cfea9ff64",
+        "2": "43df8fb93415760b7a415c8f0a4bc978172c19e0ea70feaaf23dad3be9738533",
+        "3": "b9465ec78fc4cf448e259c9a696885c814c40ef1e9496c4eae28e1458ec396e6"
+      }
+    },
+    "mix370_A75_L30_H04": {
+      "name": "mix370_A75_L30_H04",
+      "fingerprint": "fc8b023c51d03f838400ce9e2d7d5a7bc1e588d964266708e7554d5130833d1c",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L30_H04.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L30_H04.json.gz",
+      "archive_sha256": "84469e2495ab06eecd1e15ea03e838dfc19aa23dc41096d62baecae88931edee",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "c1c8d9f5829dd3f85ccebb401ae04d2e51794996c981711b440d9f351773fcbc",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "eddfb0467a388a161204c3e79f63f9800d0b32e695c24ed1086e9dc9a5979297",
+        "2": "64db5ab7a4eb2630fdfcce107035f0942194c72520d5a70ecb761ec55b2610cd",
+        "3": "89ecdd74897916bfcda0673fee88de72c997b2a1db91932f72acffd3e05de5ec"
+      }
+    },
+    "mix370_A75_L30_H06": {
+      "name": "mix370_A75_L30_H06",
+      "fingerprint": "8282048a58057cf56dd1e4ca196ac8d7a5df460b4d3e75ace361ae23169bcfff",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_A75_L30_H06.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_A75_L30_H06.json.gz",
+      "archive_sha256": "d6cb5c8b41cc290cb2aa614f9dcb97c683c1873848c2bce4a1e266f72de83009",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "b2150e41e8d65ab564b2fd36b516de8325fd1500113c6872961a2424e3e85027",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "1684e2a0874b77fdd834b89d986ee5cc93d9e70bd37fe4cad524a19f911ab615",
+        "2": "c91198b307d9da866c4ebc166742d2f3591c2a7790e194248ff5fd6c4250c776",
+        "3": "c6219a46247ac4ada4ba3da40ad884d67e8190e7516d3d329ad5a46701d5d7e9"
+      }
+    },
+    "mix370_hold_A25": {
+      "name": "mix370_hold_A25",
+      "fingerprint": "1789c0d0be2919f0ffa423bd21f611586ca00d7f4dc600a396713ba8bc80e63b",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_hold_A25.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_hold_A25.json.gz",
+      "archive_sha256": "1f88ba804be76a0cdbce6c83d28c6e7a0f3c7528d36a22270198761bb3a232bc",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "benchmark",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "e09675afb8350f77cccc80acb34550b91556fb15066180e688fec45f6c3f6649",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "c22d0177709a447bafedb74920c061bb98121371efe5164a7a125d0779b2ae46",
+        "2": "d65201a0fe06db136f9e8bbac278f6423ab22b52b94d1f6df8c80c5cf6cce854",
+        "3": "a59c01f5c822c04aaddc90a24c89d976efd4560d60a08ae3f81d3d6d7f330fb3"
+      }
+    },
+    "mix370_hold_A50": {
+      "name": "mix370_hold_A50",
+      "fingerprint": "9e7f52badf5c062471a3bede795e1a6f6689165e6cae96755c3d2797224b5d5f",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_hold_A50.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_hold_A50.json.gz",
+      "archive_sha256": "656da25aab759c023d9381e25a89cec286e19b064ba64bc575dae8e344d8b39b",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "benchmark",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "2a22d6d2c7ab55ccf4d68c563a072831904aa3c6be8628db2514f086ac8bc518",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "811819b5dbf8c360a0da04017f498f2d45ec3098b140b087e976f87455d9bb20",
+        "2": "d8faf2d9bc9c9b3fcf28f8c1072e540a857b2a9dd0e79583013436a063a0ecb0",
+        "3": "b2cae6c08d95e451ff0211db47c3e133a73ba3100eacce0faeac38e83d6e959f"
+      }
+    },
+    "mix370_hold_A75": {
+      "name": "mix370_hold_A75",
+      "fingerprint": "2799c2f51fcd1e784f239803aca077cdcb94ff9200223e10250fafe2bcb2ae03",
+      "spec": "research/experiments/20261030T053205Z/specs/mix370_hold_A75.json",
+      "archive": "research/experiments/20261030T053205Z/results/mix370_hold_A75.json.gz",
+      "archive_sha256": "b33a0a383cfd6185809ac1589c483b4dab0fab9d6aa42a79d95f8a3461bccb54",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "benchmark",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T053205Z/report.json",
+      "report_sha256": "bfc1bf449a28aad6c64f132fe12cfd210255aa82d64bc6ec3e2488b3fa4f0b20",
+      "spec_sha256": "1953b38ff58c68a16e392d583a97f2d05f9d6251926fc4a437dd2e934a2d7f0d",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "9a290df96f17058a37acc534cab863340e8ac870b5436bd2578119660b7049e1",
+        "2": "3bce2a981a39733a1846a49c2bd1ca1f99afca036d1b1a428b40670e1b02b1d1",
+        "3": "d1934e88e52c0786f3dabc2f40e10fcb6d7580f1e9b58f3fd22e173ae93492de"
+      }
+    }
+  },
+  "recorded_source_events": {
+    "source_recorded_trades_checked": 1482,
+    "source_recorded_funding_checked": 46620
+  },
+  "limits": [
+    "Actualbankexecutionresearchusingestimatedcostsandnormalizedfiltersonrepeatedhistory,notrealorders/liveprofit/venuecapacityproof.",
+    "No L2/TCA/fullhistoricalmargin/filtertiers/tickliquidation. FixedfastL3/S28priceparameterfragilityfrompriorresearchremains.",
+    "All 11597priorIDs/237conclusionsread;no independentfuture/untouchedholdout/DSR/PBO.",
+    "OriginalSMA65/singleS28continue04:30to06:30only;paper10readonly/no rulecapitalpositionchange."
+  ],
+  "novelty": {
+    "prior_registry_events": 23438,
+    "prior_registry_ids": 11597,
+    "prior_conclusions_read": 237,
+    "initial16_missing_actual_results": 0
+  }
+}
