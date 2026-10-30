@@ -1,0 +1,8 @@
+"""Prove zero-duration prefunding state is excluded and postfunding cash carried."""
+import json
+from run import ROOT,R,sha,put
+W=R/'candidate_observation';read=lambda p:json.loads(p.read_text());point=read(W/'previous_pointer.json');old=read(ROOT/point['state']);state=read(W/'state.json');v=read(R/'candidate_verification.json');assert v['passed'] and v['cumulative_finished_candidate_observations']==114 and v['NAV_points_per_scene']==4574 and v['prior_NAV_prefix']==4452 and v['elapsed_minutes']==4469 and v['new_closed_hour_risk_checks']==6 and v['new_risk_proxy_violations']==0
+assert v['new_funding_settlements']==v['new_exact_causal_decisions']==v['new_fills']==0 and state['books']==old['books'] and state['daily']==old['daily']
+for k in ['1','2','3']:
+ before=old['risk']['BTC'][k];after=state['risk']['BTC'][k];assert len(before)==2 and before[0]['t']==before[1]['t']==1793318400000000000 and before[1]['state']==old['books']['BTC'][k] and len(after)==1 and after[0]['state']==before[1]['state'] and after[0]['t']==1793325600000000000
+proof={'passed':True,'old_state_sha256':point['state_sha256'],'new_state_sha256':sha(W/'state.json'),'old_same_t_prefund_postfund_stack_preserved_in_source':True,'zero_duration_prefund_state_excluded_on00hourclose':True,'only_postfund_positive_duration_exposure_checked':True,'new_risk_checks':6,'funding_day_decision_or_fill_events_added':0,'cash_units_entry_exactly_carried':True,'daily_context_bars':36,'daily_NAV_boundaries':4,'current02hour_risk_stack':state['risk'],'next_funding_utc':'2026-10-30T08:00:00Z','next_daily_decision_utc':'2026-10-31T00:01:00Z'};put(R/'risk_carry_verification.json',proof);print(json.dumps(proof),flush=True)
