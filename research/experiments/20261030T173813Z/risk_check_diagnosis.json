@@ -1,0 +1,14 @@
+{
+  "recorded_utc": "2026-10-30T18:04:22.441275+00:00",
+  "failed_check": "check_risk_carry_initial.py",
+  "failed_check_sha256": "8c824eaf1dd9a12fb508627ed5656869adf23f403ceb08f7da006b69cee60fa7",
+  "failure_log": "risk_carry.log",
+  "failure_log_sha256": "ab66bf1d339131b5887d0801592a23c5c322ad6d87a49ec1fc679aa44c8aa235",
+  "actual_failure_exit_code": 1,
+  "root_cause": "Supplement incorrectly required strictly increasing risk-state timestamps. Frozen core stores pre-funding and post-funding states at the same16:00UTC ns when hour mark(code2) precedes real funding(code4). Core and independent account audit use only positive-duration intervals. No account or transition bug.",
+  "fix": "Allow nondecreasing event-ordered timestamps and require every tie to match the exact actual same-ns funding cashflow, unchanged quantity/entry, and terminal book. Preserve both stored states and all original rules.",
+  "original_core": "research/experiments/20261026T110637Z/prospective_core.py",
+  "frozen_core_unchanged": true,
+  "financial_or_observation_reruns": 0,
+  "prior_account_audit_already_exit0": true
+}
