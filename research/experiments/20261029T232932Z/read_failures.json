@@ -1,0 +1,37 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T232932Z/run.py",
+        "freeze"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-29T23:39:26.906711Z",
+      "finished_utc": "2026-10-29T23:39:28.709443Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261029T232932Z/freeze.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T232932Z/run.py\", line 70, in <module>\n    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()\n                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T232932Z/run.py\", line 43, in freeze\n    def freeze():module(R/'freeze_batch.py','ownership_freeze').main()\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T232932Z/freeze_batch.py\", line 41, in main\n    native(w,'ETH','ungated');native(w,'BTC','hold');native(w,'ETH','hold')\n                              ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T232932Z/freeze_batch.py\", line 37, in native\n    role='candidate' if mode=='candidate' else 'component' if mode=='momentum' else 'benchmark';s.update(name=f'nativecapital370_{asset}_W{round(w*10000):04d}_{mode}'+(f'_C{round(cap*1000000)}' if cap is not None else ''),validation_plan=rel(R/'plan.json'),sources=plan['sources']);row={'scope':'native','asset':asset,'role':role,'mode':mode,'capital_usdt':capital,'fixed_entry_notional_usdt':N,'BTC_capital_fraction':w,'entry_funding_cost_cap_per_settlement':cap,'entry_funding_lookback_settlements':6 if mode=='candidate' else None,'lookback_days':p['lookback_days'],'return_hurdle':p['return_hurdle'],'exit_buffer_fraction':p['exit_buffer_fraction'],'trend_lookback_days':p.get('trend_lookback_days'),'trend_gate_application':p.get('trend_gate_application')};new[asset,w,mode,cap]=save(s,row)\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ~^^^^^^^^^^^^^^^^^\nKeyError: 'lookback_days'\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T232932Z/reserve_batch.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-29T23:42:14.553602Z",
+      "finished_utc": "2026-10-29T23:42:14.845884Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261029T232932Z/reserve_batch_0.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T232932Z/reserve_batch.py\", line 4, in <module>\n    assert not(R/'report.json').exists();batch=json.loads((R/'batch.json').read_text());records=reg.read_records(ROOT/'research/automation/registry.jsonl');pending=[]\n                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T232932Z/batch.json'\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "phase": "premature diagnostic batch inspection",
+      "exit_code": 1,
+      "fact": "FileNotFoundError batch.json after failed freeze;no financialevaluation/no actualreservation. Successful freeze retry required before dependent steps."
+    }
+  ],
+  "policy": "Only actual failed calls;all financial results preserved."
+}

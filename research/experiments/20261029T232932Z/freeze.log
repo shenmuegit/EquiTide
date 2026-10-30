@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T232932Z/run.py", line 70, in <module>
+    p=argparse.ArgumentParser();p.add_argument('command',choices=['freeze','evaluate','finish']);globals()[p.parse_args().command]()
+                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T232932Z/run.py", line 43, in freeze
+    def freeze():module(R/'freeze_batch.py','ownership_freeze').main()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T232932Z/freeze_batch.py", line 41, in main
+    native(w,'ETH','ungated');native(w,'BTC','hold');native(w,'ETH','hold')
+                              ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261029T232932Z/freeze_batch.py", line 37, in native
+    role='candidate' if mode=='candidate' else 'component' if mode=='momentum' else 'benchmark';s.update(name=f'nativecapital370_{asset}_W{round(w*10000):04d}_{mode}'+(f'_C{round(cap*1000000)}' if cap is not None else ''),validation_plan=rel(R/'plan.json'),sources=plan['sources']);row={'scope':'native','asset':asset,'role':role,'mode':mode,'capital_usdt':capital,'fixed_entry_notional_usdt':N,'BTC_capital_fraction':w,'entry_funding_cost_cap_per_settlement':cap,'entry_funding_lookback_settlements':6 if mode=='candidate' else None,'lookback_days':p['lookback_days'],'return_hurdle':p['return_hurdle'],'exit_buffer_fraction':p['exit_buffer_fraction'],'trend_lookback_days':p.get('trend_lookback_days'),'trend_gate_application':p.get('trend_gate_application')};new[asset,w,mode,cap]=save(s,row)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ~^^^^^^^^^^^^^^^^^
+KeyError: 'lookback_days'
