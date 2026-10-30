@@ -1,0 +1,17 @@
+CAPTURE_HTTP 1 200 0
+CAPTURE_HTTP 2 0 35
+CAPTURE_HTTP 3 0 35
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/observe_candidate.py", line 19, in <module>
+    sys.argv=[str(SOURCE/'prospective_observer.py'),'run','--round',R.name,'--cutoff','2026-10-30T18:30:00Z','--lock-pid','250146'];obs.main()
+                                                                                                                                    ^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py", line 131, in main
+    packet=capture(cut,previous,binding,rawdir,receipts);packetpath=rawdir/'packet.json.gz';gzput(packetpath,packet);put(window/'input_manifest.json',{'packet':rel(packetpath),'sha256':c.sha(packetpath),'provenance':receipts,'plan_sha256':binding['plan_sha256']})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py", line 49, in capture
+    info=request('/fapi/v1/exchangeInfo',{},rawdir,receipts);server=request('/fapi/v1/time',{},rawdir,receipts);retrieved=min(now(),int(server['serverTime'])*c.MS)
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/observe_candidate.py", line 17, in request
+    receipts.append(item);raise RuntimeError('Public GET failed both bounded attempts;original account preserved')
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Public GET failed both bounded attempts;original account preserved

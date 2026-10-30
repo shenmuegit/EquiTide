@@ -1,0 +1,17 @@
+{
+  "failure": "Independent margin helper extraction omitted its bisect module import.",
+  "actual_exit_code": 1,
+  "failed_log": "audit.log",
+  "failed_audit_sha256": "ad975d711569c17332a8022c6fc46a963cf1a601b12c20febbf9d3b53099ab77",
+  "failed_helper_sha256": "b4bdc20a6bf4c57d479e12b1ed62946dae3719a68d89f5750deb699417f4f427",
+  "correction": "Separate audit_helpers_corrected.py adds import bisect; audit_corrected.py selects it. Original pre-evaluation code binding, financial engine/features/specs/report/ledgers unchanged.",
+  "financial_or_observation_reruns": 0,
+  "new_financial_calculations": 0,
+  "second_actual_failure": {
+    "log": "audit_retry1_audit_retry1.log",
+    "exit_code": 1,
+    "reason": "Same extracted helper also lacked hashlib used by recent40 NAV hash check.",
+    "original_first_corrected_helper_sha256": "9c38feb0971a50cd957b8ae4344b4686c3878ab7d6cbd0618febfa9b4304131e"
+  },
+  "final_correction": "Separate audit_helpers_complete.py restores both bisect and hashlib module dependencies; audit_complete.py uses it. Both failed audit versions and original financial binding remain unchanged."
+}

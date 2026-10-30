@@ -1,0 +1,84 @@
+{
+  "kind": "strategy",
+  "family": "perp-hourly-relative-ols-embargo-independent-banks",
+  "name": "pair370_OLS720_G24_E2_X0.5",
+  "market": "perpetual",
+  "timeframe": "1h",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "logic": {
+    "signal": "HourlylogETH=alpha+beta*logBTC OLS,window720completedhourcloses,trainingstop=j-24exclusive,testedj=h-1 excluded. Residualsamplemean/std(ddof1) fromtrainingonly;Ztest=(logETHj-alpha-beta*logBTCj-resmean)/std. betaeligible[.5,2],finitepositive std>1e-12;noADF/cointegrationclaim orfuturefundingfeatures. EntryZ>=EshortETHlongBTC;Z<=-ElongETHshortBTC. Invalidfit/time48hforceclose,no samehourreentry;otherwiseoppositefreshthresholdclose/reversefirst;shortspreadexitZ<=X,longspreadexitZ>=-X;otherwiseholdactualq,notresize. Recoveryfirstcloseallactualremainingpositionsbeforeanyentries.",
+    "execution": "Signalatclosedhour,executionh:01actualOPEN. Perlegall-or-noneLOT/tick/minnotionalestimatedfill,notL2guarantee. BTCfirstthenETH;rejectedBTCskipsETH;rejectedETHafterBTCfillimmediateattemptBTCunwindat same reference,feespaid. Failedclose/unwindleavesactualq inclose-onlyrecovery,neverfree rollback or synthetic fill. Bothlegs mustflatbeforeopening. TerminalOct24UTC00:01closeactuallegswithcost;unclosedterminalfailsqualification.",
+    "sizing": "IndependentBTC10000/ETH10000banks,total20000/rawfundedunits[1,1],notnormalized. ETHentrynominal2000,BTCbeta_at_entry*2000 (eligible1000to4000),floorqbytestedclosedhourprice/LOT beforeexecution. NoNAVsizing/transfers/netting. Nominalgross3000to6000=15to30percenttotalinitialcapital;currentprice/LOT/flatstatesvaryexposure. Notdollar-neutralorstablebeta/riskclaim.",
+    "costs": "Frozen5bpper-sidefee+1bphalfspread+2bpslip+.5*lag20sampledailylogvol*sqrt(actualq*OPEN/lag20quoteADV);participation<=.001. All1/2/3executioncostsandnegativefundingoutflowsstressed,positivefundingincomeunamplified. Realizedperpfundingatactualsettlementns/mark/thenheldq,nospotborrowfeesinvented. Fundingavailabletimestampexpostonly,notentrysignal/size.1percentclosedhourmarkadverseextrememaintenanceproxy,no crossmargin.",
+    "time": "370continuousOOSOct19_2025UTC00:01toOct24_2026UTC00:01,33daycontext;720train+24embargohours+excludedtestclose fit available. All hourly rolling fits pastonly;12complete30dayfolds+10daytail,recent40day330inherited/8x5day. Fullminute/hour/fund/preposthourlytradeclock,no account resets or futurelabeltraining,purge0. Reuseddevelopmenthistory,notuntouchedtest/independentfuture.",
+    "qualification": "Originalstrictnumericgates unchanged. round_trips means completed TWO-LEG PAIRS,not sumoflegcloses. 9E/Xcells eachspec/reservebefore anyrealfeature/modelcalculation;center2.5/1 fixed,allneighborssamejointmodel.",
+    "benchmark": "Read-only oldBTCN1000/ETHN2000constantlongbanks/parent,samefundedcapital20000,butdifferentgross/exposure andold545013pointclock versusnewhourly-referenceclock570543. PreserveoriginalNAV/metric/statusbytes,notexactexposurematchorcontrolrerun. Cash0analyticalbaseline.",
+    "risk": "Nativepostfee1xentrycap/participation and1percentclosedhourmarkextremeproxy perbank,notpooled. No new liquidation/fill or tick-capacity assumption;violationsfailgates. First/lastpartialhours lackcompletein-OOSextrema,fullminute/eventNAVDDstillchecked.",
+    "novelty": "Old9OLS/ADFpairrulesactualresults remain. Thischangesregressiondirection,24hembargo,noADF,48htimeout/crossingexit/partialleg recovery,capital20000,370dayperiodandnativefixedETH/betaBTCnotionalrule. Fullcanonicalidentity/parameters checked;not renamed/reorderedoldconfiguration."
+  },
+  "parameters": {
+    "entry_z": 2,
+    "exit_z": 0.5,
+    "window_hours": 720,
+    "training_embargo_hours": 24,
+    "regression": "logETH_on_intercept_plus_logBTC",
+    "residual_std_ddof": 1,
+    "max_holding_hours": 48,
+    "beta_eligible_min": 0.5,
+    "beta_eligible_max": 2,
+    "initial_capital_usdt": 20000,
+    "component_capitals_usdt": [
+      10000,
+      10000
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "ETH_entry_notional_usdt": 2000,
+    "BTC_entry_notional_rule": "eligible_beta_at_entry*2000",
+    "quantity_price": "tested_completed_hour_close",
+    "no_ADF_filter": true,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "complete_30day_folds": 12,
+    "positive_complete30d_folds_required": 9,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "input_hashes": {
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "97be656cf441024101417476f8338f4d739879d3ee39bfbf2a89cf1a287b726c",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "80cd98d12fd73cb8bfcc7a4d4af65d737347c9d9b53d82ae1698a1aa15bd71ce",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "b27e8f9a078a50a9d34c034870790321e43b5d7dff74f2c2a7d0b69f3c276006",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6"
+    },
+    "execution_and_recovery_policy": "BTC_first_ETH_second;costed_unwind_on_secondreject;close_only_recovery_if_actual_unclosed;invalidfit_timeout_no_samehour_reentry",
+    "capital_policy": "independent_native_cashbanks_no_crossmargin",
+    "funding_stress": "actual_settlement_outflows_x_multiplier_inflows_unchanged"
+  },
+  "validation_plan": "research/experiments/20261030T194013Z/plan.json",
+  "sources": [
+    {
+      "url": "https://github.com/Bauch0430/crypto-pairs-trading-btc-eth",
+      "role": "Conceptonly,notreplicationofauthorperformance;historicalold9ADFresultsalreadyrejected."
+    },
+    {
+      "url": "https://www.statsmodels.org/stable/examples/notebooks/generated/rolling_ls.html",
+      "role": "RollingOLSwindow/timingreference;implementedexplicitshift/embargo,notdefaultcurrentwindow."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "role": "Realizedfundingmetadata;actualnormalizedtimestamps/marks retained."
+    }
+  ]
+}

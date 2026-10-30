@@ -1,0 +1,127 @@
+{
+  "facts": [
+    {
+      "phase": "literature_read",
+      "url": "https://www.nber.org/papers/w7032",
+      "actual_error": "403 Forbidden",
+      "financial_calculations_affected": false
+    },
+    {
+      "phase": "literature_read",
+      "url": "https://academic.oup.com/rfs/article-abstract/19/3/797/1646894",
+      "actual_error": "URL is not accessible via web tool; no HTTP status supplied",
+      "financial_calculations_affected": false
+    },
+    {
+      "phase": "literature_read",
+      "url": "https://www.nber.org/system/files/working_papers/w7032/w7032.pdf",
+      "actual_error": "403 Forbidden",
+      "financial_calculations_affected": false
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/run.py",
+        "freeze"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-30T20:15:07.224735Z",
+      "finished_utc": "2026-10-30T20:15:08.602354Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261030T194013Z/freeze.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/run.py\", line 31, in <module>\n    if a=='freeze':module(R/'freeze.py','pair_definition_freeze').main()\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/freeze.py\", line 13, in main\n    sp={'kind':'strategy','family':'perp-hourly-relative-OLS-embargo-independent-banks','name':f'pair370_OLS720_G24_E{E:g}_X{X:g}','market':'perpetual','timeframe':'1h','universe':['BTC/USDT','ETH/USDT'],'logic':copy.deepcopy(rules),'parameters':p,'validation_plan':rel(R/'plan.json'),'sources':plan['sources']};fp=reg.fingerprint(sp);equiv=[{'fingerprint':f,'status':z['status'],'result_available':z.get('result_available')} for f,z in records.items() if z.get('spec',{}).get('kind')=='strategy' and z['spec'].get('parameters')==p and sorted(z['spec'].get('universe',[]))==sp['universe']];assert not any(z['result_available'] is True or z['status']=='reserved' for z in equiv);assert fp not in seen and (fp not in records or records[fp]['status'] in ['blocked','abandoned'] and not records[fp].get('result_available'));seen.add(fp);path=R/'specs'/(sp['name']+'.json');put(path,sp);rows.append({'name':sp['name'],'fingerprint':fp,'spec':rel(path),'scope':'pair','asset':'COMBO','role':'candidate','capital_usdt':20000,'entry_z':E,'exit_z':X,'raw_component_multipliers':[1,1]});checks.append({'name':sp['name'],'equivalent_economic_configs':equiv})\n                                                                                                                                                                                                                                                                                                                           ^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/automation/registry.py\", line 26, in fingerprint\n    raise ValueError(\"family must be a stable lowercase ID; logic must be a nonempty object\")\nValueError: family must be a stable lowercase ID; logic must be a nonempty object\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/audit.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-30T20:18:36.602217Z",
+      "finished_utc": "2026-10-30T20:18:47.787091Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261030T194013Z/audit.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/audit.py\", line 114, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/audit.py\", line 102, in main\n    vv={a:native(z['legs'][a],markets[a],m,int(k),ff,spec,counters) for a in ['BTC','ETH']};v=vv['BTC']+vv['ETH'];s=z['summary'];assert s==c['scenes'][k] and core.navhash(v)==s['NAV_sha256_f64le'] and s['NAV_points']==len(v) and s['initial_capital_usdt']==20000;daily=v[m['daily_indices']].tolist();assert daily==s['daily_equity_usdt'];metrics(v,daily,370,s);jointchecks+=1\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/audit.py\", line 50, in native\n    minimum,count,viol=independent_margin(mm,leg['state_segments']);assert z['margin']['state_hour_extreme_bounding_checks']==count and z['margin']['violations']==viol\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/audit_helpers.py\", line 25, in independent_margin\n    lo=bisect.bisect_left(tb,hour['open_ts']);hi=bisect.bisect_left(ta,hour['available_ts'])\n       ^^^^^^\nNameError: name 'bisect' is not defined. Did you forget to import 'bisect'?\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/audit_corrected.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-30T20:19:40.886602Z",
+      "finished_utc": "2026-10-30T20:19:52.716567Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261030T194013Z/audit_retry1_audit_retry1.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/audit_corrected.py\", line 114, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/audit_corrected.py\", line 104, in main\n    verify_recent(v,m,s);recentchecks+=9;decision_checks+=policy(z,spec,m,independent)\n    ^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/audit_helpers_corrected.py\", line 17, in verify_recent\n    ix=m['daily_indices'];daily=v[ix].tolist();a=ix[330];tail=v[a:];t=z['recent40'];assert t['NAV_points']==len(tail) and t['NAV_sha256_f64le']==hashlib.sha256(tail.astype('<f8').tobytes()).hexdigest() and t['daily_equity_usdt']==daily[330:] and t['initial_NAV_usdt']==v[a] and t['final_NAV_usdt']==v[-1];metrics(tail,daily[330:],40,t)\n                                                                                                                                                 ^^^^^^^\nNameError: name 'hashlib' is not defined. Did you forget to import 'hashlib'?\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/observe_candidate.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-30T20:29:38.841792Z",
+      "finished_utc": "2026-10-30T20:29:54.752872Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261030T194013Z/candidate.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/observe_candidate.py\", line 19, in <module>\n    sys.argv=[str(SOURCE/'prospective_observer.py'),'run','--round',R.name,'--cutoff','2026-10-30T18:30:00Z','--lock-pid','250146'];obs.main()\n                                                                                                                                    ^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 131, in main\n    packet=capture(cut,previous,binding,rawdir,receipts);packetpath=rawdir/'packet.json.gz';gzput(packetpath,packet);put(window/'input_manifest.json',{'packet':rel(packetpath),'sha256':c.sha(packetpath),'provenance':receipts,'plan_sha256':binding['plan_sha256']})\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 49, in capture\n    info=request('/fapi/v1/exchangeInfo',{},rawdir,receipts);server=request('/fapi/v1/time',{},rawdir,receipts);retrieved=min(now(),int(server['serverTime'])*c.MS)\n                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/observe_candidate.py\", line 17, in request\n    receipts.append(item);raise RuntimeError('Public GET failed both bounded attempts;original account preserved')\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Public GET failed both bounded attempts;original account preserved\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/observe_candidate_retry.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-30T20:33:32.540346Z",
+      "finished_utc": "2026-10-30T20:33:32.954261Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261030T194013Z/candidate_retry1_candidate_recovery.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T194013Z/observe_candidate_retry.py\", line 19, in <module>\n    sys.argv=[str(SOURCE/'prospective_observer.py'),'run','--round',R.name,'--cutoff','2026-10-30T18:30:00Z','--lock-pid','250146'];obs.main()\n                                                                                                                                    ^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 131, in main\n    packet=capture(cut,previous,binding,rawdir,receipts);packetpath=rawdir/'packet.json.gz';gzput(packetpath,packet);put(window/'input_manifest.json',{'packet':rel(packetpath),'sha256':c.sha(packetpath),'provenance':receipts,'plan_sha256':binding['plan_sha256']})\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 48, in capture\n    c.check_window(previous,cutoff,now());rawdir.mkdir(parents=True,exist_ok=False)\n                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1311, in mkdir\n    os.mkdir(self, mode)\nFileExistsError: [Errno 17] File exists: '/home/desktop/Documents/Codex/EquiTide/data/raw/binance/candidate_forward/20261030T194013Z'\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "phase": "candidate_public_GET",
+      "eventual_successful_window_audited": true,
+      "url": "https://fapi.binance.com/fapi/v1/time",
+      "started_utc": "2026-10-30T20:29:44.664250+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261030T194013Z/http_attempt_0001.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n"
+    },
+    {
+      "phase": "candidate_public_GET",
+      "eventual_successful_window_audited": true,
+      "url": "https://fapi.binance.com/fapi/v1/time",
+      "started_utc": "2026-10-30T20:29:49.678012+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261030T194013Z/http_attempt_0002.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n"
+    },
+    {
+      "phase": "candidate_public_GET",
+      "eventual_successful_window_audited": true,
+      "url": "https://fapi.binance.com/fapi/v1/exchangeInfo",
+      "started_utc": "2026-10-30T20:34:43.277403+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261030T194013Z_capture_retry/http_attempt_0003.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 28,
+      "stderr": "curl: (28) Connection timed out after 5000 milliseconds\n"
+    }
+  ]
+}
