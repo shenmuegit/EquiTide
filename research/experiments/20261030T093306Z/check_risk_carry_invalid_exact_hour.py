@@ -1,0 +1,12 @@
+"""Exact once real08funding and zero-duration prefund riskstate preservation;no model/trade change."""
+import json
+from decimal import Decimal as D
+from run import ROOT,R,sha,put
+W=R/'candidate_observation';read=lambda p:json.loads(p.read_text());point=read(W/'previous_pointer.json');old=read(ROOT/point['state']);state=read(W/'state.json');v=read(R/'candidate_verification.json');assert v['passed'] and v['cumulative_finished_candidate_observations']==123 and v['NAV_points_per_scene']==4942 and v['prior_NAV_prefix']==4818 and v['elapsed_minutes']==4829 and v['new_closed_hour_risk_checks']==6 and v['new_risk_proxy_violations']==0 and v['new_funding_settlements']==v['expected_from_actual_settlement_actions']==6 and v['new_exact_causal_decisions']==v['new_fills']==0
+assert state['daily']==old['daily'];ns=1793347200000000000
+for a in ['BTC','ETH']:
+ for k in ['1','2','3']:
+  prior=old['books'][a][k];book=state['books'][a][k];es=[x for x in v['independent_funding_cashflows'] if x['asset']==a and x['cost']==k];assert len(es)==1 and es[0]['timestamp_ns']==ns;income=D(es[0]['amount_usdt']);assert D(book['cash'])==D(prior['cash'])+income
+  assert all(book[f]==prior[f] for f in ['signed_units','entry_price','entry_reference']);assert old['risk'][a][k]==[{'t':1793340000000000000,'state':prior}]
+  expected=[{'t':ns,'state':prior}]+([{'t':ns,'state':book}] if income else []);assert state['risk'][a][k]==expected and state['counters'][a][k]['funding_settlements']==old['counters'][a][k]['funding_settlements']+1 and D(state['counters'][a][k]['funding_usdt'])==D(old['counters'][a][k]['funding_usdt'])+income
+put(R/'risk_carry_verification.json',{'passed':True,'old_state_sha256':point['state_sha256'],'new_state_sha256':sha(W/'state.json'),'real08funding_exactly_once_six_assetcost_cashflows':v['independent_funding_cashflows'],'zero_duration08prefund_state_retained_but_not_future_hour_exposure':True,'new_closed_hour_risk_checks':6,'new_risk_proxy_violations':0,'new_funding_cashflows':6,'new_daily_decisions_or_fills':0,'quantity_entry_precisely_carried':True,'cash_updated_only_actual_funding':True,'current08hour_risk_stack':state['risk'],'daily_context_bars':36,'daily_NAV_boundaries':4,'next_funding_utc':'2026-10-30T16:00:00Z','next_daily_decision_utc':'2026-10-31T00:01:00Z','next_window_policy':'08:30to10:30noexpectedfunding;derivefrompacket. Forclosed08hourat09onlypostfundpositive-durationstatecounts,zero-duration08prefundrowexcluded.'});print('PASS06to08 carry,real08fundingonce,oldquantityentryandzero-durationprefundriskordering')
