@@ -1,0 +1,183 @@
+{
+  "kind": "combination",
+  "family": "native-capital-fixed-bank-allocation",
+  "name": "pricegrid370_parent_L2_S28_C50_N500_4500",
+  "logic": {
+    "signal": "ETHcontrarian:atdaily00:01useonlyprior00completeclose. r=C[j]/C[j-L]-1. Desiredshortif r>H, longif r<−H;otherwiseactualexistinglongretainedif r<E,actualshortif r>−E,elseflat. H=.025,E=−.01,Lin2/3/4. Smajoritysign ofreturnsS−1/S/S+1,Sin27/28/29. New/reversalentrymustagreewithstrict2of3nonzero sign;compatibleexistingfastdesiredretainedwithoutslowgateforcedexit. No hidden desired state.",
+    "funding": "New/reversalentryalso requiresdirection*exactmeanoflast6alreadyavailablefundrates<=.00005,latestage<=16h;bothsettlement_ts/available_ts<=signal00,actual00fundavailable01excluded. Existingcompatiblepositionsnotforcedout. Full1212featurehistory separatefrom1110OOSfundingcashflows.",
+    "allocation": "ActualseparateBTC5000/ETH15000USDTbanks,fixedentryBTC500/ETH4500;raw[1,1]sumalreadyfundedNAVs. No renormalization,transfers,rebalance,NAVsizing,crossmargin,orrescalingoldorders. BTCmomentumROC31/H.04/E.01 immutable,reusedfromactual5000bank.",
+    "execution": "Closeincompatibleoldpositionbeforeopenatnext00:01OPEN;quantityfloor fixednotional/priorclose/LOT,adversetickrounding,5bpfee+1halfspread+2slip+0.5lag20sampledailyvol*sqrt(actualq*OPEN/lag20ADV);coststress1/2/3,participation<=.001,postfee1xfullcollateral,1%closedhourmaintenanceproxy. Linearperpactualfundingnegativepaymentsstressed,positiveincomeunchanged;no spotborrowinvented. Terminalexitcosted.",
+    "validation": "370continuousdaysOct19_2025toOct24_2026,no fit/futurelabels;33contextincl3initialembargo;12x30d+10tail,day330inheritedrecent40/8x5d. Allhistoricaldevelopmentreused;no untouchedtest/independentfuture. Same strictindividualandneighborcriteria beforePnL.",
+    "reuse": "ExistingcenterL3/S28nativeandparentarenotnewtests. Full3x3two-scopegridhas16new+2oldcells. Oldcriteria/statusunchanged;currentpricegridcenterqualificationonlydiagnostic,separatefromofficialoldstatus. CompareoldC0.5center andsamecapitalconstantlong/fixedungatedcenterbaselines;notmatchednewS/Lungatedcontrolforoffcenter."
+  },
+  "parameters": {
+    "initial_capital_usdt": 20000,
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "component_capitals_usdt": [
+      5000.0,
+      15000.0
+    ],
+    "component_asset_sequence": [
+      "BTC",
+      "ETH"
+    ],
+    "capital_allocation_weights": [
+      0.25,
+      0.75
+    ],
+    "BTC_capital_fraction": 0.25,
+    "owned_component_capitals_usdt": [
+      5000.0,
+      15000.0
+    ],
+    "component_initial_entry_notionals_usdt": [
+      500.0,
+      4500.0
+    ],
+    "effective_initial_entry_budget_usdt": 5000.0,
+    "source_component_parameters": [
+      {
+        "initial_capital_usdt": 5000.0,
+        "raw_entry_notional_fraction_of_initial_capital": 0.1,
+        "fixed_entry_notional_usdt": 500.0,
+        "lookback_days": 31,
+        "return_hurdle": 0.04,
+        "start_utc": "2025-10-19T00:01:00Z",
+        "end_utc": "2026-10-24T00:01:00Z",
+        "warmup_days": 30,
+        "embargo_days": 3,
+        "walk_forward_folds": 13,
+        "walk_forward_test_days": 30,
+        "maintenance_margin_proxy": 0.01,
+        "initial_notional_cap_to_collateral": 1,
+        "costs": {
+          "per_side_commission": 0.0005,
+          "half_spread": 0.0001,
+          "slippage": 0.0002,
+          "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+          "participation_max": 0.001,
+          "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+          "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+          "cost_multipliers": [
+            1,
+            2,
+            3
+          ],
+          "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+          "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+        },
+        "input_hashes": {
+          "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "97be656cf441024101417476f8338f4d739879d3ee39bfbf2a89cf1a287b726c",
+          "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "80cd98d12fd73cb8bfcc7a4d4af65d737347c9d9b53d82ae1698a1aa15bd71ce",
+          "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "b27e8f9a078a50a9d34c034870790321e43b5d7dff74f2c2a7d0b69f3c276006",
+          "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99"
+        },
+        "persistence": "Keep actual long while ROC>-E or short while ROC<E inside entrybands;strict entrybands have priority,unchanged quantity.",
+        "exit_buffer_fraction": 0.01,
+        "complete_30day_folds": 12,
+        "tail_fold_days": 10,
+        "positive_complete30d_folds_required": 9
+      },
+      {
+        "initial_capital_usdt": 15000.0,
+        "raw_entry_notional_fraction_of_initial_capital": 0.3,
+        "fixed_entry_notional_usdt": 4500.0,
+        "lookback_days": 2,
+        "return_hurdle": 0.025,
+        "start_utc": "2025-10-19T00:01:00Z",
+        "end_utc": "2026-10-24T00:01:00Z",
+        "warmup_days": 30,
+        "embargo_days": 3,
+        "walk_forward_folds": 13,
+        "walk_forward_test_days": 30,
+        "maintenance_margin_proxy": 0.01,
+        "initial_notional_cap_to_collateral": 1,
+        "costs": {
+          "per_side_commission": 0.0005,
+          "half_spread": 0.0001,
+          "slippage": 0.0002,
+          "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+          "participation_max": 0.001,
+          "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+          "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+          "cost_multipliers": [
+            1,
+            2,
+            3
+          ],
+          "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+          "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+        },
+        "input_hashes": {
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6"
+        },
+        "persistence": "Actual position only;strictfastentryHpriority;otherwise actual long retained iff fastROC<E,short iff fastROC>-E;cash requires fresh strict extreme plus slowmajority. Slowgate applies only to new/reversal entries.",
+        "exit_buffer_fraction": -0.01,
+        "complete_30day_folds": 12,
+        "tail_fold_days": 10,
+        "positive_complete30d_folds_required": 9,
+        "signal_mode": "short_roc_zero_exit_slow_trend_gate",
+        "trend_lookback_days": 28,
+        "trend_gate_mode": "adjacent_horizon_majority",
+        "trend_gate_lookbacks_days": [
+          27,
+          28,
+          29
+        ],
+        "trend_gate_votes_required": 2,
+        "trend_gate_application": "entries_only",
+        "entry_funding_lookback_settlements": 6,
+        "entry_funding_cost_cap_per_settlement": 5e-05,
+        "entry_funding_application": "new_and_reversal_entries_only",
+        "entry_funding_max_age_hours": 16,
+        "entry_funding_filter_model": "last_available_settlement_mean_directional_cost",
+        "entry_funding_cutoff": "prior_completed_daily_close_available_ts",
+        "entry_funding_stress_signal_policy": "raw_realized_rates_not_stressed"
+      }
+    ],
+    "entry_funding_lookback_settlements": 6,
+    "entry_funding_cost_cap_per_settlement": 5e-05,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "capital_policy": "actual_separate_native_capitals_1_1_bank_sum_no_reweighting",
+    "qualification_policy": "same_strict_costfold_and_neighbor_gates",
+    "lookback_days": 2,
+    "trend_lookback_days": 28
+  },
+  "components": [
+    {
+      "fingerprint": "f2c640ae6c1892ae78189209668b67fd27b92353d6a545f28ba9bafba22ff744",
+      "weight": 1
+    },
+    {
+      "fingerprint": "04038212d45dddeedca462cc18d89f8fda8c59541d355ca622b5b7ad981b123c",
+      "weight": 1
+    }
+  ],
+  "validation_plan": "research/experiments/20261030T013003Z/plan.json",
+  "sources": [
+    {
+      "url": "https://www.binance.com/en/support/faq/detail/360033525031",
+      "published": "2019-09-09",
+      "updated": "2026-03-06",
+      "role": "Funding direction,mark-based amount,interval variability and settlement timing."
+    },
+    {
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Get-Funding-Rate-History",
+      "redirected_url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "role": "Historical realized fundingTime/fundingRate/markPrice,not future predicted funding."
+    }
+  ]
+}
