@@ -1,0 +1,79 @@
+{
+  "kind": "strategy",
+  "family": "scheduled-perpetual-relative-momentum-independent-banks",
+  "name": "rankpair370_L28_R14",
+  "market": "perpetual",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "logic": {
+    "signal": "On fixed scheduled day i with(i-33)%R==0,compute rBTC=C_BTC[i-1]/C_BTC[i-1-L]-1 and rETH similarly from completedUTCdaily perpetual closes. Long strictly higher-return asset and short lower-return asset;BTCtargetsign=sign(rBTC-rETH),ETHopposite. Exacttie closesboth to cash. No absolute-return hurdle,regression/future labels/funding predictor/fit/volatilitytarget.",
+    "schedule": "L7/14/28 and R7/14days fixed before results,anchor2025-10-19UTC00:01. Daily offschedule holds actualpositions without reevaluatingrank;scheduledsameorientation retains actualq/entry,not rebalance. A scheduledrankflip closesboth at00:01thenopensopposite atsamecostedreference,not free rotation.",
+    "execution": "NextdayUTC00:01realnativeOPEN after previousdailyclose available. At code6 closeBTCthenETH;only ifbothflat may code7 openBTCthenETH. Rejectfirst skipssecond;rejectsecond pays immediateBTCunwind,failedclose/unwind retainsrealq inclose-onlyrecovery nextdaily00:01,includingoffschedule,no freshentryuntilafuture scheduleddecision. Successfulfullpair counts one completedroundtrip on finalclosure;failedpartialentryunwind does not count a pair. Terminal2026-10-24UTC00:01attempts paidcloseactualpositions;notflat failsqualification.",
+    "allocation": "Twoindependent10000USDT banks/rawunits[1,1],total20000,no normalization/transfers/crossmargin/netting. Eachnewlegfixedentrynotional2000=20percent itsinitialbank;grossinitialentry4000=20percenttotal. q=floor(2000/priorcompletedassetclose/nativeLOT)*LOT times targetsign. Sameorientationnoresizing;notdollar-neutral at futureprices orconstantgross/risk. Feeonlyonopening;cash+signedq*(mark-entryexec) NAV.",
+    "costs": "Frozen5bpper-sidefee+1bphalfspread+2bpslip+.5*lag20sampledailylogvol*sqrt(actualq*OPEN/lag20quoteADV);participation<=.001. All1/2/3executioncostsandnegativefundingoutflowsstressed,positivefundingincomeunamplified. Realizedperpfundingatactualsettlementns/mark/thenheldq,nospotborrowfeesinvented. Fundingavailabletimestampexpostonly,notentrysignal/size.1percentclosedhourmarkadverseextrememaintenanceproxy,no crossmargin.",
+    "validation": "Continuous370days 2025-10-19UTC00:01to2026-10-24UTC00:01,33daycontext,12complete30dayfolds+10daytail. Fixedgrid,nomodelselection/retrainingonOOS,rollingpast-onlylookbackfeatures,no supervisedfuturelabels,purgehorizon0;lookback endspriorcompletedclose,availabilitygap60seconds. No learnedpreprocessor requiring train-testembargo;33day context coverslargest28dayfeatureand20daycostinputs. Recent40 inheritsday330realbooks/8x5dayfolds,noaccountreset ordiagnosticfills. Repeateddevelopmenthistory,not untouchedfinaltest orindependentfuture.",
+    "qualification": "Preservedstrictnumericgates:positiveallcosts,>=9/12positivecomplete30day1xfolds,recent40positiveallcosts,>=6/8positive5dayfoldsateverycost,3xwholeDD<=25%,>=60%local3xpositiveand>=60%localstrictrecent,>=4completedtwolegpairs,grossreferencePnL+funding/cost1>=2.5,norejection/negativecollateral/hourmarginproxyviolations,terminalflat,>=180days. Neighborhoodindexradius1onbothaxesincludingcenter;centerL14/R7preset,not selected from test.",
+    "benchmark": "Read-only completedBTCN2000/ETHN2000constantlong banksandraw[1,1]parent,total20000,common370dayperiodandnativeclock. Sameinitialcapitalandinitialgross4000,butlong-onlysigns/turnover/currentgrossdiffer;not exactlymatchedrisk. Originalmetrics/hash/status unchanged,no benchmarkrerun. Cash0analyticalreference.",
+    "risk": "Source1percentclosedhourmarkadversehigh/low maintenanceproxyfor everyoverlappingnativebankstate,1xpostfeeentrycap,participation<=.001,originalLOT/tick/minnotional;noL2/historicaltier/tickliquidationorcapacityguarantee. Perpetualshortusescashcollateral,no underlyingborrow assumed;actualfundingoutflowsstressed/inflowsunamplified."
+  },
+  "parameters": {
+    "lookback_days": 28,
+    "rebalance_interval_days": 14,
+    "schedule_anchor_utc": "2025-10-19T00:01:00Z",
+    "initial_capital_usdt": 20000,
+    "component_capitals_usdt": [
+      10000,
+      10000
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "fixed_entry_notionals_usdt": [
+      2000,
+      2000
+    ],
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "ranking": "strictsimplepastreturn_BTCminusETH",
+    "winner_long_loser_short": true,
+    "exact_tie_target": "flatboth",
+    "absolute_hurdle": null,
+    "same_orientation_resize": false,
+    "offcalendar_recovery": "close_only_daily",
+    "future_label_horizon": 0,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "walk_forward_folds": 13,
+    "complete_30day_folds": 12,
+    "input_hashes": {
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "97be656cf441024101417476f8338f4d739879d3ee39bfbf2a89cf1a287b726c",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "80cd98d12fd73cb8bfcc7a4d4af65d737347c9d9b53d82ae1698a1aa15bd71ce",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "b27e8f9a078a50a9d34c034870790321e43b5d7dff74f2c2a7d0b69f3c276006",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6"
+    },
+    "native_accounting_sha256": "7ba7da288c7894e56cc05a2650afaabf792ce2fbcf8781afbae37ac156e6e316",
+    "paired_execution_helpers_sha256": "a5e2c67e2fa11ab30957455bcef77362d02462029e03cdb48668ec15d90db2be"
+  },
+  "validation_plan": "research/experiments/20261030T234040Z/plan.json",
+  "sources": [
+    {
+      "url": "https://www.aqr.com/Insights/Research/Journal-Article/Time-Series-Momentum",
+      "scope": "Conceptonly;notreplication of paper horizons/universe or performance."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "scope": "Official public funding/mark/bars definitions."
+    }
+  ]
+}
