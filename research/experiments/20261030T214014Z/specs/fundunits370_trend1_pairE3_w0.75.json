@@ -1,0 +1,93 @@
+{
+  "kind": "combination",
+  "family": "fixed-funded-trend-relative-pair-source-units",
+  "name": "fundunits370_trend1_pairE3_w0.75",
+  "market": "perpetual",
+  "timeframe": "1h",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "logic": {
+    "ownership": "One unit of original fully funded trend/reversal parent plus w units of an existing fully funded paired parent; w=.25/.5/.75 retained without normalization. Each parent starts20000 USDT; total25000/30000/35000. Fractional ownership of fully executed fund units,not a newly LOT-valid reduced standalone trading account. Independent original banks,no transfers/netting/rebalancing/cash yield or added orders.",
+    "source_strategy": "Unmodified originaltrend BTC L31/H.04/E.01 N1000 and ETH S28/L3/H.02/E0 N3000; paired ETH~BTC OLS720h/24h embargo/E2,2.5,3/X1/max48h ETHN2000/BTCbeta*2000. Source full specs,actual ledgers,status and original NAV hashes bound below. No source signals/orders recalculated.",
+    "alignment": "Union of structured(timestamp_ns,event_code) keys; source state transitions effective at recorded native keys including same-time pre/post funding and close/open. Recover cash/signedq/entry from original state segments,then revalue at real causal asset prices on expanded minute/hour/funding/hourlyOPEN clock. No future interpolation or carrying stale source NAV through a newly available OPEN. First reproduce each native and parent original point hash exactly; sourcepoint values never replaced.",
+    "costs": "Frozen5bpper-sidefee+1bphalfspread+2bpslip+.5*lag20sampledailylogvol*sqrt(actualq*OPEN/lag20quoteADV);participation<=.001. All1/2/3executioncostsandnegativefundingoutflowsstressed,positivefundingincomeunamplified. Realizedperpfundingatactualsettlementns/mark/thenheldq,nospotborrowfeesinvented. Fundingavailabletimestampexpostonly,notentrysignal/size.1percentclosedhourmarkadverseextrememaintenanceproxy,no crossmargin. All source execution cost/funding already paid at native sizes; owned unit fractions scale both net NAV and attributed source cashflow costs. No execution-cost discount,crossmargin or opposing-position fee/funding netting. No invented fund subscription fees; fractional fund units/liquidity availability unverified.",
+    "validation": "370day continuous reused development history,12 complete30day folds+10daytail;recent40 inherits real day330 state/8x5day. No selection/refitting of weights on OOS;center E2.5/w.5 frozen. Futurelabelhorizon0; source OLS rolling training excludes testedhour+24fullhours; daily indicators priorcompletedclose. This source choice is history-informed,not untouchedfuture evidence.",
+    "qualification": "Original broad numeric gates unchanged,including recent6of8 positive5d folds at every cost and >=60% of both-axis neighborhood. Portfolio counts use completed source operations: nativebank round trips plus completed two-leg pairs; disclose separate counts,no rounding fund-unit counts.",
+    "benchmark": "Three sameinitialcapital comparators: original trendparent1 plus cash20000*w,zero yield,no transfer/rebalance. Each independently reserved. Existing buyhold parent is read-only reference,initial20000/gross exposure and oldclock differ;retain original metrics and qualifications. Analytical cash0 reference.",
+    "limits": "No real orders,no new paperaccount,fund share execution or liveprofit claim. Missing source hash/reconciliation blocks configuration with no fabricated result; all completed losses retained."
+  },
+  "parameters": {
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "initial_capital_usdt": 35000.0,
+    "raw_trend_units": 1,
+    "raw_pair_units": 0.75,
+    "cash_usdt": 0,
+    "source_parent_capitals_usdt": [
+      20000,
+      20000
+    ],
+    "paired_entry_z": 3,
+    "paired_exit_z": 1,
+    "source_fingerprints": [
+      "9bef791333b2e6fb8166f7080ddad77af1b29bd73ad870baf928dd4ce72de21c",
+      "0dfd054ac743e7b008c364c5c3750d60ad2a03eccfbc97d0f943880cb36f7be4"
+    ],
+    "raw_component_multipliers": [
+      1,
+      0.75
+    ],
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "ownership": "fractional_fullyfunded_source_NAV_units_no_normalization",
+    "valuation_clock": "causal_structured_ns_eventcode_union_570543",
+    "rebalance": "none",
+    "source_orders": "immutable_original_native_execution",
+    "input_hashes": {
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "97be656cf441024101417476f8338f4d739879d3ee39bfbf2a89cf1a287b726c",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "80cd98d12fd73cb8bfcc7a4d4af65d737347c9d9b53d82ae1698a1aa15bd71ce",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "b27e8f9a078a50a9d34c034870790321e43b5d7dff74f2c2a7d0b69f3c276006",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6"
+    },
+    "source_spec_hashes": {
+      "9bef791333b2e6fb8166f7080ddad77af1b29bd73ad870baf928dd4ce72de21c": "fe8aba1bfe1961073e0965ae74c45318a27be7ca4ef3d83118d50b4e57f65d07",
+      "0dfd054ac743e7b008c364c5c3750d60ad2a03eccfbc97d0f943880cb36f7be4": "f05983e5c75fa10c2661afb76ccaef48d59f55e19c4e54e909d0e68192e09a5b"
+    },
+    "source_ledger_hashes": {
+      "9bef791333b2e6fb8166f7080ddad77af1b29bd73ad870baf928dd4ce72de21c": "f339a182d47eb6121ffc4e7d6f940a5c4906a9f4ab62222bd0eaebb767588d66",
+      "2122c03af949f66e9ab48802b8813121b9a94f1e0a5844a712c800a026a2fd4d": "688145e111c466ac990f514a15b883d4be4769404a09d9f99141d43f27201b95",
+      "d0d984ab2ae7f899c6eb6e1e680c11cf91cf47177f946a93e13a95f7a08cd82e": "6bf9497736e5fb31f0940fee26ddc6675b97e5cc95a8b38776470c47eea2ba43",
+      "0dfd054ac743e7b008c364c5c3750d60ad2a03eccfbc97d0f943880cb36f7be4": "62906003545c7785a1a9dea39372808f6e377594231b11a4782bb624afe93328"
+    }
+  },
+  "validation_plan": "research/experiments/20261030T214014Z/plan.json",
+  "sources": [
+    {
+      "report": "research/experiments/20261026T070542Z/report.json",
+      "sha256": "31ffdbe14c7a5277ec85e49c53c13e806f04826f4b36a1dd53c7bf4ecc88def4"
+    },
+    {
+      "report": "research/experiments/20261030T194013Z/report.json",
+      "sha256": "12e324dd157d94e95f98548c9135c79dfc96bb06663f00e7b86a2317989f0614"
+    }
+  ],
+  "components": [
+    {
+      "fingerprint": "9bef791333b2e6fb8166f7080ddad77af1b29bd73ad870baf928dd4ce72de21c",
+      "weight": 1
+    },
+    {
+      "fingerprint": "0dfd054ac743e7b008c364c5c3750d60ad2a03eccfbc97d0f943880cb36f7be4",
+      "weight": 0.75
+    }
+  ]
+}
