@@ -1,0 +1,1818 @@
+{
+  "time_boundaries": {
+    "input_start_utc": "2025-09-16T00:00:00Z",
+    "input_end_exclusive_utc": "2026-10-25T00:00:00Z",
+    "oos_start_utc": "2025-10-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-10-24T00:01:00Z",
+    "context_days": 33,
+    "nominal_warmup_days": 30,
+    "initial_embargo_days": 3,
+    "continuous_oos_days": 370,
+    "walk_forward_folds": 13,
+    "complete_30day_folds": 12,
+    "tail_fold_days": 10,
+    "label_purge": "No fittedlabels/model;not applicable. Fixed rules use only priorcompleteprices,actual state carries across allfolds."
+  },
+  "data": {
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet",
+          "sha256": "97be656cf441024101417476f8338f4d739879d3ee39bfbf2a89cf1a287b726c",
+          "bytes": 32143848,
+          "rows": 581760
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet",
+          "sha256": "80cd98d12fd73cb8bfcc7a4d4af65d737347c9d9b53d82ae1698a1aa15bd71ce",
+          "bytes": 494964,
+          "rows": 9696
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet",
+          "sha256": "b27e8f9a078a50a9d34c034870790321e43b5d7dff74f2c2a7d0b69f3c276006",
+          "bytes": 34756,
+          "rows": 1212
+        },
+        {
+          "path": "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet",
+          "sha256": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99",
+          "bytes": 1892,
+          "rows": 1
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet",
+          "sha256": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+          "bytes": 29255495,
+          "rows": 581760
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet",
+          "sha256": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+          "bytes": 462199,
+          "rows": 9696
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet",
+          "sha256": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+          "bytes": 33894,
+          "rows": 1212
+        },
+        {
+          "path": "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet",
+          "sha256": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6",
+          "bytes": 1892,
+          "rows": 1
+        }
+      ]
+    },
+    "provenance_manifest": "research/experiments/20261025T065405Z/extended_data_manifest.json",
+    "provenance_manifest_sha256": "c7f23dc091a19e9eebd90778b648d8330e7d193bdd07d4b4011cb02373235a76"
+  },
+  "component_costs": {
+    "per_side_commission": 0.0005,
+    "half_spread": 0.0001,
+    "slippage": 0.0002,
+    "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+    "participation_max": 0.001,
+    "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+    "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+    "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+  },
+  "original_candidate_preserved": {
+    "name": "gatebudget370_B1000_E3000_S28_L3_H02",
+    "fingerprint": "9bef791333b2e6fb8166f7080ddad77af1b29bd73ad870baf928dd4ce72de21c",
+    "spec": "research/experiments/20261026T070542Z/specs_corrected/gatebudget370_B1000_E3000_S28_L3_H02.json",
+    "spec_sha256": "fe8aba1bfe1961073e0965ae74c45318a27be7ca4ef3d83118d50b4e57f65d07",
+    "report": "research/experiments/20261026T070542Z/report.json",
+    "report_sha256": "31ffdbe14c7a5277ec85e49c53c13e806f04826f4b36a1dd53c7bf4ecc88def4",
+    "archive": "research/experiments/20261026T070542Z/results/gatebudget370_B1000_E3000_S28_L3_H02.json.gz",
+    "archive_sha256": "f339a182d47eb6121ffc4e7d6f940a5c4906a9f4ab62222bd0eaebb767588d66",
+    "scope": "parent",
+    "capital_usdt": 20000,
+    "parameters": {
+      "initial_capital_usdt": 20000,
+      "raw_component_multipliers": [
+        1,
+        1
+      ],
+      "component_capitals_usdt": [
+        10000,
+        10000
+      ],
+      "component_initial_entry_notionals_usdt": [
+        1000,
+        3000
+      ],
+      "BTC_lookback_days": 31,
+      "BTC_return_hurdle": 0.04,
+      "ETH_lookback_days": 3,
+      "ETH_return_hurdle": 0.02,
+      "start_utc": "2025-10-19T00:01:00Z",
+      "end_utc": "2026-10-24T00:01:00Z",
+      "walk_forward_folds": 13,
+      "walk_forward_test_days": 30,
+      "warmup_days": 30,
+      "embargo_days": 3,
+      "cost_multipliers": [
+        1,
+        2,
+        3
+      ],
+      "source_rules_and_costs_sha256": "2f7f2eeb66745b9ecc76efa31c0e983a197a3cb251612c608b9c896a301a95c3",
+      "BTC_exit_buffer_fraction": 0.01,
+      "ETH_exit_buffer_fraction": 0,
+      "BTC_fixed_entry_notional_usdt": 1000,
+      "ETH_fixed_entry_notional_usdt": 3000,
+      "walk_forward_complete30day_folds": 12,
+      "walk_forward_tail_days": 10,
+      "continuous_oos_days": 370,
+      "style": "btc_trend_eth_trend_filtered_reversal",
+      "trend_exit_buffer_fraction": 0.01,
+      "reversal_lookback_days": 3,
+      "reversal_return_hurdle": 0.02,
+      "trend_filter_lookback_days": 28,
+      "ETH_trend_lookback_days": 28
+    },
+    "components": [
+      {
+        "fingerprint": "2122c03af949f66e9ab48802b8813121b9a94f1e0a5844a712c800a026a2fd4d",
+        "weight": 1
+      },
+      {
+        "fingerprint": "d0d984ab2ae7f899c6eb6e1e680c11cf91cf47177f946a93e13a95f7a08cd82e",
+        "weight": 1
+      }
+    ],
+    "criteria": {
+      "positive_all_costs": true,
+      "nine_of_twelve_positive_complete30d_1x_folds": true,
+      "recent40_positive_all_costs": true,
+      "recent40_six_of_eight_positive5d_1x_folds": true,
+      "composite_DD3_lte25pct": true,
+      "local_positive3_gte60pct": true,
+      "four_round_trips1": true,
+      "gross_plus_funding_to_cost1_gte2_5": true,
+      "no_negative_collateral": true,
+      "no_order_rejections": true,
+      "no_margin_proxy_violations": true,
+      "terminal_flat": true,
+      "minimum180days": true
+    },
+    "passed_only_predeclared_historical_gates": true,
+    "scenes": {
+      "1": {
+        "full370_return_pct": 8.972716369844157,
+        "whole_curve_drawdown_pct": 2.872391309482647,
+        "recent40_return_pct": 1.5615814849144094,
+        "recent40_whole_drawdown_pct": 1.6258496279211054,
+        "full_NAV_sha256": "4c0038544c510d6a16bef44d01bb495049f1a50f0e84c72f0cb645df05a7e670",
+        "recent40_NAV_sha256": "c5af684026531192349da8edc9f5f60d26875f58faa69a0e078fc7ac6f76e739"
+      },
+      "2": {
+        "full370_return_pct": 7.588003796240583,
+        "whole_curve_drawdown_pct": 3.0645987775102523,
+        "recent40_return_pct": 1.412400446034412,
+        "recent40_whole_drawdown_pct": 1.7035799917191508,
+        "full_NAV_sha256": "05d8faa49b47a3421ee7f2e17e5017598dcb41848585ae4c162158783062ac7a",
+        "recent40_NAV_sha256": "d0dfc1f57425552af03a665fb37552953d4aa31cfe63b98466c5ad6f6af66ea7"
+      },
+      "3": {
+        "full370_return_pct": 6.2023392605370375,
+        "whole_curve_drawdown_pct": 3.2575347331928683,
+        "recent40_return_pct": 1.2596230399962716,
+        "recent40_whole_drawdown_pct": 1.7831634445965472,
+        "full_NAV_sha256": "6d541eab19a11906a6df39edc420a42aba0a05f75e9a019feaf0b81364398fdf",
+        "recent40_NAV_sha256": "5417274b20a1f03c2861719c3dca7b83119f0f74cd5a67a4020d6fde98690155"
+      }
+    },
+    "complete30d_positive_1x_folds": 10,
+    "recent5d_positive_1x_folds": 6,
+    "readonly_neighbor_diagnostics": {
+      "count": 16,
+      "full3x_net_positive_count": 15,
+      "recent6of8_raw_fold_count": 1,
+      "grid_boundary_axes": [
+        "ETH_fixed_entry_notional_usdt",
+        "trend_filter_lookback_days",
+        "reversal_lookback_days",
+        "reversal_return_hurdle"
+      ],
+      "policy": "Rawalreadyrecordedmetrics only,notreratingoldneighborsornewfinancialevaluation."
+    },
+    "independent_future_evidence_for_this_config": false,
+    "risk_limits": [
+      "Only1of108newactualconfigs passed in this repeatedlyusedhistory;strongselectionbias.",
+      "Four-axis boundary location and sparse recentfold consistency among neighbors limit robustness.",
+      "No DSR/PBO correction,untouchedholdout or stableliveprofit established.",
+      "Cost/mark/maintenanceproxy limitations in frozen plan remain."
+    ],
+    "next_step": "Keepthisspec/hashunchangedforindependentnewdataforwardvalidation. ExistingSMAandpaper10arenotitsforwardevidence;no newaccount/trade/resetorpostresulttuningperformedhere."
+  },
+  "helpers": {
+    "research/experiments/20261025T145537Z/run.py": "cfd78da26836ee5929cae31e266cdf8b19eba1cb8ea6d904c69b95dfccb6d423",
+    "research/experiments/20261025T085436Z/run.py": "b0c386644dfff35312455950b26a769672152aa12d4828b4fd638a11e095a1ef",
+    "research/experiments/20261023T204326Z/run.py": "3526462a590de17571cb15bde822b4b697cbb5b100afaff2016356d455b83456",
+    "research/experiments/20261029T092426Z/run.py": "b1be0ec7a1ebc5210626c2370007a8164ffe51c9ff7aae0509a49d02198dfa06"
+  },
+  "gates": {
+    "positive_all_costs": true,
+    "positive_complete30d_1x_folds_min": 9,
+    "complete30d_folds": 12,
+    "tail10day_fold_excluded_from_positive_count": true,
+    "recent40_positive_all_costs": true,
+    "recent40_positive5d_1x_folds_min": 6,
+    "recent40_5d_folds": 8,
+    "max_3x_composite_drawdown_pct": 25,
+    "round_trips_1x_min": 4,
+    "gross_reference_PnL_plus_funding_to_cost_min": 2.5,
+    "individual_margin_cash_order_violations": 0,
+    "each_source_terminal_flat": true,
+    "minimum_evidence_days": 180,
+    "continuous_days": 370,
+    "recent40_positive5d_each_cost_min": 6,
+    "old_qualifications_unchanged": true,
+    "local_3D_positive3_fraction_min": 0.6,
+    "local_recent6of8_allcost_fraction_min": 0.6
+  },
+  "sources": [
+    {
+      "url": "https://www.binance.com/en/support/faq/detail/360033525031",
+      "published": "2019-09-09",
+      "updated": "2026-03-06",
+      "role": "Funding direction,mark-based amount,interval variability and settlement timing."
+    },
+    {
+      "url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/market-data/rest-api/Get-Funding-Rate-History",
+      "redirected_url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "role": "Historical realized fundingTime/fundingRate/markPrice,not future predicted funding."
+    }
+  ],
+  "source_engine": {
+    "path": "research/experiments/20261029T232932Z/engine.py",
+    "sha256": "ac657cbc287ca5b225f009b568050f6b7a86896159f893c6b77b39974aaf1164"
+  },
+  "round": "20261030T053205Z",
+  "trigger_utc": "2026-10-30T05:32:05.301Z",
+  "frozen_at_utc": "2026-10-30T05:42:23.126196Z",
+  "hypothesis": "Bothshortreversalandmediumtrendstandaloneshavepositiveannualcellsyetrecent/localfailures. Testwhetherfixedcross-timescaleownershipdiversifiesactualdailyPnL/filltimingenoughtopassstrictrecentfoldswithoutchangingcomponentsorusingOOSoptimizedweights. Freezeall3a x3slowL x3slowHcellsratherthanchoosebestslowbank.",
+  "grid": {
+    "fast_ETH_bank_units": [
+      0.25,
+      0.5,
+      0.75
+    ],
+    "lookback_days": [
+      20,
+      25,
+      30
+    ],
+    "return_hurdle": [
+      0.02,
+      0.04,
+      0.06
+    ],
+    "new_financial_configs": 30,
+    "new_candidates": 27,
+    "new_reference_configs": 3,
+    "new_native_components": 0,
+    "new_parent_configs": 30,
+    "cost_scenes": 90,
+    "full_grid_cells": 27,
+    "edges": 54,
+    "total_capital_usdt": 20000,
+    "component_original_capitals_usdt": [
+      5000,
+      15000,
+      15000
+    ],
+    "raw_weights": "[1,a,1-a]",
+    "no_normalization": true
+  },
+  "rules": {
+    "composition": "StaticbankNAVownershipindex:rawunits[1,a,1-a]forBTC5000trendbank,ETH15000fastreversalbank,ETH15000slowmomentumbank. a=.25/.5/.75;allvaluesretained,neverrenormalized. Initialownedcapital[5000,15000*a,15000*(1-a)]sum20000,rawsum2. No rebalance,cashtransfer,NAVsizing,crossmarginornewparentorders.",
+    "components": "BTC31/H4/E1,N500/5000fixed;ETHfastL3/H2.5/E−1/S28entry-onlymajority+N6fundingcap.5bp,N4500/15000fixed;ETHslowL20/25/30,H2/4/6,E1,N1500/15000fixed. All14needednativebanks/42costcurvesalreadyactuallybacktested;useexactsourcefingerprints/costs/fullledgers,doNOTrerunsignalsororders.",
+    "ownership_costs": "Eachunderlyingbankretainsoriginalnativeq/LOT/TICK/nonlinearimpact/fees/spread/slippage/funding/collateral. Ownedmoneyandcostslinearbank-unitsclaims,notnewsmallernativeorders. Indexentry/exitunitsatNAVassumednoadditionalfee;nottradablefund/capacityevidence. Existingunderlyingcost1/2/3scenesreused;no nettingorcross-marginfeereduction. Coveredexecutioncountsareunderlyingwholebankevents,notfractionalnewtrades.",
+    "risk": "Checkeachunderlyingriskproxy/balancesunchanged;scaleownedcushionsonly,nevernetcollateral. OverallportfolioDDfromfullsumNAV;notmeancomponentreturns/Sharpe. Strictallcostrecentfoldand3DneighborcriteriaunchangedbeforePnL.",
+    "time": "370continuousOOSOct19_2025toOct24_2026,33contextincl3initialembargo,nofit/futurelabels;12x30d+10tail,day330inheritedrecent40/8x5d;terminalexitsalreadycostedinsources. Reusedhistorydevelopment,notuntouchedtest.",
+    "references": "3newconstantlongindicesatsame[1,a,1-a]ownershipusingactualBTC5000/N500,ETH15000/N4500andETH15000/N1500holdbanks. Purefastparentand9pureslowparentsreusedreadonly;cash0%analyticalbaseline. No newnativeexecutionororiginal-accountparameterchange."
+  },
+  "component_sources": {
+    "f2c640ae6c1892ae78189209668b67fd27b92353d6a545f28ba9bafba22ff744": {
+      "name": "nativecapital370_BTC_W2500_momentum",
+      "fingerprint": "f2c640ae6c1892ae78189209668b67fd27b92353d6a545f28ba9bafba22ff744",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_BTC_W2500_momentum.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_BTC_W2500_momentum.json.gz",
+      "archive_sha256": "c5a5c66c0f60e9d806821660626f60987fc47e808bc0b15674d5b6995c5ce162",
+      "scope": "native",
+      "asset": "BTC",
+      "role": "component",
+      "capital_usdt": 5000.0,
+      "spec_sha256": "aecb5bb62c0b2e87d9aac59d525fea5a8b0616d8413ba75b7a50c0f61fde8945",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "bfef5ccc91b294fe76a2407ad63fab97e0040e2925bbc24775fb074124ad236e",
+        "2": "adfea61013d6897312876972ea20fd2f88482b038f8d441922851c6a5f6445b8",
+        "3": "8e16e8a1df7aa3b395775864b47e2ddcab41dd786887881bf0a3790f745aca11"
+      },
+      "fixed_entry_notional_usdt": 500.0
+    },
+    "2dcb86cbca6740649265e3bb52dd4c309fe882f439403ca309fb0145b302a3ee": {
+      "name": "nativecapital370_ETH_W2500_candidate_C50",
+      "fingerprint": "2dcb86cbca6740649265e3bb52dd4c309fe882f439403ca309fb0145b302a3ee",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_ETH_W2500_candidate_C50.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_ETH_W2500_candidate_C50.json.gz",
+      "archive_sha256": "538c21351d657e86426c4047cb282b4ea1d7118a2060b15fad090efd4cae90dd",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000.0,
+      "spec_sha256": "c58b3730e1155cde2065418aa82752653eaea5840b4ca7d281644153352968ab",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "1e8f585cf4cd2c74399bc74a8abdcf7bade777e3ccc5dd163ae60c12a3a38154",
+        "2": "2227028deec0319531f0c06435169983c662313fdc159a834e2c921019d0291f",
+        "3": "0e68446bcfc4b1e9d6fc5d330200a324c783f47a405b726e15cc45b087889511"
+      },
+      "fixed_entry_notional_usdt": 4500.0
+    },
+    "5495efd3f4fa6781b584543069b72d08b567d3d35df3495a07955d144086c5d3": {
+      "name": "nativecapital370_BTC_W2500_hold",
+      "fingerprint": "5495efd3f4fa6781b584543069b72d08b567d3d35df3495a07955d144086c5d3",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_BTC_W2500_hold.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_BTC_W2500_hold.json.gz",
+      "archive_sha256": "1da59495858f6dd97719e415f2ec4a51bf56ae864c43fe7d721463a0c7c309ac",
+      "scope": "native",
+      "asset": "BTC",
+      "role": "benchmark",
+      "capital_usdt": 5000.0,
+      "spec_sha256": "cd69e9c3c1156219ed19452c366db97545a00cecc931a8ffe51e19a299508c82",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "7a30702cf9842a549c31139652f6d01efcc0137abad711a35e6608c36e2d6ca8",
+        "2": "994d8f75bcfaf5ee7c8135e59ce54616178ca51b1bf4869d3767f15a671dc3fb",
+        "3": "e1e6714a65c4f16459ebae9b20f204ddfa0d099126cc07c31baeea1041c9c61e"
+      },
+      "fixed_entry_notional_usdt": 500.0
+    },
+    "fd96b9d8250328e033aa2b40460ef01a2d7cc57a22a12ad0f5abf111ade3323e": {
+      "name": "nativecapital370_ETH_W2500_hold",
+      "fingerprint": "fd96b9d8250328e033aa2b40460ef01a2d7cc57a22a12ad0f5abf111ade3323e",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_ETH_W2500_hold.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_ETH_W2500_hold.json.gz",
+      "archive_sha256": "b15752d16d0f9001d61d7bd2aa08ca5a4543d59f0f67a63cdca03d44c8ccbdd5",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "benchmark",
+      "capital_usdt": 15000.0,
+      "spec_sha256": "c8671c77caa632b38ce7e0f0c8ce636f4fd0a35c55ce2638535ff0a8fdf56d7f",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "06f0592be344475649ad1b3e243db8d6a076581d37c7d0d63df55de73ff1c65b",
+        "2": "3870fcbcc78d0d196a1760817bd8d94b8c5adb3305b9d0b2d2639cd668ded48c",
+        "3": "6c3cd4bde84300f42616cecc0e266bae347f7b3d591a927ebf0214bf2398f3ae"
+      },
+      "fixed_entry_notional_usdt": 4500.0
+    },
+    "ee1898ce578fce1c1f47fcf08f320d0c0eaf9ff7ba4dc78c81102d11a319bdd5": {
+      "name": "trend370_ETH_hold_N1500",
+      "fingerprint": "ee1898ce578fce1c1f47fcf08f320d0c0eaf9ff7ba4dc78c81102d11a319bdd5",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_hold_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_hold_N1500.json.gz",
+      "archive_sha256": "4d732bcdc7a9910325854852feb05878879c308cc0c97f10dce50db272556e0e",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "benchmark",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "a8be5b83823eb67f0f746d6ab06dda0afb140e682b0fdd17a89b0976b0069084",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "6c81eb1a1a9ece1cbcb579c1eedf207dc7cdc174738e4dc7c82a3f1cf20b5ff6",
+        "2": "03faf8b9ed01433b5b9c312a1b8945b7b2371cd0bc0231c49e1ba3deac3fe02d",
+        "3": "c90b0a6ed37d8d1ef4d7e4c4ec7d5c19d127c237a33323c809983cadf1e196d7"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "ea0b40e0fd6822556828d70ab8cb4a8327883f679e6dcc3e3740054aac6dd614": {
+      "name": "trend370_ETH_L20_H02_E1_N1500",
+      "fingerprint": "ea0b40e0fd6822556828d70ab8cb4a8327883f679e6dcc3e3740054aac6dd614",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H02_E1_N1500.json.gz",
+      "archive_sha256": "eac108a334ee899d8a2c353fc441462029a319599bf5ecaa44e0c30b76399374",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e804de3ff7f0434cbf5330d5f123110911292298fc01d4cab7977b69917fd644",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "43b926d7c07ba6232e0ede0d27a514f6369283972eb7c270b3ca0aa1b9bdfb60",
+        "2": "99766a4cfb3642e78de950928980c6b60233fceac4ed5d42c0313218039f299b",
+        "3": "fc4ebddb9fecddceb3a43eb6d6e1184493a7d6bf24be7e3c61ee41222989b65d"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "c91f5b3e1392605d632cd1b73cc49f069d39fd713055ad7a34e1838f70e17cb3": {
+      "name": "trend370_ETH_L20_H04_E1_N1500",
+      "fingerprint": "c91f5b3e1392605d632cd1b73cc49f069d39fd713055ad7a34e1838f70e17cb3",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H04_E1_N1500.json.gz",
+      "archive_sha256": "08a4de4fe25a6698e596b1e1d2a66ed2ea8c50b354dbe00985c33c29bce3be1d",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "c002217c108885f7234bb00cd34a69e001fed1be654eb64fa41d74eaae75d86c",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "5ae8fc1b7b75a5f12e8c76bc8108d5218cd18c460068c6c6f2f108361ae16238",
+        "2": "736ed2b6a31a86aa1aa05af8fd054a49c56ef04884c82afd52e0eb1491bdbaab",
+        "3": "102d314ebceaaa44944767120273a6dd32293f31c79b4593c5ad193941f4ade4"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "281e48e9b96d43b48516aaa9819e047fcb4d39fd79a5534a5ddfbb86441cad2f": {
+      "name": "trend370_ETH_L20_H06_E1_N1500",
+      "fingerprint": "281e48e9b96d43b48516aaa9819e047fcb4d39fd79a5534a5ddfbb86441cad2f",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H06_E1_N1500.json.gz",
+      "archive_sha256": "5e7625c880c3d875df7b3edfff087152f4990739642d8105dbef0e8e071525cd",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "4012fdb60d8cd1c1933f464a72f3d7732ec5c48772ecd91243cfa3ff10ac42ce",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "879fac44118a4424a15cbf40a4ae8fd212928654401da9a62dc8291050a24222",
+        "2": "3e65198f76770a5a2bc4e8abe297d3d0da28d6831b998882c0f1d3d54b0e1227",
+        "3": "02700ceb35d29b1a77d9da2bcd855f7a432c5f777a435672ec5a0d38ea6b7c52"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "cfebb8f763e3dd33cc371749abeab6c27643adf56087ff1c08f23f3e50873482": {
+      "name": "trend370_ETH_L25_H02_E1_N1500",
+      "fingerprint": "cfebb8f763e3dd33cc371749abeab6c27643adf56087ff1c08f23f3e50873482",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H02_E1_N1500.json.gz",
+      "archive_sha256": "0c8369973ef0ebc6d14e679d1569fc7fffd5fa730786429e07207d0fa11760e7",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "bc541156df1d93b166d98e7b4a7c494b92ff72466b119d998fe619970cd22030",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "a726b1ccfe2a36b2c89341faf3b8e516cf0ebb4ba94f4e4aee21b75bc7e19e0f",
+        "2": "3f77391d0a4aa8218b69d29dfab1489b9889c64509cdc0aa103a04ac713e1a59",
+        "3": "96333d9ab313a759e06f9a22f5b7aff23e8f75f872dd3c0e48d5886bd6bcddbe"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "1fde5e00bc48f77dd96be1d97ce6c80d0c0b7a7da0933618ece88dd10a50dc86": {
+      "name": "trend370_ETH_L25_H04_E1_N1500",
+      "fingerprint": "1fde5e00bc48f77dd96be1d97ce6c80d0c0b7a7da0933618ece88dd10a50dc86",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H04_E1_N1500.json.gz",
+      "archive_sha256": "164ec3216aa2b173aad415d66755bb5addab6a9fe3cb3c0b03acd518915bf1d6",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "a64bda6ad2f17432ee022dcae4935007f564eeffce7b5cefc7a12d803611d3fb",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "bad159e2ce6364f1e6fe16d6c5aa8f1fe96087b4e99d86d6195936067219b4c3",
+        "2": "b5fb1221ab976817b141d17c9219345c8ebf951a197482a7890330785d03127c",
+        "3": "ef5e72e15c3be5b335f254a38a3367cd8b4d7ada1cced723c2180ca06b88ad7c"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "8fa5d044908be60134b0e2d8098e6d4521dcae2026a5cc8e51f16ee0abcd21d9": {
+      "name": "trend370_ETH_L25_H06_E1_N1500",
+      "fingerprint": "8fa5d044908be60134b0e2d8098e6d4521dcae2026a5cc8e51f16ee0abcd21d9",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H06_E1_N1500.json.gz",
+      "archive_sha256": "3bdb7a664d56db07f4034c56af5a2ccf54eef9348952b2812a2238e4f03a0ac3",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e2ab1715e76f1f2a943417fe7b4272e080d061fde7af6e79c0063de129031138",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "dbaf02371ab9e77fd3338a5063c0d6e6eaa3deb77d464f30da946e8ed18365f0",
+        "2": "c16c5680ea9ba61787481d2cb4b8bb0424a74192862f404dbdc2204dfb3dc7f0",
+        "3": "e03991b8eb744ddd86668ed3304c1968c15dd9d29c7efd8a3827236def527d3f"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "ac3c6f2f08bc391f99bfbb5a9f736fb27b2d909af5a38ecef7e0a6de4ca5a98b": {
+      "name": "trend370_ETH_L30_H02_E1_N1500",
+      "fingerprint": "ac3c6f2f08bc391f99bfbb5a9f736fb27b2d909af5a38ecef7e0a6de4ca5a98b",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H02_E1_N1500.json.gz",
+      "archive_sha256": "561f7e439b4f0c25ef6148b76437672282c8cbd7620d58593b09efa8cbac6237",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "1c67ec80cd78f4d866ed5d494573d2dabd29c630ba619437a8a43c4c64d5fae4",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "c09512c91d36bd267be3e37204af80d62e0b9ca6861dea0281058cde5bfb78ad",
+        "2": "1a30ccdc0afcc0d03df843859cde78b8a19f5f1e5bcb10bffa1bb15fa42bb24b",
+        "3": "17f047647daf1a4dfcf616fd65d78d0cd3a554233d825c1dd17e4b635119a50c"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "13361ef249df4457939187ad72655b8d145a2d0e910e5e6800b6cf50b2086c19": {
+      "name": "trend370_ETH_L30_H04_E1_N1500",
+      "fingerprint": "13361ef249df4457939187ad72655b8d145a2d0e910e5e6800b6cf50b2086c19",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H04_E1_N1500.json.gz",
+      "archive_sha256": "9bdebf85f87ce6ca23b2f512b875c40306d38c1b0fe9decdb83cd844b86d49b2",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "07e4892833106a7afec001ae08258e444f320d1a6e8cb7ba17871f6d201485f2",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "74e5159d54f55525a56a5aa16475330647842fcd52f84359f963218c736597bb",
+        "2": "af3f2a2d8e558f8189a22c7e6fa41de9782cb49f6632803ee0fffa7b89657721",
+        "3": "f9ea0cc86fc60441d585ba18afc09a97d881a7580acd6243344dbb9d004c619d"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "a8600793d3e2fbaf891a302dc032efc4f72825cc487e8bb0693584efc6adcb1f": {
+      "name": "trend370_ETH_L30_H06_E1_N1500",
+      "fingerprint": "a8600793d3e2fbaf891a302dc032efc4f72825cc487e8bb0693584efc6adcb1f",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H06_E1_N1500.json.gz",
+      "archive_sha256": "e2c6f9696d3d29dec622408c724e367306aa1614fbae05885f239269f2d6d0ce",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "2bdb4c373c6f215cbbc6a3617b555f648fa9cf9f840b8cfb1d863a855b8ef24b",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "db5ab068d8d88e55749fa47388c894ea2f11d309a2ca228af1958e2dbe87f326",
+        "2": "d2fed0571988a7f97b2fc5c466706f4c5f4421d37eda10c1958f4a83b4c3416d",
+        "3": "9bf8a59c6e9c1afa4ac8e529b494f03145c64af9dc178a00f15f9e277df2ed49"
+      },
+      "fixed_entry_notional_usdt": 1500
+    }
+  },
+  "all_read_only_references": {
+    "f2c640ae6c1892ae78189209668b67fd27b92353d6a545f28ba9bafba22ff744": {
+      "name": "nativecapital370_BTC_W2500_momentum",
+      "fingerprint": "f2c640ae6c1892ae78189209668b67fd27b92353d6a545f28ba9bafba22ff744",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_BTC_W2500_momentum.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_BTC_W2500_momentum.json.gz",
+      "archive_sha256": "c5a5c66c0f60e9d806821660626f60987fc47e808bc0b15674d5b6995c5ce162",
+      "scope": "native",
+      "asset": "BTC",
+      "role": "component",
+      "capital_usdt": 5000.0,
+      "spec_sha256": "aecb5bb62c0b2e87d9aac59d525fea5a8b0616d8413ba75b7a50c0f61fde8945",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "bfef5ccc91b294fe76a2407ad63fab97e0040e2925bbc24775fb074124ad236e",
+        "2": "adfea61013d6897312876972ea20fd2f88482b038f8d441922851c6a5f6445b8",
+        "3": "8e16e8a1df7aa3b395775864b47e2ddcab41dd786887881bf0a3790f745aca11"
+      },
+      "fixed_entry_notional_usdt": 500.0
+    },
+    "2dcb86cbca6740649265e3bb52dd4c309fe882f439403ca309fb0145b302a3ee": {
+      "name": "nativecapital370_ETH_W2500_candidate_C50",
+      "fingerprint": "2dcb86cbca6740649265e3bb52dd4c309fe882f439403ca309fb0145b302a3ee",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_ETH_W2500_candidate_C50.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_ETH_W2500_candidate_C50.json.gz",
+      "archive_sha256": "538c21351d657e86426c4047cb282b4ea1d7118a2060b15fad090efd4cae90dd",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000.0,
+      "spec_sha256": "c58b3730e1155cde2065418aa82752653eaea5840b4ca7d281644153352968ab",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "1e8f585cf4cd2c74399bc74a8abdcf7bade777e3ccc5dd163ae60c12a3a38154",
+        "2": "2227028deec0319531f0c06435169983c662313fdc159a834e2c921019d0291f",
+        "3": "0e68446bcfc4b1e9d6fc5d330200a324c783f47a405b726e15cc45b087889511"
+      },
+      "fixed_entry_notional_usdt": 4500.0
+    },
+    "5495efd3f4fa6781b584543069b72d08b567d3d35df3495a07955d144086c5d3": {
+      "name": "nativecapital370_BTC_W2500_hold",
+      "fingerprint": "5495efd3f4fa6781b584543069b72d08b567d3d35df3495a07955d144086c5d3",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_BTC_W2500_hold.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_BTC_W2500_hold.json.gz",
+      "archive_sha256": "1da59495858f6dd97719e415f2ec4a51bf56ae864c43fe7d721463a0c7c309ac",
+      "scope": "native",
+      "asset": "BTC",
+      "role": "benchmark",
+      "capital_usdt": 5000.0,
+      "spec_sha256": "cd69e9c3c1156219ed19452c366db97545a00cecc931a8ffe51e19a299508c82",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "7a30702cf9842a549c31139652f6d01efcc0137abad711a35e6608c36e2d6ca8",
+        "2": "994d8f75bcfaf5ee7c8135e59ce54616178ca51b1bf4869d3767f15a671dc3fb",
+        "3": "e1e6714a65c4f16459ebae9b20f204ddfa0d099126cc07c31baeea1041c9c61e"
+      },
+      "fixed_entry_notional_usdt": 500.0
+    },
+    "fd96b9d8250328e033aa2b40460ef01a2d7cc57a22a12ad0f5abf111ade3323e": {
+      "name": "nativecapital370_ETH_W2500_hold",
+      "fingerprint": "fd96b9d8250328e033aa2b40460ef01a2d7cc57a22a12ad0f5abf111ade3323e",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_ETH_W2500_hold.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_ETH_W2500_hold.json.gz",
+      "archive_sha256": "b15752d16d0f9001d61d7bd2aa08ca5a4543d59f0f67a63cdca03d44c8ccbdd5",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "benchmark",
+      "capital_usdt": 15000.0,
+      "spec_sha256": "c8671c77caa632b38ce7e0f0c8ce636f4fd0a35c55ce2638535ff0a8fdf56d7f",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "06f0592be344475649ad1b3e243db8d6a076581d37c7d0d63df55de73ff1c65b",
+        "2": "3870fcbcc78d0d196a1760817bd8d94b8c5adb3305b9d0b2d2639cd668ded48c",
+        "3": "6c3cd4bde84300f42616cecc0e266bae347f7b3d591a927ebf0214bf2398f3ae"
+      },
+      "fixed_entry_notional_usdt": 4500.0
+    },
+    "ee1898ce578fce1c1f47fcf08f320d0c0eaf9ff7ba4dc78c81102d11a319bdd5": {
+      "name": "trend370_ETH_hold_N1500",
+      "fingerprint": "ee1898ce578fce1c1f47fcf08f320d0c0eaf9ff7ba4dc78c81102d11a319bdd5",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_hold_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_hold_N1500.json.gz",
+      "archive_sha256": "4d732bcdc7a9910325854852feb05878879c308cc0c97f10dce50db272556e0e",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "benchmark",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "a8be5b83823eb67f0f746d6ab06dda0afb140e682b0fdd17a89b0976b0069084",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "6c81eb1a1a9ece1cbcb579c1eedf207dc7cdc174738e4dc7c82a3f1cf20b5ff6",
+        "2": "03faf8b9ed01433b5b9c312a1b8945b7b2371cd0bc0231c49e1ba3deac3fe02d",
+        "3": "c90b0a6ed37d8d1ef4d7e4c4ec7d5c19d127c237a33323c809983cadf1e196d7"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "ea0b40e0fd6822556828d70ab8cb4a8327883f679e6dcc3e3740054aac6dd614": {
+      "name": "trend370_ETH_L20_H02_E1_N1500",
+      "fingerprint": "ea0b40e0fd6822556828d70ab8cb4a8327883f679e6dcc3e3740054aac6dd614",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H02_E1_N1500.json.gz",
+      "archive_sha256": "eac108a334ee899d8a2c353fc441462029a319599bf5ecaa44e0c30b76399374",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e804de3ff7f0434cbf5330d5f123110911292298fc01d4cab7977b69917fd644",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "43b926d7c07ba6232e0ede0d27a514f6369283972eb7c270b3ca0aa1b9bdfb60",
+        "2": "99766a4cfb3642e78de950928980c6b60233fceac4ed5d42c0313218039f299b",
+        "3": "fc4ebddb9fecddceb3a43eb6d6e1184493a7d6bf24be7e3c61ee41222989b65d"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "c91f5b3e1392605d632cd1b73cc49f069d39fd713055ad7a34e1838f70e17cb3": {
+      "name": "trend370_ETH_L20_H04_E1_N1500",
+      "fingerprint": "c91f5b3e1392605d632cd1b73cc49f069d39fd713055ad7a34e1838f70e17cb3",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H04_E1_N1500.json.gz",
+      "archive_sha256": "08a4de4fe25a6698e596b1e1d2a66ed2ea8c50b354dbe00985c33c29bce3be1d",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "c002217c108885f7234bb00cd34a69e001fed1be654eb64fa41d74eaae75d86c",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "5ae8fc1b7b75a5f12e8c76bc8108d5218cd18c460068c6c6f2f108361ae16238",
+        "2": "736ed2b6a31a86aa1aa05af8fd054a49c56ef04884c82afd52e0eb1491bdbaab",
+        "3": "102d314ebceaaa44944767120273a6dd32293f31c79b4593c5ad193941f4ade4"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "281e48e9b96d43b48516aaa9819e047fcb4d39fd79a5534a5ddfbb86441cad2f": {
+      "name": "trend370_ETH_L20_H06_E1_N1500",
+      "fingerprint": "281e48e9b96d43b48516aaa9819e047fcb4d39fd79a5534a5ddfbb86441cad2f",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H06_E1_N1500.json.gz",
+      "archive_sha256": "5e7625c880c3d875df7b3edfff087152f4990739642d8105dbef0e8e071525cd",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "4012fdb60d8cd1c1933f464a72f3d7732ec5c48772ecd91243cfa3ff10ac42ce",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "879fac44118a4424a15cbf40a4ae8fd212928654401da9a62dc8291050a24222",
+        "2": "3e65198f76770a5a2bc4e8abe297d3d0da28d6831b998882c0f1d3d54b0e1227",
+        "3": "02700ceb35d29b1a77d9da2bcd855f7a432c5f777a435672ec5a0d38ea6b7c52"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "cfebb8f763e3dd33cc371749abeab6c27643adf56087ff1c08f23f3e50873482": {
+      "name": "trend370_ETH_L25_H02_E1_N1500",
+      "fingerprint": "cfebb8f763e3dd33cc371749abeab6c27643adf56087ff1c08f23f3e50873482",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H02_E1_N1500.json.gz",
+      "archive_sha256": "0c8369973ef0ebc6d14e679d1569fc7fffd5fa730786429e07207d0fa11760e7",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "bc541156df1d93b166d98e7b4a7c494b92ff72466b119d998fe619970cd22030",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "a726b1ccfe2a36b2c89341faf3b8e516cf0ebb4ba94f4e4aee21b75bc7e19e0f",
+        "2": "3f77391d0a4aa8218b69d29dfab1489b9889c64509cdc0aa103a04ac713e1a59",
+        "3": "96333d9ab313a759e06f9a22f5b7aff23e8f75f872dd3c0e48d5886bd6bcddbe"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "1fde5e00bc48f77dd96be1d97ce6c80d0c0b7a7da0933618ece88dd10a50dc86": {
+      "name": "trend370_ETH_L25_H04_E1_N1500",
+      "fingerprint": "1fde5e00bc48f77dd96be1d97ce6c80d0c0b7a7da0933618ece88dd10a50dc86",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H04_E1_N1500.json.gz",
+      "archive_sha256": "164ec3216aa2b173aad415d66755bb5addab6a9fe3cb3c0b03acd518915bf1d6",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "a64bda6ad2f17432ee022dcae4935007f564eeffce7b5cefc7a12d803611d3fb",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "bad159e2ce6364f1e6fe16d6c5aa8f1fe96087b4e99d86d6195936067219b4c3",
+        "2": "b5fb1221ab976817b141d17c9219345c8ebf951a197482a7890330785d03127c",
+        "3": "ef5e72e15c3be5b335f254a38a3367cd8b4d7ada1cced723c2180ca06b88ad7c"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "8fa5d044908be60134b0e2d8098e6d4521dcae2026a5cc8e51f16ee0abcd21d9": {
+      "name": "trend370_ETH_L25_H06_E1_N1500",
+      "fingerprint": "8fa5d044908be60134b0e2d8098e6d4521dcae2026a5cc8e51f16ee0abcd21d9",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H06_E1_N1500.json.gz",
+      "archive_sha256": "3bdb7a664d56db07f4034c56af5a2ccf54eef9348952b2812a2238e4f03a0ac3",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e2ab1715e76f1f2a943417fe7b4272e080d061fde7af6e79c0063de129031138",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "dbaf02371ab9e77fd3338a5063c0d6e6eaa3deb77d464f30da946e8ed18365f0",
+        "2": "c16c5680ea9ba61787481d2cb4b8bb0424a74192862f404dbdc2204dfb3dc7f0",
+        "3": "e03991b8eb744ddd86668ed3304c1968c15dd9d29c7efd8a3827236def527d3f"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "ac3c6f2f08bc391f99bfbb5a9f736fb27b2d909af5a38ecef7e0a6de4ca5a98b": {
+      "name": "trend370_ETH_L30_H02_E1_N1500",
+      "fingerprint": "ac3c6f2f08bc391f99bfbb5a9f736fb27b2d909af5a38ecef7e0a6de4ca5a98b",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H02_E1_N1500.json.gz",
+      "archive_sha256": "561f7e439b4f0c25ef6148b76437672282c8cbd7620d58593b09efa8cbac6237",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "1c67ec80cd78f4d866ed5d494573d2dabd29c630ba619437a8a43c4c64d5fae4",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "c09512c91d36bd267be3e37204af80d62e0b9ca6861dea0281058cde5bfb78ad",
+        "2": "1a30ccdc0afcc0d03df843859cde78b8a19f5f1e5bcb10bffa1bb15fa42bb24b",
+        "3": "17f047647daf1a4dfcf616fd65d78d0cd3a554233d825c1dd17e4b635119a50c"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "13361ef249df4457939187ad72655b8d145a2d0e910e5e6800b6cf50b2086c19": {
+      "name": "trend370_ETH_L30_H04_E1_N1500",
+      "fingerprint": "13361ef249df4457939187ad72655b8d145a2d0e910e5e6800b6cf50b2086c19",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H04_E1_N1500.json.gz",
+      "archive_sha256": "9bdebf85f87ce6ca23b2f512b875c40306d38c1b0fe9decdb83cd844b86d49b2",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "07e4892833106a7afec001ae08258e444f320d1a6e8cb7ba17871f6d201485f2",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "74e5159d54f55525a56a5aa16475330647842fcd52f84359f963218c736597bb",
+        "2": "af3f2a2d8e558f8189a22c7e6fa41de9782cb49f6632803ee0fffa7b89657721",
+        "3": "f9ea0cc86fc60441d585ba18afc09a97d881a7580acd6243344dbb9d004c619d"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "a8600793d3e2fbaf891a302dc032efc4f72825cc487e8bb0693584efc6adcb1f": {
+      "name": "trend370_ETH_L30_H06_E1_N1500",
+      "fingerprint": "a8600793d3e2fbaf891a302dc032efc4f72825cc487e8bb0693584efc6adcb1f",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H06_E1_N1500.json.gz",
+      "archive_sha256": "e2c6f9696d3d29dec622408c724e367306aa1614fbae05885f239269f2d6d0ce",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "2bdb4c373c6f215cbbc6a3617b555f648fa9cf9f840b8cfb1d863a855b8ef24b",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "db5ab068d8d88e55749fa47388c894ea2f11d309a2ca228af1958e2dbe87f326",
+        "2": "d2fed0571988a7f97b2fc5c466706f4c5f4421d37eda10c1958f4a83b4c3416d",
+        "3": "9bf8a59c6e9c1afa4ac8e529b494f03145c64af9dc178a00f15f9e277df2ed49"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "8b539a3eb81076817d5bd7e74a3f4003f67c6cbaf6928b8516f795607c810fac": {
+      "name": "nativecapital370_parent_W2500_candidate_C50",
+      "fingerprint": "8b539a3eb81076817d5bd7e74a3f4003f67c6cbaf6928b8516f795607c810fac",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_parent_W2500_candidate_C50.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_parent_W2500_candidate_C50.json.gz",
+      "archive_sha256": "0df1125569865c1cdef2f3255c6ca44edfc5f5f039552850cbf73ec1d98a61df",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "fc123ab3aa7090bd68ddc2749e085cd920c413ec976f5d8247fbfb4fc5da2ee3",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "31d34972cc947428275931341a467b3395fd813715b50c83ee4a3e0aa205f82d",
+        "2": "4695b93ce8cb1cf10efb5b069e22dda828e2b807ea3c6351efc2e27fa61083aa",
+        "3": "781118f71a7743dbb8810e4e8464fece4f41767be4e7ece9bf3971bbd0aecf4b"
+      }
+    },
+    "233060a4ad6296c7ade2dac9e3ef2bce7ecf726e5da19fd954aef283502a5100": {
+      "name": "trend370_parent_L20_H02_E1_N500_1500",
+      "fingerprint": "233060a4ad6296c7ade2dac9e3ef2bce7ecf726e5da19fd954aef283502a5100",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L20_H02_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L20_H02_E1_N500_1500.json.gz",
+      "archive_sha256": "2f3c8f1c058cb6e28acb12966d100a198ee0c921d2cff4f9a44748eb01785732",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "4ed98d4f02fd2a79af15d992e5b82d88d433819ed16a7bd90a189852396778b4",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "8c6260f3632a0242b6e4896be532e6a0dccb2484242f3312b04e247e2c936f7d",
+        "2": "300422133ef2b65a8f874428908bbea811b5298d0ff6eddb9d4725434018b091",
+        "3": "1d65f4c02a42ff85ddfefb924482f51f8e15cb88eaec337928828210b67f6b25"
+      }
+    },
+    "50ec18ee9a7dbd74afbe245f877c10d744348e7a5691e3eca23ecd7785ed2705": {
+      "name": "trend370_parent_L20_H04_E1_N500_1500",
+      "fingerprint": "50ec18ee9a7dbd74afbe245f877c10d744348e7a5691e3eca23ecd7785ed2705",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L20_H04_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L20_H04_E1_N500_1500.json.gz",
+      "archive_sha256": "d150bd1192d72cfe0d34b4bd97024bb81c5cdd64d674dc515e38395ee2507f57",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "c255ad15a9561aed1e598f590cae0675995ab0bc9bfd9c250506d0303d4b15a1",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "cdc26d196b55fdcfc2fc48c5969261c61597d48cd69ed89d23f1fd9b6c6a10b7",
+        "2": "c3b041996fa7e7f243034d9fb2bc35edc51b089e528494deabf07a6d806e3759",
+        "3": "ab3c3a2a0a5e094b9087ad92c00aa6062cacbf3021fffe908a8e401ab6cc20ee"
+      }
+    },
+    "33bf72e246de8a94765bd95f33750160247606e585d6813481d984f888e40edf": {
+      "name": "trend370_parent_L20_H06_E1_N500_1500",
+      "fingerprint": "33bf72e246de8a94765bd95f33750160247606e585d6813481d984f888e40edf",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L20_H06_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L20_H06_E1_N500_1500.json.gz",
+      "archive_sha256": "a450b5ef50d682f7794c8ac573a4a11ee65482a00eec17af420e208cc6289042",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e445d94fac255d88ba5bca19fa04ba5f2850c722a06e32231bbb843d14c98751",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "2a5e098e120a6b231d3eaf6b5d65963b0f88fd290e7b0e601891f64951264635",
+        "2": "f73e61f9854920588d6f0636a0efad52e91b0d82b72085750f22616533b9d73f",
+        "3": "de539b375b7595b55a1804a2dcb8c7b122337adb9e5750fdb3f86ec5c1d0c143"
+      }
+    },
+    "69b7e93553f6a0efa8e960e70853e791b688cde81a38009d8c2798c5d25e8730": {
+      "name": "trend370_parent_L25_H02_E1_N500_1500",
+      "fingerprint": "69b7e93553f6a0efa8e960e70853e791b688cde81a38009d8c2798c5d25e8730",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L25_H02_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L25_H02_E1_N500_1500.json.gz",
+      "archive_sha256": "fac4bbb53e18821c587cde98df4b87a44c826bf6d80b78f3ff5547ec6972d01f",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e31f2513e049b839beb6fb41e5bf365c88aa7b4eb6ba9a6cb7f2fc0b82907fce",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "26e241f79a87a94df3b1dbfbc6614d50f0a97952e752d8749fe66dd646c42b19",
+        "2": "d17e692c4614ab4904eacf1a64cf69bafcd2db8e1b4f8050d0d681362f10311a",
+        "3": "f7ad628c1dd3276691c01e89b791411d7d50ebf99773711001cc9375428c13da"
+      }
+    },
+    "d9e9f209b1b71440a811566da18aeceb68cbd635ef70f5c9efab7e9329bde49b": {
+      "name": "trend370_parent_L25_H04_E1_N500_1500",
+      "fingerprint": "d9e9f209b1b71440a811566da18aeceb68cbd635ef70f5c9efab7e9329bde49b",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L25_H04_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L25_H04_E1_N500_1500.json.gz",
+      "archive_sha256": "dd9a92ff2b901c7711a904775e34e3126b2742e2537cd17e532a1c9d69a81f15",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "c94169be0a6b755e012042b3dbe61377c0d33fdc11f387f67791973c481627ae",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "fd61c70606a2bfe70c2308eadd539ba7e6eb3a939c3a33fae744ae015a7f9eda",
+        "2": "fa961099467f80a80421b627603e37a91a4e83a9ec225745a9620e6e8c696d60",
+        "3": "e3f4c64d1a40348a531a60ab263fc1b47febcb29a8d94a6e1ea85cf84cba9e34"
+      }
+    },
+    "bccc60106160aafca18ed029ac78df601a1cb9d1d76f84e9b251b040262686cd": {
+      "name": "trend370_parent_L25_H06_E1_N500_1500",
+      "fingerprint": "bccc60106160aafca18ed029ac78df601a1cb9d1d76f84e9b251b040262686cd",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L25_H06_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L25_H06_E1_N500_1500.json.gz",
+      "archive_sha256": "1cc08fe164bda6801a899a6f493fe0c6c256753aa246df3a3f5710d934dd3de3",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "1c47b4281d3ea703082e5707603558e1345dc488bf9240f639cf9c1c5f8450e3",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "08697287b89704b8187b394030784f27bc9269ee659deddfd2369af51cd46092",
+        "2": "ae89944e454d8a29bc3dd7516f1f035cc69dbe78c9c030bc25b07497c1f5b8cb",
+        "3": "19bbf4700630f3490125299eaff0e9ebeb7f2f6b183f684871805126508bd0f6"
+      }
+    },
+    "fd7817d12dc4330ad22f61f8f05d28da9c5fe85154cd2dd5012f10c40fa1b918": {
+      "name": "trend370_parent_L30_H02_E1_N500_1500",
+      "fingerprint": "fd7817d12dc4330ad22f61f8f05d28da9c5fe85154cd2dd5012f10c40fa1b918",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L30_H02_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L30_H02_E1_N500_1500.json.gz",
+      "archive_sha256": "158afcc0d4d167c465574e92f7434a40de99157645aa0e098ebdc2b8ad03de6d",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "942bb4d94e77d2e95cc7e91277713cc84e69fce79dc0c8d566a33ff596af3686",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "75de8431d362762523aef19e4bd345beadc3fc4097bd4a1ce156f6a7b52f2222",
+        "2": "8087376b99c47730d8747bb59638d17a38c87852802444c7cb77151b1afc2309",
+        "3": "8831531fdd6b50e949070cebe8c66b4d621be5720542be430a2d9bad731483a2"
+      }
+    },
+    "d9b10da4f30601f2803e232ec5d0f4d0f52fcad4e872cc033f7b66cd4898c2a7": {
+      "name": "trend370_parent_L30_H04_E1_N500_1500",
+      "fingerprint": "d9b10da4f30601f2803e232ec5d0f4d0f52fcad4e872cc033f7b66cd4898c2a7",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L30_H04_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L30_H04_E1_N500_1500.json.gz",
+      "archive_sha256": "c4a4231aac426a1a11073cdb543fb624bcafdf24f64ce10e15abf737ccb61ce3",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e056b3ed4bf1e704c573d225cae53ae56d09782a4755377fb018f587aa66de71",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "ad90568198d632c2dd8fc67b22d86e172590cb8cdad40fb00f2e721f376137b4",
+        "2": "43bed04e432aaa8b44d3c6b1eb06ce0d03e374117cf946a1dc3d3d0074c60707",
+        "3": "2288926ac97fae27a7f372b26558278f77620f292ec18166d1e173db28ae7a3f"
+      }
+    },
+    "545834a8b3dabbeac9258c61c935887d9a47edb4ccd94f286aa21f93f4e4b10a": {
+      "name": "trend370_parent_L30_H06_E1_N500_1500",
+      "fingerprint": "545834a8b3dabbeac9258c61c935887d9a47edb4ccd94f286aa21f93f4e4b10a",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L30_H06_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L30_H06_E1_N500_1500.json.gz",
+      "archive_sha256": "4356622499fedf9a599c1457cd05f1cf44d5cfd286090d9f22bb970db9720651",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "eb44a4f2a01b3cdd8592234ca709e5c633bc27c1ecdd6f9b4d9b6406bfd68828",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "3d2a90a4ecd6dfca2b03aedaabbce7e38d76af905944062bfef35f1bb571821f",
+        "2": "ab748a5ffad3cb92ba2066c7ed0f439c12db6ab8cbebc36edb5cb4a5d9a4097f",
+        "3": "48a8d4ec8ea62d647a91155f04dd07c29c0b5cf52ac96ddd65900c43205a9721"
+      }
+    }
+  },
+  "read_only_anchor_references": {
+    "fast": {
+      "name": "nativecapital370_parent_W2500_candidate_C50",
+      "fingerprint": "8b539a3eb81076817d5bd7e74a3f4003f67c6cbaf6928b8516f795607c810fac",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_parent_W2500_candidate_C50.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_parent_W2500_candidate_C50.json.gz",
+      "archive_sha256": "0df1125569865c1cdef2f3255c6ca44edfc5f5f039552850cbf73ec1d98a61df",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "fc123ab3aa7090bd68ddc2749e085cd920c413ec976f5d8247fbfb4fc5da2ee3",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "31d34972cc947428275931341a467b3395fd813715b50c83ee4a3e0aa205f82d",
+        "2": "4695b93ce8cb1cf10efb5b069e22dda828e2b807ea3c6351efc2e27fa61083aa",
+        "3": "781118f71a7743dbb8810e4e8464fece4f41767be4e7ece9bf3971bbd0aecf4b"
+      }
+    },
+    "L20_H0.02": {
+      "name": "trend370_parent_L20_H02_E1_N500_1500",
+      "fingerprint": "233060a4ad6296c7ade2dac9e3ef2bce7ecf726e5da19fd954aef283502a5100",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L20_H02_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L20_H02_E1_N500_1500.json.gz",
+      "archive_sha256": "2f3c8f1c058cb6e28acb12966d100a198ee0c921d2cff4f9a44748eb01785732",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "4ed98d4f02fd2a79af15d992e5b82d88d433819ed16a7bd90a189852396778b4",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "8c6260f3632a0242b6e4896be532e6a0dccb2484242f3312b04e247e2c936f7d",
+        "2": "300422133ef2b65a8f874428908bbea811b5298d0ff6eddb9d4725434018b091",
+        "3": "1d65f4c02a42ff85ddfefb924482f51f8e15cb88eaec337928828210b67f6b25"
+      }
+    },
+    "L20_H0.04": {
+      "name": "trend370_parent_L20_H04_E1_N500_1500",
+      "fingerprint": "50ec18ee9a7dbd74afbe245f877c10d744348e7a5691e3eca23ecd7785ed2705",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L20_H04_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L20_H04_E1_N500_1500.json.gz",
+      "archive_sha256": "d150bd1192d72cfe0d34b4bd97024bb81c5cdd64d674dc515e38395ee2507f57",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "c255ad15a9561aed1e598f590cae0675995ab0bc9bfd9c250506d0303d4b15a1",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "cdc26d196b55fdcfc2fc48c5969261c61597d48cd69ed89d23f1fd9b6c6a10b7",
+        "2": "c3b041996fa7e7f243034d9fb2bc35edc51b089e528494deabf07a6d806e3759",
+        "3": "ab3c3a2a0a5e094b9087ad92c00aa6062cacbf3021fffe908a8e401ab6cc20ee"
+      }
+    },
+    "L20_H0.06": {
+      "name": "trend370_parent_L20_H06_E1_N500_1500",
+      "fingerprint": "33bf72e246de8a94765bd95f33750160247606e585d6813481d984f888e40edf",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L20_H06_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L20_H06_E1_N500_1500.json.gz",
+      "archive_sha256": "a450b5ef50d682f7794c8ac573a4a11ee65482a00eec17af420e208cc6289042",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e445d94fac255d88ba5bca19fa04ba5f2850c722a06e32231bbb843d14c98751",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "2a5e098e120a6b231d3eaf6b5d65963b0f88fd290e7b0e601891f64951264635",
+        "2": "f73e61f9854920588d6f0636a0efad52e91b0d82b72085750f22616533b9d73f",
+        "3": "de539b375b7595b55a1804a2dcb8c7b122337adb9e5750fdb3f86ec5c1d0c143"
+      }
+    },
+    "L25_H0.02": {
+      "name": "trend370_parent_L25_H02_E1_N500_1500",
+      "fingerprint": "69b7e93553f6a0efa8e960e70853e791b688cde81a38009d8c2798c5d25e8730",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L25_H02_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L25_H02_E1_N500_1500.json.gz",
+      "archive_sha256": "fac4bbb53e18821c587cde98df4b87a44c826bf6d80b78f3ff5547ec6972d01f",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e31f2513e049b839beb6fb41e5bf365c88aa7b4eb6ba9a6cb7f2fc0b82907fce",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "26e241f79a87a94df3b1dbfbc6614d50f0a97952e752d8749fe66dd646c42b19",
+        "2": "d17e692c4614ab4904eacf1a64cf69bafcd2db8e1b4f8050d0d681362f10311a",
+        "3": "f7ad628c1dd3276691c01e89b791411d7d50ebf99773711001cc9375428c13da"
+      }
+    },
+    "L25_H0.04": {
+      "name": "trend370_parent_L25_H04_E1_N500_1500",
+      "fingerprint": "d9e9f209b1b71440a811566da18aeceb68cbd635ef70f5c9efab7e9329bde49b",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L25_H04_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L25_H04_E1_N500_1500.json.gz",
+      "archive_sha256": "dd9a92ff2b901c7711a904775e34e3126b2742e2537cd17e532a1c9d69a81f15",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "c94169be0a6b755e012042b3dbe61377c0d33fdc11f387f67791973c481627ae",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "fd61c70606a2bfe70c2308eadd539ba7e6eb3a939c3a33fae744ae015a7f9eda",
+        "2": "fa961099467f80a80421b627603e37a91a4e83a9ec225745a9620e6e8c696d60",
+        "3": "e3f4c64d1a40348a531a60ab263fc1b47febcb29a8d94a6e1ea85cf84cba9e34"
+      }
+    },
+    "L25_H0.06": {
+      "name": "trend370_parent_L25_H06_E1_N500_1500",
+      "fingerprint": "bccc60106160aafca18ed029ac78df601a1cb9d1d76f84e9b251b040262686cd",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L25_H06_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L25_H06_E1_N500_1500.json.gz",
+      "archive_sha256": "1cc08fe164bda6801a899a6f493fe0c6c256753aa246df3a3f5710d934dd3de3",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "1c47b4281d3ea703082e5707603558e1345dc488bf9240f639cf9c1c5f8450e3",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "08697287b89704b8187b394030784f27bc9269ee659deddfd2369af51cd46092",
+        "2": "ae89944e454d8a29bc3dd7516f1f035cc69dbe78c9c030bc25b07497c1f5b8cb",
+        "3": "19bbf4700630f3490125299eaff0e9ebeb7f2f6b183f684871805126508bd0f6"
+      }
+    },
+    "L30_H0.02": {
+      "name": "trend370_parent_L30_H02_E1_N500_1500",
+      "fingerprint": "fd7817d12dc4330ad22f61f8f05d28da9c5fe85154cd2dd5012f10c40fa1b918",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L30_H02_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L30_H02_E1_N500_1500.json.gz",
+      "archive_sha256": "158afcc0d4d167c465574e92f7434a40de99157645aa0e098ebdc2b8ad03de6d",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "942bb4d94e77d2e95cc7e91277713cc84e69fce79dc0c8d566a33ff596af3686",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "75de8431d362762523aef19e4bd345beadc3fc4097bd4a1ce156f6a7b52f2222",
+        "2": "8087376b99c47730d8747bb59638d17a38c87852802444c7cb77151b1afc2309",
+        "3": "8831531fdd6b50e949070cebe8c66b4d621be5720542be430a2d9bad731483a2"
+      }
+    },
+    "L30_H0.04": {
+      "name": "trend370_parent_L30_H04_E1_N500_1500",
+      "fingerprint": "d9b10da4f30601f2803e232ec5d0f4d0f52fcad4e872cc033f7b66cd4898c2a7",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L30_H04_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L30_H04_E1_N500_1500.json.gz",
+      "archive_sha256": "c4a4231aac426a1a11073cdb543fb624bcafdf24f64ce10e15abf737ccb61ce3",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e056b3ed4bf1e704c573d225cae53ae56d09782a4755377fb018f587aa66de71",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "ad90568198d632c2dd8fc67b22d86e172590cb8cdad40fb00f2e721f376137b4",
+        "2": "43bed04e432aaa8b44d3c6b1eb06ce0d03e374117cf946a1dc3d3d0074c60707",
+        "3": "2288926ac97fae27a7f372b26558278f77620f292ec18166d1e173db28ae7a3f"
+      }
+    },
+    "L30_H0.06": {
+      "name": "trend370_parent_L30_H06_E1_N500_1500",
+      "fingerprint": "545834a8b3dabbeac9258c61c935887d9a47edb4ccd94f286aa21f93f4e4b10a",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L30_H06_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L30_H06_E1_N500_1500.json.gz",
+      "archive_sha256": "4356622499fedf9a599c1457cd05f1cf44d5cfd286090d9f22bb970db9720651",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "eb44a4f2a01b3cdd8592234ca709e5c633bc27c1ecdd6f9b4d9b6406bfd68828",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "3d2a90a4ecd6dfca2b03aedaabbce7e38d76af905944062bfef35f1bb571821f",
+        "2": "ab748a5ffad3cb92ba2066c7ed0f439c12db6ab8cbebc36edb5cb4a5d9a4097f",
+        "3": "48a8d4ec8ea62d647a91155f04dd07c29c0b5cf52ac96ddd65900c43205a9721"
+      }
+    }
+  },
+  "read_only_hold_references": {
+    "BTC500.0": {
+      "name": "nativecapital370_BTC_W2500_hold",
+      "fingerprint": "5495efd3f4fa6781b584543069b72d08b567d3d35df3495a07955d144086c5d3",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_BTC_W2500_hold.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_BTC_W2500_hold.json.gz",
+      "archive_sha256": "1da59495858f6dd97719e415f2ec4a51bf56ae864c43fe7d721463a0c7c309ac",
+      "scope": "native",
+      "asset": "BTC",
+      "role": "benchmark",
+      "capital_usdt": 5000.0,
+      "spec_sha256": "cd69e9c3c1156219ed19452c366db97545a00cecc931a8ffe51e19a299508c82",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "7a30702cf9842a549c31139652f6d01efcc0137abad711a35e6608c36e2d6ca8",
+        "2": "994d8f75bcfaf5ee7c8135e59ce54616178ca51b1bf4869d3767f15a671dc3fb",
+        "3": "e1e6714a65c4f16459ebae9b20f204ddfa0d099126cc07c31baeea1041c9c61e"
+      },
+      "fixed_entry_notional_usdt": 500.0
+    },
+    "ETH4500.0": {
+      "name": "nativecapital370_ETH_W2500_hold",
+      "fingerprint": "fd96b9d8250328e033aa2b40460ef01a2d7cc57a22a12ad0f5abf111ade3323e",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_ETH_W2500_hold.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_ETH_W2500_hold.json.gz",
+      "archive_sha256": "b15752d16d0f9001d61d7bd2aa08ca5a4543d59f0f67a63cdca03d44c8ccbdd5",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "benchmark",
+      "capital_usdt": 15000.0,
+      "spec_sha256": "c8671c77caa632b38ce7e0f0c8ce636f4fd0a35c55ce2638535ff0a8fdf56d7f",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "06f0592be344475649ad1b3e243db8d6a076581d37c7d0d63df55de73ff1c65b",
+        "2": "3870fcbcc78d0d196a1760817bd8d94b8c5adb3305b9d0b2d2639cd668ded48c",
+        "3": "6c3cd4bde84300f42616cecc0e266bae347f7b3d591a927ebf0214bf2398f3ae"
+      },
+      "fixed_entry_notional_usdt": 4500.0
+    },
+    "ETH1500": {
+      "name": "trend370_ETH_hold_N1500",
+      "fingerprint": "ee1898ce578fce1c1f47fcf08f320d0c0eaf9ff7ba4dc78c81102d11a319bdd5",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_hold_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_hold_N1500.json.gz",
+      "archive_sha256": "4d732bcdc7a9910325854852feb05878879c308cc0c97f10dce50db272556e0e",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "benchmark",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "a8be5b83823eb67f0f746d6ab06dda0afb140e682b0fdd17a89b0976b0069084",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "6c81eb1a1a9ece1cbcb579c1eedf207dc7cdc174738e4dc7c82a3f1cf20b5ff6",
+        "2": "03faf8b9ed01433b5b9c312a1b8945b7b2371cd0bc0231c49e1ba3deac3fe02d",
+        "3": "c90b0a6ed37d8d1ef4d7e4c4ec7d5c19d127c237a33323c809983cadf1e196d7"
+      },
+      "fixed_entry_notional_usdt": 1500
+    }
+  },
+  "fixed_BTC": {
+    "name": "nativecapital370_BTC_W2500_momentum",
+    "fingerprint": "f2c640ae6c1892ae78189209668b67fd27b92353d6a545f28ba9bafba22ff744",
+    "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_BTC_W2500_momentum.json",
+    "archive": "research/experiments/20261029T232932Z/results/nativecapital370_BTC_W2500_momentum.json.gz",
+    "archive_sha256": "c5a5c66c0f60e9d806821660626f60987fc47e808bc0b15674d5b6995c5ce162",
+    "scope": "native",
+    "asset": "BTC",
+    "role": "component",
+    "capital_usdt": 5000.0,
+    "spec_sha256": "aecb5bb62c0b2e87d9aac59d525fea5a8b0616d8413ba75b7a50c0f61fde8945",
+    "report": "research/experiments/20261029T232932Z/report.json",
+    "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+    "original_status": "rejected",
+    "NAV_sha256_by_cost": {
+      "1": "bfef5ccc91b294fe76a2407ad63fab97e0040e2925bbc24775fb074124ad236e",
+      "2": "adfea61013d6897312876972ea20fd2f88482b038f8d441922851c6a5f6445b8",
+      "3": "8e16e8a1df7aa3b395775864b47e2ddcab41dd786887881bf0a3790f745aca11"
+    },
+    "fixed_entry_notional_usdt": 500.0
+  },
+  "fixed_fast_ETH": {
+    "name": "nativecapital370_ETH_W2500_candidate_C50",
+    "fingerprint": "2dcb86cbca6740649265e3bb52dd4c309fe882f439403ca309fb0145b302a3ee",
+    "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_ETH_W2500_candidate_C50.json",
+    "archive": "research/experiments/20261029T232932Z/results/nativecapital370_ETH_W2500_candidate_C50.json.gz",
+    "archive_sha256": "538c21351d657e86426c4047cb282b4ea1d7118a2060b15fad090efd4cae90dd",
+    "scope": "native",
+    "asset": "ETH",
+    "role": "candidate",
+    "capital_usdt": 15000.0,
+    "spec_sha256": "c58b3730e1155cde2065418aa82752653eaea5840b4ca7d281644153352968ab",
+    "report": "research/experiments/20261029T232932Z/report.json",
+    "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+    "original_status": "rejected",
+    "NAV_sha256_by_cost": {
+      "1": "1e8f585cf4cd2c74399bc74a8abdcf7bade777e3ccc5dd163ae60c12a3a38154",
+      "2": "2227028deec0319531f0c06435169983c662313fdc159a834e2c921019d0291f",
+      "3": "0e68446bcfc4b1e9d6fc5d330200a324c783f47a405b726e15cc45b087889511"
+    },
+    "fixed_entry_notional_usdt": 4500.0
+  },
+  "slow_ETH_sources": {
+    "L20_H0.02": {
+      "name": "trend370_ETH_L20_H02_E1_N1500",
+      "fingerprint": "ea0b40e0fd6822556828d70ab8cb4a8327883f679e6dcc3e3740054aac6dd614",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H02_E1_N1500.json.gz",
+      "archive_sha256": "eac108a334ee899d8a2c353fc441462029a319599bf5ecaa44e0c30b76399374",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e804de3ff7f0434cbf5330d5f123110911292298fc01d4cab7977b69917fd644",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "43b926d7c07ba6232e0ede0d27a514f6369283972eb7c270b3ca0aa1b9bdfb60",
+        "2": "99766a4cfb3642e78de950928980c6b60233fceac4ed5d42c0313218039f299b",
+        "3": "fc4ebddb9fecddceb3a43eb6d6e1184493a7d6bf24be7e3c61ee41222989b65d"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "L20_H0.04": {
+      "name": "trend370_ETH_L20_H04_E1_N1500",
+      "fingerprint": "c91f5b3e1392605d632cd1b73cc49f069d39fd713055ad7a34e1838f70e17cb3",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H04_E1_N1500.json.gz",
+      "archive_sha256": "08a4de4fe25a6698e596b1e1d2a66ed2ea8c50b354dbe00985c33c29bce3be1d",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "c002217c108885f7234bb00cd34a69e001fed1be654eb64fa41d74eaae75d86c",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "5ae8fc1b7b75a5f12e8c76bc8108d5218cd18c460068c6c6f2f108361ae16238",
+        "2": "736ed2b6a31a86aa1aa05af8fd054a49c56ef04884c82afd52e0eb1491bdbaab",
+        "3": "102d314ebceaaa44944767120273a6dd32293f31c79b4593c5ad193941f4ade4"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "L20_H0.06": {
+      "name": "trend370_ETH_L20_H06_E1_N1500",
+      "fingerprint": "281e48e9b96d43b48516aaa9819e047fcb4d39fd79a5534a5ddfbb86441cad2f",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L20_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L20_H06_E1_N1500.json.gz",
+      "archive_sha256": "5e7625c880c3d875df7b3edfff087152f4990739642d8105dbef0e8e071525cd",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "4012fdb60d8cd1c1933f464a72f3d7732ec5c48772ecd91243cfa3ff10ac42ce",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "879fac44118a4424a15cbf40a4ae8fd212928654401da9a62dc8291050a24222",
+        "2": "3e65198f76770a5a2bc4e8abe297d3d0da28d6831b998882c0f1d3d54b0e1227",
+        "3": "02700ceb35d29b1a77d9da2bcd855f7a432c5f777a435672ec5a0d38ea6b7c52"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "L25_H0.02": {
+      "name": "trend370_ETH_L25_H02_E1_N1500",
+      "fingerprint": "cfebb8f763e3dd33cc371749abeab6c27643adf56087ff1c08f23f3e50873482",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H02_E1_N1500.json.gz",
+      "archive_sha256": "0c8369973ef0ebc6d14e679d1569fc7fffd5fa730786429e07207d0fa11760e7",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "bc541156df1d93b166d98e7b4a7c494b92ff72466b119d998fe619970cd22030",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "a726b1ccfe2a36b2c89341faf3b8e516cf0ebb4ba94f4e4aee21b75bc7e19e0f",
+        "2": "3f77391d0a4aa8218b69d29dfab1489b9889c64509cdc0aa103a04ac713e1a59",
+        "3": "96333d9ab313a759e06f9a22f5b7aff23e8f75f872dd3c0e48d5886bd6bcddbe"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "L25_H0.04": {
+      "name": "trend370_ETH_L25_H04_E1_N1500",
+      "fingerprint": "1fde5e00bc48f77dd96be1d97ce6c80d0c0b7a7da0933618ece88dd10a50dc86",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H04_E1_N1500.json.gz",
+      "archive_sha256": "164ec3216aa2b173aad415d66755bb5addab6a9fe3cb3c0b03acd518915bf1d6",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "a64bda6ad2f17432ee022dcae4935007f564eeffce7b5cefc7a12d803611d3fb",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "bad159e2ce6364f1e6fe16d6c5aa8f1fe96087b4e99d86d6195936067219b4c3",
+        "2": "b5fb1221ab976817b141d17c9219345c8ebf951a197482a7890330785d03127c",
+        "3": "ef5e72e15c3be5b335f254a38a3367cd8b4d7ada1cced723c2180ca06b88ad7c"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "L25_H0.06": {
+      "name": "trend370_ETH_L25_H06_E1_N1500",
+      "fingerprint": "8fa5d044908be60134b0e2d8098e6d4521dcae2026a5cc8e51f16ee0abcd21d9",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L25_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L25_H06_E1_N1500.json.gz",
+      "archive_sha256": "3bdb7a664d56db07f4034c56af5a2ccf54eef9348952b2812a2238e4f03a0ac3",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e2ab1715e76f1f2a943417fe7b4272e080d061fde7af6e79c0063de129031138",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "dbaf02371ab9e77fd3338a5063c0d6e6eaa3deb77d464f30da946e8ed18365f0",
+        "2": "c16c5680ea9ba61787481d2cb4b8bb0424a74192862f404dbdc2204dfb3dc7f0",
+        "3": "e03991b8eb744ddd86668ed3304c1968c15dd9d29c7efd8a3827236def527d3f"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "L30_H0.02": {
+      "name": "trend370_ETH_L30_H02_E1_N1500",
+      "fingerprint": "ac3c6f2f08bc391f99bfbb5a9f736fb27b2d909af5a38ecef7e0a6de4ca5a98b",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H02_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H02_E1_N1500.json.gz",
+      "archive_sha256": "561f7e439b4f0c25ef6148b76437672282c8cbd7620d58593b09efa8cbac6237",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "1c67ec80cd78f4d866ed5d494573d2dabd29c630ba619437a8a43c4c64d5fae4",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "c09512c91d36bd267be3e37204af80d62e0b9ca6861dea0281058cde5bfb78ad",
+        "2": "1a30ccdc0afcc0d03df843859cde78b8a19f5f1e5bcb10bffa1bb15fa42bb24b",
+        "3": "17f047647daf1a4dfcf616fd65d78d0cd3a554233d825c1dd17e4b635119a50c"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "L30_H0.04": {
+      "name": "trend370_ETH_L30_H04_E1_N1500",
+      "fingerprint": "13361ef249df4457939187ad72655b8d145a2d0e910e5e6800b6cf50b2086c19",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H04_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H04_E1_N1500.json.gz",
+      "archive_sha256": "9bdebf85f87ce6ca23b2f512b875c40306d38c1b0fe9decdb83cd844b86d49b2",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "07e4892833106a7afec001ae08258e444f320d1a6e8cb7ba17871f6d201485f2",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "74e5159d54f55525a56a5aa16475330647842fcd52f84359f963218c736597bb",
+        "2": "af3f2a2d8e558f8189a22c7e6fa41de9782cb49f6632803ee0fffa7b89657721",
+        "3": "f9ea0cc86fc60441d585ba18afc09a97d881a7580acd6243344dbb9d004c619d"
+      },
+      "fixed_entry_notional_usdt": 1500
+    },
+    "L30_H0.06": {
+      "name": "trend370_ETH_L30_H06_E1_N1500",
+      "fingerprint": "a8600793d3e2fbaf891a302dc032efc4f72825cc487e8bb0693584efc6adcb1f",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_ETH_L30_H06_E1_N1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_ETH_L30_H06_E1_N1500.json.gz",
+      "archive_sha256": "e2c6f9696d3d29dec622408c724e367306aa1614fbae05885f239269f2d6d0ce",
+      "scope": "native",
+      "asset": "ETH",
+      "role": "candidate",
+      "capital_usdt": 15000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "2bdb4c373c6f215cbbc6a3617b555f648fa9cf9f840b8cfb1d863a855b8ef24b",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "db5ab068d8d88e55749fa47388c894ea2f11d309a2ca228af1958e2dbe87f326",
+        "2": "d2fed0571988a7f97b2fc5c466706f4c5f4421d37eda10c1958f4a83b4c3416d",
+        "3": "9bf8a59c6e9c1afa4ac8e529b494f03145c64af9dc178a00f15f9e277df2ed49"
+      },
+      "fixed_entry_notional_usdt": 1500
+    }
+  },
+  "source_parent_references": {
+    "fast": {
+      "name": "nativecapital370_parent_W2500_candidate_C50",
+      "fingerprint": "8b539a3eb81076817d5bd7e74a3f4003f67c6cbaf6928b8516f795607c810fac",
+      "spec": "research/experiments/20261029T232932Z/specs/nativecapital370_parent_W2500_candidate_C50.json",
+      "archive": "research/experiments/20261029T232932Z/results/nativecapital370_parent_W2500_candidate_C50.json.gz",
+      "archive_sha256": "0df1125569865c1cdef2f3255c6ca44edfc5f5f039552850cbf73ec1d98a61df",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "spec_sha256": "fc123ab3aa7090bd68ddc2749e085cd920c413ec976f5d8247fbfb4fc5da2ee3",
+      "report": "research/experiments/20261029T232932Z/report.json",
+      "report_sha256": "b531e0b4b740c6918d50f8b64327cab2bc55ea5ccf07148652a891d8a29ce2de",
+      "original_status": "passed",
+      "NAV_sha256_by_cost": {
+        "1": "31d34972cc947428275931341a467b3395fd813715b50c83ee4a3e0aa205f82d",
+        "2": "4695b93ce8cb1cf10efb5b069e22dda828e2b807ea3c6351efc2e27fa61083aa",
+        "3": "781118f71a7743dbb8810e4e8464fece4f41767be4e7ece9bf3971bbd0aecf4b"
+      }
+    },
+    "L20_H0.02": {
+      "name": "trend370_parent_L20_H02_E1_N500_1500",
+      "fingerprint": "233060a4ad6296c7ade2dac9e3ef2bce7ecf726e5da19fd954aef283502a5100",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L20_H02_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L20_H02_E1_N500_1500.json.gz",
+      "archive_sha256": "2f3c8f1c058cb6e28acb12966d100a198ee0c921d2cff4f9a44748eb01785732",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "4ed98d4f02fd2a79af15d992e5b82d88d433819ed16a7bd90a189852396778b4",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "8c6260f3632a0242b6e4896be532e6a0dccb2484242f3312b04e247e2c936f7d",
+        "2": "300422133ef2b65a8f874428908bbea811b5298d0ff6eddb9d4725434018b091",
+        "3": "1d65f4c02a42ff85ddfefb924482f51f8e15cb88eaec337928828210b67f6b25"
+      }
+    },
+    "L20_H0.04": {
+      "name": "trend370_parent_L20_H04_E1_N500_1500",
+      "fingerprint": "50ec18ee9a7dbd74afbe245f877c10d744348e7a5691e3eca23ecd7785ed2705",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L20_H04_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L20_H04_E1_N500_1500.json.gz",
+      "archive_sha256": "d150bd1192d72cfe0d34b4bd97024bb81c5cdd64d674dc515e38395ee2507f57",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "c255ad15a9561aed1e598f590cae0675995ab0bc9bfd9c250506d0303d4b15a1",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "cdc26d196b55fdcfc2fc48c5969261c61597d48cd69ed89d23f1fd9b6c6a10b7",
+        "2": "c3b041996fa7e7f243034d9fb2bc35edc51b089e528494deabf07a6d806e3759",
+        "3": "ab3c3a2a0a5e094b9087ad92c00aa6062cacbf3021fffe908a8e401ab6cc20ee"
+      }
+    },
+    "L20_H0.06": {
+      "name": "trend370_parent_L20_H06_E1_N500_1500",
+      "fingerprint": "33bf72e246de8a94765bd95f33750160247606e585d6813481d984f888e40edf",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L20_H06_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L20_H06_E1_N500_1500.json.gz",
+      "archive_sha256": "a450b5ef50d682f7794c8ac573a4a11ee65482a00eec17af420e208cc6289042",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e445d94fac255d88ba5bca19fa04ba5f2850c722a06e32231bbb843d14c98751",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "2a5e098e120a6b231d3eaf6b5d65963b0f88fd290e7b0e601891f64951264635",
+        "2": "f73e61f9854920588d6f0636a0efad52e91b0d82b72085750f22616533b9d73f",
+        "3": "de539b375b7595b55a1804a2dcb8c7b122337adb9e5750fdb3f86ec5c1d0c143"
+      }
+    },
+    "L25_H0.02": {
+      "name": "trend370_parent_L25_H02_E1_N500_1500",
+      "fingerprint": "69b7e93553f6a0efa8e960e70853e791b688cde81a38009d8c2798c5d25e8730",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L25_H02_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L25_H02_E1_N500_1500.json.gz",
+      "archive_sha256": "fac4bbb53e18821c587cde98df4b87a44c826bf6d80b78f3ff5547ec6972d01f",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e31f2513e049b839beb6fb41e5bf365c88aa7b4eb6ba9a6cb7f2fc0b82907fce",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "26e241f79a87a94df3b1dbfbc6614d50f0a97952e752d8749fe66dd646c42b19",
+        "2": "d17e692c4614ab4904eacf1a64cf69bafcd2db8e1b4f8050d0d681362f10311a",
+        "3": "f7ad628c1dd3276691c01e89b791411d7d50ebf99773711001cc9375428c13da"
+      }
+    },
+    "L25_H0.04": {
+      "name": "trend370_parent_L25_H04_E1_N500_1500",
+      "fingerprint": "d9e9f209b1b71440a811566da18aeceb68cbd635ef70f5c9efab7e9329bde49b",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L25_H04_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L25_H04_E1_N500_1500.json.gz",
+      "archive_sha256": "dd9a92ff2b901c7711a904775e34e3126b2742e2537cd17e532a1c9d69a81f15",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "c94169be0a6b755e012042b3dbe61377c0d33fdc11f387f67791973c481627ae",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "fd61c70606a2bfe70c2308eadd539ba7e6eb3a939c3a33fae744ae015a7f9eda",
+        "2": "fa961099467f80a80421b627603e37a91a4e83a9ec225745a9620e6e8c696d60",
+        "3": "e3f4c64d1a40348a531a60ab263fc1b47febcb29a8d94a6e1ea85cf84cba9e34"
+      }
+    },
+    "L25_H0.06": {
+      "name": "trend370_parent_L25_H06_E1_N500_1500",
+      "fingerprint": "bccc60106160aafca18ed029ac78df601a1cb9d1d76f84e9b251b040262686cd",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L25_H06_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L25_H06_E1_N500_1500.json.gz",
+      "archive_sha256": "1cc08fe164bda6801a899a6f493fe0c6c256753aa246df3a3f5710d934dd3de3",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "1c47b4281d3ea703082e5707603558e1345dc488bf9240f639cf9c1c5f8450e3",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "08697287b89704b8187b394030784f27bc9269ee659deddfd2369af51cd46092",
+        "2": "ae89944e454d8a29bc3dd7516f1f035cc69dbe78c9c030bc25b07497c1f5b8cb",
+        "3": "19bbf4700630f3490125299eaff0e9ebeb7f2f6b183f684871805126508bd0f6"
+      }
+    },
+    "L30_H0.02": {
+      "name": "trend370_parent_L30_H02_E1_N500_1500",
+      "fingerprint": "fd7817d12dc4330ad22f61f8f05d28da9c5fe85154cd2dd5012f10c40fa1b918",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L30_H02_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L30_H02_E1_N500_1500.json.gz",
+      "archive_sha256": "158afcc0d4d167c465574e92f7434a40de99157645aa0e098ebdc2b8ad03de6d",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "942bb4d94e77d2e95cc7e91277713cc84e69fce79dc0c8d566a33ff596af3686",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "75de8431d362762523aef19e4bd345beadc3fc4097bd4a1ce156f6a7b52f2222",
+        "2": "8087376b99c47730d8747bb59638d17a38c87852802444c7cb77151b1afc2309",
+        "3": "8831531fdd6b50e949070cebe8c66b4d621be5720542be430a2d9bad731483a2"
+      }
+    },
+    "L30_H0.04": {
+      "name": "trend370_parent_L30_H04_E1_N500_1500",
+      "fingerprint": "d9b10da4f30601f2803e232ec5d0f4d0f52fcad4e872cc033f7b66cd4898c2a7",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L30_H04_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L30_H04_E1_N500_1500.json.gz",
+      "archive_sha256": "c4a4231aac426a1a11073cdb543fb624bcafdf24f64ce10e15abf737ccb61ce3",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "e056b3ed4bf1e704c573d225cae53ae56d09782a4755377fb018f587aa66de71",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "ad90568198d632c2dd8fc67b22d86e172590cb8cdad40fb00f2e721f376137b4",
+        "2": "43bed04e432aaa8b44d3c6b1eb06ce0d03e374117cf946a1dc3d3d0074c60707",
+        "3": "2288926ac97fae27a7f372b26558278f77620f292ec18166d1e173db28ae7a3f"
+      }
+    },
+    "L30_H0.06": {
+      "name": "trend370_parent_L30_H06_E1_N500_1500",
+      "fingerprint": "545834a8b3dabbeac9258c61c935887d9a47edb4ccd94f286aa21f93f4e4b10a",
+      "spec": "research/experiments/20261030T033034Z/specs/trend370_parent_L30_H06_E1_N500_1500.json",
+      "archive": "research/experiments/20261030T033034Z/results/trend370_parent_L30_H06_E1_N500_1500.json.gz",
+      "archive_sha256": "4356622499fedf9a599c1457cd05f1cf44d5cfd286090d9f22bb970db9720651",
+      "scope": "parent",
+      "asset": "COMBO",
+      "role": "candidate",
+      "capital_usdt": 20000,
+      "report": "research/experiments/20261030T033034Z/report.json",
+      "report_sha256": "fecdc0df7172a8ea64a06b8500c333bfeeefe9244d5b04ed2ffda696139781c2",
+      "spec_sha256": "eb44a4f2a01b3cdd8592234ca709e5c633bc27c1ecdd6f9b4d9b6406bfd68828",
+      "original_status": "rejected",
+      "NAV_sha256_by_cost": {
+        "1": "3d2a90a4ecd6dfca2b03aedaabbce7e38d76af905944062bfef35f1bb571821f",
+        "2": "ab748a5ffad3cb92ba2066c7ed0f439c12db6ab8cbebc36edb5cb4a5d9a4097f",
+        "3": "48a8d4ec8ea62d647a91155f04dd07c29c0b5cf52ac96ddd65900c43205a9721"
+      }
+    }
+  },
+  "recorded_source_events": {
+    "source_recorded_trades_checked": 1482,
+    "source_recorded_funding_checked": 46620
+  },
+  "limits": [
+    "StaticbankNAVownershipresearchindexonly,notactualnewsubbankorderamounts/tradablefund/subscriptionfee/capacity/liveprofitproof. Changingcapital/notionalamountsrequiressuccessfulnewreserve+nativebacktest.",
+    "Underlyingestimatedspread/slippage/ADVimpactandnormalizedhistoricalfilters/1percentclosedhourmarginproxyarenotL2/TCA/fulltier/tickliquidationproof.",
+    "Repeateddevelopmenthistoryand11551priorIDs;no untouchedholdout/DSR/PBO/independentfuture.",
+    "OriginalSMA65/singleS28continue02:30to04:30marks;paper10readonly,no plan/capital/holdingschanged."
+  ],
+  "novelty": {
+    "prior_registry_events": 23346,
+    "prior_registry_ids": 11551,
+    "prior_conclusions_read": 236,
+    "initial16_missing_actual_results": 0
+  }
+}
