@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T114342Z/check_primitives.py", line 10, in <module>
+    spec={'parameters':{'lookback_days':31,'return_hurdle':.04,'exit_buffer_fraction':.01}};values=[D(100)]*40;values[32]=D(104);m={'asset':'BTC','closes':values};assert engine.decide(spec,m,33,0)[0]==0;values[32]=D(105);z=engine.decide(spec,m,33,0);assert z[0]==1;values[33]=D(999999);assert engine.decide(spec,m,33,0)==z
+                                                                                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T114342Z/engine.py", line 15, in decide
+    L=int(p['lookback_days']);S=int(p['trend_lookback_days']);assert L in [2,3,4] and S==28 and p['return_hurdle'] in [.015,.02,.025] and p['exit_buffer_fraction']==0 and i-1-max(L,S)>=0
+                                    ~^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'trend_lookback_days'

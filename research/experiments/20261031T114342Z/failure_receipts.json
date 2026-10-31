@@ -1,0 +1,24 @@
+{
+  "actual_failed_pipeline_command_receipts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T114342Z/check_primitives.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-31T11:53:01.449716Z",
+      "finished_utc": "2026-10-31T11:53:01.718089Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261031T114342Z/primitive_check.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T114342Z/check_primitives.py\", line 10, in <module>\n    spec={'parameters':{'lookback_days':31,'return_hurdle':.04,'exit_buffer_fraction':.01}};values=[D(100)]*40;values[32]=D(104);m={'asset':'BTC','closes':values};assert engine.decide(spec,m,33,0)[0]==0;values[32]=D(105);z=engine.decide(spec,m,33,0);assert z[0]==1;values[33]=D(999999);assert engine.decide(spec,m,33,0)==z\n                                                                                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T114342Z/engine.py\", line 15, in decide\n    L=int(p['lookback_days']);S=int(p['trend_lookback_days']);assert L in [2,3,4] and S==28 and p['return_hurdle'] in [.015,.02,.025] and p['exit_buffer_fraction']==0 and i-1-max(L,S)>=0\n                                    ~^^^^^^^^^^^^^^^^^^^^^^^\nKeyError: 'trend_lookback_days'\n"
+    }
+  ],
+  "actual_failed_HTTP_attempts": [],
+  "failed_pipeline_commands": 1,
+  "failed_HTTP_attempts": 0,
+  "failure_scope": "One synthetic BTC branch-edit preflight failure before any registry reserve/real data valuation; original failed log retained, restored branch passed synthetic suite then sourcebound. No actual backtest failure/retry.",
+  "complete_native_or_parent_backtest_reruns": 0,
+  "completed_observation_window_reruns": 0,
+  "inherited_signal_grid_example_clarification": "research/experiments/20261031T114342Z/spec_signal_clarification.json",
+  "spec_report_and_qualifications_not_rewritten": true
+}
