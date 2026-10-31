@@ -1,0 +1,18 @@
+import json,os,subprocess,sys
+from datetime import datetime,timezone
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[3];R=Path(__file__).resolve().parent;PY='/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python';now=lambda:datetime.now(timezone.utc).isoformat().replace('+00:00','Z');phase=sys.argv[1]
+if phase.startswith('reserve_batch_'):jobs=[(phase+'.log',['reserve_batch.py'])]
+elif phase.startswith('finish_batch_'):jobs=[(phase+'.log',['finish_batch.py'])]
+elif phase=='candidate_retry2':jobs=[('candidate_recovered.log',['observe_candidate_recovered.py']),('candidate_audit.log',['audit_candidate.py']),('risk_carry.log',['check_risk_carry.py']),('candidate_index.log',['project_candidate_batch.py'])]
+elif phase=='candidate_retry1':jobs=[('candidate_recovery.log',['observe_candidate_retry.py']),('candidate_audit.log',['audit_candidate.py']),('risk_carry.log',['check_risk_carry.py']),('candidate_index.log',['project_candidate_batch.py'])]
+elif phase=='audit_retry2':jobs=[('audit_complete.log',['audit_complete.py'])]
+elif phase=='audit_retry1':jobs=[('audit_retry1.log',['audit_corrected.py'])]
+else:jobs={'initial':[('primitive_check.log',['check_primitives.py']),('definition_check.log',['check_definitions.py'])],'evaluate':[('evaluate.log',['run.py','evaluate'])],'audit':[('audit.log',['audit.py'])],'summary':[('summary.log',['summarize.py'])],'exports':[('exports.log',['check_exports.py'])],'finish':[('finish.log',['run.py','finish'])],'forward':[('forward_reserve.log',['forward.py','reserve']),('forward_evaluate.log',['forward.py']),('forward_audit.log',['audit_forward.py']),('forward_finish.log',['forward.py','finish']),('forward_replay.log',['forward.py','--reproduce'])],'candidate':[('candidate.log',['observe_candidate.py']),('candidate_audit.log',['audit_candidate.py']),('risk_carry.log',['check_risk_carry.py']),('candidate_index.log',['project_candidate_batch.py'])],'candidate_checks':[('risk_carry.log',['check_risk_carry.py']),('candidate_index.log',['project_candidate_batch.py'])],'observer_status':[('observer_status.log',['ROOT:research/experiments/20261026T110637Z/prospective_observer.py','status'])],'review':[('source_checks.log',['check_sources.py'])],'gates':[('registry_gate.log',['ROOT:checks/strategy_registry.py']),('snapshot.log',['ROOT:research/monitor/snapshot.py']),('monitor_check.log',['ROOT:checks/monitor_snapshot.py'])],'feed':[('feed.log',['check_feed.py'])]}[phase.split('_retry')[0]]
+dest=R/(phase+'_commands.json');assert not dest.exists();out=[];saved={p:p.read_bytes() for p in [ROOT/'research/monitor/latest.json',ROOT/'research/monitor/configs.json.gz']} if phase=='gates' else {};env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1','OPENBLAS_NUM_THREADS':'1','OMP_NUM_THREADS':'1'}
+for log,args in jobs:
+ if 'retry' in phase:log=phase+'_'+log
+ script=str(ROOT/args[0][5:]) if args[0].startswith('ROOT:') else str(R/args[0]);cmd=['python3' if phase=='gates' else PY,script,*args[1:]];start=now();p=subprocess.run(cmd,cwd=ROOT,env=env,capture_output=True,text=True);(R/log).write_text(p.stdout+p.stderr);row={'command':cmd,'cwd':str(ROOT),'started_utc':start,'finished_utc':now(),'exit_code':p.returncode,'log':str((R/log).relative_to(ROOT)),'stderr':p.stderr};out.append(row);dest.write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print(json.dumps({'phase':phase,'exit_code':p.returncode,'log':log,'last_output':(p.stdout+p.stderr)[-1700:]}),flush=True)
+ if p.returncode:
+  for path,raw in saved.items():path.write_bytes(raw)
+  q=R/'read_failures.json';d=json.loads(q.read_text());d['facts'].append({**row,'previous_valid_monitor_restored':bool(saved)});q.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n');raise SystemExit(p.returncode)
