@@ -1,0 +1,27 @@
+{
+  "facts": [
+    {
+      "phase": "freeze_preflight",
+      "actual_exit_code": 1,
+      "actual_tool_chunk": "7231c9",
+      "error": "registry.fingerprint rejected uppercase NAV in family ID, before any spec/batch write, reserve or valuation",
+      "recovery": "Use stable lowercase family fixed-funded-native-net-nav-interests; economic parameters and weights unchanged"
+    },
+    {
+      "phase": "initial",
+      "actual_exit_code": 1,
+      "actual_tool_chunk": "5de868",
+      "error": "Initial definition check was invoked despite freeze failure and correctly failed on absent batch.json. Synthetic primitives only; no real valuation/reserve/account calculation.",
+      "evidence": "initial_commands.json;definition_check.log",
+      "recovery": "Dependent stages will run only after freeze actual exit0"
+    },
+    {
+      "phase": "freeze_retry1",
+      "actual_exit_code": 1,
+      "actual_tool_chunk": "a8767a",
+      "error": "Semantic duplicate guard found an already actual matched-hold weight0.5/1. No batch reservation or new financial valuation occurred.",
+      "evidence": "freeze_retry1.stderr.log",
+      "recovery": "Fully inventory all hold weights too, reuse completed hold results and keep their qualification unchanged; only genuine new weights will reserve"
+    }
+  ]
+}

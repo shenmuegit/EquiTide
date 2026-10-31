@@ -1,0 +1,43 @@
+{
+  "actual_observed_failures": [
+    {
+      "phase": "freeze_initial",
+      "exit_code": 1,
+      "actual_tool_chunk": "7231c9",
+      "error": "Stable-family validator rejected uppercase NAV before any spec/reserve/valuation.",
+      "recovery": "Lowercase family ID, no economic parameter change."
+    },
+    {
+      "phase": "initial",
+      "exit_code": 1,
+      "actual_tool_chunk": "5de868",
+      "evidence": "research/experiments/20261031T074311Z/initial_commands.json",
+      "error": "Definition check invoked before successful freeze; missing batch correctly stopped. Only synthetic primitives ran."
+    },
+    {
+      "phase": "freeze_retry1",
+      "exit_code": 1,
+      "actual_tool_chunk": "a8767a",
+      "evidence": "research/experiments/20261031T074311Z/freeze_retry1.stderr.log",
+      "error": "Semantic duplicate guard found old actual0.5/1 hold. Inventory extended to all hold weights and those old results reused; no new financial reservation or valuation."
+    }
+  ],
+  "failed_framework_command_receipts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T074311Z/check_definitions.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-31T07:54:55.153196Z",
+      "finished_utc": "2026-10-31T07:54:55.405479Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261031T074311Z/definition_check.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T074311Z/check_definitions.py\", line 3, in <module>\n    batch=json.loads((R/'batch.json').read_text());plan=json.loads((R/'plan.json').read_text());records=reg.read_records(ROOT/'research/automation/registry.jsonl');assert len(batch)==16 and len(plan['grid'])==18\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T074311Z/batch.json'\n"
+    }
+  ],
+  "actual_failed_nonfinancial_commands": 3,
+  "failed_financial_evaluations": 0,
+  "failed_observation_calculations": 0,
+  "extra_HTTP_or_completed_window_retries": 0
+}
