@@ -15,7 +15,7 @@ def main():
    for f in z['folds']:folds.append({'name':c['name'],'cost_multiplier':k,**f})
    for f in z['recent40']['folds']:recent.append({'name':c['name'],'cost_multiplier':k,**f})
    for day,nav in enumerate(z['daily_equity_usdt']):daily.append({'name':c['name'],'cost_multiplier':k,'day':day,'equity_usdt':nav})
-   b=bs[k];comparisons.append({'name':c['name'],'cost_multiplier':k,'readonly_benchmark_fingerprint':bf,'same_initial_capital_usdt':20000,'same_nominal_gross_entry_budget_usdt':4000,'net_return_pct':z['net_return_pct'],'buyhold_net_return_pct':b['net_return_pct'],'return_difference_percentage_points':z['net_return_pct']-b['net_return_pct'],'wholeDD_difference_percentage_points':z['max_drawdown_pct']-b['max_drawdown_pct'],'cash_analytical_return_pct':0,'qualification_unchanged':True})
+   b=bs[k];comparisons.append({'name':c['name'],'cost_multiplier':k,'readonly_benchmark_fingerprint':bf,'same_initial_capital_usdt':20000,'benchmark_nominal_gross_entry_budget_usdt':4000,'net_return_pct':z['net_return_pct'],'buyhold_net_return_pct':b['net_return_pct'],'return_difference_percentage_points':z['net_return_pct']-b['net_return_pct'],'wholeDD_difference_percentage_points':z['max_drawdown_pct']-b['max_drawdown_pct'],'cash_analytical_return_pct':0,'qualification_unchanged':True})
  for a in cs:
   for b in cs:
    dl=abs([20,30].index(a['beta_fit_window_days'])-[20,30].index(b['beta_fit_window_days']));dr=abs([7,14,28].index(a['momentum_lookback_days'])-[7,14,28].index(b['momentum_lookback_days']))

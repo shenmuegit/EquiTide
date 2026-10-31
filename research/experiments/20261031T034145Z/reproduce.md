@@ -23,3 +23,5 @@ env PYTHONDONTWRITEBYTECODE=1 /home/desktop/.local/share/equitide-research/workt
 随后同锁registry、python3 snapshot/monitor检查和旧网页每行完整比对，paper10只读，无真实订单/重部署/新任务。新proposal原ETH S35历史特征需真实Sep13..15收盘和Sep16重叠，不能用负数组下标拿到未来，完整查重/冻结/各变体reserve之后才可计算。下一原账户窗口02:30至04:30按真实packet继续，不假设零事件、不回滚未来共享指针。
 
 publish.py只提交本轮及4共享文件，SSH非force main，fetch/独立lsremote/完整tree/所有必要blob与原输入核验，发布实际exit0后解锁。真实SHA/进程/解锁见.git/automation_proofs/20261031T034145Z.json。
+
+比较表元数据校正：首次推送后复核将CSV列same_nominal_gross_entry_budget_usdt更名为benchmark_nominal_gross_entry_budget_usdt，4000只描述旧长持基准预算；新beta策略预算3000–6000，原冻结规则与正文已说明敞口不匹配。18行所有数字、金融报告/登记/账户和图均不变；只校正表头与生成器并重新核验导出，追加main提交，无金融重算。
