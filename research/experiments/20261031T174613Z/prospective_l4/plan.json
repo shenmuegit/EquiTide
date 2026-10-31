@@ -1,0 +1,234 @@
+{
+  "schema_version": 1,
+  "status": "frozen_before_start_no_account_created",
+  "frozen_at_utc": "2026-10-31T17:55:33.337039Z",
+  "owner_automation_id": "btc-eth",
+  "reason": "Independentlyvalidate unchanged oldL4/H2parent afterbroad joint-neighborhooddiagnostic; chosen fromreusedhistory, no untouchedhistoricalclaim. Newentryvolcapresearch never modifies this candidate.",
+  "original_candidate": {
+    "name": "fastgrid370_parent_L4_H200_B5000_E15000",
+    "fingerprint": "cd5df95d06288078d923a99ae210ab4cbe84ef03d32522b274a40d12120f9a37",
+    "spec": "research/experiments/20261031T114342Z/specs/fastgrid370_parent_L4_H200_B5000_E15000.json",
+    "spec_sha256": "2af35a0315f5eb9a927af35570bb0e4e572268328f8a8dc66083d355d8866f9b",
+    "historical_report": "research/experiments/20261031T114342Z/report.json",
+    "historical_report_sha256": "4664dcd717622011ad372bd35ccf0581a077731c1c68884ab1454972d9de0ae1"
+  },
+  "components": [
+    {
+      "asset": "BTC",
+      "fingerprint": "f2c640ae6c1892ae78189209668b67fd27b92353d6a545f28ba9bafba22ff744",
+      "weight": 1,
+      "source_spec": "research/experiments/20261029T232932Z/specs/nativecapital370_BTC_W2500_momentum.json",
+      "source_spec_sha256": "aecb5bb62c0b2e87d9aac59d525fea5a8b0616d8413ba75b7a50c0f61fde8945",
+      "parameters": {
+        "initial_capital_usdt": 5000.0,
+        "raw_entry_notional_fraction_of_initial_capital": 0.1,
+        "fixed_entry_notional_usdt": 500.0,
+        "lookback_days": 31,
+        "return_hurdle": 0.04,
+        "start_utc": "2025-10-19T00:01:00Z",
+        "end_utc": "2026-10-24T00:01:00Z",
+        "warmup_days": 30,
+        "embargo_days": 3,
+        "walk_forward_folds": 13,
+        "walk_forward_test_days": 30,
+        "maintenance_margin_proxy": 0.01,
+        "initial_notional_cap_to_collateral": 1,
+        "costs": {
+          "per_side_commission": 0.0005,
+          "half_spread": 0.0001,
+          "slippage": 0.0002,
+          "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+          "participation_max": 0.001,
+          "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+          "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+          "cost_multipliers": [
+            1,
+            2,
+            3
+          ],
+          "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+          "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+        },
+        "input_hashes": {
+          "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "97be656cf441024101417476f8338f4d739879d3ee39bfbf2a89cf1a287b726c",
+          "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "80cd98d12fd73cb8bfcc7a4d4af65d737347c9d9b53d82ae1698a1aa15bd71ce",
+          "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "b27e8f9a078a50a9d34c034870790321e43b5d7dff74f2c2a7d0b69f3c276006",
+          "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99"
+        },
+        "persistence": "Keep actual long while ROC>-E or short while ROC<E inside entrybands;strict entrybands have priority,unchanged quantity.",
+        "exit_buffer_fraction": 0.01,
+        "complete_30day_folds": 12,
+        "tail_fold_days": 10,
+        "positive_complete30d_folds_required": 9
+      },
+      "logic": {
+        "signal": "At daily decision i,priorcompletedperpetualROC=C[i-1]/C[i-1-L]-1. Flat enterslong iff ROC>H,short iff ROC<-H. Inside or on entrybands,existinglong persists strictly while ROC>-E;existingshort persists strictly while ROC<E. Long exits at ROC<=-E;short exits at ROC>=E. Crossing opposite strict fullentryband closesold then opensopposite at00:01. E<=H,at exact +/-H no newentry. State is actualsignedquantity,no unpublishedprice/funding input.",
+        "execution": "NextUTC00:01 nativeOPEN;closeopposite first then enter. Quantity=floor(spec.fixed_entry_notional_usdt/priorcompletedC/lot)*lot times direction;fixed raw N,no future OPEN/NAV/unpublishedfunding sizing;retain actualsame-directionquantity.",
+        "allocation": "Independentactual5000.0USDTbank;fixedentry500.0USDT=0.1ofitsowninitialcapital,qfrompriorclose/nativeLOTfloor,noNAVresizing orcashsharing.",
+        "ledger": "Opening debitsfeeonly;unrealizedPnL=q*(price-entryexecution). Closing realizes signedq*(exitexecution-entryexecution) and paysfee. Notional is not debited as spot cash.",
+        "funding": "At actual settlementns,rawcashdelta=-signedq*actualmark*realizedrate. Only oldposition thenheld participates;funding events00:00/00:00.001 occur before00:01rotation. Negative delta multiplied by coststress;positive income not increased. Sourceavailable_ts (often+1hour) retained;rates are ex-post accounting only,never signal or size inputs.",
+        "risk": "Composite sampled NAV includes minute transaction-close proxies plus actual closed-hour mark and actualfundingsettlement marks,pre/posttrade samples and terminalcash. Report mark-only and trade-proxy DD separately. Marginproxy:1%ofnotional versus adverse full-hour markhigh/low for every overlapping state in completelyin-OOSclosedhours. No exact historicaltier/tick liquidation engine;anyproxybreachfails qualification.",
+        "state": "Coldactual5000.0cashstart2025-10-19UTC00:01,continuous370days,no foldreset,day330inheritedrecent40,Oct24UTC00:01terminalexitcosted."
+      }
+    },
+    {
+      "asset": "ETH",
+      "fingerprint": "ef2fd8f47a3e14542da6d28defd1451224c56cbc418c8f9719deecd164605428",
+      "weight": 1,
+      "source_spec": "research/experiments/20261031T114342Z/specs/fastgrid370_ETH_L4_H200_C15000_N4500.json",
+      "source_spec_sha256": "afbeb8f1ba68751d104c4f29552af4f2c20a62d24d811154ec71f9b44c9fde42",
+      "parameters": {
+        "initial_capital_usdt": 15000,
+        "raw_entry_notional_fraction_of_initial_capital": 0.3,
+        "fixed_entry_notional_usdt": 4500,
+        "lookback_days": 4,
+        "return_hurdle": 0.02,
+        "start_utc": "2025-10-19T00:01:00Z",
+        "end_utc": "2026-10-24T00:01:00Z",
+        "warmup_days": 30,
+        "embargo_days": 3,
+        "walk_forward_folds": 13,
+        "walk_forward_test_days": 30,
+        "maintenance_margin_proxy": 0.01,
+        "initial_notional_cap_to_collateral": 1,
+        "costs": {
+          "per_side_commission": 0.0005,
+          "half_spread": 0.0001,
+          "slippage": 0.0002,
+          "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+          "participation_max": 0.001,
+          "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+          "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+          "cost_multipliers": [
+            1,
+            2,
+            3
+          ],
+          "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+          "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+        },
+        "input_hashes": {
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6"
+        },
+        "persistence": "Baseusesactualcurrentpositiononly;permitlongiffslowROC>0,shortiffslowROC<0;slowzeroorincompatibilityforcescash,neverhiddenstate. ReopeningrequiresstrictshortROCextremeifcash.",
+        "exit_buffer_fraction": 0,
+        "complete_30day_folds": 12,
+        "tail_fold_days": 10,
+        "positive_complete30d_folds_required": 9,
+        "signal_mode": "short_roc_zero_exit_slow_trend_gate",
+        "trend_lookback_days": 28
+      },
+      "logic": {
+        "signal": "At dailyi00:01,shortROC=C[i-1]/C[i-1-L]-1,L1/2/3,H2/4/6percent. BasecontrarianstrictROC>H short,ROC<-H long;insidebandsretainactualexistinglongonlyROC<0,existingshortonlyROC>0;ROCzeroexits,oppositeextremeclosesandflips. IndependentlyslowROC=C[i-1]/C[i-1-S]-1,S7/14/28. PermitbaseLONGonlyifslowROC>0,SHORTonlyifslowROC<0;otherwiseactualtargetflat,includingexistingposition. slowROCzeroalwaysflat. No hiddenbaseposition/desiredstate;gate reopeningneedsnewstrictextremeifcash. Allsignalsonlypriorcompleteclose.",
+        "execution": "At i UTC00:00 use only completed closes throughi-1, fastROC=C[i-1]/C[i-1-L]-1, slowROC=C[i-1]/C[i-29]-1. Strict fastROC>H short/<-H long; otherwise actual long retained onlyfastROC<0, short onlyfastROC>0. Apply slow sign gate to both existing and newpositions; incompatible targetflat. Actual q only, no hiddenposition. Close before flip, open nextUTC00:01OPEN; q=floor(4500/priorcompleteclose/LOT)*LOT, same-direction q retained. Costed finalclose only at frozen terminal.",
+        "allocation": "Actual native bank15000USDT/fixedentry4500USDT=30%of initial bank; integer LOT, actual size/ADV impact, no NAV resizing/scaling/borrowing.",
+        "ledger": "Opening debitsfeeonly;unrealizedPnL=q*(price-entryexecution). Closing realizes signedq*(exitexecution-entryexecution) and paysfee. Notional is not debited as spot cash.",
+        "funding": "At actual settlementns,rawcashdelta=-signedq*actualmark*realizedrate. Only oldposition thenheld participates;funding events00:00/00:00.001 occur before00:01rotation. Negative delta multiplied by coststress;positive income not increased. Sourceavailable_ts (often+1hour) retained;rates are ex-post accounting only,never signal or size inputs.",
+        "risk": "Composite sampled NAV includes minute transaction-close proxies plus actual closed-hour mark and actualfundingsettlement marks,pre/posttrade samples and terminalcash. Report mark-only and trade-proxy DD separately. Marginproxy:1%ofnotional versus adverse full-hour markhigh/low for every overlapping state in completelyin-OOSclosedhours. No exact historicaltier/tick liquidation engine;anyproxybreachfails qualification.",
+        "state": "Cold15000USDT2025-10-19UTC00:01, continuous370days, no fold reset; recent40 inherits day330, terminal2026-10-24UTC00:01."
+      }
+    }
+  ],
+  "time_boundaries": {
+    "planned_start_utc": "2026-11-01T00:01:00Z",
+    "planned_end_exclusive_utc": "2027-04-30T00:01:00Z",
+    "duration_days": 180,
+    "fold_boundaries_utc": [
+      "2026-11-01T00:01:00Z",
+      "2026-12-01T00:01:00Z",
+      "2026-12-31T00:01:00Z",
+      "2027-01-30T00:01:00Z",
+      "2027-03-01T00:01:00Z",
+      "2027-03-31T00:01:00Z",
+      "2027-04-30T00:01:00Z"
+    ],
+    "warmup_start_utc": "2026-09-29T00:00:00Z",
+    "historical_context_before_start": "Onlypastcompletebars toderivecausalsignal/cost;never futurePnL evidence."
+  },
+  "initial_state_policy": {
+    "account_state_created": false,
+    "planned_initial_cash_usdt_by_asset": {
+      "BTC": 5000,
+      "ETH": 15000
+    },
+    "planned_initial_units_by_asset": {
+      "BTC": "0",
+      "ETH": "0"
+    },
+    "fixed_entry_notional_usdt": {
+      "BTC": 500,
+      "ETH": 4500
+    },
+    "parent_initial_capital_usdt": 20000,
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "interpretation": "Twoindependentwholebanks, fixedbudgets10percent/30percentofinitialbank; no normalization/NAVresize/transfer/rebalance/crossmargin."
+  },
+  "costs": {
+    "per_side_commission": 0.0005,
+    "half_spread": 0.0001,
+    "slippage": 0.0002,
+    "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+    "participation_max": 0.001,
+    "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+    "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+    "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+  },
+  "cost_multipliers": [
+    1,
+    2,
+    3
+  ],
+  "rules_policy": "BTC L31/H.04/E.01momentum;ETH L4/H.02/S28/zeroexit, alwaysslowgateactualposition; strictentry, closebeforeflip, no hiddenstate, nativeLOT/tick/minnotional, postfee1xentrycap. Next00:01OPEN afterpriorcompleteclose; qfloor(N/priorclose/LOT), samedirectionqretained. No entryvolatility cap in this futurecandidate.",
+  "data_protocol": {
+    "public_only": true,
+    "closed1m_and_hourmark_actualfunding": "SourceURL/availability/UTCunits/rawSHA/continuity/overlap/metadata allverifybeforecalculation; missingdata blocks withpreservedstate.",
+    "funding": "Actualsettlementns/mark/thenheldq; negativesstressed,incomeunamplified; no fundinglookaheadsignal, no spotborrow invented.",
+    "margin": "1percentfullclosedhour adversemark proxy perbank, positive-durationstate intervals only; exactsame-ns pre/posteventorder preserved, no fulltier/tickliquidation claim.",
+    "continuity": "Newseparateledger/pointer; neverreinitializeafterfirstwindow, carrycash/q/entry/costs/funding/fullNAVprefix, no partialcutforcedexit.",
+    "transport": "VerifiedTLS1.2HTTP1.1, everyattempttimestamp/status/stderr/rawSHA and boundedretry; no disableSSLverification.",
+    "metadata_change": "ChangedLOT/tick/minnotional or unplannedfundingcadence blocks, no silentretrofit."
+  },
+  "qualification_after_full_180_days": {
+    "minimum_days": 180,
+    "complete_30day_folds": 6,
+    "positive_1x_complete30day_folds_min": 5,
+    "positive_full_net_all_costs": true,
+    "max_3x_whole_NAV_drawdown_pct": 25,
+    "round_trips_1x_min": 4,
+    "gross_reference_PnL_plus_funding_to_execution_cost_min": 2.5,
+    "no_cash_order_margin_proxy_violations": true,
+    "recent40_each_cost_positive_and_min6of8_positive5d_folds": true,
+    "partial_observations": "Mayfinishrejectedforinsufficientmaturity; doesnotcancel/resetfrozenplan. No passedbefore180days.",
+    "terminal_exit": "Onlypredeclared180dayend, actualclosingcosts."
+  },
+  "execution_readiness": {
+    "runner": "prospective_l4/observer.py",
+    "pointer": "research/automation/l4h02_forward_latest.json",
+    "window_folder": "l4h02_observation",
+    "reservation": "Every actualnewasset/parentcutoffcomplete spec mustreserve afterrealpacketvalidated andbeforeadvance. No reservation/account/performancebeforestart.",
+    "monitor": "forward_snapshot_l4h02_* areobservation IDs, notnewstrategytrial orpaper10. Existingmainfeedrefresh only; no newtimer/deployment.",
+    "isolation": "OriginalSMA65/singleS28/paper10 plans/pointers/books unchanged; oldcandidate_forward_latest neverusedasnewpointer.",
+    "code_freeze": "binding.json pinsplan, core,observer andsourcehashes; anymismatch blocks."
+  },
+  "observation_mode": "Prospectivelyfrozenfuturedata, delayedclosed-bar/fundingreplay; notlivetrade/quoteexecution.",
+  "known_limits": [
+    "Selectionfrommanyreuseddevelopmenttrials, no multiplicitycorrection.",
+    "NoL2/TCA/fullhistoricalmargin tiers ortruecapacity/steadyprofitguarantee.",
+    "No futureprices/returns/accountnow; firstactualwindow onlyafterstartandbarclosure."
+  ],
+  "result_available": false,
+  "actual_observations": 0,
+  "new_financial_evaluations": 0
+}
