@@ -1,0 +1,72 @@
+{
+  "kind": "combination",
+  "family": "native-bank-fast-reversal-lookback-hurdle-grid",
+  "name": "outergrid370_parent_L5_H300_B5000_E15000",
+  "market": "perpetual",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "components": [
+    {
+      "fingerprint": "f2c640ae6c1892ae78189209668b67fd27b92353d6a545f28ba9bafba22ff744",
+      "weight": 1
+    },
+    {
+      "fingerprint": "27d9fbd57d99ba07f5cf2ab00e895a49cbfe3813b7fb7fac243abdd054d073f1",
+      "weight": 1
+    }
+  ],
+  "logic": {
+    "allocation": "BTC independent actual bank5000USDT/fixedentry500USDT; ETH independent actual bank15000USDT/fixedentry4500USDT. Raw child multipliers[1,1], total20000USDT. Initial bank allocations25%/75% only, no automatic normalization, rebalance, transfers, borrowing or crossmargin.",
+    "source_execution": "Every new native cap/notional uses fresh nextUTC00:01OPEN orders, quantityfloor(N/priorcompleteclose/LOT), adverse native tick, minnotional, commission/spread/slippage and original lagged-vol/quoteADV square-root impact based on ACTUAL orderquantity. Same-direction q retained, closebeforeopen, terminal costed close. Exact completed native definitions reused only after source fullNAV SHA verification.",
+    "composition": "Add actual native full NAV once on union integer relative-ns/eventcode axis with lastcompleted projection, preserve pre/postfund/order priority. No sourceNAV rescaling or fractional perpetuallots; no parent orders. Recompute whole/fold/recent return/DD/Sharpe/Calmar, not averages.",
+    "rules": "BTC original L31/H4%/exitbuffer1% momentum fixed. ETH always-applied slowS28 gate; only fastL in[3,4,5] and strictH in[2%,2.5%,3%] vary, zero exit, actual positions only. Reuse exact old center without regrading historical status.",
+    "funding_and_risk": "Actual settlementns/mark/then-held q; outflows stressed1/2/3, positiveincome not increased. Linearperpetual source cashcollateral, no invented spotborrow. Keep each actualbank1xpostfeeentrycap and1%fullyclosedhour adversemark maintenance proxy independently, no netting. No historicalfulltier/tickliquidation or L2/TCA capacity guarantee.",
+    "continuity": "One continuous370day actualnativepath perbank; all13folds carrycash/q/entry/funding/costs. Recent40 inherits day330predecision states, no diagnosticorders or reset. Rules/scales fixed before new evaluation; repeated history is development, not untouched future."
+  },
+  "parameters": {
+    "initial_capital_usdt": 20000,
+    "component_capitals_usdt": [
+      5000,
+      15000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      500,
+      4500
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "ETH_lookback_days": 5,
+    "ETH_return_hurdle": 0.03,
+    "ETH_trend_lookback_days": 28,
+    "ETH_exit_buffer_fraction": 0,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "walk_forward_test_days": 30,
+    "continuous_oos_days": 370,
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "native_quantity_and_impact_recalculated": true
+  },
+  "validation_plan": "research/experiments/20261031T134412Z/plan.json",
+  "sources": [
+    {
+      "url": "https://www.aqr.com/Insights/Research/Working-Paper/Trading-Costs-of-Asset-Pricing-Anomalies",
+      "access_date": "2026-10-31",
+      "version": "2012-12-05 authors working paper webpage",
+      "scope": "Equity short-reversal cost warning motivates explicit stress; not crypto/L2/TCA calibration."
+    }
+  ]
+}
