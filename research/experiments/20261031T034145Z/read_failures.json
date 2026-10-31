@@ -1,0 +1,66 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T034145Z/observe_candidate.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-31T03:53:58.849552Z",
+      "finished_utc": "2026-10-31T03:54:09.252883Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261031T034145Z/candidate.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T034145Z/observe_candidate.py\", line 19, in <module>\n    sys.argv=[str(SOURCE/'prospective_observer.py'),'run','--round',R.name,'--cutoff','2026-10-31T02:30:00Z','--lock-pid','369670'];obs.main()\n                                                                                                                                    ^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 131, in main\n    packet=capture(cut,previous,binding,rawdir,receipts);packetpath=rawdir/'packet.json.gz';gzput(packetpath,packet);put(window/'input_manifest.json',{'packet':rel(packetpath),'sha256':c.sha(packetpath),'provenance':receipts,'plan_sha256':binding['plan_sha256']})\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 49, in capture\n    info=request('/fapi/v1/exchangeInfo',{},rawdir,receipts);server=request('/fapi/v1/time',{},rawdir,receipts);retrieved=min(now(),int(server['serverTime'])*c.MS)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T034145Z/observe_candidate.py\", line 17, in request\n    receipts.append(item);raise RuntimeError('Public GET failed both bounded attempts;original account preserved')\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Public GET failed both bounded attempts;original account preserved\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T034145Z/observe_candidate_recovered.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-31T03:58:11.634624Z",
+      "finished_utc": "2026-10-31T03:58:11.649150Z",
+      "exit_code": 2,
+      "log": "research/experiments/20261031T034145Z/candidate_retry2_candidate_recovered.log",
+      "stderr": "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python: can't open file '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T034145Z/observe_candidate_recovered.py': [Errno 2] No such file or directory\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "phase": "candidate_recovery_setup",
+      "actual_tool_chunk": "fd9223",
+      "actual_exit_code": 1,
+      "error": "relative_to called on relative Path against absolute root;failedbefore move/write/retry HTTP/reservation/accountcompute",
+      "actual_extra_HTTP_requests": 0,
+      "actual_candidate_reservations": 0,
+      "actual_candidate_computations": 0,
+      "resolution": "Resolve round path under verified absolute root;preserve failedwindow/raw/sharedpointer,then one boundedretrycapture."
+    },
+    {
+      "phase": "candidate_public_GET",
+      "eventual_successful_window_audited": true,
+      "url": "https://fapi.binance.com/fapi/v1/exchangeInfo",
+      "started_utc": "2026-10-31T03:53:59.169357+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261031T034145Z/http_attempt_0000.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 28,
+      "stderr": "curl: (28) Connection timed out after 5000 milliseconds\n"
+    },
+    {
+      "phase": "candidate_public_GET",
+      "eventual_successful_window_audited": true,
+      "url": "https://fapi.binance.com/fapi/v1/exchangeInfo",
+      "started_utc": "2026-10-31T03:54:04.184496+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261031T034145Z/http_attempt_0001.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 28,
+      "stderr": "curl: (28) Connection timed out after 5002 milliseconds\n"
+    }
+  ]
+}

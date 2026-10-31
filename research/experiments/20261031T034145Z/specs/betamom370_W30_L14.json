@@ -1,0 +1,87 @@
+{
+  "kind": "strategy",
+  "family": "weekly-past-beta-adjusted-relative-momentum",
+  "name": "betamom370_W30_L14",
+  "market": "perpetual",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "logic": {
+    "fit": "At weekly scheduleddayi=33+7k,fit y=alpha+beta*x on W20/30 paired dailylogreturns indexedj in[i-W-1,i-1),lastj=i-2. x=log(CBTC[j]/CBTC[j-1]),y=log(CETH[j]/CETH[j-1]),Float64ratio/log/NumPy centeredOLS with intercept. The latestmomentumclosei-1 isexcluded from beta training;onefullreturnbar gap,not futurelabels. Denominator<=1e-20/nonfinitebeta or betaoutside[.5,2] isinvalid,notclipped. EarliestW30atfirsti33usesreturnsj2..31/closes1..31,within33daycontext.",
+    "signal": "At that scheduledday,score=log(CETH[i-1]/CETH[i-1-L])-beta*log(CBTC[i-1]/CBTC[i-1-L]),L7/14/28. Alpha is fitted/audited but notsubtractedfromscore;thisis beta-adjusted relative momentum,not a claimofmean-centeredOLSresidual or cointegration. Eligiblepositive scorelongETH/shortBTC,negativeopposite,exactzero/invalidfit cash. No ADF/Zfilter/entrydeadband/consecutiveconfirmation orfuturefundingfeature.",
+    "schedule": "Weeklyanchor2025-10-19UTC00:01. Sameorientations retain actualq/entryandentrybeta,not resizeor rebalance whenestimatedbeta changes;newbeta affects currentscore and sizingonlyifnewentry. Oppositescore/tie/invalidfit closesboth atscheduleddecision;neweligibleopposite mayenter afterbothflat. Offscheduledayshold,exceptactualleftoverclose-onlydailyrecovery. PresetcenterW20/L14,notchosenfromOOS.",
+    "execution": "NextdayUTC00:01realnativeOPEN after previousdailyclose available. At code6 closeBTCthenETH;only ifbothflat may code7 openBTCthenETH. Rejectfirst skipssecond;rejectsecond pays immediateBTCunwind,failedclose/unwind retainsrealq inclose-onlyrecovery nextdaily00:01,includingoffschedule,no freshentryuntilafuture scheduleddecision. Successfulfullpair counts one completedroundtrip on finalclosure;failedpartialentryunwind does not count a pair. Terminal2026-10-24UTC00:01attempts paidcloseactualpositions;notflat failsqualification.",
+    "allocation": "IndependentBTC10000/ETH10000banks/rawfundedunits[1,1],total20000,no normalization/transfer/crossmargin/netting. Onnewentry ETHnotional2000,BTCnotional=eligibleentrybeta*2000 (1000to4000),q=floor(notional/priorcompletedassetclose/LOT)*LOT,notfutureOPEN/NAVsizing. Initialgrossentrybudget3000to6000=15to30percenttotalcapital,actualOPENandLOTvary;notexactdollar/beta-neutral orconstantgross/risk. Openingdebitsfeeonly,linearperpPnLcash+q*(mark-entryexec).",
+    "costs": "Frozen5bpper-sidefee+1bphalfspread+2bpslip+.5*lag20sampledailylogvol*sqrt(actualq*OPEN/lag20quoteADV);participation<=.001. All1/2/3executioncostsandnegativefundingoutflowsstressed,positivefundingincomeunamplified. Realizedperpfundingatactualsettlementns/mark/thenheldq,nospotborrowfeesinvented. Fundingavailabletimestampexpostonly,notentrysignal/size.1percentclosedhourmarkadverseextrememaintenanceproxy,no crossmargin.",
+    "validation": "Continuous370dayreuseddevelopmentOOS2025-10-19UTC00:01to2026-10-24UTC00:01,33daycontext,12complete30dayfolds+10daytail. Fixedgrid/weeklyanchor,rollingpastbeta,recomputeusingpastonly,no OOSoptimization orfoldaccountreset. Unsupervisedexposurefit,no futurelabels/purgehorizon0;one withheldlatestreturnbar beforelatestmomentumclose,60second signal-toexecutiondelay. Recent40inheritsday330realbooks/8x5dayfolds,no diagnosticorders. Notuntouchedfinaltest/DSR/PBO/independentfuture.",
+    "qualification": "Preservedstrictnumericgates:positiveallcosts,>=9/12positivecomplete30day1xfolds,recent40positiveallcosts,>=6/8positive5dayfoldsateverycost,3xwholeDD<=25%,>=60%local3xpositiveand>=60%localstrictrecent,>=4completedtwolegpairs,grossreferencePnL+funding/cost1>=2.5,norejection/negativecollateral/hourmarginproxyviolations,terminalflat,>=180days. Neighborhoodindexradius1onbothaxesincludingcenter;centerW20/L14preset,not selected from test.",
+    "benchmark": "Read-only completedBTCN2000/ETHN2000constantlong banksandraw[1,1]parent,total20000,common370dayperiodandnativeclock. Sameinitialcapitalandinitialgross4000,butlong-onlysigns/turnover/currentgrossdiffer;not exactlymatchedrisk. Originalmetrics/hash/status unchanged,no benchmarkrerun. Cash0analyticalreference. Also readonlypreviouslypresetunfilteredL14/R7sourcealloldscenes remain finished;oldqualificationnotrerated. Newbetasizing has3000to6000grossbudget versusold4000;alloldcontrols haveequalinitialcapital butunmatchedexposure/turnover. No beta1/oldbenchmark resimulation.",
+    "risk": "Source1percentclosedhourmarkadversehigh/low maintenanceproxyfor everyoverlappingnativebankstate,1xpostfeeentrycap,participation<=.001,originalLOT/tick/minnotional;noL2/historicaltier/tickliquidationorcapacityguarantee. Perpetualshortusescashcollateral,no underlyingborrow assumed;actualfundingoutflowsstressed/inflowsunamplified."
+  },
+  "parameters": {
+    "beta_fit_window_days": 30,
+    "lookback_days": 14,
+    "momentum_lookback_days": 14,
+    "rebalance_interval_days": 7,
+    "schedule_anchor_utc": "2025-10-19T00:01:00Z",
+    "regression": "daily_logETH_returns_on_intercept_plus_daily_logBTC_returns",
+    "beta_training_return_indices": "[i-W-1,i-1),last=i-2",
+    "beta_fit_excludes_latest_momentum_close": true,
+    "beta_eligible_min": 0.5,
+    "beta_eligible_max": 2,
+    "OLS_variance_denominator_min": 1e-20,
+    "alpha_in_score": false,
+    "score": "logETH_L-beta*logBTC_L",
+    "initial_capital_usdt": 20000,
+    "component_capitals_usdt": [
+      10000,
+      10000
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "ETH_entry_notional_usdt": 2000,
+    "BTC_entry_notional_rule": "eligible_beta_at_entry*2000",
+    "quantity_price": "priorcompletedUTCdailyclose",
+    "same_orientation_resize": false,
+    "offcalendar_recovery": "close_only_daily",
+    "invalid_beta_action": "paidflat_on_scheduledday",
+    "numeric_fit": "numpy_float64_centered_OLS_on_float64_logratios",
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "future_label_horizon": 0,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "walk_forward_folds": 13,
+    "complete_30day_folds": 12,
+    "input_hashes": {
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "97be656cf441024101417476f8338f4d739879d3ee39bfbf2a89cf1a287b726c",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "80cd98d12fd73cb8bfcc7a4d4af65d737347c9d9b53d82ae1698a1aa15bd71ce",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "b27e8f9a078a50a9d34c034870790321e43b5d7dff74f2c2a7d0b69f3c276006",
+      "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6"
+    },
+    "native_accounting_sha256": "7ba7da288c7894e56cc05a2650afaabf792ce2fbcf8781afbae37ac156e6e316",
+    "paired_execution_helpers_sha256": "a5e2c67e2fa11ab30957455bcef77362d02462029e03cdb48668ec15d90db2be"
+  },
+  "validation_plan": "research/experiments/20261031T034145Z/plan.json",
+  "sources": [
+    {
+      "url": "https://www.statsmodels.org/stable/examples/notebooks/generated/rolling_ls.html",
+      "scope": "Past-onlyrollingOLSconcept;explicitonebartraininggapandweeklyscoreareours,notlibrarydefaulttiming."
+    },
+    {
+      "url": "https://www.aqr.com/Insights/Research/Journal-Article/Time-Series-Momentum",
+      "scope": "Momentumconceptonly,notreplicationofpaperhorizons/universe/performance."
+    }
+  ]
+}
