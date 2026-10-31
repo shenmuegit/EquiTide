@@ -1,0 +1,36 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T094316Z/run.py",
+        "evaluate"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-31T10:08:54.691543Z",
+      "finished_utc": "2026-10-31T10:09:03.946393Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261031T094316Z/evaluate.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T094316Z/run.py\", line 38, in <module>\n    if __name__=='__main__':globals()[argparse.ArgumentParser().parse_known_args()[1][0]]()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T094316Z/run.py\", line 24, in evaluate\n    fps=row['source_fingerprints'];v=vectors[fps[0],k]+vectors[fps[1],k];s=portfolio_summary(v,[sources[fp,k] for fp in fps],[1,1],cm);z={'summary':s,'source_fingerprints':fps,'raw_component_multipliers':[1,1],'source_full_NAV_sha256':[sources[fp,k]['NAV_sha256_f64le'] for fp in fps]};vectors[row['fingerprint'],k]=v\n                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T094316Z/portfolio.py\", line 8, in summary\n    s.update({f:sum(w*p[f] for w,p in zip(weights,parts)) for f in MONEY});s.update({f:sum(p[f] for p in parts) for f in COUNTS});capital=sum(w*p['initial_capital_usdt'] for w,p in zip(weights,parts));assert v[0]==capital and abs(s['gross_reference_price_PnL_usdt']+s['funding_usdt']-s['cost_usdt']-(v[-1]-capital))<2e-8\n                                                                   ^^^^^\nNameError: name 'MONEY' is not defined\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "phase": "evaluate",
+      "actual_exit_code": 1,
+      "actual_tool_chunk": "9bd34c",
+      "error": "NameError MONEY/COUNTS missing in parent summary after5native/15scenes completed; first parent1x summary incomplete, no full parent result saved",
+      "evidence": "evaluate.log;evaluate_commands.json",
+      "recovery": "Separate fixed parent helper and recovery driver; preserve original boundcode and all5complete native archives; no completed-native re-simulation"
+    },
+    {
+      "phase": "candidate_public_GET",
+      "actual_curl_exit_code": 35,
+      "http_status": 0,
+      "error": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=ETHUSDT&startTime=1793404800002&endTime=1793435400000&limit=1000",
+      "raw": "data/raw/binance/candidate_forward/20261031T094316Z/http_attempt_0007.gz",
+      "raw_sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "recovery": "Second bounded attempt succeeded HTTP200 before any candidate reservation or account advance. Only8validated success pages used for one newwindow; failure attempt retained."
+    }
+  ]
+}

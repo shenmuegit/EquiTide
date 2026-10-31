@@ -1,0 +1,16 @@
+nativerepl370_candidate_BTC_W150 [2.9651115, 2.4649829, 1.9649332]
+nativerepl370_candidate_ETH_W050 [14.9534904, 12.6867301, 10.4195887]
+nativerepl370_candidate_ETH_W150 [14.9514978, 12.6726597, 10.3938562]
+nativerepl370_benchmark_BTC_W150 [-2.7000932, -3.0335174, -3.3669517]
+nativerepl370_benchmark_ETH_W050 [-12.1601767, -12.9661713, -13.7722464]
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T094316Z/run.py", line 38, in <module>
+    if __name__=='__main__':globals()[argparse.ArgumentParser().parse_known_args()[1][0]]()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T094316Z/run.py", line 24, in evaluate
+    fps=row['source_fingerprints'];v=vectors[fps[0],k]+vectors[fps[1],k];s=portfolio_summary(v,[sources[fp,k] for fp in fps],[1,1],cm);z={'summary':s,'source_fingerprints':fps,'raw_component_multipliers':[1,1],'source_full_NAV_sha256':[sources[fp,k]['NAV_sha256_f64le'] for fp in fps]};vectors[row['fingerprint'],k]=v
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T094316Z/portfolio.py", line 8, in summary
+    s.update({f:sum(w*p[f] for w,p in zip(weights,parts)) for f in MONEY});s.update({f:sum(p[f] for p in parts) for f in COUNTS});capital=sum(w*p['initial_capital_usdt'] for w,p in zip(weights,parts));assert v[0]==capital and abs(s['gross_reference_price_PnL_usdt']+s['funding_usdt']-s['cost_usdt']-(v[-1]-capital))<2e-8
+                                                                   ^^^^^
+NameError: name 'MONEY' is not defined

@@ -1,0 +1,58 @@
+{
+  "recorded_utc": "2026-10-31T10:13:37.661947+00:00",
+  "failure": "Missing MONEY/COUNTS declarations in parent summary, after5complete native configurations/15costscenes. No complete parent archive existed. First parent1x summary began then raised before complete monetary results.",
+  "completed_native_archives": {
+    "research/experiments/20261031T094316Z/results/nativerepl370_candidate_BTC_W150.json.gz": "fe94a20dbdf9785a9ef826faeaccac1a3ae0a59dd849f1b75c4b8ecf532839b5",
+    "research/experiments/20261031T094316Z/results/nativerepl370_candidate_ETH_W050.json.gz": "74c9e33995517ea352c479e0e4a27b5a3e20d3eab040828d7b2a8ae5db19c1b9",
+    "research/experiments/20261031T094316Z/results/nativerepl370_candidate_ETH_W150.json.gz": "522849f03d791d73ec43be2d49b978b7a72df752ea6be09c812523e8346fc56a",
+    "research/experiments/20261031T094316Z/results/nativerepl370_benchmark_BTC_W150.json.gz": "f643de7baa89ce6a9e1b1efbe5f03b99a017fc83fc691a09ff6a4ddde35e099f",
+    "research/experiments/20261031T094316Z/results/nativerepl370_benchmark_ETH_W050.json.gz": "e13b3783e598b4289b45e4b5e17ad8bf7c89d53d0e5aed182c15caef18960ddf"
+  },
+  "completed_native_configurations": 5,
+  "complete_native_cost_scenes": 15,
+  "full_parent_results_before_recovery": 0,
+  "original_evaluation_command": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T094316Z/run.py",
+        "evaluate"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-10-31T10:08:54.691543Z",
+      "finished_utc": "2026-10-31T10:09:03.946393Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261031T094316Z/evaluate.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T094316Z/run.py\", line 38, in <module>\n    if __name__=='__main__':globals()[argparse.ArgumentParser().parse_known_args()[1][0]]()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T094316Z/run.py\", line 24, in evaluate\n    fps=row['source_fingerprints'];v=vectors[fps[0],k]+vectors[fps[1],k];s=portfolio_summary(v,[sources[fp,k] for fp in fps],[1,1],cm);z={'summary':s,'source_fingerprints':fps,'raw_component_multipliers':[1,1],'source_full_NAV_sha256':[sources[fp,k]['NAV_sha256_f64le'] for fp in fps]};vectors[row['fingerprint'],k]=v\n                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T094316Z/portfolio.py\", line 8, in summary\n    s.update({f:sum(w*p[f] for w,p in zip(weights,parts)) for f in MONEY});s.update({f:sum(p[f] for p in parts) for f in COUNTS});capital=sum(w*p['initial_capital_usdt'] for w,p in zip(weights,parts));assert v[0]==capital and abs(s['gross_reference_price_PnL_usdt']+s['funding_usdt']-s['cost_usdt']-(v[-1]-capital))<2e-8\n                                                                   ^^^^^\nNameError: name 'MONEY' is not defined\n"
+    }
+  ],
+  "original_code_sha256": {
+    "research/experiments/20261031T094316Z/audit_forward.py": "ca65c2af0313e006c4b9f44922756ecbe9de0098634535c13d9c94744e22bbc6",
+    "research/experiments/20261031T094316Z/portfolio.py": "096ec864bbcf2821f54f2d7cb8248f1bb79f294eb77436032252fd7f6b00ae33",
+    "research/experiments/20261031T094316Z/reserve_batch.py": "573ddca2312594fa5af7250cc0c24f12f882b48078dbb8ed42ffb68d2fd82287",
+    "research/experiments/20261031T094316Z/forward_registry.py": "62a2b9b7f7d2b013e4808b33a6f7f06b67e6ef9cfe0d3e4b9fd99a4f1ef6bfd6",
+    "research/experiments/20261031T094316Z/audit.py": "e52e9fb9f46fab7dbd4d74092351fa49de0f0a53d85bd63517b949b9d0497f39",
+    "research/experiments/20261031T094316Z/recent.py": "5c5e151ce3197ad3ea323534dda299ad07ce64972418a2c80e54d0dd57bcfd27",
+    "research/experiments/20261031T094316Z/audit_helpers_complete.py": "0c082df397e7510586ede5a803c8ace4bfeab580166e74d6739c76a70b03b190",
+    "research/experiments/20261031T094316Z/audit_native.py": "f577170899ab8c3835f0c84b8369a2cb3286592c2f88f8451ba3739a00ffbdf3",
+    "research/experiments/20261031T094316Z/finish_batch.py": "b521c33eca182c8200237d9748a57a34b45a00038c13add10123b2def4401e9f",
+    "research/experiments/20261031T094316Z/bootstrap.py": "26412832940479957e9d9b1195378824de753d12e6fefd4b32970379fb3810a5",
+    "research/experiments/20261031T094316Z/check_primitives.py": "e8fe0ef9ac05eb6711ec0a1743cf14c444de3feb5bf2ddde4f8e8d8f56a37c5b",
+    "research/experiments/20261031T094316Z/forward.py": "14793c7d65c6a1359e0d8e91aab4b633eb67dca3ca0102cbbaa277f1a923f78a",
+    "research/experiments/20261031T094316Z/market.py": "f9af0e44eb56e563525cbf96f31c3faebd95d40d5044850f3f59c706d36167b4",
+    "research/experiments/20261031T094316Z/common.py": "6268ace386553feca5a41d394232d25f2ddce9fb2d86c44d3b990386402f237e",
+    "research/experiments/20261031T094316Z/audit_candidate.py": "59458663de12e0d9b90101b200aab89f3f9f0e4ca0e81fd8f2903144ee9e78b8",
+    "research/experiments/20261031T094316Z/freeze.py": "bfc7528535baa7105b3d831f6782e75d70f14b2d5345f45f37050cbda82c57ef",
+    "research/experiments/20261031T094316Z/check_risk_carry.py": "e6c4d65adc4528597be322bdae517e9b94e16f84fc8541ccf75215bd5189cc44",
+    "research/experiments/20261031T094316Z/run.py": "39809079bce1301813f520f7fe0dd58a2be0128143b5dcf1a6f95c2610ce574c",
+    "research/experiments/20261031T094316Z/engine.py": "1b4dd8efecbf7785836407069c377fdad8d99a14cd69f007fb62f1a37d7d598f",
+    "research/experiments/20261031T094316Z/project_candidate_batch.py": "1a8f9553bc9ab34319e2f39951e69fe8aef41e403a8904d6415e0b2983d0ac67",
+    "research/experiments/20261031T094316Z/check_definitions.py": "b01e4a02466d73cda9351458c5545cff9cce6b1cb00ece2889372875c5d41ed0",
+    "research/experiments/20261031T094316Z/observe_candidate.py": "537bb60f75ea6fac0343fb79da3e52221aaa743ddd841077554358b3c36ee9d3"
+  },
+  "recovery_code_sha256": {
+    "research/experiments/20261031T094316Z/portfolio_complete.py": "abc9ba946503a135b784131ccb270ab4d3757e4e6f5672227bb9bc89988e1169",
+    "research/experiments/20261031T094316Z/run_recovered.py": "57fbdb93b7031ebadeb7cdfc1379c9dc77bb336fae5192a22168a04e3368771b"
+  },
+  "rules": "Sourceplan/parameters/costs/gates/time boundaries/native engine unchanged. Recover completed native NAV from actual saved state segments and prices with exactSHA; never call native simulate/decide/trade. Compute only unfinished parent configurations under same reservedIDs. Keep all native archive bytes unchanged."
+}

@@ -1,0 +1,72 @@
+{
+  "kind": "combination",
+  "family": "native-bank-capital-notional-replication",
+  "name": "nativerepl370_parent_candidate_B050_E050",
+  "market": "perpetual",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "components": [
+    {
+      "fingerprint": "f2c640ae6c1892ae78189209668b67fd27b92353d6a545f28ba9bafba22ff744",
+      "weight": 1
+    },
+    {
+      "fingerprint": "d01e13819987423fd710c64f62ba5c47618c7eac0e2b77ff66ab009e3e6fb17f",
+      "weight": 1
+    }
+  ],
+  "logic": {
+    "allocation": "Raw bankscale coefficients wB/wE retained exactly; actual initialcash BTC=10000*wB, ETH=10000*wE; actual native entrybudgets BTC=1000*wB, ETH=3000*wE. Compose complete independently executed native bank NAVs at raw childmultipliers1/1; totalcapital=10000*(wB+wE). No normalization, NAV resizing, transfers, borrowing, crossmargin or parent rebalance.",
+    "source_execution": "Every new native cap/notional uses fresh nextUTC00:01OPEN orders, quantityfloor(N/priorcompleteclose/LOT), adverse native tick, minnotional, commission/spread/slippage and original lagged-vol/quoteADV square-root impact based on ACTUAL orderquantity. Same-direction q retained, closebeforeopen, terminal costed close. Exact completed native definitions reused only after source fullNAV SHA verification.",
+    "composition": "Add actual native full NAV once on union integer relative-ns/eventcode axis with lastcompleted projection, preserve pre/postfund/order priority. No sourceNAV rescaling or fractional perpetuallots; no parent orders. Recompute whole/fold/recent return/DD/Sharpe/Calmar, not averages.",
+    "rules": "BTC fixed original L31/H4%/exitbuffer1% momentum; ETH fixed original S28/fastL3/H2% zero-exit gated reversal with actual state only, no hidden positions. Matched constantlong controls change only signal to firstentry/hold/costedterminal.",
+    "funding_and_risk": "Actual settlementns/mark/then-held q; outflows stressed1/2/3, positiveincome not increased. Linearperpetual source cashcollateral, no invented spotborrow. Keep each actualbank1xpostfeeentrycap and1%fullyclosedhour adversemark maintenance proxy independently, no netting. No historicalfulltier/tickliquidation or L2/TCA capacity guarantee.",
+    "continuity": "One continuous370day actualnativepath perbank; all13folds carrycash/q/entry/funding/costs. Recent40 inherits day330predecision states, no diagnosticorders or reset. Rules/scales fixed before new evaluation; repeated history is development, not untouched future."
+  },
+  "parameters": {
+    "initial_capital_usdt": 10000.0,
+    "raw_bank_scale_coefficients": [
+      0.5,
+      0.5
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "component_capitals_usdt": [
+      5000.0,
+      5000.0
+    ],
+    "component_initial_entry_notionals_usdt": [
+      500.0,
+      1500.0
+    ],
+    "allocation_role": "candidate",
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "walk_forward_test_days": 30,
+    "continuous_oos_days": 370,
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "native_quantity_and_impact_recalculated": true
+  },
+  "validation_plan": "research/experiments/20261031T094316Z/plan.json",
+  "sources": [
+    {
+      "url": "https://www.aqr.com/Insights/Research/Working-Paper/Trading-Costs-of-Asset-Pricing-Anomalies",
+      "access_date": "2026-10-31",
+      "scope": "Primary2012 equity cost/capacity background only, not crypto execution/TCA evidence."
+    }
+  ]
+}
