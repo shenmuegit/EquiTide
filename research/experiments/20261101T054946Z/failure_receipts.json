@@ -1,0 +1,252 @@
+{
+  "failed_pipeline_commands": [
+    {
+      "command": [
+        "python3",
+        "/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-01T06:29:16.194408Z",
+      "finished_utc": "2026-11-01T06:29:36.549284Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261101T054946Z/monitor_check.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 115, in <module>\n    main()\n    ~~~~^^\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 108, in main\n    assert len(config_gzip) < 4_000_000, \"compressed monitor configs exceed size limit\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: compressed monitor configs exceed size limit\n"
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261101T054946Z/audit.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-01T06:15:22.737320Z",
+      "finished_utc": "2026-11-01T06:15:32.980583Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261101T054946Z/audit.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261101T054946Z/audit.py\", line 17, in <module>\n    proxy={'ts':cm['start_ns']+cm['keys']//16,'daily_indices':cm['daily_indices'],'fold_indices':cm['fold_indices']};curves={};source_reports={fp:sha(ROOT[x['report']]) for fp,x in p['read_only_references'].items()}\n                                                                                                                                                      ~~~~^^^^^^^^^^^^^\nTypeError: 'PosixPath' object is not subscriptable\n"
+    }
+  ],
+  "candidate_failed_HTTP_attempts": [
+    {
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=ETHUSDT&startTime=1793491200000&endTime=1793507400000&limit=1000",
+      "started_utc": "2026-11-01T06:25:31.095162+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261101T054946Z/http_attempt_0007.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 28,
+      "stderr": "curl: (28) Connection timed out after 10001 milliseconds\n"
+    }
+  ],
+  "L4_failed_transport_attempts": [],
+  "forward_transport_error_messages": [],
+  "exact_forward_HTTP_attempt_count_instrumented": false,
+  "completed_financial_backtest_reruns": 0,
+  "completed_observation_reruns": 0,
+  "recorded_command_failures": [
+    {
+      "recorded_utc": "2026-11-01T06:03:43.261120+00:00",
+      "actual_failed_exit_chunk": "60793c",
+      "actual_failed_exit_code": 1,
+      "root_cause": "family ID contained uppercase ETH; validator requires lowercase. Nonemptylogic and all numeric rules were valid. Failure occurred during fingerprint generation before any reservation or financial calculation.",
+      "minimal_reproduction_failed_then_passed": true,
+      "initial_family": "native-bank-capitalmix-with-ETH-exitbuffer",
+      "corrected_family": "native-bank-capitalmix-with-eth-exitbuffer",
+      "numeric_rules_parameters_components_unchanged": true,
+      "valid_probe_fingerprint": "5b9806f8e6721b4c7cc751ee20cddc821d355668c623bd692e82a335e1e52aac",
+      "original_failed_source": "research/experiments/20261101T054946Z/freeze.py",
+      "original_failed_receipt": "research/experiments/20261101T054946Z/freeze_receipt.json",
+      "original_invalid_spec": "research/experiments/20261101T054946Z/pre_reservation_engineering/invalid_initial_spec.json",
+      "recovery_source": "research/experiments/20261101T054946Z/freeze_recovered.py",
+      "financial_evaluations_before_repair": 0,
+      "registry_writes_before_repair": 0,
+      "completed_financial_or_observation_reruns": 0
+    },
+    {
+      "recorded_utc": "2026-11-01T06:07:57.626058+00:00",
+      "actual_failed_exit_chunk": "e45332",
+      "actual_failed_exit_code": 1,
+      "root_cause": "Exact component-pair lookup found all three existing actual matchedholding parents. Duplicate avoidance correctly reused them, but engineering assertion still expected two new controls. Six new candidate definitions unchanged; no registration or financial evaluation happened.",
+      "verified_existing_hold_parents": [
+        "295d47dabe5f7c32d85391763ca593511fb4bd7f0e48763c8a0b6dc10794b17a",
+        "eec7f520c4a3eaceb457fdb5616c5886e0388d55a886cdebd306045ca13b6cd5",
+        "a9b8ac37d09f39994ea25f5c6afe1ebf0edc55754662fc5a9509486226e9c314"
+      ],
+      "corrected_count_only": {
+        "new_candidates": 6,
+        "new_benchmarks": 0,
+        "existing_benchmarks": 3,
+        "readonly_unique_sources": 16
+      },
+      "original_failed_source": "research/experiments/20261101T054946Z/freeze_recovered.py",
+      "original_failed_receipt": "research/experiments/20261101T054946Z/freeze_recovered_receipt.json",
+      "recovery_source": "research/experiments/20261101T054946Z/freeze_final.py",
+      "financial_evaluations_before_repair": 0,
+      "registry_writes_before_repair": 0
+    },
+    {
+      "recorded_utc": "2026-11-01T06:11:19.812561+00:00",
+      "actual_failed_exit_chunk": "8b6116",
+      "actual_failed_exit_code": 1,
+      "scope": "Report-renderer source generator only; AST validation caught newline in quoted figuretitle before any summarize.py file write. No ledger/model/account computation affected.",
+      "error": "SyntaxError: unterminated string literal in fig.suptitle source generator",
+      "recovery": "Write literal source with quoted heredoc; AST validate before report generation.",
+      "financial_evaluations_before_recovery": 0
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261101T054946Z/audit.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-01T06:15:22.737320Z",
+      "finished_utc": "2026-11-01T06:15:32.980583Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261101T054946Z/audit.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261101T054946Z/audit.py\", line 17, in <module>\n    proxy={'ts':cm['start_ns']+cm['keys']//16,'daily_indices':cm['daily_indices'],'fold_indices':cm['fold_indices']};curves={};source_reports={fp:sha(ROOT[x['report']]) for fp,x in p['read_only_references'].items()}\n                                                                                                                                                      ~~~~^^^^^^^^^^^^^\nTypeError: 'PosixPath' object is not subscriptable\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "recorded_utc": "2026-11-01T06:18:49.881121+00:00",
+      "actual_failed_exit_chunk": "93da24",
+      "actual_failed_exit_code": 1,
+      "root_cause": "Readonly source-report SHA guard used ROOT[path] instead of ROOT/path in two locations. Thirty native ledger/quantity checks had completed before the bookkeeping TypeError; parent calculations/reports were already complete and preserved.",
+      "original_bound_source": "research/experiments/20261101T054946Z/audit.py",
+      "recovery_source": "research/experiments/20261101T054946Z/audit_recovered.py",
+      "change_only_path_operator": true,
+      "saved_actual_model_evidence_sha256": {
+        "research/experiments/20261101T054946Z/report.json": "8c78d7a98f1fa5091bd51714d4f7ddffed8c78cf2029211edca573f0859f73c6",
+        "research/experiments/20261101T054946Z/results/bankmix370_parent_B15000_H250.json.gz": "aa5dc9cfdd490e5ff01013fe000cd4aa121df065fc8b0ece67c921db6ef47bd0",
+        "research/experiments/20261101T054946Z/results/bankmix370_parent_B10000_H200.json.gz": "2e8c1f65631e6817c11249909bd2539d60877070a0e5e59f30e7dd539618533e",
+        "research/experiments/20261101T054946Z/results/bankmix370_parent_B15000_H200.json.gz": "bfae0d743c296007a4b7b0ece366b10a84efdd922890557173b619dbb875f4cc",
+        "research/experiments/20261101T054946Z/results/bankmix370_parent_B15000_H300.json.gz": "91afa8b95c7897fa528715fd75ef52177ef31a35007cd392ffcfa3b0c37f6da3",
+        "research/experiments/20261101T054946Z/results/bankmix370_parent_B10000_H250.json.gz": "63d220630feb7bd9e01da66290f9544e845439c1bb53083573d04ef1f926a72a",
+        "research/experiments/20261101T054946Z/results/bankmix370_parent_B10000_H300.json.gz": "6c067dd4ab8c273db6be060009252a5b8a8898ed5fc4bb2e49b80d610fd3398f"
+      },
+      "completed_financial_backtest_reruns": 0
+    },
+    {
+      "command": [
+        "python3",
+        "/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-01T06:29:16.194408Z",
+      "finished_utc": "2026-11-01T06:29:36.549284Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261101T054946Z/monitor_check.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 115, in <module>\n    main()\n    ~~~~^^\n  File \"/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py\", line 108, in main\n    assert len(config_gzip) < 4_000_000, \"compressed monitor configs exceed size limit\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: compressed monitor configs exceed size limit\n",
+      "previous_valid_monitor_restored": true
+    }
+  ],
+  "prior_audit_schema_compatibility_preserved": "Read-only current auditor derives native banks from each unchanged frozenplan; no old model/binding edits.",
+  "pre_reservation_failed_commands": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261101T054946Z/freeze.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-01T06:01:11.177690+00:00",
+      "finished_utc": "2026-11-01T06:01:12.918038+00:00",
+      "exit_code": 1,
+      "log": "research/experiments/20261101T054946Z/freeze.log",
+      "financial_calculations_at_freeze": 0
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261101T054946Z/freeze_recovered.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-01T06:03:43.428743+00:00",
+      "finished_utc": "2026-11-01T06:03:45.905246+00:00",
+      "exit_code": 1,
+      "log": "research/experiments/20261101T054946Z/freeze_recovered.log",
+      "financial_calculations_at_freeze": 0
+    }
+  ],
+  "report_source_generation_failure": {
+    "recorded_utc": "2026-11-01T06:11:19.812561+00:00",
+    "actual_failed_exit_chunk": "8b6116",
+    "actual_failed_exit_code": 1,
+    "scope": "Report-renderer source generator only; AST validation caught newline in quoted figuretitle before any summarize.py file write. No ledger/model/account computation affected.",
+    "error": "SyntaxError: unterminated string literal in fig.suptitle source generator",
+    "recovery": "Write literal source with quoted heredoc; AST validate before report generation.",
+    "financial_evaluations_before_recovery": 0
+  },
+  "readonly_audit_repair": {
+    "recorded_utc": "2026-11-01T06:18:49.881121+00:00",
+    "actual_failed_exit_chunk": "93da24",
+    "actual_failed_exit_code": 1,
+    "root_cause": "Readonly source-report SHA guard used ROOT[path] instead of ROOT/path in two locations. Thirty native ledger/quantity checks had completed before the bookkeeping TypeError; parent calculations/reports were already complete and preserved.",
+    "original_bound_source": "research/experiments/20261101T054946Z/audit.py",
+    "recovery_source": "research/experiments/20261101T054946Z/audit_recovered.py",
+    "change_only_path_operator": true,
+    "saved_actual_model_evidence_sha256": {
+      "research/experiments/20261101T054946Z/report.json": "8c78d7a98f1fa5091bd51714d4f7ddffed8c78cf2029211edca573f0859f73c6",
+      "research/experiments/20261101T054946Z/results/bankmix370_parent_B15000_H250.json.gz": "aa5dc9cfdd490e5ff01013fe000cd4aa121df065fc8b0ece67c921db6ef47bd0",
+      "research/experiments/20261101T054946Z/results/bankmix370_parent_B10000_H200.json.gz": "2e8c1f65631e6817c11249909bd2539d60877070a0e5e59f30e7dd539618533e",
+      "research/experiments/20261101T054946Z/results/bankmix370_parent_B15000_H200.json.gz": "bfae0d743c296007a4b7b0ece366b10a84efdd922890557173b619dbb875f4cc",
+      "research/experiments/20261101T054946Z/results/bankmix370_parent_B15000_H300.json.gz": "91afa8b95c7897fa528715fd75ef52177ef31a35007cd392ffcfa3b0c37f6da3",
+      "research/experiments/20261101T054946Z/results/bankmix370_parent_B10000_H250.json.gz": "63d220630feb7bd9e01da66290f9544e845439c1bb53083573d04ef1f926a72a",
+      "research/experiments/20261101T054946Z/results/bankmix370_parent_B10000_H300.json.gz": "6c067dd4ab8c273db6be060009252a5b8a8898ed5fc4bb2e49b80d610fd3398f"
+    },
+    "completed_financial_backtest_reruns": 0
+  },
+  "monitor_budget_repair": {
+    "recorded_utc": "2026-11-01T06:31:20.228402+00:00",
+    "actual_failed_exit_chunk": "d1b36d",
+    "original_size_gate_failed": true,
+    "original_failed_compressed_bytes": 4002609,
+    "old_budget_bytes": 4000000,
+    "new_budget_bytes": 5000000,
+    "previous_valid_outputs_restored_before_repair": true,
+    "restored_valid_outputs": {
+      "research/monitor/latest.json": {
+        "sha256": "2f4465d42e2c3035cee4e2cc6b8d3fe3f34638c4340e7c1abc5df4697eb66d04",
+        "bytes": 415232
+      },
+      "research/monitor/configs.json.gz": {
+        "sha256": "8bf63c356a81ddb5b809d81a784f8a13bb682e6700fdf0e00be801968484a0b5",
+        "bytes": 3999152
+      }
+    },
+    "base_commit": "f10fb9cb53730aa901c99b4e5cdfc6696b2cab6b",
+    "original_source_sha256": {
+      "checks/monitor_snapshot.py": "2faec644f606e3e2a76ed7aa300621d4881b63cc7f418b4bd9fe0ad143dc1349",
+      "research/monitor/README.md": "2958016a1cbf6487670161d4b0d5409d43d0d2b74946606b64190c74b212e914"
+    },
+    "original_source_copies": {
+      "checks/monitor_snapshot.py": {
+        "path": "research/experiments/20261101T054946Z/monitor_budget_before/monitor_snapshot.py.txt",
+        "sha256": "2faec644f606e3e2a76ed7aa300621d4881b63cc7f418b4bd9fe0ad143dc1349"
+      },
+      "research/monitor/README.md": {
+        "path": "research/experiments/20261101T054946Z/monitor_budget_before/README.md",
+        "sha256": "2958016a1cbf6487670161d4b0d5409d43d0d2b74946606b64190c74b212e914"
+      }
+    },
+    "changed_paths": [
+      "checks/monitor_snapshot.py",
+      "research/monitor/README.md"
+    ],
+    "new_source_sha256": {
+      "checks/monitor_snapshot.py": "ba0699c72ae0e4bdf6d16cdf5f45f99ff5f0df1ebfc2be58b3b46cb879a22030",
+      "research/monitor/README.md": "65c5a9585b50e3fcd0eb876e0a31123f2fe639edc8572efc3714a162f538d2e6"
+    },
+    "browser_reader_sha256": "26b4af7b7839f4dbd5deb1945225b38523e00a5cda53168a62eb31369c3c2922",
+    "existing_browser_native_gzip_SHA_rowcount_no4MB_limit_verified": true,
+    "no_frontend_deploy_needed": true,
+    "old_rows_expected_unchanged": 8876,
+    "new_rows_expected": 6,
+    "trading_registry_rules_principal_positions_modified": false,
+    "scope": "One nonfinancial size-budget constant plus chronology/currentbudget documentation only. Original source copies and real failure retained; old financial source/results unchanged."
+  },
+  "diagnostic_label_notes": {
+    "independent_qualification_stdout_label": "The saved checker success sentence contains stale and2actualcontrolresults wording; its actual proof dictionary has exactly6candidate entries, plan/newbenchmarkcount0,3benchmarkparents readonly. Source/log preserved rather than rewritten.",
+    "actual_new_controls": 0,
+    "actual_readonly_matched_hold_parents": 3,
+    "numeric_results_qualifications_unchanged": true
+  }
+}
