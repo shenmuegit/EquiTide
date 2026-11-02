@@ -1,0 +1,23 @@
+asym370_ETH_L3_HL150bp_HS200_E025_V10 [12.511814195573479, 10.492485104018812, 8.472322541964129]
+asym370_ETH_L3_HL150bp_HS300_E025_V10 [11.707732787290226, 9.881138204802209, 8.053679332414188]
+asym370_ETH_L4_HL150bp_HS200_E025_V10 [13.183130256972863, 11.234693225280722, 9.285773002421905]
+asym370_ETH_L4_HL150bp_HS300_E025_V10 [12.796014712502068, 11.140487730407877, 9.484215719680368]
+asym370_ETH_L5_HL150bp_HS200_E025_V10 [16.946518835746495, 14.900473717190366, 12.855644067534255]
+asym370_ETH_L5_HL150bp_HS300_E025_V10 [16.94293079630387, 15.048539744980083, 13.15533524332293]
+asym370_parent_L3_HL150bp_HS200 [10.644330158992844, 8.936609400366958, 7.22822473547442]
+asym370_parent_L3_HL150bp_HS300 [10.001065032366242, 8.447531880993697, 6.893310167834477]
+asym370_parent_L4_HL150bp_HS200 [11.181383008112356, 9.530375897376487, 7.878985103840641]
+asym370_parent_L4_HL150bp_HS300 [10.87169057253572, 9.455011501478229, 8.037739277647415]
+asym370_parent_L5_HL150bp_HS200 [14.19209387113125, 12.463000290904214, 10.73488195593053]
+asym370_parent_L5_HL150bp_HS300 [14.189223439577159, 12.581453113135987, 10.974634896561476]
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261102T095853Z/run.py", line 41, in <module>
+    if __name__=='__main__':globals()[argparse.ArgumentParser().parse_known_args()[1][0]]()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261102T095853Z/run.py", line 33, in evaluate
+    c=copy.deepcopy(full[g['fingerprint']]);c.update(L=g['L'],HL=g['HS'],H=g['H'],readonly=g['readonly'],scope=scope,role='candidate' if scope=='parent' else 'component',BTC_capital_usdt=3750);ns=neighborhood(c,p,full);c['current_grid_diagnostic_sensitivity']={'scope':'CurrentL/HSdiagnostics only,oldcanonicalstatus/criteria/sensitivityunchanged','neighbor_names':[x['name'] for x in ns],'neighbor_count':len(ns),'local_positive3_fraction':sum(x['scenes']['3']['net_return_pct']>0 for x in ns)/len(ns),'local_strict_recent_fraction':sum(recent_ok(x) for x in ns)/len(ns)};(current if scope=='parent' else native_current)[g['fingerprint']]=c
+                                                                                                                                                                                                    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261102T095853Z/run.py", line 11, in neighborhood
+    return [full[g['fingerprint']] for g in grid if abs(p['lookbacks'].index(g['L'])-p['lookbacks'].index(c['L']))<=1 and abs(p['short_hurdles'].index(g['HS'])-p['short_hurdles'].index(c['HS']))<=1]
+                                                                                                                                                                                         ~^^^^^^
+KeyError: 'HS'

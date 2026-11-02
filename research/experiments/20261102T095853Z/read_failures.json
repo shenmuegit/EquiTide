@@ -1,0 +1,31 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261102T095853Z/run.py",
+        "evaluate"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-02T10:08:41.264311Z",
+      "finished_utc": "2026-11-02T10:08:50.761135Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261102T095853Z/evaluate.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261102T095853Z/run.py\", line 41, in <module>\n    if __name__=='__main__':globals()[argparse.ArgumentParser().parse_known_args()[1][0]]()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261102T095853Z/run.py\", line 33, in evaluate\n    c=copy.deepcopy(full[g['fingerprint']]);c.update(L=g['L'],HL=g['HS'],H=g['H'],readonly=g['readonly'],scope=scope,role='candidate' if scope=='parent' else 'component',BTC_capital_usdt=3750);ns=neighborhood(c,p,full);c['current_grid_diagnostic_sensitivity']={'scope':'CurrentL/HSdiagnostics only,oldcanonicalstatus/criteria/sensitivityunchanged','neighbor_names':[x['name'] for x in ns],'neighbor_count':len(ns),'local_positive3_fraction':sum(x['scenes']['3']['net_return_pct']>0 for x in ns)/len(ns),'local_strict_recent_fraction':sum(recent_ok(x) for x in ns)/len(ns)};(current if scope=='parent' else native_current)[g['fingerprint']]=c\n                                                                                                                                                                                                    ^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261102T095853Z/run.py\", line 11, in neighborhood\n    return [full[g['fingerprint']] for g in grid if abs(p['lookbacks'].index(g['L'])-p['lookbacks'].index(c['L']))<=1 and abs(p['short_hurdles'].index(g['HS'])-p['short_hurdles'].index(c['HS']))<=1]\n                                                                                                                                                                                         ~^^^^^^\nKeyError: 'HS'\n",
+      "previous_valid_monitor_restored": false
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261102T095853Z/count_evidence.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-02T10:14:14.442410Z",
+      "finished_utc": "2026-11-02T10:14:15.144069Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261102T095853Z/evidence_counts.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261102T095853Z/count_evidence.py\", line 15, in <module>\n    v=json.loads((R/'verification.json').read_text());assert sum(x['funding_records'] for x in out.values())==v['counts']['funding'] and sum(x['filled_trade_records'] for x in out.values())==v['counts']['fills'] and out['new_native']['new_policy_decisions']==6660\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261102T095853Z/verification.json'\n",
+      "previous_valid_monitor_restored": false
+    }
+  ]
+}
