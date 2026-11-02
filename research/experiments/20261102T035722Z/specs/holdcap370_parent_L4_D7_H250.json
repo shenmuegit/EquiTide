@@ -1,0 +1,77 @@
+{
+  "kind": "combination",
+  "family": "native-gated-reversal-with-maximum-holding-duration",
+  "name": "holdcap370_parent_L4_D7_H250",
+  "market": "perpetual",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "components": [
+    {
+      "fingerprint": "1b3961bb44f291cf89ae1955b8aa0c0da92356c67aa66f144b75d237cfdde659",
+      "weight": 1
+    },
+    {
+      "fingerprint": "c18b690c93dc0166e17e3f99b179ac1d41d4f9e604b1a1c69cbee1cb260e82e3",
+      "weight": 1
+    }
+  ],
+  "logic": {
+    "signal": "BTC unchangedROC31/H.04/E.01, readonly actual3750/N375. ETH fastROC=C[i-1]/C[i-1-L]-1,L3/4/5,H.025,E+.0025 basedonactualposition,equalityexits; absoluteS28directionalwaysgates; currentV10samplelogvol>.045 filtersfreshentry/flip only. Then actual open ETH position age at daily00:01 is current decisionday minus latest successfully filled openingday. If age>=max_holding_days D3/7, desired=0 regardless normal target: close and remainflat for that same daily decision, including suppressing otherwise opposite entry. Following daily decision may reenter normally. Earlier original exit/flip unchanged. Position age spans WF folds, resets only on filled close/open, not rejected orders. OFF=None bypasses expiry and uses old exact actualresults. Real futurefunding/fees remain booked while actually held; no new funding signal or slowstrength floor.",
+    "allocation": "BTCactual3750bank/N375 andETHactual15000bank/N4500,rawchildweights[1,1]unchanged,total18750,capitalshares20/80percent. Onebankperasset,no sameassetclones,NAVresize,cashtransfer,crossmargin orrenormalization. ParentNAVdollarsum,notweightedagainbycapitalshare.",
+    "execution": "Priorclosedfullbars only,q=floor(fixedN/priorcompleteclose/LOT)*LOT,nextUTC00:01nativeOPENadversetick,reverseclosebeforeopen,retainsameactualq. Continuous370d,terminalcostedclose,no foldresets. Parentsownactualbankswithoutparentrebalance/fills.",
+    "costs": "5bpfee+1bphalfspread+2bpslippage+0.5*past20samplelogvol*sqrt(actualq*OPEN/past20completequoteADV),1/2/3xstress. Realfundingsettlementns/mark/rate/heldq,outflowsstressed,inflowsunchanged. LOT/tick/minnotional,participation<=.001,postfee1xentrycap,independent1percentclosedhouradversemarkmaintenanceproxy. Linearperpetualshortno spotborrow;noinventedborrowfee,TCA/L2,historicalmaxqty/tier,tickliquidation orcapacityproof.",
+    "validation": "FixedL/holdingD axes predeclared, no fit/labels,purge0,warmup30/embargo3,continuous370days12x30+10tail,recent40/8x5day. Reused development history, not untouchedfinaltest or independentfuture.",
+    "benchmark": "Readonlyexisting3750BTC+15000ETHconstantlongmatchedinitialbudgets375/4500,notfullinvestedorequalriskhold;cash0percentseparate."
+  },
+  "parameters": {
+    "initial_capital_usdt": 18750,
+    "component_capitals_usdt": [
+      3750,
+      15000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      375,
+      4500
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "capital_allocation_fractions": [
+      0.2,
+      0.8
+    ],
+    "BTC_bank_capital_usdt": 3750,
+    "BTC_entry_notional_usdt": 375,
+    "ETH_lookback_days": 4,
+    "ETH_return_hurdle": 0.025,
+    "ETH_exit_buffer_fraction": 0.0025,
+    "ETH_trend_lookback_days": 28,
+    "ETH_max_holding_days": 7,
+    "ETH_holding_expiry_action": "close_and_remain_flat_for_that_daily_decision",
+    "ETH_entry_volatility_window_days": 10,
+    "ETH_entry_volatility_ceiling": 0.045,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "continuous_oos_days": 370,
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "actual_native_quantity_and_impact_reused": true,
+    "source_component_spec_sha256": [
+      "f616168528fe88429846f4ba71caadebbaaf6ae70be54dd225a66c48e405b409",
+      "6a0e92a67f43a178e306faa94f78f8c2a7f081a07aadf4eabeaf9a3fd8d3ef96"
+    ]
+  },
+  "validation_plan": "research/experiments/20261102T035722Z/plan.json"
+}
