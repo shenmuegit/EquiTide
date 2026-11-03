@@ -1,0 +1,77 @@
+{
+  "kind": "combination",
+  "family": "native-bank-capitalmix-with-eth-exitbuffer",
+  "name": "entrysize370_parent_L0_BTCN625_constantlong",
+  "market": "perpetual",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "components": [
+    {
+      "fingerprint": "c0306129b1a21da64d2cc071a0d3a90f59b951ad95f66e85cf52e6db8fc0db72",
+      "weight": 1
+    },
+    {
+      "fingerprint": "fd96b9d8250328e033aa2b40460ef01a2d7cc57a22a12ad0f5abf111ade3323e",
+      "weight": 1
+    }
+  ],
+  "logic": {
+    "allocation": "Actual BTC3750bank/fixedN625 and ETH15000bank/fixedN4500,rawweights[1,1],total18750USDT,capitalshares20/80percent. Full actual bank NAV sum without multiplying again by capital share; no transfers,netting,clones,parent orders,rebalance or oldNAV resizing.",
+    "policy": "BTCoriginalROC31/H4/E1. ETHfixedL4/S28,EabsoluteROC.0025,V10samplelogvolcap.045 freshentryonly; strictfast>Hshort,fast<-Hlong, retainactuallongonlyr<E/shortonlyr>-E, equalityexits;slowgatealwaysapplies. H2/2.5/3percent. Constantlongmatched-notionalholdcontrols use their exactnativebanks independently.",
+    "execution": "No newcomponent orders or parentrebalance. Parentowns two existing fullyfunded nativeaccounts at raw1/1 from commonstart to terminalcostedclose. Nativeq=floor(N/priorclosedclose/LOT)*LOT,next00:01OPEN adverse tick,retainedq,no freecashtransfer,NAVresize,crossmargin orborrow.",
+    "costs": "Native5bpfee+1bphalfspread+2bpslip+0.5*past20logvol*sqrt(actualq*OPEN/past20quoteADV),1/2/3x stress. Actualsettledfundingns/rate/mark/heldq,outflowsstressed,inflowsunchanged. NativeLOT/tick/minnotional,participation<=.001,postfee1xentrycap,independent1percentclosedhourmaintenanceproxy. No new TCA/L2/tickliquidation/capacity proof.",
+    "time": "Continuous370days12complete30dfolds+10tail,recent40inheritsday330,8x5dfolds,no resets. Reusedhistoricaldevelopment; grid fixed before currentoutcomes, no untouchedfinaltest or independentforwardqualification.",
+    "benchmark": "Matchedcapital and matchedinitialentrybudgets constantlong banks,not fullyinvestedbuyhold or equalrisk. Compare eachcandidate with sameCBTC hold plus cash0percent.",
+    "validation": "Predeclare BTC fixed-entry N500/625/750 USDT x ETH fastL3/4/5, all banks3750/15000 fixed. N500 actual old sources readonly; new BTC N625/750 independently simulate native LOT/impact/funding/collateral, not scaled old NAV. ETH unchanged actual paths readonly. No fitting or labels,purge0,warmup30+embargo3,continuous370days12x30+10tail,recent40/8x5. Reused development history,not independent final/future;no outcome-driven extensions."
+  },
+  "parameters": {
+    "initial_capital_usdt": 18750,
+    "component_capitals_usdt": [
+      3750,
+      15000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      625,
+      4500
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "capital_allocation_fractions": [
+      0.2,
+      0.8
+    ],
+    "BTC_bank_capital_usdt": 3750,
+    "BTC_entry_notional_usdt": 625,
+    "ETH_lookback_days": 0,
+    "ETH_return_hurdle": 0,
+    "ETH_exit_buffer_fraction": 0,
+    "ETH_trend_lookback_days": 0,
+    "ETH_entry_volatility_window_days": 0,
+    "ETH_entry_volatility_ceiling": null,
+    "control_policy": "constant_long_matched_entry_budget",
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "continuous_oos_days": 370,
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "actual_native_quantity_and_impact_reused": true,
+    "source_component_spec_sha256": [
+      "4116d61b3ef28c844cf8a5d552e478b8801e82d13abd3c32b30389a40d084459",
+      "c8671c77caa632b38ce7e0f0c8ce636f4fd0a35c55ce2638535ff0a8fdf56d7f"
+    ]
+  },
+  "validation_plan": "research/experiments/20261103T060403Z/plan.json"
+}
