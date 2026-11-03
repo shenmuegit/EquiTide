@@ -1,0 +1,547 @@
+{
+  "passed": true,
+  "old_actual_unique_results": 10,
+  "old_SMA32_L4_controls_outside_new_LH_grid": [
+    "2bae769dc3761e98087a62a05214379c0c1f1e5e1be55905d1579991f772e2c9",
+    "f2e804defcd9f4d53167ddce357a7cfc0e028355b2ac34ded223c535104b7d12",
+    "d0bd9f098acc12e3ccd888377e5c3d3a0e2dbdc9341ead0a8104cfe0324dd7cf"
+  ],
+  "primary_same_SMA32_E005": "f2e804defcd9f4d53167ddce357a7cfc0e028355b2ac34ded223c535104b7d12",
+  "rows": [
+    {
+      "fingerprint": "78a87d29f0990695de56ac8398c799a4017bd6a752800027b689083eee9823ca",
+      "scope": "native",
+      "unchanged_status": "rejected",
+      "spec_sha256": "8f9788b8e6cf7d4165212af8e997622c693dfb5b4c83f9648fd0d9dbdea30b47",
+      "parameters": {
+        "initial_capital_usdt": 3750.0,
+        "raw_entry_notional_fraction_of_initial_capital": 0.2,
+        "fixed_entry_notional_usdt": 750,
+        "lookback_days": 31,
+        "return_hurdle": 0.04,
+        "start_utc": "2025-10-19T00:01:00Z",
+        "end_utc": "2026-10-24T00:01:00Z",
+        "warmup_days": 30,
+        "embargo_days": 3,
+        "walk_forward_folds": 13,
+        "walk_forward_test_days": 30,
+        "maintenance_margin_proxy": 0.01,
+        "initial_notional_cap_to_collateral": 1,
+        "costs": {
+          "per_side_commission": 0.0005,
+          "half_spread": 0.0001,
+          "slippage": 0.0002,
+          "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+          "participation_max": 0.001,
+          "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+          "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+          "cost_multipliers": [
+            1,
+            2,
+            3
+          ],
+          "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+          "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+        },
+        "input_hashes": {
+          "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "97be656cf441024101417476f8338f4d739879d3ee39bfbf2a89cf1a287b726c",
+          "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "80cd98d12fd73cb8bfcc7a4d4af65d737347c9d9b53d82ae1698a1aa15bd71ce",
+          "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "b27e8f9a078a50a9d34c034870790321e43b5d7dff74f2c2a7d0b69f3c276006",
+          "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99"
+        },
+        "persistence": "Keep actual long while ROC>-E or short while ROC<E inside entrybands;strict entrybands have priority,unchanged quantity.",
+        "exit_buffer_fraction": 0.01,
+        "complete_30day_folds": 12,
+        "tail_fold_days": 10,
+        "positive_complete30d_folds_required": 9
+      }
+    },
+    {
+      "fingerprint": "ad5bf4178db51dfe707168457593c60c6577d52cebdcc570cb7f86a9d9ac609e",
+      "scope": "parent",
+      "unchanged_status": "rejected",
+      "spec_sha256": "c18384884892210155ed9dfd3d8d796421939f4e21efbc7ba00accbc8aeaa18b",
+      "parameters": {
+        "initial_capital_usdt": 18750,
+        "component_capitals_usdt": [
+          3750,
+          15000
+        ],
+        "component_initial_entry_notionals_usdt": [
+          750,
+          4500
+        ],
+        "raw_component_multipliers": [
+          1,
+          1
+        ],
+        "capital_allocation_fractions": [
+          0.2,
+          0.8
+        ],
+        "BTC_bank_capital_usdt": 3750,
+        "BTC_entry_notional_usdt": 750,
+        "ETH_lookback_days": 0,
+        "ETH_return_hurdle": 0,
+        "ETH_exit_buffer_fraction": 0,
+        "ETH_trend_lookback_days": 0,
+        "ETH_entry_volatility_window_days": 0,
+        "ETH_entry_volatility_ceiling": null,
+        "control_policy": "constant_long_matched_entry_budget",
+        "start_utc": "2025-10-19T00:01:00Z",
+        "end_utc": "2026-10-24T00:01:00Z",
+        "walk_forward_folds": 13,
+        "walk_forward_complete30day_folds": 12,
+        "walk_forward_tail_days": 10,
+        "continuous_oos_days": 370,
+        "warmup_days": 30,
+        "embargo_days": 3,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "actual_native_quantity_and_impact_reused": true,
+        "source_component_spec_sha256": [
+          "3d4132421d1b0dda6b5f79cd4233aec995be4712ceebed53ade429829a190ff6",
+          "c8671c77caa632b38ce7e0f0c8ce636f4fd0a35c55ce2638535ff0a8fdf56d7f"
+        ]
+      }
+    },
+    {
+      "fingerprint": "66d8e59b4c6fd7279161617999228b44762aa2a90af3d5923fab300e8cc18a94",
+      "scope": "native",
+      "unchanged_status": "rejected",
+      "spec_sha256": "3d4132421d1b0dda6b5f79cd4233aec995be4712ceebed53ade429829a190ff6",
+      "parameters": {
+        "initial_capital_usdt": 3750.0,
+        "raw_entry_notional_fraction_of_initial_capital": 0.2,
+        "fixed_entry_notional_usdt": 750,
+        "start_utc": "2025-10-19T00:01:00Z",
+        "end_utc": "2026-10-24T00:01:00Z",
+        "warmup_days": 30,
+        "embargo_days": 3,
+        "walk_forward_folds": 13,
+        "walk_forward_test_days": 30,
+        "maintenance_margin_proxy": 0.01,
+        "initial_notional_cap_to_collateral": 1,
+        "costs": {
+          "per_side_commission": 0.0005,
+          "half_spread": 0.0001,
+          "slippage": 0.0002,
+          "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+          "participation_max": 0.001,
+          "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+          "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+          "cost_multipliers": [
+            1,
+            2,
+            3
+          ],
+          "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+          "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+        },
+        "input_hashes": {
+          "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "97be656cf441024101417476f8338f4d739879d3ee39bfbf2a89cf1a287b726c",
+          "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "80cd98d12fd73cb8bfcc7a4d4af65d737347c9d9b53d82ae1698a1aa15bd71ce",
+          "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "b27e8f9a078a50a9d34c034870790321e43b5d7dff74f2c2a7d0b69f3c276006",
+          "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99"
+        },
+        "signal_mode": "constant_long_reference",
+        "complete_30day_folds": 12,
+        "tail_fold_days": 10,
+        "positive_complete30d_folds_required": 9,
+        "lookback_days": 0,
+        "return_hurdle": 0,
+        "exit_buffer_fraction": 0
+      }
+    },
+    {
+      "fingerprint": "fd96b9d8250328e033aa2b40460ef01a2d7cc57a22a12ad0f5abf111ade3323e",
+      "scope": "native",
+      "unchanged_status": "rejected",
+      "spec_sha256": "c8671c77caa632b38ce7e0f0c8ce636f4fd0a35c55ce2638535ff0a8fdf56d7f",
+      "parameters": {
+        "initial_capital_usdt": 15000.0,
+        "raw_entry_notional_fraction_of_initial_capital": 0.3,
+        "fixed_entry_notional_usdt": 4500.0,
+        "start_utc": "2025-10-19T00:01:00Z",
+        "end_utc": "2026-10-24T00:01:00Z",
+        "warmup_days": 30,
+        "embargo_days": 3,
+        "walk_forward_folds": 13,
+        "walk_forward_test_days": 30,
+        "maintenance_margin_proxy": 0.01,
+        "initial_notional_cap_to_collateral": 1,
+        "costs": {
+          "per_side_commission": 0.0005,
+          "half_spread": 0.0001,
+          "slippage": 0.0002,
+          "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+          "participation_max": 0.001,
+          "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+          "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+          "cost_multipliers": [
+            1,
+            2,
+            3
+          ],
+          "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+          "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+        },
+        "input_hashes": {
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6"
+        },
+        "signal_mode": "constant_long_reference",
+        "complete_30day_folds": 12,
+        "tail_fold_days": 10,
+        "positive_complete30d_folds_required": 9,
+        "lookback_days": 0,
+        "return_hurdle": 0,
+        "exit_buffer_fraction": 0,
+        "trend_gate_mode": null,
+        "trend_lookback_days": 28,
+        "trend_gate_application": "none"
+      }
+    },
+    {
+      "fingerprint": "2bae769dc3761e98087a62a05214379c0c1f1e5e1be55905d1579991f772e2c9",
+      "scope": "parent",
+      "unchanged_status": "rejected",
+      "spec_sha256": "8a4cb72199e4e2b03de1bbd1a34854cd6320f770ef617c60dfa18eae1727dd5d",
+      "parameters": {
+        "initial_capital_usdt": 18750,
+        "component_capitals_usdt": [
+          3750,
+          15000
+        ],
+        "component_initial_entry_notionals_usdt": [
+          750,
+          4500
+        ],
+        "raw_component_multipliers": [
+          1,
+          1
+        ],
+        "capital_allocation_fractions": [
+          0.2,
+          0.8
+        ],
+        "BTC_bank_capital_usdt": 3750,
+        "BTC_entry_notional_usdt": 750,
+        "ETH_lookback_days": 4,
+        "ETH_return_hurdle": 0.02,
+        "ETH_exit_buffer_fraction": 0.00375,
+        "ETH_trend_lookback_days": 32,
+        "ETH_long_entry_return_hurdle": 0.02,
+        "ETH_short_entry_return_hurdle": 0.02,
+        "ETH_entry_volatility_window_days": 10,
+        "ETH_entry_volatility_ceiling": 0.045,
+        "start_utc": "2025-10-19T00:01:00Z",
+        "end_utc": "2026-10-24T00:01:00Z",
+        "walk_forward_folds": 13,
+        "walk_forward_complete30day_folds": 12,
+        "walk_forward_tail_days": 10,
+        "continuous_oos_days": 370,
+        "warmup_days": 30,
+        "embargo_days": 3,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "actual_native_quantity_and_impact_reused": true,
+        "source_component_spec_sha256": [
+          "8f9788b8e6cf7d4165212af8e997622c693dfb5b4c83f9648fd0d9dbdea30b47",
+          "aea6e82e523e990ddaf876087adcbab01834f57aa25e4653b6c196aae2149492"
+        ],
+        "ETH_trend_estimator": "simple_moving_average_level",
+        "ETH_trend_mean_includes_latest_complete_close": true,
+        "ETH_signal_mode": "SMAlevel_gated_reversal_entry_vol"
+      }
+    },
+    {
+      "fingerprint": "16b0c1c2ac394bc8649eee646f3614e497e9f4f0ec3b112111e3617422ed5ae3",
+      "scope": "native",
+      "unchanged_status": "rejected",
+      "spec_sha256": "aea6e82e523e990ddaf876087adcbab01834f57aa25e4653b6c196aae2149492",
+      "parameters": {
+        "initial_capital_usdt": 15000,
+        "raw_entry_notional_fraction_of_initial_capital": 0.3,
+        "fixed_entry_notional_usdt": 4500,
+        "lookback_days": 4,
+        "return_hurdle": 0.02,
+        "start_utc": "2025-10-19T00:01:00Z",
+        "end_utc": "2026-10-24T00:01:00Z",
+        "warmup_days": 30,
+        "embargo_days": 3,
+        "walk_forward_folds": 13,
+        "walk_forward_test_days": 30,
+        "maintenance_margin_proxy": 0.01,
+        "initial_notional_cap_to_collateral": 1,
+        "costs": {
+          "per_side_commission": 0.0005,
+          "half_spread": 0.0001,
+          "slippage": 0.0002,
+          "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+          "participation_max": 0.001,
+          "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+          "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+          "cost_multipliers": [
+            1,
+            2,
+            3
+          ],
+          "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+          "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+        },
+        "input_hashes": {
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6"
+        },
+        "persistence": "Executedposition only;strict contrarianentry +/-2%;holdlong r<E and short r>-E;SMA gate must match direction;flat reentry requires threshold and entryvolfilter,not hiddenstate.",
+        "exit_buffer_fraction": 0.00375,
+        "complete_30day_folds": 12,
+        "tail_fold_days": 10,
+        "positive_complete30d_folds_required": 9,
+        "signal_mode": "SMAlevel_gated_reversal_entry_vol",
+        "trend_lookback_days": 32,
+        "entry_volatility_window_days": 10,
+        "entry_volatility_ceiling": 0.045,
+        "long_entry_return_hurdle": 0.02,
+        "short_entry_return_hurdle": 0.02,
+        "trend_estimator": "simple_moving_average_level",
+        "trend_mean_includes_latest_complete_close": true
+      }
+    },
+    {
+      "fingerprint": "f2e804defcd9f4d53167ddce357a7cfc0e028355b2ac34ded223c535104b7d12",
+      "scope": "parent",
+      "unchanged_status": "rejected",
+      "spec_sha256": "25d8629e85afa6f5723c34e8a6c70a297987de3bcc019655e4548964336eb9f5",
+      "parameters": {
+        "initial_capital_usdt": 18750,
+        "component_capitals_usdt": [
+          3750,
+          15000
+        ],
+        "component_initial_entry_notionals_usdt": [
+          750,
+          4500
+        ],
+        "raw_component_multipliers": [
+          1,
+          1
+        ],
+        "capital_allocation_fractions": [
+          0.2,
+          0.8
+        ],
+        "BTC_bank_capital_usdt": 3750,
+        "BTC_entry_notional_usdt": 750,
+        "ETH_lookback_days": 4,
+        "ETH_return_hurdle": 0.02,
+        "ETH_exit_buffer_fraction": 0.005,
+        "ETH_trend_lookback_days": 32,
+        "ETH_long_entry_return_hurdle": 0.02,
+        "ETH_short_entry_return_hurdle": 0.02,
+        "ETH_entry_volatility_window_days": 10,
+        "ETH_entry_volatility_ceiling": 0.045,
+        "start_utc": "2025-10-19T00:01:00Z",
+        "end_utc": "2026-10-24T00:01:00Z",
+        "walk_forward_folds": 13,
+        "walk_forward_complete30day_folds": 12,
+        "walk_forward_tail_days": 10,
+        "continuous_oos_days": 370,
+        "warmup_days": 30,
+        "embargo_days": 3,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "actual_native_quantity_and_impact_reused": true,
+        "source_component_spec_sha256": [
+          "8f9788b8e6cf7d4165212af8e997622c693dfb5b4c83f9648fd0d9dbdea30b47",
+          "c64b628c6206cf45ef000f71089a8c50a31ced8f26ad20eb4e8bf25cb2c87e1d"
+        ],
+        "ETH_trend_estimator": "simple_moving_average_level",
+        "ETH_trend_mean_includes_latest_complete_close": true,
+        "ETH_signal_mode": "SMAlevel_gated_reversal_entry_vol"
+      }
+    },
+    {
+      "fingerprint": "e6ea39ffe5c20edb4cd206df98d8c0645453ff36d5f6a223fbc646044bcdc56d",
+      "scope": "native",
+      "unchanged_status": "rejected",
+      "spec_sha256": "c64b628c6206cf45ef000f71089a8c50a31ced8f26ad20eb4e8bf25cb2c87e1d",
+      "parameters": {
+        "initial_capital_usdt": 15000,
+        "raw_entry_notional_fraction_of_initial_capital": 0.3,
+        "fixed_entry_notional_usdt": 4500,
+        "lookback_days": 4,
+        "return_hurdle": 0.02,
+        "start_utc": "2025-10-19T00:01:00Z",
+        "end_utc": "2026-10-24T00:01:00Z",
+        "warmup_days": 30,
+        "embargo_days": 3,
+        "walk_forward_folds": 13,
+        "walk_forward_test_days": 30,
+        "maintenance_margin_proxy": 0.01,
+        "initial_notional_cap_to_collateral": 1,
+        "costs": {
+          "per_side_commission": 0.0005,
+          "half_spread": 0.0001,
+          "slippage": 0.0002,
+          "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+          "participation_max": 0.001,
+          "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+          "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+          "cost_multipliers": [
+            1,
+            2,
+            3
+          ],
+          "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+          "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+        },
+        "input_hashes": {
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6"
+        },
+        "persistence": "Executedposition only;strict contrarianentry +/-2%;holdlong r<E and short r>-E;SMA gate must match direction;flat reentry requires threshold and entryvolfilter,not hiddenstate.",
+        "exit_buffer_fraction": 0.005,
+        "complete_30day_folds": 12,
+        "tail_fold_days": 10,
+        "positive_complete30d_folds_required": 9,
+        "signal_mode": "SMAlevel_gated_reversal_entry_vol",
+        "trend_lookback_days": 32,
+        "entry_volatility_window_days": 10,
+        "entry_volatility_ceiling": 0.045,
+        "long_entry_return_hurdle": 0.02,
+        "short_entry_return_hurdle": 0.02,
+        "trend_estimator": "simple_moving_average_level",
+        "trend_mean_includes_latest_complete_close": true
+      }
+    },
+    {
+      "fingerprint": "d0bd9f098acc12e3ccd888377e5c3d3a0e2dbdc9341ead0a8104cfe0324dd7cf",
+      "scope": "parent",
+      "unchanged_status": "rejected",
+      "spec_sha256": "2cc2a82fef559446d8b6cc18a51e98ef2eca5938fe93e07adf429f6948b0c94c",
+      "parameters": {
+        "initial_capital_usdt": 18750,
+        "component_capitals_usdt": [
+          3750,
+          15000
+        ],
+        "component_initial_entry_notionals_usdt": [
+          750,
+          4500
+        ],
+        "raw_component_multipliers": [
+          1,
+          1
+        ],
+        "capital_allocation_fractions": [
+          0.2,
+          0.8
+        ],
+        "BTC_bank_capital_usdt": 3750,
+        "BTC_entry_notional_usdt": 750,
+        "ETH_lookback_days": 4,
+        "ETH_return_hurdle": 0.02,
+        "ETH_exit_buffer_fraction": 0.00625,
+        "ETH_trend_lookback_days": 32,
+        "ETH_long_entry_return_hurdle": 0.02,
+        "ETH_short_entry_return_hurdle": 0.02,
+        "ETH_entry_volatility_window_days": 10,
+        "ETH_entry_volatility_ceiling": 0.045,
+        "start_utc": "2025-10-19T00:01:00Z",
+        "end_utc": "2026-10-24T00:01:00Z",
+        "walk_forward_folds": 13,
+        "walk_forward_complete30day_folds": 12,
+        "walk_forward_tail_days": 10,
+        "continuous_oos_days": 370,
+        "warmup_days": 30,
+        "embargo_days": 3,
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "actual_native_quantity_and_impact_reused": true,
+        "source_component_spec_sha256": [
+          "8f9788b8e6cf7d4165212af8e997622c693dfb5b4c83f9648fd0d9dbdea30b47",
+          "dde8fca10d88813d5d4639fa142653ad302449c63b4d783842f2c2b96c06e4e9"
+        ],
+        "ETH_trend_estimator": "simple_moving_average_level",
+        "ETH_trend_mean_includes_latest_complete_close": true,
+        "ETH_signal_mode": "SMAlevel_gated_reversal_entry_vol"
+      }
+    },
+    {
+      "fingerprint": "7a14fe8eb2a0783b02e6d8d4c352fea56a96acfef00a9c2f6cfe12bec984f49a",
+      "scope": "native",
+      "unchanged_status": "rejected",
+      "spec_sha256": "dde8fca10d88813d5d4639fa142653ad302449c63b4d783842f2c2b96c06e4e9",
+      "parameters": {
+        "initial_capital_usdt": 15000,
+        "raw_entry_notional_fraction_of_initial_capital": 0.3,
+        "fixed_entry_notional_usdt": 4500,
+        "lookback_days": 4,
+        "return_hurdle": 0.02,
+        "start_utc": "2025-10-19T00:01:00Z",
+        "end_utc": "2026-10-24T00:01:00Z",
+        "warmup_days": 30,
+        "embargo_days": 3,
+        "walk_forward_folds": 13,
+        "walk_forward_test_days": 30,
+        "maintenance_margin_proxy": 0.01,
+        "initial_notional_cap_to_collateral": 1,
+        "costs": {
+          "per_side_commission": 0.0005,
+          "half_spread": 0.0001,
+          "slippage": 0.0002,
+          "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+          "participation_max": 0.001,
+          "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+          "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+          "cost_multipliers": [
+            1,
+            2,
+            3
+          ],
+          "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+          "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+        },
+        "input_hashes": {
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+          "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6"
+        },
+        "persistence": "Executedposition only;strict contrarianentry +/-2%;holdlong r<E and short r>-E;SMA gate must match direction;flat reentry requires threshold and entryvolfilter,not hiddenstate.",
+        "exit_buffer_fraction": 0.00625,
+        "complete_30day_folds": 12,
+        "tail_fold_days": 10,
+        "positive_complete30d_folds_required": 9,
+        "signal_mode": "SMAlevel_gated_reversal_entry_vol",
+        "trend_lookback_days": 32,
+        "entry_volatility_window_days": 10,
+        "entry_volatility_ceiling": 0.045,
+        "long_entry_return_hurdle": 0.02,
+        "short_entry_return_hurdle": 0.02,
+        "trend_estimator": "simple_moving_average_level",
+        "trend_mean_includes_latest_complete_close": true
+      }
+    }
+  ]
+}
