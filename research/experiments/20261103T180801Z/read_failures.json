@@ -1,0 +1,64 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261103T180801Z/freeze.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-03T18:15:16.070487Z",
+      "finished_utc": "2026-11-03T18:15:18.029783Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261103T180801Z/freeze.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261103T180801Z/freeze.py\", line 19, in <module>\n    sp=copy.deepcopy(base_native);name=f'smagate370_ETH_L4_H200bp_S{S}_E{round(E*1000000)}ppm';sp.update(name=name,family='native-SMAlevel-gated-reversal-entry-vol',logic=copy.deepcopy(logic),validation_plan=rel(R/'plan.json'),sources=sources);sp['parameters'].update(lookback_days=4,return_hurdle=.02,long_entry_return_hurdle=.02,short_entry_return_hurdle=.02,trend_lookback_days=S,trend_estimator='simple_moving_average_level',trend_mean_includes_latest_complete_close=True,exit_buffer_fraction=E,signal_mode='SMAlevel_gated_reversal_entry_vol',persistence='Executedposition only;strict contrarianentry +/-2%;holdlong r<E and short r>-E;SMA gate must match direction;flat reentry requires threshold and entryvolfilter,not hiddenstate.');path=R/'specs'/(name+'.json');path.parent.mkdir(exist_ok=True);put(path,sp);fp=reg.fingerprint(sp);assert fp not in records;newsp[fp]=(sp,rel(path));nb.append({'name':name,'fingerprint':fp,'scope':'native','role':'component','asset':'ETH','capital_usdt':15000,'L':4,'H':.02,'S':S,'E':E,'N':4500,'spec':rel(path)});ng.append({'L':4,'H':.02,'S':S,'E':E,'fingerprint':fp,'readonly':False,'role':'component'})\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/automation/registry.py\", line 26, in fingerprint\n    raise ValueError(\"family must be a stable lowercase ID; logic must be a nonempty object\")\nValueError: family must be a stable lowercase ID; logic must be a nonempty object\n",
+      "previous_valid_monitor_restored": false,
+      "resolved": true,
+      "resolution": "Pre-registration family ID lowercased;freeze_retry1 actual exit0 (tool7303aa),18defs written. Initial dependency failure rerun after successful freeze;no market valuation or reserve occurred during failed preflight."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261103T180801Z/check_definitions.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-03T18:15:40.924490Z",
+      "finished_utc": "2026-11-03T18:15:41.168911Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261103T180801Z/definition_check.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261103T180801Z/check_definitions.py\", line 3, in <module>\n    p=json.loads((R/'plan.json').read_text());batch=json.loads((R/'batch.json').read_text());rs=reg.read_records(ROOT/'research/automation/registry.jsonl');assert len(batch)==18 and len(p['read_only_references'])==10 and sum(x['scope']=='native' for x in batch)==9\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261103T180801Z/plan.json'\n",
+      "previous_valid_monitor_restored": false,
+      "resolved": true,
+      "resolution": "Pre-registration family ID lowercased;freeze_retry1 actual exit0 (tool7303aa),18defs written. Initial dependency failure rerun after successful freeze;no market valuation or reserve occurred during failed preflight."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261103T180801Z/count_evidence.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-03T18:21:06.995163Z",
+      "finished_utc": "2026-11-03T18:21:07.737385Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261103T180801Z/evidence_counts.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261103T180801Z/count_evidence.py\", line 12, in <module>\n    old=count([(x['archive'],False) for x in plan['read_only_references'].values() if x['scope']=='native']);new=count([(x['archive'],True) for x in rep['configs'].values() if x['scope']=='native']);v=json.loads((R/'verification.json').read_text());assert old['curves']==18 and new['curves']==27 and new['new_policy_decisions']==9990==v['independent_new_policy_decisions']\n                                                                                                                                                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261103T180801Z/verification.json'\n",
+      "previous_valid_monitor_restored": false,
+      "resolved": true,
+      "resolution": "counts called before independent audit produced verification.json;retry after audit actual0,b5b3b2. No source edit,market simulation,registry write or report change."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261103T180801Z/summarize.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-03T18:21:07.011149Z",
+      "finished_utc": "2026-11-03T18:21:12.345250Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261103T180801Z/summary.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261103T180801Z/summarize.py\", line 88, in <module>\n    fp=next(fp for fp in p['external_control_fingerprints'] if next(x for x in json.loads((ROOT/p['read_only_references'][fp]['report']).read_text())['configs'].values() if x['fingerprint']==fp)['E']==c['E']);ref=p['read_only_references'][fp];old=next(x for x in json.loads((ROOT/ref['report']).read_text())['configs'].values() if x['fingerprint']==fp)\n       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261103T180801Z/summarize.py\", line 88, in <genexpr>\n    fp=next(fp for fp in p['external_control_fingerprints'] if next(x for x in json.loads((ROOT/p['read_only_references'][fp]['report']).read_text())['configs'].values() if x['fingerprint']==fp)['E']==c['E']);ref=p['read_only_references'][fp];old=next(x for x in json.loads((ROOT/ref['report']).read_text())['configs'].values() if x['fingerprint']==fp)\n                                                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^\nKeyError: 'E'\n",
+      "previous_valid_monitor_restored": false,
+      "resolved": true,
+      "resolution": "Old 6bfd report lacks top-level E;matching sameE now reads immutable original spec ETH_exit_buffer_fraction. summary_retry1 actualexit0 ede0f5. No financial report/archive/hash or policy/accounting changes."
+    }
+  ]
+}

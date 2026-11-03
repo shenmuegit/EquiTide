@@ -1,0 +1,99 @@
+{
+  "kind": "combination",
+  "family": "native-smalevel-gated-reversal-entry-vol",
+  "name": "smagate370_parent_BTC750_ETHS24_E6250ppm",
+  "market": "perpetual",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "components": [
+    {
+      "fingerprint": "78a87d29f0990695de56ac8398c799a4017bd6a752800027b689083eee9823ca",
+      "weight": 1
+    },
+    {
+      "fingerprint": "29b2e9d9ddea48f5b52a7231a05177fdf49ac04a57ee599914e3d027a86271f4",
+      "weight": 1
+    }
+  ],
+  "logic": {
+    "signal": "ETHfastreversal r=C[i-1]/C[i-5]-1,L4,H.02:strict r>H short,r<-H long;otherwise actual long retained onlyr<E,actualshort onlyr>-E,E.00375/.005/.00625,equality exits. SMA=sum(C[i-S:i])/S includes latest completeclose i-1 and S completebars,S24/28/32;gate=sign(C[i-1]/SMA-1),gatezero/opposite forcesflat. This replaces endpointROC slowgate,not a cosmeticrename. V10 samplelogvol entry-only cap.045,only fresh/nonmatchingrawdesired filtered when sigma>cap;same actualposition unfiltered. No future bars/labels. BTCactual3750/N750 originalROC31/H.04/E.01 readonly.",
+    "allocation": "Each new ETHnativebank15000,N4500=30%initialcapital. Eachparent owns fullBTC3750/N750 andETH15000/N4500 at raw[1,1],C18750,bankshares20/80%,entrynominalshares4/24%. Actual priorclose LOTsizing;no normalization,quantity/NAVscaling,average metrics,crossmargin,transfers/rebalance orparentorders.",
+    "execution": "Priorclosedfullbars only,q=floor(fixedN/priorcompleteclose/LOT)*LOT,nextUTC00:01nativeOPENadversetick,reverseclosebeforeopen,retainsameactualq. Continuous370d,terminalcostedclose,no foldresets. Parentsownactualbankswithoutparentrebalance/fills.",
+    "costs": "5bpfee+1bphalfspread+2bpslippage+0.5*past20samplelogvol*sqrt(actualq*OPEN/past20completequoteADV),1/2/3xstress. Realfundingsettlementns/mark/rate/heldq,outflowsstressed,inflowsunchanged. LOT/tick/minnotional,participation<=.001,postfee1xentrycap,independent1percentclosedhouradversemarkmaintenanceproxy. Linearperpetualshortno spotborrow;noinventedborrowfee,TCA/L2,historicalmaxqty/tier,tickliquidation orcapacityproof.",
+    "validation": "Preset SMA24/28/32 x E.00375/.005/.00625,fastL4/H.02,V10/cap.045 fixed. All9newnative and9newparents reserve before any financialvaluation. S/E indexradius1 inclcenter. Fixedrules,no fit/labels,purge0,33pastbars available(maxS32),continuous370d12x30+10tail,recent40/8x5,no fold resets. Reuseddevelopmenthistory,not untouchedfinal orindependentfuture.",
+    "benchmark": "Actual samebank/N constantlong BTC750+ETH4500 matchedhold and cash0% readonly. Three endpointROC-gated L4/S28 controls E.00375/.005/.00625 keptoutside SMAgrid;primary E.00375 control preset,known oldslowwindowfragility retained.",
+    "native_implementation": {
+      "path": "research/experiments/20261103T180801Z/engine.py",
+      "sha256": "46550f3228ec21e5bec498178511320b9605047f5c2e141f75c5113977c28bc0",
+      "accounting_unchanged_from": "research/experiments/20261103T020232Z/engine.py",
+      "signal_change": "ETH endpointROC slowgate replaced by latestcompleteclose versus S-bar simplemean,fastreversal and execution/cost/funding unchanged."
+    }
+  },
+  "parameters": {
+    "initial_capital_usdt": 18750,
+    "component_capitals_usdt": [
+      3750,
+      15000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      750,
+      4500
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "capital_allocation_fractions": [
+      0.2,
+      0.8
+    ],
+    "BTC_bank_capital_usdt": 3750,
+    "BTC_entry_notional_usdt": 750,
+    "ETH_lookback_days": 4,
+    "ETH_return_hurdle": 0.02,
+    "ETH_exit_buffer_fraction": 0.00625,
+    "ETH_trend_lookback_days": 24,
+    "ETH_long_entry_return_hurdle": 0.02,
+    "ETH_short_entry_return_hurdle": 0.02,
+    "ETH_entry_volatility_window_days": 10,
+    "ETH_entry_volatility_ceiling": 0.045,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "continuous_oos_days": 370,
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "actual_native_quantity_and_impact_reused": true,
+    "source_component_spec_sha256": [
+      "8f9788b8e6cf7d4165212af8e997622c693dfb5b4c83f9648fd0d9dbdea30b47",
+      "6258c079ce57d30efa5b0bbb60c632787ecab05267a13558023eefa412ec5a5f"
+    ],
+    "ETH_trend_estimator": "simple_moving_average_level",
+    "ETH_trend_mean_includes_latest_complete_close": true,
+    "ETH_signal_mode": "SMAlevel_gated_reversal_entry_vol"
+  },
+  "validation_plan": "research/experiments/20261103T180801Z/plan.json",
+  "sources": [
+    {
+      "url": "https://mebfaber.com/white-papers/",
+      "access_date": "2026-11-03",
+      "version": "author2013 update of original2006 paper",
+      "scope": "Primary source supports price-versus-simplemean as a trend estimator only. Daily24/28/32 and contrarian/perpetual rules are our experimental adaptation,not the original10month long-only model or a transferred profitability claim."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "access_date": "2026-11-03",
+      "scope": "OfficialUSD-MfundingTime/rate/mark schema,not proof of profit/execution/capacity."
+    }
+  ]
+}

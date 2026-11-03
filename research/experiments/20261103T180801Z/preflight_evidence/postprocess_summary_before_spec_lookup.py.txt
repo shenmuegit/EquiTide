@@ -1,0 +1,94 @@
+"""Saved native/parent S/E surfaces, all folds, controls and provenance; no simulation."""
+import collections,csv,json,statistics
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from common import *
+r=json.loads((R/'report.json').read_text());p=json.loads((R/'plan.json').read_text());rows={}
+def write(name,cols,items):
+ with (R/name).open('w',newline='') as f:w=csv.writer(f,lineterminator='\n');w.writerow(cols);w.writerows(items)
+ rows[name]=len(items)
+cost=[];wf=[];recent=[];daily=[];edges=[];sources=[];alloc=[]
+for c in r['configs'].values():
+ for k,s in c['scenes'].items():
+  cost.append([c['name'],c['fingerprint'],c['scope'],c['role'],c['asset'],c['S'],c['E'],c['capital_usdt'],k,s['net_return_pct'],s['max_drawdown_pct'],s['sharpe_365'],s['calmar'],s['cost_usdt'],s['cost_pct_initial'],s['funding_usdt'],s['gross_reference_PnL_to_execution_cost'],s['executions'],s['round_trips'],s['recent40']['net_return_pct'],sum(f['net_return_pct']>0 for f in s['recent40']['folds']),c['status']])
+  wf.extend([c['name'],c['scope'],c['S'],c['E'],k,z['fold'],z['start_utc'],z['end_exclusive_utc'],z['duration_days'],z['net_return_pct'],z['max_drawdown_pct'],z['sharpe_365'],z['calmar']] for z in s['folds'])
+  recent.extend([c['name'],c['scope'],c['S'],c['E'],k,z['fold'],z['start_utc'],z['end_exclusive_utc'],z['net_return_pct'],z['max_drawdown_pct'],z['sharpe_365'],z['calmar']] for z in s['recent40']['folds'])
+  daily.extend([c['name'],c['scope'],k,i,v] for i,v in enumerate(s['daily_equity_usdt']))
+write('cost_scenes.csv',['configuration','fingerprint','scope','role','asset','ETH_SMA_S','exit_buffer_fraction_E','initial_capital','cost_multiplier','net_return_pct','whole_OOS_DD_pct','Sharpe365','Calmar','cost_usdt','cost_pct_initial','funding_usdt','gross_plus_funding_to_cost','executions','closes','recent40_return_pct','positive5d_folds','status'],cost)
+write('walk_forward_folds.csv',['configuration','scope','ETH_SMA_S','exit_buffer_fraction_E','cost_multiplier','fold','start_utc','end_exclusive_utc','days','return_pct','whole_fold_DD_pct','Sharpe365','Calmar'],wf)
+write('recent40_folds.csv',['configuration','scope','ETH_SMA_S','exit_buffer_fraction_E','cost_multiplier','fold','start_utc','end_exclusive_utc','return_pct','whole_fold_DD_pct','Sharpe365','Calmar'],recent)
+write('daily_NAV.csv',['configuration','scope','cost_multiplier','boundary','NAV_usdt'],daily)
+cols=['ETH_SMA_S','exit_buffer_fraction_E','fingerprint','readonly_old','unchanged_canonical_status','cost_multiplier','net_return_pct','whole_OOS_DD_pct','Sharpe365','Calmar','recent40_return_pct','positive5d_folds','local_positive3_fraction','local_recent_fraction'];flags={};readonly=[]
+for scope,grid,key in [('parent',p['grid'],'all_current_grid'),('native',p['native_grid'],'all_current_native_grid')]:
+ full=r[key];items=[]
+ for g in grid:
+  c=full[g['fingerprint']]
+  for k,s in c['scenes'].items():
+   d=c['current_grid_diagnostic_sensitivity'];z=[g['S'],g['E'],g['fingerprint'],g['readonly'],c['status'],k,s['net_return_pct'],s['max_drawdown_pct'],s['sharpe_365'],s['calmar'],s['recent40']['net_return_pct'],sum(f['net_return_pct']>0 for f in s['recent40']['folds']),d['local_positive3_fraction'],d['local_strict_recent_fraction']];items.append(z)
+   if scope=='parent' and g['readonly']:readonly.append(z)
+ for k in ['1','2','3']:
+  for g in grid:
+   i,j=p['slow_windows'].index(g['S']),p['exit_buffers'].index(g['E']);ng=[h for h in grid if i<2 and h['S']==p['slow_windows'][i+1] and h['E']==g['E'] or j<2 and h['E']==p['exit_buffers'][j+1] and h['S']==g['S']]
+   for h in ng:
+    a,b=full[g['fingerprint']]['scenes'][k],full[h['fingerprint']]['scenes'][k];edges.append([scope,k,g['S'],g['E'],h['S'],h['E'],g['fingerprint'],h['fingerprint'],abs(a['sharpe_365']-b['sharpe_365']),abs(a['net_return_pct']-b['net_return_pct']),abs(a['max_drawdown_pct']-b['max_drawdown_pct'])])
+ flags[scope]={}
+ for k in ['1','2','3']:
+  v=[x[8] for x in edges if x[0]==scope and x[1]==k];threshold=2*statistics.stdev(v);flags[scope][k]={'edge_count':len(v),'max_Sharpe_change':max(v),'two_std_change_threshold':threshold,'descriptive_cliff_flag':max(v)>threshold,'scope':'Dependentedge descriptive heuristic only,not significance/DSR/PBO or a posthoc gate.'}
+ write('sensitivity_grid.csv' if scope=='parent' else 'native_sensitivity_grid.csv',cols,items)
+external=[]
+for fp in p['external_control_fingerprints']:
+ ref=p['read_only_references'][fp];c=next(x for x in json.loads((ROOT/ref['report']).read_text())['configs'].values() if x['fingerprint']==fp)
+ for k,s in c['scenes'].items():external.append([c['name'],fp,ref['capital_usdt'],k,s['net_return_pct'],s['max_drawdown_pct'],s['sharpe_365'],s['calmar'],s['recent40']['net_return_pct'],sum(f['net_return_pct']>0 for f in s['recent40']['folds']),c['status'],ref['report'],ref['report_sha256']])
+write('readonly_reused_scenes.csv',['configuration','fingerprint','capital','cost_multiplier','return_pct','whole_DD_pct','Sharpe365','Calmar','recent40_return_pct','positive5d_folds','unchanged_canonical_status','original_report','report_sha256'],external);write('adjacent_edges.csv',['scope','cost_multiplier','from_S','from_E','to_S','to_E','from_fp','to_fp','absolute_Sharpe_change','absolute_return_change_pp','absolute_DD_change_pp'],edges)
+cs=r['matched_hold_comparisons'];write('matched_hold_comparisons.csv',list(cs[0]),[list(x.values()) for x in cs])
+for fp,x in p['read_only_references'].items():
+ if x['scope']!='native':continue
+ sp=json.loads((ROOT/x['spec']).read_text());c=next(z for z in json.loads((ROOT/x['report']).read_text())['configs'].values() if z['fingerprint']==fp)
+ for k,s in c['scenes'].items():sources.append([fp,x['asset'],x['capital_usdt'],sp['parameters']['fixed_entry_notional_usdt'],k,s['net_return_pct'],s['max_drawdown_pct'],s['cost_usdt'],s['funding_usdt'],s['executions'],s['NAV_sha256_f64le'],x['report'],x['report_sha256'],True])
+for c in r['configs'].values():
+ if c['scope']!='native':continue
+ for k,s in c['scenes'].items():sources.append([c['fingerprint'],c['asset'],c['capital_usdt'],4500,k,s['net_return_pct'],s['max_drawdown_pct'],s['cost_usdt'],s['funding_usdt'],s['executions'],s['NAV_sha256_f64le'],rel(R/'report.json'),sha(R/'report.json'),False])
+write('source_curves.csv',['fingerprint','asset','actual_bank_capital','actual_entry_N','cost_multiplier','return_pct','whole_DD_pct','cost_usdt','funding_usdt','executions','NAV_sha256','provenance_report','report_sha256','readonly_old'],sources)
+for g in p['grid']:alloc.append([g['fingerprint'],'candidate',g['S'],g['E'],3750,15000,18750,750,4500,1,1,.2,.8,g['readonly']])
+alloc.append([p['benchmark_parent_fingerprint'],'matched_initial_budget_hold',None,None,3750,15000,18750,750,4500,1,1,.2,.8,True]);write('fixed_allocations.csv',['fingerprint','role','ETH_S','exit_buffer_fraction_E','BTC_bank','ETH_bank','total_initial_capital','BTC_N','ETH_N','raw_BTC_weight','raw_ETH_weight','BTC_capital_share','ETH_capital_share','readonly'],alloc);put(R/'edge_flags.json',flags)
+fig,axs=plt.subplots(2,4,figsize=(16,9),layout='constrained')
+for row,(scope,key) in enumerate([('ETH native15000/N4500','all_current_native_grid'),('BTC3750/N750+ETH15000/N4500 parent','all_current_grid')]):
+ full=r[key]
+ for j,(label,fn) in enumerate([('3x continuous370 return %',lambda c:c['scenes']['3']['net_return_pct']),('3x wholecurve DD %',lambda c:c['scenes']['3']['max_drawdown_pct']),('3x daily Sharpe365',lambda c:c['scenes']['3']['sharpe_365']),('3x recent positive5d /8',lambda c:sum(f['net_return_pct']>0 for f in c['scenes']['3']['recent40']['folds']))]):
+  arr=np.empty((3,3))
+  for c in full.values():arr[p['slow_windows'].index(c['S']),p['exit_buffers'].index(c['E'])]=fn(c)
+  ax=axs[row,j];im=ax.imshow(arr,cmap='RdYlGn_r' if j==1 else 'RdYlGn',**({'vmin':0,'vmax':8} if j==3 else {}));ax.set_xticks(range(3),['E0.375%','E0.5%','E0.625%']);ax.set_yticks(range(3),['S24','S28','S32']);ax.set_xlabel('ETH reversal exit buffer E (%)');ax.set_ylabel('ETH SMA slow window S (days)');ax.set_title(scope+'\n'+label,fontsize=10)
+  for c in full.values():i,k=p['slow_windows'].index(c['S']),p['exit_buffers'].index(c['E']);ax.text(k,i,f'{arr[i,k]:.3f}'+(' O' if c['readonly'] else ' N'),ha='center',va='center',fontsize=9)
+  fig.colorbar(im,ax=ax,shrink=.7)
+fig.suptitle('ETH SMAlevel-gated reversal S24/28/32 x E0.375/0.5/0.625% | fixed L4,H2%,V10/cap4.5%\nBTC3750/N750 + ETH15000/N4500 | raw[1,1],capitalshares20/80%,noNAVscaling | All grids N=newnative/parent;oldROCgate controls outsidegrid | reused history');fig.savefig(R/'sensitivity.png',dpi=140);plt.close(fig)
+summary={'report_sha256':sha(R/'report.json'),**p['expected_counts'],'passed':len(r['summary']['passed']),'rejected':len(r['summary']['candidate_rejected']),'failed_criteria':dict(collections.Counter(f for c in r['configs'].values() for f in c['failed_criteria'])),'CSV_rows':rows,'edge_flags':flags};put(R/'sensitivity_summary.json',summary)
+ctx=json.loads((R/'context.json').read_text());records=reg.read_records(ROOT/'research/automation/registry.jsonl');eq=[]
+def compare(c,base):
+ return {k:{'return_pct':z['net_return_pct'],'whole_DD_pct':z['max_drawdown_pct'],'control_return_pct':base['scenes'][k]['net_return_pct'],'control_DD_pct':base['scenes'][k]['max_drawdown_pct'],'delta_return_to_control_pp':z['net_return_pct']-base['scenes'][k]['net_return_pct'],'delta_DD_to_control_pp':z['max_drawdown_pct']-base['scenes'][k]['max_drawdown_pct'],'new_recent_positive5d':sum(f['net_return_pct']>0 for f in z['recent40']['folds']),'control_recent_positive5d':sum(f['net_return_pct']>0 for f in base['scenes'][k]['recent40']['folds'])} for k,z in c['scenes'].items()}
+control_fp=p['primary_control_fingerprint'];ref=p['read_only_references'][control_fp];base=next(c for c in json.loads((ROOT/ref['report']).read_text())['configs'].values() if c['fingerprint']==control_fp)
+for c in r['configs'].values():
+ if c['scope']!='parent':continue
+ eq.append({'name':c['name'],'fingerprint':c['fingerprint'],'L':4,'H':.02,'S':c['S'],'E':c['E'],'N':750,'control_fingerprint':control_fp,'control_report':ref['report'],'control_report_sha256':ref['report_sha256'],'all_cost_NAV_identical':all(s['NAV_sha256_f64le']==base['scenes'][k]['NAV_sha256_f64le'] for k,s in c['scenes'].items()),'cost_comparisons':compare(c,base)})
+assert len(eq)==9;put(R/'equivalent_realized_NAV_paths.json',{'report_sha256':sha(R/'report.json'),'comparisons':eq,'scope':'Saved priorstrongL4endpointROCgateS28/E.00375control,predeclaredoutside newSMAgrid;samebank/N/costs/time. No extra financial valuation.'})
+groups={}
+for c in r['configs'].values():
+ if c['scope']=='parent':groups.setdefault('|'.join(c['scenes'][k]['NAV_sha256_f64le'] for k in ['1','2','3']),[]).append(c['fingerprint'])
+put(R/'prior_grid_NAV_aliases.json',{'new_definitions_matching_a_prior_path':sum(x['all_cost_NAV_identical'] for x in eq),'within_new_parent_grid_alias_groups':[v for v in groups.values() if len(v)>1],'scope':'Fullbank parent hashes only;native and parent capitals not compared as equal.'})
+newfps={c['fingerprint'] for c in r['configs'].values()};hist={}
+for fp,z in records.items():
+ sp=z.get('spec',{});obs=sp.get('family')=='paper-live-portfolio-observation' or sp.get('name','').startswith('forward_snapshot_') or 'observation_terminal_action' in sp.get('parameters',{})
+ if fp in newfps or not sp or obs:continue
+ hist.setdefault(reg.fingerprint(sp),[]).append(z)
+trials={'canonical_prior_research_definitions':len(hist),'registry_marked_actual':sum(any(z.get('result_available') is True for z in zs) for zs in hist.values()),'not_marked_actual':sum(not any(z.get('result_available') is True for z in zs) for zs in hist.values()),'initial16_actual_evidence':16,'new_financial_definitions':18,'new_native_models':9,'new_cost_scenes':54,'observations_excluded':True};put(R/'prior_actual_research_counts.json',trials)
+matched=[]
+for c in r['configs'].values():
+ if c['scope']!='parent':continue
+ fp=next(fp for fp in p['external_control_fingerprints'] if next(x for x in json.loads((ROOT/p['read_only_references'][fp]['report']).read_text())['configs'].values() if x['fingerprint']==fp)['E']==c['E']);ref=p['read_only_references'][fp];old=next(x for x in json.loads((ROOT/ref['report']).read_text())['configs'].values() if x['fingerprint']==fp)
+ matched.append({'fingerprint':c['fingerprint'],'SMA_S':c['S'],'E':c['E'],'readonly_ROC_S':28,'control_fingerprint':fp,'report_sha256':ref['report_sha256'],'cost_comparisons':compare(c,old),'scope':'Samecapital,N,fastL/H,volfilter,E,costs/time. S differs exceptcenter;SMA vsendpointROC gate. No new financialmodel valuation.'})
+put(R/'matched_gate_comparisons.json',{'report_sha256':sha(R/'report.json'),'comparisons':matched,'no_new_financial_evaluation':True})
+lines=['ETH 收盘价相对 SMA 慢门槛的逆势策略验证','',p['hypothesis'],'',f"完整读取{ctx['registry_events']}事件/{ctx['registry_ids']}ID、{len(ctx['prior_conclusions_read'])}份既往结论；初始16已有原档实际证据、缺真实结果0。此前研究定义{trials['canonical_prior_research_definitions']}，标实际{trials['registry_marked_actual']}、未标{trials['not_marked_actual']}；大量历史搜索存在多重选择偏差。",'', '事前固定 SMA S24/28/32 日×退出 E0.375/0.5/0.625%。快反转 L4、对称 H2%、entry-only V10/cap4.5%固定。SMA=mean(C[i-S:i])，包含最新完整 i−1 收盘；gate=sign(C[i−1]/SMA−1)。fastROC>2%做空、<−2%做多，入场等号不触发；否则实际多仓仅r<E保留，空仓仅r>−E保留，退出等号平仓；与SMA方向不符或均值相等强制flat。只过滤新增/转向持仓，高波动不单独退出同方向实仓。', '', '九个ETH新原生各本金15000、固定N4500。九个组合逐一持有完整BTC3750/N750旧银行+对应ETH15000/N4500新银行，raw[1,1]、总本金18750、资金占比20/80%、入场名义占比4/24%。不归一化、不缩放旧净值/数量、不平均收益/Sharpe/DD、不跨银行调仓/转移/交叉保证金，0父订单。三项旧endpointROC逆势S28控制E0.375/0.5/0.625%在网格外只读；主控制E0.375%在新结果前固定，同E对照另存matched_gate_comparisons.json。', '', 'Walk-forward：2025-10-19UTC00:01至2026-10-24UTC00:01，连续370日、12×30日完整折+10日尾折；逐折不重置现金/持仓，整体DD来自完整分钟/事件净值。近期40日承接day330真实状态，8×5日。固定规则无拟合/标签、purge0，事前33根日线足够maxS32，下一UTC00:01原生OPEN执行，数量以前一完整close/LOT算；反手先平后开，终点计成本平仓。这是反复使用的开发历史，不是未触碰最终测试或独立未来。', '', '成本：5bp手续费+1bp半价差+2bp滑点+0.5×past20样本logvol×sqrt(实际q×OPEN/past20完整日quoteADV)。1/2/3倍放大执行和资金费支出，资金费收入不放大。实际结算ns/rate/mark/heldq；LOT/tick/minnotional、参与率<=0.1%、费后1倍入场抵押、独立1%闭合小时不利mark风险代理。永续空头无需借入现货，不虚构借币费用。匹配同资本/入场N750/4500持有与现金0%对照。缺真实盘口/TCA、历史完整层级/最大量、逐tick强平及容量证明。', '', '冻结失败判据：各成本全年净正，1倍至少9/12正完整月；各成本近期总收益正且>=6/8正5日折；3倍整体DD<=25%；S/E索引半径1含中心邻域3倍正和严格近期合格比例均>=60%；>=4底层平仓，毛参考PnL+资金费/执行成本>=2.5；0订单/现金/保证金代理违规，终点flat、>=180日。全部18项按同一预定门槛裁定。旧ROC控制canonical资格/判据/敏感性不改，不能混进SMA邻域。', '', '|新配置|scope|SMA日数|E比例|1x收益%|2x收益%|3x收益%|3x整体DD%|1x正月|近期正折1/2/3|状态|','|---|---|---:|---:|---:|---:|---:|---:|---:|---|---|']
+for c in r['configs'].values():lines.append('|'+ '|'.join([c['name'],c['scope'],str(c['S']),str(c['E']),*[f"{c['scenes'][k]['net_return_pct']:.6f}" for k in ['1','2','3']],f"{c['scenes']['3']['max_drawdown_pct']:.6f}",str(c['positive_complete_30d_folds_1x']),'/'.join(str(c['recent40_positive_5d_folds_by_cost'][k]) for k in ['1','2','3']),c['status']])+'|')
+lines.extend(['',f"九个新组合通过{len(r['summary']['passed'])}、淘汰{len(r['summary']['candidate_rejected'])}；九个新原生状态另列。逐项失败{ {c['name']:c['failed_criteria'] for c in r['configs'].values()} }。对预设旧强控制全成本NAV同路径{sum(x['all_cost_NAV_identical'] for x in eq)}/9，同网格别名组另存，不把不同名称当新收益路径。",'', '11CSV含54新成本场景、702月/尾折、432近期折、20034日NAV、两个九格S/E面、9旧ROC控制场景、72相邻边、27匹配持有/现金比较、45新旧原生成本路径和10资金分配。全部正负折、净收益、完整DD、Sharpe、Calmar、成本及成交数保留；边界按真实S/E端点检查。相邻cliff只作依赖样本描述，不冒充DSR/PBO显著性或事后门槛。', '', 'SMA原始动机来自作者一手[2013年战术配置论文入口](https://mebfaber.com/white-papers/)，仅参考价格相对简单均线这一趋势估计器。这里的日线S24/28/32、逆势快入场、永续双向仓位和风险核算均为本项目新实验；不能移植原10月长仓模型的收益结论。2026-11-03UTC已访问该作者入口、更新说明及[Binance USD-M市场数据API](https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data)。官方字段不是成交/盈利/容量证据；数据边界、字节/SHA及实现哈希见plan/data_manifest。', '', '预检family ID含大写导致freeze失败，依赖plan的initial检查随之失败；两次原始命令和无实际结果事实均保留，preflight_evidence保存无效spec/生成器。修正ID后freeze_retry1与initial_retry1实际退出0，再预登记。失败期间0reserve/0实际市场回测；合成负对照与SMA窗口、future不可见、两向反转、入退场等号、S/E18邻域、原始权重/非平均DD/错位轴拒绝检查通过。33来源文件在首个reserve前绑定。', '', '全部18项分三批reserve成功才计算27原生+27组合成本路径，独立Fraction慢均值/快信号、Decimal真实q/费用/资金费/小时风险及完整NAV核验后逐项finish，完整负结果同样保存。没有已完成市场回测重跑、没有据结果扩网格或松判据。', '', '原SMA65和single账户续14:30→16:30；原L4/H2续16:10→18:10，仅18:11参考闭合后采集。single本轮独立取得16资金费，按本账户BTC−0.012计算；L4此前已计16，本轮不得重复。原规则/本金/持仓、risk/context/完整账本前缀和终止日不变，不采纳新SMA研究。原SMA65上下文源20261103T020232Z保留，partial不冒充180日/六折资格。旧延迟shadow与十策略报价模拟分开。', '', '只清理本轮可重建中间物；完整账本、登记、冻结规则、原始短窗响应、全部真实结果和核验代码保留。同main排他锁内生成只读监控并非强制push，远端完整tree/实际终态及解锁凭据见.git/automation_proofs/'+R.name+'.json。'])
+(R/'result.md').write_text('\n'.join(lines).rstrip()+'\n');print(json.dumps(summary),flush=True)
