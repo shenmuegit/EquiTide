@@ -1,0 +1,73 @@
+{
+  "failed_pipeline_commands": [],
+  "expected_TDD_red": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "research/experiments/20261103T140600Z/check_asymmetric.py",
+      "--negative-control-double-weighting"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-03T14:24:47.351309+00:00",
+    "finished_utc": "2026-11-03T14:24:47.603343+00:00",
+    "actual_exit_code": 1,
+    "expected_exit_code": 1,
+    "synthetic_only": true,
+    "financial_evaluations": 0,
+    "negative_control": "Intentionally double-weight raw full banks by capitalfractions;wrong initial capital must be rejected.Not failure of old correctengine.",
+    "log": "research/experiments/20261103T140600Z/TDD_red.log"
+  },
+  "candidate_and_L4_HTTP_failures": [
+    {
+      "url": "https://fapi.binance.com/fapi/v1/markPriceKlines?symbol=BTCUSDT&interval=1h&startTime=1793696400000&endTime=1793703600000&limit=1500",
+      "started_utc": "2026-11-03T14:29:31.749958+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261103T140600Z/http_attempt_0003.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n"
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/klines?symbol=ETHUSDT&interval=1m&startTime=1793701740000&endTime=1793709000000&limit=1500",
+      "started_utc": "2026-11-03T14:29:43.401527+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261103T140600Z/http_attempt_0006.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 28,
+      "stderr": "curl: (28) Connection timed out after 10000 milliseconds\n"
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/markPriceKlines?symbol=ETHUSDT&interval=1h&startTime=1793696400000&endTime=1793703600000&limit=1500",
+      "started_utc": "2026-11-03T14:30:04.102357+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261103T140600Z/http_attempt_0008.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n"
+    }
+  ],
+  "forward_transport_errors": [],
+  "exact_forward_HTTP_attempt_count_instrumented": false,
+  "observed_HTTP_or_transport_failures": 3,
+  "actual_read_tool_failures": [
+    {
+      "action": "main-only remote heads preflight over configured HTTPS origin",
+      "actual_exit_code": 128,
+      "tool_terminal_exit_code": 1,
+      "actual_tool_chunk": "29195b",
+      "error": "GnuTLS handshake failed: TLS connection was non-properly terminated",
+      "financial_reservations": 0,
+      "financial_evaluations": 0,
+      "resolved": true,
+      "resolution": "Ordinary authenticated SSH read-only ls-remote succeeded;exactly one remote main. No credential inspection or branch creation."
+    }
+  ],
+  "completed_native_or_parent_backtest_reruns": 0,
+  "completed_observation_reruns": 0
+}

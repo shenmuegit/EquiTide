@@ -1,0 +1,82 @@
+{
+  "kind": "combination",
+  "family": "native-gated-reversal-with-asymmetric-entry-hurdles",
+  "name": "corner750_parent_L4_S29_E375milliPct",
+  "market": "perpetual",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "components": [
+    {
+      "fingerprint": "78a87d29f0990695de56ac8398c799a4017bd6a752800027b689083eee9823ca",
+      "weight": 1
+    },
+    {
+      "fingerprint": "892f8b7fcd73d593aa93cd64150ef7887908468c718bc0c496494b45eaad4c18",
+      "weight": 1
+    }
+  ],
+  "logic": {
+    "signal": "ETH fixedfastL4: r=C[i-1]/C[i-5]-1;strict r>.025 short,r<-.015 long. Else retain actual long iff r<E,actualshort iff r>-E;exit equality. Desired direction must match sign(C[i-1]/C[i-1-S]-1),S27/28/29. Entry-only sample10dailylogvol cap.045,rawdesired nonzero and differentfromactual filtered to0 iff sigma>cap,equality allowed. E=.00375/.005/.00625. Pastcomplete bars only,nextUTC00:01OPEN,closebeforeopening;no hidden persistence. BTC original ROC31/H.04/E.01 actual3750/N750 readonly.",
+    "allocation": "ETHnative full15000 bank with fixedN4500,notional30%initial;actualpriorclose LOT-sized quantities,actualpertradecost/funding/constraints. Parentowns one complete BTC3750/N750 bank plus ETH15000/N4500 bank at raw[1,1],total18750,capitalshares20/80%,entrynominalshares4/24%;no normalization,NAVscaling,rebalancing/transfers/crossmargin or parentorders.",
+    "execution": "Priorclosedfullbars only,q=floor(fixedN/priorcompleteclose/LOT)*LOT,nextUTC00:01nativeOPENadversetick,reverseclosebeforeopen,retainsameactualq. Continuous370d,terminalcostedclose,no foldresets. Parentsownactualbankswithoutparentrebalance/fills.",
+    "costs": "5bpfee+1bphalfspread+2bpslippage+0.5*past20samplelogvol*sqrt(actualq*OPEN/past20completequoteADV),1/2/3xstress. Realfundingsettlementns/mark/rate/heldq,outflowsstressed,inflowsunchanged. LOT/tick/minnotional,participation<=.001,postfee1xentrycap,independent1percentclosedhouradversemarkmaintenanceproxy. Linearperpetualshortno spotborrow;noinventedborrowfee,TCA/L2,historicalmaxqty/tier,tickliquidation orcapacityproof.",
+    "validation": "Preset fixedL4 slowS27/28/29 x exitE.00375/.005/.00625. Fiveactualnative and fiveactualparent gridcells readonly. Fourmissingnative corners and fourparent corners reserved before any financial valuation. Fixed rules,no fitting/labels,purge0,warmup30/embargo3,continuous370d12x30+10tail,recent40/8x5. Neighborhood radius1 by S/E index,including center. Reused development history,not independent final/future.",
+    "benchmark": "Existing actual BTC3750/N750+ETH15000/N4500 constantlong matchedinitialentrybudgets,not fullyinvested/equalriskhold;cash0% separate.",
+    "native_implementation": {
+      "path": "research/experiments/20261103T020232Z/engine.py",
+      "sha256": "97e8cfb2d7a76293fcecc24fa669a11ac1abc2736ea9ee09fb30acd4007467e9",
+      "rules_unchanged_except_declared_S_E_parameters": true
+    }
+  },
+  "parameters": {
+    "initial_capital_usdt": 18750,
+    "component_capitals_usdt": [
+      3750,
+      15000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      750,
+      4500
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "capital_allocation_fractions": [
+      0.2,
+      0.8
+    ],
+    "BTC_bank_capital_usdt": 3750,
+    "BTC_entry_notional_usdt": 750,
+    "ETH_lookback_days": 4,
+    "ETH_return_hurdle": 0.025,
+    "ETH_exit_buffer_fraction": 0.00375,
+    "ETH_trend_lookback_days": 29,
+    "ETH_long_entry_return_hurdle": 0.015,
+    "ETH_short_entry_return_hurdle": 0.025,
+    "ETH_entry_volatility_window_days": 10,
+    "ETH_entry_volatility_ceiling": 0.045,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "continuous_oos_days": 370,
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "actual_native_quantity_and_impact_reused": true,
+    "source_component_spec_sha256": [
+      "8f9788b8e6cf7d4165212af8e997622c693dfb5b4c83f9648fd0d9dbdea30b47",
+      "c625067e5c6082119dac9abc8694d94bf0c2117073627a30e9cba20da4eb041a"
+    ]
+  },
+  "validation_plan": "research/experiments/20261103T140600Z/plan.json"
+}
