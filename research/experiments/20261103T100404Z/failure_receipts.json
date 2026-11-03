@@ -1,0 +1,100 @@
+{
+  "failed_pipeline_commands": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261103T100404Z/observe_l4h02.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-03T10:16:49.471225Z",
+      "finished_utc": "2026-11-03T10:17:22.828144Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261103T100404Z/l4h02_observe.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T174613Z/prospective_l4/observer.py\", line 151, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T174613Z/prospective_l4/observer.py\", line 128, in main\n    packet=capture(cut,previous,binding,rawdir,receipts);packetpath=rawdir/'packet.json.gz';gzput(packetpath,packet);put(window/'input_manifest.json',{'packet':rel(packetpath),'sha256':c.sha(packetpath),'provenance':receipts,'plan_sha256':binding['plan_sha256']})\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T174613Z/prospective_l4/observer.py\", line 65, in capture\n    data=request('/fapi/v1/fundingRate',{'symbol':a+'USDT','startTime':cursor,'endTime':cutoff//c.MS,'limit':1000},rawdir,receipts);assert isinstance(data,list)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T174613Z/prospective_l4/observer.py\", line 42, in request\n    raise RuntimeError('Publiccapturefailedbothboundedattempts; preserveaccount/capturefailure, no fakefills')\nRuntimeError: Publiccapturefailedbothboundedattempts; preserveaccount/capturefailure, no fakefills\n"
+    }
+  ],
+  "expected_TDD_red": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "research/experiments/20261103T100404Z/check_asymmetric.py",
+      "--legacy-slow-range"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-03T10:12:42.381362+00:00",
+    "finished_utc": "2026-11-03T10:12:42.637369+00:00",
+    "actual_exit_code": 1,
+    "expected_exit_code": 1,
+    "synthetic_only": true,
+    "financial_evaluations": 0,
+    "negative_control": "Intentionally apply20/80capital fractions again to fullbank dollar NAV;reject wrong capital identity.Not failure of any old correct engine.",
+    "expected_reason": "Full actual3750+15000banks at raw[1,1] must start18750,not double-weighted capital.",
+    "log": "research/experiments/20261103T100404Z/TDD_red.log"
+  },
+  "candidate_and_L4_HTTP_failures": [
+    {
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=ETHUSDT&startTime=1793692800001&endTime=1793700600000&limit=1000",
+      "started_utc": "2026-11-03T10:17:12.730934+00:00",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "data/raw/binance/l4h02_forward/20261103T100404Z/http_0007.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "transport": "verifiedTLS1.2HTTP1.1 bounded2attempts"
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=ETHUSDT&startTime=1793692800001&endTime=1793700600000&limit=1000",
+      "started_utc": "2026-11-03T10:17:17.743010+00:00",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "data/raw/binance/l4h02_forward/20261103T100404Z/http_0008.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "transport": "verifiedTLS1.2HTTP1.1 bounded2attempts"
+    }
+  ],
+  "forward_transport_errors": [],
+  "exact_forward_HTTP_attempt_count_instrumented": false,
+  "observed_HTTP_or_transport_failures": 2,
+  "actual_read_tool_failures": [
+    {
+      "observed_utc": "2026-11-03T10:15:51.971611+00:00",
+      "action": "Supplemental inline readonly source identity check",
+      "actual_exit_code": 1,
+      "actual_tool_chunk": "f9bd8e",
+      "error": "AssertionError: checker treated ETH constant-long hold source as L/S strategy, because assumed signal_type discriminator was absent.",
+      "financial_calculations": 0,
+      "journal_writes": 0,
+      "resolved": true,
+      "resolution": "Observed actual signal_mode=constant_long_reference;exclude the two matchedhold sources by this real discriminator and verify13source/control rows;6semantic absence checks pass.",
+      "resolved_at_utc": "2026-11-03T10:16:25.285925+00:00",
+      "actual_resolution_exit_code": 0,
+      "actual_resolution_tool_chunk": "a0cfb2"
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261103T100404Z/observe_l4h02.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-03T10:16:49.471225Z",
+      "finished_utc": "2026-11-03T10:17:22.828144Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261103T100404Z/l4h02_observe.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T174613Z/prospective_l4/observer.py\", line 151, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T174613Z/prospective_l4/observer.py\", line 128, in main\n    packet=capture(cut,previous,binding,rawdir,receipts);packetpath=rawdir/'packet.json.gz';gzput(packetpath,packet);put(window/'input_manifest.json',{'packet':rel(packetpath),'sha256':c.sha(packetpath),'provenance':receipts,'plan_sha256':binding['plan_sha256']})\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T174613Z/prospective_l4/observer.py\", line 65, in capture\n    data=request('/fapi/v1/fundingRate',{'symbol':a+'USDT','startTime':cursor,'endTime':cutoff//c.MS,'limit':1000},rawdir,receipts);assert isinstance(data,list)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T174613Z/prospective_l4/observer.py\", line 42, in request\n    raise RuntimeError('Publiccapturefailedbothboundedattempts; preserveaccount/capturefailure, no fakefills')\nRuntimeError: Publiccapturefailedbothboundedattempts; preserveaccount/capturefailure, no fakefills\n",
+      "previous_valid_monitor_restored": false,
+      "actual_failure_terminal_tool_chunk": "f996c3",
+      "resolved": true,
+      "receipt_attribution_correction": "The metadata-check terminal was briefly attached to this concurrently appended failure row;corrected by explicit action/log match before any success claim. Original receipt preserved separately.",
+      "resolved_at_utc": "2026-11-03T10:21:59.083196+00:00",
+      "resolution": "Seven original successful raw responses reused with exact hashes, two TLS failures retained;only missing exact ETHfunding URL fetched successfully. Original frozen observer then reserved3 before first advance and finished3 once. Complete prefix/cost/risk/funding audit passed;no prior08/00 credited again.",
+      "actual_resolution_exit_code": 0,
+      "actual_resolution_tool_chunk": "f71336",
+      "successful_recovery_commands": "research/experiments/20261103T100404Z/l4h02_transport_recovery_commands.json"
+    }
+  ],
+  "completed_native_or_parent_backtest_reruns": 0,
+  "completed_observation_reruns": 0
+}
