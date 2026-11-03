@@ -1,0 +1,77 @@
+{
+  "kind": "combination",
+  "family": "native-gated-reversal-with-asymmetric-entry-hurdles",
+  "name": "cross625_parent_L3_S27_HL150_HS250_E500milliPct",
+  "market": "perpetual",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "components": [
+    {
+      "fingerprint": "610188f638b6fcfbf2d793d69ff003d5766d746aad93f28ab881dcf3c4bfbf11",
+      "weight": 1
+    },
+    {
+      "fingerprint": "166b7b622ec36fc0bb19c59e253843f91417af55cf9c1f944d73b6aca31c7c5b",
+      "weight": 1
+    }
+  ],
+  "logic": {
+    "signal": "BTC readonly actual3750/N625 originalROC31,H4%,E1% momentum. ETH readonly actual15000/N4500 fastL3/4/5,slowS27/28/29,HL1.5%/HS2.5%,E0.5%,V10/cap4.5% original asymmetric gated reversal. All child rules/quantities/costs/funding are already executed actual ledgers; do not rerun or scale them.",
+    "allocation": "Own one full actual BTC3750/N625 bank and one full actual ETH15000/N4500 bank at rawweights[1,1],total initial18750,capitalshares20/80%,entry nominal shares625/18750 and4500/18750. Sum actual dollar NAV after a common event-axis projection;never renormalize weights,multiply again by capital share,average returns/Sharpe,resize source quantity,crossmargin,transfer orrebalance. Parent executes zero new orders.",
+    "execution": "Priorclosedfullbars only,q=floor(fixedN/priorcompleteclose/LOT)*LOT,nextUTC00:01nativeOPENadversetick,reverseclosebeforeopen,retainsameactualq. Continuous370d,terminalcostedclose,no foldresets. Parentsownactualbankswithoutparentrebalance/fills.",
+    "costs": "5bpfee+1bphalfspread+2bpslippage+0.5*past20samplelogvol*sqrt(actualq*OPEN/past20completequoteADV),1/2/3xstress. Realfundingsettlementns/mark/rate/heldq,outflowsstressed,inflowsunchanged. LOT/tick/minnotional,participation<=.001,postfee1xentrycap,independent1percentclosedhouradversemarkmaintenanceproxy. Linearperpetualshortno spotborrow;noinventedborrowfee,TCA/L2,historicalmaxqty/tier,tickliquidation orcapacityproof.",
+    "validation": "Predeclare L3/4/5 x S27/28/29 at fixed actual BTC N625;S28 actualparent controls readonly. Six new S27/29 combinations reserved before aligned-NAV calculation. All native curves and matchedhold readonly. Fixed rules,no fitting/labels,purge0,warmup30+embargo3,continuous370days12x30+10tail,recent40/8x5. Reused development history,not untouched final or independent future;no outcome-driven extension.",
+    "benchmark": "Readonlyexisting3750BTC+15000ETHconstantlongmatchedinitialbudgets375/4500,notfullinvestedorequalriskhold;cash0percentseparate."
+  },
+  "parameters": {
+    "initial_capital_usdt": 18750,
+    "component_capitals_usdt": [
+      3750,
+      15000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      625,
+      4500
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "capital_allocation_fractions": [
+      0.2,
+      0.8
+    ],
+    "BTC_bank_capital_usdt": 3750,
+    "BTC_entry_notional_usdt": 625,
+    "ETH_lookback_days": 3,
+    "ETH_return_hurdle": 0.025,
+    "ETH_exit_buffer_fraction": 0.005,
+    "ETH_trend_lookback_days": 27,
+    "ETH_long_entry_return_hurdle": 0.015,
+    "ETH_short_entry_return_hurdle": 0.025,
+    "ETH_entry_volatility_window_days": 10,
+    "ETH_entry_volatility_ceiling": 0.045,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "continuous_oos_days": 370,
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "actual_native_quantity_and_impact_reused": true,
+    "source_component_spec_sha256": [
+      "185c44462beee0b79a7bc475f2fcd63b7d688ab21474ada4d0179a9ef66ccbfc",
+      "a2fbc667cf7b5769b07f8ea79e25571044299b20e2bafe919b872c9e772d8eb4"
+    ]
+  },
+  "validation_plan": "research/experiments/20261103T080404Z/plan.json"
+}

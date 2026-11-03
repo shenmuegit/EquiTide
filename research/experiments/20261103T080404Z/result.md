@@ -1,0 +1,44 @@
+固定BTC N625后的跨慢窗口组合研究
+
+N625在S28下与ETH L3/L4通过先前L/N历史门槛，新增收益伴随更高回撤，不能推断慢窗口稳健。本轮只预设固定BTC3750/N625 + ETH15000/N4500的L3/4/5 x S27/28/29交叉，诊断较高BTC敞口能否让近期表现跨单日慢窗口扰动连续。S28三组合只读，S27/29六组合逐项先reserve；所有组件，包括九个ETH原生与BTC625，全部复用真实已付成本/资金费/约束下净值，0新原生回测。原raw[1,1]完整银行NAV相加，不归一化、不改变本金或数量。该研究使用反复开发历史，不是独立最终测试、未来或实盘稳定利润。
+
+完整读取26344事件/13050ID、285份既往结论；初始16均有原档实际证据。此前完整研究定义9589，登记有结果9376、未标结果213，全部登记不能算全部完成回测。大量重复历史搜索有多重选择偏差。
+
+预设ETH快L3/4/5 × 慢S27/28/29，固定BTC真实银行3750/N625，ETH真实15000/N4500、HL1.5%/HS2.5%、E0.5%、V10/cap4.5%。raw[1,1]代表完整银行所有权，初始本金18750、资金份额20/80%；不归一化、不再乘资金份额、不线性缩放数量或净值，不平均Sharpe/收益/DD。S28三个父、BTC、九个ETH源与匹配持有父及其源共16旧实际结果只读。六个S27/29父逐项reserve后才对齐完整分钟/事件净值计算；0新原生策略、0新源成交、0新持有基准、0父订单。
+
+Walk-forward：实际2025-10-19UTC00:01至2026-10-24UTC00:01，连续370日，12×30日完整折+10日尾折。现金/数量/费用不按折重开，完整OOS曲线算整体DD。近期40日继承day330状态、8×5日折。固定规则无拟合/标签，purge0、30日预热+3日间隔，过去完整收盘生成信号、下一00:01原生OPEN执行、终点平仓成本已在原生源内。历史反复开发，不能叫未触碰最终测试、独立未来或实盘稳定盈利。
+
+成本全部来自真实已执行原生源：5bp费+1bp半价差+2bp滑点+0.5×past20样本logvol×sqrt(实际q×OPEN/past20完整日quoteADV)，LOT/tick/minnotional、参与率<=0.1%、费后1倍入场抵押、独立1%闭合小时不利mark维持保证金代理；真实settlement ns/rate/mark/heldq资金费，1/2/3倍放大支出、收入不放大。永续空头不借现货，不虚构借币费。父没有调仓或额外成本；匹配持有为相同银行与初始入场N625/4500，现金0%另列。缺盘口/TCA/历史全层级/逐tick强平和真实容量验证，估计及代理局限保留。
+
+原资格门槛保持：各成本全年正；1倍至少9/12正完整月；各成本近期40日正且>=6/8正5日折；3倍整体DD<=25%；含中心索引半径1的L/S邻域3倍正比例与严格近期合格比例均>=60%；至少4底层平仓、毛参考PnL+资金费/执行成本>=2.5；0订单/现金/保证金代理违规，终点flat。旧原生/父的canonical status/criteria/sensitivity及报告字节不改，新L/S诊断另列。
+
+|新组合|L|S|1x收益%|2x收益%|3x收益%|3x整体DD%|1x正月|近期正折1/2/3|状态|
+|---|---:|---:|---:|---:|---:|---:|---:|---|---|
+|cross625_parent_L3_S27_HL150_HS250_E500milliPct|3|27|11.297827|9.450734|7.602751|4.710207|9|5/5/5|rejected|
+|cross625_parent_L3_S29_HL150_HS250_E500milliPct|3|29|12.917228|11.065960|9.213715|4.042590|9|5/5/5|rejected|
+|cross625_parent_L4_S27_HL150_HS250_E500milliPct|4|27|9.012271|7.306148|5.599051|4.500667|9|4/4/4|rejected|
+|cross625_parent_L4_S29_HL150_HS250_E500milliPct|4|29|11.058080|9.346158|7.633155|4.488834|10|5/5/5|rejected|
+|cross625_parent_L5_S27_HL150_HS250_E500milliPct|5|27|13.585308|11.979512|10.374514|3.920186|10|3/3/2|rejected|
+|cross625_parent_L5_S29_HL150_HS250_E500milliPct|5|29|15.254004|13.592966|11.932291|3.920293|11|3/3/2|rejected|
+
+六个新组合历史通过0、淘汰6，逐项失败{'cross625_parent_L3_S27_HL150_HS250_E500milliPct': ['recent40_positive_all_costs', 'recent40_six_of_eight_positive5d_all_costs', 'local_recent6of8_allcost_gte60pct'], 'cross625_parent_L3_S29_HL150_HS250_E500milliPct': ['recent40_six_of_eight_positive5d_all_costs', 'local_recent6of8_allcost_gte60pct'], 'cross625_parent_L4_S27_HL150_HS250_E500milliPct': ['recent40_positive_all_costs', 'recent40_six_of_eight_positive5d_all_costs', 'local_recent6of8_allcost_gte60pct'], 'cross625_parent_L4_S29_HL150_HS250_E500milliPct': ['recent40_six_of_eight_positive5d_all_costs', 'local_recent6of8_allcost_gte60pct'], 'cross625_parent_L5_S27_HL150_HS250_E500milliPct': ['recent40_positive_all_costs', 'recent40_six_of_eight_positive5d_all_costs', 'local_recent6of8_allcost_gte60pct'], 'cross625_parent_L5_S29_HL150_HS250_E500milliPct': ['recent40_six_of_eight_positive5d_all_costs', 'local_recent6of8_allcost_gte60pct']}。相对S28同L/N625原中心，三成本完整NAV同路径0/6；与同L/S原N375逐成本差异及近期折数保留。更高BTC敞口不能只靠年度净收益判定跨S稳健。
+
+11CSV包含18新场景、234逐月/尾折、144近期折、6678日NAV、原生只读九格与新父九格敏感性、72相邻边及来源/分配/匹配持有现金。图中ETH原生全部O=只读，父S27/29 N=新、S28 O=旧。全部Sharpe/Calmar/完整DD及负收益期间保留，描述性悬崖不是统计显著性，也不是事后加门槛。
+
+原SMA65与single仅续Nov3_04:30→06:30；L4/H2续06:10→08:10，仅08:11参考闭合后采集，逐条核对实际新增08资金费并按原heldq计一次，不预填固定时间/费率/mark，不重复00。所有cash/q/desired/已付成本/risk/context/完整NAV前缀保留，不采纳本批S、不改本金或冻结终止计划。部分延迟shadow与十策略真实报价模拟分开，不作180日/六折资格。SMA真实65日源仍为20261103T020232Z/forward_inputs.json.gz。
+
+一手资料2026-11-03实际访问：[Binance市场数据API](https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data)。官方字段不证明盈利或实时执行；8源行情/mark/资金费/约束文件边界/单位/字节/SHA见plan和data_manifest。
+
+金融计算前合成检查覆盖原始完整银行资本恒等式、收益/DD不能平均、不同事件轴必须拒绝与18个L/S索引邻域。预登记前发现继承的原生单轴检查条件不适用ETH双轴，已留存原代码/旧绑定并在任何金融reserve前修正、重新绑定；不是结果后改规则或门槛。
+
+所有实际定义先reserve后计算并finish；正负结果和失败均保留，检查后只清理可重建中间件，完整账本不删。同main锁内生成只读监控、提交非强制push；真实发布/终态/解锁凭据见.git/automation_proofs/20261103T080404Z.json。
+
+封存：6新组合/18成本场景分别finish，历史通过0、淘汰6。0新原生模型、0新源交易、0父订单。16旧实际结果只读，36旧原生成本路径核验funding39960条、成交2028笔；这些是旧源账本，不是新增成交。新父对齐NAV9810234点，逐折/完整DD与成本加总独立审核，计数{'funding': 39960, 'fills': 2028, 'rejects': 0, 'metric_checks': 756, 'margin_checks': 152862}。15新ID/30追加事件，28519旧保护文件字节不变。
+
+旧S28/N625中心在本轮L/S邻域严格近期支持{3: 0.3333333333333333, 4: 0.2222222222222222, 5: 0.16666666666666666}；低于60%不能称跨慢窗口稳健。旧canonical status/criteria/sensitivity、原报告和登记保留，本次新S27/29状态独立按固定门槛裁定，不据此重写历史。与匹配S28全成本NAV相同0/6，全部差异与同L/S原N375增益/回撤/近期折数均留档。
+
+原SMA从2026-11-03T04:30:00Z续2026-11-03T06:30:00Z，NAV46383+120=46503，累计46469分钟/32完整日，0新日决策/成交，Float现金/units/desired/成本连续。single从2026-11-03T04:30:00Z续2026-11-03T06:30:00Z，NAV10710，累计10469分钟/264ID，新资金费[]、成交0、日决策0。L4/H2从2026-11-03T06:10:00Z续2026-11-03T08:10:00Z，仅08:11参考闭合后采集，NAV3449、累计3369分钟/87ID，新资金费[{'asset': 'BTC', 'cost': '1', 'timestamp_ns': 1793692800001000000, 'base_usdt': '0.04608066963043200000000000000', 'amount_usdt': '0.04608066963043200000000000000', 'mark': '76801.11605072', 'rate': '0.00010000'}, {'asset': 'BTC', 'cost': '2', 'timestamp_ns': 1793692800001000000, 'base_usdt': '0.04608066963043200000000000000', 'amount_usdt': '0.04608066963043200000000000000', 'mark': '76801.11605072', 'rate': '0.00010000'}, {'asset': 'BTC', 'cost': '3', 'timestamp_ns': 1793692800001000000, 'base_usdt': '0.04608066963043200000000000000', 'amount_usdt': '0.04608066963043200000000000000', 'mark': '76801.11605072', 'rate': '0.00010000'}, {'asset': 'ETH', 'cost': '1', 'timestamp_ns': 1793692800001000000, 'base_usdt': '0E-16', 'amount_usdt': '0E-16', 'mark': '2257.37116279', 'rate': '0.00010000'}, {'asset': 'ETH', 'cost': '2', 'timestamp_ns': 1793692800001000000, 'base_usdt': '0E-16', 'amount_usdt': '0E-16', 'mark': '2257.37116279', 'rate': '0.00010000'}, {'asset': 'ETH', 'cost': '3', 'timestamp_ns': 1793692800001000000, 'base_usdt': '0E-16', 'amount_usdt': '0E-16', 'mark': '2257.37116279', 'rate': '0.00010000'}]、成交0、日决策0。08新增结算按实际时间/rate/mark/原heldq逐条计算一次；00不重复。全部book/risk/context/NAV前缀与冻结规则/本金/终止计划保持，partial不冒充180日。
+
+只读监控通过：9154研究行，9148旧完整行相同，10报价账户/233观察，gzip4166483字节。HTTP/传输失败实录0次，必要pipeline真实退出0。预登记前修改只读网格检查器的L维度跳过条件，旧代码及两次绑定完整保留，修正与重新绑定在任何金融reserve/valuation之前，未改规则/门槛。合成负对照故意重复乘资金份额而exit1，证明资本恒等式必须保留；随后正确加总、非平均DD/收益及时间轴错位拒绝均通过。0金融或完成观察重跑。
+
+清理0真实结果、0完整账本，无遗留可重建缓存。所有正负结果、登记/原始短窗响应/源净值哈希/复现代码保存。main非强制push和完整远端tree、实际终态/释放锁凭据见.git/automation_proofs/20261103T080404Z.json。
