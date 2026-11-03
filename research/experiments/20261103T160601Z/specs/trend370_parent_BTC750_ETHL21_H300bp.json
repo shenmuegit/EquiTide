@@ -1,0 +1,84 @@
+{
+  "kind": "combination",
+  "family": "native-trend-roc-gated-entry-vol-momentum",
+  "name": "trend370_parent_BTC750_ETHL21_H300bp",
+  "market": "perpetual",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "components": [
+    {
+      "fingerprint": "78a87d29f0990695de56ac8398c799a4017bd6a752800027b689083eee9823ca",
+      "weight": 1
+    },
+    {
+      "fingerprint": "f0ac9275db5bb8e608dd295e41a3a4fd9531370c3373990dc7a74a90400e813f",
+      "weight": 1
+    }
+  ],
+  "logic": {
+    "signal": "ETHexperimentaltrendmomentum:r=C[i-1]/C[i-1-L]-1,L7/14/21. Strict r>H long,r<-H short,H1/2/3%,equality no freshentry. Otherwise actual long retained only r>-E,actualshort onlyr<E,E=.005,equality exits. Desired must equal sign of S28completeclose return;incompatible or zero slow gate forcesflat. Sample10dailylogvol entry-only cap.045 filters fresh/nonmatchingrawdesired to0 iff sigma>cap,equality admitted. No future bars/labels. BTC actual3750/N750 originalROC31/H.04/E.01 readonly.",
+    "allocation": "NewETH nativebank15000,N4500=30%initialcapital,actualpriorcloseLOTquantity and full cost/funding/collateral. Parent owns one full BTC3750/N750 and ETH15000/N4500 bank at raw[1,1],C18750,bankshares20/80%,entrynominalshares4/24%. No normalization,quantity/NAV scaling,average metrics,crossmargin,transfer/rebalance or parentorders.",
+    "execution": "Priorclosedfullbars only,q=floor(fixedN/priorcompleteclose/LOT)*LOT,nextUTC00:01nativeOPENadversetick,reverseclosebeforeopen,retainsameactualq. Continuous370d,terminalcostedclose,no foldresets. Parentsownactualbankswithoutparentrebalance/fills.",
+    "costs": "5bpfee+1bphalfspread+2bpslippage+0.5*past20samplelogvol*sqrt(actualq*OPEN/past20completequoteADV),1/2/3xstress. Realfundingsettlementns/mark/rate/heldq,outflowsstressed,inflowsunchanged. LOT/tick/minnotional,participation<=.001,postfee1xentrycap,independent1percentclosedhouradversemarkmaintenanceproxy. Linearperpetualshortno spotborrow;noinventedborrowfee,TCA/L2,historicalmaxqty/tier,tickliquidation orcapacityproof.",
+    "validation": "Preset L7/14/21 x H.01/.02/.03,with S28,E.005,V10/cap.045 fixed. All9newnative and9newparent definitions successfully reserved before any actual financialvaluation. Two-axis indexradius1 includescenter. Fixedrules/no fit/labels,purge0,warmup30/embargo3,continuous370d12x30+10tail,recent40/8x5. Reuseddevelopmenthistory,not untouchedfinal or independentfuture.",
+    "benchmark": "ActualreadonlyBTC3750/N750+ETH15000/N4500constantlong matchedentrybudget hold,cash0%separate. Three prioractualL4contrarian S28controls E.00375/.005/.00625 keptoutside new momentumgrid;primary E.00375 chosen before outcomes,prior slow-window weakness retained.",
+    "native_implementation": {
+      "path": "research/experiments/20261103T160601Z/engine.py",
+      "sha256": "ae4f21c74b6470669e26829ab401ecad3ddf3cc376a8d712964d164d46904137",
+      "accounting_unchanged_from": "research/experiments/20261103T020232Z/engine.py",
+      "signal_change": "ETHtrend momentum instead of contrarian entry/exit;all native execution/cost/funding unchanged"
+    }
+  },
+  "parameters": {
+    "initial_capital_usdt": 18750,
+    "component_capitals_usdt": [
+      3750,
+      15000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      750,
+      4500
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "capital_allocation_fractions": [
+      0.2,
+      0.8
+    ],
+    "BTC_bank_capital_usdt": 3750,
+    "BTC_entry_notional_usdt": 750,
+    "ETH_lookback_days": 21,
+    "ETH_return_hurdle": 0.03,
+    "ETH_exit_buffer_fraction": 0.005,
+    "ETH_trend_lookback_days": 28,
+    "ETH_long_entry_return_hurdle": 0.03,
+    "ETH_short_entry_return_hurdle": 0.03,
+    "ETH_entry_volatility_window_days": 10,
+    "ETH_entry_volatility_ceiling": 0.045,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "continuous_oos_days": 370,
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "actual_native_quantity_and_impact_reused": true,
+    "source_component_spec_sha256": [
+      "8f9788b8e6cf7d4165212af8e997622c693dfb5b4c83f9648fd0d9dbdea30b47",
+      "ee3644b7e6274eba02e2ebaab0610a39de91ca7c47eb63922dc86dd1413d7eec"
+    ],
+    "ETH_signal_mode": "trend_roc_buffered_exit_slowgate_entry_vol"
+  },
+  "validation_plan": "research/experiments/20261103T160601Z/plan.json"
+}
