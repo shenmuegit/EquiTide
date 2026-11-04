@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T201939Z/freeze.py", line 39, in <module>
+    fp,ro=parent(N,K);grid.append({'L':5,'H':.02,'E':.005,'S':24,'K':K,'D':1,'N':N,'fingerprint':fp,'readonly':ro,'role':'candidate'})
+          ^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T201939Z/freeze.py", line 37, in parent
+    path=R/'specs'/(name+'.json');put(path,sp);fp=reg.fingerprint(sp);assert fp not in records;row={'name':name,'fingerprint':fp,'scope':'parent','role':'benchmark_parent' if benchmark else 'candidate','asset':'COMBO','capital_usdt':18750,'BTC_capital_usdt':3750,'ETH_capital_usdt':15000,'BTC_N':N,'ETH_N':4500,'L':0 if benchmark else 5,'H':None if benchmark else .02,'E':None if benchmark else .005,'S':None if benchmark else 24,'K':K,'D':None if benchmark else 1,'N':N,'source_fingerprints':fps,'reference_fingerprint':oldfp,'reference_BTC_N':625 if benchmark else 500,'reference_ETH_K_D_matched':not benchmark,'spec':rel(path)};batch.append(row);mapping[fp]=oldfp;return fp,False
+                                  ^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T201939Z/common.py", line 9, in <lambda>
+    put=lambda p,x:p.write_text(json.dumps(x,ensure_ascii=False,indent=2,allow_nan=False)+'\n')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1047, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T201939Z/specs/localmix370_parent_BTCN625_ETHentryGateK250ppm_D1.json'

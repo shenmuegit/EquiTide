@@ -1,0 +1,26 @@
+本轮工作目录：/home/desktop/Documents/Codex/EquiTide
+环境：PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1；只用main，branch.lock排他锁。
+历史首次执行顺序和实际退出码保存在*_commands.json、reserve_batches/、finish_batches/；每一金融ID先reserve成功，才开始evaluate。registry现在拒绝精确重跑，勿重做已完成金融/观察。
+
+只读复核：
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T201939Z/audit.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T201939Z/check_decisions.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T201939Z/check_sources.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T201939Z/check_exports.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T201939Z/review/evidence.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T201939Z/forward.py --reproduce
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T201939Z/audit_candidate.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T201939Z/audit_l4h02.py
+python3 checks/strategy_registry.py
+python3 checks/monitor_snapshot.py
+这些命令核对已存真实账本/完整NAV与SHA，不重跑策略。必要审计依赖真实输入和受保护旧归档；路径/SHA在plan、binding、data_manifest。
+
+初次首次运行发生于本轮，不要重复：commands.py reserve_batch_0 → evaluate → audit → counts → decisions → finish_batch_0 → finish；三原账户单独reserve/capture/advance/finish。完整CLI命令/时间/日志见相应receipt。原始追加24事件已经逐字节移至registry_records.jsonl，主journal原前缀/全部旧fragment/事件多重集/时间戳合并索引不变。review/journal_layout.py只能首次执行，不能再次运行。
+
+未来计划状态（严格只读）：
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T201939Z/prospective_fewm/observer.py status
+新计划从2026-11-05UTC00:01开始；起点之前不抓取、不建账、不reserve。当前readiness只做合成工程检验，1980策略一致性，不是金融结果。check.py里的before-start断言过期后不再作为运行期检查；代码/计划不可改，未来必须按绑定执行并对真实首窗独立审计。首次实际观察需要完整33日真实warmup，之后延续独立fewm_forward_latest.json指针，无现金重开。
+
+只读网页：本轮在相同main锁内实际运行python3 research/monitor/snapshot.py及python3 checks/monitor_snapshot.py；无新回测、订单、旧账户变更、重部署或新定时任务。失败保留原有效快照。
+
+原始HTTP/packet和每项成本/折/变体/资金费/账本、冻结规则均保留。仅可重建npy/checkpoint/cache可清理；本轮无这些文件。实际提交、push、远端整tree/blob与解锁证据：.git/automation_proofs/20261104T201939Z.json。

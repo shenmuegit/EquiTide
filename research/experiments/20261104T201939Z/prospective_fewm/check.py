@@ -1,0 +1,68 @@
+"""Deterministic synthetic engineering fixtures only; never market trials or real accounts."""
+import ast,copy,hashlib,importlib.util,json,random,subprocess,sys,time
+from decimal import Decimal as D
+from fractions import Fraction as F
+from pathlib import Path
+import core as c
+ROOT=c.ROOT;R=Path(__file__).resolve().parent;ROUND=R.parent
+sys.path.insert(0,str(ROUND));import engine
+
+def load(p,name):
+ s=importlib.util.spec_from_file_location(name,p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
+
+def main():
+ b=c.bindings();assert c.START>time.time_ns() and c.END-c.START==180*c.DAY and b['capitals']=={'BTC':3750,'ETH':15000};old={p:c.sha(p) for p in [ROOT/'research/automation/candidate_forward_latest.json',ROOT/'research/automation/l4h02_forward_latest.json',ROOT/'research/automation/registry.jsonl']};assert not (ROOT/'research/automation/fewm_forward_latest.json').exists()
+ plan=json.loads(c.PLAN.read_text());sp=json.loads((ROOT/plan['components'][1]['source_spec']).read_text());cases=[]
+ # Exact fast entry/exit and slow slope equality: strict thresholds, causal past only.
+ for actual in [-1,0,1]:
+  for r in [F('-.020001'),F('-.02'),F('-.005001'),F('-.005'),F(0),F('.005'),F('.005001'),F('.02'),F('.020001')]:
+   expected=-1 if r>F('.02') else 1 if r<F('-.02') else actual if actual==1 and r<F('.005') or actual==-1 and r>F('-.005') else 0
+   assert c.base_target(r,actual)==expected;cases.append({'actual':actual,'r':str(r),'target':expected})
+ for slope,expected in [(F('-.000501'),-1),(F('-.0005'),0),(F(0),0),(F('.0005'),0),(F('.000501'),1)]:assert c.slope_gate(slope)==expected
+ for actual in [-1,0,1]:
+  for raw in [-1,0,1]:
+   for sigma in [.044999,.045,.045001]:assert c.entry_filter(raw,actual,sigma)==(0 if raw and raw!=actual and sigma>.045 else raw)
+ rng=random.Random(201939);parity=0;retained=[];failed=[];volblocked=[]
+ for path in range(220):
+  values=[D(100)]
+  for _ in range(66):values.append(values[-1]*D(str(1+rng.uniform(-.075,.075) if path%4 else 1+rng.uniform(-.009,.009))))
+  for i in [33,48,64]:
+   for actual in [-1,0,1]:
+    result=c.target_eth(values,i,actual);wanted,a=engine.decide(sp,{'asset':'ETH','closes':values},i,actual)
+    assert result[0]==wanted and result[1]==a['return_exact'] and result[2]==a['slow_distance_exact'] and float(result[3])==a['observed_sample_logvol'];assert int(result[4])==a['ungated_desired'] and int(result[5])==a['slowgate_direction'] and int(result[6])==a['raw_desired_before_entry_filter']
+    assert c.target_eth(values[:i]+[D('999999999'),D('.0001')],i,actual)==result
+    if actual and int(result[4])==actual and int(result[5])!=actual:assert result[0]==actual;retained.append((values[:i],actual))
+    if actual and int(result[4])==-actual and int(result[6])==0:assert result[0]==0;failed.append((values[:i],actual))
+    if int(result[6]) and int(result[6])!=actual and float(result[3])>.045:assert result[0]==0;volblocked.append((values[:i],actual))
+    parity+=1
+ assert parity==1980 and retained and failed and volblocked
+ # Synthetic actual-position close then blocked reversal, and retention despite neutral/opposite slope.
+ transitions=[]
+ for cls,actual in [retained[0],failed[0],volblocked[0]]:
+  prev=c.new_state(b);t=c.START+c.DAY;prev['last_key']=[t-c.MIN,1];prev['cutoff_ns']=t-c.MIN;prev['last_prices']={'BTC':100.,'ETH':float(cls[-1])}
+  for k,book in prev['books']['ETH'].items():book.update(signed_units=str(D('1')*actual),entry_price=str(cls[-1]),entry_reference=str(cls[-1]))
+  payload={a:{'price':str(cls[-1]) if a=='ETH' else '100','closes':[str(x) for x in cls] if a=='ETH' else ['100']*33,'ADV':'20000000','sigma':'.02'} for a in ['BTC','ETH']};actions={(t,6):copy.deepcopy(payload),(t,7):copy.deepcopy(payload),(t+c.MIN,1):{a:{'price':p['price']} for a,p in payload.items()}}
+  target=c.target_eth(cls,len(cls),actual)[0];state,delta=c.transition(prev,actions,t+c.MIN,b)
+  trades=[z for z in delta['journal'] if z['kind']=='trade'];assert len(trades)==(3 if actual and target!=actual else 0)
+  assert all(not z['opening'] and z['status']=='filled' and z['event_code']==6 for z in trades)
+  for k,book in state['books']['ETH'].items():assert D(book['signed_units'])==(D('1')*actual if target==actual else D(0))
+  for row in delta['NAV']:
+   for k in ['1','2','3']:assert row['NAV']['COMBO'][k]==row['NAV']['BTC'][k]+row['NAV']['ETH'][k]
+  transitions.append({'actual':actual,'target':target,'filled_closes':len(trades),'new_opens':0,'whole_banks_sum':True})
+ # Invalid future bounds and duplicate/rewind fail before any data handling.
+ rejected=0
+ for previous,cut,retrieved in [(None,c.START,c.START+c.MIN),(None,c.START+1,c.START+2*c.MIN),(None,c.END+c.MIN,c.END+2*c.MIN),(None,c.START+c.MIN,c.START+c.MIN),({'cutoff_ns':c.START+2*c.MIN},c.START+c.MIN,c.START+3*c.MIN)]:
+  try:c.check_window(previous,cut,retrieved)
+  except AssertionError:rejected+=1
+  else:raise AssertionError('invalid window accepted')
+ # Status is readonly; before-start run is denied before HTTP/mkdir/reserve/advance.
+ cmds=[]
+ for args,expected in [(['status'],0),(['run','--round',ROUND.name,'--cutoff','2026-11-05T00:10:00Z','--lock-pid','2126706'],1)]:
+  start=time.time_ns();cmd=[sys.executable,'-B',str(R/'observer.py'),*args];z=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True);assert z.returncode==expected
+  if args[0]=='status':status=json.loads(z.stdout);assert status['status']=='waiting_for_planned_start' and not status['account_created'] and status['network_requests']==status['filesystem_writes']==status['registry_writes']==0
+  else:assert 'before planned start' in z.stderr
+  cmds.append({'command':cmd,'started_ns':start,'finished_ns':time.time_ns(),'exit_code':z.returncode,'expected_exit_code':expected,'stdout':z.stdout,'stderr':z.stderr})
+ assert all(c.sha(p)==h for p,h in old.items()) and not (ROUND/'fewm_observation').exists() and not (ROOT/'data/raw/binance/fewm_forward'/ROUND.name).exists() and not (ROOT/'research/automation/fewm_forward_latest.json').exists()
+ out={'passed':True,'engineering_only':True,'real_market_backtests':0,'actual_accounts_created':0,'actual_future_observations':0,'result_available':False,'frozen_start_utc':plan['time_boundaries']['planned_start_utc'],'frozen_end_utc':plan['time_boundaries']['planned_end_exclusive_utc'],'plan_sha256':c.sha(c.PLAN),'binding_sha256':c.sha(c.FREEZE),'code_sha256':{str(p.relative_to(ROOT)):c.sha(p) for p in R.glob('*.py')},'exact_policy_parity_cases':parity,'fast_boundary_cases':cases,'slope_boundary_cases':5,'volatility_boundary_cases':81,'retained_actual_position_cases':len(retained),'failed_reversal_gate_cases':len(failed),'volatility_blocked_cases':len(volblocked),'synthetic_transitions':transitions,'invalid_windows_rejected':rejected,'causal_future_values_ignored':True,'new_pointer_account_registry_data_unchanged':True,'commands':cmds,'qualification':'Ready for post-start reserved actual window only; no prospective return or stability evidence. First actualwindow still requires independent ledger audit.'}
+ (R/'readiness.json').write_text(json.dumps(out,ensure_ascii=False,indent=2)+'\n');print(json.dumps({k:out[k] for k in ['passed','engineering_only','actual_accounts_created','actual_future_observations','exact_policy_parity_cases','retained_actual_position_cases','failed_reversal_gate_cases','volatility_blocked_cases','invalid_windows_rejected']}))
+if __name__=='__main__':main()
