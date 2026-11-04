@@ -1,0 +1,51 @@
+{
+  "recorded_utc": "2026-11-04T22:39:34.808996+00:00",
+  "kind": "publication-manifest-schema-correction",
+  "engineering_only": true,
+  "new_financial_results": 0,
+  "original_pushed_commit": "af7125bf8c4acc99c07acefbc0e0848b969ea66f",
+  "original_push_exit_code": 0,
+  "original_manifest_path": "research/experiments/20261104T221940Z/data_manifest.json",
+  "original_manifest_sha256": "9dc3ea98e7ed363e19932786c4db5311e093456e8dd5b381190b1102cdeaea32",
+  "actual_publisher_tool_terminal": {
+    "exit_code": 1,
+    "tool_chunk": "88006d",
+    "error": "KeyError: prospective_readiness",
+    "failed_source_line": 98
+  },
+  "original_failure_receipts": [
+    {
+      "at_utc": "2026-11-04T22:37:17.622882Z",
+      "exit_code": 1,
+      "type": "KeyError",
+      "error": "'prospective_readiness'"
+    }
+  ],
+  "cause": "Global replacement intended for the required fewm_status command phase also renamed a manifest schema field holding original-single cumulative observations.",
+  "correction": "Restore canonical prospective_readiness field, unchanged payload; keep separate new_FEWM_independent_future_plan and fewm_status_commands.json unchanged. Correct only finalizer serialization template and explain correction in result.md.",
+  "canonical_field": "prospective_readiness",
+  "original_misnamed_field": "fewm_status",
+  "unchanged_payload": {
+    "actual_candidate_observations": 321,
+    "new_actual_observation_IDs": 3,
+    "original_frozen_rules_unchanged": true,
+    "current_cutoff_utc": "2026-11-04T20:30:00Z"
+  },
+  "intentional_original_artifact_changes": {
+    "research/experiments/20261104T221940Z/finalize.py": {
+      "original_sha256": "1a9543d4eb80884c5cfe48c5d695f6bd369cf2a4245bdf2e3b6a7b8d0e47b633",
+      "corrected_sha256": "2c6bdcaf8ab7e9129d54eab926e87a136971ed822b451819a49880941c0e950b"
+    },
+    "research/experiments/20261104T221940Z/result.md": {
+      "original_sha256": "e0c16d9118e4ce7916d9a24879c202c468d0acf79ac9b2fc460df6454b45f338",
+      "corrected_sha256": "26fd7e0ed2d3e2210b5af1bc69169838750544dc0f35a277bf154b76dfdca45e"
+    }
+  },
+  "all_original_financial_result_account_and_journal_bytes_unchanged": true,
+  "original_versions_permanently_retained_in_main_git_history": true,
+  "reproduce_verification": [
+    "python3",
+    "research/experiments/20261104T221940Z/publication_correction.py"
+  ],
+  "financial_or_observation_reruns": 0
+}
