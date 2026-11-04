@@ -1,0 +1,94 @@
+{
+  "name": "bankmix370_BTC1500_ETHL3_H150bp",
+  "kind": "combination",
+  "family": "native-fullbank-sma-allocation",
+  "market": "perpetual",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "timeframe": "1d",
+  "logic": {
+    "source_signals": "ReadonlyactualBTCmomentumL31/H.04/E.01,C15000,N1500;readonlyactualETHSMA32-gatedreversal,L3/5/7,H.015/.02/.025,E.005,V10/cap.045,C15000,N4500.Allsourcepolicy/cost/funding/riskledgersalreadyexecuted.No newnative signals ortrades.",
+    "allocation": "Own onefullBTC15000bank andonefullETH15000bank,raw[1,1],capital30000,capitalshares50/50%,entrynominalshares5/15%. Sum aligneddollarNAV;no normalization,linearNAV/quantityresizing,averagedmetrics,rebalancing/transfers/crossmargin orparentorders. OldBTC3750/N750+ETH15000/N4500 comparator had C18750,20/80%capitalshares,4/24%entrynominalshares;capitalandexposurebothdiffer,notmatchedcapitalalpha.",
+    "execution_and_costs": "Priorclosedfullbars only,q=floor(fixedN/priorcompleteclose/LOT)*LOT,nextUTC00:01nativeOPENadversetick,reverseclosebeforeopen,retainsameactualq. Continuous370d,terminalcostedclose,no foldresets. Parentsownactualbankswithoutparentrebalance/fills.",
+    "costs": "5bpfee+1bphalfspread+2bpslippage+0.5*past20samplelogvol*sqrt(actualq*OPEN/past20completequoteADV),1/2/3xstress. Realfundingsettlementns/mark/rate/heldq,outflowsstressed,inflowsunchanged. LOT/tick/minnotional,participation<=.001,postfee1xentrycap,independent1percentclosedhouradversemarkmaintenanceproxy. Linearperpetualshortno spotborrow;noinventedborrowfee,TCA/L2,historicalmaxqty/tier,tickliquidation orcapacityproof.",
+    "validation": "Reserveall9newparentdefinitionsbeforecomputinganynewportfolio. PresetL3/5/7 x H1.5/2/2.5%,sameSMA32/E.005 andcosts;continuous370d12x30+10tail,recent40/8x5,no resets/fits/labels. Reuseddevelopmenthistory,notuntouchedfinal/independentfuture. Oldoriginalallocationrejections remainreadonly.",
+    "benchmark": "ExistingactualconstantlongBTC15000/N1500+ETH15000/N4500 matchedcapital/budgethold andcash0%. No newbenchmark/nativevaluation."
+  },
+  "parameters": {
+    "initial_capital_usdt": 30000,
+    "component_capitals_usdt": [
+      15000,
+      15000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      1500,
+      4500
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "capital_allocation_fractions": [
+      0.5,
+      0.5
+    ],
+    "BTC_bank_capital_usdt": 15000,
+    "BTC_entry_notional_usdt": 1500,
+    "BTC_lookback_days": 31,
+    "BTC_return_hurdle": 0.04,
+    "BTC_exit_buffer_fraction": 0.01,
+    "ETH_bank_capital_usdt": 15000,
+    "ETH_entry_notional_usdt": 4500,
+    "ETH_lookback_days": 3,
+    "ETH_return_hurdle": 0.015,
+    "ETH_long_entry_return_hurdle": 0.015,
+    "ETH_short_entry_return_hurdle": 0.015,
+    "ETH_trend_lookback_days": 32,
+    "ETH_trend_estimator": "simple_moving_average_level",
+    "ETH_exit_buffer_fraction": 0.005,
+    "ETH_entry_volatility_window_days": 10,
+    "ETH_entry_volatility_ceiling": 0.045,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "continuous_oos_days": 370,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "actual_native_quantity_and_impact_reused": true,
+    "source_component_spec_sha256": [
+      "5517035127491c85be461b08b546c53944284183a60ff2677490c3c4f3dcb8c9",
+      "a3a7f3952bed64f3c8334b90c66f23e73521290cab6fa7cb72a26acf7dc46301"
+    ]
+  },
+  "components": [
+    {
+      "fingerprint": "09e867d990dec746952fe578524a85e6fa229c288fa65895160c5f43d94effff",
+      "weight": 1
+    },
+    {
+      "fingerprint": "b64b254b28850619ce00abdd9e32f2dc0befe3e542a12a440480fa400898981a",
+      "weight": 1
+    }
+  ],
+  "validation_plan": "research/experiments/20261104T001133Z/plan.json",
+  "sources": [
+    {
+      "url": "https://mebfaber.com/white-papers/",
+      "access_date": "2026-11-04",
+      "version": "author2013 update of original2006 paper",
+      "scope": "Primary source supports price-versus-simplemean as a trend estimator only. Daily24/28/32 and contrarian/perpetual rules are our experimental adaptation,not the original10month long-only model or a transferred profitability claim."
+    },
+    {
+      "url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "access_date": "2026-11-04",
+      "scope": "OfficialUSD-MfundingTime/rate/mark schema,not proof of profit/execution/capacity."
+    }
+  ]
+}
