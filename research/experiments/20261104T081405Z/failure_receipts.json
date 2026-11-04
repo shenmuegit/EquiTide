@@ -1,0 +1,92 @@
+{
+  "failed_pipeline_commands": [
+    {
+      "receipt": "summary_commands.json",
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T081405Z/summarize.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-04T08:40:18.108569Z",
+      "finished_utc": "2026-11-04T08:40:19.481425Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261104T081405Z/summary.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T081405Z/summarize.py\", line 54, in <module>\n    for c in full.values():arr[p['trend_windows'].index(c['S']),p['slope_lags'].index(c['E'])]=fn(c)\n                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: 0.005 is not in list\n"
+    }
+  ],
+  "resolved_index_projection_failures": 0,
+  "resolved_saved_metric_export_failures": 1,
+  "expected_TDD_red": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T081405Z/check_asymmetric.py",
+      "--negative-control-double-weighting"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-04T08:28:39.099941+00:00",
+    "finished_utc": "2026-11-04T08:28:39.362675+00:00",
+    "actual_exit_code": 1,
+    "expected_failure": true,
+    "synthetic_only": true,
+    "no_new_financial_valuation": true,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T081405Z/check_asymmetric.py\", line 10, in <module>\n    wrong=.2*btc+.8*eth;assert wrong[0]==18750,'Synthetic double-weighting raw full banks must fail capital identity'\n                               ^^^^^^^^^^^^^^^\nAssertionError: Synthetic double-weighting raw full banks must fail capital identity\n"
+  },
+  "candidate_and_L4_HTTP_failures": [
+    {
+      "url": "https://fapi.binance.com/fapi/v1/klines?symbol=ETHUSDT&interval=1m&startTime=1793766540000&endTime=1793773800000&limit=1500",
+      "started_utc": "2026-11-04T08:37:51.309495+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261104T081405Z/http_attempt_0005.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n"
+    }
+  ],
+  "forward_transport_errors": [],
+  "exact_forward_HTTP_attempt_count_instrumented": false,
+  "observed_HTTP_or_transport_failures": 1,
+  "actual_read_tool_failures": [
+    {
+      "kind": "primary_documentation_web_read",
+      "url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "actual_error": "400 Timeout fetching in web tool",
+      "resolved": false,
+      "financial_data_implication": "No market/fundingvalue inferred; actualpublicAPI capture remainsrequired.",
+      "actual_attempts": 3,
+      "attempt_results": [
+        "web currentpage400timeout",
+        "web wholepage400timeout",
+        "web priorreference400timeout"
+      ],
+      "same_day_prior_verified_documentation": "research/experiments/20261104T061335Z/startup.json",
+      "blocking_financial_valuation": false,
+      "nonblocking_financial_dependency_verified": true,
+      "underlying_documentation_web_fetch_recovered": false,
+      "mitigation": "Verified actualBTC/ETH fundingRate response fields and08 cashflows in primary_funding_field_verification.json; docsread remains failed, no fabricatedfunding/rate/mark.",
+      "verification_sha256": "59a0c56c725d328daea76eddee566c57336ffbf886486614102c689a13e9d36b"
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T081405Z/summarize.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-04T08:40:18.108569Z",
+      "finished_utc": "2026-11-04T08:40:19.481425Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261104T081405Z/summary.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T081405Z/summarize.py\", line 54, in <module>\n    for c in full.values():arr[p['trend_windows'].index(c['S']),p['slope_lags'].index(c['E'])]=fn(c)\n                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: 0.005 is not in list\n",
+      "previous_valid_monitor_restored": false,
+      "resolved": true,
+      "resolution": "Two plotting indexes correctedEtoD; reran saved-metric exporter only, actualretry0. Originalfailedscript/log/receipt retained,financialreportSHAunchanged.",
+      "recovery_receipt": "summary_retry1_commands.json",
+      "recovery_tool_chunk": "f2c07f"
+    }
+  ],
+  "completed_native_or_parent_backtest_reruns": 0,
+  "completed_observation_reruns": 0
+}
