@@ -1,0 +1,110 @@
+{
+  "name": "localmix370_parent_BTCN1250_ETHentryGateK250ppm_D1",
+  "kind": "combination",
+  "family": "actual-btc-entry-budget-eth-entry-gated-reversal",
+  "market": "perpetual",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "timeframe": "1d",
+  "logic": {
+    "signal": "BTC original ROC31/H.04/E.01 momentum unchanged. ETH old entry-only finiteEWM trend gate at fixedS24,D1,K.00025/.0005/.00075,L5/H.02/E.005,V10/.045: three actual native paths read only. No signal re-fit or policy change.",
+    "allocation": "Actual independent BTC3750 and ETH15000 banks,total18750,rawweights[1,1],capital20/80%. BTC fixed entry N750/1000/1250 USDT,own-bank20/26.666667/33.333333%,totalinitial nominal4/5.333333/6.666667%;ETH4500=24%total. Keep raw weights;no normalization,NAV/quantity/cost scaling,parent orders,clones,transfers,rebalance or cross margin. Only genuinely new BTCN1250 momentum and sameN hold require native LOT/adverse tick/volume impact/funding/collateral computation.",
+    "execution": "Priorclosedfullbars only,q=floor(fixedN/priorcompleteclose/LOT)*LOT,nextUTC00:01nativeOPENadversetick,reverseclosebeforeopen,retainsameactualq. Continuous370d,terminalcostedclose,no foldresets. Parentsownactualbankswithoutparentrebalance/fills.",
+    "costs": "5bpfee+1bphalfspread+2bpslippage+0.5*past20samplelogvol*sqrt(actualq*OPEN/past20completequoteADV),1/2/3xstress. Realfundingsettlementns/mark/rate/heldq,outflowsstressed,inflowsunchanged. LOT/tick/minnotional,participation<=.001,postfee1xentrycap,independent1percentclosedhouradversemarkmaintenanceproxy. Linearperpetualshortno spotborrow;noinventedborrowfee,TCA/L2,historicalmaxqty/tier,tickliquidation orcapacityproof.",
+    "validation": "Preset N750/1000/1250 x K.00025/.0005/.00075,D1 fixed.1old parent centerN1000/K.0005 and2old BTC source amounts readonly;8new strategy parents,1new matchedhold parent,2new BTC1250 native banks=11financial definitions/33cost scenes.All reserve before valuation. Joint N/K index-radius1 including center,nativeBTC N one-axis; old canonical status/criteria/sensitivity unchanged,current neighborhood diagnostic separately named. Continuous370d12x30+10tail,recent40/8x5,no resets,fitting,labels,purge0. Reused development history after prior selection,not independent final/future. No batch expansion/gate change after outcomes.",
+    "benchmark": "Each N uses samecapital/sameN BTC+ETH4500 constantlong reference andcash0%. Old750/1000 matchedholds read only; new1250hold natively computed. Readonly BTC500 baselines match ETHK/D and capitals but intentionally differ BTCN.",
+    "native_implementation": {
+      "path": "research/experiments/20261104T181839Z/engine.py",
+      "sha256": "2f98a3d86b06df7bcf538df1c9cabbe19393f24d531721af7f1778c572ba6e05",
+      "accounting_unchanged_from": "research/experiments/20261104T161708Z/engine.py",
+      "signal_change": "Entire engine bytes unchanged. New BTCN1250 actual size/cost/fund calculation only; BTC750/1000 and all ETH components reused."
+    }
+  },
+  "parameters": {
+    "initial_capital_usdt": 18750,
+    "component_capitals_usdt": [
+      3750,
+      15000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      1250,
+      4500
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "capital_allocation_fractions": [
+      0.2,
+      0.8
+    ],
+    "BTC_bank_capital_usdt": 3750,
+    "BTC_entry_notional_usdt": 1250,
+    "BTC_lookback_days": 31,
+    "BTC_return_hurdle": 0.04,
+    "BTC_exit_buffer_fraction": 0.01,
+    "ETH_bank_capital_usdt": 15000,
+    "ETH_entry_notional_usdt": 4500,
+    "ETH_lookback_days": 5,
+    "ETH_return_hurdle": 0.02,
+    "ETH_long_entry_return_hurdle": 0.02,
+    "ETH_short_entry_return_hurdle": 0.02,
+    "ETH_trend_lookback_days": 24,
+    "ETH_trend_estimator": "finite_normalized_exponentially_weighted_mean_slope",
+    "ETH_exit_buffer_fraction": 0.005,
+    "ETH_entry_volatility_window_days": 10,
+    "ETH_entry_volatility_ceiling": 0.045,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "continuous_oos_days": 370,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "actual_native_quantity_and_impact_reused": false,
+    "source_component_spec_sha256": [
+      "1dc40532eae0d33c0cac9bff7c6b41aabef04d149cc1ed5d52f3996d1822251f",
+      "9da7fb32092329205716777d2cc49f32aac50d7893008e2c71b4995ead1fe279"
+    ],
+    "ETH_trend_window_days": 24,
+    "ETH_trend_decay_numerator": 23,
+    "ETH_trend_decay_denominator": 25,
+    "ETH_signal_mode": "finite_EWMslope_entry_gated_reversal_entry_vol",
+    "BTC_existing_actual_bank_reused": true,
+    "ETH_new_native_quantity_and_impact_computed": true,
+    "ETH_trend_slope_lag_days": 1,
+    "ETH_trend_slope_hurdle_fraction": 0.00025,
+    "ETH_trend_gate_scope": "new_or_reversed_position_only"
+  },
+  "components": [
+    {
+      "fingerprint": "3e23ed6338b29ba2a4d60ed7ce8f337181155a1a85d00500eafc7ea31c3b680f",
+      "weight": 1
+    },
+    {
+      "fingerprint": "6c48e6d880cd6cb3b3d61757c0ca639b68d9b20f3433f82266446014203783e9",
+      "weight": 1
+    }
+  ],
+  "validation_plan": "research/experiments/20261104T181839Z/plan.json",
+  "sources": [
+    {
+      "title": "Pandas official exponentially weighted mean adjust=True formula",
+      "url": "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.ewm.html",
+      "access_date": "2026-11-04",
+      "version": "Documentation retrieved2026-11-04; explicit researchwindow32 andbeta31/33,not defaultinfinitehistory or performanceclaim."
+    },
+    {
+      "title": "Binance USD-M official market data REST fields",
+      "url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "access_date": "2026-11-04",
+      "version": "Fields for native bars,marks,realizedfunding andmetadata; exact input versionsSHAinplan."
+    }
+  ]
+}
