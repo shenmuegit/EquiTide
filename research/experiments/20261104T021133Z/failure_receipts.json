@@ -1,0 +1,56 @@
+{
+  "failed_pipeline_commands": [],
+  "resolved_index_projection_failures": 0,
+  "expected_TDD_red": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T021133Z/check_asymmetric.py",
+      "--negative-control-double-weighting"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-04T02:22:07.282824+00:00",
+    "finished_utc": "2026-11-04T02:22:07.555596+00:00",
+    "actual_exit_code": 1,
+    "expected_failure": true,
+    "synthetic_only": true,
+    "no_new_portfolio_valuation": true,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T021133Z/check_asymmetric.py\", line 8, in <module>\n    wrong=.5*btc+.5*eth;assert wrong[0]==18750,'Synthetic double-weighting raw full banks must fail capital identity'\n                               ^^^^^^^^^^^^^^^\nAssertionError: Synthetic double-weighting raw full banks must fail capital identity\n"
+  },
+  "candidate_and_L4_HTTP_failures": [
+    {
+      "url": "https://fapi.binance.com/fapi/v1/markPriceKlines?symbol=ETHUSDT&interval=1h&startTime=1793739600000&endTime=1793746800000&limit=1500",
+      "started_utc": "2026-11-04T02:25:08.328240+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261104T021133Z/http_attempt_0006.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n"
+    }
+  ],
+  "forward_transport_errors": [],
+  "exact_forward_HTTP_attempt_count_instrumented": false,
+  "observed_HTTP_or_transport_failures": 1,
+  "actual_read_tool_failures": [
+    {
+      "kind": "documentation_web_open",
+      "url": "https://developers.binance.com/en/docs/derivatives/usds-margined-futures/market-data/rest-api/Get-Funding-Rate-History",
+      "actual_result": "Internal Error: not accessible via web tool",
+      "resolved": true,
+      "resolution": "Read current official catalog market-data page at https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data; no market input fabricated."
+    },
+    {
+      "kind": "readonly_source_search_command",
+      "tool_chunk": "8936e5",
+      "actual_exit_code": 1,
+      "error": "Inline diagnostic syntax typo; no file mutation or calculation",
+      "resolved": true,
+      "resolution": "Corrected diagnostic executed below before freeze/reservation."
+    }
+  ],
+  "completed_native_or_parent_backtest_reruns": 0,
+  "completed_observation_reruns": 0
+}
