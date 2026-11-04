@@ -1,0 +1,107 @@
+{
+  "name": "fewm32_parent_BTC500_ETHL7_H200bp",
+  "kind": "combination",
+  "family": "native-finite-ewmlevel-gated-reversal-entry-vol",
+  "market": "perpetual",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "timeframe": "1d",
+  "logic": {
+    "signal": "ETH r=C[i-1]/C[i-1-L]-1,L3/5/7,H.015/.02/.025. r>Hshort,r<-Hlong,entryequality nofreshposition;otherwise holdactuallongr<.005,actualshort r>-.005,exitequalityflat. EWM32=sum_{j=0..31}[(31/33)^j*C[i-1-j]]/sum_{j=0..31}[(31/33)^j]. Exactlylast32completecloses,includeslatestcomplete. Gate=sign(C[i-1]/EWM32-1),zero/opposite forcesflat. This is a finite normalizedgeometricwindow,not recursivelycarriedinfiniteEMA;no current/futurebar. V10 samplelogvol cap.045 appliesonlyfresh/reversalrawposition,not sameactualposition. BTCunchangedmomentumL31/H.04/E.01 readonly.",
+    "allocation": "NewETHnativebankC15000,N4500,actualpastcloseLOTquantity,cost/funding/risk. ParentsownfullBTC3750/N500actualbankandfullETH15000/N4500newbank,raw[1,1],C18750,capitalshares20/80%,initialnominalshares500/18750=2.6666666667%,24%. No normalizationofcomponentweights,NAV/quantityscaling,meanmetrics,transfers/rebalance/crossmargin/parentorders. NormalizinggeometricTIMEweights is partofthesignaldefinitiononly.",
+    "execution": "Priorclosedfullbars only,q=floor(fixedN/priorcompleteclose/LOT)*LOT,nextUTC00:01nativeOPENadversetick,reverseclosebeforeopen,retainsameactualq. Continuous370d,terminalcostedclose,no foldresets. Parentsownactualbankswithoutparentrebalance/fills.",
+    "costs": "5bpfee+1bphalfspread+2bpslippage+0.5*past20samplelogvol*sqrt(actualq*OPEN/past20completequoteADV),1/2/3xstress. Realfundingsettlementns/mark/rate/heldq,outflowsstressed,inflowsunchanged. LOT/tick/minnotional,participation<=.001,postfee1xentrycap,independent1percentclosedhouradversemarkmaintenanceproxy. Linearperpetualshortno spotborrow;noinventedborrowfee,TCA/L2,historicalmaxqty/tier,tickliquidation orcapacityproof.",
+    "validation": "All9newETHnative+9newparents reservebeforeanyvaluation. PresetL3/5/7xH.015/.02/.025;EWM32/beta31/33/E.005/V10cap.045 fixed. L/H indexradius1includescenter,eachnativeandparentgrid separate. Continuous370d12x30+10tail,recent40/8x5,no fit/labels/purge0/reset. 33sourcecontextbars suffice. Reuseddevelopmenthistory,notuntouchedfinalorindependentfuture;no postoutcomegridextension/gates.",
+    "benchmark": "Readonlysamecapital/budgetconstantlongBTC3750/N500+ETH15000/N4500andcash0%. NineoldSMA32parentsandnineSMA32natives atidenticalL/H,N,capital,cost,calendarcompareestimatoronly,canonicalqualificationsunchanged,outsidecurrentEWMgrid.",
+    "native_implementation": {
+      "path": "research/experiments/20261104T041304Z/engine.py",
+      "sha256": "949bcca40b77bc43ee40f76c2ac9cccd1fdbbe1b789db5e0821d02d0b116eb07",
+      "accounting_unchanged_from": "research/experiments/20261103T200934Z/engine.py",
+      "signal_change": "OnlyETHtrendlevelSMA32tofinite normalizedEWM32,beta31/33. SimulateASTandnativeaccountingtrade/funding/summaryunchanged."
+    }
+  },
+  "parameters": {
+    "initial_capital_usdt": 18750,
+    "component_capitals_usdt": [
+      3750,
+      15000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      500,
+      4500
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "capital_allocation_fractions": [
+      0.2,
+      0.8
+    ],
+    "BTC_bank_capital_usdt": 3750,
+    "BTC_entry_notional_usdt": 500,
+    "BTC_lookback_days": 31,
+    "BTC_return_hurdle": 0.04,
+    "BTC_exit_buffer_fraction": 0.01,
+    "ETH_bank_capital_usdt": 15000,
+    "ETH_entry_notional_usdt": 4500,
+    "ETH_lookback_days": 7,
+    "ETH_return_hurdle": 0.02,
+    "ETH_long_entry_return_hurdle": 0.02,
+    "ETH_short_entry_return_hurdle": 0.02,
+    "ETH_trend_lookback_days": 32,
+    "ETH_trend_estimator": "finite_normalized_exponentially_weighted_mean_level",
+    "ETH_exit_buffer_fraction": 0.005,
+    "ETH_entry_volatility_window_days": 10,
+    "ETH_entry_volatility_ceiling": 0.045,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "continuous_oos_days": 370,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "actual_native_quantity_and_impact_reused": false,
+    "source_component_spec_sha256": [
+      "26364f0b3c78fb7f695c688613cc69d5b73fe89a1877c0d48f65a7fccd422448",
+      "3d4ed26dceebb12de877b7e3c1fb7b5e8c20695e28810ecbfdf3f3ae8eb4c015"
+    ],
+    "ETH_trend_window_days": 32,
+    "ETH_trend_decay_numerator": 31,
+    "ETH_trend_decay_denominator": 33,
+    "ETH_signal_mode": "finite_EWMlevel_gated_reversal_entry_vol",
+    "BTC_existing_actual_bank_reused": true,
+    "ETH_new_native_quantity_and_impact_computed": true
+  },
+  "components": [
+    {
+      "fingerprint": "3eb8a6c512d66cb8cbc91ecbe84d0979bcb0141f3473dc4cbd250a1d00e865a5",
+      "weight": 1
+    },
+    {
+      "fingerprint": "88d705262a22e56d0ee7ade0d4935bc4845d5bd430762f772d55449cb61f8a82",
+      "weight": 1
+    }
+  ],
+  "validation_plan": "research/experiments/20261104T041304Z/plan.json",
+  "sources": [
+    {
+      "title": "Pandas official exponentially weighted mean adjust=True formula",
+      "url": "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.ewm.html",
+      "access_date": "2026-11-04",
+      "version": "Documentation retrieved2026-11-04; explicit researchwindow32 andbeta31/33,not defaultinfinitehistory or performanceclaim."
+    },
+    {
+      "title": "Binance USD-M official market data REST fields",
+      "url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "access_date": "2026-11-04",
+      "version": "Fields for native bars,marks,realizedfunding andmetadata; exact input versionsSHAinplan."
+    }
+  ]
+}
