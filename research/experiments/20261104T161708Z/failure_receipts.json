@@ -1,0 +1,77 @@
+{
+  "failed_pipeline_commands": [
+    {
+      "receipt": "freeze_commands.json",
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T161708Z/freeze.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-04T16:31:26.471529Z",
+      "finished_utc": "2026-11-04T16:31:28.569651Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261104T161708Z/freeze.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T161708Z/freeze.py\", line 28, in <module>\n    for N,D in itertools.product(Ns,Ds):grid.append({'L':5,'H':.02,'E':.005,'S':24,'K':K,'D':D,'N':N,'fingerprint':fresh_parent(N,D),'readonly':False,'role':'candidate'})\n                                                                                                                   ^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T161708Z/freeze.py\", line 27, in fresh_parent\n    oldfp=HOLD if benchmark else controls['parent'][str(D)];fps=[HB[N],EH] if benchmark else [B[N],controls['native'][str(D)]];sp=copy.deepcopy(records[oldfp]['spec']);name=f'mixbudget370_parent_BTCN{N}_'+('constantlong' if benchmark else f'ETHentryGateK500ppm_D{D}');sp.update(name=name,family='actual-BTC-entry-budget-ETH-entry-gated-reversal' if not benchmark else sp['family'],components=[{'fingerprint':fp,'weight':1} for fp in fps],logic=copy.deepcopy(logic),validation_plan=rel(R/'plan.json'),sources=sources);sp['parameters'].update(BTC_entry_notional_usdt=N,component_initial_entry_notionals_usdt=[N,4500],source_component_spec_sha256=[refs[fp]['spec_sha256'] if fp in refs else sha(ROOT/newsp[fp][1]) for fp in fps]);sp['logic']['signal']=('Both native components constant long at first executable reference and held until costed terminal close;actual sameN budgets,no momentum or EWM gate.' if benchmark else logic['signal']);path=R/'specs'/(name+'.json');put(path,sp);fp=reg.fingerprint(sp);assert fp not in records;row={'name':name,'fingerprint':fp,'scope':'parent','role':'benchmark_parent' if benchmark else 'candidate','asset':'COMBO','capital_usdt':18750,'BTC_capital_usdt':3750,'ETH_capital_usdt':15000,'BTC_N':N,'ETH_N':4500,'L':0 if benchmark else 5,'H':None if benchmark else .02,'E':None if benchmark else .005,'S':None if benchmark else 24,'K':None if benchmark else K,'D':D,'N':N,'source_fingerprints':fps,'reference_fingerprint':oldfp,'reference_BTC_N':500,'reference_ETH_D_matched':not benchmark,'reference_ETH_K_matched':not benchmark,'spec':rel(path)};batch.append(row);mapping[fp]=oldfp;return fp\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/automation/registry.py\", line 26, in fingerprint\n    raise ValueError(\"family must be a stable lowercase ID; logic must be a nonempty object\")\nValueError: family must be a stable lowercase ID; logic must be a nonempty object\n"
+    }
+  ],
+  "resolved_index_projection_failures": 0,
+  "resolved_saved_metric_export_failures": 0,
+  "resolved_manual_journal_iteration_order_check_failures": 0,
+  "resolved_preregistration_family_format_failures": 1,
+  "expected_TDD_red": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "research/experiments/20261104T161708Z/check_asymmetric.py",
+      "--negative-control-double-weighting"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-04T16:33:14.659260Z",
+    "finished_utc": "2026-11-04T16:33:14.950723Z",
+    "actual_exit_code": 1,
+    "expected_failure": true,
+    "synthetic_only": true,
+    "no_new_financial_valuation": true,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T161708Z/check_asymmetric.py\", line 10, in <module>\n    wrong=.2*btc+.8*eth;assert wrong[0]==18750,'Synthetic double-weighting raw full banks must fail capital identity'\n                               ^^^^^^^^^^^^^^^\nAssertionError: Synthetic double-weighting raw full banks must fail capital identity\n"
+  },
+  "candidate_and_L4_HTTP_failures": [
+    {
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=ETHUSDT&startTime=1793779200000&endTime=1793802600000&limit=1000",
+      "started_utc": "2026-11-04T16:42:08.461391+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261104T161708Z/http_attempt_0007.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n"
+    }
+  ],
+  "forward_transport_errors": [],
+  "exact_forward_HTTP_attempt_count_instrumented": false,
+  "observed_HTTP_or_transport_failures": 1,
+  "actual_read_tool_failures": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T161708Z/freeze.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-04T16:31:26.471529Z",
+      "finished_utc": "2026-11-04T16:31:28.569651Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261104T161708Z/freeze.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T161708Z/freeze.py\", line 28, in <module>\n    for N,D in itertools.product(Ns,Ds):grid.append({'L':5,'H':.02,'E':.005,'S':24,'K':K,'D':D,'N':N,'fingerprint':fresh_parent(N,D),'readonly':False,'role':'candidate'})\n                                                                                                                   ^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T161708Z/freeze.py\", line 27, in fresh_parent\n    oldfp=HOLD if benchmark else controls['parent'][str(D)];fps=[HB[N],EH] if benchmark else [B[N],controls['native'][str(D)]];sp=copy.deepcopy(records[oldfp]['spec']);name=f'mixbudget370_parent_BTCN{N}_'+('constantlong' if benchmark else f'ETHentryGateK500ppm_D{D}');sp.update(name=name,family='actual-BTC-entry-budget-ETH-entry-gated-reversal' if not benchmark else sp['family'],components=[{'fingerprint':fp,'weight':1} for fp in fps],logic=copy.deepcopy(logic),validation_plan=rel(R/'plan.json'),sources=sources);sp['parameters'].update(BTC_entry_notional_usdt=N,component_initial_entry_notionals_usdt=[N,4500],source_component_spec_sha256=[refs[fp]['spec_sha256'] if fp in refs else sha(ROOT/newsp[fp][1]) for fp in fps]);sp['logic']['signal']=('Both native components constant long at first executable reference and held until costed terminal close;actual sameN budgets,no momentum or EWM gate.' if benchmark else logic['signal']);path=R/'specs'/(name+'.json');put(path,sp);fp=reg.fingerprint(sp);assert fp not in records;row={'name':name,'fingerprint':fp,'scope':'parent','role':'benchmark_parent' if benchmark else 'candidate','asset':'COMBO','capital_usdt':18750,'BTC_capital_usdt':3750,'ETH_capital_usdt':15000,'BTC_N':N,'ETH_N':4500,'L':0 if benchmark else 5,'H':None if benchmark else .02,'E':None if benchmark else .005,'S':None if benchmark else 24,'K':None if benchmark else K,'D':D,'N':N,'source_fingerprints':fps,'reference_fingerprint':oldfp,'reference_BTC_N':500,'reference_ETH_D_matched':not benchmark,'reference_ETH_K_matched':not benchmark,'spec':rel(path)};batch.append(row);mapping[fp]=oldfp;return fp\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/automation/registry.py\", line 26, in fingerprint\n    raise ValueError(\"family must be a stable lowercase ID; logic must be a nonempty object\")\nValueError: family must be a stable lowercase ID; logic must be a nonempty object\n",
+      "previous_valid_monitor_restored": false,
+      "resolved": true,
+      "root_cause": "New family ID contained uppercase BTC/ETH; registry.fingerprint requires stable lowercase family ID.",
+      "resolution": "Changed only family label casing before any reserve/valuation; retained failed source and first invalid parent spec. Actual exit1 receipt remains unchanged. Retry freeze regenerates only unreserved definitions.",
+      "failed_source_sha256": "2558032cc9db2e1b498a3e1970e0789395859c2762818438d77183cc0a56b16f",
+      "no_reserve_or_market_valuation_at_failure": true,
+      "retry_receipt": "freeze_retry1_commands.json"
+    }
+  ],
+  "completed_native_or_parent_backtest_reruns": 0,
+  "completed_observation_reruns": 0
+}

@@ -1,0 +1,96 @@
+{
+  "kind": "combination",
+  "family": "native-bank-capitalmix-with-eth-exitbuffer",
+  "name": "mixbudget370_parent_BTCN1000_constantlong",
+  "market": "perpetual",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "components": [
+    {
+      "fingerprint": "7309720aa24cc34220c45f5a8c7a3ccd3fed7f74ab1b1e8074c38d6c62a8a0da",
+      "weight": 1
+    },
+    {
+      "fingerprint": "fd96b9d8250328e033aa2b40460ef01a2d7cc57a22a12ad0f5abf111ade3323e",
+      "weight": 1
+    }
+  ],
+  "logic": {
+    "signal": "Both native components constant long at first executable reference and held until costed terminal close;actual sameN budgets,no momentum or EWM gate.",
+    "allocation": "Actual independent BTC C3750,entry N1000/2000/3000, and ETH C15000/entryN4500. Parent raw[1,1] adds whole banks,total18750,capital20/80%. BTC initial nominal share5.333333/10.666667/16%,ETH24%; BTC own-bank share26.666667/53.333333/80%. These are fixed-entry USDT budgets,not NAV fractions. No weight normalization,NAV/quantity scaling,clone accounts,cash transfer,parent orders,rebalance or cross margin. New BTC LOT/adverse tick/volume impact/funding/collateral calculated natively.",
+    "execution": "Priorclosedfullbars only,q=floor(fixedN/priorcompleteclose/LOT)*LOT,nextUTC00:01nativeOPENadversetick,reverseclosebeforeopen,retainsameactualq. Continuous370d,terminalcostedclose,no foldresets. Parentsownactualbankswithoutparentrebalance/fills.",
+    "costs": "5bpfee+1bphalfspread+2bpslippage+0.5*past20samplelogvol*sqrt(actualq*OPEN/past20completequoteADV),1/2/3xstress. Realfundingsettlementns/mark/rate/heldq,outflowsstressed,inflowsunchanged. LOT/tick/minnotional,participation<=.001,postfee1xentrycap,independent1percentclosedhouradversemarkmaintenanceproxy. Linearperpetualshortno spotborrow;noinventedborrowfee,TCA/L2,historicalmaxqty/tier,tickliquidation orcapacityproof.",
+    "validation": "Preset BTC N1000/2000/3000 x ETH D1/3/5 with K.0005,S24,L5,H.02,E.005,V10/.045 fixed.9new parents,3new BTC momentum natives,3sameN BTC constantlong natives and3samecapital/budget hold parents;18financial IDs reserve before any market valuation. SourceBTC one-axis N sensitivity, parent joint N/D index-radius1 inclcenter; oldETH unchanged. Continuous370days12x30+10tail,recent40/8x5,no reset,fit,labels,purge0. Reused development history,not untouched final/future. No postresult grid/gate change.",
+    "benchmark": "Each N has its own actual samecapital/sameN constantlong BTC+ETH4500 benchmark and cash0%. Old BTCN500/entry-gate parent controls have same ETHD/K and bank capitals, but different BTC budget explicitly; saved curves/statuses are read only.",
+    "native_implementation": {
+      "path": "research/experiments/20261104T161708Z/engine.py",
+      "sha256": "2f98a3d86b06df7bcf538df1c9cabbe19393f24d531721af7f1778c572ba6e05",
+      "accounting_unchanged_from": "research/experiments/20261104T141637Z/engine.py",
+      "signal_change": "Engine entire bytes unchanged from prior round. Only BTC fixed entry N changes; native quantity/impact/funding recomputed. ETH components reused, no new ETH calculation."
+    }
+  },
+  "parameters": {
+    "initial_capital_usdt": 18750,
+    "component_capitals_usdt": [
+      3750,
+      15000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      1000,
+      4500
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "capital_allocation_fractions": [
+      0.2,
+      0.8
+    ],
+    "BTC_bank_capital_usdt": 3750,
+    "BTC_entry_notional_usdt": 1000,
+    "ETH_lookback_days": 0,
+    "ETH_return_hurdle": 0,
+    "ETH_exit_buffer_fraction": 0,
+    "ETH_trend_lookback_days": 0,
+    "ETH_entry_volatility_window_days": 0,
+    "ETH_entry_volatility_ceiling": null,
+    "control_policy": "constant_long_matched_entry_budget",
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "continuous_oos_days": 370,
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "actual_native_quantity_and_impact_reused": true,
+    "source_component_spec_sha256": [
+      "9e2501da1e929ff0cbeb18d43ce944f4ae318b0dd220a1e794296564122639bc",
+      "c8671c77caa632b38ce7e0f0c8ce636f4fd0a35c55ce2638535ff0a8fdf56d7f"
+    ]
+  },
+  "validation_plan": "research/experiments/20261104T161708Z/plan.json",
+  "sources": [
+    {
+      "title": "Pandas official exponentially weighted mean adjust=True formula",
+      "url": "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.ewm.html",
+      "access_date": "2026-11-04",
+      "version": "Documentation retrieved2026-11-04; explicit researchwindow32 andbeta31/33,not defaultinfinitehistory or performanceclaim."
+    },
+    {
+      "title": "Binance USD-M official market data REST fields",
+      "url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "access_date": "2026-11-04",
+      "version": "Fields for native bars,marks,realizedfunding andmetadata; exact input versionsSHAinplan."
+    }
+  ]
+}
