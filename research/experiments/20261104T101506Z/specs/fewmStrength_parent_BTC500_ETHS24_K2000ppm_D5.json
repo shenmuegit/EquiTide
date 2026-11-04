@@ -1,0 +1,109 @@
+{
+  "name": "fewmStrength_parent_BTC500_ETHS24_K2000ppm_D5",
+  "kind": "combination",
+  "family": "native-finite-ewmslope-strength-gated-reversal-entry-vol",
+  "market": "perpetual",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "timeframe": "1d",
+  "logic": {
+    "signal": "ETH fast L5 ROC r=C[i-1]/C[i-6]-1. Strict r>.02 short, r<-.02 long; otherwise actual long retained only r<.005, actual short only r>-.005. Entry/exit equalities do not retain/enter. Finite M(i,24)=sum_{j=0..23}[beta^j*C[i-1-j]]/sumweights, beta=23/25. Slope s=M(i,24)/M(i-D,24)-1. Gate +1 only s>K, -1 only s<-K, otherwise0 including both equalities. K=.001/.002/.003 and D1/3/5. Retain raw reversal desired only if equal to gate; zero/opposite forces flat, including current position. Entry-only sample logvol V10/cap.045 applies only fresh/reversal. Both mean windows strictly completed closes, no future/fitting/labels.",
+    "allocation": "Actual ETH bank C15000/N4500. Parent sums full BTC C3750/N500 old bank and full new ETH bank, raw[1,1], total18750, capital shares20/80%, initial nominal shares2.6666666667/24%. No weight normalization, old NAV/quantity resizing, parent orders, transfers, rebalance or cross margin. Signal geometric weights normalized only as its fixed formula.",
+    "execution": "Priorclosedfullbars only,q=floor(fixedN/priorcompleteclose/LOT)*LOT,nextUTC00:01nativeOPENadversetick,reverseclosebeforeopen,retainsameactualq. Continuous370d,terminalcostedclose,no foldresets. Parentsownactualbankswithoutparentrebalance/fills.",
+    "costs": "5bpfee+1bphalfspread+2bpslippage+0.5*past20samplelogvol*sqrt(actualq*OPEN/past20completequoteADV),1/2/3xstress. Realfundingsettlementns/mark/rate/heldq,outflowsstressed,inflowsunchanged. LOT/tick/minnotional,participation<=.001,postfee1xentrycap,independent1percentclosedhouradversemarkmaintenanceproxy. Linearperpetualshortno spotborrow;noinventedborrowfee,TCA/L2,historicalmaxqty/tier,tickliquidation orcapacityproof.",
+    "validation": "All9 new ETH natives+9 parents reserve before any valuation. Preset K .001/.002/.003 by D1/3/5, S24/L5/H.02/E.005/V10/.045 fixed. Separate K/D index-radius1 neighborhoods including center. Maximum S+D29 complete past closes within existing33 context. Continuous370d12x30+10tail, recent40/8x5, no fold resets. Fixed rules no fit/labels, purge0. Reused development history, not untouched final/independent future. No postoutcome batch/gate changes.",
+    "benchmark": "Old zero-strength slope controls S24 with the same D1/3/5 are preregistered references. They match capital,N,L,H,E,V,costs and calendar; only K changes. Their complete NAV and canonical status are read only. Matchedcapital/budget constant-long BTC500+ETH4500 and cash0% also read only. Differences are descriptive on reused history, no causal alpha proof.",
+    "native_implementation": {
+      "path": "research/experiments/20261104T101506Z/engine.py",
+      "sha256": "a6b86b1d1ecd0e7431bb765be8f3006554ba1cf157fbe4a1381fe2161afefe86",
+      "accounting_unchanged_from": "research/experiments/20261104T081405Z/engine.py",
+      "signal_change": "Only ETH slope gate gains strict symmetric minimum-strength K; simulation AST/trade/funding/summary unchanged."
+    }
+  },
+  "parameters": {
+    "initial_capital_usdt": 18750,
+    "component_capitals_usdt": [
+      3750,
+      15000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      500,
+      4500
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "capital_allocation_fractions": [
+      0.2,
+      0.8
+    ],
+    "BTC_bank_capital_usdt": 3750,
+    "BTC_entry_notional_usdt": 500,
+    "BTC_lookback_days": 31,
+    "BTC_return_hurdle": 0.04,
+    "BTC_exit_buffer_fraction": 0.01,
+    "ETH_bank_capital_usdt": 15000,
+    "ETH_entry_notional_usdt": 4500,
+    "ETH_lookback_days": 5,
+    "ETH_return_hurdle": 0.02,
+    "ETH_long_entry_return_hurdle": 0.02,
+    "ETH_short_entry_return_hurdle": 0.02,
+    "ETH_trend_lookback_days": 24,
+    "ETH_trend_estimator": "finite_normalized_exponentially_weighted_mean_slope",
+    "ETH_exit_buffer_fraction": 0.005,
+    "ETH_entry_volatility_window_days": 10,
+    "ETH_entry_volatility_ceiling": 0.045,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "continuous_oos_days": 370,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "actual_native_quantity_and_impact_reused": false,
+    "source_component_spec_sha256": [
+      "26364f0b3c78fb7f695c688613cc69d5b73fe89a1877c0d48f65a7fccd422448",
+      "40b774c5e7210d77e0b80e26a5f8f08de204a0df3338670eb8b079b1e4f3b2d0"
+    ],
+    "ETH_trend_window_days": 24,
+    "ETH_trend_decay_numerator": 23,
+    "ETH_trend_decay_denominator": 25,
+    "ETH_signal_mode": "finite_EWMslope_strength_gated_reversal_entry_vol",
+    "BTC_existing_actual_bank_reused": true,
+    "ETH_new_native_quantity_and_impact_computed": true,
+    "ETH_trend_slope_lag_days": 5,
+    "ETH_trend_slope_hurdle_fraction": 0.002
+  },
+  "components": [
+    {
+      "fingerprint": "3eb8a6c512d66cb8cbc91ecbe84d0979bcb0141f3473dc4cbd250a1d00e865a5",
+      "weight": 1
+    },
+    {
+      "fingerprint": "9be8932d769b6a7fa4a951c2e5c849e33ace222623047d73c8ad9173383c2f9e",
+      "weight": 1
+    }
+  ],
+  "validation_plan": "research/experiments/20261104T101506Z/plan.json",
+  "sources": [
+    {
+      "title": "Pandas official exponentially weighted mean adjust=True formula",
+      "url": "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.ewm.html",
+      "access_date": "2026-11-04",
+      "version": "Documentation retrieved2026-11-04; explicit researchwindow32 andbeta31/33,not defaultinfinitehistory or performanceclaim."
+    },
+    {
+      "title": "Binance USD-M official market data REST fields",
+      "url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "access_date": "2026-11-04",
+      "version": "Fields for native bars,marks,realizedfunding andmetadata; exact input versionsSHAinplan."
+    }
+  ]
+}
