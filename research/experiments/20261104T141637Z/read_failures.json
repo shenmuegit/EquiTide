@@ -1,0 +1,26 @@
+{
+  "facts": [
+    {
+      "source": "web tool official legacy funding documentation URL",
+      "url": "https://developers.binance.com/en/docs/derivatives/usds-margined-futures/market-data/rest-api/Get-Funding-Rate-History",
+      "actual_error": "URL not accessible via web tool / Internal Error",
+      "resolved": true,
+      "resolution": "Current official Binance market-data catalog successfully read; schema fundingTime/fundingRate/markPrice checked there. No raw market data or financial outcome inferred from document failure."
+    },
+    {
+      "source": "manual journal archive verification",
+      "actual_exit_code": 1,
+      "tool_output_chunk": "099b3d",
+      "stderr": "AssertionError at post-archive equality assertion",
+      "effects_before_assertion": "Exact54-event fragment written and old main prefix restored. No old fragment or result touched.",
+      "root_cause": "read_events iteration order depends on physical _ledger_paths order; list equality was stronger than logical history preservation.",
+      "diagnostic_tool_output_chunk": "8842ec",
+      "reconstructed_before_events": 27376,
+      "after_events": 27376,
+      "records_equal": true,
+      "exact_event_multiset_equal": true,
+      "resolved": true,
+      "resolution": "Verified original prefix+tail stream, every old fragment SHA, exact canonical event multiset including duplicate multiplicities, full timestamp-merged index equality,54 events/27 finishedIDs. No registry writer/observation/backtest rerun."
+    }
+  ]
+}

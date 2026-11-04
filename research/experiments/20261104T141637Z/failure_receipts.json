@@ -1,0 +1,65 @@
+{
+  "failed_pipeline_commands": [],
+  "resolved_index_projection_failures": 0,
+  "resolved_saved_metric_export_failures": 0,
+  "resolved_manual_journal_iteration_order_check_failures": 1,
+  "expected_TDD_red": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "research/experiments/20261104T141637Z/check_asymmetric.py",
+      "--negative-control-double-weighting"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-04T14:30:16.534175Z",
+    "finished_utc": "2026-11-04T14:30:16.793291Z",
+    "actual_exit_code": 1,
+    "expected_failure": true,
+    "synthetic_only": true,
+    "no_new_financial_valuation": true,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T141637Z/check_asymmetric.py\", line 10, in <module>\n    wrong=.2*btc+.8*eth;assert wrong[0]==18750,'Synthetic double-weighting raw full banks must fail capital identity'\n                               ^^^^^^^^^^^^^^^\nAssertionError: Synthetic double-weighting raw full banks must fail capital identity\n"
+  },
+  "candidate_and_L4_HTTP_failures": [
+    {
+      "url": "https://fapi.binance.com/fapi/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1793794140000&endTime=1793801400000&limit=1500",
+      "started_utc": "2026-11-04T14:38:01.642462+00:00",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "data/raw/binance/l4h02_forward/20261104T141637Z/http_0002.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "transport": "verifiedTLS1.2HTTP1.1 publicGET,bounded3attempts"
+    }
+  ],
+  "forward_transport_errors": [],
+  "exact_forward_HTTP_attempt_count_instrumented": false,
+  "observed_HTTP_or_transport_failures": 1,
+  "actual_read_tool_failures": [
+    {
+      "source": "web tool official legacy funding documentation URL",
+      "url": "https://developers.binance.com/en/docs/derivatives/usds-margined-futures/market-data/rest-api/Get-Funding-Rate-History",
+      "actual_error": "URL not accessible via web tool / Internal Error",
+      "resolved": true,
+      "resolution": "Current official Binance market-data catalog successfully read; schema fundingTime/fundingRate/markPrice checked there. No raw market data or financial outcome inferred from document failure."
+    },
+    {
+      "source": "manual journal archive verification",
+      "actual_exit_code": 1,
+      "tool_output_chunk": "099b3d",
+      "stderr": "AssertionError at post-archive equality assertion",
+      "effects_before_assertion": "Exact54-event fragment written and old main prefix restored. No old fragment or result touched.",
+      "root_cause": "read_events iteration order depends on physical _ledger_paths order; list equality was stronger than logical history preservation.",
+      "diagnostic_tool_output_chunk": "8842ec",
+      "reconstructed_before_events": 27376,
+      "after_events": 27376,
+      "records_equal": true,
+      "exact_event_multiset_equal": true,
+      "resolved": true,
+      "resolution": "Verified original prefix+tail stream, every old fragment SHA, exact canonical event multiset including duplicate multiplicities, full timestamp-merged index equality,54 events/27 finishedIDs. No registry writer/observation/backtest rerun."
+    }
+  ],
+  "completed_native_or_parent_backtest_reruns": 0,
+  "completed_observation_reruns": 0
+}
