@@ -1,0 +1,27 @@
+工作目录：/home/desktop/Documents/Codex/EquiTide，只用main，写入持branch.lock排他锁。
+环境：PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1；Python=/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python
+
+本轮首次计算的完整CLI/时间/exitcode：*_commands.json、reserve_batches/、finish_batches/。首次金融执行为reserve_batch_0(6个逐项成功) → evaluate → audit → counts → decisions → finish_batch_0(6个实际finish) → finish。原三个账户各自新窗口reserve/capture/advance/finish。不得对精确完成定义重新reserve/evaluate，registry应返回3；只读旧结果。
+
+只读复核（不重跑策略或账户）：
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T221940Z/audit.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T221940Z/check_decisions.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T221940Z/check_sources.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T221940Z/check_exports.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T221940Z/review/evidence.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T221940Z/forward.py --reproduce
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T221940Z/audit_candidate.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T221940Z/audit_l4h02.py
+python3 checks/strategy_registry.py
+python3 checks/monitor_snapshot.py
+以上依赖真实输入、旧完整账本与数据SHA，见plan/binding/data_manifest。策略计算代码33个源在第一次reserve前绑定，engine整个文件不变，0原生策略重跑；新组合仅复用13旧银行/39成本路径完整NAV。
+
+journal已在同锁内将原始30追加事件逐字节转存registry_records.jsonl，主journal原前缀/旧fragments/完整事件多重集/时间戳合并索引不变。review/journal_layout.py只允许首次执行，不要再次运行。
+
+新FEWM原R20计划只读状态：
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261104T201939Z/prospective_fewm/observer.py status
+原计划Nov5UTC00:01至May4UTC00:01、N750/D1/K.0005不改。本轮未重复工程test、未抓取未来数据、未建账户/登记/收益，实际status请求0写入0网络0登记。起点后完整真实33日warmup、3个spec逐项reserve，再advance；首窗还须对新FEWM信号/成本/资金费/完整NAV独立审计。
+
+原L4下一窗Nov4UTC22:10→Nov5UTC00:10跨实际资金费和00:01日决策，必须延续自己的原L4规则/资本/仓位/risk/context，核对真实结算ns/mark/rate，不能复制single或新FEWM。原SMA65/single下一窗20:30→22:30，下一日决策Nov5_00:01，SMA完整上下文仍用20261104T021133Z/forward_inputs.json.gz。
+
+本轮只读snapshot.py与monitor_snapshot.py在同main锁内实际执行，网页无需重部署/新定时任务；不进行新回测/成交/改变冻结账户。全部正负结果、完整账户账本、登记/规则/验证所需真实输入保留。可重建cache/npy/checkpoint为0，不动预先存在的data/normalized。真实非强制push/完整远端tree/blob/解锁终态凭据：.git/automation_proofs/20261104T221940Z.json。
