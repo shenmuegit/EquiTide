@@ -1,0 +1,43 @@
+{
+  "fresh_public_market_inputs": true,
+  "initial_attempt": {
+    "account_execution_started": false,
+    "account_state_sha256": "a6b3cee16a650ff9efe1cd964c79f104a4493ee72c1a1ed7e6390f211dc4c288",
+    "attempt": {
+      "chunk_id": "308d9f",
+      "original_token_count": 28,
+      "output": "WAITING_FOR_SHARED_BRANCH_LOCK; no account or registry writes before acquisition\r\nSHARED_BRANCH_LOCK_ACQUIRED\r\n",
+      "session_id": 32242,
+      "wall_time_seconds": 1.001671165
+    },
+    "cause": "Git fetch exited 128 after a GnuTLS handshake termination; native executor exited before ensure_plan returned and before reservation or market capture",
+    "failure": {
+      "chunk_id": "27641d",
+      "exit_code": 1,
+      "original_token_count": 327,
+      "output": "fatal: unable to access 'https://github.com/shenmuegit/EquiTide.git/': GnuTLS, handshake failed: The TLS connection was non-properly terminated.\r\nTraceback (most recent call last):\r\n  File \"<string>\", line 36, in <module>\r\n    executor.main()\r\n    ~~~~~~~~~~~~~^^\r\n  File \"/home/desktop/Documents/Codex/EquiTide/research/paper10/run.py\", line 310, in main\r\n    fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB);plan=ensure_plan();recover();before=json.loads((T/'state.json').read_text()) if (T/'state.json').exists() else None\r\n                                                    ~~~~~~~~~~~^^\r\n  File \"<string>\", line 16, in synchronized_plan\r\n    subprocess.run([\"git\",\"fetch\",\"https://github.com/shenmuegit/EquiTide.git\",\"refs/heads/main:refs/remotes/origin/main\"],check=True,env=env,timeout=45)\r\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\r\n  File \"/usr/lib/python3.13/subprocess.py\", line 577, in run\r\n    raise CalledProcessError(retcode, process.args,\r\n                             output=stdout, stderr=stderr)\r\nsubprocess.CalledProcessError: Command '['git', 'fetch', 'https://github.com/shenmuegit/EquiTide.git', 'refs/heads/main:refs/remotes/origin/main']' returned non-zero exit status 128.\r\n",
+      "wall_time_seconds": 1.2201e-05
+    },
+    "heartbeat_at_utc": "2026-11-05T16:17:20.485Z",
+    "last_observation_id": "20261105T141814744116Z",
+    "preserved_observations": 260,
+    "public_market_gets_by_attempt": 0,
+    "recorded_at_utc": "2026-11-05T16:23:08.768651+00:00",
+    "reservations_created_by_attempt": 0,
+    "retry": "Start the same frozen executor with SSH Git read transport, a fresh observation cutoff and fresh public market GETs; no past fills or account reset",
+    "stage": "read-only pre-capture Git synchronization under native branch lock",
+    "transport": "HTTPS with credential helpers disabled"
+  },
+  "initial_failure_evidence_sha256": "24f2105ed934d1a52a79abcc61113446dc899a1bdf2a88987f31591dcfea6abe",
+  "native_branch_lock_owner_pid": 2439321,
+  "no_account_reset": true,
+  "no_historical_fill_backfill": true,
+  "observation_id": "20261105T162318003757Z",
+  "observed_at_utc": "2026-11-05T16:24:23.913266Z",
+  "recorded_at_utc": "2026-11-05T16:27:29.417118+00:00",
+  "recovered": true,
+  "same_frozen_executor": true,
+  "state_after_sha256": "4acdf192df1e8b92eab6b92426e610e34d84d10101d60482c5ab4c74db94fd45",
+  "state_before_sha256": "a6b3cee16a650ff9efe1cd964c79f104a4493ee72c1a1ed7e6390f211dc4c288",
+  "successful_git_read_transport": "SSH"
+}
