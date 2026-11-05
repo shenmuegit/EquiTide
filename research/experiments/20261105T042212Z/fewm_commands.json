@@ -1,0 +1,14 @@
+[
+  {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T042212Z/observe_fewm.py"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-05T04:40:22.915203Z",
+    "finished_utc": "2026-11-05T04:40:33.307845Z",
+    "exit_code": 1,
+    "log": "research/experiments/20261105T042212Z/fewm_observe.log",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T042212Z/observe_fewm.py\", line 14, in <module>\n    obs.request=request;sys.argv=[str(SOURCE/'observer.py'),'run','--round',R.name,'--cutoff','2026-11-05T04:10:00Z','--lock-pid','2264322'];obs.main()\n                                                                                                                                             ^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T201939Z/prospective_fewm/observer.py\", line 129, in main\n    packet=capture(cut,previous,binding,rawdir,receipts);packetpath=rawdir/'packet.json.gz';gzput(packetpath,packet);put(window/'input_manifest.json',{'packet':rel(packetpath),'sha256':c.sha(packetpath),'provenance':receipts,'plan_sha256':binding['plan_sha256']})\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T201939Z/prospective_fewm/observer.py\", line 47, in capture\n    info=request('/fapi/v1/exchangeInfo',{},rawdir,receipts);server=request('/fapi/v1/time',{},rawdir,receipts);retrieved=min(now(),int(server['serverTime'])*c.MS)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T042212Z/observe_fewm.py\", line 13, in request\n    count+=1;print('FEWM_PUBLIC_GET',count,path,params.get('symbol',''),params.get('interval',''),flush=True);data=original(path,params,rawdir,receipts);print('FEWM_CAPTURED',count,len(data) if isinstance(data,list) else 'object',flush=True);return data\n                                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T201939Z/prospective_fewm/observer.py\", line 43, in request\n    raise RuntimeError('Publiccapturefailedbothboundedattempts; preserveaccount/capturefailure, no fakefills')\nRuntimeError: Publiccapturefailedbothboundedattempts; preserveaccount/capturefailure, no fakefills\n"
+  }
+]

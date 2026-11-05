@@ -1,0 +1,61 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T042212Z/observe_candidate.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-05T04:37:10.075563Z",
+      "finished_utc": "2026-11-05T04:37:22.809236Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261105T042212Z/candidate.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T042212Z/observe_candidate.py\", line 20, in <module>\n    sys.argv=[str(SOURCE/'prospective_observer.py'),'run','--round',R.name,'--cutoff','2026-11-05T02:30:00Z','--lock-pid','2264322'];obs.main()\n                                                                                                                                     ^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 131, in main\n    packet=capture(cut,previous,binding,rawdir,receipts);packetpath=rawdir/'packet.json.gz';gzput(packetpath,packet);put(window/'input_manifest.json',{'packet':rel(packetpath),'sha256':c.sha(packetpath),'provenance':receipts,'plan_sha256':binding['plan_sha256']})\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 49, in capture\n    info=request('/fapi/v1/exchangeInfo',{},rawdir,receipts);server=request('/fapi/v1/time',{},rawdir,receipts);retrieved=min(now(),int(server['serverTime'])*c.MS)\n                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T042212Z/observe_candidate.py\", line 17, in request\n    receipts.append(item);raise RuntimeError('Public GET failed both bounded attempts;original account preserved')\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Public GET failed both bounded attempts;original account preserved\n",
+      "previous_valid_monitor_restored": false,
+      "resolved": true,
+      "resolved_utc": "2026-11-05T04:46:36.306415+00:00",
+      "resolution": "Transport-only failed before observationreservation/advance;verifiedcurrentL4publictime/metadata reused,own6marketrequestsHTTP200 andindependentauditpassed.",
+      "verification": "research/experiments/20261105T042212Z/candidate_capture_recovery_verification.json",
+      "actual_result_at_failure": false,
+      "completed_financial_or_observation_reruns": 0
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T042212Z/review/recover_candidate.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-05T04:38:51.676912Z",
+      "finished_utc": "2026-11-05T04:38:52.001504Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261105T042212Z/candidate_capture_recovery.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T042212Z/review/recover_candidate.py\", line 8, in <module>\n    probe=read(R/'server_time_transport_probe.json');assert probe['actual_curl_exit_code']==0 and probe['http_status']==200\n                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "previous_valid_monitor_restored": false,
+      "resolved": true,
+      "resolved_utc": "2026-11-05T04:46:36.306517+00:00",
+      "resolution": "Preflight recovery guard stopped beforemutation because diagnosticprobe failed. Originalguardcode/logretained;lateractualL4HTTP200 supplied realmetadata/time.",
+      "verification": "research/experiments/20261105T042212Z/candidate_capture_recovery_verification.json",
+      "actual_result_at_failure": false,
+      "completed_financial_or_observation_reruns": 0
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T042212Z/observe_fewm.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-05T04:40:22.915203Z",
+      "finished_utc": "2026-11-05T04:40:33.307845Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261105T042212Z/fewm_observe.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T042212Z/observe_fewm.py\", line 14, in <module>\n    obs.request=request;sys.argv=[str(SOURCE/'observer.py'),'run','--round',R.name,'--cutoff','2026-11-05T04:10:00Z','--lock-pid','2264322'];obs.main()\n                                                                                                                                             ^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T201939Z/prospective_fewm/observer.py\", line 129, in main\n    packet=capture(cut,previous,binding,rawdir,receipts);packetpath=rawdir/'packet.json.gz';gzput(packetpath,packet);put(window/'input_manifest.json',{'packet':rel(packetpath),'sha256':c.sha(packetpath),'provenance':receipts,'plan_sha256':binding['plan_sha256']})\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T201939Z/prospective_fewm/observer.py\", line 47, in capture\n    info=request('/fapi/v1/exchangeInfo',{},rawdir,receipts);server=request('/fapi/v1/time',{},rawdir,receipts);retrieved=min(now(),int(server['serverTime'])*c.MS)\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T042212Z/observe_fewm.py\", line 13, in request\n    count+=1;print('FEWM_PUBLIC_GET',count,path,params.get('symbol',''),params.get('interval',''),flush=True);data=original(path,params,rawdir,receipts);print('FEWM_CAPTURED',count,len(data) if isinstance(data,list) else 'object',flush=True);return data\n                                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T201939Z/prospective_fewm/observer.py\", line 43, in request\n    raise RuntimeError('Publiccapturefailedbothboundedattempts; preserveaccount/capturefailure, no fakefills')\nRuntimeError: Publiccapturefailedbothboundedattempts; preserveaccount/capturefailure, no fakefills\n",
+      "previous_valid_monitor_restored": false,
+      "resolved": true,
+      "resolved_utc": "2026-11-05T04:46:36.306578+00:00",
+      "resolution": "Transport-only failed beforeobservationreservation/advance. Same-windowactualpublicL4marketarrays/provenancereused;ownFEWMbinding/normalize/reserve/advance/audit completedonce.",
+      "verification": "research/experiments/20261105T042212Z/fewm_shared_market_recovery_verification.json",
+      "actual_result_at_failure": false,
+      "completed_financial_or_observation_reruns": 0
+    }
+  ]
+}

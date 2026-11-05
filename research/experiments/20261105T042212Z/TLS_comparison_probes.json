@@ -1,0 +1,63 @@
+[
+  {
+    "tag": "default_verified_TLS",
+    "url": "https://fapi.binance.com/fapi/v1/time",
+    "command": [
+      "curl",
+      "--ipv4",
+      "--compressed",
+      "--http1.1",
+      "--silent",
+      "--show-error",
+      "--connect-timeout",
+      "10",
+      "--max-time",
+      "20",
+      "--user-agent",
+      "EquiTide-ReadOnly-Research/1.0",
+      "--write-out",
+      "\n%{http_code}",
+      "https://fapi.binance.com/fapi/v1/time"
+    ],
+    "started_utc": "2026-11-05T04:39:20.770621+00:00",
+    "finished_utc": "2026-11-05T04:39:25.782331+00:00",
+    "curl_exit_code": 35,
+    "http_status": 0,
+    "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+    "raw": "research/experiments/20261105T042212Z/default_verified_TLS_server_time_probe.json.gz",
+    "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "TLS_verification": true
+  },
+  {
+    "tag": "original_verified_TLS12",
+    "url": "https://fapi.binance.com/fapi/v1/time",
+    "command": [
+      "curl",
+      "--ipv4",
+      "--compressed",
+      "--http1.1",
+      "--tlsv1.2",
+      "--tls-max",
+      "1.2",
+      "--silent",
+      "--show-error",
+      "--connect-timeout",
+      "10",
+      "--max-time",
+      "20",
+      "--user-agent",
+      "EquiTide-ReadOnly-Research/1.0",
+      "--write-out",
+      "\n%{http_code}",
+      "https://fapi.binance.com/fapi/v1/time"
+    ],
+    "started_utc": "2026-11-05T04:39:25.782464+00:00",
+    "finished_utc": "2026-11-05T04:39:30.795289+00:00",
+    "curl_exit_code": 35,
+    "http_status": 0,
+    "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+    "raw": "research/experiments/20261105T042212Z/original_verified_TLS12_server_time_probe.json.gz",
+    "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "TLS_verification": true
+  }
+]
