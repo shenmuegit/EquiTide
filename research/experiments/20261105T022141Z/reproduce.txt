@@ -1,0 +1,29 @@
+固定工作目录：/home/desktop/Documents/Codex/EquiTide；仅main；写入/登记/push持branch.lock排他锁。Python=/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python；使用-B及PYTHONDONTWRITEBYTECODE=1，OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1。
+
+本轮实际执行CLI/时间/退出码保存在*_commands.json及reserve_batches/finish_batches。最新spec/plan/batch预先固定六个真正新BTC1250×ETHD3/5,K250/500/750ppm父组合；3旧D1只读，26旧结果/13原生银行/39成本曲线复用。0新原生模型/信号/交易重算，六父组合18成本场景逐个先reserve后evaluate，再独审/finish。原生手续费/LOT/impact/funding/collateral记录从旧完整真实账本恢复并核对SHA，完整组合NAV在共同时间轴相加；无旧NAV/数量/费用缩放或权重归一化。
+
+预留之前修正了两个沿用旧组件生成阶段的说明旗标，表明本轮全部原生路径已存在且只读；原始准备态SHA/未预留指纹及旧绑定留在pre_reservation_metadata_revision.json。信号、金额、权重、边界、门槛没改，zero financial evaluations/reservations at revision。随后freeze_retry1/initial_retry1重新绑定36源，才进行任何账户/历史新cutoff预留；两次freeze/initial均是准备校验，不是重复回测。
+
+只读复核（不要重新reserve/evaluate或重复advance完成截止）：
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T022141Z/audit.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T022141Z/check_decisions.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T022141Z/check_sources.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T022141Z/check_exports.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T022141Z/review/evidence.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T022141Z/forward.py --reproduce
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T022141Z/audit_candidate.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T022141Z/audit_l4h02.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T022141Z/audit_fewm.py
+python3 checks/strategy_registry.py
+python3 checks/monitor_snapshot.py
+这些检查只核对已存真实原始输入、账本、连续净值及SHA，不执行新策略账户transition。全部输入/spec/report/archive/code SHA和复现依赖见plan/binding/data_manifest；原始大行情保留忽略data，不提交或删除。
+
+本轮SMA从Nov4_22:30到Nov5_00:30，真实spot65日、64日逐行重叠和最后日收盘与minute核对；原Float单位/SMA65/对称1%/1500+500初始分配/10bp现货手续费不变。两资产午夜目标/每成本执行/完整NAV前缀独立核对，新增121点（120分钟+1日参考点），没有把perp_metadata/FEWM日线混入。最新完整65日上下文在本轮forward_inputs.json.gz。
+旧single也续22:30→00:30，以自己的旧持仓处理实际00资金费，再00:01原L3/S28/H2%/E0日决策，不复制L4或FEWM现金流。原L4本轮00:10→02:10只增加闭合marks/hourrisk，不重复上轮00fund/daily。
+FEWM独立账户从自己的首窗pointer续00:10→02:10，129分钟、135点NAV、6个累计观察ID；无初始现金重开、首单重下或33日warmup重取。仍原计划research/experiments/20261104T201939Z/prospective_fewm/，3750/15000银行、750/4500预算、D1/K.0005、Nov5_00:01至May4_00:01，历史BTC1250批次不被采纳。保留原始首窗完整warmup/所有HTTP/packet；当前二小时原始HTTP/packet、轻量输入/context和完整账本保留。当前partial不代表180日/六折或稳定盈利，年化指标不解释。
+
+下一SMA/single窗口00:30→02:30、参考02:31闭合后；下一L4/FEWM窗口02:10→04:10、参考04:11闭合后。四账户下一日决策Nov6_00:01；实际00fund/00:01/首笔订单均不能重复。每个新截止逐项reserve成功才advance，延续各自book/risk/context/fullNAV，不从现金重开。
+
+journal36新事件/18ID已原字节移至registry_records.jsonl，主journal原前缀/旧fragments/所有事件内容和multiplicity/时间戳合并索引不变。review/journal_layout.py只能初次执行，不能再跑。
+只读snapshot.py/monitor_snapshot.py在相同main锁内实际执行，不回测、不生成模拟成交、不改任何本金/规则/持仓；没有重部署/新建定时任务。完整账本、冻结规则、登记及真实输入保留；本轮无npy/cache/checkpoint可重建文件，预先存在data/normalized保持。
+真实非强制push/完整远端tree/blob与解锁终态凭据：.git/automation_proofs/20261105T022141Z.json。
