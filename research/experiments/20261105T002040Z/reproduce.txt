@@ -1,0 +1,28 @@
+工作目录：/home/desktop/Documents/Codex/EquiTide；只用main，写入持branch.lock排他锁。
+Python=/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python，所有命令使用-B和PYTHONDONTWRITEBYTECODE=1；OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1。
+
+本轮真实顺序/时间/退出码见*_commands.json、reserve_batches/、finish_batches/：
+冻结plan/spec/batch → initial_retry1绑定36源 → fewm(原冻结执行器抓取真实完整33日warmup，3个spec逐个reserve成功才advance，3个真实partial结果finish) → reserve_batch_0(4个历史新角点) → evaluate/audit/counts/decisions → finish_batch_0/finish → 原SMA/single/L4各自reserve/capture/advance/finish。
+预登记前inventory/模板/依赖三个错误与原日志保留，freeze_retry1/initial_retry1解决；0完成金融或观察重跑。一次首次FEWM抓取TLS35失败按原冻结2次上限恢复，空响应gzip/状态/错误/URL/hash完整保留，未关闭TLS校验。
+
+只读复核（禁止再次reserve/evaluate或启动已完成截止）：
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T002040Z/audit.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T002040Z/check_decisions.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T002040Z/check_sources.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T002040Z/check_exports.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T002040Z/review/evidence.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T002040Z/forward.py --reproduce
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T002040Z/audit_candidate.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T002040Z/audit_l4h02.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T002040Z/audit_fewm.py
+python3 checks/strategy_registry.py
+python3 checks/monitor_snapshot.py
+这些命令只重建/检查已存实际净值与账本，不重跑策略或账户advance。源码/全部数据/spec/report/archive SHA见binding/plan/data_manifest。原spec少量N750旧prose/family标签勘误见template_label_errata.json；实际参数、源组件和完整NAV均BTCN1000，原文和指纹不改。
+
+FEWM原冻结源码始终在research/experiments/20261104T201939Z/prospective_fewm/，原planSHA=c93bd8b2ce4ab56fe5a9613d415d9659f59b1444d130a01df27bed95ff4292d7，原bindingSHA=20e1f74d77046fade93ed3ccffb06b8f486a5b06f35bdabe1d78723181ca4999。本轮新建独立真实模拟账本，firstactual00:01→00:10共9分钟/13NAV点，不复制L4/旧single，不采纳本轮N1000，仍用3750/15000银行、750/4500预算、D1/K.0005。33日真实warmup只是上下文，不算前向收益。原始全部HTTP和完整packet保留data/raw/binance/fewm_forward/20261105T002040Z/，只提交轻量33日context+首窗11条minute/小时/funding+来源/hash，见fewm_light_inputs.json.gz和fewm_raw_manifest.json。
+首窗9分钟不作180日/六折、稳定利润或容量证明，短窗年化指标不解释。首窗actualpartial rejected不取消Nov5至May4计划。后续必须延续fewm_forward_latest.json完整chain/cash/q/entry/fee/risk/context，不重下首笔订单或现金重开，不再下载33日warmup。next Nov5_00:10→02:10，真实参考bar在02:11闭合后再抓取和预留新cutoff；独立审计须扩展为续接模式，不能把本轮first=True检查直接当下一轮续接器。
+
+原L4本轮22:10→00:10跨00资金费和00:01daily，6资金费记录来自自己的旧q和实际rate/mark、先入账再决策。原single/SMA本轮只续20:30→22:30，下轮22:30→00:30需处理各自的午夜资金费/日线信号（SMA是原spot，不拿perp_FEWM日线混用）；SMA完整65日上下文仍在20261104T021133Z/forward_inputs.json.gz，追加真实闭合Nov4日数据。原L4/FEWM下一日决策Nov6_00:01；已有00fund/daily不能重复。
+
+journal32事件/16ID已原字节转存registry_records.jsonl，主journal原前缀/全部旧fragment/事件多重集/时间戳合并索引不变，review/journal_layout.py只能首次执行。只读snapshot/monitor_check在同锁内实际运行，无新回测、模拟成交、账户/规则变动或重部署/新定时任务。全部账本/冻结规则/登记/必需真实证据保留，可重建cache/npy/checkpoint本轮0，不动预先存在的data/normalized。
+真实非强制push/远端完整tree/blob与解锁终态凭据：.git/automation_proofs/20261105T002040Z.json。

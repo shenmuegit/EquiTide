@@ -1,0 +1,104 @@
+{
+  "failed_pipeline_commands": [
+    {
+      "receipt": "initial_commands.json",
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T002040Z/check_definitions.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-05T00:29:32.712955Z",
+      "finished_utc": "2026-11-05T00:29:32.969550Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261105T002040Z/definition_check.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T002040Z/check_definitions.py\", line 4, in <module>\n    p=json.loads((R/'plan.json').read_text());batch=json.loads((R/'batch.json').read_text());rs=reg.read_records(ROOT/'research/automation/registry.jsonl');assert len(batch)==4 and len(p['read_only_references'])==28 and sum(z['scope']=='native' for z in p['read_only_references'].values())==13\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T002040Z/plan.json'\n"
+    },
+    {
+      "receipt": "freeze_commands.json",
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T002040Z/freeze.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-05T00:28:46.235071Z",
+      "finished_utc": "2026-11-05T00:28:47.779134Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261105T002040Z/freeze.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T002040Z/freeze.py\", line 5, in <module>\n    Ds=[1,3,5];Ks=[.00025,.0005,.00075];N=1000;B='3007d27a4be571ca4bc4283fd6695460352e8c363b584742b85d5913494fa541';HOLD='554d265dc8906ec3e55fbca9fe593c3112540d94ada7e88d77594cbd3e3d0886';CENTER='26067e3b21db20a70488dadc51e1588fd774e2826bd2e8c5a3418af6aed53a4c';controls={scope:{(c['D'],c['K']):c['fingerprint'] for c in r14['configs'].values() if c['scope']==scope} for scope in ['native','parent']};assert all(len(v)==9 for v in controls.values());controls['parent']={(x['D'],x['K']):x['matched_baseline_BTC1000'][0]['fingerprint'] for x in inventory['grid']};refs={};batch=[];grid=[];nativegrid=[];mapping={}\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nKeyError: 'matched_baseline_BTC1000'\n"
+    }
+  ],
+  "resolved_pre_reservation_inventory_checks": 1,
+  "resolved_pre_reservation_template_failures": 1,
+  "resolved_dependent_definition_checks": 1,
+  "expected_TDD_red": {
+    "started_utc": "2026-11-05T00:29:32.070817+00:00",
+    "finished_utc": "2026-11-05T00:29:32.369686+00:00",
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "research/experiments/20261105T002040Z/check_asymmetric.py",
+      "--negative-control-double-weighting"
+    ],
+    "actual_exit_code": 1,
+    "expected_failure": true,
+    "synthetic_only": true,
+    "log": "research/experiments/20261105T002040Z/TDD_red.log",
+    "detected": "doubleweighting fullbank actualcapital fails identity"
+  },
+  "actual_read_tool_failures": [
+    {
+      "operation": "pre-freeze metadata inventory",
+      "actual_exit_code": 1,
+      "tool_chunk": "49c6d3",
+      "error": "AssertionError assumed six missingBTC1000parents; full graph lookup also found prior D3/5/K500 centers.",
+      "resolved": true,
+      "resolution": "Complete graph inventory saved; predeclare only genuinelymissing cells,oldactual centersreadonly. No reserve or financial calculation had occurred."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T002040Z/freeze.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-05T00:28:46.235071Z",
+      "finished_utc": "2026-11-05T00:28:47.779134Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261105T002040Z/freeze.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T002040Z/freeze.py\", line 5, in <module>\n    Ds=[1,3,5];Ks=[.00025,.0005,.00075];N=1000;B='3007d27a4be571ca4bc4283fd6695460352e8c363b584742b85d5913494fa541';HOLD='554d265dc8906ec3e55fbca9fe593c3112540d94ada7e88d77594cbd3e3d0886';CENTER='26067e3b21db20a70488dadc51e1588fd774e2826bd2e8c5a3418af6aed53a4c';controls={scope:{(c['D'],c['K']):c['fingerprint'] for c in r14['configs'].values() if c['scope']==scope} for scope in ['native','parent']};assert all(len(v)==9 for v in controls.values());controls['parent']={(x['D'],x['K']):x['matched_baseline_BTC1000'][0]['fingerprint'] for x in inventory['grid']};refs={};batch=[];grid=[];nativegrid=[];mapping={}\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nKeyError: 'matched_baseline_BTC1000'\n",
+      "previous_valid_monitor_restored": false,
+      "resolved": true,
+      "resolution": "Template word replacement touched inventory key; restored exact matched_baseline_BTC750 identifier before any reservation/valuation."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T002040Z/check_definitions.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-05T00:29:32.712955Z",
+      "finished_utc": "2026-11-05T00:29:32.969550Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261105T002040Z/definition_check.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T002040Z/check_definitions.py\", line 4, in <module>\n    p=json.loads((R/'plan.json').read_text());batch=json.loads((R/'batch.json').read_text());rs=reg.read_records(ROOT/'research/automation/registry.jsonl');assert len(batch)==4 and len(p['read_only_references'])==28 and sum(z['scope']=='native' for z in p['read_only_references'].values())==13\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261105T002040Z/plan.json'\n",
+      "previous_valid_monitor_restored": false,
+      "resolved": true,
+      "resolution": "Dependent definitioncheck ran afterfailedfreeze; willretry onlyafterplanfreeze succeeds. No reservation or valuation."
+    }
+  ],
+  "all_HTTP_failures": [
+    {
+      "url": "https://fapi.binance.com/fapi/v1/klines?symbol=ETHUSDT&interval=1m&startTime=1791975600000&endTime=1793837400000&limit=1500",
+      "started_utc": "2026-11-05T00:33:52.944337+00:00",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "data/raw/binance/fewm_forward/20261105T002040Z/http_0047.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "transport": "verifiedTLS1.2HTTP1.1 bounded2attempts"
+    }
+  ],
+  "forward_transport_errors": [],
+  "observed_HTTP_or_transport_failures": 1,
+  "completed_financial_or_observation_reruns": 0
+}
