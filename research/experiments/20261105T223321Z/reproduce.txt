@@ -1,0 +1,19 @@
+固定工作目录 /home/desktop/Documents/Codex/EquiTide；仅 main，无新分支/工作树。
+Python: /home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B
+环境: PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
+
+本轮实际执行命令及起止时间/退出码在 *_commands.json；每个金融 reserve/finish 子命令在 reserve_batches/ 与 finish_batches/。冻结逻辑/spec/原参数、批次、8个真实行情SHA和不可变来源在 plan.json、batch.json、specs/、code_binding_before_evaluation.json、data_manifest.json。
+实际估值前先成功 reserve 全部6金融配置；commands.py evaluate 仅实际执行一次，18成本场景完整保存于 results/ 和 report.json。结束后禁止在当前账本重跑同一配置 evaluate/observe 或重复 reserve。
+
+只读复现/核验既有结果（不会调用策略或账户 transition/simulate/advance）：
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T223321Z/audit.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T223321Z/check_decisions.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T223321Z/audit_candidate.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T223321Z/audit_l4h02.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T223321Z/audit_fewm.py
+
+这些独立审计脚本写本轮核验摘要；封存后使用前先保留原摘要并核对执行不会改变被核验报告，勿据此重跑已完成策略或未来账户。复现资金费/交易/NAV需 manifest 中原始被忽略 data 路径；当前小窗口原始响应、全部失败尝试及完整 packet 复制在 raw_evidence/；账户完整 delta/previous_pointer 链保留，历史大 warmup 与八个行情文件不提交也不删除。
+当前审计绑定本轮日期/截止和账户指针。未来指针推进后，先只读解析本轮 archived previous_pointer/complete/report/state 链，再独立核验；不得修改冻结账户引擎或回退共享指针来复现。
+
+registry分片完整保留本轮36事件/18ID，主文件字节前缀复原。保护源检查必须在 review/journal_layout.py 完成后；该脚本只执行一次。原错序失败与恢复见 check_order_failure_diagnosis.json。
+监控只读 snapshot 在全部 finish 后、同 branch.lock 中运行；无新交易/账户/回测。推送/远端完整 tree/blob/锁释放终态保存在 .git/automation_proofs/20261105T223321Z.json。
