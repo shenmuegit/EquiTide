@@ -1,0 +1,31 @@
+固定目录 /home/desktop/Documents/Codex/EquiTide，仅main，不建分支/worktree。写登记、snapshot、commit/push持research/automation/branch.lock。Python /home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B；PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1。
+
+固定完整独立BTC原生银行3750/入场750、ETH银行15000/入场4500，总18750，raw[1,1]相加；资本20/80%，BTC预算占自身20%/总4%，ETH自身30%/总24%。不归一化、不缩放旧NAV/数量/成本，不产父订单、转移、再平衡或交叉保证金。BTC ROC31/H.04/E.01；ETH contrarianROC5/H.02/E.005、有限EWM24 beta23/25、仅新开仓/反手趋势及V10/.045过滤。预设D6/7/8×K.005/.01/.02（0.5%/1%/2%），最大32个过去完整收盘在33日上下文内。
+
+9新父组合全部先reserve后估值，8+1 reserve/finish，27成本场景。13个原生银行/39成本曲线、共23旧结果全部实际存在并只读恢复，0原生策略或订单重跑。9旧BTC500基线完全匹配相同ETH子账户/D/K/本金，仅BTC原生预算750与500不同；同N750的BTC+ETH4500持有和现金0%也只读。旧canonical状态、criteria、sensitivity和报告字节不改。新组合完整净值在共同545013事件轴逐点相加，不能平均Sharpe/收益/回撤。原370日12×30+10尾折、近期40日继承状态/8×5日、成本/失败门槛均预先固定。
+
+实际CLI/UTC/stdout/stderr/退出码见*_commands.json及reserve_batches/finish_batches。freeze、freeze_retry_metadata、initial、midnight_archive、两批reserve、evaluate、audit、counts、两批finish、finish均有真实回执。第一项reserve前修正了继承字符串替换造成的说明文字BTC银行7500->3750，所有数值本金一直为3750/15000、入场750/4500；保留pre_reservation_metadata_revision.json、原命令回执与原文本/SHA，未进行任何完整金融结果重算。36源码及整个原生engine/全部冻结账户代码在reserve前绑定，最终源码哈希保持。
+
+只在本轮封存提交对应的归档输入上只读核验；不重复reserve/evaluate/advance，不重置canonical指针：
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T203116Z/audit.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T203116Z/check_decisions.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T203116Z/check_sources.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T203116Z/check_exports.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T203116Z/review/evidence.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T203116Z/review/market_reuse.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T203116Z/forward.py --reproduce
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T203116Z/audit_candidate.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T203116Z/audit_l4h02.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T203116Z/audit_fewm.py
+python3 checks/strategy_registry.py
+python3 checks/monitor_snapshot.py
+
+历史通过2个：BTC750/ETH4500、K2%，D6与D7；3x370日净收益10.393009%/11.081672%，整体DD3.595777%/3.549877%，1x完整正月均11/12，1/2/3成本近期正折均6/8。局部严格近期合格率分别3/4=75%、4/6=66.6667%；所有预设资格逐项独立验证。其余7项按原门槛淘汰。两候选均K上边界，许多先前试验/复用开发历史造成选择偏差；这些不是未触碰最终留出、独立未来或稳定实盘盈利证据。historical_pass_followup.json记录细节和尚未开始的新独立前向状态，不自动创建账户、不替换现有四个冻结计划。
+
+原SMA/single各自Nov5_16:30→18:30；L4/FEWM各自18:10→20:10。三个永续账户均从自己已结算16资金费的原账本续接，不重复16/08、不重开、不强制截止平仓，无新日目标/成交。完整现金/单位/desired/成本/risk/资金费游标与NAV前缀保留。single NAV14270→14392，L4 7007→7129，FEWM1115→1237，各122闭合分钟/参考点；SMA49985→50105，各120闭合mark。FEWM累计1209分钟/33观察ID，原D1/K.0005、BTC3750/N750、ETH15000/N4500和Nov5→May4计划不变；虽BTC金额同为750，仍与本轮新D6/7/K2候选严格分开。仍未成熟，不称180日/六折。SMA65日spot完整上下文仍20261105T022141Z/forward_inputs.json.gz；不冒充十策略真实报价模拟业绩。
+
+公开响应复用预先在源码中声明：single仅用当前L4元数据/服务器时间，自己的分钟/hour/funding另取6个HTTP200；FEWM和L4同窗公共数组/provenance相同，各自冻结binding/normalize/3reserve/advance/全NAV核验独立。失败和成功HTTP请求及原始哈希如实保留。
+
+42新事件/21ID原字节保存在registry_records.jsonl，主前缀/旧fragments/全事件内容与multiplicity/时间戳合并索引保持。review/journal_layout.py只首次归档，不得重跑。只读snapshot/monitor不回测、不造模拟成交、不改十策略plan/state/本金/持仓；不重部署网页或新增定时任务。之后canonical指针推进会使旧归档审计的当前指针断言失败时，不得为通过旧检查而回滚指针。所有原始warmup/年度行情/当前raw留忽略data，完整账本/冻结规则/登记与核验必要证据保留，仅清理可重建中间物。
+
+下轮SMA/single18:30→20:30（20:31参考闭合后）；L4/FEWM20:10→22:10（22:11参考闭合后）。各自携带post16现金/单位/资金费游标/risk/fullNAV，不重复16/08，不复制别的账户现金流。下一日决策仍Nov6_00:01。两新历史候选需要单独、事前冻结、使用后来新数据的独立前向；当前历史不得复称未来证据，任何新参数/权重都须新spec/查重/reserve。真实commit/push、远端完整tree/blob核验及解锁终态留.git/automation_proofs/20261105T203116Z.json。
