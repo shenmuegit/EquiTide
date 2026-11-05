@@ -1,0 +1,24 @@
+固定工作目录 /home/desktop/Documents/Codex/EquiTide；仅main。写登记、快照、提交push持branch.lock。Python -B，PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1。
+
+预先固定BTC3000/3750、ETH4500/15000，raw[1,1]完整独立银行直接相加；BTC占自身80%/总本金16%，ETH占自身30%/总本金24%。不归一化，不缩放旧NAV/数量/成本。ETH D1/3/5×K250/500/750ppm；6个K250/750新父组合逐项先reserve再计算；3旧K500、13原生银行/39成本路径、9BTC2000匹配D/K对照及同N3000持有只读。0新原生策略/信号/订单重跑。实际CLI/UTC/退出码及spec/plan/report/code/data/archive哈希在*_commands.json、reserve_batches/finish_batches和data_manifest.json。
+
+在本轮提交对应的归档输入上只读核验，不重新reserve/evaluate/advance已完成截止，不重置已推进的账户指针：
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T082443Z/audit.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T082443Z/check_decisions.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T082443Z/check_sources.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T082443Z/check_exports.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T082443Z/review/evidence.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T082443Z/forward.py --reproduce
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T082443Z/audit_candidate.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T082443Z/audit_l4h02.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T082443Z/audit_fewm.py
+python3 checks/strategy_registry.py
+python3 checks/monitor_snapshot.py
+
+原SMA/single分别04:30→06:30，L4/FEWM分别06:10→08:10。账户现金、单位、desired、成本、risk、完整NAV前缀和资金费游标各自延续。无新日目标/成交；L4与FEWM使用真实08fundingTime/rate/mark，按自己此前仓位入账，正收入不随成本倍数放大，支出才倍增。FEWM的ETH空仓零金额也有真实费率/mark依据，不用他人现金流或假设零。single当前未覆盖08，留待下一窗口。
+
+公共数据复用预先声明：single仅复用本轮L4真实元数据/服务器时间，自己的分钟/hour/funding另取6个HTTP200响应；FEWM同窗口复用实际L4市场数组/原provenance，ownfrozenbinding/normalize/3reserve/advance/完整账本审计独立执行一次，不复制L4状态、现金、数量、交易、资金费金额或NAV。market_reuse_verification.json和primary_funding_field_verification.json保存独立金额/身份/时间证明。FEWM489分钟/503NAV/15观察ID仍partial，不采纳历史N3000，原N750/4500及Nov5→May4计划保持。SMA完整65日spot上下文仍20261105T022141Z/forward_inputs.json.gz。
+
+36新事件/18ID原字节保存在registry_records.jsonl，主前缀/旧fragments/全事件内容和multiplicity/时间戳合并索引保持；review/journal_layout.py仅初次归档，不得重跑。只读snapshot/monitor检查不回测、不产生成交、不改paper10冻结规则/本金/持仓，无重部署或新增定时任务。
+
+下一SMA/single06:30→08:30，在08:31参考闭合后；single必须按自己持仓处理真实08资金费，不复制L4/FEWM现金流。下一L4/FEWM08:10→10:10，在10:11参考闭合后，沿各自post08状态并避免重复结算。下一日决策均Nov6_00:01。保留完整账本/冻结规则/登记/原始warmup及当前raw/年度行情，后者留忽略data，仅清理可重建中间物。真实push/全远端tree/blob/解锁终态见.git/automation_proofs/20261105T082443Z.json。
