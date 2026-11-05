@@ -1,0 +1,31 @@
+固定工作目录 /home/desktop/Documents/Codex/EquiTide，仅main；不建分支/worktree。写登记、snapshot、commit/push持research/automation/branch.lock。Python /home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B，PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1。
+
+本轮BTC500/3750旧原生银行和ETH4500/15000银行，raw[1,1]相加完整银行，总18750，资本20/80%；BTC入场预算占自身13.333333%/总2.666667%，ETH自身30%/总24%。不归一化、不缩放旧NAV/数量/成本，不产父订单/转移/再平衡/交叉保证金。
+
+预设ETH有限EWM24 beta23/25，D6/7/8×K.005/.01/.02（0.5%/1%/2%），固定L5/H.02/E.005/V10/cap.045、仅新开仓/反手过滤。同向实仓保留；失败反转先平旧仓、不新开。最大32个过去完整收盘在33日上下文内，原370日边界/折/成本/失败门槛不变。9新ETH组件实际计算原生数量/LOT/成交量冲击/资金费/风险/完整净值，9组合使用这9条新路径与旧BTC500。全部18配置先reserve后估值，8+8+2 reserve/finish，54成本场景（27原生+27组合）。36旧成本曲线只读，0旧策略重跑。对照K5000->旧1000、10000->旧2000、20000->旧3000ppm，同D/本金/预算/其他规则，仅K不同；同N500持有与现金0%只读。旧canonical结果不改，净值别名不算独立alpha。
+
+实际CLI/UTC/stdout/stderr/退出码见*_commands.json及reserve_batches/finish_batches。36份源码在第一项reserve前绑定；新研究engine仅K参数允许列表变化，native simulate函数AST、trade/funding/accounting及四个冻结账户源码原字节保持。15个严格K边界、27因果性、18邻域/资金守恒检查是纯合成验证；expected_TDD_red退出1不是市场结果。未重跑任何完整金融或已完成观察配置。
+
+只在本轮封存提交对应归档输入上只读核验，不重新reserve/evaluate/advance、不重置canonical指针：
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T182915Z/audit.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T182915Z/check_decisions.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T182915Z/check_sources.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T182915Z/check_exports.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T182915Z/review/evidence.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T182915Z/review/market_reuse.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T182915Z/forward.py --reproduce
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T182915Z/audit_candidate.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T182915Z/audit_l4h02.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T182915Z/audit_fewm.py
+python3 checks/strategy_registry.py
+python3 checks/monitor_snapshot.py
+
+原SMA/single各自Nov5_14:30→16:30，single用自身旧BTC-.012/ETH-1.237持仓独立结算真实16:00资金费ns1793894400000000000；BTC mark76004.10000000/rate.00010000，ETH mark2251.18000000/rate.00010000。每成本副本自身收入分别.09120492/.278470966，收入不随成本倍数增加，不复制L4/FEWM金额。single NAV14146→14270，124新增点含122分钟/参考与两个资金费前后事件。L4/FEWM各自16:10→18:10，从已结算16资金费的自身账本续接，不重复16/08；L4 NAV6885→7007，FEWM993→1115，均增加122点。SMA49865→49985，120闭合mark。四账户无新日目标或成交，不强制截止平仓，完整现金/单位/desired/成本/risk/资金费游标与NAV前缀保留。
+
+FEWM累计1089分钟/30观察ID，原D1/K.0005、BTC3750/N750、ETH15000/N4500及Nov5→May4计划不变，未采纳本轮K；仍未成熟，不称180日/六折或稳定盈利。SMA完整65日spot上下文仍20261105T022141Z/forward_inputs.json.gz。旧前向都是延迟真实闭合bar/funding shadow，不冒充P01–P10真实报价模拟业绩。
+
+公开数据复用在源码绑定前预设：single只复用当前L4元数据/服务器时间，自身分钟/hour/funding另取6个HTTP200；FEWM/L4同窗公共数组与provenance相同，各自冻结binding/normalize/3reserve/advance/全NAV审计独立。失败及成功请求、原始响应和哈希如实留档。
+
+60新事件/30ID原字节留registry_records.jsonl；主前缀/旧fragments/全事件内容与multiplicity/时间戳合并索引一致。review/journal_layout.py只首次归档、不得重跑。只读snapshot/monitor不回测、不造模拟成交、不改十策略plan/state/本金/持仓，不重部署或增加定时任务。以后canonical指针推进使旧归档审计当前指针断言失败时，不能为通过旧检查而回滚指针。完整warmup/年度行情/当前raw保留忽略data，保留完整账本/冻结规则/登记及核验必要证据，仅清理可重建中间物。
+
+下轮SMA/single16:30→18:30（18:31参考闭合后）；L4/FEWM18:10→20:10（20:11参考闭合后）。三个永续账户各自都已结算16，携带自己的post16现金/单位/risk/资金费游标/fullNAV，不重复16或08，不复制其他账户现金流。下一日决策仍Nov6_00:01，终点仍冻结计划。真实commit/push、完整远端tree/blob核验和解锁终态留.git/automation_proofs/20261105T182915Z.json。
