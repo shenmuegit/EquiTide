@@ -1,0 +1,33 @@
+固定工作目录 /home/desktop/Documents/Codex/EquiTide，仅main，不建分支/worktree；写登记、snapshot、commit/push持research/automation/branch.lock。Python /home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B，PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1。
+
+本轮固定BTC500/3750旧银行与ETH4500/15000银行，raw[1,1]相加完整银行，总18750，本金20/80%，BTC入场占自身13.333333%/总2.666667%，ETH自身30%/总24%。不归一化、不缩放旧NAV/数量/成本、不产父订单/转移/再平衡/交叉保证金。
+
+预设ETH有限EWM24 beta23/25，D6/7/8×K.001/.002/.003，L5/H.02/E.005/V10/cap.045及仅新开仓/反手过滤不变。同向实仓保留；失败反转先平旧仓，不新开。最大32个过去完整收盘在33日上下文内，原370日边界/折/成本/门槛不变。9新ETH组件实际重算原生数量/LOT/成交量冲击/资金费/风险/完整净值，9新组合使用这9条新路径与旧BTC500。全部18配置先reserve后计算，8+8+2 reserve/finish，54场景（27原生+27组合）。36旧成本曲线只读、0旧策略重跑。对照预设K1000->旧250、2000->旧500、3000->旧750ppm，同D/本金/预算/其他规则，仅K有意不同；同N500持有与现金0%只读。旧canonical结果不改，净值别名不作独立alpha或独立历史。
+
+真实CLI/UTC/stdout/stderr/退出码在*_commands.json和reserve_batches/finish_batches。代码绑定在第一项reserve前成功完成；曾在任何reserve/估值前将工程检查中的FEWM累计观察断言24推进至27，旧binding留code_binding_superseded_before_first_reserve.json，新binding及bind_account_window_commands.json为实际执行依据。金融spec/参数/门槛未变、任何完整金融或观察结果未重跑。15个严格K边界、27因果性及18邻域/完整银行资金守恒为纯合成单元检查，expected_TDD_red退出1不是市场结果。
+
+仅在本轮封存提交对应归档输入上执行只读核验；不重复reserve/evaluate/advance，不重置canonical指针：
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T162815Z/audit.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T162815Z/check_decisions.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T162815Z/check_sources.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T162815Z/check_exports.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T162815Z/review/evidence.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T162815Z/review/market_reuse.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T162815Z/forward.py --reproduce
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T162815Z/audit_candidate.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T162815Z/audit_l4h02.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T162815Z/audit_fewm.py
+python3 checks/strategy_registry.py
+python3 checks/monitor_snapshot.py
+
+原SMA/single各自Nov5_12:30→14:30，single尚未跨16资金费。L4/FEWM各自14:10→16:10，真实16:00 UTC结算ns1793894400000000000；BTC mark76004.10000000/rate.00010000，ETH mark2251.18000000/rate.00010000。L4自身BTC-.006/ETH-1.856，每成本副本收入分别.04560246/.417819008；FEWM自身BTC-.009/ETH0，每成本副本收入.06840369/0（ETH零来自真实rate/mark与零持仓，而非缺数据假设）。各自6条资产/成本结算记录，收入不随成本倍数放大；没有复制另一账户金额。L4 NAV6761→6885，FEWM869→993，124新增点含122分钟/参考及资金费前后两个事件；single14024→14146，原SMA49745→49865。无新日目标/成交、无08重复或强制截止平仓，完整账本/净值前缀保留。
+
+FEWM累计969分钟/27观察ID，原D1/K.0005、BTC3750/N750、ETH15000/N4500及Nov5→May4计划不变，未采纳本轮K；仍未成熟，不能称180日/六折或稳定盈利。SMA完整65日spot上下文仍20261105T022141Z/forward_inputs.json.gz。所有前向都是延迟真实闭合bar/funding shadow，不冒充P01–P10真实报价模拟业绩。
+
+公开响应复用在观察源码绑定前预设：single仅复用本轮L4元数据/服务器时间，自己的分钟/hour/funding另取6个HTTP200；FEWM与L4同窗公共数组/provenance相同，各自冻结binding/normalize/3reserve/advance/全NAV审计独立。TLS失败与后续成功保留原stderr/原始响应哈希，不改变策略账本规则。
+
+60新事件/30ID原字节保存在registry_records.jsonl，主前缀/所有旧fragments/全事件内容与multiplicity/时间戳合并索引一致。review/journal_layout.py仅首次归档，不得重跑。本轮归档与收集控制台计数已在第一项reserve前修正为60/30与18，原旧轮日志不变。
+
+只读snapshot/monitor汇总已有证据，不回测、不造模拟成交、不改十策略plan/state/冻结本金/持仓；不重部署网页或增加定时任务。canonical指针后来推进时，旧归档审计的当前指针断言可能失败，不得为通过旧审计而回滚指针。完整warmup/年度行情/当前raw留忽略data；保留完整账本/冻结规则/登记和核验必要证据，仅清理可重建中间物。
+
+下轮SMA/single14:30→16:30，16:31参考闭合后；single届时必须用自己的旧持仓和真实16funding ns/rate/mark独立入账一次，不复制L4/FEWM现金流。L4/FEWM16:10→18:10，18:11参考闭合后，携带自己已结算16的现金/单位/资金费游标/risk/fullNAV，不重复16或08。下一日决策均Nov6_00:01。真实commit/push、远端完整tree/blob核验和解锁终态留.git/automation_proofs/20261105T162815Z.json。
