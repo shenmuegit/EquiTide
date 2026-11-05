@@ -1,0 +1,28 @@
+固定工作目录 /home/desktop/Documents/Codex/EquiTide；仅main。写登记、快照、提交push均持branch.lock排他锁。Python -B，PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1。
+
+本轮固定BTC2000/3750与ETH4500/15000，raw[1,1]完整独立银行相加，不自动归一化或缩放旧NAV/数量/成本。ETH D1/3/5×K250/500/750ppm；仅6个K250/750父组合是新定义，均先reserve再计算。3旧K500、13原生银行/39成本路径、9个BTC1250匹配D/K对照和同N2000持有只读；0新原生模型/信号/订单重跑。实际CLI/UTC/退出码在*_commands.json和reserve_batches/finish_batches；plan/spec/report/code/data/archive哈希保留。
+
+预留前校正中文假设中的旧基线1250文字为2000。原说明/源码gzip/SHA留在pre_reservation_metadata_revision.json；6份实际spec字节及指纹不变，0实际预留或计算。之后才绑定36源和执行新配置。
+
+只读核验已存真实输入与完整账本，不要对已完成截止重新reserve/evaluate/advance：
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T062312Z/audit.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T062312Z/check_decisions.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T062312Z/check_sources.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T062312Z/check_exports.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T062312Z/review/evidence.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T062312Z/forward.py --reproduce
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T062312Z/audit_candidate.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T062312Z/audit_l4h02.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261105T062312Z/audit_fewm.py
+python3 checks/strategy_registry.py
+python3 checks/monitor_snapshot.py
+
+原SMA/single分别02:30→04:30，L4/FEWM分别04:10→06:10；cash/units/desired/cost/risk/完整NAV前缀各自延续，本窗真实事件表无日目标/成交/资金费，原午夜/首单没有重复。SMA完整65日spot上下文仍20261105T022141Z/forward_inputs.json.gz。FEWM369分钟/379NAV/12实际观察ID仍partial，原BTC3750/N750与ETH15000/N4500、D1/K.0005、Nov5→May4计划不改，不采纳历史N2000。
+
+公共市场响应复用在任何新预留前声明。L4当前真实元数据/服务器时间被single复用，single自己的分钟/hour/funding仍另行请求六个HTTP200响应；FEWM使用L4完全相同窗口的真实市场数组和原始provenance，ownfrozenbinding/normalize/3reserve/advance/完整账本审计独立执行一次，绝不复制另一账户state、cash、quantity、decision、trade、fundingcashflow或NAV。market_reuse_verification.json另行证明身份/金额和时序。
+
+36新事件/18ID原字节移至registry_records.jsonl；主前缀、旧fragments、全事件内容/重复次数和时间戳合并索引保持。review/journal_layout.py只用于首次归档，不得重跑。只读snapshot/monitor检查不回测、不产生成交、不改paper10规则/本金/持仓，无重部署或新定时任务。
+
+下一SMA/single04:30→06:30，在06:31参考闭合后；下一L4/FEWM06:10→08:10，在08:11参考闭合后，需要实际08fundingTime/rate/mark并以各自账本持仓入账，不假设零或复制现金流。四账户下一日决策Nov6_00:01。延续完整账户及资金费游标，保留原FEWM首窗warmup/本轮raw/annualparquets于忽略data；不提交大行情，仅清理可重建中间物。
+
+锁前FETCH_HEAD读取失败及锁内重新fetch/ff验证在preflight_read_failure.json。真实非强制push/全远端tree/blob/解锁终态见.git/automation_proofs/20261105T062312Z.json。
