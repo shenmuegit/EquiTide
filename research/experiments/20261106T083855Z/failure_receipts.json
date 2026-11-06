@@ -1,0 +1,70 @@
+{
+  "failed_pipeline_commands": [],
+  "resolved_pre_reservation_inventory_checks": 0,
+  "resolved_pre_reservation_template_failures": 0,
+  "resolved_dependent_definition_checks": 0,
+  "pre_reservation_metadata_revision": null,
+  "expected_TDD_red": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "research/experiments/20261106T083855Z/check_asymmetric.py",
+      "--negative-control-double-weighting"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-06T09:03:55.974318+00:00",
+    "finished_utc": "2026-11-06T09:03:56.261998+00:00",
+    "expected_exit_code": 1,
+    "actual_exit_code": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T083855Z/check_asymmetric.py\", line 10, in <module>\n    if '--negative-control-double-weighting' in sys.argv:assert (.2*btc+.8*eth)[0]==18750,'Synthetic double-weighting raw full banks must fail capital identity'\n                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Synthetic double-weighting raw full banks must fail capital identity\n",
+    "synthetic_only": true,
+    "actual_market_backtests": 0
+  },
+  "actual_read_tool_failures": [
+    {
+      "tool": "web.open",
+      "actual_failure": true,
+      "URL": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "error": "HTTP400 Timeout fetching",
+      "resolved": true,
+      "resolution": "Direct catalog timeout retained. Search returned COIN-M, excluded. Use original frozen USD-M accounting and same-day successful USD-M field access receipt; current real fapi fields independently audited."
+    },
+    {
+      "actual_exit_code": 1,
+      "tool_chunk_id": "73ae70",
+      "scope": "Pre-reservation global AST preflight found one summarize.py path-expression closing bracket typo; no reservation or financial calculation.",
+      "resolved": true,
+      "resolution": "Correct one ROOT/path bracket expression. Global AST preflight actual0 before any reservation; financial engine/plan/spec unaffected.",
+      "actual_error": "SyntaxError: closing parenthesis does not match opening bracket in unbound summarize.py old-source path expression.",
+      "original_expression": "json.loads((ROOT[z['report']).read_text())",
+      "corrected_expression": "json.loads((ROOT/z['report']).read_text())",
+      "fixed_before_any_reservation": true
+    }
+  ],
+  "preflight_access_checks": {
+    "root_verified": "/home/desktop/Documents/Codex/EquiTide",
+    "actual_access_failure": false,
+    "root_tool_chunk": "e87d84",
+    "instructions_full_read_tool_chunk": "502db1",
+    "fetch_actual_tool_chunk": "5856f7",
+    "lock_tool_chunk": "221462",
+    "unrelated_checkout_used": false
+  },
+  "all_HTTP_failures": [
+    {
+      "url": "https://fapi.binance.com/fapi/v1/klines?symbol=ETHUSDT&interval=1m&startTime=1793939340000&endTime=1793946600000&limit=1500",
+      "started_utc": "2026-11-06T09:12:30.336463+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261106T083855Z/http_attempt_0003.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n"
+    }
+  ],
+  "forward_transport_errors": [],
+  "observed_HTTP_or_transport_failures": 1,
+  "completed_financial_or_observation_reruns": 0
+}
