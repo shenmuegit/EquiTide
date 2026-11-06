@@ -1,0 +1,210 @@
+{
+  "failed_pipeline_commands": [
+    {
+      "receipt": "initial_commands.json",
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/check_definitions.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-06T06:50:19.709068Z",
+      "finished_utc": "2026-11-06T06:50:21.173362Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261106T063754Z/definition_check.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/check_definitions.py\", line 11, in <module>\n    assert e['initial_capital_usdt']==15000 and e['fixed_entry_notional_usdt']==4800 and e['lookback_days']==5 and e['return_hurdle']==.02 and e['exit_buffer_fraction']==.005 and e['trend_lookback_days']==24 and e['trend_slope_lag_days']==row['D'] and e['trend_slope_hurdle_fraction']==row['K'] and e['trend_gate_scope']=='new_or_reversed_position_only' and e['entry_volatility_window_days']==10 and e['entry_volatility_ceiling']==.045\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "receipt": "freeze_commands.json",
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/freeze.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-06T06:45:58.381483Z",
+      "finished_utc": "2026-11-06T06:46:00.924599Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261106T063754Z/freeze.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/freeze.py\", line 17, in <module>\n    oldfp=parents[d,k]['fingerprint'];e=parents[d,k]['source_fingerprints'][1];fps=[B,e];key=sorted((x,Decimal(1)) for x in fps);matches=[fp for fp,z in rs.items() if z.get('spec',{}).get('kind')=='combination' and sorted((x['fingerprint'],Decimal(str(x['weight']))) for x in z['spec']['components'])==key];assert not matches,matches\n                                                                                                                                                                                                                                                                                                                          ^^^^^^^^^^^\nAssertionError: ['656ccaf98ef455200f022d6ea5e2ccaa569966748e700c2b2eba9feadb1da0dc']\n"
+    },
+    {
+      "receipt": "evaluate_commands.json",
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/run.py",
+        "evaluate"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-06T06:51:19.511828Z",
+      "finished_utc": "2026-11-06T06:51:21.012705Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261106T063754Z/evaluate.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/run.py\", line 46, in <module>\n    if __name__=='__main__':globals()[argparse.ArgumentParser().parse_known_args()[1][0]]()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/run.py\", line 21, in evaluate\n    assert not(R/'report.json').exists();p=json.loads((R/'plan.json').read_text());batch=json.loads((R/'batch.json').read_text());rs=reg.read_records(ROOT/'research/automation/registry.jsonl');assert len(batch)==p['expected_counts']['new_configs'] and all(rs[x['fingerprint']]['status']=='reserved' for x in batch);binding=json.loads((R/'code_binding_before_evaluation.json').read_text());assert all(sha(ROOT/k)==h for k,h in binding['source_sha256'].items());started=now();ms,cm=market.load(p);vectors,ss,old,arcs,diag=market.recover(p,ms,cm);put(R/'read_only_recent_slice_diagnostics.json',{'scope':'Pastday330slices from actual fullnativeNAV only; no nativepolicy,order or newparameter evaluation.','diagnostics':diag});configs={};(R/'results').mkdir()\n                                                                                                                                                                                                                                                                                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/code_binding_before_evaluation.json'\n"
+    }
+  ],
+  "resolved_pre_reservation_inventory_checks": 1,
+  "resolved_pre_reservation_template_failures": 0,
+  "resolved_dependent_definition_checks": 1,
+  "pre_reservation_metadata_revision": null,
+  "expected_TDD_red": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "research/experiments/20261106T063754Z/check_asymmetric.py",
+      "--negative-control-double-weighting"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-06T06:49:36.957786+00:00",
+    "finished_utc": "2026-11-06T06:49:37.240925+00:00",
+    "expected_exit_code": 1,
+    "actual_exit_code": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/check_asymmetric.py\", line 11, in <module>\n    wrong=.2*btc+.8*eth;assert wrong[0]==18750,'Synthetic double-weighting raw full banks must fail capital identity'\n                               ^^^^^^^^^^^^^^^\nAssertionError: Synthetic double-weighting raw full banks must fail capital identity\n",
+    "synthetic_only": true,
+    "actual_market_backtests": 0
+  },
+  "actual_read_tool_failures": [
+    {
+      "actual_exit_code": 127,
+      "tool_chunk_id": "dc9aee",
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "command": "rg --files -g AGENTS.md -g *oos.py -g *result.md research checks freqtrade_trial .agents",
+      "stderr": "/bin/bash: line 2: rg: command not found",
+      "resolved": true,
+      "resolution": "Use Python Path.glob/rglob and complete file reads for instruction/evidence discovery; no installation or workspace switch."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/freeze.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-06T06:45:58.381483Z",
+      "finished_utc": "2026-11-06T06:46:00.924599Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261106T063754Z/freeze.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/freeze.py\", line 17, in <module>\n    oldfp=parents[d,k]['fingerprint'];e=parents[d,k]['source_fingerprints'][1];fps=[B,e];key=sorted((x,Decimal(1)) for x in fps);matches=[fp for fp,z in rs.items() if z.get('spec',{}).get('kind')=='combination' and sorted((x['fingerprint'],Decimal(str(x['weight']))) for x in z['spec']['components'])==key];assert not matches,matches\n                                                                                                                                                                                                                                                                                                                          ^^^^^^^^^^^\nAssertionError: ['656ccaf98ef455200f022d6ea5e2ccaa569966748e700c2b2eba9feadb1da0dc']\n",
+      "previous_valid_monitor_restored": false,
+      "resolved": true,
+      "resolved_by_receipt": "freeze_retry1_commands.json",
+      "resolution": "Original failed log retained. Corresponding exact engineering/prevaluation retry actual0; no changed frozen N625 spec, duplicate reserve or completed financial rerun. Full financial audit/finish actual0."
+    },
+    {
+      "actual_exit_code": 1,
+      "tool_chunk_id": "fe5502",
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "command": "cat research/experiments/20261106T063754Z/readonly_cost_feasibility_before_reserve.json",
+      "stderr": "No such file or directory",
+      "resolved": true,
+      "resolution": "Requested a not-yet-created pre-reservation screen file. Read old screen format and generate the new screen solely from already actual source reports before any reservation; no valuation failure or lost result."
+    },
+    {
+      "actual_exit_code": 1,
+      "tool_chunk_id": "ede98d",
+      "receipt": "freeze_commands.json",
+      "log": "freeze.log",
+      "scope": "Pre-reservation completed-graph duplicate guard at N500, no spec/plan/reserve/valuation written.",
+      "resolved": true,
+      "resolution_pending": "Select genuinely new N625 graphs; preserve original guard/source/log, retry freeze only before any financial reservation.",
+      "resolution": "Original failed log retained. Corresponding exact engineering/prevaluation retry actual0; no changed frozen N625 spec, duplicate reserve or completed financial rerun. Full financial audit/finish actual0.",
+      "resolved_by_receipt": "freeze_retry1_commands.json"
+    },
+    {
+      "actual_exit_code": 1,
+      "tool_chunk_id": "353eb9",
+      "scope": "Dependent pre-reservation helper attempted plan.json after freeze guard prevented plan creation.",
+      "resolved": true,
+      "resolution_pending": "Create valid genuinely new N625 frozen plan first, then generate old-source cost screen and frozen account resume plan.",
+      "resolution": "Pre-reservation N500 duplicate guard kept. New N625 freeze_retry1 actual0; plan/specs created before any reserve, old screen/l4 resume generated. No market/config rerun."
+    },
+    {
+      "actual_exit_code": 1,
+      "tool_chunk_id": "fe5502",
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "command": "cat research/experiments/20261106T063754Z/readonly_cost_feasibility_before_reserve.json",
+      "stderr": "No such file or directory",
+      "resolved": true,
+      "resolution": "Requested not-yet-created screen. Current screen generated now solely from39 actual old native scenes before any reserve."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/check_definitions.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-06T06:50:19.709068Z",
+      "finished_utc": "2026-11-06T06:50:21.173362Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261106T063754Z/definition_check.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/check_definitions.py\", line 11, in <module>\n    assert e['initial_capital_usdt']==15000 and e['fixed_entry_notional_usdt']==4800 and e['lookback_days']==5 and e['return_hurdle']==.02 and e['exit_buffer_fraction']==.005 and e['trend_lookback_days']==24 and e['trend_slope_lag_days']==row['D'] and e['trend_slope_hurdle_fraction']==row['K'] and e['trend_gate_scope']=='new_or_reversed_position_only' and e['entry_volatility_window_days']==10 and e['entry_volatility_ceiling']==.045\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "previous_valid_monitor_restored": false,
+      "resolved": true,
+      "resolved_by_receipt": "initial_retry1_commands.json",
+      "resolution": "Original failed log retained. Corresponding exact engineering/prevaluation retry actual0; no changed frozen N625 spec, duplicate reserve or completed financial rerun. Full financial audit/finish actual0."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/run.py",
+        "evaluate"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-06T06:51:19.511828Z",
+      "finished_utc": "2026-11-06T06:51:21.012705Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261106T063754Z/evaluate.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/run.py\", line 46, in <module>\n    if __name__=='__main__':globals()[argparse.ArgumentParser().parse_known_args()[1][0]]()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/run.py\", line 21, in evaluate\n    assert not(R/'report.json').exists();p=json.loads((R/'plan.json').read_text());batch=json.loads((R/'batch.json').read_text());rs=reg.read_records(ROOT/'research/automation/registry.jsonl');assert len(batch)==p['expected_counts']['new_configs'] and all(rs[x['fingerprint']]['status']=='reserved' for x in batch);binding=json.loads((R/'code_binding_before_evaluation.json').read_text());assert all(sha(ROOT/k)==h for k,h in binding['source_sha256'].items());started=now();ms,cm=market.load(p);vectors,ss,old,arcs,diag=market.recover(p,ms,cm);put(R/'read_only_recent_slice_diagnostics.json',{'scope':'Pastday330slices from actual fullnativeNAV only; no nativepolicy,order or newparameter evaluation.','diagnostics':diag});configs={};(R/'results').mkdir()\n                                                                                                                                                                                                                                                                                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/code_binding_before_evaluation.json'\n",
+      "previous_valid_monitor_restored": false,
+      "resolved": true,
+      "resolved_by_receipt": "evaluate_retry1_commands.json",
+      "resolution": "Original failed log retained. Corresponding exact engineering/prevaluation retry actual0; no changed frozen N625 spec, duplicate reserve or completed financial rerun. Full financial audit/finish actual0."
+    },
+    {
+      "tool_chunk_id": "a320ce",
+      "actual_exit_code": 1,
+      "receipt": "initial_commands.json",
+      "log": "definition_check.log",
+      "scope": "Engineering metadata assertion only: unbounded text replacement ==45->==48 accidentally changed ==4500 to ==4800. Frozen ETH specs/native source/engine retained4500.",
+      "resolved": true,
+      "resolution_pending": "Restore only checker literal; match own already-reserved specs exactly; rerun engineering checks before any market load/evaluation.",
+      "resolution": "Original failed log retained. Corresponding exact engineering/prevaluation retry actual0; no changed frozen N625 spec, duplicate reserve or completed financial rerun. Full financial audit/finish actual0.",
+      "resolved_by_receipt": "initial_retry1_commands.json"
+    },
+    {
+      "tool_chunk_id": "4eb205",
+      "actual_exit_code": 1,
+      "receipt": "evaluate_commands.json",
+      "log": "evaluate.log",
+      "scope": "Dependent evaluation attempt stopped at missing source-binding file before market.load/recover/results; all9 prior reserve calls actual0.",
+      "resolved": true,
+      "resolution_pending": "Bind corrected checker/all36sources before first valuation. Reuse the9existing own reservations, no duplicate reserve or financial backtest rerun.",
+      "resolution": "Original failed log retained. Corresponding exact engineering/prevaluation retry actual0; no changed frozen N625 spec, duplicate reserve or completed financial rerun. Full financial audit/finish actual0.",
+      "resolved_by_receipt": "evaluate_retry1_commands.json"
+    }
+  ],
+  "preflight_access_checks": {
+    "root_verified": "/home/desktop/Documents/Codex/EquiTide",
+    "actual_access_failure": false,
+    "root_tool_chunk": "d78b63",
+    "instructions_full_read_tool_chunk": "702928",
+    "fetch_actual_tool_chunk": "6a8269",
+    "ff_only_actual_tool_chunk": "b8ca17",
+    "lock_tool_chunk": "15315d",
+    "unrelated_checkout_used": false
+  },
+  "all_HTTP_failures": [
+    {
+      "url": "https://fapi.binance.com/fapi/v1/markPriceKlines?symbol=ETHUSDT&interval=1h&startTime=1793934000000&endTime=1793941200000&limit=1500",
+      "started_utc": "2026-11-06T06:56:27.462087+00:00",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "data/raw/binance/l4h02_forward/20261106T063754Z/http_0006.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "transport": "verifiedTLS1.2HTTP1.1 publicGET,bounded3attempts"
+    }
+  ],
+  "forward_transport_errors": [],
+  "observed_HTTP_or_transport_failures": 1,
+  "completed_financial_or_observation_reruns": 0
+}

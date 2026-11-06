@@ -1,0 +1,15 @@
+[
+  {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/run.py",
+      "evaluate"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-06T06:51:19.511828Z",
+    "finished_utc": "2026-11-06T06:51:21.012705Z",
+    "exit_code": 1,
+    "log": "research/experiments/20261106T063754Z/evaluate.log",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/run.py\", line 46, in <module>\n    if __name__=='__main__':globals()[argparse.ArgumentParser().parse_known_args()[1][0]]()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/run.py\", line 21, in evaluate\n    assert not(R/'report.json').exists();p=json.loads((R/'plan.json').read_text());batch=json.loads((R/'batch.json').read_text());rs=reg.read_records(ROOT/'research/automation/registry.jsonl');assert len(batch)==p['expected_counts']['new_configs'] and all(rs[x['fingerprint']]['status']=='reserved' for x in batch);binding=json.loads((R/'code_binding_before_evaluation.json').read_text());assert all(sha(ROOT/k)==h for k,h in binding['source_sha256'].items());started=now();ms,cm=market.load(p);vectors,ss,old,arcs,diag=market.recover(p,ms,cm);put(R/'read_only_recent_slice_diagnostics.json',{'scope':'Pastday330slices from actual fullnativeNAV only; no nativepolicy,order or newparameter evaluation.','diagnostics':diag});configs={};(R/'results').mkdir()\n                                                                                                                                                                                                                                                                                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1027, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1013, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T063754Z/code_binding_before_evaluation.json'\n"
+  }
+]

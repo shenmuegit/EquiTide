@@ -1,0 +1,22 @@
+固定工作目录 /home/desktop/Documents/Codex/EquiTide；只有main，同research/automation/branch.lock排他锁。Python=/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B；环境PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1。所有原实际命令、UTC、退出码/stdout在 *_commands.json 和 review_*_receipt.json，失败也永久保留。普通Git发布及解锁终态保存在.git/automation_proofs/20261106T063754Z.json。
+
+正式新批次：BTC银行3750/入场625，ETH银行15000/入场4500，总本金18750，原始完整银行权重[1,1]，不归一化或缩放原生数量/冲击/资金费。ETH固定L5/H.02/E.005、finite normalizedEWM24/beta23/25、entry-only slow gate、V10 logvol cap.045；D6/7/8×K.01/.02/.03九格。正式匹配BTC1000同ETH child/D/K/本金旧结果，N625同预算持有/现金只读；BTC1250报告额外预先声明的只读背景。13旧银行/39旧成本路径、23旧结果只读，不重跑旧policy或重判资格。
+
+实际时序：freeze(N500 duplicate guard失败，无spec/reserve/计算)；N625 exact graph inventory和freeze_retry1成功；synthetic negative control expected1；initial的primitive0/definition1；九个reserve实际0；过早evaluate在binding文件读取处失败，市场未加载；修复纯检查器的ETH4500断言、保留九个原reserve/spec不变；initial_retry1 actual0绑定36sources；evaluate_retry1一次真实计算；audit/counts；finish_batch_0/1及finish；summary/exports/decisions/grid/midnight_archive；observer_status/fewm_status；L4、FEWM、single、SMA各自原账本续接。chronology及每个spec/hash都以原receipts/recovery verification为准，不把工程失败说成新回测或修改已完成结果。精确已完成配置不能作为新试验重跑。
+
+只读审计命令（Python替换为文首绝对路径）：
+Python research/experiments/20261106T063754Z/audit.py
+Python research/experiments/20261106T063754Z/check_decisions.py
+Python research/experiments/20261106T063754Z/audit_forward.py
+Python research/experiments/20261106T063754Z/audit_candidate.py
+Python research/experiments/20261106T063754Z/audit_l4h02.py
+Python research/experiments/20261106T063754Z/audit_fewm.py
+审计会写核验摘要；封存后先保存原摘要/hash，不回退共享指针、不重新开户。要重建原生完整NAV可依market.py按真实持仓segments和完整真实价格恢复，核对原NAV SHA，不能再次调用simulate。八件真实parquet、首段FEWM warmup及所有真实raw包留在忽略data并保留原SHA；本轮完整窗口/重叠bar/hour/funding/metadata/time与来源复制轻量必要证据，账本完整保留。
+
+当前原账户窗口：SMA/single Nov6_02:30→04:30；L4/FEWM Nov6_04:10→06:10，均post00/Nov6_00:01原账本续接，仅真实闭合mark/risk，不产生新日事件/资金费/成交，不强平。资金费零由实际响应和窗口装配核验，不用缺记录补零，不复制其他账户现金/数量/净值。SMA保持原Float/SMA65±1%/原成本/现金状态，最近完整65日上下文仍20261106T023552Z/forward_inputs.json.gz（asset->{1d,1m}），当前/上一轮输入是asset->minute-array，核对实际形状及重叠。FEWM仍原D1/K.0005、BTC750/3750及ETH4500/15000，不采用研究N625。所有仍partial，非180日/六折或实时成交业绩。
+
+下一建议：SMA/single04:30→06:30，要等06:31闭合参考；L4/FEWM06:10→08:10，要等08:11闭合参考，包含08资金费边界，须抓取并按真实settlement ns/rate/mark/各自当时q独立计算，不能重复00或提前假定08为零。下一日决策Nov7_00:01，先按原冻结计划预登记新截止。
+
+四个review脚本均actual0：evidence、market_reuse、metadata、journal_layout；journal只执行一次，21ID/42事件完整片段+原main字节前缀、全事件多重集/按时间合并索引保持相同，随后才check_sources。三项研究验证及所有逐折/变体/成本/完整整体回撤见report、CSV和results。重复开发历史不是独立最终测试或稳定实盘收益。
+
+同锁内真实只读监控命令：python3 research/monitor/snapshot.py；python3 checks/monitor_snapshot.py。gates保存原退出码，feed完整比较全部旧行，collect复制真实必要输入；不会下单/创建账户/改冻结规则、重部署网页或建立定时任务。清理只查本轮可重建垃圾，实际结果、全部负折、完整账本、冻结规则、登记、输入/必要证据删除数0。封存最后执行Python research/experiments/20261106T063754Z/finalize.py，之后不再修改本轮文件；publish脚本验证完整remote tree及每个必要blob SHA再解锁。
