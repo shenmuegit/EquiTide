@@ -1,0 +1,63 @@
+工作目录固定 /home/desktop/Documents/Codex/EquiTide；先git rev-parse --show-toplevel确认根目录可读、当前main且本地只有main。远程shenmuegit/EquiTide。
+本轮20261106T144056Z，基线c6fb737793958f7e3fa414fee32f49e1b18c6626，branch.lock同一排他锁PID2801463/session26380覆盖预登记、账户、监控、提交和push；无新分支/worktree/子代理/真实订单，保留旧data/normalized。
+解释器=/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python，仅使用依赖环境、cwd始终本根目录；研究Python使用-B，环境PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1。监控按要求python3。
+以下列出实际执行顺序及核验入口，完成状态以实际 *_commands.json/独立receipt为准。已有结果不能再次reserve/计算/finish或重播已完成账户窗口；只读引用旧报告与账本。所有新配置已独立spec+reserve，避免跨轮精确重复。
+R=research/experiments/20261106T144056Z
+ python -B $R/bootstrap.py
+ python -B $R/check_asymmetric.py --negative-control-double-weighting
+ 预期exit1，仅合成全银行重复乘权负对照，TDD_red_receipt留档；不是市场回测。
+ python -B $R/review/joint_grid.py --self-test
+ 合成27坐标/54邻接对/8角与27中心截断邻域检查，exit0，0市场估值。
+ python -B $R/commands.py freeze
+ python -B $R/commands.py initial
+ python -B $R/commands.py reserve_batch_0
+ python -B $R/commands.py evaluate
+ python -B $R/commands.py audit
+ python -B $R/commands.py counts
+ python -B $R/commands.py finish_batch_0
+ python -B $R/commands.py finish
+仅第0批各8项，0新原生policy/订单，8新父组合/24成本场景；所有reserve/finish底层registry.py命令、UTC、stdout/stderr/exit0逐项保存。36根源文件与联合诊断helper/事前inventory在首次reserve前绑定，整个engine与前轮字节相同。18邻域/27未来不变性/15严格斜率/5波动保留及资本/错轴检查通过。财务report SHA060da3cf12b2df465bcf4ae9d2e64b4873f3025c86abfa3d7d83f27a04e2c122，finish后不改。
+
+本轮固定BTC ROC29/H5%/E1%、自有C3750/N1000；ETH C15000/N4500，contrarianROC5/H2%/E0.5%、有限归一化EWM24 beta23/25、entry-only slowgate与V10样本logvolcap4.5%，只变ETH D6/7/8×严格K1/2/3%。同向保留原q、失败反手先平旧不新开。raw[1,1]相加完整银行，总本金18750；资本20/80%不再次乘，BTC名义占自身26.666667%/总5.333333%，ETH占自身30%/总24%；无自动归一化/NAV或数量/成本缩放/父订单/转账/再平衡/交叉保证金。
+24正式只读结果、13原生银行/39成本路径；BTC原生fp8e25c505446e24c640f6d0054a191866355136c65b6471cda110f01d2d409c48已有真实结果，H5父D7/K2中心fp2f667080d3b4dcdc5b53f8b3f0579c4cb429405d73ae2918290ab50dde82e421已有passed，保留原资格，不重reserve/估值/finish/改判。逐D/K匹配旧BTC29/H4的相同ETH child/本金/名义/日历，只有BTC门槛5%与4%不同；同预算常持有/现金0%只读。完整数字图查重见novelty_precheck及source_inventory_before_freeze。
+实际8个parquet路径/字节/SHA见data_manifest.real_market_inputs，源年度/近期输入、24个spec/report/archive SHA见manifest/plan.read_only_references；大行情留原忽略data，不提交。370日2025-10-19UTC00:01至2026-10-24UTC00:01；12×30日完整折+10日尾折，近期day330继承状态8×5日，无折间现金或仓位重置。33过去完整收盘上下文满足最大32需求，固定无fit/labels，purge/embargo0；过去收盘形成信号，下一00:01原生OPEN执行，末端计成本平仓。逐折与整条连续OOS最大回撤均保存，不平均组件Sharpe/收益率。复用开发历史与多重试验，不称未触碰最终/独立未来集。
+成本每边fee5bp+halfspread1bp+slippage2bp，impact0.5×过去20完整日样本logvol×sqrt(实际q×OPEN/过去20日quoteADV)；1/2/3倍执行成本及资金费支出、收入不放大。资金费用真实ns/rate/mark/当时自己的q，费率不作信号。线性永续无需现货借币，不捏造借费；核验LOT/tick/minnotional/参与率<=0.1%/费后1倍入场抵押及闭合小时1%不利mark保证金代理。缺L2/TCA/完整保证金层级/逐tick强平/实际容量证据。
+原失败门槛固定，6历史passed/2rejected，全部正负折保存：D7/K1与D8/K1各成本近期仅5/8正折，后者邻域50%；不为收益正放宽门槛，不称稳定实盘盈利。
+
+导出与联合诊断：
+ python -B $R/review/joint_grid.py
+ python -B $R/commands.py summary
+ python -B $R/commands.py exports
+ python -B $R/commands.py decisions
+ python -B $R/commands.py grid
+主网格仅H5的8新/1旧，ETH原生9格全旧，D/K半径1含中心，保留Sharpe/Calmar/整条DD/净收益与72邻接边/边界/cliff，11 CSV含24成本场景、312全期折、192近期折、8904日NAV、39原生路径等。
+联合H3/4/5×D6/7/8×K1/2/3在joint_grid_before_evaluation事前固定：只读19旧+8新实际结果，27格81成本指标行/162成本邻接边，描述三维邻域/边界/cliff，不重新估值或改canonical资格，原2D失败门槛保留。27格3倍全期均正，仅21格满足全部成本近期6/8，各H层7/9且失败区相同。共享BTC银行造成每同ETH格全期收益差一致，不是27份独立alpha验证。H5相较H4在1/2倍成本全期略低、3倍略高，不据开发历史成本排名选最优。主图与联合图都经实际view_image，原图哈希/目视记录留档。
+
+原四冻结账户一次续接，未采用H5研究规则、不创建新前向账户：
+ python -B $R/commands.py midnight_archive
+ python -B $R/commands.py observer_status
+ python -B $R/commands.py fewm_status
+ python -B $R/commands.py l4h02
+ python -B $R/commands.py fewm
+ python -B $R/commands.py candidate
+ python -B $R/commands.py forward
+SMA/single Nov6_10:30→12:30，L4/FEWM12:10→14:10；闭合参考可得后才取真实公开数据，明确延迟shadow重建，不冒充及时成交或十策略真实报价账户。08资金费已按原账本计，本轮实际无新资金费/日事件/成交/拒单/风险代理违规；不缺记录填零、不复制现金流或重复结算。复用仅公开metadata/time/minutes/hours/funding及provenance，三永续各自plan、现金/q/入场/risk/资金费和完整NAV链独立。
+SMA原C1500/500、SMA65±1%/Float/10bp现货规则，NAV51066→51186、累计51149分钟；当前/上一轮asset→minute-array，最新完整65日asset→{1d,1m}仍20261106T023552Z/forward_inputs.json.gz，SHA0dab6004856f7f9cf62cf2551839436ba663ccd1f6aaba23a8bb2bed9324683f，不以分钟数组替代日上下文。forward.py --reproduce只读重现9场景完整NAV/状态，无HTTP/registry写入。
+原single C10000/10000、N1000/3000、BTC31/H4/ETH L3S28，累计381ID/15149分钟/NAV15497；原L4 C5000/15000/N500/4500，累计204ID/8049分钟/NAV8234；原FEWM C3750/15000/N750/4500、ETH D1/K.0005，累计60ID/2289分钟/NAV2342。原FEWM初次暖机data/raw/binance/fewm_forward/20261105T002040Z/packet.json.gz完整保留，不重下载/重开现金/重复初单。全部partial、未180日资格，partial rejected不取消长期计划。
+一次L4 BTC小时mark公共GET curl35/TLS失败由原有3次上限重试恢复，原空body gzip/URL/UTC/哈希/stderr与成功响应全部保留；FEWM共享其公开来源，失败去重计数，不算两次实际请求。所有真实失败见failure_receipts及原commands/provenance，不改冻结observer或财务计算。
+
+最终独立检查和同锁监控：
+ python -B $R/review/evidence.py
+ python -B $R/review/market_reuse.py
+ python -B $R/review/metadata.py
+ python -B $R/review/journal_layout.py
+journal只在20ID/40事件全部finish后单次执行；精确本轮40尾事件移入registry_records.jsonl，物理main保留基线前缀，所有旧fragment、完整事件内容/重数及timestamp合并索引一致，无历史/结果删除，不重复布局迁移。
+ python -B $R/commands.py review
+ python -B $R/commands.py gates
+ gates实际python3 checks/strategy_registry.py、python3 research/monitor/snapshot.py、python3 checks/monitor_snapshot.py，同一main FLOCK；只汇总既有报告和账户，不新回测/产生模拟成交/改冻结规则、本金或持仓，不把旧SMA shadow充实时报价业绩，不部署/新建定时任务；失败保留旧有效汇总并留档。
+ python -B $R/commands.py feed
+ python -B $R/commands.py collect
+ python -B $R/finalize.py
+保留真实HTTP原始响应/packet/重叠bars/小时mark/资金费/context/完整账本、URL/时间/SHA，轻量必要证据提交。metadata检查无pycache/pyc/npy/tmp/checkpoints，0实际结果或账本删除，旧data不动。封存后不改本轮产物。
+发布仍持本轮锁：python -B $R/publish.py publish，仅本轮证据/3账户latest/monitor2文件提交main，普通SSH非force push，独立HTTPS fetch和ls-remote确认唯一main；完整tree/所需remote blob SHA/真实输入/冻结计划/3永续完整指针链核验。实际工具终态/commit/push/只读网络恢复/解锁后核验见.git/automation_proofs/20261106T144056Z.json；只有发布核验和真实工具终态完成后才释放broker，再运行私有postrelease检查，不重复已成功提交或财务计算。
+下轮SMA/single12:30→14:30待14:31参考；L4/FEWM14:10→16:10待16:11，覆盖16UTC边界，按实际响应ns/rate/mark/各自q/cash结算，不能假定0、复制金额或重复08；SMA现货无资金费。全部下一日决策Nov7 UTC00:01，各长期终止边界保持，不重复初单或改冻结规则。
