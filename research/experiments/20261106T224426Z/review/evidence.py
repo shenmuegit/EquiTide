@@ -1,0 +1,35 @@
+"""Independent parent graph identity and complete old-book/funding checks."""
+import gzip,json,sys
+from decimal import Decimal as D
+from pathlib import Path
+from datetime import datetime,timezone
+ROOT=Path(__file__).resolve().parents[4];R=Path(__file__).resolve().parents[1];sys.path.insert(0,str(R));from common import reg,sha,rel,put
+rd=lambda p:json.loads(p.read_text());p=rd(R/'plan.json');rep=rd(R/'report.json');rs=reg.read_records(ROOT/'research/automation/registry.jsonl');b=rd(R/'batch.json');assert len(b)==12;newfps={x['fingerprint'] for x in b};checks=[]
+for row in b:
+ sp=rd(ROOT/row['spec']);q=sp['parameters'];assert reg.fingerprint(sp)==row['fingerprint'] and row['scope']=='parent' and row['BTC_H'] in [.03,.05] and row['D'] in [6,7,8] and row['VC'] in [.04,.05] and row['K']==.02
+ assert [x['weight'] for x in sp['components']]==[1,1] and q['component_capitals_usdt']==[3750,15000] and q['component_initial_entry_notionals_usdt']==[1000,4500] and q['BTC_return_hurdle']==row['BTC_H'] and q['ETH_entry_volatility_ceiling']==row['VC'];key=sorted((x['fingerprint'],D(str(x['weight']))) for x in sp['components']);matches=[fp for fp,z in rs.items() if fp not in newfps and z.get('spec',{}).get('kind')=='combination' and sorted((x['fingerprint'],D(str(x['weight']))) for x in z['spec']['components'])==key];assert not matches
+ ref=rs[row['reference_fingerprint']]['spec'];assert ref['parameters']['BTC_return_hurdle']==.04 and ref['components'][1]==sp['components'][1];checks.append({'fingerprint':row['fingerprint'],'BTC_H':row['BTC_H'],'D':row['D'],'VC':row['VC'],'K':.02,'spec_sha256':sha(ROOT/row['spec']),'numeric_graph_matches':matches,'reference':row['reference_fingerprint']})
+assert len(p['read_only_references'])==30
+put(R/'parameter_identity_inventory.json',{'passed':True,'full_new_definitions':12,'native_definitions':0,'parent_definitions':12,'rows':checks,'actual_grid':{'BTC_H':[.03,.04,.05],'ETH_D':[6,7,8],'ETH_VC':[.04,.045,.05]},'fixed_ETH_K':.02,'raw_weights':[1,1],'bank_capitals':[3750,15000],'entry_notionals':[1000,4500]});put(R/'numeric_equivalence_inventory_verification.json',{'passed':True,'full_records_checked':len(rs),'numeric_graph_duplicates':[],'new_native':0,'new_parents':12})
+for fp,ref in p['read_only_references'].items():assert rs[fp]['status']==ref['status'] and rs[fp]['report_sha256']==ref['report_sha256'] and sha(ROOT/ref['report'])==ref['report_sha256']
+put(R/'readonly_control_parameter_verification.json',{'passed':True,'old_source_results':30,'old_native_banks':14,'formal_H4_matched_controls':9,'old_qualifications_preserved':True})
+com=rd(R/'equivalent_realized_NAV_paths.json')['comparisons'];assert len(com)==12
+for z in com:
+ c=next(x for x in rep['configs'].values() if x['fingerprint']==z['fingerprint']);ref=p['read_only_references'][c['reference_fingerprint']];old=next(x for x in rd(ROOT/ref['report'])['configs'].values() if x['fingerprint']==c['reference_fingerprint']);assert old['D']==c['D'] and old['K']==c['K'] and old.get('VC',.045)==c['VC'];newsp=rs[c['fingerprint']]['spec'];oldsp=rs[old['fingerprint']]['spec'];assert oldsp['parameters']['BTC_return_hurdle']==.04 and newsp['parameters']['BTC_return_hurdle']==c['BTC_H'] and oldsp['components'][1]==newsp['components'][1]
+ for k,s in c['scenes'].items():assert z['cost_comparisons'][k]['return_pct']==s['net_return_pct'] and z['cost_comparisons'][k]['old_return_pct']==old['scenes'][k]['net_return_pct']
+put(R/'reference_comparison_verification.json',{'passed':True,'new_native_comparisons':0,'new_parent_comparisons':12,'same_initial_capital_and_entry_notionals':True,'same_D_K_VC_only_BTC_H_changed':True,'old_statuses_unchanged':True})
+d=rd(R/'sensitivity_diagnostics.json');maxima=[]
+for scope,key in [('native','all_current_native_grid'),('parent','all_current_grid')]:
+ for k in ['1','2','3']:
+  best=max(c['scenes'][k]['sharpe_365'] for c in rep[key].values());assert d['grid'][scope][k]['maximum_Sharpe']==best;maxima.append({'scope':scope,'cost':k,'maximum_Sharpe':best,'maximum_cells':d['grid'][scope][k]['maximum_cells']})
+put(R/'boundary_verification.json',{'passed':True,'axes':['BTC_H','ETH_D','ETH_VC'],'maxima':maxima,'no_postoutcome_grid_or_gate_change':True})
+packets=[]
+for stem in ['candidate','l4h02','fewm']:
+ w=R/(stem+'_observation');im=rd(w/'input_manifest.json');assert sha(ROOT/im['packet'])==im['sha256'];packet=json.loads(gzip.decompress((ROOT/im['packet']).read_bytes()));v=rd(R/(stem+'_verification.json'));before=rd(ROOT/rd(w/'previous_pointer.json')['state']);state=rd(w/'state.json');delta=json.loads(gzip.decompress((w/'delta.json.gz').read_bytes()));raw={(a,int(z['fundingTime'])*1000000):z for a,body in packet['assets'].items() for z in body['funding'] if before['cutoff_ns']<int(z['fundingTime'])*1000000<=state['cutoff_ns']};funds=[z for z in delta['journal'] if z['kind']=='funding'];decs=[z for z in delta['journal'] if z['kind']=='decision'];assert v['passed'] and not decs and not v['new_fills'] and len(funds)==v['new_funding_settlements']==3*len(raw);formula=[]
+ for z in funds:
+  a,k,t=z['asset'],str(z['cost_multiplier']),z['timestamp_ns'];f=raw[a,t];q=D(before['books'][a][k]['signed_units']);base=-q*D(f['markPrice'])*D(f['fundingRate']);amount=base*int(k) if base<0 else base;assert D(z['signed_units'])==q and D(z['mark_price'])==D(f['markPrice']) and D(z['rate'])==D(f['fundingRate']) and D(z['base_amount_usdt'])==base and D(z['amount_usdt'])==amount and D(z['cash_before'])==D(before['books'][a][k]['cash']) and D(z['cash_after'])==D(z['cash_before'])+amount;formula.append({'asset':a,'cost':k,'actual_ns':t,'actual_rate':f['fundingRate'],'actual_mark':f['markPrice'],'own_units':str(q),'own_base_usdt':str(base),'own_amount_usdt':str(amount)})
+ for a in ['BTC','ETH']:
+  for k in ['1','2','3']:
+   bs,ss=before['books'][a][k],state['books'][a][k];assert all(bs[f]==ss[f] for f in ['signed_units','entry_price','entry_reference']) and D(ss['cash'])==D(bs['cash'])+sum((D(z['amount_usdt']) for z in funds if z['asset']==a and str(z['cost_multiplier'])==k),D(0))
+ packets.append({'account':stem,'raw_funding_records_in_new_window':len(raw),'new_settlement_ledger_records':len(funds),'independent_own_account_funding_formulas':formula,'no_daily_decisions_or_trades':True,'raw_packet_sha256':im['sha256'],'complete_NAV_audit_sha256':sha(R/(stem+'_verification.json'))})
+put(R/'primary_funding_field_verification.json',{'passed':True,'accessed_UTC':'2026-11-06','official_fields':['symbol','fundingTime','fundingRate','markPrice'],'fundingTime_ms_to_ns':True,'current_actual_packets':packets,'zero_cashflows_if_actual_units_zero_are_derived_not_missing_data':True,'no_duplicate00_or_other_account_cashflow_copy':True});assert rd(R/'visual_inspection.json')['passed'] and rd(R/'visual_inspection.json')['sha256']==sha(R/'sensitivity.png');print('PASS12newparentgraphs/24readonlygridcells/30oldresults/6boundaryscenes/allthreeownfundingbooks')

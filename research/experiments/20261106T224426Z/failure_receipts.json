@@ -1,0 +1,164 @@
+{
+  "failed_pipeline_commands": [
+    {
+      "receipt": "midnight_archive_commands.json",
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T224426Z/check_midnight_archive.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-06T23:04:57.777966Z",
+      "finished_utc": "2026-11-06T23:04:58.085140Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261106T224426Z/midnight_archive.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T224426Z/check_midnight_archive.py\", line 9, in <module>\n    assert sha(ROOT/prev['state'])==prev['state_sha256'] and sha(ROOT/im['packet'])==im['sha256'];lo,cut,actions,ctx=c.normalize(packet,before,b);day=c.ns('2026-11-02T00:01:00Z');assert lo==c.ns('2026-11-01T00:10:00Z') and cut==c.ns('2026-11-02T00:10:00Z') and state['context']==ctx and sorted(t for t,k in actions if k==5)==[day]\n                                                                                                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    }
+  ],
+  "resolved_pre_reservation_inventory_checks": 0,
+  "resolved_pre_reservation_template_failures": 0,
+  "resolved_dependent_definition_checks": 0,
+  "pre_reservation_metadata_revision": null,
+  "expected_TDD_red": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T224426Z/check_asymmetric.py",
+      "--negative-control-double-weighting"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-06T23:00:24.512458Z",
+    "finished_utc": "2026-11-06T23:00:24.778645Z",
+    "actual_exit_code": 1,
+    "expected_exit_code": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T224426Z/check_asymmetric.py\", line 11, in <module>\n    wrong=.2*btc+.8*eth;assert wrong[0]==18750,'Synthetic double-weighting raw full banks must fail capital identity'\n                               ^^^^^^^^^^^^^^^\nAssertionError: Synthetic double-weighting raw full banks must fail capital identity\n",
+    "synthetic_only": true,
+    "actual_market_backtests": 0
+  },
+  "pre_execution_account_adapter_correction": {
+    "passed": true,
+    "recorded_utc": "2026-11-06T23:04:48.533679Z",
+    "correction_kind": "Static pre-execution stale observation start guard detected; no failed financial backtest or observation execution.",
+    "financial_report_sha256_unchanged": "dcdb8ccd55cec2fe8c4992f4f6d05f03256c758b0f0d79d52a62318cd561d630",
+    "original_financial_binding_sha256": "f02903c3104821e559495abca964c4f628861713e3842fc65390b84df91c3bfe",
+    "original36financial_sources_preserved": true,
+    "source_sha256": {
+      "research/experiments/20261106T224426Z/review/observe_candidate_corrected.py": "434333a4e72407cb8ddd2088a46963466a234bc2b7557749c5ada918a0e4cafa",
+      "research/experiments/20261106T224426Z/review/forward_registry_corrected.py": "287d1959f2246b48fed696def026e870f9848f61ead3747145f139c6ad80c1cd",
+      "research/experiments/20261106T224426Z/review/audit_candidate_corrected.py": "05f55e846170e3ee554dbf2b0ae8f62e4786b7d834d893bc924f4cb5b468afdb",
+      "research/experiments/20261106T224426Z/commands.py": "a8f66e38080c7a00d295673c5f838fbbc98144bda971e331c6950c57bdd969cc"
+    },
+    "patches": [
+      {
+        "original": "research/experiments/20261106T224426Z/observe_candidate.py",
+        "original_preserved_sha256": "3f9b4cb97dd7b1e1f4e4b82ce0deb05dfa42e8ad49063729814c95401348ef4e",
+        "corrected": "research/experiments/20261106T224426Z/review/observe_candidate_corrected.py",
+        "corrected_sha256": "434333a4e72407cb8ddd2088a46963466a234bc2b7557749c5ada918a0e4cafa",
+        "window_guard_correction": [
+          "2026-11-06T16:30:00Z",
+          "2026-11-06T18:30:00Z"
+        ],
+        "other_changes": "Only relocated file ROOT/R/import path and candidate audit entry point; original frozen strategy/advance/core unchanged."
+      },
+      {
+        "original": "research/experiments/20261106T224426Z/forward_registry.py",
+        "original_preserved_sha256": "cdfc1076e245c1d1d4f2ed5bea4a6799add95c6fd0db6b328c3fbac3aad70215",
+        "corrected": "research/experiments/20261106T224426Z/review/forward_registry_corrected.py",
+        "corrected_sha256": "287d1959f2246b48fed696def026e870f9848f61ead3747145f139c6ad80c1cd",
+        "window_guard_correction": [
+          "2026-11-06T16:30:00Z",
+          "2026-11-06T18:30:00Z"
+        ],
+        "other_changes": "Only relocated file ROOT/R/import path and candidate audit entry point; original frozen strategy/advance/core unchanged."
+      },
+      {
+        "original": "research/experiments/20261106T224426Z/audit_incremental.py",
+        "original_preserved_sha256": "e8d2ec0241477dae8f5f3b137445c2984608667596de81d9ff2464f690a7ee71",
+        "corrected": "research/experiments/20261106T224426Z/review/audit_candidate_corrected.py",
+        "corrected_sha256": "05f55e846170e3ee554dbf2b0ae8f62e4786b7d834d893bc924f4cb5b468afdb",
+        "window_guard_correction": [
+          "2026-11-06T16:30:00Z",
+          "2026-11-06T18:30:00Z"
+        ],
+        "other_changes": "Only relocated file ROOT/R/import path and candidate audit entry point; original frozen strategy/advance/core unchanged."
+      }
+    ],
+    "current_windows": {
+      "SMA_single": [
+        "2026-11-06T18:30:00Z",
+        "2026-11-06T20:30:00Z"
+      ],
+      "L4_FEWM": [
+        "2026-11-06T20:10:00Z",
+        "2026-11-06T22:10:00Z"
+      ]
+    },
+    "no_current_observation_reservation_or_account_started_before_correction": true,
+    "financial_recalculations": 0,
+    "original_frozen_account_rules_changed": false,
+    "no_old_account_or_result_rewritten": true
+  },
+  "resolved_archival_check_failure": {
+    "passed": true,
+    "recorded_utc": "2026-11-06T23:08:00.917724Z",
+    "root_cause": "Unscoped time substitution changed the fixed historical Nov1_22:10 archive start to Nov1_00:10; actual archive inputs and finished backtests were unchanged.",
+    "reference_working_source": "research/experiments/20261106T204429Z/check_midnight_archive.py",
+    "reference_sha256": "5e517a9072be2c9bed797a3b215649ce0ead7b0d8ad5e518bce9d1d39e2ad674",
+    "preserved_broken_bound_source": "research/experiments/20261106T224426Z/check_midnight_archive.py",
+    "preserved_broken_sha256": "c7b78be3a08f36498848841515d55d175609808badd0780c57b18a023d453e0e",
+    "corrected_source": "research/experiments/20261106T224426Z/review/check_midnight_archive_corrected.py",
+    "corrected_sha256": "7a9343823287989a529180594c89f03a264b4c078a44ec60cff638449550cf26",
+    "only_reference_change": "Import path for relocation; archival checker body exactly original working source, no shifted historical dates.",
+    "financial_report_sha256": "dcdb8ccd55cec2fe8c4992f4f6d05f03256c758b0f0d79d52a62318cd561d630",
+    "no_observation_started_before_correction": true,
+    "financial_or_observation_recalculations": 0,
+    "actual_recovery_exit_code": 0,
+    "original_failure_exit_code": 1,
+    "failed_receipt": "research/experiments/20261106T224426Z/midnight_archive_commands.json",
+    "recovery_receipt": "research/experiments/20261106T224426Z/midnight_archive_retry1_commands.json",
+    "original_failure_preserved": true,
+    "verification_sha256": "e299863d3b0c106d0b9720f3ca9fabe0fc1a67ebcb930ad17ea02ffc6d5d7374"
+  },
+  "actual_read_tool_failures": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T224426Z/check_midnight_archive.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-06T23:04:57.777966Z",
+      "finished_utc": "2026-11-06T23:04:58.085140Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261106T224426Z/midnight_archive.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T224426Z/check_midnight_archive.py\", line 9, in <module>\n    assert sha(ROOT/prev['state'])==prev['state_sha256'] and sha(ROOT/im['packet'])==im['sha256'];lo,cut,actions,ctx=c.normalize(packet,before,b);day=c.ns('2026-11-02T00:01:00Z');assert lo==c.ns('2026-11-01T00:10:00Z') and cut==c.ns('2026-11-02T00:10:00Z') and state['context']==ctx and sorted(t for t,k in actions if k==5)==[day]\n                                                                                                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "previous_valid_monitor_restored": false,
+      "resolved": true,
+      "resolution": "Corrected readonly archival checker restored exact working historical time bounds; no financial/account reruns.",
+      "resolution_receipt": "research/experiments/20261106T224426Z/midnight_archive_retry1_commands.json",
+      "resolved_utc": "2026-11-06T23:08:01.261273Z"
+    }
+  ],
+  "preflight_access_checks": {
+    "passed": true,
+    "failed_access_checks": [],
+    "root_readable": true,
+    "root": "/home/desktop/Documents/Codex/EquiTide",
+    "actual_git_root_verified": true
+  },
+  "all_HTTP_failures": [
+    {
+      "url": "https://fapi.binance.com/fapi/v1/exchangeInfo",
+      "started_utc": "2026-11-06T23:08:02.345393+00:00",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "data/raw/binance/l4h02_forward/20261106T224426Z/http_0000.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "transport": "verifiedTLS1.2HTTP1.1 publicGET,bounded3attempts"
+    }
+  ],
+  "forward_transport_errors": [],
+  "observed_HTTP_or_transport_failures": 1,
+  "completed_financial_or_observation_reruns": 0
+}
