@@ -1,0 +1,37 @@
+工作目录固定 /home/desktop/Documents/Codex/EquiTide；仅main、同branch.lock排他锁，不创建其他分支或工作树。
+Python /home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B
+环境 PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
+
+所有实际命令、UTC起止和退出码在 *_commands.json。9金融配置在reserve_batches逐个reserve成功后，evaluate仅实际执行一次；27新组合成本路径保存在results/和report.json，13旧原生银行/39成本路径只读恢复，不重新运行policy/simulate。finish子命令在finish_batches；原始[1,1]权重、本金3750/15000、入场名义1250/4500、两轴网格、边界和失败门槛在plan/spec/batch/specs；8真实市场输入SHA及代码/数据/旧结果哈希在data_manifest和code_binding_before_evaluation。精确重复已完成配置不得作为新试验重跑。
+
+只读重建已有结果与账本的命令：
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261106T043623Z/audit.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261106T043623Z/check_decisions.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261106T043623Z/audit_forward.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261106T043623Z/audit_candidate.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261106T043623Z/audit_l4h02.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261106T043623Z/audit_fewm.py
+审计会写核验摘要；封存后先保留原摘要、核对原报告和所有输入SHA。未来共享指针推进后按本轮archived previous_pointer/complete/report/state/delta链只读核验，不能回退共享指针或重开账户。忽略的真实parquet/大warmup保留，当前全部轻量原始窗口和完整packet在raw_evidence或本轮输入文件。
+
+正式比较是旧BTC1000同ETH D/K/本金/日历对子；budget_bracket_comparison另外读取预先声明的BTC2000已完成报告作背景，原报告SHA、canonical资格和原始场景均不改，不重跑老配置。全部是反复使用的开发历史，不能称独立最终或未来验证。
+
+SMA/single各自Nov6_00:30→02:30，L4/FEWM各自Nov6_02:10→04:10，均从post00资金费/Nov6_00:01原日决策后的各自真实模拟账本继续mark/风险。按实际返回数据识别新资金费，不以缺数据填零，不复制其他账户现金流，不重开本金/现金或复演首笔。SMA仍原Float/SMA65/±1%/原10bp成本，本轮输入资产->分钟数组；上轮是资产->{1d,1m}，验证重叠时按真实形状读取。最新完整65日现货上下文仍research/experiments/20261106T023552Z/forward_inputs.json.gz，当前分钟输入不能替代它；下一日目标Nov7_00:01。FEWM仍D1/K.0005,N750/4500，不采用研究BTC1250。
+
+全部42事件/21ID完整保存在registry_records.jsonl；主簿恢复原字节前缀，事件多重集和按时间合并索引相同。review/journal_layout.py只执行一次且必须早于保护源检查。全部finish/核验后同锁运行只读snapshot及monitor check，不产生交易/账户/回测。非强制push、远端完整tree及必要blob、锁释放终态见.git/automation_proofs/20261106T043623Z.json。
+
+本轮实际执行的金融命令顺序（仅用于核对原 receipts，已完成配置不得重新登记或再作新试验）：
+Python -B research/experiments/20261106T043623Z/commands.py freeze
+Python -B research/experiments/20261106T043623Z/commands.py initial
+Python -B research/experiments/20261106T043623Z/commands.py reserve_batch_0
+Python -B research/experiments/20261106T043623Z/commands.py reserve_batch_1
+Python -B research/experiments/20261106T043623Z/commands.py evaluate
+Python -B research/experiments/20261106T043623Z/commands.py audit
+Python -B research/experiments/20261106T043623Z/commands.py counts
+Python -B research/experiments/20261106T043623Z/commands.py finish_batch_0
+Python -B research/experiments/20261106T043623Z/commands.py finish_batch_1
+Python -B research/experiments/20261106T043623Z/commands.py finish
+其他 summary/exports/decisions/grid/midnight_archive/四账户动作的真实顺序与子命令以各 *_commands.json UTC 和 reserve/finish receipts 为准，不用本文替代原实际记录。Python 是文首绝对路径，所有 cwd 固定文首仓库，环境同前。
+
+封存前只读核对最后一项：Python -B research/experiments/20261106T043623Z/review/metadata.py；结果 review_metadata.py_receipt.json。它核对 typed 参数/39旧路径来源、27行已完成预算报告背景及最新完整SMA65上下文形状，不计算策略/净值/成交。审阅发现的冻结描述旧文字另存 frozen_description_errata.json；原 plan/spec/report 不改，不因该勘误改变 fingerprint、门槛、评价、原结果资格或重跑。清理核验在 cleanup_verification.json，未生成可重建垃圾，实际结果和账本删除数均0。
+
+只读监控实际命令：python3 research/monitor/snapshot.py、python3 checks/monitor_snapshot.py；gates_commands.json 保留实际退出0。feed 校验9新行和所有9541旧行完整不变；18件当前窗口原始响应/包已轻量保存在 raw_evidence/，FEWM复用公开市场数组但各自原账本/NAV独立。私有 seal/publisher/远端树与blob/解锁工具终态在 .git/automation_proofs/20261106T043623Z.json。
