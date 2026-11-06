@@ -1,0 +1,60 @@
+工作目录固定/home/desktop/Documents/Codex/EquiTide；首先git rev-parse --show-toplevel确认可读根目录，当前及本地/远端仅main。远程shenmuegit/EquiTide；base fc91f6f6e8c049ddded3e61e37192ce9f6d6761f。本轮20261106T164157Z，同一main FLOCK PID2831332/session98103保护登记、账户、监控、commit/push。无新分支/worktree/子代理/真实订单，保留旧data/normalized。
+Python=/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python，仅依赖解释器，不进入其他目录。研究Python -B，环境PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1。监控按要求python3。
+以下为实际执行顺序/复现入口，终态见各 *_commands.json 和独立receipt。已完成配置不能再次reserve/计算或重复账户窗口；旧结果只读。全部新配置独立spec并先成功registry.py reserve。
+R=research/experiments/20261106T164157Z
+ python -B $R/bootstrap.py
+ TDD_red_receipt保存对旧engine cap==.045域的合成新cap.04调用，预期exit1，无市场回测；随后新引擎绿检查。
+ python -B $R/commands.py freeze
+ python -B $R/commands.py initial
+ python -B $R/commands.py reserve_batch_0
+ python -B $R/commands.py reserve_batch_1
+ python -B $R/commands.py evaluate
+ python -B $R/commands.py audit
+ python -B $R/commands.py counts
+ python -B $R/commands.py finish_batch_0
+ python -B $R/commands.py finish_batch_1
+ python -B $R/commands.py finish
+两批8+4配置，均在首次估值前reserve。6个新ETH原生+6个新父组合，共36成本场景；每项独立finish。18个新原生成本路径/6660个独立因果策略决策，18个新父净值路径；6个旧原生银行/18成本路径与4旧父结果只读（共10结果）。审计实际39960资金费记录、1530成交、0拒单、756指标检查、162090保证金代理检查。36根源文件在首次reserve前绑定。原生simulate/entry_filter/slope_gate AST与旧引擎相同；唯一源码差异是允许VC域.045拓宽为[.04,.045,.05]，策略公式与账户成交/成本/资金费/风险核算不改。engine_policy_domain_change保存完整新旧SHA和AST证据。
+另实际运行python -B $R/check_asymmetric.py --negative-control-double-weighting，预期exit1保留TDD_capital_red_receipt，合成重复乘资本份额须失败，不是市场回测；真实新数据不重复计算。18邻域/27未来不变性/严格斜率/15波动边界及持仓保留/错轴检查通过。财务报告SHA e05064ab06a9f1c9daa7f88405090136b0b828c2f0eafa947813e3dec85ab88f，finish后不改。
+
+事前固定BTC ROC29/H4%/E1%，银行C3750/N1000只读；ETH contrarianROC5/H2%/E0.5%、有限归一化EWM24 beta23/25、strictK1%、V10样本logvol，交叉D6/7/8×entry-onlyVC4/4.5/5%。仅新开/反手检查慢趋势及波动，同向保留实际q，失败反手先平旧不新开。ETH银行15000/N4500。旧VC4.5%的3原生+3父基线只读，原status/criteria/sensitivity不改（D7原中心rejected保留），新cap4/5各3D必须重算ETH数量、LOT、成本/冲击/资金费/风险，不缩放旧NAV或订单。
+raw[1,1]相加完整独立银行，总本金18750；资本20/80%不再乘，BTC名义自身26.666667%/总5.333333%，ETH自身30%/总24%。无自动归一化/旧净值缩放/父订单/转账/重平衡/交叉保证金。基准只读同C/N1000BTC+N4500ETH常持有和现金0%，不用平均Sharpe或组件收益代组合。
+真实8个parquet路径、字节和SHA见data_manifest.real_market_inputs；源年度/近期输入、全部旧spec/report/archive SHA见manifest与plan.read_only_references；大行情保留原data忽略路径，不提交。370日2025-10-19UTC00:01→2026-10-24UTC00:01，12×30日完整折+10日尾折；近期day330继承实际状态8×5日，无折间重开。过去完整收盘信号，下一00:01原生OPEN，末端计成本平仓。33上下文满足32过去收盘，无fit/labels、purge/embargo0；新spec warmup33/embargo0与实际代码一致，旧spec遗留30/3字段不改。报告逐折及整条连续OOS DD。复用开发历史/大量试验，不称未触碰最终或独立未来集。
+成本每边fee5bp+半价差1bp+滑点2bp，impact0.5×过去20完整日样本logvol×sqrt(实际q×OPEN/过去20日quoteADV)；1/2/3倍执行成本及资金费支出、收入不放大；真实结算ns/rate/mark/自己的q，资金费不作信号。线性永续现金抵押无现货借币，不捏造借费；核验LOT/tick/minnotional、参与率0.1%、费后1倍入场抵押及闭合小时1%不利mark保证金代理。缺历史L2/TCA/完整层级/逐tick强平/实际容量证据。
+
+输出及独立资格检查：
+ python -B $R/commands.py summary
+ python -B $R/commands.py exports
+ python -B $R/commands.py decisions
+ python -B $R/commands.py grid
+11 CSV含36实际新成本场景/468全期折/288近期折/13356日NAV、各9格原生/父曲面、72邻接边、9只读基准成本、36新旧原生成本路径及分配。D/VC二维索引半径1含中心；保存全部净收益/整体DD/Sharpe/Calmar、边界/cliff，不把依赖网格当DSR/PBO独立证明，不据结果扩网格或放宽门槛。原失败门槛见plan/spec（各成本全期/近期净正、近期>=6/8正折、邻域近期及3倍正率>=60%等），保持不变。sensitivity.png已实际view_image核验与保存SHA。
+本轮0合格新候选，6新组件/6新组合全部实际rejected，正负折永久保留。新组合3倍全期净9.961419%–11.921586%虽正，D6自身6/8但邻域50%<60%；D7/8仅5/8、邻域约33.3%/0%。新ETH组件仅2–3/8，D7近期净负。改变VC4/4.5/5未修复K1弱斜率D7/8失败区，旧canonical资格只按旧原邻域保留；额外D/VC诊断不改判旧结果。不能把年内正收益称稳定实盘盈利，不创建新前向账户或采用研究VC到原计划。
+
+四个原冻结账户一次续接并独立审计：
+ python -B $R/commands.py midnight_archive
+ python -B $R/commands.py observer_status
+ python -B $R/commands.py fewm_status
+ python -B $R/commands.py l4h02
+ python -B $R/commands.py fewm
+ python -B $R/commands.py candidate
+ python -B $R/commands.py forward
+SMA/single Nov6_12:30→14:30；L4/FEWM14:10→16:10，闭合参考到达后才GET真实公开输入。仅延迟shadow重建，不冒充及时成交或十策略真实报价。共享仅metadata/time/minutes/hours/funding与provenance；现金/数量/决策/成交/资金费/NAV各自独立。原冻结plan/本金/规则/长期终止不改；无本轮新日决策/成交/拒单/风险代理违规。
+L4和FEWM各实际新增6条16UTC资金费记录（BTC/ETH×3成本），用实际ns/rate/mark和自身q独立计算；ETH零持仓金额由真实记录推导，非缺数据补零。原single当前未跨16，新资金费0，不能复制L4/FEWM金额或重复08/16。完整HTTP原始响应/URL/UTC/哈希、重叠bars/小时mark/资金费/packet/context与账本保留。
+SMA原C1500/500、SMA65±1%/Float/10bp现货，不含永续资金费；NAV51186→51306、累计51269分钟。当前/上一轮asset→minute-array，最新完整65日asset→{1d,1m}仍20261106T023552Z/forward_inputs.json.gz，SHA0dab6004856f7f9cf62cf2551839436ba663ccd1f6aaba23a8bb2bed9324683f，不以分钟数组替代。forward.py --reproduce已只读重现9完整场景/NAV/状态，无HTTP/registry写入。
+原single C10000/10000,N1000/3000,BTC31/H4/ETH L3S28，累计384ID/15269分钟/NAV15619；原L4 C5000/15000,N500/4500，累计207ID/8169分钟/NAV8358；原FEWM C3750/15000,N750/4500,ETH D1/K.0005，累计63ID/2409分钟/NAV2466。初次FEWM完整暖机data/raw/binance/fewm_forward/20261105T002040Z/packet.json.gz保留、不重下载/重置现金/重复初单。全部partial，未180日资格，partial rejected不取消长期计划。真实失败及恢复见failure_receipts/原commands/provenance。
+
+最终检查与同锁只读监控：
+ python -B $R/review/evidence.py
+ python -B $R/review/market_reuse.py
+ python -B $R/review/metadata.py
+ python -B $R/review/journal_layout.py
+journal只在24ID/48事件全部finish后单次执行；精确48尾事件移registry_records.jsonl，物理main保留基线前缀。所有旧fragment、事件内容/重数与timestamp合并索引一致，无历史/结果删除，不重跑布局迁移。
+ python -B $R/commands.py review
+ python -B $R/commands.py gates
+ gates实际python3 checks/strategy_registry.py、python3 research/monitor/snapshot.py、python3 checks/monitor_snapshot.py，同main FLOCK；只汇总已有账户和报告，不新回测/产生模拟新成交/改冻结规则、本金、持仓，不把旧SMA shadow充十策略报价业绩，不重部署或建重复定时任务；失败保留旧有效汇总并留档。
+ python -B $R/commands.py feed
+ python -B $R/commands.py collect
+ python -B $R/finalize.py
+完整账本/冻结规则/登记/必要原始输入与真实证据保留，metadata检查无pycache/pyc/npy/tmp/checkpoints，0回测结果或账本删除。旧data不动，封存后不改本轮产物。
+发布仍持锁执行python -B $R/publish.py publish，仅本轮相关轻证据/3原账户latest/monitor2文件提交main，普通SSH非force push，独立HTTPS fetch/ls-remote确认唯一main；核对完整tree/所有所需remote blob SHA/真实输入/冻结plan/3永续完整指针链。实际工具终态、commit/push/只读网络恢复及解锁后核验见.git/automation_proofs/20261106T164157Z.json；只有发布核验及真实工具终态完成后才释放broker，再做私有postrelease检查，不重复成功提交或财务计算。
+下轮SMA/single14:30→16:30待16:31参考：single须独立结算其尚未计入的16资金费，用实际rate/mark/ns/自己q，不复制L4/FEWM金额；SMA现货无资金费。L4/FEWM16:10→18:10待18:11，其16已计，不能再重复；只据新实际响应判断后续事件。全部下一日决策Nov7UTC00:01，长期终止边界与规则不变。

@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+    "-B",
+    "-c",
+    "import sys\nfrom pathlib import Path\nroot=Path.cwd();sys.path.insert(0,str(root/'research/experiments/20261106T164157Z'))\nfrom common import module,core\nold=module(root/'research/experiments/20261106T144056Z/engine.py','old_volcap_domain')\np={'lookback_days':5,'trend_lookback_days':24,'trend_slope_lag_days':7,'trend_slope_hurdle_fraction':.01,'entry_volatility_window_days':10,'entry_volatility_ceiling':.04,'exit_buffer_fraction':.005,'return_hurdle':.02,'long_entry_return_hurdle':.02,'short_entry_return_hurdle':.02,'trend_estimator':'finite_normalized_exponentially_weighted_mean_slope','trend_decay_numerator':23,'trend_decay_denominator':25,'trend_window_days':24,'trend_gate_scope':'new_or_reversed_position_only'}\nold.decide({'parameters':p},{'asset':'ETH','closes':[core.D(100)+core.D(j%8)*core.D('.2') for j in range(33)]},33,0)\n"
+  ],
+  "cwd": "/home/desktop/Documents/Codex/EquiTide",
+  "started_utc": "2026-11-06T17:01:09.339420+00:00",
+  "finished_utc": "2026-11-06T17:01:09.675386+00:00",
+  "actual_exit_code": 1,
+  "expected_exit_code": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 7, in <module>\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261106T144056Z/engine.py\", line 17, in decide\n    L=int(p['lookback_days']);S=int(p['trend_lookback_days']);lag=int(p['trend_slope_lag_days']);V=int(p['entry_volatility_window_days']);cap=float(p['entry_volatility_ceiling']);E=float(p['exit_buffer_fraction']);H=float(p['return_hurdle']);assert L==5 and S==24 and p['trend_slope_hurdle_fraction'] in [.01,.02,.03] and lag in [6,7,8] and V==10 and cap==.045 and E==.005 and H==.02 and p['long_entry_return_hurdle']==p['short_entry_return_hurdle']==H and p['trend_estimator']=='finite_normalized_exponentially_weighted_mean_slope' and p['trend_decay_numerator']==S-1 and p['trend_decay_denominator']==S+1 and p['trend_window_days']==S and i-S-lag>=0 and p['trend_gate_scope']=='new_or_reversed_position_only'\n                                                                                                                                                                                                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "synthetic_only": true,
+  "actual_market_backtests": 0,
+  "reason": "Old engine cap==.045 assertion must reject predeclared new cap.04;new engine broadens only allowed domain."
+}
