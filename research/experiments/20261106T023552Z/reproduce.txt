@@ -1,0 +1,20 @@
+固定工作目录 /home/desktop/Documents/Codex/EquiTide；仅main、同branch.lock排他锁，不创建其他分支/工作树。
+Python /home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B
+环境 PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
+
+实际命令/UTC起止/退出码见 *_commands.json。9金融配置在reserve_batches中逐个reserve成功后，evaluate仅执行一次；27新父组合成本路径在results/和report.json，13旧原生银行/39成本路径只读恢复，不进行新的policy/simulate。所有finish子命令在finish_batches/，原始[1,1]权重、本金3750/15000、入场名义2000/4500、边界/门槛在plan/spec/batch/specs，8个真实市场输入SHA及全部必要文件/代码绑定在data_manifest与code_binding_before_evaluation。禁止把现成结果精确重跑当新试验。
+
+只读重建已有金融账本和资格：
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261106T023552Z/audit.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261106T023552Z/check_decisions.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261106T023552Z/audit_forward.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261106T023552Z/audit_candidate.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261106T023552Z/audit_l4h02.py
+/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B research/experiments/20261106T023552Z/audit_fewm.py
+审计会写核验摘要；封存后先保留原摘要、核对现有输入与原报告SHA，不能修改被核验的结果。未来共享指针推进后，按本轮archived previous_pointer/complete/report/state/delta链只读核验，勿回退共享指针。data/的真实parquet和原大warmup保留，本轮完整小窗口响应/packet/全部原账本和失败尝试（若有）在当前目录和raw_evidence。
+
+SMA沿用已实际运行的20261105T022141Z原每日转换实现及不可变20261011/20261001信号/成本，原Float单位、10bp手续费与1/2/3倍费用不变。SMA和single各自Nov5_22:30→Nov6_00:30跨00:01；SMA每币种另取65个完整现货日线和121分钟bar，核对64个重叠日线与分钟收盘。当前SMA输入为asset->{1d,1m}，前段minute-array格式同样核对。独立Decimal/Float审核新目标、成交、成本、连续NAV和次日状态；forward --reproduce/finish中的verify仅为既有本窗确定性归档核验，不写新账户/成交/登记，不另算实际观测试验。
+
+single先以自己旧持仓结算真实00资金费，再执行原BTC31/ETHL3S28日目标；L4/FEWM各自Nov6_00:10→02:10，从自身已结算00/已执行日目标的账本继续mark/小时风险，不重复结算、不重开现金。FEWM仍D1/K.0005,N750/4500，未采用研究BTC2000。
+
+42事件/21ID完整分片registry_records.jsonl；主簿恢复原字节前缀，完整事件多重集及按时间合并索引不变。review/journal_layout.py仅运行一次，必须在保护源检查前。全部finish和核验后，同一排他锁内只读snapshot与monitor check，无新回测/造单/冻结修改。真实push、远端完整tree/必要blob和释放锁终态在.git/automation_proofs/20261106T023552Z.json。
