@@ -1,0 +1,26 @@
+"""Validate fixed windows, UTC rollover, original own-book context and actual source use."""
+import gzip,json,sys
+from pathlib import Path
+from datetime import datetime,timezone
+ROOT=Path(__file__).resolve().parents[4];R=Path(__file__).resolve().parents[1];P=ROOT/'research/experiments/20261107T104703Z';sys.path.insert(0,str(R));from common import sha,put,rel
+rd=lambda p:json.loads(p.read_text());win=rd(R/'account_windows.json');bind=rd(R/'code_binding_before_evaluation.json');assert rd(R/'prebinding_preparation.json')['accounts']==win;assert len(bind['source_sha256'])==36
+for path,h in {**bind['source_sha256'],**bind['immutable_source_sha256']}.items():assert sha(ROOT/path)==h,path
+out={};ns=lambda s:int(datetime.fromisoformat(s.replace('Z','+00:00')).timestamp())*10**9
+for stem in ['candidate','l4h02','fewm']:
+ v=rd(R/(stem+'_verification.json'));old=rd(P/(stem+'_verification.json'));assert v['passed'] and v['window_start_utc']==win[stem]['start_utc'] and v['cutoff_utc']==win[stem]['cutoff_utc'] and v['prior_NAV_prefix']==old['NAV_points_per_scene'] and v['elapsed_minutes']==old['elapsed_minutes']+120
+ expected=list(map(ns,win[stem]['expected_daily_events_utc']));assert v['new_daily_events']==len(expected) and v['new_exact_causal_decisions']==6*len(expected)
+ if expected:
+  assert {z['timestamp_ns'] for z in v['independent_decisions']}==set(expected) and v['new_funding_settlements']==6;W=R/(stem+'_observation');im=rd(W/'input_manifest.json');packet=json.loads(gzip.decompress((ROOT/im['packet']).read_bytes()));before=rd(ROOT/rd(W/'previous_pointer.json')['state']);state=rd(W/'state.json');raw_ns={int(f['fundingTime'])*1000000 for body in packet['assets'].values() for f in body['funding'] if before['cutoff_ns']<int(f['fundingTime'])*1000000<=state['cutoff_ns']};assert {z['timestamp_ns'] for z in v['independent_funding_cashflows']}==raw_ns and all(ns('2026-11-07T00:00:00Z')<=n<expected[0] for n in raw_ns);assert all(z['timestamp_ns']<expected[0] for z in v['independent_funding_cashflows']);assert v['daily_context_bars']=={a:old['daily_context_bars'][a]+1 for a in ['BTC','ETH']}
+ else:assert not v['independent_decisions'] and v['new_fills']==0 and v['new_funding_settlements']==len(v['independent_funding_cashflows'])==v['expected_from_actual_settlement_actions']
+ assert v['new_rejected_orders']==v['new_risk_proxy_violations']==0 and not v['whole180day_qualified'];out[stem]={k:v[k] for k in ['window_start_utc','cutoff_utc','new_daily_events','new_exact_causal_decisions','new_funding_settlements','new_fills','daily_context_bars','NAV_points_per_scene','prior_NAV_prefix']}
+fr=rd(R/'forward_report.json');assert fr['resume_utc']==win['SMA']['start_utc'] and fr['cutoff_utc']==win['SMA']['cutoff_utc'] and rd(R/'forward_verification.json')['new_daily_decisions']==0
+assert rd(R/'candidate_commands.json')[0]['exit_code']==1
+assert rd(R/'candidate_capture_recovery_plan.json')['first_capture_never_reserved_or_advanced']
+assert rd(R/'candidate_capture_failed_attempt/failure.json')['result_available'] is False
+assert rd(R/'candidate_recovery_verification.json')['passed'] and rd(R/'candidate_recovery_commands.json')[0]['exit_code']==0
+rows=rd(R/'candidate_checks_commands.json');assert len(rows)==2
+for z,name in zip(rows,['audit_candidate.py','project_candidate_batch.py']):assert z['exit_code']==0 and Path(z['command'][1])==R/name
+rows=rd(R/'forward_commands.json');expected_scripts=['forward_registry.py','forward.py','audit_forward.py','forward_registry.py','forward.py'];assert len(rows)==len(expected_scripts)
+for z,name in zip(rows,expected_scripts):assert z['exit_code']==0 and Path(z['command'][1])==R/name
+assert rd(R/'midnight_archive_commands.json')[0]['exit_code']==0 and all(z.get('resolved',False) for z in rd(R/'read_failures.json')['facts'])
+put(R/'account_window_verification.json',{'passed':True,'account_windows_sha256':sha(R/'account_windows.json'),'36_bound_sources_unchanged':True,'actual_root_command_paths_verified':True,'predeclared_windows':win,'actual_observation_windows':out,'original_archived_midnight_checker_unshifted_and_passed':True,'original00funding_precedes_original00_01daily':True,'growing_own_context_and_complete_day_volume_verified_by_independent_auditor':True,'completed_financial_or_observation_reruns':0,'no_original_frozen_rule_or_capital_reset':True});print('PASS explicit fixed windows, own00funding before00:01daily, growing context and all actual root source paths')
