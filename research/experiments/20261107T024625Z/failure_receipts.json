@@ -1,0 +1,94 @@
+{
+  "failed_pipeline_commands": [],
+  "resolved_review_expectation_failure": null,
+  "resolved_seal_metadata_count_failure": {
+    "passed": true,
+    "recorded_utc": "2026-11-07T03:16:53.122185+00:00",
+    "actual_original_saved_curve_count": 36,
+    "actual_finished_and_independently_audited_curve_count": 45,
+    "saved_parent_archives_verified": 15,
+    "changed_metadata_fields": [
+      "new_parent_cost_curves",
+      "scope"
+    ],
+    "original_output_snapshot": "research/experiments/20261107T024625Z/research_evidence_counts_original.json",
+    "original_output_sha256": "74ffcd7a88db60dbf98ac6c9bb071e2d545610e63ca4fcb41e91e350ab0c01ed",
+    "corrected_output_sha256": "14c8a0f8c5e632f7a786412ea9840c35aa4a4b90cd30df1738f49e7b068ab776",
+    "bound_count_source_preserved_sha256": "48ba0d3ffda73d13348905dac22e5d35771087afb9785acfdf7e8e14294b304e",
+    "root_cause": "Legacy count_evidence.py display counter andscope used literal36;actual15configs x3 archives andaudit45 were already correct. Preserve executed bound source andoriginal output;reconcile summary only.",
+    "five_finished_reports_sha256_unchanged": {
+      "research/experiments/20261107T024625Z/report.json": "a8263676174b4bbf3520da5400a6f90572a8fde4758d998e959801beec4565c1",
+      "research/experiments/20261107T024625Z/forward_report.json": "6df86ad362906ee89f919342a71d8e37cdbb9b832ff5b117606e1462a5a80369",
+      "research/experiments/20261107T024625Z/candidate_observation/report.json": "fb1e964500300a4a09241df3897ac518878c209ac992bb1156c77c5f17991912",
+      "research/experiments/20261107T024625Z/l4h02_observation/report.json": "93040c1810eb3017d363801f774e21d038bc6b5345d64f09753eb216022dde72",
+      "research/experiments/20261107T024625Z/fewm_observation/report.json": "dab1a0c1fd1a118babdae1934abea0b635954c56228790c67493070e26945771"
+    },
+    "all36_bound_sources_unchanged": true,
+    "market_or_policy_calculations": 0,
+    "completed_backtest_or_observation_reruns": 0,
+    "no_qualification_gate_or_status_change": true
+  },
+  "resolved_pre_reservation_inventory_checks": 0,
+  "resolved_pre_reservation_template_failures": 0,
+  "resolved_dependent_definition_checks": 0,
+  "pre_reservation_metadata_revision": null,
+  "expected_TDD_red": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261107T024625Z/check_asymmetric.py",
+      "--negative-control-double-weighting"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-07T02:58:27.887689Z",
+    "finished_utc": "2026-11-07T02:58:28.166268Z",
+    "actual_exit_code": 1,
+    "expected_exit_code": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261107T024625Z/check_asymmetric.py\", line 11, in <module>\n    wrong=.2*btc+.8*eth;assert wrong[0]==18750,'Synthetic double-weighting raw full banks must fail capital identity'\n                               ^^^^^^^^^^^^^^^\nAssertionError: Synthetic double-weighting raw full banks must fail capital identity\n",
+    "synthetic_only": true,
+    "actual_market_backtests": 0
+  },
+  "actual_read_tool_failures": [
+    {
+      "kind": "seal_metadata_cost_curve_count_mismatch",
+      "actual_exit_code": 1,
+      "receipt": "research/experiments/20261107T024625Z/seal_initial_failure_receipt.json",
+      "resolved": true,
+      "recovery": "research/experiments/20261107T024625Z/evidence_count_reconciliation.json",
+      "recovery_actual_exit_code": 0
+    }
+  ],
+  "preflight_access_checks": {
+    "working_directory_accessible": true,
+    "root_verified": true,
+    "read_errors": []
+  },
+  "all_HTTP_failures": [
+    {
+      "url": "https://fapi.binance.com/fapi/v1/markPriceKlines?symbol=ETHUSDT&interval=1h&startTime=1793998800000&endTime=1794006000000&limit=1500",
+      "started_utc": "2026-11-07T03:04:23.600232+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261107T024625Z/http_attempt_0004.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLS,separate bounded attempts",
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n"
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/markPriceKlines?symbol=ETHUSDT&interval=1h&startTime=1794006000000&endTime=1794013200000&limit=1500",
+      "started_utc": "2026-11-07T03:02:51.806469+00:00",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "data/raw/binance/l4h02_forward/20261107T024625Z/http_0006.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "transport": "verifiedTLS1.2HTTP1.1 publicGET,bounded3attempts"
+    }
+  ],
+  "forward_transport_errors": [],
+  "observed_HTTP_or_transport_failures": 2,
+  "completed_financial_or_observation_reruns": 0
+}
