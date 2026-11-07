@@ -1,0 +1,115 @@
+{
+  "name": "btcLvolK2_370_parent_BL27_D7_VC50000ppm",
+  "kind": "combination",
+  "family": "finite-ewm-entry-gated-combination",
+  "market": "perpetual",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "timeframe": "1d",
+  "logic": {
+    "signal": "Existing BTC ROC27/29/31,H4%,E1%,C3750/N1000 and existing ETH contrarianROC5,H2%,E0.5%,finiteEWM24 beta23/25,K2%,D6/7/8,entry-onlypastV10cap4/4.5/5%,C15000/N4500. No newnativepolicy or executions.",
+    "allocation": "Raw[1,1] adds complete own-bank NAVs, C3750+15000=18750. Capital20/80%notappliedagain;BTC entry nominal26.666667%own/5.333333%total,ETH30%own/24%total. No normalization,scaling,transfers,parentorders,rebalancing,crossmargin.",
+    "execution": "Priorclosedfullbars only,q=floor(fixedN/priorcompleteclose/LOT)*LOT,nextUTC00:01nativeOPENadversetick,reverseclosebeforeopen,retainsameactualq. Continuous370d,terminalcostedclose,no foldresets. Parentsownactualbankswithoutparentrebalance/fills.",
+    "costs": "5bpfee+1bphalfspread+2bpslippage+0.5*past20samplelogvol*sqrt(actualq*OPEN/past20completequoteADV),1/2/3xstress. Realfundingsettlementns/mark/rate/heldq,outflowsstressed,inflowsunchanged. LOT/tick/minnotional,participation<=.001,postfee1xentrycap,independent1percentclosedhouradversemarkmaintenanceproxy. Linearperpetualshortno spotborrow;noinventedborrowfee,TCA/L2,historicalmaxqty/tier,tickliquidation orcapacityproof.",
+    "validation": "Predeclared BTC_lookback x ETH_D x ETH_VC radius1 includingcenter,27cells14new13old,all9ETHnativecells readonly. All old canonical statuses/criteria unchanged. Continuous370d12x30+10tail,recentday330inherited40d8x5,noreset. All frozen gates unchanged;local3xpositive andstrictrecent>=.6. Nofit/labels,purge0/embargo0,source33pastcontext/max32closes;reuseddevelopmenthistory,notuntouchedfinal/future.",
+    "benchmark": "SameC18750/N1000BTC+N4500ETHholdparent/cash0readonly. Eachnewparent comparedwith old BTC29/H4 sameD/K/VC andsamewholebankcapital/notionals;only BTClookback differs.",
+    "native_implementation": {
+      "path": "research/experiments/20261107T044631Z/engine.py",
+      "sha256": "871a5609d5f52bcf8b5a83d30cc15cc85d5707ee6f62f4b987978f9226ab89d0",
+      "previous_engine": "research/experiments/20261107T024625Z/engine.py",
+      "previous_sha256": "871a5609d5f52bcf8b5a83d30cc15cc85d5707ee6f62f4b987978f9226ab89d0",
+      "only_code_change": "None;whole nativeengine unchanged. All14oldnativebanks/42costledgers readonly,zero nativepolicy/order calls.",
+      "native_simulate_AST_unchanged": true,
+      "entry_filter_AST_unchanged": true
+    }
+  },
+  "parameters": {
+    "initial_capital_usdt": 18750,
+    "component_capitals_usdt": [
+      3750,
+      15000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      1000,
+      4500
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "capital_allocation_fractions": [
+      0.2,
+      0.8
+    ],
+    "BTC_bank_capital_usdt": 3750,
+    "BTC_entry_notional_usdt": 1000,
+    "BTC_lookback_days": 27,
+    "BTC_return_hurdle": 0.04,
+    "BTC_exit_buffer_fraction": 0.01,
+    "ETH_bank_capital_usdt": 15000,
+    "ETH_entry_notional_usdt": 4500,
+    "ETH_lookback_days": 5,
+    "ETH_return_hurdle": 0.02,
+    "ETH_long_entry_return_hurdle": 0.02,
+    "ETH_short_entry_return_hurdle": 0.02,
+    "ETH_trend_lookback_days": 24,
+    "ETH_trend_estimator": "finite_normalized_exponentially_weighted_mean_slope",
+    "ETH_exit_buffer_fraction": 0.005,
+    "ETH_entry_volatility_window_days": 10,
+    "ETH_entry_volatility_ceiling": 0.05,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "continuous_oos_days": 370,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "actual_native_quantity_and_impact_reused": true,
+    "source_component_spec_sha256": [
+      "929c1579e8f35d36d03af90037348eacf95d8b81ce9080aa75452f884f946a5f",
+      "1656e253077091bb2af0d797ba902157dcfe4ba371a2bef32c5a7accdfc5cf69"
+    ],
+    "ETH_trend_window_days": 24,
+    "ETH_trend_decay_numerator": 23,
+    "ETH_trend_decay_denominator": 25,
+    "ETH_signal_mode": "finite_EWMslope_entry_gated_reversal_entry_vol",
+    "BTC_existing_actual_bank_reused": true,
+    "ETH_new_native_quantity_and_impact_computed": false,
+    "ETH_trend_slope_lag_days": 7,
+    "ETH_trend_slope_hurdle_fraction": 0.02,
+    "ETH_trend_gate_scope": "new_or_reversed_position_only",
+    "BTC_new_native_quantity_and_impact_computed": false
+  },
+  "components": [
+    {
+      "fingerprint": "34623d8ad13f2dcfbd3280a008c6b5cf13b86218ccb91492dd2cff934a3487b9",
+      "weight": 1
+    },
+    {
+      "fingerprint": "a06502e6dc861be62a0ab30ca91ad7192b76981a7cec97a6759600144e82291d",
+      "weight": 1
+    }
+  ],
+  "validation_plan": "research/experiments/20261107T044631Z/plan.json",
+  "sources": [
+    {
+      "title": "Original exact signed-momentum policy source",
+      "path": "research/experiments/20261025T065405Z/engine.py",
+      "sha256": "99b7b9ddd5dbf1bead10e7d252404196c3a32343a1203d3bac4450bee9d4740b",
+      "access_date": "2026-11-06",
+      "role": "Existing audited policy; same strict entries and E1% persistence, only L/H batch differs."
+    },
+    {
+      "title": "Binance USD-M official public market-data fields",
+      "url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "access_date": "2026-11-06",
+      "role": "Historical bars,realizedfunding,marks,metadata;cost assumptions remain explicit,notTCA."
+    }
+  ]
+}
