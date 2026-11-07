@@ -1,0 +1,92 @@
+{
+  "failed_pipeline_commands": [
+    {
+      "receipt": "initial_commands.json",
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261107T064632Z/check_asymmetric.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-07T06:57:05.253279Z",
+      "finished_utc": "2026-11-07T06:57:05.544030Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261107T064632Z/primitive_check.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261107T064632Z/check_asymmetric.py\", line 24, in <module>\n    spec={'parameters':{'lookback_days':l,'return_hurdle':h,'exit_buffer_fraction':.01}};cls=[D(100)]*33;cls[-1]=D(100)*(D(1)+D(r.numerator)/D(r.denominator));m={'asset':'BTC','closes':cls};wanted,audit=engine.decide(spec,m,33,actual);rr=F(cls[-1])/F(cls[32-l])-1;hh=F(str(h));ee=F('.01');independent=1 if rr>hh else -1 if rr<-hh else 1 if actual==1 and rr>-ee else -1 if actual==-1 and rr<ee else 0;assert wanted==independent and audit=={'kind':'BTC_momentum','return_exact':str(rr)};boundaries+=1;m['closes'] += [D(1),D(999999)];assert engine.decide(spec,m,33,actual)==(wanted,audit);future+=1\n                                                                                                                                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261107T064632Z/engine.py\", line 14, in decide\n    assert p['lookback_days'] in [27,29,31] and p['return_hurdle'] in [.03,.04,.05] and p['exit_buffer_fraction']==.01 and i-1-p['lookback_days']>=0\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    }
+  ],
+  "resolved_pre_reservation_inventory_checks": 1,
+  "resolved_pre_reservation_template_failures": 0,
+  "resolved_dependent_definition_checks": 0,
+  "pre_reservation_metadata_revision": {
+    "passed": true,
+    "recorded_utc": "2026-11-07T06:57:51.617573+00:00",
+    "old_sha256": "401938ca08e83b421e26c2444757f6fbc03478038da89b61c4d86998086f1d72",
+    "new_sha256": "b303873afb10c24ca3f813e186378bc2e422b311af9ba90ca4b5ab5c95ee1cc1",
+    "old_allowed_L": [
+      27,
+      29,
+      31
+    ],
+    "new_allowed_L": [
+      23,
+      25,
+      27
+    ],
+    "only_domain_assert_changed_AST": true,
+    "signal_formula_and_all_accounting_AST_unchanged": true,
+    "failure_before_reserve_or_market_evaluation": true,
+    "failed_source_archive": "research/experiments/20261107T064632Z/prebinding_failed_initial",
+    "failed_receipt": "research/experiments/20261107T064632Z/initial_commands.json"
+  },
+  "expected_TDD_red": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261107T064632Z/check_asymmetric.py",
+      "--negative-control-double-weighting"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-07T06:57:04.811637Z",
+    "finished_utc": "2026-11-07T06:57:05.100212Z",
+    "actual_exit_code": 1,
+    "expected_exit_code": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261107T064632Z/check_asymmetric.py\", line 10, in <module>\n    if '--negative-control-double-weighting' in sys.argv:assert (.2*btc+.8*eth)[0]==18750,'Synthetic double-weighting raw full banks must fail capital identity'\n                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Synthetic double-weighting raw full banks must fail capital identity\n",
+    "synthetic_only": true,
+    "actual_market_backtests": 0
+  },
+  "actual_read_tool_failures": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261107T064632Z/check_asymmetric.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-07T06:57:05.253279Z",
+      "finished_utc": "2026-11-07T06:57:05.544030Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261107T064632Z/primitive_check.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261107T064632Z/check_asymmetric.py\", line 24, in <module>\n    spec={'parameters':{'lookback_days':l,'return_hurdle':h,'exit_buffer_fraction':.01}};cls=[D(100)]*33;cls[-1]=D(100)*(D(1)+D(r.numerator)/D(r.denominator));m={'asset':'BTC','closes':cls};wanted,audit=engine.decide(spec,m,33,actual);rr=F(cls[-1])/F(cls[32-l])-1;hh=F(str(h));ee=F('.01');independent=1 if rr>hh else -1 if rr<-hh else 1 if actual==1 and rr>-ee else -1 if actual==-1 and rr<ee else 0;assert wanted==independent and audit=={'kind':'BTC_momentum','return_exact':str(rr)};boundaries+=1;m['closes'] += [D(1),D(999999)];assert engine.decide(spec,m,33,actual)==(wanted,audit);future+=1\n                                                                                                                                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261107T064632Z/engine.py\", line 14, in decide\n    assert p['lookback_days'] in [27,29,31] and p['return_hurdle'] in [.03,.04,.05] and p['exit_buffer_fraction']==.01 and i-1-p['lookback_days']>=0\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "previous_valid_monitor_restored": false,
+      "resolved": true,
+      "resolution": "Synthetic pre-reserve guard found old BTC allowed-L domain; saved original sources/specs, only allowlist AST changed. No registered actual valuation occurred; all rules/parameters/gates/accounting unchanged. Freeze regenerated before firstreserve."
+    }
+  ],
+  "preflight_access_checks": {
+    "failed": false,
+    "root_access_verified": true,
+    "facts": []
+  },
+  "all_HTTP_failures": [],
+  "forward_transport_errors": [
+    {
+      "log": "research/experiments/20261107T064632Z/forward_evaluate.log",
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "observed_curl_error_codes": [
+        "35"
+      ]
+    }
+  ],
+  "observed_HTTP_or_transport_failures": 1,
+  "completed_financial_or_observation_reruns": 0
+}
