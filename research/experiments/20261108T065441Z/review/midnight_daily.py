@@ -1,0 +1,10 @@
+"""Read-only last original midnight evidence plus zero new daily events."""
+import gzip,json,sys
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[4];R=Path(__file__).resolve().parents[1];P=ROOT/'research/experiments/20261108T025309Z';sys.path.insert(0,str(R));from common import sha,put
+rd=lambda p:json.loads(p.read_text());old=rd(P/'current_midnight_daily_verification.json');fv=rd(P/'forward_verification.json');assert old['passed'] and fv['passed'] and fv['new_daily_decisions']==2 and fv['new_reference_points']==1
+for name in ['candidate','l4h02','fewm']:
+ v=rd(R/(name+'_verification.json'));assert v['passed'] and v['new_daily_events']==v['new_exact_causal_decisions']==v['new_funding_settlements']==v['new_fills']==0
+ p=R/(name+'_observation');before=rd(ROOT/rd(p/'previous_pointer.json')['state']);state=rd(p/'state.json');assert before['books']==state['books'] and before['context']['BTC']['daily']==state['context']['BTC']['daily'] and before['context']['ETH']['daily']==state['context']['ETH']['daily']
+assert rd(R/'forward_verification.json')['new_daily_decisions']==0
+put(R/'current_midnight_daily_verification.json',{'passed':True,'current_new_daily_events':0,'current_new_funding_records':0,'all_own_original_books_and_closed_daily_context_unchanged':True,'last_midnight_original_single_proof':str((P/'current_midnight_daily_verification.json').relative_to(ROOT)),'last_midnight_original_single_sha256':sha(P/'current_midnight_daily_verification.json'),'last_midnight_original_SMA_proof':str((P/'forward_verification.json').relative_to(ROOT)),'last_midnight_original_SMA_sha256':sha(P/'forward_verification.json'),'scope':'OnlysavedtrueNov8midnightevidenceandcurrentzeroeventassertions;noaccount/policy/dayreplay.'});print('PASS lastactualNov8midnightproofsread-only;all4currentmark-only/no00repeat')

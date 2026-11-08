@@ -1,0 +1,15 @@
+工作目录固定 /home/desktop/Documents/Codex/EquiTide，main唯一分支，先git rev-parse --show-toplevel；全轮持有 research/automation/branch.lock。先fetch/ff-only、读取task/三技能/完整逻辑登记/全部既往结论和初始16项真实证据。解释器 /home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B 仅提供依赖；cwd一直上述仓库。设置 PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1。不创建分支、子代理、真实订单或新定时任务。
+
+实际命令、cwd、时间、退出码见 *_commands.json、reserve_batches/、finish_batches/、review_*_receipt.json。顺序bootstrap；commands.py freeze；check_asymmetric.py两个合成负控（--negative-control-double-weighting及--negative-control-fixed-L5，均预期退出1/0市场计算）；commands.py initial检查18D/L邻域、27因果性、3不同过去L索引、18严格退出E1%边界、斜率/波动率和资本/时间轴。36根脚本在首次reserve前绑定，所有12个实际配置逐项reserve退出0后才 commands.py evaluate。完成后commands.py audit，再counts、summary、exports、decisions、grid，再finish_batch_0/1和finish。禁止重跑已完成市场配置；数学账本审计/旧报告对照不是新策略回测。
+
+本轮ETH快反转ROCL4/5/6×慢斜率间隔D6/7/8，两轴九格，固定退出E1%、对称严格入场H2%、finiteEWM24 beta23/25严格K1.5%、entry-only V10样本logvol cap4.5%、C15000/N4500。ROC精确读取close[i-1]/close[i-1-L]-1，不能仍写死L5。仅L4/L6六新组件实际模拟，L5三旧组件＋三组合只读；BTC29/H3%/E1%、C3750/N1000和匹配持有基准也只读。raw[1,1]完整银行NAV相加，总本金18750，20/80%不重复乘、不归一化/缩放q/NAV/成本、无父订单/转账/日再平衡。每个新参数/组合独立reserve并finish，共12配置/36成本场景；180日/逐折/近期/邻域/成本/风险门槛沿原值，无事后换代表D6/L4。
+
+真实370日开发历史2025-10-19UTC00:01至2026-10-24UTC00:01，12×30完整折＋10日尾；近期40日继承day330现金/q、8×5日，不折间重开。源33日过去完整收盘覆盖最大32日，固定无fit/labels/purge/embargo；下一UTC00:01 OPEN执行、历史终点计成本平仓。1/2/3倍费用、半价差、滑点、量相关冲击、真实资金费支出压力和未放大收入；LOT/tick/minnotional、参与率/抵押/小时不利mark代理均审计。数据/计划/代码/归档SHA在spec/plan/data_manifest，原大行情留忽略data。重复开发历史和多重试验不是未触碰最终留出、独立未来或稳定实盘盈利。
+
+金融finish后依次commands.py l4h02、fewm、candidate、forward，各实际终态0后再下一步。SMA/single Nov8_02:30→04:30，L4/FEWM Nov8_04:10→06:10仅闭合mark，无新funding/daily/成交，不重复已经完成的00/00:01或旧16。FEWM只复用L4同窗公共市场输入，自己的冻结计划/books/context/risk/fullNAV独立；single只复用metadata/time，自己的市场窗口另取。SMA当前和前轮输入均minute-array；完整65日spot上下文仍R025309的asset→1d/1m，按形状读取并核对重叠，不重开现金/首买/强制平仓。forward.py --reproduce离线只读，无HTTP/登记/账户写入。原冻结规则、资本、持仓与终止计划不变。
+
+commands.py midnight_archive保持历史固定检查器字节，observer_status/fewm_status只读工程状态。review/run_checks.py control_diagnostics.py realized_aliases.py funding_handoff.py midnight_daily.py account_windows.py market_reuse.py evidence.py核验保存结果；midnight_daily只读上轮真实Nov8午夜证明及本轮零新日事件，不再做日策略/账户推进。全部24ID/48事件finish后journal_layout.py保存精确48事件、不变旧前缀/片段/逻辑索引；metadata.py核验源码、窗口、SMA65形状与清理；materialize_status.py只从实际字段生成汇总并验证与原报告一致，记录prior_derived_metadata_correction.json中的前轮派生说明更正，原报告和旧文件不改。commands.py review；gates实际执行python3 checks/strategy_registry.py、python3 research/monitor/snapshot.py、python3 checks/monitor_snapshot.py；feed逐旧行核对，collect保存必要真实输入。collect冻结脚本内的旧派生字段由最终封存器按实际D/L计划更正，不改绑定代码或金融结果。
+
+全部必要检查通过后直接finalize.py封存，之后禁止改轮次文件。publish.py publish仅main普通非强制push；独立HTTPS读取ref/完整tree/必要blob原字节SHA核验，实际SHA与终态在.git/automation_proofs本轮私有回执。发布器实际terminal0并核验后才释放broker，再postrelease检查。监控只汇总已有账户/报告，不改paper10计划、资本、持仓、账本或制造新成交，不重新部署网页。
+
+下轮SMA/single Nov8_04:30→06:30仍marks；L4/FEWM Nov8_06:10→08:10仅在08:11参考已闭合后reserve并推进，跨08真实资金费，必须使用各自结算前q、实际rate/mark/时间戳独立核算，不复制另一账户现金流或重复00/16。下一日决策Nov9_00:01。新研究L4/EWM24/D6–8/E1%与“原L4”账户SMA28/零退出等冻结规则不同，不可混同或替换。保留全部正负结果、失败、完整账户账本/冻结规则/登记和必要证据，只清理可重建中间物。
