@@ -1,0 +1,203 @@
+{
+  "failed_pipeline_commands": [],
+  "resolved_pre_reservation_archive_checker_failures": 0,
+  "resolved_pre_reservation_inventory_checks": 0,
+  "resolved_pre_reservation_capture_failures": 0,
+  "resolved_pre_reservation_template_failures": 0,
+  "resolved_dependent_evidence_checks": 0,
+  "resolved_dependent_definition_checks": 0,
+  "resolved_ad_hoc_note_edit_failures": 0,
+  "predeclared_native_ETH_slope_K_domain_change": {
+    "only_declared_ETH_slope_K_changed": true,
+    "K_values": [
+      0.01,
+      0.0125,
+      0.015
+    ],
+    "slow_S_values": [
+      12,
+      14,
+      16
+    ],
+    "fixed_D": 3,
+    "fixed_ETH_L": 5,
+    "fixed_H": 0.02,
+    "fixed_E": 0.01,
+    "maximum_required_context_days": 30,
+    "ETH_required_context_days": 21,
+    "ETH_signal_context_days": 19,
+    "ETH_cost_context_days": 21,
+    "initial_available_context_days": 33,
+    "simulate_trade_funding_accounting_AST_unchanged": true,
+    "source": "research/experiments/20261108T210242Z/engine.py",
+    "source_sha256": "ccbbad2030a185ceedadf779e594ba6b6073122a47915a6152ecf85ce47f5805"
+  },
+  "expected_TDD_red": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261108T230347Z/check_asymmetric.py",
+      "--negative-control-double-weighting"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-08T23:12:48.416284Z",
+    "finished_utc": "2026-11-08T23:12:48.706088Z",
+    "actual_exit_code": 1,
+    "expected_exit_code": 1,
+    "synthetic_only": true,
+    "actual_market_valuations": 0,
+    "passed": true
+  },
+  "expected_slope_K_mutation_red": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261108T230347Z/check_asymmetric.py",
+      "--negative-control-fixed-K15000ppm"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-08T23:12:48.708620Z",
+    "finished_utc": "2026-11-08T23:12:49.026631Z",
+    "actual_exit_code": 1,
+    "expected_exit_code": 1,
+    "synthetic_only": true,
+    "actual_market_valuations": 0,
+    "passed": true
+  },
+  "actual_read_tool_failures": [],
+  "operational_setup_facts": [],
+  "preflight_access_checks": {
+    "root_verified": true,
+    "root_accessible": true,
+    "actual_access_failures": [],
+    "working_directory": "/home/desktop/Documents/Codex/EquiTide"
+  },
+  "all_HTTP_failures": [],
+  "immutable_prior_public_funding16_receipts_reused": [
+    {
+      "asset": "BTC",
+      "attempt": 0,
+      "command": [
+        "curl",
+        "--ipv4",
+        "--compressed",
+        "--http1.1",
+        "--tlsv1.2",
+        "--tls-max",
+        "1.2",
+        "--silent",
+        "--show-error",
+        "--connect-timeout",
+        "10",
+        "--max-time",
+        "30",
+        "--user-agent",
+        "EquiTide-ReadOnly-Research/1.0",
+        "--write-out",
+        "\n%{http_code}",
+        "https://fapi.binance.com/fapi/v1/fundingRate?symbol=BTCUSDT&startTime=1794153599000&endTime=1794153601000&limit=1000"
+      ],
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=BTCUSDT&startTime=1794153599000&endTime=1794153601000&limit=1000",
+      "started_utc": "2026-11-08T17:03:47.502094Z",
+      "finished_utc": "2026-11-08T17:03:48.767358Z",
+      "http_status": 200,
+      "curl_exit_code": 0,
+      "stderr": "",
+      "raw": "research/experiments/20261108T170010Z/funding16_preflight/BTC_0.json.gz",
+      "sha256": "99edbf941ca0504b94ca65f701980d69f709a449bbf98158c81cc7c86d3298bf",
+      "bytes": 127
+    },
+    {
+      "asset": "ETH",
+      "attempt": 0,
+      "command": [
+        "curl",
+        "--ipv4",
+        "--compressed",
+        "--http1.1",
+        "--tlsv1.2",
+        "--tls-max",
+        "1.2",
+        "--silent",
+        "--show-error",
+        "--connect-timeout",
+        "10",
+        "--max-time",
+        "30",
+        "--user-agent",
+        "EquiTide-ReadOnly-Research/1.0",
+        "--write-out",
+        "\n%{http_code}",
+        "https://fapi.binance.com/fapi/v1/fundingRate?symbol=ETHUSDT&startTime=1794153599000&endTime=1794153601000&limit=1000"
+      ],
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=ETHUSDT&startTime=1794153599000&endTime=1794153601000&limit=1000",
+      "started_utc": "2026-11-08T17:03:48.767659Z",
+      "finished_utc": "2026-11-08T17:03:52.084037Z",
+      "http_status": 200,
+      "curl_exit_code": 0,
+      "stderr": "",
+      "raw": "research/experiments/20261108T170010Z/funding16_preflight/ETH_0.json.gz",
+      "sha256": "f21f71abcf7ddc403d4bfd9cc2c9a8ffe67e3ef038375d5a8a00338c93231179",
+      "bytes": 126
+    }
+  ],
+  "immutable_prior_public_funding_receipts_reused": [
+    {
+      "asset": "BTC",
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=BTCUSDT&startTime=1794124500000&endTime=1794125400000&limit=100",
+      "started_utc": "2026-11-08T08:58:53.401498Z",
+      "finished_utc": "2026-11-08T08:58:58.913918Z",
+      "curl_exit_code": 0,
+      "http_status": 200,
+      "raw": "research/experiments/20261108T085506Z/funding_preflight/BTC_0.json.gz",
+      "sha256": "07ddec6fc1b927733b90a0632d053a9b5868973a615add053fbb74b3050b0e5f",
+      "bytes": 127,
+      "stderr": "",
+      "read_only_public_market_fields": true,
+      "account_or_strategy_calculations": 0
+    },
+    {
+      "asset": "ETH",
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=ETHUSDT&startTime=1794124500000&endTime=1794125400000&limit=100",
+      "started_utc": "2026-11-08T08:58:58.914216Z",
+      "finished_utc": "2026-11-08T08:59:03.929057Z",
+      "curl_exit_code": 35,
+      "http_status": 0,
+      "raw": "research/experiments/20261108T085506Z/funding_preflight/ETH_0.json.gz",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "read_only_public_market_fields": true,
+      "account_or_strategy_calculations": 0
+    },
+    {
+      "asset": "ETH",
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=ETHUSDT&startTime=1794124500000&endTime=1794125400000&limit=100",
+      "started_utc": "2026-11-08T08:59:03.929324Z",
+      "finished_utc": "2026-11-08T08:59:09.195559Z",
+      "curl_exit_code": 0,
+      "http_status": 200,
+      "raw": "research/experiments/20261108T085506Z/funding_preflight/ETH_1.json.gz",
+      "sha256": "30d4d05a8e6a9a3a8c077755be131c8c55c6bae22105b733aa0040876a5f0d83",
+      "bytes": 126,
+      "stderr": "",
+      "read_only_public_market_fields": true,
+      "account_or_strategy_calculations": 0
+    }
+  ],
+  "immutable_prior_public_reuse_provenance": {
+    "recorded_utc": "2026-11-08T23:06:57.208214Z",
+    "new_downloads": 0,
+    "strategy_or_account_calculations": 0,
+    "purpose": "Prior08.001/16 actualpublicfields withoriginalretrieval/rawprovenanceonlyforhistoricalchainuniqueness. Currentallwindowsmarks only, no newfunding/daily/fill. Nextownmidnightneedsfreshactualfieldsandownbook,notpriorrate/mark orothercashflow.",
+    "sources": {
+      "research/experiments/20261108T210242Z/funding_preflight.json": "44a2025f70d9f4bb2abae4e6d7f6c4574e1d0a14d9a157c5973f27afac46d2e6",
+      "research/experiments/20261108T210242Z/funding_preflight_receipts.json": "d6c3a12891f4211f04a0af1d57aa840b98f6f27f558952b0ac610289fedc6362",
+      "research/experiments/20261108T210242Z/funding16_preflight.json": "e23bf9a1bee1eb83ee89cca99a73231cbbdcee542a8e8aeec8b6ed7e62d30357",
+      "research/experiments/20261108T210242Z/funding16_preflight_receipts.json": "f2005625554d7724e35a78f1a13c811972bf8c384c25ab227c3dae17fd8f90d0"
+    }
+  },
+  "forward_transport_errors": [],
+  "observed_HTTP_or_transport_failures": 0,
+  "completed_financial_or_observation_reruns": 0
+}
