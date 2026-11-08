@@ -1,0 +1,13 @@
+工作目录固定 /home/desktop/Documents/Codex/EquiTide，main唯一分支；先git rev-parse --show-toplevel。全轮持有research/automation/branch.lock，先fetch/ff-only和完整逻辑登记/既往结论读取；不创建分支、子代理、真实订单或新定时任务。解释器 /home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B 仅提供依赖，cwd始终上述仓库；设置 PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1。
+
+全部实际命令、cwd、时间、退出码保留于 *_commands.json、reserve_batches/、finish_batches/、review_*_receipt.json。bootstrap.py完整读取；commands.py freeze；check_asymmetric.py --negative-control-double-weighting（合成负控预期退出1，不是市场回测）；commands.py initial验证18严格退出边界、27因果性、18邻域和36源码预绑定。commands.py reserve_batch_0/1必须逐个实际退出0后才commands.py evaluate。实际完成后commands.py audit，再counts、summary、exports、decisions、grid，随后finish_batch_0/1、finish。已完成的配置仅审计归档，勿重新reserve/evaluate。
+
+本轮ETH D6/7/8×退出E0.875/1/1.25%，固定K1.5%、L5/H2%/S24/finiteEWM beta23/25、entry-only V10样本logvol cap4.5%、银行C15000/N4500。旧E1%三组件＋三父组合、BTC29/H3%/E1%银行C3750/N1000及匹配持有基准只读。raw[1,1]直接相加两独立完整银行，资金20/80%不重复乘、不归一化/缩放NAV/q/成本，无父级再平衡或转账。6新ETH实际数量/LOT/费用/资金费/冲击/risk/fullNAV和6新父组合共36成本场景；全部实际参数含敏感性变体独立reserve和finish。输入数据、真实资金费、代码/计划/归档SHA见data_manifest和源data字段，原大行情留忽略data。连续370日12×30＋10日尾及近期40日继承状态8×5，完整整体DD和逐折正负保留；1/2/3倍真实成本支出压力和未放大的资金费收入。高度复用开发历史并非未触碰最终样本或实盘盈利。
+
+金融finish后commands.py l4h02、fewm、candidate、forward依次各实际终态0后再下一步。SMA/single Nov8_00:30→02:30、L4/FEWM Nov8_02:10→04:10均只增加闭合mark，无新daily/funding/成交，不重复已完成Nov8_00/00:01和旧16。L4/FEWM同窗公共行情复用，自己的plan/books/context/risk/fundingcursor/fullNAV独立；single只复用metadata/time，自己的市场窗口单独获取。SMA最新旧输入为R025309的asset→1d/1m字典，本轮新输入minute数组；使用已审计mark-only适配器，检查重叠，保存原65spot日上下文路径，不将分钟数组替代65日日线。forward.py --reproduce仅离线核验，无HTTP/登记/账户写入；勿重复账户实际推进。
+
+commands.py midnight_archive、observer_status、fewm_status保持既往固定午夜核验器字节不变。review/run_checks.py control_diagnostics.py realized_aliases.py funding_handoff.py midnight_daily.py account_windows.py market_reuse.py evidence.py核对保存的真实结果；midnight_daily只读上轮真实Nov8跨日证明和本轮零日事件，不做新的日决策。全部24ID/48事件finish后journal_layout.py把精确48事件单独归档，不改旧前缀/碎片/逻辑索引。metadata.py检查当前时间边界/上下文形状/清理；materialize_status.py只从已验证报告派生状态汇总，不改门槛或重算策略。commands.py review，再gates实际执行python3 checks/strategy_registry.py、python3 research/monitor/snapshot.py、python3 checks/monitor_snapshot.py；feed逐旧行一致性和collect复制轻量必要真实输入。监控仅汇总已有证据，不改变paper10计划/本金/持仓/账本，不新建虚拟成交或重部署网页。
+
+必要检查通过后直接finalize.py封存，禁止再改变本轮产物。publish.py publish在main普通非强制push，再独立HTTPS读取ref、完整tree和全部必要blob原字节SHA。真实提交SHA/退出码在.git/automation_proofs本轮私有回执；确认发布器实际terminal0后释放broker，再执行postrelease核验并记录实际terminal0。
+
+下轮SMA/single Nov8_02:30→04:30、L4/FEWM Nov8_04:10→06:10仍marks only。所有Nov8_00各自已结算一次，下一资金费Nov8_08仅当自身窗口跨越时，下一日决策Nov9_00:01。SMA完整65日仍R025309的1d/1m字典，本轮输入分钟数组须按形状处理。现金/q/entry/desired/成本/risk/fullNAV、冻结规则和终止计划原样延续；新研究参数不得直接替代冻结账户。所有结果（含淘汰、负收益折、失败和原账本）永久保留；只清理可重建中间物。

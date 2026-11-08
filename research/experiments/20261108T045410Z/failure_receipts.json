@@ -1,0 +1,94 @@
+{
+  "failed_pipeline_commands": [],
+  "resolved_pre_reservation_archive_checker_failures": 0,
+  "resolved_pre_reservation_inventory_checks": 0,
+  "resolved_pre_reservation_capture_failures": 0,
+  "resolved_pre_reservation_template_failures": 0,
+  "resolved_dependent_evidence_checks": 0,
+  "resolved_dependent_definition_checks": 0,
+  "predeclared_native_ETH_K_domain_change": {
+    "passed": true,
+    "recorded_utc": "2026-11-08T04:58:12.099379Z",
+    "old_path": "research/experiments/20261108T025309Z/engine.py",
+    "old_sha256": "dbf6e01de513b9f5b9432646c51cd96419144bf350a6400baa1acbb4a9b19a61",
+    "new_sha256": "707c790fc112fe802a3f97eadbabfc3e72d817dbcbdda1b7cadc4a9f827e0a1a",
+    "old_ETH_exit_E_domain": [
+      0.00625,
+      0.0075,
+      0.01
+    ],
+    "new_ETH_exit_E_domain": [
+      0.00875,
+      0.01,
+      0.0125
+    ],
+    "fixed_ETH_K": 0.015,
+    "ETH_exit_exact_fraction_read_from_spec": true,
+    "all_non_decide_functions_AST_unchanged": true,
+    "trade_funding_summary_simulate_accounting_AST_unchanged": true,
+    "original_four_forward_sources_unchanged": true,
+    "actual_backtests_so_far": 0,
+    "only_declared_ETH_exit_parameterization_and_K_guard_changed": true
+  },
+  "expected_TDD_red": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "research/experiments/20261108T045410Z/check_asymmetric.py",
+      "--negative-control-double-weighting"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-08T04:59:39.126399Z",
+    "finished_utc": "2026-11-08T04:59:39.415042Z",
+    "actual_exit_code": 1,
+    "expected_exit_code": 1,
+    "synthetic_only": true,
+    "actual_market_valuations": 0,
+    "passed": true
+  },
+  "actual_read_tool_failures": [
+    {
+      "kind": "pre_reservation_inline_read_filter_typo",
+      "tool_chunk": "c50969",
+      "actual_exit_code": 1,
+      "actual_error": "TypeError: 'bool' object is not iterable",
+      "failing_expression": "any(w in s for w in [filters] == [])",
+      "resolved": true,
+      "resolution": "Corrected only the inline read-only display filter. Full bootstrap and semantic parameter scan already passed. No market calculation, reservation, report or account was affected."
+    }
+  ],
+  "operational_setup_facts": [],
+  "preflight_access_checks": {
+    "root_accessible": true,
+    "required_root_verified": true,
+    "root_tool_chunk": "f20ebe",
+    "actual_access_failures": []
+  },
+  "all_HTTP_failures": [
+    {
+      "url": "https://fapi.binance.com/fapi/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1794103740000&endTime=1794111000000&limit=1500",
+      "started_utc": "2026-11-08T05:06:52.401029+00:00",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "data/raw/binance/l4h02_forward/20261108T045410Z/http_0002.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "transport": "verifiedTLS1.2HTTP1.1 publicGET,bounded3attempts"
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=BTCUSDT&startTime=1794096000000&endTime=1794111000000&limit=1000",
+      "started_utc": "2026-11-08T05:07:03.730534+00:00",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "data/raw/binance/l4h02_forward/20261108T045410Z/http_0005.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "transport": "verifiedTLS1.2HTTP1.1 publicGET,bounded3attempts"
+    }
+  ],
+  "forward_transport_errors": [],
+  "observed_HTTP_or_transport_failures": 2,
+  "completed_financial_or_observation_reruns": 0
+}
