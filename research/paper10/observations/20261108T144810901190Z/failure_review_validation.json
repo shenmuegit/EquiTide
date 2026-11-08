@@ -1,0 +1,13 @@
+{
+  "cause": "The supplemental verifier incorrectly expected result_available=true for blocked, while registry.py line 135 deliberately sets it false except for passed/rejected.",
+  "corrected_check_scope": "Failure evidence verification only; no signal, cost, market or account mutation",
+  "correction": "Assert status blocked, result_available is False, original blocked report SHA and exactly reserved+blocked events. Preserve native report, registry bytes, executor and account unchanged.",
+  "initial_check": {
+    "chunk_id": "fee1fd",
+    "exit_code": 1,
+    "original_token_count": 93,
+    "output": "Traceback (most recent call last):\n  File \"<string>\", line 29, in <module>\n    assert records[fp][\"status\"]==\"blocked\" and records[fp][\"result_available\"] and records[fp][\"report_sha256\"]==sha(folder/\"report.json\")\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+    "wall_time_seconds": 2.896715635
+  },
+  "native_registry_definition": "research/automation/registry.py:135"
+}
