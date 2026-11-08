@@ -1,0 +1,13 @@
+工作目录固定 /home/desktop/Documents/Codex/EquiTide，main 分支，先验证 git rev-parse --show-toplevel。全轮持有 research/automation/branch.lock，先同步远端并读取完整逻辑登记及历史结论。解释器 /home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B，仅用于依赖；执行cwd一直为上述仓库。设置 PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1。不要重复reserve/evaluate已完成配置或重启账户。
+
+所有实际命令、完整参数、cwd、时间与退出码见 *_commands.json、reserve_batches/、finish_batches/、review_*_receipt.json。顺序：bootstrap.py完整读历史；commands.py freeze；check_asymmetric.py --negative-control-double-weighting（预期合成检查退出1）；commands.py initial（18严格退出边界、27因果性、18邻域和源绑定）；commands.py midnight_archive/observer_status/fewm_status；commands.py reserve_batch_0/reserve_batch_1全部逐项成功后，commands.py evaluate；实际完成后 commands.py audit，再 counts、summary、exports、decisions、grid；finish_batch_0/finish_batch_1/finish。数学审计重算核验，不再运行策略或账户。
+
+本轮固定K1.5%、ETH L5/H2%/S24/V10cap4.5%、C15000/N4500，D6/7/8×退出E0.625/0.75/1.0%，旧E0.75%三格原生及父组合只读。BTC29/H3%/E1% C3750/N1000银行只读，raw[1,1]完整银行相加，不归一化或缩放数量/成本。6新ETH实际数量、成交、费用、资金费、风险/NAV＋6新父组合，36成本场景。退出E从spec精确Fraction读取；所有simulate/trade/funding/accounting函数AST保持。数据来自旧data_manifest冻结的真实370日历史、33日过去完整收盘和真实资金费/mark/成交量，原始大行情留忽略data；每个spec/plan/归档/数据/代码SHA留档。全部逐折、近期继承状态、连续整体DD及1/2/3倍成本保留，重复开发历史不是未触碰最终样本。
+
+金融finish后依次 commands.py l4h02、fewm、candidate、forward，各自完整实际终态0后才执行下一步。L4/FEWM Nov8_00:10→02:10只增加闭合mark；00资金费和00:01已在各自先前窗口计入，禁止重复。FEWM仅复用同窗公共数据，自己的现金/q/context/risk/fullNAV独立。single Nov7_22:30→Nov8_00:30需先核算自身00资金费，再原00:01日决策，完整日量/收盘从自身carriedpartial加真实分钟核验。SMA同22:30→00:30，复用已实际跨日R024625 forward适配器及原始Float/SMA65/1%核算；从最新状态续算，取原spot65日完整日线，64日重叠和Nov7收盘独立核对。先reserve后取数/执行；forward.py --reproduce仅离线核验，不发HTTP或登记。无真实订单或新paper10观察。
+
+审查 review/run_checks.py control_diagnostics.py realized_aliases.py funding_handoff.py midnight_daily.py account_windows.py market_reuse.py evidence.py；midnight_daily独立以各自carried partial＋真实分钟合成完整1440根Nov7日成交量和收盘，核对single6个成本副本日决策；SMA另独立核对2币×3成本及1个日参考点。全部24ID/48事件finish后运行 journal_layout.py、metadata.py；commands.py review；gates实际运行 python3 checks/strategy_registry.py、python3 research/monitor/snapshot.py、python3 checks/monitor_snapshot.py；然后feed逐旧行核对及collect保存轻量证据。生成仅只读已有账户和报告，冻结规则、本金、持仓不被monitor改写。
+
+全部必要检查实际完成后直接 finalize.py 封存，禁止再改轮次文件。publish.py publish仅main非强制push，再独立HTTPS读取ref/完整tree和所有必要blob原字节SHA；真实退出码与提交SHA留.git/automation_proofs本轮私有回执，核验后释放原broker、运行postrelease检查。不创建分支或新定时任务，不重新部署网页。
+
+交接：Nov8_00所有三个永续账户各按自身q/rate/mark结算一次，各自原00:01已完成；SMAspot无资金费，最新完整65日输入即本轮forward_inputs.json.gz的asset->{1d,1m}，不能误当minute数组。下一SMA/single Nov8_00:30→02:30，L4/FEWM Nov8_02:10→04:10，均mark-only，无00/16重复；下一fundingNov8_08仅在自身窗口跨越时，下一日决策Nov9_00:01。原本金、冻结规则、完整账本和终止计划不变。
