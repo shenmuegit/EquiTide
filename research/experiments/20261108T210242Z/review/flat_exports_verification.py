@@ -1,0 +1,19 @@
+"""Verify repaired derived exports without changing financial evidence or nulls."""
+import csv,json,sys,hashlib
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[4];R=Path(__file__).resolve().parents[1];sys.path.insert(0,str(R));from common import sha,put
+rd=lambda p:json.loads(p.read_text());fix=rd(R/'derived_export_fix_plan.json');rep=rd(R/'report.json');bind=rd(R/'code_binding_before_evaluation.json');assert sha(R/'report.json')==fix['frozen_report_sha256']==rd(R/'verification.json')['report_sha256'] and sha(R/'plan.json')==fix['original_paths_sha256'][str(R.relative_to(ROOT)/'plan.json')]
+for p,h in {**bind['source_sha256'],**bind['immutable_source_sha256']}.items():assert sha(ROOT/p)==h,p
+old=rd(R/'summary_commands.json');retry=rd(R/'summary_retry1_commands.json');assert len(old)==len(retry)==1 and old[0]['exit_code']==1 and retry[0]['exit_code']==0 and 'NoneType' in old[0]['stderr'] and sha(ROOT/old[0]['log'])==fix['original_failure_log_sha256'];assert sha(ROOT/fix['original_failed_source_snapshot'])==fix['original_failed_source_snapshot_sha256']
+assert sha(R/'check_grid_diagnostics.py')==fix['original_paths_sha256'][str(R.relative_to(ROOT)/'check_grid_diagnostics.py')];grid=rd(R/'grid_commands.json');assert len(grid)==1 and grid[0]['exit_code']==0 and Path(grid[0]['command'][1])==R/'review/flat_sensitivity.py';assert rd(R/'export_verification.json')['passed'] and rd(R/'decision_verification.json')['passed']
+zero=[c for c in rep['configs'].values() if c['scope']=='native' and c['D']==2 and c['S'] in [12,14]];assert len(zero)==2 and all(c['status']=='rejected' for c in zero);rows=list(csv.DictReader((R/'cost_scenes.csv').open()));signatures={}
+for c in zero:
+ for k,s in c['scenes'].items():
+  assert s['net_return_pct']==s['max_drawdown_pct']==s['executions']==s['round_trips']==s['cost_usdt']==0 and s['sharpe_365'] is s['calmar'] is None and s['daily_equity_usdt']==[15000.]*371
+  x=next(x for x in rows if x['fingerprint']==c['fingerprint'] and x['cost_multiplier']==k);assert x['return_pct']=='0.0' and x['Sharpe365']==x['Calmar']=='';signatures[(c['name'],k)]=s['NAV_sha256_f64le']
+for k in ['1','2','3']:
+ g=rd(R/'sensitivity_diagnostics.json')['grid']['native'][k];assert g['grid_cells']==9 and g['defined_Sharpe_cells']==7 and g['undefined_Sharpe_cells']==2 and g['positive_Sharpe_cells']==7 and g['positive_Sharpe_fraction']==7/9
+ f=rd(R/'edge_flags.json')['native'][k];assert f['edge_count']==12 and f['defined_Sharpe_edges']==8 and f['undefined_Sharpe_edges']==4
+assert len(list(csv.DictReader((R/'adjacent_edges.csv').open())))==72
+put(R/'derived_export_fix_verification.json',{'passed':True,'original_failure_receipt':old[0],'original_failure_log_sha256':fix['original_failure_log_sha256'],'successful_recovery_receipt':retry[0],'frozen_report_sha256':sha(R/'report.json'),'frozen_plan_sha256':sha(R/'plan.json'),'all36bound_sources_unchanged':True,'bound_original_grid_checker_unchanged':True,'derived_grid_checker':str((R/'review/flat_sensitivity.py').relative_to(ROOT)),'derived_grid_checker_sha256':sha(R/'review/flat_sensitivity.py'),'derived_summarizer_sha256':sha(R/'summarize.py'),'undefined_native_cells_per_cost':2,'defined_native_cells_per_cost':7,'native_Sharpe_robustness_denominator':9,'all72edges_retained':True,'undefined_native_edges_per_cost':4,'zero_backtests_actual_not_missing':True,'null_Sharpe_Calmar_preserved':True,'all12_qualification_results_unchanged':True,'new_financial_or_observation_reruns':0,'new_reservations':0,'resolution':'Recover only posthoc read-only exports;retain exactfailedsource/receipt/log and unmodifiedfinancialreport/plan/sourcebinding/criteria. N/A neverimputedzero.'})
+print('PASS recoveredread-onlyexports,6zero-scenemetricrows,N/Aandall9cells/72edges,36boundsourcehashes,0newvaluations')
