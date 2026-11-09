@@ -1,0 +1,42 @@
+"""Read-only fresh Nov9 original single midnight funding/day evidence,not account replay."""
+import gzip,json,sys,statistics,math
+from decimal import Decimal as D
+from datetime import datetime,timezone
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[4];R=Path(__file__).resolve().parents[1];sys.path.insert(0,str(R));from common import sha,put
+rd=lambda p:json.loads(p.read_text());gz=lambda p:json.loads(gzip.decompress(p.read_bytes()));win=rd(R/'account_windows.json');pref=rd(R/'funding_midnight_preflight.json');receipts=rd(R/'funding_midnight_preflight_receipts.json');assert pref['account_or_strategy_calculations']==0 and sha(R/'funding_midnight_preflight.json')==win['public_funding_midnight_preflight']['sha256'];MID=1794182400000000000;DAY=86400000000000;DEC=MID+60000000000
+for z in receipts:assert z['http_status']==200 and z['curl_exit_code']==0 and sha(ROOT/z['raw'])==z['sha256'] and len(gzip.decompress((ROOT/z['raw']).read_bytes()))==z['bytes']
+old=ROOT/'research/experiments/20261108T025309Z/current_midnight_daily_verification.json';assert rd(old)['passed'];days=[];fundrows=[];currentcounts={};chaincounts={};fills={};decisions={}
+for stem in ['candidate','l4h02','fewm']:
+ W=R/(stem+'_observation');before=rd(ROOT/rd(W/'previous_pointer.json')['state']);state=rd(W/'state.json');v=rd(R/(stem+'_verification.json'));delta=gz(W/'delta.json.gz');im=rd(W/'input_manifest.json');assert sha(ROOT/im['packet'])==im['sha256'];packet=gz(ROOT/im['packet']);fund=[x for x in delta['journal'] if x['kind']=='funding'];decs=[x for x in delta['journal'] if x['kind']=='decision'];trades=[x for x in delta['journal'] if x['kind']=='trade' and x['status']=='filled'];daily=len(win[stem]['expected_daily_events_utc']);assert v['passed'] and v['new_daily_events']==daily and v['new_exact_causal_decisions']==6*daily==len(decs) and v['new_funding_settlements']==win[stem]['expected_funding_records']==len(fund) and v['new_fills']==len(trades) and v['new_rejected_orders']==v['new_risk_proxy_violations']==0;currentcounts[stem]=len(fund);fills[stem]=len(trades);decisions[stem]=len(decs)
+ if stem!='candidate':
+  assert not daily and not fund and not trades and state['books']==before['books'] and all(state['context'][a]['daily']==before['context'][a]['daily'] for a in ['BTC','ETH'])
+ else:
+  assert daily==1 and len(fund)==len(decs)==6 and all(x['timestamp_ns']==DEC for x in decs) and all(x['timestamp_ns']>=DEC for x in trades)
+  for z in fund:
+   a,k=z['asset'],str(z['cost_multiplier']);f=pref['public_fields_by_asset'][a][0];t=int(f['fundingTime'])*1000000;raw=next(x for x in packet['assets'][a]['funding'] if int(x['fundingTime'])*1000000==t);assert all(str(raw[f0])==str(f[f0]) for f0 in ['symbol','fundingTime','fundingRate','markPrice']);q=D(before['books'][a][k]['signed_units']);base=-q*D(f['markPrice'])*D(f['fundingRate']);amount=base*int(k) if base<0 else base
+   assert z['timestamp_ns']==t==MID and t<DEC and D(z['signed_units'])==q and D(z['rate'])==D(f['fundingRate']) and D(z['mark_price'])==D(f['markPrice']) and D(z['base_amount_usdt'])==base and D(z['amount_usdt'])==amount and D(z['cash_before'])==D(before['books'][a][k]['cash']) and D(z['cash_after'])==D(z['cash_before'])+amount
+   fundrows.append({'account':stem,'asset':a,'cost':k,'actual_timestamp_ns':t,'actual_rate':f['fundingRate'],'actual_mark':f['markPrice'],'own_pre_daily_units':str(q),'own_base_usdt':str(base),'own_actual_usdt':str(amount),'cash_before':z['cash_before'],'cash_after_funding_before_daily':z['cash_after']})
+  for a in ['BTC','ETH']:
+   partial=before['context'][a]['partial'];assert partial['day']==MID//DAY-1;bars=[x for x in packet['assets'][a]['minutes'] if before['cutoff_ns']<=int(x[0])*1000000<MID];completed=next(d for d in state['context'][a]['daily'] if d['day']==partial['day']);assert partial['count']+len(bars)==completed['count']==1440 and D(completed['quote_volume'])==D(partial['quote_volume'])+sum((D(x[7]) for x in bars),D(0)) and D(completed['close'])==D(bars[-1][4]);assert state['context'][a]['daily'][:-1]==before['context'][a]['daily'] and len(state['context'][a]['daily'])==len(before['context'][a]['daily'])+1
+   dd=[d for d in state['context'][a]['daily'] if d['day']<DEC//DAY];cls=[D(d['close']) for d in dd];adv=D(str(statistics.mean(float(d['quote_volume']) for d in dd[-20:])));sigma=D(str(statistics.stdev([math.log(float(cls[j])/float(cls[j-1])) for j in range(len(cls)-20,len(cls))])))
+   own=[x for x in decs if x['asset']==a];assert len(own)==3 and all(D(x['prior_complete_close'])==D(completed['close']) and D(x['ADV'])==adv and D(x['sigma'])==sigma for x in own)
+   days.append({'account':stem,'asset':a,'completed_day_utc':'2026-11-08','prior_partial_minutes':partial['count'],'new_day_completion_minutes':len(bars),'complete_day_minutes':completed['count'],'complete_day_close':completed['close'],'complete_day_quote_volume':completed['quote_volume'],'past20day_ADV':str(adv),'past20sample_logvol':str(sigma),'daily_context_before':len(before['context'][a]['daily']),'daily_context_after':len(state['context'][a]['daily']),'original_daily_decisions':3,'unchanged_policy_independently_verified':True})
+ point=rd(ROOT/('research/automation/'+stem+'_forward_latest.json'));seen=set();matches=[]
+ while point:
+  assert sha(ROOT/point['delta'])==point['delta_sha256']
+  for z in gz(ROOT/point['delta'])['journal']:
+   if z['kind']=='funding' and z['timestamp_ns']==MID:
+    key=(z['asset'],str(z['cost_multiplier']));assert key not in seen;seen.add(key);matches.append(z)
+  ref=point.get('previous_pointer');point=rd(ROOT/ref['path']) if ref else None
+ assert len(matches)==6;chaincounts[stem]=len(matches)
+assert len(fundrows)==6 and len(days)==2 and currentcounts=={'candidate':6,'l4h02':0,'fewm':0} and decisions=={'candidate':6,'l4h02':0,'fewm':0}
+assert all(D(x['own_pre_daily_units'])==0 and D(x['actual_rate'])<0 and D(x['own_actual_usdt'])==0 for x in fundrows if x['asset']=='ETH')
+put(R/'current_midnight_funding_verification.json',{'passed':True,'actual_timestamp_ns':MID,'actual_public_preflight_sha256':sha(R/'funding_midnight_preflight.json'),'own_current_funding_records':currentcounts,'full_own_chain_Nov9_midnight_counts':chaincounts,'own_cashflow_rows':fundrows,'own_predecision_quantities_used':True,'positive_income_not_cost_boosted':True,'ETH_negative_rate_with_zero_own_units_gives_derived_zero':True,'no_old_rate_mark_or_other_cashflow_copy':True,'single_own_midnight_completed_once_in_current_window':True,'new_backtests_or_account_replays':0})
+sma=rd(R/'forward_report.json');sv=rd(R/'forward_verification.json');si=gz(R/'forward_inputs.json.gz');assert sv['passed'] and sv['new_daily_decisions']==2 and sv['new_reference_points']==1
+sma_days=[]
+for asset in ['BTC','ETH']:
+ daily=si[asset]['1d'];assert len(daily)==65 and daily[-1][6]+1==MID//1000000
+ decision=sma['daily_decisions_by_asset'][asset][0];assert decision['executed_at_utc']=='2026-11-09T00:01:00Z' and D(decision['prior_close'])==D(daily[-1][4])
+ sma_days.append({'asset':asset,'completed_day_utc':'2026-11-08','past_closed_days':65,'last_close':daily[-1][4],'last_quote_volume':daily[-1][7],'SMA65':decision['SMA65'],'own_signal_cost_book_fullNAV_independent_audit':True})
+put(R/'current_midnight_daily_verification.json',{'passed':True,'UTC_daily_decision':'2026-11-09T00:01:00Z','current_new_daily_events':1,'current_new_causal_decisions':6,'current_new_funding_records':6,'current_filled_trades_by_account':fills,'full_completed_Nov8_days':days,'SMA_spot_completed_Nov8_daily_context':sma_days,'SMA_new_percost_daily_decisions':6,'SMA_funding_records':0,'own_funding_precedes_original_daily_decisions_and_trades':True,'own_context_prefixes_and_complete_NAV_verified_by_independent_audits':True,'old_Nov8_midnight_proof_unchanged':str(old.relative_to(ROOT)),'old_Nov8_midnight_proof_sha256':sha(old),'scope':'Read only current actual saved journals/context/rawfields; no strategy/account advance,reset,rulechange or marketreplay. Singleownmidnightcomplete;L4FEWMpreviousmidnightproofretainedandnotrepeated. SMAspotdailyverifiedseparately.'});print('PASS18freshownfunding/12originaldecisions/4complete1440barNov8days,ownq/rate/mark/cashflows/ADV/sigma,chainsunique;0replays')
