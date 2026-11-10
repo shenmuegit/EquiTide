@@ -1,0 +1,6 @@
+"""Correct one legacy diagnostic label; preserve every actual metric and finished report byte."""
+import hashlib,json,sys
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[4];R=Path(__file__).resolve().parents[1];sys.path.insert(0,str(R));from common import put,sha,rel,now
+p=R/'derived_metadata_verification.json';old=json.loads(p.read_text());report=sha(R/'report.json');new=dict(old);assert new.pop('fixed_VC')==.05 and new['VC_values']==[.045,.05,.055];new['old_center_VC']=.05;assert {k:v for k,v in old.items() if k!='fixed_VC'}=={k:v for k,v in new.items() if k!='old_center_VC'}
+proof=json.loads((R/'derived_label_correction.json').read_text());proof['current_derived_label_repairs']=[{'artifact':rel(p),'old_label':'fixed_VC','old_value':.05,'new_label':'old_center_VC','new_value':.05,'actual_varied_VC_values':new['VC_values'],'old_artifact_sha256':sha(p),'recorded_utc':now(),'all_metric_values_and_statuses_unchanged':True}];put(p,new);proof['current_derived_label_repairs'][0]['new_artifact_sha256']=sha(p);put(R/'derived_label_correction.json',proof);assert sha(R/'report.json')==report;print('PASS diagnostic fixed_VC label corrected to old_center_VC; actual VC grid/status/metrics/report unchanged')
