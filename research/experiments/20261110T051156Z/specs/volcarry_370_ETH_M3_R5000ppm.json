@@ -1,0 +1,117 @@
+{
+  "kind": "strategy",
+  "family": "native-finite-ewmslope-entry-gated-reversal-entry-vol",
+  "name": "volcarry_370_ETH_M3_R5000ppm",
+  "market": "perpetual",
+  "timeframe": "1d",
+  "universe": [
+    "ETH/USDT"
+  ],
+  "logic": {
+    "signal": "FixedETHH.02L5E.0075K.0075S16beta15/17D3V10VC.05. SignedmedianoflatestMactualsettlementsage1..36hANDavailable<=signal. cap=min(.0002,R*past10sampledailylogvol*latesteligibleactualtimestampgap_hours/24),Decimal28afterstr(sigma). Latestintervalusesimmediatepastsourcepredecessor,bothavailable<=signal,notnormalizedconstant8;nanosecondjitterpreserved. MissingM/interval,nonpositiveor>36hgapblocksnew/reversedentryonly. Sameactualqretained;reversalclosesfirst. Futureimmutable. UTC00:00signal,next00:01OPEN. Normalizedsourceavailable=settlement+1hASSUMPTION,notarrivalproof.",
+    "allocation": "Raw[1,1]sum entireBTC3750/N1000+ETH15000/N4500independentbanks18750;capital20/80notappliedtwice,no normalization/scaling/transfers/rebalance,parentorders/crossmargin.",
+    "execution": "Priorclosedfullbars only,q=floor(fixedN/priorcompleteclose/LOT)*LOT,nextUTC00:01nativeOPENadversetick,reverseclosebeforeopen,retainsameactualq. Continuous370d,terminalcostedclose,no foldresets. Parentsownactualbankswithoutparentrebalance/fills.",
+    "costs": "5bpfee+1bphalfspread+2bpslippage+0.5*past20samplelogvol*sqrt(actualq*OPEN/past20completequoteADV),1/2/3xstress. Realfundingsettlementns/mark/rate/heldq,outflowsstressed,inflowsunchanged. LOT/tick/minnotional,participation<=.001,postfee1xentrycap,independent1percentclosedhouradversemarkmaintenanceproxy. Linearperpetualshortno spotborrow;noinventedborrowfee,TCA/L2,historicalmaxqty/tier,tickliquidation orcapacityproof.",
+    "validation": "M[2,3,4]xR[.005,.0075,.01]all9newETH+9newparents/54costscenes. ExactsameMoldstaticF75ppmcontrolsreadonly. Oldunfiltered/HOLD/cashcomparisonsdescriptive. Allpriorgates/timeboundsunchanged. 12x30+10tailcontinuous370days;recent40inheritedday3308x5;no fit/labels/purge/embargo. Repeateddevelopment/multipletrialsnotfinalindependentfuture.",
+    "benchmark": "SameMmatchedF50ppmcontrolforattribution;matchedcapitalconstantlong/cash0readonly. Oldcanonicalqualificationsunchanged.",
+    "native_implementation": {
+      "path": "research/experiments/20261110T051156Z/engine.py",
+      "sha256": "4eca7ad31dd4d64d0573e6a060109ad2bfb47c8a615cf543a9616d630322baa2",
+      "accounting_unchanged_from": "research/experiments/20261110T031055Z/engine.py",
+      "signal_change": "Causal volatility-relative entry budget only; source interval measured from two completed actual fundingTime values. simulate/trade/funding/NAV unchanged."
+    },
+    "legacy_parameter_fields": "Inheritedwarmup_days30/embargo_days3andoldpersistenceproseunused;source33days,no fit/labels/purge/embargo. Numericcurrentparams/rulesauthoritative."
+  },
+  "parameters": {
+    "initial_capital_usdt": 15000,
+    "raw_entry_notional_fraction_of_initial_capital": 0.3,
+    "fixed_entry_notional_usdt": 4500,
+    "lookback_days": 5,
+    "return_hurdle": 0.02,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "walk_forward_folds": 13,
+    "walk_forward_test_days": 30,
+    "maintenance_margin_proxy": 0.01,
+    "initial_notional_cap_to_collateral": 1,
+    "costs": {
+      "per_side_commission": 0.0005,
+      "half_spread": 0.0001,
+      "slippage": 0.0002,
+      "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+      "participation_max": 0.001,
+      "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+      "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+      "cost_multipliers": [
+        1,
+        2,
+        3
+      ],
+      "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+      "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+    },
+    "input_hashes": {
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+      "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6"
+    },
+    "persistence": "Executed position only; raw L5/H2 reversal with E.005 hysteresis, strict slope>K or slope<-K applied only new/reversed positions; actual direction persists under unchanged fast exit when gate neutral/opposite; entry-only volatility.",
+    "exit_buffer_fraction": 0.0075,
+    "complete_30day_folds": 12,
+    "tail_fold_days": 10,
+    "positive_complete30d_folds_required": 9,
+    "signal_mode": "finite_EWMslope_entry_gated_reversal_entry_vol",
+    "trend_lookback_days": 16,
+    "entry_volatility_window_days": 10,
+    "entry_volatility_ceiling": 0.05,
+    "long_entry_return_hurdle": 0.02,
+    "short_entry_return_hurdle": 0.02,
+    "trend_estimator": "finite_normalized_exponentially_weighted_mean_slope",
+    "trend_mean_includes_latest_complete_close": true,
+    "trend_window_days": 16,
+    "trend_decay_numerator": 15,
+    "trend_decay_denominator": 17,
+    "trend_slope_lag_days": 3,
+    "trend_slope_hurdle_fraction": 0.0075,
+    "trend_gate_scope": "new_or_reversed_position_only",
+    "entry_funding_filter": "volatility_relative_median_of_latest_N_eligible_realized_settlements_new_entry_only",
+    "entry_funding_min_age_hours": 1,
+    "entry_funding_max_age_hours": 36,
+    "entry_funding_missing_policy": "block_new_or_reversed_entry_only",
+    "entry_funding_availability_policy": "source_available_ts_lte_daily_signal_available_ts",
+    "entry_funding_outflow_formula": "max(desired_direction*median(lastNeligible_realized_rates),0)",
+    "entry_funding_same_direction_policy": "retain_actual_quantity_without_funding_exit",
+    "entry_funding_outflow_cap": 0.0002,
+    "entry_funding_even_median_policy": "arithmetic_mean_of_two_middle_rates",
+    "entry_funding_settlement_count": 3,
+    "entry_funding_budget_formula": "min(hardcap,ratio*past10_sample_daily_logvol*latest_eligible_completed_actual_interval_hours/24)",
+    "entry_funding_interval_source": "latesteligibleactualfundingTime_minus_immediatepredecessor;bothavailable<=signal;nsdifference/3600000000000_Decimal28;missing/nonpositive/over36hblocksnewentry",
+    "entry_funding_volatility_ratio": 0.005
+  },
+  "validation_plan": "research/experiments/20261110T051156Z/plan.json",
+  "sources": [
+    {
+      "title": "Prior actually executed latest-realized-rate filter and native accounting",
+      "path": "research/experiments/20261110T011054Z/engine.py",
+      "sha256": "160df24dd06a74410e5ca88015e4b64ab4e61d6792fa79863edca649e1719f3a",
+      "access_date": "2026-11-10",
+      "role": "ExactoldsameM/F50ppmbank/parentsreusedreadonly;fullmedian/nativeaccountingASTunchanged."
+    },
+    {
+      "title": "Binance official USD-M funding rate history",
+      "url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "access_date": "2026-11-10",
+      "role": "ActualfundingTime/rate/markfields;normalized1hdelayassumed,notarrivalmeasurements."
+    },
+    {
+      "title": "Current actual settlement interval/availability audit",
+      "path": "research/experiments/20261110T051156Z/funding_signal_preflight.json",
+      "sha256": "77252773a2432b6ed8bc0104c2fe10341c96dffbf3ab5d20a1dce4f78e33d617",
+      "access_date": "2026-11-10",
+      "role": "1212 actual signed rates/timestamps perasset; latestinterval derivedfromconsecutivepastsource timestamps; normalizedconstant8notmeasuredgap."
+    }
+  ]
+}
