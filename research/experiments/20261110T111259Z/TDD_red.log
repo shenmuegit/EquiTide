@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261110T111259Z/review/test_price_gates.py", line 10, in <module>
+    try:engine.decide(probe,m,33,0)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261110T111259Z/engine.py", line 17, in decide
+    L=int(p['lookback_days']);S=int(p['trend_lookback_days']);lag=int(p['trend_slope_lag_days']);V=int(p['entry_volatility_window_days']);cap=float(p['entry_volatility_ceiling']);E=float(p['exit_buffer_fraction']);H=float(p['return_hurdle']);assert L==5 and S==16 and p['trend_slope_hurdle_fraction'] in [.00625,.0075,.00875] and lag==3 and V==10 and cap in [.045,.05,.055] and E==.0075 and E<H and H in [.0175,.02,.0225] and p['long_entry_return_hurdle']==p['short_entry_return_hurdle']==H and p['trend_estimator']=='finite_normalized_exponentially_weighted_mean_slope' and p['trend_decay_numerator']==S-1 and p['trend_decay_denominator']==S+1 and p['trend_window_days']==S and i-S-lag>=0 and p['trend_gate_scope']=='new_or_reversed_position_only'
+                                                                                                                                                                                                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261110T111259Z/review/test_price_gates.py", line 11, in <module>
+    except AssertionError:raise AssertionError('Missing parameterized H/E exit-buffer domain')
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Missing parameterized H/E exit-buffer domain

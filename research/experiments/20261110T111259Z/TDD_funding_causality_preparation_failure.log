@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261110T111259Z/check_asymmetric.py", line 30, in <module>
+    old={'criteria':{'sentinel':False}};saved=copy.deepcopy(old);c=run.current_grid_row(old,z,sc);assert old==saved and c['K']==z['K'] and c['VC']==z['VC'];ns=run.neighborhood(c,p,full);assert len(ns)==(3 if z['K']==.0075 else 2)*(3 if z['VC']==.05 else 2);cases.append({'scope':sc,'K':z['K'],'VC':z['VC'],'neighbors':len(ns)})
+                                                                                                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261110T111259Z/run.py", line 12, in neighborhood
+    return [full[g['fingerprint']] for g in grid if abs(p['entry_hurdles'].index(g['H'])-p['entry_hurdles'].index(c['H']))<=1 and abs(p['exit_buffers'].index(g['E'])-p['exit_buffers'].index(c['E']))<=1]
+                                                        ~^^^^^^^^^^^^^^^^^
+KeyError: 'entry_hurdles'
