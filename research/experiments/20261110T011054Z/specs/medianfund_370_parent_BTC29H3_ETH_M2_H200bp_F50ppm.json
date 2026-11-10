@@ -1,0 +1,123 @@
+{
+  "name": "medianfund_370_parent_BTC29H3_ETH_M2_H200bp_F50ppm",
+  "kind": "combination",
+  "family": "finite-ewm-entry-gated-combination",
+  "market": "perpetual",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "timeframe": "1d",
+  "logic": {
+    "signal": "BTC29H.03E.01C3750/N1000readonly. ETHcontrarianROC5H.02E.0075,K.0075finiteEWM S16beta15/17 lag3,V10samplelogvolcap.05;strictpriceentry/exit/retentionunchanged. AtlastcompletecloseavailableUTC00:00,selectlatestMactualsettlementswithage1..36hANDsourceavailable<=signal;sorttheirSIGNEDrates,medianmiddleodd/arithmeticmeanofmiddle2even;expectedoutflow=max(rawdesired*median,0);<=Fpasses,missingrequiredMblocksnew/reversedentryonly. Actualsame-directionqretained;reversecloseoldbeforeblockednewentryleavesflat. Next00:01OPEN,no futurefundingorprice. Sourceavailable=settlement+1hconservativeassumption,nothistoricalarrivalproof.",
+    "allocation": "Raw[1,1]sum entireBTC3750/N1000+ETH15000/N4500independentbanks18750;capital20/80notappliedtwice,no normalization/scaling/transfers/rebalance,parentorders/crossmargin.",
+    "execution": "Priorclosedfullbars only,q=floor(fixedN/priorcompleteclose/LOT)*LOT,nextUTC00:01nativeOPENadversetick,reverseclosebeforeopen,retainsameactualq. Continuous370d,terminalcostedclose,no foldresets. Parentsownactualbankswithoutparentrebalance/fills.",
+    "costs": "5bpfee+1bphalfspread+2bpslippage+0.5*past20samplelogvol*sqrt(actualq*OPEN/past20completequoteADV),1/2/3xstress. Realfundingsettlementns/mark/rate/heldq,outflowsstressed,inflowsunchanged. LOT/tick/minnotional,participation<=.001,postfee1xentrycap,independent1percentclosedhouradversemarkmaintenanceproxy. Linearperpetualshortno spotborrow;noinventedborrowfee,TCA/L2,historicalmaxqty/tier,tickliquidation orcapacityproof.",
+    "validation": "M[1,2,3,4]xF[0,.00005]4x2surface. M1twoFcellsreuseexactlatestoneactualoldspecswithoriginal1..12hagepolicy;do notreinterpretoldsourceasnew36hpolicy. NewM2/3/4all36hage. 6newETH+6parentsreservebeforevaluation. Continuous370d12x30+10tail,recent40inheritedday3308x5,nofit/labels/purge/embargo. Indexradius1includingcenterM/F,frozenallgates/time/costsunchanged. Reuseddevelopment/multipleselectionnotindependentfinal/future.",
+    "benchmark": "SameFmatchedlatestoneM1controlforattribution;unfilteredH2native/parentandmatchedcapitalconstantlong/cash0readonly. Oldcanonicalqualificationsunchanged.",
+    "native_implementation": {
+      "path": "research/experiments/20261110T011054Z/engine.py",
+      "sha256": "160df24dd06a74410e5ca88015e4b64ab4e61d6792fa79863edca649e1719f3a",
+      "accounting_unchanged_from": "research/experiments/20261109T230923Z/engine.py",
+      "signal_change": "Onlypastcarryproxy:medianlatestM2/3/4eligibleactualsettlementswithin1to36h insteadlatestone. Fixedprice/trend/volpolicy/native simulate/trade/funding/margin unchanged."
+    },
+    "legacy_parameter_fields": "Inheritedwarmup_days30/embargo_days3andoldpersistenceproseunused;source33days,no fit/labels/purge/embargo. Numericcurrentparams/rulesauthoritative."
+  },
+  "parameters": {
+    "initial_capital_usdt": 18750,
+    "component_capitals_usdt": [
+      3750,
+      15000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      1000,
+      4500
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "capital_allocation_fractions": [
+      0.2,
+      0.8
+    ],
+    "BTC_bank_capital_usdt": 3750,
+    "BTC_entry_notional_usdt": 1000,
+    "BTC_lookback_days": 29,
+    "BTC_return_hurdle": 0.03,
+    "BTC_exit_buffer_fraction": 0.01,
+    "ETH_bank_capital_usdt": 15000,
+    "ETH_entry_notional_usdt": 4500,
+    "ETH_lookback_days": 5,
+    "ETH_return_hurdle": 0.02,
+    "ETH_long_entry_return_hurdle": 0.02,
+    "ETH_short_entry_return_hurdle": 0.02,
+    "ETH_trend_lookback_days": 16,
+    "ETH_trend_estimator": "finite_normalized_exponentially_weighted_mean_slope",
+    "ETH_exit_buffer_fraction": 0.0075,
+    "ETH_entry_volatility_window_days": 10,
+    "ETH_entry_volatility_ceiling": 0.05,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-10-24T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 10,
+    "continuous_oos_days": 370,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "actual_native_quantity_and_impact_reused": false,
+    "source_component_spec_sha256": [
+      "d0f8dcc3476d6ee1cc5abff12a6b44781cbd8a63b27800556907ad1664a3036b",
+      "f697637ec84d6e7d6ca865772c1e004c148053106dff97c0dee076592ffe46cf"
+    ],
+    "ETH_trend_window_days": 16,
+    "ETH_trend_decay_numerator": 15,
+    "ETH_trend_decay_denominator": 17,
+    "ETH_signal_mode": "finite_EWMslope_entry_gated_reversal_entry_vol",
+    "BTC_existing_actual_bank_reused": true,
+    "ETH_new_native_quantity_and_impact_computed": true,
+    "ETH_trend_slope_lag_days": 3,
+    "ETH_trend_slope_hurdle_fraction": 0.0075,
+    "ETH_trend_gate_scope": "new_or_reversed_position_only",
+    "BTC_new_native_quantity_and_impact_computed": false,
+    "ETH_entry_funding_filter": "median_of_latest_N_eligible_realized_settlements_new_entry_only",
+    "ETH_entry_funding_min_age_hours": 1,
+    "ETH_entry_funding_max_age_hours": 36,
+    "ETH_entry_funding_missing_policy": "block_new_or_reversed_entry_only",
+    "ETH_entry_funding_availability_policy": "source_available_ts_lte_daily_signal_available_ts",
+    "ETH_entry_funding_outflow_formula": "max(desired_direction*median(lastNeligible_realized_rates),0)",
+    "ETH_entry_funding_same_direction_policy": "retain_actual_quantity_without_funding_exit",
+    "ETH_entry_funding_outflow_cap": 5e-05,
+    "ETH_entry_funding_even_median_policy": "arithmetic_mean_of_two_middle_rates",
+    "ETH_entry_funding_settlement_count": 2
+  },
+  "components": [
+    {
+      "fingerprint": "76ddc848b244802d98e85e01a389e79ce3a36d0ff4af81f823498003ae95f030",
+      "weight": 1
+    },
+    {
+      "fingerprint": "1cff1bed3d45e668cfb88114709379f6aa7d6d85bbe8c2757d2c0e31a2fcd661",
+      "weight": 1
+    }
+  ],
+  "validation_plan": "research/experiments/20261110T011054Z/plan.json",
+  "sources": [
+    {
+      "title": "Prior actually executed latest-realized-rate filter and native accounting",
+      "path": "research/experiments/20261109T230923Z/engine.py",
+      "sha256": "eb0c1f93812c31a2b5e9088e85b7e12f3e64f1bff648c7af8ad4587b69280620",
+      "access_date": "2026-11-10",
+      "role": "ExactoldlatestM1bank/parentsreusedreadonly;unchangednativebankaccounting."
+    },
+    {
+      "title": "Binance official USD-M funding rate history",
+      "url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "access_date": "2026-11-10",
+      "role": "ActualfundingTime/rate/markfields;normalized1hdelayassumed,notarrivalmeasurements."
+    }
+  ]
+}
