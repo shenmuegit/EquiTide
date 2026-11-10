@@ -1,0 +1,9 @@
+"""Verify original mark-only SMA adapter byte identity aside from round/PREV metadata."""
+import json,sys
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[4];R=Path(__file__).resolve().parents[1];S=ROOT/'research/experiments/20261110T011054Z';P=ROOT/'research/experiments/20261110T151431Z';sys.path.insert(0,str(R));from common import sha,put,rel
+rd=lambda p:json.loads(p.read_text());assert (R/'forward.py').read_text()==(S/'forward.py').read_text().replace(S.name,R.name)
+assert (R/'forward_registry.py').read_text()==(S/'forward_registry.py').read_text().replace('20261109T230923Z',P.name).replace('Next daily event2026-11-10','Next daily event2026-11-11')
+assert (R/'audit_forward.py').read_bytes()==(S/'audit_forward.py').read_bytes();v=rd(R/'forward_verification.json');p=rd(R/'forward_resume_plan.json');assert v['passed'] and p['forward_resume']['source_report']==rel(P/'forward_report.json') and p['forward_resume']['source_state']==rel(P/'forward_state.json') and v['new_daily_decisions']==v['new_reference_points']==v['new_executions']==0
+put(R/'original_SMA_rule_source_identity.json',{'passed':True,'original_mark_template':rel(S/'forward.py'),'original_mark_template_sha256':sha(S/'forward.py'),'current_mark_adapter_sha256':sha(R/'forward.py'),'exact_mark_source_except_raw_round_directory':True,'original_reservation_dispatcher_only_PREV_and_next_daily_prose_changed':True,'independent_auditor_exact_bytes':True,'frozen_plan_unchanged_sha256':p['frozen_original_plan_sha256'],'original_float_quantity_and_cost_functions_unchanged':True,'current_previous_state_path':p['forward_resume']['source_state'],'current_actual_cash_quantity_trades_full_NAV_prefix_verified_by_independent_audit':True,'financial_or_account_valuations':0})
+print('PASS originalSMA markonly byteidentity/current PREV/independent auditor;currentcash/q/fullNAVprefix retained')
