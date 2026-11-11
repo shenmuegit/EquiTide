@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261111T052407Z/review/run_checks.py", line 7, in <module>
+    source=R/'review'/name;receipt=R/('review_'+name+'_receipt.json');log=R/('review_'+name+'.log');assert not receipt.exists();cmd=[PY,'-B',str(source)];start=now();p=subprocess.run(cmd,cwd=ROOT,env=env,capture_output=True,text=True);row={'command':cmd,'cwd':str(ROOT),'started_utc':start,'finished_utc':now(),'actual_exit_code':p.returncode,'log':str(log.relative_to(ROOT)),'stderr':p.stderr};log.write_text(p.stdout+p.stderr);receipt.write_text(json.dumps(row,ensure_ascii=False,indent=2)+'\n');print(json.dumps({**row,'last_output':(p.stdout+p.stderr)[-1200:]}),flush=True)
+                                                                                                           ^^^^^^^^^^^^^^^^^^^^
+AssertionError
