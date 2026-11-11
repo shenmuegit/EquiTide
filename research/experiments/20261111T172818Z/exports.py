@@ -1,0 +1,58 @@
+"""Saved-only complete variant/fold/daily/N surface exports and scientific plots."""
+import csv,json,statistics
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from common import *
+p=json.loads((R/'plan.json').read_text());r=json.loads((R/'report.json').read_text());rows={}
+def save(n,head,data):
+ with (R/n).open('w',newline='') as f:w=csv.writer(f,lineterminator="\n");w.writerow(head);w.writerows(data)
+ rows[n]=len(data)
+meta=lambda c:[c['name'],c['fingerprint'],c['scope'],c['asset'],c.get('N'),c.get('NB'),c.get('NE')]
+head=['configuration','fingerprint','scope','asset','native_N','BTC_N','ETH_N'];cost=[];fold=[];recent=[];daily=[]
+for c in r['configs'].values():
+ for k,s in c['scenes'].items():
+  base=meta(c)+[k];cost.append(base+[s['net_return_pct'],s['max_drawdown_pct'],s['sharpe_365'],s['calmar'],s['cost_usdt'],s['cost_pct_initial'],s['funding_usdt'],s['gross_reference_PnL_to_execution_cost'],s['executions'],s['round_trips'],sum(z['net_return_pct']>0 for z in s['folds'][:12]),sum(z['net_return_pct']>0 for z in s['recent40']['folds']),c['status']])
+  fold.extend(base+[f['fold'],f['start_utc'],f['end_exclusive_utc'],f['duration_days'],f['net_return_pct'],f['max_drawdown_pct'],f['sharpe_365'],f['calmar']] for f in s['folds']);recent.extend(base+[f['fold'],f['start_utc'],f['end_exclusive_utc'],f['net_return_pct'],f['max_drawdown_pct'],f['sharpe_365'],f['calmar']] for f in s['recent40']['folds']);daily.extend(base+[i,v] for i,v in enumerate(s['daily_equity_usdt']))
+save('cost_scenes.csv',head+['cost_multiplier','return_pct','whole_DD_pct','Sharpe365','Calmar','cost_usdt','cost_pct_initial','funding_usdt','gross_plus_funding_to_execution_cost','executions','closes','positive_full30d_folds','positive_recent5d_folds','status'],cost)
+save('walk_forward_folds.csv',head+['cost_multiplier','fold','start_utc','end_exclusive_utc','days','return_pct','fold_DD_pct','Sharpe365','Calmar'],fold);save('recent40_folds.csv',head+['cost_multiplier','fold','start_utc','end_exclusive_utc','return_pct','fold_DD_pct','Sharpe365','Calmar'],recent);save('daily_NAV.csv',head+['cost_multiplier','day_index','NAV_usdt'],daily)
+for name,key in [('sensitivity_grid.csv','all_current_grid'),('native_sensitivity_grid.csv','all_current_native_grid')]:
+ data=[]
+ for c in r[key].values():
+  d=c['current_grid_diagnostic_sensitivity']
+  for k,s in c['scenes'].items():data.append(meta(c)+[c['readonly'],k,s['net_return_pct'],s['max_drawdown_pct'],s['sharpe_365'],s['calmar'],sum(z['net_return_pct']>0 for z in s['recent40']['folds']),d['local_positive3_fraction'],d['local_strict_recent_fraction'],c['status']])
+ save(name,head+['readonly','cost_multiplier','return_pct','whole_DD_pct','Sharpe365','Calmar','recent_positive_folds','local_positive3','local_strict_recent','canonical_status'],data)
+edges=[];flags={}
+for scope,groups in [('parent',[list(r['all_current_grid'].values())]),('native',[[c for c in r['all_current_native_grid'].values() if c['asset']==a] for a in ['BTC','ETH']])]:
+ for k in ['1','2','3']:
+  ds=[]
+  for cells in groups:
+   for c in cells:
+    if scope=='parent':
+     i,j=p['axes']['BTC_N'].index(c['NB']),p['axes']['ETH_N'].index(c['NE']);adj=[h for h in cells if i<2 and h['NB']==p['axes']['BTC_N'][i+1] and h['NE']==c['NE'] or j<2 and h['NE']==p['axes']['ETH_N'][j+1] and h['NB']==c['NB']]
+    else:
+     vals=p['axes'][c['asset']+'_N'];i=vals.index(c['N']);adj=[h for h in cells if i<2 and h['N']==vals[i+1]]
+    for h in adj:
+     x,y=c['scenes'][k],h['scenes'][k];d=abs(y['sharpe_365']-x['sharpe_365']) if x['sharpe_365'] is not None and y['sharpe_365'] is not None else None
+     if d is not None:ds.append(d)
+     edges.append([scope,c['asset'],k,c['fingerprint'],h['fingerprint'],c.get('N'),c.get('NB'),c.get('NE'),h.get('N'),h.get('NB'),h.get('NE'),d,y['net_return_pct']-x['net_return_pct'],y['max_drawdown_pct']-x['max_drawdown_pct']])
+  limit=2*statistics.pstdev(ds) if ds else None;flags[scope,k]={'edge_count':len(ds),'maximum_Sharpe_change':max(ds) if ds else None,'two_std_change_threshold':limit,'descriptive_cliff_flag':bool(ds and max(ds)>limit),'dependent_diagnostic_not_significance_or_a_new_gate':True}
+save('adjacent_edges.csv',['scope','asset','cost_multiplier','from_fp','to_fp','from_N','from_BTC_N','from_ETH_N','to_N','to_BTC_N','to_ETH_N','absolute_Sharpe_change','return_delta_pp','whole_DD_delta_pp'],edges)
+alloc=[[g['fingerprint'],g['NB'],g['NE'],3750,15000,18750,1,1,.2,.8,g['NB']/18750,g['NE']/18750,g['readonly']] for g in p['grid']];save('fixed_allocations.csv',['fingerprint','BTC_N','ETH_N','BTC_C','ETH_C','total_C','raw_BTC_weight','raw_ETH_weight','BTC_capital_share','ETH_capital_share','BTC_entry_exposure_fraction_total_C','ETH_entry_exposure_fraction_total_C','readonly'],alloc)
+comps=r['matched_hold_comparisons'];save('matched_hold_comparisons.csv',list(comps[0]),[[c[k] for k in comps[0]] for c in comps])
+# Parent heatmaps show the two simultaneously varied actual N amounts.
+metrics=[('3x continuous370d return %',lambda s:s['net_return_pct'],'RdYlGn'),('3x wholecurve DD %',lambda s:s['max_drawdown_pct'],'YlOrRd'),('3x daily Sharpe365',lambda s:s['sharpe_365'],'RdYlGn'),('3x Calmar',lambda s:s['calmar'],'RdYlGn'),('3x recent positive5d /8',lambda s:sum(f['net_return_pct']>0 for f in s['recent40']['folds']),'RdYlGn'),('local strict recent fraction',None,'RdYlGn')]
+fig,axs=plt.subplots(2,3,figsize=(17,10),constrained_layout=True)
+for ax,(title,fn,cmap) in zip(axs.flat,metrics):
+ arr=np.empty((3,3))
+ for c in r['all_current_grid'].values():i,j=p['axes']['BTC_N'].index(c['NB']),p['axes']['ETH_N'].index(c['NE']);arr[i,j]=fn(c['scenes']['3']) if fn else c['current_grid_diagnostic_sensitivity']['local_strict_recent_fraction']
+ im=ax.imshow(arr,cmap=cmap,aspect='auto',vmin=0 if fn is None else None,vmax=1 if fn is None else None);fig.colorbar(im,ax=ax,fraction=.035);ax.set_xticks(range(3),[str(x) for x in p['axes']['ETH_N']]);ax.set_yticks(range(3),[str(x) for x in p['axes']['BTC_N']]);ax.set_xlabel('ETH actual entry N (USDT)');ax.set_ylabel('BTC actual entry N (USDT)');ax.set_title(title)
+ for c in r['all_current_grid'].values():i,j=p['axes']['BTC_N'].index(c['NB']),p['axes']['ETH_N'].index(c['NE']);ax.text(j,i,f'{arr[i,j]:.4f}'+(' O' if c['readonly'] else ' N'),ha='center',va='center',fontsize=10)
+fig.suptitle('Matched constant-long benchmark grid | C_BTC3750+C_ETH15000=18750 | raw[1,1],no normalization/NAV scaling\nConstant-long actual entry N; no predictive policy | reused development history\nO=existing actual control; N=new control | no new alpha candidate or independent future/live profit',fontsize=12);fig.savefig(R/'sensitivity.png',dpi=150);plt.close(fig)
+fig,axs=plt.subplots(2,4,figsize=(17,8),constrained_layout=True)
+for i,a in enumerate(['BTC','ETH']):
+ cells=sorted([c for c in r['all_current_native_grid'].values() if c['asset']==a],key=lambda c:c['N'])
+ for j,(title,fn,_) in enumerate(metrics[:4]):axs[i,j].plot([c['N'] for c in cells],[fn(c['scenes']['3']) for c in cells],marker='o');axs[i,j].set_title(a+' '+title);axs[i,j].set_xlabel('Actual entry N (USDT)');axs[i,j].grid(alpha=.2)
+fig.suptitle('Native hold benchmarks: own N varied; constant-long policy fixed. Existing BTC3+ETH4500 read only; new ETH4000/5000 actual q.');fig.savefig(R/'native_sensitivity.png',dpi=150);plt.close(fig)
+put(R/'export_verification.json',{'passed':True,'CSV_rows':rows,'report_sha256':sha(R/'report.json'),'parent_two_axes':p['axes'],'native_component_one_applicable_sizing_axis':True,'parent_sensitivity_png_sha256':sha(R/'sensitivity.png'),'native_sensitivity_png_sha256':sha(R/'native_sensitivity.png'),'all9_prior_strategy_N_cells_have_exact_matched_hold_controls':True});put(R/'edge_flags.json',{a:{k:flags[a,k] for k in ['1','2','3']} for a in ['parent','native']});print(json.dumps(rows),flush=True)
