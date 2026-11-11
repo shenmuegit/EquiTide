@@ -1,0 +1,48 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261111T072543Z/review/funding_signal_preflight.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-11T07:36:16.445848Z",
+      "finished_utc": "2026-11-11T07:36:16.720936Z",
+      "actual_exit_code": 1,
+      "log": "research/experiments/20261111T072543Z/pre_reservation_preparation_archive/review_funding_signal_preflight.py.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261111T072543Z/review/funding_signal_preflight.py\", line 8, in <module>\n    f=next(x for x in fs if x['path'].endswith('funding_settlement.parquet'));assert sha(ROOT/f['path'])==f['sha256'];q=pl.read_parquet(ROOT/f['path']);rows=q.to_dicts();assert len(rows)==1512 and all(e['available_ts']-e['settlement_ts']==HOUR for e in rows);first=int(pl.read_parquet(ROOT/fs[0]['path'],columns=['open_ts'])['open_ts'][0]);selections=[]\n                                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "resolved": true,
+      "pre_reservation_original_source_archive": "research/experiments/20261111T072543Z/pre_reservation_preparation_archive/funding_signal_preflight_initial.py",
+      "resolution_pending": "Correct only accidental count substitution1512toactual1212 before binding/reserve; rerun actual public data preflight; no strategy result/parameter/gate changed.",
+      "resolution": "Before any reservation/binding, corrected only accidental preflight count1512toactual1212; original source/native failure archived. Real source hash,1212 settlement rows and370 mature selections now actualexit0. All independent L/VC synthetic checks actualexit0,financial data/rules/results unchanged."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261111T072543Z/review/run_checks.py",
+        "funding_signal_preflight.py",
+        "public00_reuse.py",
+        "public08_reuse.py",
+        "public16_reuse.py",
+        "public_nov10_08_reuse.py",
+        "public_nov10_16_reuse.py",
+        "public_nov11_00_reuse.py",
+        "test_price_gates.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-11T07:36:16.408624Z",
+      "finished_utc": "2026-11-11T07:36:16.728150Z",
+      "exit_code": 1,
+      "expected_exit_code": 0,
+      "real_executor_missing_domain_failure": false,
+      "deliberate_synthetic_mutant": false,
+      "log": "research/experiments/20261111T072543Z/preflight_reviews.log",
+      "resolved": true,
+      "pre_reservation_original_source_archive": "research/experiments/20261111T072543Z/pre_reservation_preparation_archive/funding_signal_preflight_initial.py",
+      "resolution_pending": "Correct only accidental count substitution1512toactual1212 before binding/reserve; rerun actual public data preflight; no strategy result/parameter/gate changed.",
+      "resolution": "Before any reservation/binding, corrected only accidental preflight count1512toactual1212; original source/native failure archived. Real source hash,1212 settlement rows and370 mature selections now actualexit0. All independent L/VC synthetic checks actualexit0,financial data/rules/results unchanged."
+    }
+  ]
+}
