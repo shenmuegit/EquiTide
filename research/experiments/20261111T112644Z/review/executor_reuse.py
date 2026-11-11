@@ -1,0 +1,12 @@
+"""Posthoc evidence of the actual unchanged executor and earlier native gates; no backdating."""
+import ast,json,sys
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[4];R=Path(__file__).resolve().parents[1];P=ROOT/'research/experiments/20261111T092544Z';sys.path.insert(0,str(R));from common import sha,put,rel,now
+rd=lambda p:json.loads(p.read_text());bind=rd(R/'code_binding_before_evaluation.json');rep=rd(R/'report.json');res=[z for f in (R/'reserve_batches').glob('*.json') for z in rd(f)['actual_command_receipts']];assert len(res)==16 and all(z['exit_code']==0 for z in res)
+functions=lambda p:{n.name:ast.dump(n,include_attributes=False) for n in ast.parse(p.read_text()).body if isinstance(n,ast.FunctionDef)}
+assert (R/'engine.py').read_bytes()==(P/'engine.py').read_bytes() and functions(R/'engine.py')==functions(P/'engine.py')
+for path,h in {**bind['source_sha256'],**bind['immutable_source_sha256']}.items():assert sha(ROOT/path)==h,path
+reds=[rd(R/(n+'_receipt.json')) for n in ['TDD_doubleweight_red','TDD_funding_causality_red','TDD_median_red','TDD_ratio_red']];assert all(z['exit_code']==z['expected_exit_code']==1 and z['deliberate_synthetic_mutant'] and not z['real_executor_missing_domain_failure'] and z['finished_utc']<bind['recorded_utc'] for z in reds)
+assert bind['recorded_utc']<min(z['started_utc'] for z in res)<rep['evaluation_started_utc'] and rd(R/'initial_commands.json')[0]['exit_code']==0
+put(R/'executor_reuse_before_reserve.json',{'passed':True,'recorded_utc':now(),'timing_policy':'Writtenafteractualevaluationasread-onlyevidence;notclaimedwrittenbeforereserve.Theearliernativeunit/binding/reservationtimestampsbelowareoriginalreceipts.','current_executor':rel(R/'engine.py'),'current_sha256':sha(R/'engine.py'),'prior_executor':rel(P/'engine.py'),'prior_sha256':sha(P/'engine.py'),'byte_identical':True,'all_function_AST_unchanged':True,'domain_extension_required':False,'actual_missing_domain_RED':0,'deliberate_synthetic_mutants':4,'mutant_receipts':reds,'actual_source_binding_utc':bind['recorded_utc'],'first_actual_reserve_utc':min(z['started_utc'] for z in res),'actual_evaluation_started_utc':rep['evaluation_started_utc'],'source_binding_precedes_reservations':True,'completed_financial_or_account_reruns':0,'new_financial_or_account_evaluations':0})
+print('PASS byteidentical/allfunctionAST unchanged;earliernative4mutants/sourcebinding/16reserves before evaluation;0newvaluations')
