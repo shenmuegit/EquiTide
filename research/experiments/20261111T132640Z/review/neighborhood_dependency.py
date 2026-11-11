@@ -1,0 +1,11 @@
+"""Saved-only demonstration that a finer neighborhood can change qualification without new PnL."""
+import json,sys
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[4];R=Path(__file__).resolve().parents[1];sys.path.insert(0,str(R));from common import reg,sha,put,rel,now
+rd=lambda p:json.loads(p.read_text());r=rd(R/'report.json');rs=reg.read_records(ROOT/'research/automation/registry.jsonl');new=next(c for c in r['configs'].values() if c['scope']=='parent' and c['M']==3 and c['R']==.009375);oldfp='dc943442de168664b5a713b67c9a1ad779de58ab9d0541a3e9cfb051876b53ad';z=rs[oldfp];assert sha(ROOT/z['report'])==z['report_sha256'];old=next(c for c in rd(ROOT/z['report'])['configs'].values() if c['fingerprint']==oldfp)
+assert old['status']==z['status']=='rejected' and new['status']=='passed' and old['failed_criteria']==['local_recent6of8_allcost_gte60pct'] and old['sensitivity']['local_recent_allcost_qualifying_fraction']==5/9 and new['sensitivity']['local_recent_allcost_qualifying_fraction']==1
+for k in ['1','2','3']:
+ for f in ['NAV_sha256_f64le','net_return_pct','max_drawdown_pct','sharpe_365','calmar','folds','recent40','daily_equity_usdt','cost_usdt','funding_usdt','gross_reference_price_PnL_usdt']:assert new['scenes'][k][f]==old['scenes'][k][f],(k,f)
+assert rs[oldfp]['status']=='rejected' and rs[oldfp]['report_sha256']==z['report_sha256']
+put(R/'qualification_neighborhood_dependency.json',{'passed':True,'recorded_utc':now(),'new_fingerprint':new['fingerprint'],'new_parameters':{'M':3,'R':.009375},'new_status':new['status'],'old_fingerprint':oldfp,'old_parameters':{'M':3,'R':.00875},'old_status_preserved':z['status'],'old_report':z['report'],'old_report_sha256':z['report_sha256'],'identical_full_allcost_NAV_and_metrics':True,'old_local_recent_fraction':5/9,'new_local_recent_fraction':1,'qualification_difference_due_only_to_predeclared_neighborhood_members':True,'finer_grid_was_chosen_after_prior_development_outcomes':True,'no_independent_new_alpha_or_future_robustness':True,'new_financial_or_account_evaluations':0})
+print('PASS exactoldrejectedM3R.00875 vs newpassedM3R.009375 identicalallcostNAV/whole/fold/cost;local5/9to1only,oldcanonicalstatuspreserved')
