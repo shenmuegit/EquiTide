@@ -1,0 +1,12 @@
+"""Original mark-only Float quantity, books, full NAV and daily-context identity."""
+import ast,gzip,json,sys
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[4];R=Path(__file__).resolve().parents[1];P=ROOT/'research/experiments/20261111T072543Z';T=ROOT/'research/experiments/20261111T012135Z';sys.path.insert(0,str(R));from common import sha,put,rel,now
+rd=lambda p:json.loads(p.read_text());fn=lambda s:{n.name:ast.dump(n,include_attributes=False) for n in ast.parse(s).body if isinstance(n,ast.FunctionDef)};expected=(T/'forward.py').read_text().replace(T.name,R.name).replace('Nov9 daily','Nov11 daily');assert fn(expected)==fn((R/'forward.py').read_text())
+v=rd(R/'forward_verification.json');rep=rd(R/'forward_report.json');prior=rd(P/'forward_report.json');state=rd(R/'forward_state.json');oldstate=rd(P/'forward_state.json');assert v['passed'] and v['new_daily_decisions']==v['new_reference_points']==v['new_executions']==0 and state['positions_by_asset_and_cost']==oldstate['positions_by_asset_and_cost'] and state['next_daily_decision_utc']==oldstate['next_daily_decision_utc']=='2026-11-12T00:01:00Z'
+for asset in ['BTC','ETH']:
+ for k in ['1','2','3']:
+  a,b=rep['configs']['forward_snapshot_'+asset]['scenes'][k],prior['configs']['forward_snapshot_'+asset]['scenes'][k];assert a['equity_usdt'][:len(b['equity_usdt'])]==b['equity_usdt']
+  for f in ['cash_usdt','units','desired_long','trades','cost_usdt','executions','round_trips']:assert a[f]==b[f]
+full=ROOT/'research/experiments/20261111T032206Z/forward_inputs.json.gz';d=json.loads(gzip.decompress(full.read_bytes()));assert all(len(d[a]['1d'])==65 and d[a]['1d'][-1][6]+1==1794355200000 for a in ['BTC','ETH'])
+put(R/'original_SMA_rule_source_identity.json',{'passed':True,'checked_utc':now(),'original_mark_template':rel(T/'forward.py'),'original_mark_template_sha256':sha(T/'forward.py'),'original_mark_only_main_AST_identical_except_current_raw_path_and_day_note':True,'source_context':rel(full),'source_sha256':sha(full),'fresh65closedSPOTdays_before_binding':False,'full65_context_end_utc':'2026-11-11T00:00:00Z','own_previous_cash_units_desired_andcompleteNAVprefix_used':True,'frozen_rules_capital_costs_andFloatquantities_unchanged':True,'SMA_funding_records':0,'new_account_or_financial_valuations':0});print('PASS original SMA mark-only Float books/trades/costs and completeNAV unchanged;full65authority032206 retained')
