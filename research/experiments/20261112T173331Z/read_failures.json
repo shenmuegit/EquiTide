@@ -1,0 +1,129 @@
+{
+  "facts": [
+    {
+      "kind": "read_only_schema_dependency_probe",
+      "observed_error": "ModuleNotFoundError: No module named 'pyarrow'",
+      "tool_output_observed": true,
+      "exit_code_not_separately_persisted": true,
+      "resolved": true,
+      "resolution": "Use existing Polars scan_parquet.collect_schema;schema read succeeds with no new package or model evaluation.",
+      "proof": "research/experiments/20261112T173331Z/metadata_schema_inventory.json"
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261112T173331Z/freeze.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-12T17:46:13.421153Z",
+      "finished_utc": "2026-11-12T17:46:15.710369Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261112T173331Z/freeze.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261112T173331Z/freeze.py\", line 15, in <module>\n    sp=copy.deepcopy(base);name=f'ethclv370_ETH_W{W}_min{int(cap*100)}pct';sp.update(name=name,family='native-eth-finite-ewm-completed-daily-CLV-entry-confirmation',logic=rules,validation_plan=rel(R/'plan.json'),sources=old['sources']);sp['parameters'].update(entry_close_location_filter='candidate_signed_mean_completed_daily_CLV',entry_close_location_window_days=W,entry_close_location_minimum=cap,entry_close_location_scope='new_or_reversed_position_only',entry_close_location_direction_source='raw_candidate_after_trend_gate',entry_close_location_definition=inv['definition'],entry_close_location_zero_range=0,persistence='Actual position only;L5/H.02/E.0075,finiteS16/D3/K.0075 entrytrend,originalV6samplevolcap.05625 plus candidate-signed completed dailyCLV entryconfirmation;VW8/R.00875/M4 budget unchanged.');path=R/'specs'/(name+'.json');put(path,sp);fp=reg.fingerprint(sp);assert fp not in rs;row={'scope':'native','role':'component','asset':'ETH','N':4000,'capital_usdt':15000,'W':W,'CLV_MIN':cap,'H':.02,'R':.00875,'E_ETH':.0075,'VW':8,'readonly':False,'name':name,'fingerprint':fp,'spec':rel(path)};batch.append(row);nativegrid.append(row)\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/automation/registry.py\", line 26, in fingerprint\n    raise ValueError(\"family must be a stable lowercase ID; logic must be a nonempty object\")\nValueError: family must be a stable lowercase ID; logic must be a nonempty object\n",
+      "resolved": true,
+      "resolution": "Correct only illegal uppercase family token before any reserve/model evaluation;original invalid spec/freezer retained;lowercase full-batch freeze exits0.",
+      "successful_native_command": {
+        "command": [
+          "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+          "-B",
+          "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261112T173331Z/freeze.py"
+        ],
+        "cwd": "/home/desktop/Documents/Codex/EquiTide",
+        "started_utc": "2026-11-12T17:48:30.717082Z",
+        "finished_utc": "2026-11-12T17:48:33.254999Z",
+        "exit_code": 0,
+        "log": "research/experiments/20261112T173331Z/freeze_retry1_freeze.log",
+        "stderr": ""
+      },
+      "failed_spec_record": "research/experiments/20261112T173331Z/invalid_spec_preflight.json"
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261112T173331Z/audit.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-12T17:53:08.162533Z",
+      "finished_utc": "2026-11-12T17:53:13.744423Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261112T173331Z/audit.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261112T173331Z/audit.py\", line 61, in <module>\n    m=ms[c['asset']];policy(z,sp,m);v=native(z,m,m,int(k),None,sp,counts);verify_recent(v,m,z['summary']);vectors[c['fingerprint'],k]=v[cm['projections'][c['asset']]];source_scenes[c['fingerprint'],k]=z['summary'];newnative+=1\n                     ^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261112T173331Z/audit.py\", line 41, in policy\n    assert audit['fast_lookback_days']==L and audit['kind']=='ETH_finite_EWMslope_entry_gate_reversal_entry_vol_daily_CLV' and audit['slope_lag_days']==lag and audit['slope_hurdle_fraction']==float(strength) and audit['slow_distance_basis']=='finite_EWM_slope_ratio' and audit['slow_reference_mean_exact']==str(reference) and audit['long_entry_return_hurdle']==float(h) and audit['short_entry_return_hurdle']==float(h) and audit['exit_buffer_fraction']==float(e) and audit['return_exact']==str(rr) and audit['slow_mean_exact']==str(meanclose) and audit['slow_distance_exact']==str(slow) and audit['slow_lookback_days']==S and audit['raw_desired_before_entry_filter']==raw and audit['entry_filter_applied']==bool(raw and raw!=actual) and audit['volatility_window_days']==V and audit['entry_volatility_ceiling']==cap;near(audit['observed_sample_logvol'],sigma,1e-12);assert audit['raw_desired_before_CLV_filter']==before_clv and audit['CLV_candidate_direction']==raw and F(audit['observed_candidate_CLV_exact'])==score and audit['close_location_window_days']==W and F(audit['close_location_minimum_exact'])==minimum and audit['CLV_filter_applied']==bool(before_clv and before_clv!=actual)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "resolved": true,
+      "resolution": "Full independent supplemental auditor2 completed with native exit0 after local-variable shadow fix and zero-trade undefined ratio handling. Original bound audit,auditor1 and original financial report retained;no model or account rerun.",
+      "successful_complete_readonly_audit": {
+        "command": [
+          "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+          "-B",
+          "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261112T173331Z/audit_retry2.py"
+        ],
+        "cwd": "/home/desktop/Documents/Codex/EquiTide",
+        "started_utc": "2026-11-12T17:59:49.734571Z",
+        "finished_utc": "2026-11-12T18:00:18.453695Z",
+        "exit_code": 0,
+        "log": "research/experiments/20261112T173331Z/audit_retry2_audit_retry2.log",
+        "stderr": ""
+      },
+      "repair_binding": "research/experiments/20261112T173331Z/audit_repair_binding.json"
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261112T173331Z/audit_retry1.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-12T17:55:59.935175Z",
+      "finished_utc": "2026-11-12T17:56:20.438816Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261112T173331Z/audit_retry1_audit_retry1.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261112T173331Z/audit_retry1.py\", line 78, in <module>\n    ss=list(c['scenes'].values());one,three=c['scenes']['1'],c['scenes']['3'];ratio=(one['gross_reference_price_PnL_usdt']+one['funding_usdt'])/one['cost_usdt'];near(one['gross_reference_PnL_to_execution_cost'],ratio)\n                                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~\nZeroDivisionError: float division by zero\n",
+      "resolved": true,
+      "resolution": "Full independent supplemental auditor2 completed with native exit0 after local-variable shadow fix and zero-trade undefined ratio handling. Original bound audit,auditor1 and original financial report retained;no model or account rerun.",
+      "successful_complete_readonly_audit": {
+        "command": [
+          "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+          "-B",
+          "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261112T173331Z/audit_retry2.py"
+        ],
+        "cwd": "/home/desktop/Documents/Codex/EquiTide",
+        "started_utc": "2026-11-12T17:59:49.734571Z",
+        "finished_utc": "2026-11-12T18:00:18.453695Z",
+        "exit_code": 0,
+        "log": "research/experiments/20261112T173331Z/audit_retry2_audit_retry2.log",
+        "stderr": ""
+      },
+      "repair_binding": "research/experiments/20261112T173331Z/audit_repair_binding.json"
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261112T173331Z/collect.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-12T18:13:06.530098Z",
+      "finished_utc": "2026-11-12T18:13:06.548012Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261112T173331Z/collect.log",
+      "stderr": "  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261112T173331Z/collect.py\", line 53\n    para(f\"完整读取{ctx['registry_events']}事件/{ctx['registry_ids']}ID、{len(ctx['prior_conclusions_read'])}份结论、task/三技能/README/OOS检查/原freqtradeZIP。初始16条由11份正式补测与5个原ZIP具备真实证据，保留旧false标志和历史；完整同C15000/N4000/期间没有CLV入场确认配置。首reserve前绑定{len(binding['source_sha256'])}个金融/账户根代码，实际8个行情输入SHA/版本和元数据留档。ETH/BTC原始分钟OHLC经独立数据质量核验：各404UTC日×1440闭合分钟、无空值、全部open/close被high/low包含、可得时点精确。')\n         ^\nSyntaxError: unterminated f-string literal (detected at line 53)\n",
+      "resolved": true,
+      "resolution": "Fix only an unmatched closing quote in readonly collector;preserve original invalid source .py.txt and native error;report/account files unchanged,collect_retry1 exits0.",
+      "successful_readonly_formatter_command": {
+        "command": [
+          "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+          "-B",
+          "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261112T173331Z/collect.py"
+        ],
+        "cwd": "/home/desktop/Documents/Codex/EquiTide",
+        "started_utc": "2026-11-12T18:14:50.517854Z",
+        "finished_utc": "2026-11-12T18:14:51.726262Z",
+        "exit_code": 0,
+        "log": "research/experiments/20261112T173331Z/collect_retry1_collect.log",
+        "stderr": ""
+      },
+      "repair": "collector_syntax_repair.json"
+    }
+  ]
+}

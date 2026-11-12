@@ -1,0 +1,60 @@
+{
+  "recorded_utc": "2026-11-12T17:44:22.620028Z",
+  "all_registry_IDs_read": 16864,
+  "financial_or_NAV_calculations_done": 0,
+  "economic_hypothesis": "Confirm mean-reversion entries with candidate-signed mean close location inside completed UTC daily perp high-low ranges. Closing near the candidate-favorable end may indicate intraday rejection of the adverse move;test this,do not infer actual order flow. Original V6/.05625 pricevol and M4/VW8 funding budget remain unchanged;BTC reused.",
+  "axes": {
+    "ETH_CLV_W": [
+      1,
+      2,
+      3
+    ],
+    "ETH_CLV_MIN": [
+      0,
+      0.25,
+      0.5
+    ]
+  },
+  "representative_preset": {
+    "W": 2,
+    "CLV_MIN": 0.25
+  },
+  "BTC_fixed": "76ddc848b244802d98e85e01a389e79ce3a36d0ff4af81f823498003ae95f030",
+  "ETH_template": "d2188e34f6d96f2205823e74b834003e1b5d5dd8c2994f0ccd8b72062fed4a53",
+  "base_parent": "c765635d80dbaa0778818c6ba407aeafb0b1566ef83a247b1fd2964485f58a50",
+  "matched_hold_parent": "781615112532b4b8bf1ed06156d49dc570fb8a4443736222d8b051b147227e52",
+  "existing_samecapital_period_notional_CLV_configs": [],
+  "prior_same_scope_risk_estimators": {
+    "original_two_sided_samplevol": 21,
+    "zero_target_downside_root_mean_square_daily_log_returns": 9,
+    "candidate_direction_zero_target_adverse_root_mean_square_daily_log_returns": 9
+  },
+  "related_CLV_configs_all_scopes": [],
+  "definition": "d/W * sum((2*Cj-Hj-Lj)/(Hj-Lj),j in[i-W,i)),Hj/Lj are max/min of all1440completed UTC perp minute bars,Cj is finalclose;zero range->0. Exact Fraction score;d=rawcandidateaftertrendgate. After original V6samplelogvolcap.05625,score<minimum blocks new/reversed only;equal allowed;retain same-direction q,normal exits unchanged. Funding samplevol VW8/R.00875/M4/actual interval unchanged.",
+  "bank_Cs": [
+    3750,
+    15000
+  ],
+  "fixed_entry_Ns": [
+    1000,
+    4000
+  ],
+  "raw_weights": [
+    1,
+    1
+  ],
+  "source_reads": [
+    {
+      "url": "https://www.tradingview.com/support/solutions/43000501770-accumulation-distribution-adl/",
+      "page": "Official ADL help:Money Flow Multiplier",
+      "read_date_utc": "2026-11-12",
+      "use": "HLC range position formula only;no volume weighting or ADL,unweighted signed mean gate is our inference;gaps between periods are not captured."
+    },
+    {
+      "url": "https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/accumulation-distribution",
+      "page": "Official technical indicator guide",
+      "read_date_utc": "2026-11-12",
+      "use": "Official proximity and gap limitation background,not empirical crypto profit evidence."
+    }
+  ]
+}
