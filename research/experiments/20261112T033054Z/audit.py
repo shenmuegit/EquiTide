@@ -1,0 +1,81 @@
+"""Independent saved native cash/LOT/cost/funding/signals, aligned parent and fixed gates audit."""
+import gzip,json,math,statistics,copy
+from decimal import Decimal as D,ROUND_FLOOR
+from fractions import Fraction as F
+import numpy as np
+from common import *
+import market
+from audit_native import native
+from audit_helpers_complete import near,metrics,verify_recent
+plan=json.loads((R/'plan.json').read_text());report=json.loads((R/'report.json').read_text());ms,cm=market.load(plan);vectors,source_scenes,old,arcs,diagnostics=market.recover(plan,ms,cm);counts={k:0 for k in ['funding','fills','rejects','metric_checks','margin_checks']};newnative=oldnative=parents=decisions=0
+proxy={'ts':cm['start_ns']+cm['keys']//16,'daily_indices':cm['daily_indices'],'fold_indices':cm['fold_indices']}
+def policy(leg,spec,m):
+ global decisions
+ p=spec['parameters'];entryN=D(str(p['fixed_entry_notional_usdt']));C=D(str(p['initial_capital_usdt']));assert D(leg['state_segments'][0]['cash'])==C and len(leg['decisions'])==370
+ for d in leg['decisions']:
+  i=d['decision_index'];st=d['state_before'];q=D(st['signed_units']);actual=(q>0)-(q<0);audit=d['policy_audit']
+  if p.get('signal_mode')=='constant_long_reference':wanted=1;assert audit=={'kind':'constant_long_reference'}
+  elif m['asset']=='BTC':
+   ll=int(p['lookback_days']);r=F(m['closes'][i-1])/F(m['closes'][i-1-ll])-1;h=F(str(p['return_hurdle']));e=F(str(p['exit_buffer_fraction']));assert p['lookback_days']==29 and e in [F('.0075'),F('.01'),F('.0125')];wanted=1 if r>h else -1 if r<-h else 1 if actual==1 and r>-e else -1 if actual==-1 and r<e else 0;assert audit=={'kind':'BTC_momentum','return_exact':str(r)}
+  else:
+   L=int(p['lookback_days']);S=int(p['trend_lookback_days']);lag=int(p['trend_slope_lag_days']);h=F(str(p['return_hurdle']));e=F(str(p['exit_buffer_fraction']));assert L in [4,5,6] and S in [12,16,20] and p['trend_slope_hurdle_fraction'] in [.00625,.0075,.00875] and lag in [1,2,3,4,5] and h in [F('.0175'),F('.019'),F('.02'),F('.021'),F('.0225')] and e in [F('.00625'),F('.0075'),F('.00875')] and e<h and p['trend_estimator']=='finite_normalized_exponentially_weighted_mean_slope' and p['trend_decay_numerator']==S-1 and p['trend_decay_denominator']==S+1 and p['trend_window_days']==S and i-S-lag>=0 and p['trend_gate_scope']=='new_or_reversed_position_only'
+   rr=F(m['closes'][i-1])/F(m['closes'][i-1-L])-1;total=F(0);mass=F(0);past=F(0);beta=F(S-1,S+1)
+   # Independent oldest-to-newest Horner recursion for both completed windows.
+   for j in range(i-S,i):total=F(m['closes'][j])+beta*total;mass=1+beta*mass
+   for j in range(i-S-lag,i-lag):past=F(m['closes'][j])+beta*past
+   meanclose=total/mass;reference=past/mass;slow=total/past-1
+   base=-1 if rr>h else 1 if rr<-h else actual if actual==1 and rr<e or actual==-1 and rr>-e else 0;strength=F(str(p['trend_slope_hurdle_fraction']));gate=1 if slow>strength else -1 if slow<-strength else 0;raw=base if base==actual or base==gate else 0;V=int(p['entry_volatility_window_days']);cap=float(p['entry_volatility_ceiling']);assert V in [5,6,7,8,10,12] and cap in [.045,.05,.0525,.055,.05625,.0575,.06]
+   xs=[math.log(float(m['closes'][j])/float(m['closes'][j-1])) for j in range(i-V,i)];mean=math.fsum(xs)/V;sigma=math.sqrt(math.fsum((x-mean)**2 for x in xs)/(V-1));wanted=0 if raw and raw!=actual and sigma>cap else raw
+   pre_funding=wanted;sn=int(m['frame']['available_ts'][i*1440-1]);count=int(p['entry_funding_settlement_count']);assert count in [2,3,4];eligible=[e for e in m['signal_funds'] if sn-36*HOUR<=e['settlement_ts']<=sn-HOUR and e['available_ts']<=sn];selected=list(reversed(sorted(eligible,key=lambda e:e['settlement_ts'])))[:count];assert len(selected)==count;rates=sorted(F(e['realized_rate']) for e in selected);median=rates[count//2] if count%2 else (rates[count//2-1]+rates[count//2])/2;fa=audit['funding_filter'];hours=D(selected[0]['settlement_ts']-m['signal_funds'][selected[0]['source_index']-1]['settlement_ts'])/D(HOUR);assert selected[0]['source_index']>0 and selected[0]['entry_interval_hours']==hours;VW=int(p['entry_funding_budget_volatility_window_days']);assert VW in [8,10,12] and count in [2,3,4];bx=[math.log(float(m['closes'][j])/float(m['closes'][j-1])) for j in range(i-VW,i)];bm=math.fsum(bx)/VW;independent_sigma=math.sqrt(math.fsum((z-bm)**2 for z in bx)/(VW-1));near(float(fa['budget_sigma_daily']),independent_sigma,1e-12);budget=min(D('.0002'),D(str(p['entry_funding_volatility_ratio']))*D(str(statistics.stdev(bx)))*hours/D(24));fc=F(budget);assert fa['budget_volatility_window_days']==VW and fa['budget_ratio']==str(p['entry_funding_volatility_ratio']) and D(fa['latest_past_interval_hours'])==hours and D(fa['budget_sigma_daily'])==D(str(statistics.stdev(bx)));out=max(F(wanted)*median,F(0));ap=bool(wanted and wanted!=actual);block=ap and out>fc;wanted=0 if block else wanted
+   expected_fields=[{'settlement_ts_ns':e['settlement_ts'],'available_ts_ns':e['available_ts'],'realized_rate':str(e['realized_rate']),'source_index':e['source_index']} for e in selected]
+   assert audit['raw_desired_before_funding_filter']==pre_funding and fa['applied']==ap and fa['blocked']==block and F(fa['cap_fraction_per_settlement'])==fc and fa['signal_available_ts_ns']==sn and fa['selected_settlements']==expected_fields and fa['settlement_count']==count and F(fa['median_realized_rate'])==median and F(fa['expected_outflow_fraction'])==out and fa['minimum_age_ns']==HOUR and fa['maximum_age_ns']==36*HOUR
+   assert audit['ungated_desired']==base and audit['slowgate_direction']==gate and audit['trend_gate_applied']==bool(base and base!=actual) and audit['trend_gate_scope']=='new_or_reversed_position_only'
+   assert audit['fast_lookback_days']==L and audit['kind']=='ETH_finite_EWMslope_entry_gate_reversal_entry_vol' and audit['slope_lag_days']==lag and audit['slope_hurdle_fraction']==float(strength) and audit['slow_distance_basis']=='finite_EWM_slope_ratio' and audit['slow_reference_mean_exact']==str(reference) and audit['long_entry_return_hurdle']==float(h) and audit['short_entry_return_hurdle']==float(h) and audit['exit_buffer_fraction']==float(e) and audit['return_exact']==str(rr) and audit['slow_mean_exact']==str(meanclose) and audit['slow_distance_exact']==str(slow) and audit['slow_lookback_days']==S and audit['raw_desired_before_entry_filter']==raw and audit['entry_filter_applied']==bool(raw and raw!=actual) and audit['volatility_window_days']==V and audit['entry_volatility_ceiling']==cap;near(audit['observed_sample_logvol'],sigma,1e-12)
+
+  assert d['desired_direction']==wanted and d['signal_available_ts_ns']<=d['execution_ts_ns']-MIN and D(str(d['fixed_entry_notional_usdt']))==entryN
+  trades=[t for t in leg['trades'] if t['decision_index']==i and not t['terminal']];close=[t for t in trades if not t['opening']];op=[t for t in trades if t['opening']];assert len(close)==int(actual!=0 and actual!=wanted)
+  if close:assert D(close[0]['change_signed_units'])==-q
+  expected=bool(wanted and (not q or actual!=wanted));assert len(op)==int(expected)
+  if op:
+   lot=D(m['meta']['lot_size']);quantity=(entryN/m['closes'][i-1]/lot).to_integral_value(rounding=ROUND_FLOOR)*lot;assert D(op[0]['change_signed_units'])==quantity*wanted
+   if close:assert close[0]['axis_index']<op[0]['axis_index']
+  if actual==wanted and actual:assert D(d['state_after']['signed_units'])==q
+  assert d['state_after']==(trades[-1]['state_after'] if trades else st);decisions+=1
+
+for fp,arc in arcs.items():
+ ref=plan['read_only_references'][fp];m=ms[ref['asset']];sp=json.loads((ROOT/ref['spec']).read_text())
+ for k,z in arc['scenes'].items():
+  v=native(z,m,m,int(k),None,sp,counts);assert np.array_equal(v[cm['projections'][ref['asset']]],vectors[fp,k]);verify_recent(v,m,source_scenes[fp,k]);oldnative+=1
+for c in report['configs'].values():
+ arc=json.loads(gzip.decompress((ROOT/c['archive']).read_bytes()));sp=arc['spec'];assert reg.fingerprint(sp)==c['fingerprint'] and sha(ROOT/c['archive'])==c['archive_sha256']
+ for k,z in arc['scenes'].items():
+  if c['scope']=='native':
+   m=ms[c['asset']];policy(z,sp,m);v=native(z,m,m,int(k),None,sp,counts);verify_recent(v,m,z['summary']);vectors[c['fingerprint'],k]=v[cm['projections'][c['asset']]];source_scenes[c['fingerprint'],k]=z['summary'];newnative+=1
+   assert D(str(sp['parameters']['fixed_entry_notional_usdt']))==D(c['N']) and math.isclose(sp['parameters']['raw_entry_notional_fraction_of_initial_capital'],c['N']/c['capital_usdt'],rel_tol=1e-15)
+  else:
+   fps=c['source_fingerprints'];assert [x['weight'] for x in sp['components']]==[1,1] and sp['parameters']['component_initial_entry_notionals_usdt']==[c['NB'],c['NE']];v=vectors[fps[0],k]+vectors[fps[1],k];s=z['summary'];assert core.navhash(v)==s['NAV_sha256_f64le'] and v[0]==18750 and s['daily_equity_usdt']==v[cm['daily_indices']].tolist();metrics(v,s['daily_equity_usdt'],370,s);counts['metric_checks']+=1
+   for j,(a,b) in enumerate(zip(cm['fold_indices'],cm['fold_indices'][1:])):metrics(v[a:b+1],s['daily_equity_usdt'][j*30:min(j*30+30,370)+1],min(30,370-j*30),s['folds'][j]);counts['metric_checks']+=1
+   verify_recent(v,proxy,s)
+   for f in ['cost_usdt','funding_usdt','gross_reference_price_PnL_usdt','executions','round_trips','rejected_orders','cash_or_units_violations','funding_settlements']:near(s[f],sum(source_scenes[x,k][f] for x in fps),1e-12)
+   for f in ['fee','half_spread','slippage','impact','tick_rounding']:near(s['cost_parts_usdt'][f],sum(source_scenes[x,k]['cost_parts_usdt'][f] for x in fps),1e-12)
+   near(v[-1]-v[0],s['gross_reference_price_PnL_usdt']+s['funding_usdt']-s['cost_usdt']);assert s['parent_executions']==0 and s['margin']['independent_sleeve_violations']==sum(source_scenes[x,k]['margin']['violations'] for x in fps);assert z['source_full_NAV_sha256']==[source_scenes[x,k]['NAV_sha256_f64le'] for x in fps] and z['source_common_axis_sha256']==cm['sha256'];parents+=1
+  assert c['scenes'][k]==z['summary']
+ if c['scope']=='parent':
+  source_specs=[json.loads((ROOT/(plan['read_only_references'][fp]['spec'] if fp in plan['read_only_references'] else next(x['spec'] for x in report['configs'].values() if x['fingerprint']==fp))).read_text()) for fp in c['source_fingerprints']];assert [x['parameters']['fixed_entry_notional_usdt'] for x in source_specs]==[c['NB'],c['NE']] and [x['parameters']['initial_capital_usdt'] for x in source_specs]==[3750,15000]
+full={**old,**{c['fingerprint']:c for c in report['configs'].values()}}
+recentpass=lambda c:all(z['recent40']['net_return_pct']>0 and sum(f['net_return_pct']>0 for f in z['recent40']['folds'])>=6 for z in c['scenes'].values())
+for c in report['configs'].values():
+ if c['scope']=='parent':
+  rows=plan['benchmark_grid'] if c['role']=='benchmark' else plan['grid'];ng=[g for g in rows if abs(plan['axes']['BTC_N'].index(g['NB'])-plan['axes']['BTC_N'].index(c['NB']))<=1 and abs(plan['axes']['ETH_N'].index(g['NE'])-plan['axes']['ETH_N'].index(c['NE']))<=1];dimensions=2
+ else:
+  rows=plan['benchmark_native_grid'] if c['role']=='benchmark_component' else plan['native_grid'];vs=plan['axes'][c['asset']+'_N'];ng=[g for g in rows if g['asset']==c['asset'] and abs(vs.index(g['N'])-vs.index(c['N']))<=1];dimensions=1
+ ns=[full[g['fingerprint']] for g in ng];pos=sum(x['scenes']['3']['net_return_pct']>0 for x in ns)/len(ns);rob=sum(recentpass(x) for x in ns)/len(ns);near(c['sensitivity']['local_3x_neighbor_positive_fraction'],pos);near(c['sensitivity']['local_recent_allcost_qualifying_fraction'],rob);assert c['sensitivity']['neighbor_names']==[x['name'] for x in ns] and c['sensitivity']['dimension_count']==dimensions
+ ss=list(c['scenes'].values());one,three=c['scenes']['1'],c['scenes']['3'];ratio=(one['gross_reference_price_PnL_usdt']+one['funding_usdt'])/one['cost_usdt'];near(one['gross_reference_PnL_to_execution_cost'],ratio)
+ expected={'not_a_benchmark_control':c['role'] not in ['benchmark','benchmark_component'],'positive_all_costs':all(z['net_return_pct']>0 for z in ss),'nine_of_twelve_positive_complete30d_1x_folds':sum(z['net_return_pct']>0 for z in one['folds'][:12])>=9,'recent40_positive_all_costs':all(z['recent40']['net_return_pct']>0 for z in ss),'recent40_six_of_eight_positive5d_all_costs':recentpass(c),'composite_DD3_lte25pct':three['max_drawdown_pct']<=25,'local_positive3_gte60pct':pos>=.6,'local_recent6of8_allcost_gte60pct':rob>=.6,'four_underlying_native_closes1':one['round_trips']>=4,'gross_plus_funding_to_cost1_gte2_5':ratio>=2.5,'no_negative_native_collateral':all(z['cash_or_units_violations']==0 for z in ss),'no_native_order_rejections':all(z['rejected_orders']==0 for z in ss),'no_native_margin_proxy_violations':all(z['margin'].get('independent_sleeve_violations',z['margin'].get('violations'))==0 for z in ss),'native_terminal_flat':all(D(z['terminal_units'])==0 for z in ss),'minimum180days':True}
+ assert c['criteria']==expected and c['status']==('passed' if all(expected.values()) else 'rejected') and c['failed_criteria']==[k for k,v in expected.items() if not v]
+assert (newnative,oldnative,parents,decisions)==(3*plan['expected_counts']['new_native'],plan['expected_counts']['old_native_cost_curves'],3*plan['expected_counts']['new_parents'],3*370*plan['expected_counts']['new_native'])
+for x in report['matched_hold_comparisons']:
+ c=report['all_current_grid'][x['fingerprint']];h=report['all_current_benchmark_grid'][x['matched_hold_fingerprint']];k=str(x['cost_multiplier']);near(x['excess_to_matched_hold_pp'],c['scenes'][k]['net_return_pct']-h['scenes'][k]['net_return_pct']);assert x['matched_notional'] and [x['NB'],x['NE']]==[c['NB'],c['NE']]==[h['NB'],h['NE']]
+for fp,ref in plan['read_only_references'].items():
+ z=reg.read_records(ROOT/'research/automation/registry.jsonl')[fp];assert z['status']==ref['status'] and z['report_sha256']==ref['report_sha256']
+put(R/'verification.json',{'passed':True,'report_sha256':sha(R/'report.json'),'plan_sha256':sha(R/'plan.json'),'new_native_curves':newnative,'new_parent_curves':parents,'read_only_native_curves':oldnative,'independent_new_policy_decisions':decisions,'counts':counts,'old_statuses_and_reports_unchanged':True,'actual_new_native_N_LOT_volumeimpact_funding_and_risk_verified':True,'new_BTC_N_values':[750,1250],'new_ETH_N_values':[3500,4500],'parent_two_N_axes_native_own_N_axis':True,'actual_sameC_N_hold_control_for_each_cell':True,'parent_raw_weights':[1,1],'no_source_NAV_scaling':True,'scope':'IndependentFraction/HornerpolicyandDecimalN/LOT/cash/cost/fund,fullnative/parentNAV/13folds/recent40/hourrisk;no strategy simulate/decide/trade in auditor.'});print(json.dumps({'passed':True,'new_native':newnative,'old_native':oldnative,'new_parent':parents,'new_decisions':decisions,**counts}),flush=True)
