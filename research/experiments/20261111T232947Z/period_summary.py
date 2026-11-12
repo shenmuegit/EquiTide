@@ -1,0 +1,12 @@
+import math
+from decimal import Decimal as D
+import numpy as np
+from common import *
+stats,stamp,navhash,margin_audit=core.stats,core.stamp,core.navhash,core.margin_audit
+def native_summary(m,v,trades,funding,segments):
+ daily=v[m['daily_indices']].tolist();s=stats(v,daily,DAYS);s['folds']=[]
+ for j,(a,b) in enumerate(zip(m['fold_indices'],m['fold_indices'][1:])):s['folds'].append({'fold':j+1,'start_utc':stamp(m['start_ns']+j*3*DAY),'end_exclusive_utc':stamp(m['start_ns']+min((j+1)*3,DAYS)*DAY),'duration_days':min(3,DAYS-j*3),**stats(v[a:b+1],daily[j*3:min((j+1)*3,DAYS)+1],min(3,DAYS-j*3))})
+ filled=[x for x in trades if x['status']=='filled'];parts={k:float(sum(D(t['cost_parts'][k]) for t in filled)) for k in ['fee','half_spread','slippage','impact','tick_rounding']};cost=sum(parts.values());fund=sum(D(x['amount_usdt']) for x in funding);basefund=sum(D(x['base_amount_usdt']) for x in funding);gross=sum(D(t['reference_price_PnL_usdt']) for t in filled);assert abs(float(gross+fund)-cost-(v[-1]-float(v[0])))<1e-8;assert abs(math.prod(1+f['net_return_pct']/100 for f in s['folds'])-v[-1]/v[0])<1e-12
+ mark=np.isin(m['codes'],[0,2,3,4,9]);mv=v[mark];minute=np.isin(m['codes'],[0,1,3,4,5,6,7,8,9]);pv=v[minute];margin=margin_audit(m,segments)
+ s.update(initial_capital_usdt=float(v[0]),final_NAV_usdt=float(v[-1]),cost_usdt=cost,cost_pct_initial=100*cost/float(v[0]),cost_parts_usdt=parts,funding_usdt=float(fund),base_funding_same_exposure_usdt=float(basefund),funding_stress_increment_usdt=float(fund-basefund),funding_income_usdt=float(sum(D(x['amount_usdt']) for x in funding if D(x['amount_usdt'])>0)),funding_outflow_usdt=float(-sum(D(x['amount_usdt']) for x in funding if D(x['amount_usdt'])<0)),gross_reference_price_PnL_usdt=float(gross),gross_reference_PnL_to_execution_cost=float((gross+fund)/D(str(cost))) if cost else None,executions=len(filled),round_trips=sum(not t['opening'] for t in filled),rejected_orders=len(trades)-len(filled),cash_or_units_violations=sum(D(x['cash'])<0 for x in segments),terminal_units=segments[-1]['signed_units'],daily_equity_usdt=daily,NAV_points=len(v),NAV_sha256_f64le=navhash(v),axis_sha256=m['axis_sha256'],axis_prices_sha256_f64le=m['axis_price_sha256_f64le'],mark_observation_drawdown_pct=100*float(np.max(1-mv/np.maximum.accumulate(mv))),trade_proxy_drawdown_pct=100*float(np.max(1-pv/np.maximum.accumulate(pv))),margin=margin,funding_settlements=len(funding),nonzero_funding_settlements=sum(D(x['signed_units'])!=0 for x in funding));return s
+

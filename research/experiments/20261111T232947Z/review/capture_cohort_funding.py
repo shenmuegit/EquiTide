@@ -1,0 +1,12 @@
+import gzip,hashlib,json,subprocess,urllib.parse
+from pathlib import Path
+from datetime import datetime,timezone
+ROOT=Path(__file__).resolve().parents[4];R=Path(__file__).resolve().parents[1];sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();now=lambda:datetime.now(timezone.utc).isoformat().replace('+00:00','Z');put=lambda p,x:p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n');ms=lambda s:int(datetime.fromisoformat(s.replace('Z','+00:00')).timestamp())*1000;lo=ms('2026-10-24T00:01:00Z');hi=ms('2026-11-11T00:01:00Z');folder=R/'cohort_funding_raw';folder.mkdir();records=[];counts={}
+for a in ['BTC','ETH']:
+ url='https://fapi.binance.com/fapi/v1/fundingRate?'+urllib.parse.urlencode({'symbol':a+'USDT','startTime':lo+1,'endTime':hi,'limit':1000})
+ for attempt in range(3):
+  start=now();cmd=['curl','--ipv4','--compressed','--http1.1','--silent','--show-error','--connect-timeout','10','--max-time','30','--write-out','\n%{http_code}',url];p=subprocess.run(cmd,cwd=ROOT,capture_output=True,timeout=65);body,code=p.stdout.rsplit(b'\n',1) if b'\n' in p.stdout else (p.stdout,b'000');path=folder/(a+'_'+str(attempt)+'.json.gz');path.write_bytes(gzip.compress(body,mtime=0));row={'asset':a,'url':url,'started_utc':start,'retrieved_utc':now(),'http_status':int(code),'curl_exit_code':p.returncode,'raw':str(path.relative_to(ROOT)),'sha256':sha(path),'raw_response_sha256':hashlib.sha256(body).hexdigest(),'bytes':len(body),'stderr':p.stderr.decode(errors='replace')};records.append(row);put(R/'cohort_funding_receipts.json',records)
+  if p.returncode==0 and int(code)==200:
+   rows=json.loads(body);ts=[int(x['fundingTime']) for x in rows];assert rows and len(rows)<1000 and ts==sorted(set(ts)) and all(lo<t<=hi for t in ts) and all(z['symbol']==a+'USDT' and float(z['markPrice'])>0 for z in rows);counts[a]=len(rows);break
+ else:raise RuntimeError('Actual official cohort funding capture failed3attempts; no strategy calculation')
+put(R/'cohort_funding_source.json',{'passed':True,'recorded_utc':now(),'receipts':records,'actual_settlement_counts':counts,'new_public_GETs':len(records),'financial_or_account_calculations':0,'scope':'Actual full requested retrospective18day realized fundingTime/rate/mark history, counts/timestamps derived from returned official rows, no nominal8h count assumption or future funding.'});print(json.dumps({'actual_settlement_counts':counts,'GETs':len(records),'financial_account_calculations':0}),flush=True)

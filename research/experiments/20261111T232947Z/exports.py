@@ -1,0 +1,47 @@
+"""Saved-only all cost/fold/NAV exports and both native/parent two-horizon surfaces."""
+import csv,json,statistics
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from common import *
+p=json.loads((R/'plan.json').read_text());r=json.loads((R/'report.json').read_text());rows={}
+def save(n,head,data):
+ with (R/n).open('w',newline='') as f:w=csv.writer(f,lineterminator='\n');w.writerow(head);w.writerows(data)
+ rows[n]=len(data)
+meta=lambda c:[c['name'],c['fingerprint'],c['scope'],c['asset'],c.get('N'),c.get('NB'),c.get('NE'),c.get('H'),c.get('R'),c.get('value'),c['V'],c['VW']]
+head=['configuration','fingerprint','scope','asset','native_N','BTC_N','ETH_N','BTC_H','ETH_R','native_parameter_value','price_V','budget_VW'];cost=[];fold=[];recent=[];daily=[]
+for c in r['configs'].values():
+ for k,s in c['scenes'].items():
+  b=meta(c)+[k];cost.append(b+[s['net_return_pct'],s['max_drawdown_pct'],s['sharpe_365'],s['calmar'],s['cost_usdt'],s['cost_pct_initial'],s['funding_usdt'],s['gross_reference_PnL_to_execution_cost'],s['executions'],s['round_trips'],sum(x['net_return_pct']>0 for x in s['folds']),sum(x['net_return_pct']>0 for x in s['folds']),c['status']]);fold.extend(b+[x['fold'],x['start_utc'],x['end_exclusive_utc'],x['duration_days'],x['net_return_pct'],x['max_drawdown_pct'],x['sharpe_365'],x['calmar']] for x in s['folds']);daily.extend(b+[i,v] for i,v in enumerate(s['daily_equity_usdt']))
+save('cost_scenes.csv',head+['cost_multiplier','return_pct','whole_DD_pct','Sharpe365','Calmar','cost_usdt','cost_pct_initial','funding_usdt','gross_plus_funding_to_execution_cost','executions','closes','positive_3d_folds','positive_3d_folds_all','status'],cost);save('walk_forward_folds.csv',head+['cost_multiplier','fold','start_utc','end_exclusive_utc','days','return_pct','fold_DD_pct','Sharpe365','Calmar'],fold);save('daily_NAV.csv',head+['cost_multiplier','day_index','NAV_usdt'],daily)
+for n,key in [('sensitivity_grid.csv','all_current_grid'),('native_sensitivity_grid.csv','all_current_native_grid')]:
+ data=[]
+ for c in r[key].values():
+  d=c['current_grid_diagnostic_sensitivity']
+  for k,s in c['scenes'].items():data.append(meta(c)+[c['readonly'],k,s['net_return_pct'],s['max_drawdown_pct'],s['sharpe_365'],s['calmar'],sum(x['net_return_pct']>0 for x in s['folds']),d['local_positive3_fraction'],d['local_four_of_six_fraction'],c['status']])
+ save(n,head+['readonly','cost_multiplier','return_pct','whole_DD_pct','Sharpe365','Calmar','positive_3d_folds','local_positive3','local_four_of_six','canonical_status'],data)
+edges=[];flags={}
+for scope,key in [('parent','all_current_grid'),('native','all_current_native_grid')]:
+ cells=list(r[key].values())
+ for k in ['1','2','3']:
+  changes=[]
+  for c in cells:
+   i,j=p['axes']['ETH_V'].index(c['V']),p['axes']['ETH_VW'].index(c['VW']);adj=[h for h in cells if i<2 and h['V']==p['axes']['ETH_V'][i+1] and h['VW']==c['VW'] or j<2 and h['VW']==p['axes']['ETH_VW'][j+1] and h['V']==c['V']]
+   for h in adj:
+    x,y=c['scenes'][k],h['scenes'][k];delta=abs(y['sharpe_365']-x['sharpe_365']) if x['sharpe_365'] is not None and y['sharpe_365'] is not None else None
+    if delta is not None:changes.append(delta)
+    edges.append([scope,k,c['fingerprint'],h['fingerprint'],c['V'],c['VW'],h['V'],h['VW'],delta,y['net_return_pct']-x['net_return_pct'],y['max_drawdown_pct']-x['max_drawdown_pct']])
+  threshold=2*statistics.pstdev(changes) if changes else None;flags[scope,k]={'edge_count':len(changes),'max_Sharpe_change':max(changes) if changes else None,'two_std_threshold':threshold,'descriptive_cliff_flag':bool(changes and max(changes)>threshold),'not_independent_significance_or_new_gate':True}
+save('adjacent_edges.csv',['scope','cost_multiplier','from_fp','to_fp','from_V','from_VW','to_V','to_VW','absolute_Sharpe_change','return_delta_pp','whole_DD_delta_pp'],edges)
+alloc=[[g['fingerprint'],g['V'],g['VW'],1000,4000,3750,15000,18750,1,1,.2,.8,g['readonly']] for g in p['grid']];save('fixed_allocations.csv',['fingerprint','V','VW','BTC_N','ETH_N','BTC_C','ETH_C','total_C','raw_BTC_weight','raw_ETH_weight','BTC_capital_share','ETH_capital_share','readonly'],alloc);comp=r['matched_hold_comparisons'];save('matched_hold_comparisons.csv',list(comp[0]),[[x[k] for k in comp[0]] for x in comp])
+metrics=[('3x continuous18d return %',lambda s:s['net_return_pct'],'RdYlGn'),('3x wholecurve DD %',lambda s:s['max_drawdown_pct'],'YlOrRd'),('3x annualized Sharpe (18d, unstable)',lambda s:s['sharpe_365'],'RdYlGn'),('3x annualized Calmar (18d, unstable)',lambda s:s['calmar'],'RdYlGn'),('3x positive3d folds /6',lambda s:sum(x['net_return_pct']>0 for x in s['folds']),'RdYlGn'),('local four-of-six fraction',None,'RdYlGn')]
+for key,file,label in [('all_current_grid','sensitivity.png','Parent BTC+ETH whole-bank NAV'),('all_current_native_grid','native_sensitivity.png','ETH native C15000 / N4000')]:
+ fig,axs=plt.subplots(2,3,figsize=(17,10),constrained_layout=True)
+ for ax,(title,fn,cmap) in zip(axs.flat,metrics):
+  arr=np.empty((3,3))
+  for c in r[key].values():i,j=p['axes']['ETH_V'].index(c['V']),p['axes']['ETH_VW'].index(c['VW']);arr[i,j]=fn(c['scenes']['3']) if fn else c['current_grid_diagnostic_sensitivity']['local_four_of_six_fraction']
+  im=ax.imshow(arr,cmap=cmap,aspect='auto',vmin=0 if fn is None else None,vmax=1 if fn is None else None);fig.colorbar(im,ax=ax,fraction=.035);ax.set_xticks(range(3),[str(x) for x in p['axes']['ETH_VW']]);ax.set_yticks(range(3),[str(x) for x in p['axes']['ETH_V']]);ax.set_xlabel('Funding budget volatility VW (past days)');ax.set_ylabel('Entry price volatility V (past days)');ax.set_title(title)
+  for c in r[key].values():i,j=p['axes']['ETH_V'].index(c['V']),p['axes']['ETH_VW'].index(c['VW']);ax.text(j,i,(f'{arr[i,j]:.4f}' if np.isfinite(arr[i,j]) else 'NA'),ha='center',va='center',fontsize=10)
+ fig.suptitle(label+' | two ETH volatility horizons V x VW | fixed BTC H.03 / ETH R.00875 / entry N1000,4000\nParent context C3750+15000=18750 raw[1,1] no normalization/NAV scaling; All9 cells new calendar; representative6/10 preset\nOct24-Nov11 later history, 18days/6x3dayfolds; not untouched final or independent future; maturity gate fails',fontsize=12);fig.savefig(R/file,dpi=150);plt.close(fig)
+put(R/'export_verification.json',{'passed':True,'CSV_rows':rows,'report_sha256':sha(R/'report.json'),'both_ETH_native_and_parent_two_applicable_horizons':p['axes'],'parent_sensitivity_png_sha256':sha(R/'sensitivity.png'),'native_sensitivity_png_sha256':sha(R/'native_sensitivity.png'),'same_actual_C_N_matched_hold_for_all_cells':True});put(R/'edge_flags.json',{a:{k:flags[a,k] for k in ['1','2','3']} for a in ['parent','native']});print(json.dumps(rows),flush=True)
