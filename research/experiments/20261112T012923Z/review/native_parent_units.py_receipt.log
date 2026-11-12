@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261112T012923Z/parent_units.py", line 14, in <module>
+    f1=core.stats(v[:3],v[:3].tolist(),200);f2=core.stats(v[2:],v[2:].tolist(),170);assert max(f1['max_drawdown_pct'],f2['max_drawdown_pct'])<25
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261030T173813Z/engine.py", line 72, in stats
+    ret=100*(v[-1]/v[0]-1);dd=100*float(np.max(1-v/np.maximum.accumulate(v)));rr=[b/a-1 for a,b in zip(daily,daily[1:])];sd=statistics.stdev(rr);cagr=100*((v[-1]/v[0])**(365/days)-1)
+                                                                                                                            ^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/statistics.py", line 970, in stdev
+    raise StatisticsError('stdev requires at least two data points')
+statistics.StatisticsError: stdev requires at least two data points
