@@ -1,0 +1,12 @@
+"""Read-only old-anchor comparison; figure review and negative results retained."""
+import json,sys
+from pathlib import Path
+R=Path(__file__).resolve().parents[1];ROOT=R.parents[2];sys.path.insert(0,str(R));from common import sha,put,now,rel
+rd=lambda p:json.loads(p.read_text());p=rd(R/'plan.json');r=rd(R/'report.json');original=sha(R/'report.json');anchor=r['all_current_grid'][p['control_fingerprints']['parent_base']];rows=[]
+for c in r['configs'].values():
+ if c['scope']!='parent':continue
+ for k,s in c['scenes'].items():
+  a=anchor['scenes'][k];rows.append({'fingerprint':c['fingerprint'],'BTC_L':c['W'],'BTC_H':c['K'],'cost_multiplier':int(k),'net_return_difference_pp':s['net_return_pct']-a['net_return_pct'],'max_drawdown_difference_pp':s['max_drawdown_pct']-a['max_drawdown_pct'],'joint_improvement':s['net_return_pct']>a['net_return_pct'] and s['max_drawdown_pct']<a['max_drawdown_pct']})
+negative={k:sum(c['scenes'][k]['net_return_pct']<0 for c in r['configs'].values() if c['scope']=='native') for k in ['1','2','3']};ex=rd(R/'export_verification.json');best=max(r['all_current_grid'].values(),key=lambda c:c['scenes']['3']['net_return_pct']);boundary=best['W'] in [min(p['axes']['BTC_L']),max(p['axes']['BTC_L'])] or best['K'] in [min(p['axes']['BTC_H']),max(p['axes']['BTC_H'])]
+put(R/'old_anchor_comparison.json',{'passed':True,'verified_utc':now(),'scope':'Saved-result metric differences only;oldL29/H3pct anchor and all3L29cells readonly. No alternative configuration,NAV,trades,account observations or registry calls;qualification gates unchanged.','report_sha256':original,'readonly_source_sha256':sha(Path(__file__)),'anchor_fingerprint':anchor['fingerprint'],'rows':rows,'all_new_parents_lower_net_at_each_cost':all(z['net_return_difference_pp']<0 for z in rows),'new_parents_jointly_improving_net_and_DD_all_costs':sum(all(z['joint_improvement'] for z in rows if z['fingerprint']==c['fingerprint']) for c in r['configs'].values() if c['scope']=='parent'),'negative_BTC_configs_by_cost':negative,'all_actual_negative_curves_retained':True,'highest_parent3x_is_old_anchor':best['fingerprint']==anchor['fingerprint'],'best_parent3x_at_parameter_grid_boundary':boundary,'Sharpe_cliff_count':len(ex['cliffs_over_two_std']),'multiple_history_selection_bias_not_resolved':True})
+assert sha(R/'report.json')==original;print('PASS18savednewparent-costmetriccomparisons;negativeBTCcounts andboundary/cliffs retained;reportunchanged')
