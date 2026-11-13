@@ -1,0 +1,318 @@
+{
+  "kind": "combination",
+  "family": "prospectively-frozen-fewm-candidate-observation",
+  "name": "forward_snapshot_fewm_COMBO",
+  "logic": {
+    "mode": "delayed real closed-bar/funding replay, not live quote execution",
+    "frozen_plan_sha256": "c93bd8b2ce4ab56fe5a9613d415d9659f59b1444d130a01df27bed95ff4292d7",
+    "rules": {
+      "BTC": {
+        "N": 750,
+        "L": 31,
+        "H": 0.04,
+        "E": 0.01
+      },
+      "ETH": {
+        "N": 4500,
+        "S": 24,
+        "L": 5,
+        "H": 0.02,
+        "E": 0.005,
+        "D": 1,
+        "K": 0.0005,
+        "V": 10,
+        "VC": 0.045,
+        "gate_scope": "new_or_reversed_position_only"
+      }
+    },
+    "allocation": "WholeBTC3750/ETH15000banks,raw1/1,parent18750,N750/4500,no normalization/NAVresize/transfers/rebalance.",
+    "full_frozen_plan": {
+      "schema_version": 1,
+      "status": "frozen_before_start_no_account_created",
+      "frozen_at_utc": "2026-11-04T20:34:34.367229+00:00",
+      "owner_automation_id": "btc-eth",
+      "reason": "Precommitted selection before Nov5futurestart: choose priorround passed N750 (lowestBTC amount among priorpassed grid),middle ETHK.0005,not maxreturn after currentN625 results. Historicalselection bias disclosed; no claim of unselected historical holdout. New separate prospectiveledger; all original accounts immutable.",
+      "original_candidate": {
+        "name": "localmix370_parent_BTCN750_ETHentryGateK500ppm_D1",
+        "fingerprint": "6ff0bc3fd7bfc7ade2393cc43da0b4999d15ce774705fea83c2f341ed9ec889c",
+        "spec": "research/experiments/20261104T181839Z/specs/localmix370_parent_BTCN750_ETHentryGateK500ppm_D1.json",
+        "spec_sha256": "d7fade0b87de06fbae3f129268050fb78f132089cb90c164ac9186d0a9fcbd50",
+        "historical_report": "research/experiments/20261104T181839Z/report.json",
+        "historical_report_sha256": "7d5e073121168c829d9d4755f2161553a7bc6df714090e2bcc676edd44d0e246"
+      },
+      "components": [
+        {
+          "asset": "BTC",
+          "fingerprint": "78a87d29f0990695de56ac8398c799a4017bd6a752800027b689083eee9823ca",
+          "weight": 1,
+          "source_spec": "research/experiments/20261103T060403Z/specs/entrysize370_BTC_N750_momentum.json",
+          "source_spec_sha256": "8f9788b8e6cf7d4165212af8e997622c693dfb5b4c83f9648fd0d9dbdea30b47",
+          "parameters": {
+            "initial_capital_usdt": 3750.0,
+            "raw_entry_notional_fraction_of_initial_capital": 0.2,
+            "fixed_entry_notional_usdt": 750,
+            "lookback_days": 31,
+            "return_hurdle": 0.04,
+            "start_utc": "2025-10-19T00:01:00Z",
+            "end_utc": "2026-10-24T00:01:00Z",
+            "warmup_days": 30,
+            "embargo_days": 3,
+            "walk_forward_folds": 13,
+            "walk_forward_test_days": 30,
+            "maintenance_margin_proxy": 0.01,
+            "initial_notional_cap_to_collateral": 1,
+            "costs": {
+              "per_side_commission": 0.0005,
+              "half_spread": 0.0001,
+              "slippage": 0.0002,
+              "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+              "participation_max": 0.001,
+              "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+              "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+              "cost_multipliers": [
+                1,
+                2,
+                3
+              ],
+              "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+              "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+            },
+            "input_hashes": {
+              "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "97be656cf441024101417476f8338f4d739879d3ee39bfbf2a89cf1a287b726c",
+              "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "80cd98d12fd73cb8bfcc7a4d4af65d737347c9d9b53d82ae1698a1aa15bd71ce",
+              "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "b27e8f9a078a50a9d34c034870790321e43b5d7dff74f2c2a7d0b69f3c276006",
+              "data/normalized/binance/BTC/binance_BTC_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99"
+            },
+            "persistence": "Keep actual long while ROC>-E or short while ROC<E inside entrybands;strict entrybands have priority,unchanged quantity.",
+            "exit_buffer_fraction": 0.01,
+            "complete_30day_folds": 12,
+            "tail_fold_days": 10,
+            "positive_complete30d_folds_required": 9
+          },
+          "logic": {
+            "signal": "At daily decision i,priorcompletedperpetualROC=C[i-1]/C[i-1-L]-1. Flat enterslong iff ROC>H,short iff ROC<-H. Inside or on entrybands,existinglong persists strictly while ROC>-E;existingshort persists strictly while ROC<E. Long exits at ROC<=-E;short exits at ROC>=E. Crossing opposite strict fullentryband closesold then opensopposite at00:01. E<=H,at exact +/-H no newentry. State is actualsignedquantity,no unpublishedprice/funding input.",
+            "execution": "NextUTC00:01 nativeOPEN;closeopposite first then enter. Quantity=floor(spec.fixed_entry_notional_usdt/priorcompletedC/lot)*lot times direction;fixed raw N,no future OPEN/NAV/unpublishedfunding sizing;retain actualsame-directionquantity.",
+            "allocation": "Actual independent3750USDT cash bank,fixed entry N750USDT=750/3750 of own initial capital. Native prior-close LOT floor,actual volume impact/cost/funding,retain actual same-direction q,no NAV scaling,cash sharing or renormalization.",
+            "ledger": "Opening debitsfeeonly;unrealizedPnL=q*(price-entryexecution). Closing realizes signedq*(exitexecution-entryexecution) and paysfee. Notional is not debited as spot cash.",
+            "funding": "At actual settlementns,rawcashdelta=-signedq*actualmark*realizedrate. Only oldposition thenheld participates;funding events00:00/00:00.001 occur before00:01rotation. Negative delta multiplied by coststress;positive income not increased. Sourceavailable_ts (often+1hour) retained;rates are ex-post accounting only,never signal or size inputs.",
+            "risk": "Composite sampled NAV includes minute transaction-close proxies plus actual closed-hour mark and actualfundingsettlement marks,pre/posttrade samples and terminalcash. Report mark-only and trade-proxy DD separately. Marginproxy:1%ofnotional versus adverse full-hour markhigh/low for every overlapping state in completelyin-OOSclosedhours. No exact historicaltier/tick liquidation engine;anyproxybreachfails qualification.",
+            "state": "Independentcashstart at frozenNov5_00:01;full180dcontinuous,next00:01decisions andterminalcostedcloseonly;source historicalstate notcarried."
+          }
+        },
+        {
+          "asset": "ETH",
+          "fingerprint": "d0b07bd3921170c62aed4e6e2d64bc91ceadb24dcc2d57f5cbff12f59781b00e",
+          "weight": 1,
+          "source_spec": "research/experiments/20261104T141637Z/specs/fewmEntryOnly_ETH_S24_K500ppm_D1_L5_H200bp_E5000ppm.json",
+          "source_spec_sha256": "ea3446669372e49556b120f5c757b7844ce8c207ef916767c7013cc4b1ccc4e9",
+          "parameters": {
+            "initial_capital_usdt": 15000,
+            "raw_entry_notional_fraction_of_initial_capital": 0.3,
+            "fixed_entry_notional_usdt": 4500,
+            "lookback_days": 5,
+            "return_hurdle": 0.02,
+            "start_utc": "2025-10-19T00:01:00Z",
+            "end_utc": "2026-10-24T00:01:00Z",
+            "warmup_days": 30,
+            "embargo_days": 3,
+            "walk_forward_folds": 13,
+            "walk_forward_test_days": 30,
+            "maintenance_margin_proxy": 0.01,
+            "initial_notional_cap_to_collateral": 1,
+            "costs": {
+              "per_side_commission": 0.0005,
+              "half_spread": 0.0001,
+              "slippage": 0.0002,
+              "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+              "participation_max": 0.001,
+              "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+              "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+              "cost_multipliers": [
+                1,
+                2,
+                3
+              ],
+              "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+              "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+            },
+            "input_hashes": {
+              "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_bars.parquet": "3f2002091dda4584856d1231ee3190c90fe2d47389aa5c9289bdd765d09fb060",
+              "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/mark_hour_bars.parquet": "0f66d2a46603ba077d6ae78eb959d841eadead91902dd2b3ab9ce1020be0c913",
+              "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/funding_settlement.parquet": "e94c3303e36a2325fee6b88d78eae8fd00c64d4fdbbba742cc35ab5da5a93a27",
+              "data/normalized/binance/ETH/binance_ETH_20250916T000000Z_20261025T000000Z_extended_20261025/perp_instrument_meta.parquet": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6"
+            },
+            "persistence": "Executed position only; raw L5/H2 reversal with E.005 hysteresis, strict slope>K or slope<-K applied only new/reversed positions; actual direction persists under unchanged fast exit when gate neutral/opposite; entry-only volatility.",
+            "exit_buffer_fraction": 0.005,
+            "complete_30day_folds": 12,
+            "tail_fold_days": 10,
+            "positive_complete30d_folds_required": 9,
+            "signal_mode": "finite_EWMslope_entry_gated_reversal_entry_vol",
+            "trend_lookback_days": 24,
+            "entry_volatility_window_days": 10,
+            "entry_volatility_ceiling": 0.045,
+            "long_entry_return_hurdle": 0.02,
+            "short_entry_return_hurdle": 0.02,
+            "trend_estimator": "finite_normalized_exponentially_weighted_mean_slope",
+            "trend_mean_includes_latest_complete_close": true,
+            "trend_window_days": 24,
+            "trend_decay_numerator": 23,
+            "trend_decay_denominator": 25,
+            "trend_slope_lag_days": 1,
+            "trend_slope_hurdle_fraction": 0.0005,
+            "trend_gate_scope": "new_or_reversed_position_only"
+          },
+          "logic": {
+            "signal": "ETH fast L5 ROC r=C[i-1]/C[i-6]-1. Strict r>.02 short, r<-.02 long; otherwise actual long retained only r<.005, actual short only r>-.005. Entry/exit equalities do not retain/enter. Finite M(i,24)=sum_{j=0..23}[beta^j*C[i-1-j]]/sumweights, beta=23/25. Slope s=M(i,24)/M(i-D,24)-1. Gate +1 only s>K, -1 only s<-K, otherwise0 including both equalities. K=.00025/.0005/.00075 and D1/3/5. Apply trend gate only if nonzero base differs from actual direction, covering fresh entry and reversal. If base equals actual, retain actual regardless neutral/opposite trend; fast exit hysteresis still applies. Failed reversal closes prior position but does not open opposite. Equalities block fresh/reversal entry; neutral trend alone does not close an existing position. Entry-only sample logvol V10/cap.045 applies only fresh/reversal. Both mean windows strictly completed closes, no future/fitting/labels.",
+            "allocation": "Actual ETH bank C15000/N4500. Parent sums full BTC C3750/N500 old bank and full new ETH bank, raw[1,1], total18750, capital shares20/80%, initial nominal shares2.6666666667/24%. No weight normalization, old NAV/quantity resizing, parent orders, transfers, rebalance or cross margin. Signal geometric weights normalized only as its fixed formula.",
+            "execution": "Priorclosedfullbars only,q=floor(fixedN/priorcompleteclose/LOT)*LOT,nextUTC00:01nativeOPENadversetick,reverseclosebeforeopen,retainsameactualq. Continuous370d,terminalcostedclose,no foldresets. Parentsownactualbankswithoutparentrebalance/fills.",
+            "costs": "5bpfee+1bphalfspread+2bpslippage+0.5*past20samplelogvol*sqrt(actualq*OPEN/past20completequoteADV),1/2/3xstress. Realfundingsettlementns/mark/rate/heldq,outflowsstressed,inflowsunchanged. LOT/tick/minnotional,participation<=.001,postfee1xentrycap,independent1percentclosedhouradversemarkmaintenanceproxy. Linearperpetualshortno spotborrow;noinventedborrowfee,TCA/L2,historicalmaxqty/tier,tickliquidation orcapacityproof.",
+            "validation": "All9 new ETH natives+9 parents reserve before any valuation. Preset K .00025/.0005/.00075 by D1/3/5, S24/L5/H.02/E.005/V10/.045 fixed. Separate K/D index-radius1 neighborhoods including center. Maximum S+D29 complete past closes within existing33 context. Continuous370d12x30+10tail, recent40/8x5, no fold resets. Fixed rules no fit/labels, purge0. Reused development history, not untouched final/independent future. No postoutcome batch/gate changes.",
+            "benchmark": "Nine old all-position gate controls match S24/K/D cell by cell. They match capital,N,L,H,E,V,costs and calendar; only trend gate application scope changes. Their complete NAV and canonical status are read only. Matchedcapital/budget constant-long BTC500+ETH4500 and cash0% also read only. Differences are descriptive on reused history, no causal alpha proof.",
+            "native_implementation": {
+              "path": "research/experiments/20261104T141637Z/engine.py",
+              "sha256": "2f98a3d86b06df7bcf538df1c9cabbe19393f24d531721af7f1778c572ba6e05",
+              "accounting_unchanged_from": "research/experiments/20261104T121637Z/engine.py",
+              "signal_change": "Only ETH gate application changes from all nonzero base directions to fresh/reversal only. Existing positions retain unchanged fast exit hysteresis; strict K threshold and all accounting unchanged."
+            },
+            "state": "Independentcashstart at frozenNov5_00:01;full180dcontinuous,next00:01decisions andterminalcostedcloseonly;source historicalstate notcarried."
+          }
+        }
+      ],
+      "time_boundaries": {
+        "planned_start_utc": "2026-11-05T00:01:00Z",
+        "planned_end_exclusive_utc": "2027-05-04T00:01:00Z",
+        "duration_days": 180,
+        "fold_boundaries_utc": [
+          "2026-11-05T00:01:00Z",
+          "2026-12-05T00:01:00Z",
+          "2027-01-04T00:01:00Z",
+          "2027-02-03T00:01:00Z",
+          "2027-03-05T00:01:00Z",
+          "2027-04-04T00:01:00Z",
+          "2027-05-04T00:01:00Z"
+        ],
+        "warmup_start_utc": "2026-10-03T00:00:00Z",
+        "historical_context_before_start": "Pastcomplete33days only forcausalROC31/finiteEWM24D1/samplevol/ADV;never countwarmupreturns asfutureperformance."
+      },
+      "initial_state_policy": {
+        "account_state_created": false,
+        "planned_initial_cash_usdt_by_asset": {
+          "BTC": 3750,
+          "ETH": 15000
+        },
+        "planned_initial_units_by_asset": {
+          "BTC": "0",
+          "ETH": "0"
+        },
+        "fixed_entry_notional_usdt": {
+          "BTC": 750,
+          "ETH": 4500
+        },
+        "parent_initial_capital_usdt": 18750,
+        "raw_component_multipliers": [
+          1,
+          1
+        ],
+        "interpretation": "Independentwholebanks3750/15000,raw[1,1],capital20/80%;BTC750=20%ownbank,4%total,ETH4500=30%ownbank,24%total.No normalization/NAVresize/transfer/rebalance/crossmargin."
+      },
+      "costs": {
+        "per_side_commission": 0.0005,
+        "half_spread": 0.0001,
+        "slippage": 0.0002,
+        "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+        "participation_max": 0.001,
+        "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+        "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+        "cost_multipliers": [
+          1,
+          2,
+          3
+        ],
+        "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+        "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+      },
+      "cost_multipliers": [
+        1,
+        2,
+        3
+      ],
+      "rules_policy": "BTC ROC31/H.04/E.01momentum unchanged; ETHcontrarianROC5/H.02/E.005,finite normalized EWM24 beta23/25 slopeD1 strictK.0005. Gate only new/reversedbase target; existing same-direction actualposition retained regardlessgate. Oppositeentry fails gate:closeold,no newposition. Sample10dailylogvol stdevcap.045 onlynew/reversal;equalcapallowed. Allpriorcompletecloses,next00:01OPEN,qfloorN/priorclose/LOT,sameqretained. Decimal28 ledger,fee5bp,halfspread1bp,slip2bp,volumeimpact/fundingstress1/2/3,collateral/risk guards asboundcode.",
+      "data_protocol": {
+        "public_only": true,
+        "closed1m_and_hourmark_actualfunding": "SourceURL/availability/UTCunits/rawSHA/continuity/overlap/metadata allverifybeforecalculation; missingdata blocks withpreservedstate.",
+        "funding": "Actualsettlementns/mark/heldq,negativeoutflowsstressed,incomesunchanged. Frozen8hregularcadence is an explicit data-integrity guard (±2sec),not fabricatedpayments;missing orchangedcadence blocks ratherthanfillszeros.",
+        "margin": "1percentfullclosedhour adversemark proxy perbank, positive-durationstate intervals only; exactsame-ns pre/posteventorder preserved, no fulltier/tickliquidation claim.",
+        "continuity": "Newseparateledger/pointer; neverreinitializeafterfirstwindow, carrycash/q/entry/costs/funding/fullNAVprefix, no partialcutforcedexit.",
+        "transport": "VerifiedTLS1.2HTTP1.1, everyattempttimestamp/status/stderr/rawSHA and boundedretry; no disableSSLverification.",
+        "metadata_change": "ChangedLOT/tick/minnotional or unplannedfundingcadence blocks, no silentretrofit."
+      },
+      "qualification_after_full_180_days": {
+        "minimum_days": 180,
+        "complete_30day_folds": 6,
+        "positive_1x_complete30day_folds_min": 5,
+        "positive_full_net_all_costs": true,
+        "max_3x_whole_NAV_drawdown_pct": 25,
+        "round_trips_1x_min": 4,
+        "gross_reference_PnL_plus_funding_to_execution_cost_min": 2.5,
+        "no_cash_order_margin_proxy_violations": true,
+        "recent40_each_cost_positive_and_min6of8_positive5d_folds": true,
+        "partial_observations": "Mayfinishrejectedforinsufficientmaturity; doesnotcancel/resetfrozenplan. No passedbefore180days.",
+        "terminal_exit": "Onlypredeclared180dayend, actualclosingcosts."
+      },
+      "execution_readiness": {
+        "runner": "research/experiments/20261104T201939Z/prospective_fewm/observer.py",
+        "pointer": "research/automation/fewm_forward_latest.json",
+        "window_folder": "fewm_observation",
+        "reservation": "Every actualnewasset/parentcutoffcomplete spec mustreserve afterrealpacketvalidated andbeforeadvance. No reservation/account/performancebeforestart.",
+        "monitor": "forward_snapshot_fewm_* observation IDs only,notnewstrategytrial/paper10;readonlyexistingmain monitor,no newtimer/deployment.",
+        "isolation": "Separatepointer andledger;originalSMA65/singleS28/L4/paper10rules/capital/positions/pointersunchanged.",
+        "code_freeze": "binding.json pinsplan, core,observer andsourcehashes; anymismatch blocks.",
+        "independent_audit_required": "Firstactualwindow must independently verify signals/tradecost/funds/wholeNAVprefix withcomplete savedactualpacket beforecommit,then every continuation. Engineeringreadiness alone is not financial result."
+      },
+      "observation_mode": "Prospectivelyfrozenfuturedata, delayedclosed-bar/fundingreplay; notlivetrade/quoteexecution.",
+      "known_limits": [
+        "Selectionfrommanyreuseddevelopmenttrials, no multiplicitycorrection.",
+        "NoL2/TCA/fullhistoricalmargin tiers ortruecapacity/steadyprofitguarantee.",
+        "No futureprices/returns/accountnow; firstactualwindow onlyafterstartandbarclosure."
+      ],
+      "result_available": false,
+      "actual_observations": 0,
+      "new_financial_evaluations": 0
+    },
+    "partial_rejected_does_not_cancel_plan": true
+  },
+  "parameters": {
+    "owner_automation_id": "btc-eth",
+    "observation_mode": "forward_snapshot_candidate",
+    "asset": "COMBO",
+    "start_utc": "2026-11-05T00:01:00Z",
+    "end_utc": "2026-11-13T02:10:00Z",
+    "planned_terminal_utc": "2027-05-04T00:01:00Z",
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "initial_capital_usdt": 18750.0,
+    "input_hashes": {
+      "data/raw/binance/fewm_forward/20261113T033939Z/packet.json.gz": "d2abe28388a8edec3ab611c33ca2b08735aad31d15a707adb539c5a6269e2af0"
+    },
+    "previous_state_sha256": "0d54a902383919bbaec799d8567cd7c5775005d38a164273aac8855afb39e11d"
+  },
+  "components": [
+    {
+      "fingerprint": "151179f3667170e142f011ac722850cdb28d76e72ce951ebd797e8acbcd84be2",
+      "weight": 1
+    },
+    {
+      "fingerprint": "e4aa5728d2715fe9adb927556ca204834f5cd744d58892299b5c8ad982e9af15",
+      "weight": 1
+    }
+  ],
+  "market": "binance-usdm-linear-perpetual",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ]
+}
