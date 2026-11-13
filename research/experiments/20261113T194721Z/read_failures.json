@@ -1,0 +1,24 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261113T194721Z/journal.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-13T20:02:56.687169Z",
+      "finished_utc": "2026-11-13T20:02:57.492768Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261113T194721Z/journal.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261113T194721Z/journal.py\", line 7, in <module>\n    main=ROOT/'research/automation/registry.jsonl';fragment=R/'registry_records.jsonl';assert not fragment.exists();prefix=subprocess.check_output(['git','show',start['base_commit']+':research/automation/registry.jsonl'],cwd=ROOT);raw=main.read_bytes();assert raw.startswith(prefix) and hashlib.sha256(prefix).hexdigest()==ctx['main_registry_sha256_before_reserve'];tail=raw[len(prefix):];events=[json.loads(x) for x in tail.splitlines()];batch=sum([json.loads((R/name).read_text()) for name in ['batch.json','forward_batch.json','candidate_batch.json','l4h02_batch.json','fewm_batch.json']],[]);assert len(batch)==24 and len(events)==48 and {x['fingerprint'] for x in batch}=={x['fingerprint'] for x in events}\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "resolved": true,
+      "resolved_utc": "2026-11-13T20:05:07.258015Z",
+      "root_cause": "Inherited priorbatch metadata count24IDs/48events instead of frozen actual20/40;failed before first write.",
+      "successful_retry_commands": "research/experiments/20261113T194721Z/journal_retry1_commands.json",
+      "successful_retry_commands_sha256": "763659cef5ef74a264699397145bac292a8861c07140950c554d7e564932576d",
+      "verified_logical_event_stream_unchanged": true,
+      "financial_or_account_reruns": 0
+    }
+  ]
+}
