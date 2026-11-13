@@ -1,0 +1,149 @@
+{
+  "kind": "combination",
+  "family": "matched-fixed-exposure-389day-reference",
+  "name": "extend389_matched_hold_parent",
+  "market": "perpetual",
+  "timeframe": "1d",
+  "universe": [
+    "BTC/USDT",
+    "ETH/USDT"
+  ],
+  "components": [
+    {
+      "fingerprint": "c1c73bd262daf250869b064a26c5e685b3c681c1443ca00a5e412bcf7c11adea",
+      "weight": 1
+    },
+    {
+      "fingerprint": "daa289e57ad62bc9d6f43b8a11ef1a5bc0e808f566997aa88c7643aad73e7cb9",
+      "weight": 1
+    }
+  ],
+  "logic": {
+    "holding_reference": "Exact same capital, native initial entry notionals, calendar, costs and no daily rebalance;actual native q/LOT/funding/collateral and terminal costs.",
+    "calendar": "Fixed BTC V10 caps.03/.04/.05 x ETH M4/VW8 ratios.00875/.01/.01125; preset.04/.01. Continuous389days from2025-10-19T00:01Z to2026-11-12T00:01Z,12x30+29tail. Recent40 inheritsday349,8x5. New19day extension inheritsday370 without previous forced exit/reset,5+5+5+4 folds. Extra predeclared gates: positive extension19 allcost and >=3of4 positive extension folds eachcost. Historical data repeatedly observed, not untouched final/independent future."
+  },
+  "parameters": {
+    "initial_capital_usdt": 18750,
+    "component_capitals_usdt": [
+      3750,
+      15000
+    ],
+    "component_initial_entry_notionals_usdt": [
+      1000,
+      4000
+    ],
+    "raw_component_multipliers": [
+      1,
+      1
+    ],
+    "capital_allocation_fractions": [
+      0.2,
+      0.8
+    ],
+    "BTC_bank_capital_usdt": 3750,
+    "BTC_entry_notional_usdt": 1000,
+    "ETH_lookback_days": 0,
+    "ETH_return_hurdle": 0,
+    "ETH_exit_buffer_fraction": 0,
+    "ETH_trend_lookback_days": 0,
+    "ETH_entry_volatility_window_days": 0,
+    "ETH_entry_volatility_ceiling": null,
+    "control_policy": "constant_long_matched_entry_budget",
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-11-12T00:01:00Z",
+    "walk_forward_folds": 13,
+    "walk_forward_complete30day_folds": 12,
+    "walk_forward_tail_days": 29,
+    "continuous_oos_days": 389,
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "cost_multipliers": [
+      1,
+      2,
+      3
+    ],
+    "actual_native_quantity_and_impact_reused": false,
+    "source_component_spec_sha256": [
+      "caa314730aa790dbe4d474590ba9015b64b265fc3eb6ac8745a5c03222fc5604",
+      "292d26a70dfc4e6ba5f42adca77108e489aa03d58af4ed7dba817687e9f391c5"
+    ],
+    "ETH_entry_notional_usdt": 4000,
+    "BTC_existing_actual_bank_reused": true,
+    "BTC_new_native_quantity_and_impact_computed": false,
+    "ETH_new_native_quantity_and_impact_computed": true,
+    "initial_gross_notional_fraction_of_parent_capital": 0.26666666666666666,
+    "prior_370day_source_fingerprint": "781615112532b4b8bf1ed06156d49dc570fb8a4443736222d8b051b147227e52"
+  },
+  "validation_plan": "research/experiments/20261112T233703Z/plan.json",
+  "sources": [
+    {
+      "title": "Prior actually executed latest-realized-rate filter and native accounting",
+      "path": "research/experiments/20261110T011054Z/engine.py",
+      "sha256": "160df24dd06a74410e5ca88015e4b64ab4e61d6792fa79863edca649e1719f3a",
+      "access_date": "2026-11-10",
+      "role": "ExactoldsameM/F50ppmbank/parentsreusedreadonly;fullmedian/nativeaccountingASTunchanged."
+    },
+    {
+      "title": "Binance official USD-M funding rate history",
+      "url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "access_date": "2026-11-10",
+      "role": "ActualfundingTime/rate/markfields;normalized1hdelayassumed,notarrivalmeasurements."
+    },
+    {
+      "title": "Current actual settlement interval/availability audit",
+      "path": "research/experiments/20261110T051156Z/funding_signal_preflight.json",
+      "sha256": "77252773a2432b6ed8bc0104c2fe10341c96dffbf3ab5d20a1dce4f78e33d617",
+      "access_date": "2026-11-10",
+      "role": "1212 actual signed rates/timestamps perasset; latestinterval derivedfromconsecutivepastsource timestamps; normalizedconstant8notmeasuredgap."
+    },
+    {
+      "title": "Current budget-window/source availability audit",
+      "path": "research/experiments/20261110T071157Z/funding_signal_preflight.json",
+      "sha256": "8f08c379c3c2c7b5dc9a26618323b2e407546169aa6e5839085e59f4b86ce84f",
+      "access_date": "2026-11-10",
+      "role": "1212 actualsettlements/asset and pasttimestampinterval; source33days supports price19,cost21 and budgetVW+1<=13 closes."
+    },
+    {
+      "title": "Current original-account actualNov10_08 official settlement fields",
+      "path": "research/experiments/20261110T091228Z/funding08_nov10_preflight.json",
+      "sha256": "3dbe07c16085b51f552bc4f7bfced648b8bbd544df349f0922c24d0f795b7ac1",
+      "access_date": "2026-11-10",
+      "role": "Accountpublicfields only,beforebinding/reserve;not researchmarketwindow or anotheraccountcashflow."
+    },
+    {
+      "title": "Current original-account actualNov10_08 official settlement fields",
+      "path": "research/experiments/20261110T111259Z/funding08_nov10_preflight.json",
+      "sha256": "3dbe07c16085b51f552bc4f7bfced648b8bbd544df349f0922c24d0f795b7ac1",
+      "access_date": "2026-11-10",
+      "role": "Accountpublicfields only,beforebinding/reserve;not researchmarketwindow or anotheraccountcashflow."
+    },
+    {
+      "title": "Current original-account actualNov10_08 official settlement fields",
+      "path": "research/experiments/20261110T131400Z/funding08_nov10_preflight.json",
+      "sha256": "3dbe07c16085b51f552bc4f7bfced648b8bbd544df349f0922c24d0f795b7ac1",
+      "access_date": "2026-11-10",
+      "role": "Accountpublicfields only,beforebinding/reserve;not researchmarketwindow or anotheraccountcashflow."
+    },
+    {
+      "title": "Current original-account actualNov10_08 official settlement fields",
+      "path": "research/experiments/20261110T151431Z/funding08_nov10_preflight.json",
+      "sha256": "3dbe07c16085b51f552bc4f7bfced648b8bbd544df349f0922c24d0f795b7ac1",
+      "access_date": "2026-11-10",
+      "role": "Accountpublicfields only,beforebinding/reserve;not researchmarketwindow or anotheraccountcashflow."
+    },
+    {
+      "title": "Fresh actualNov10_16 official settlement public fields",
+      "path": "research/experiments/20261110T171502Z/funding16_nov10_preflight.json",
+      "sha256": "76efb250b4a26534a7a8cff08e0565da82ce1e55ca700fd79816adc0f158362e",
+      "access_date": "2026-11-10",
+      "role": "Original account actual public settlement fields only,beforebinding/reserve;not research marketwindow or otheraccountcashflows."
+    },
+    {
+      "title": "Immutable actualNov10_16 official funding fields reuse",
+      "path": "research/experiments/20261110T191703Z/funding16_nov10_preflight.json",
+      "sha256": "76efb250b4a26534a7a8cff08e0565da82ce1e55ca700fd79816adc0f158362e",
+      "access_date": "2026-11-10",
+      "role": "Original single own14:30to16:30 accountpublicfields only;L4/FEWM16alreadyonce. No new public capture/accountcashflow reuse/research market window."
+    }
+  ]
+}
