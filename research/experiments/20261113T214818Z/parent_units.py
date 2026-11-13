@@ -1,0 +1,15 @@
+from common import *
+import engine
+from fractions import Fraction as F
+import numpy as np
+n=0
+for L in [28,29,30]:
+ for E in [F('.005'),F('.01'),F('.015')]:
+  H=F('.03')
+  for actual in [-1,0,1]:
+   for roc in [-H-F(1,10**8),-H,-E,F(0),E,H,H+F(1,10**8)]:
+    closes=[F(100)]*50;closes[39]=100*(1+roc);wanted=1 if roc>H else -1 if roc<-H else 1 if actual==1 and roc>-E else -1 if actual==-1 and roc<E else 0;out,r=engine.btc.target(closes,40,L,float(H),actual,float(E));assert out==wanted and F(r)==roc
+    future=closes[:40]+[F(1),F(10**12),F(2)];assert engine.btc.target(future,40,L,float(H),actual,float(E))==(out,r);n+=1
+a=np.array([3750.,4500.,3000.]);b=np.array([15000.,14000.,16000.]);assert (a+b).tolist()==[18750.,18500.,19000.] and not np.array_equal(a+b,(a+b)/2)
+v=np.array([100.,120.,90.,110.]);assert max(1-v/np.maximum.accumulate(v))==.25
+put(R/'parent_primitive_verification.json',{'passed':True,'synthetic_only':True,'BTC_hysteresis_boundary_future_suffix_cases':n,'tests':['bothentryequalities','entrybandpriority','strictlongshortexitbufferE','futureclosemutationirrelevant','wholebanknotnormalized','continuouscrossfoldDD25pct'],'new_strategy_or_account_calculations':0});print('PASS',n,'syntheticBTClookbackexitboundary/futurecases;0backtests')
