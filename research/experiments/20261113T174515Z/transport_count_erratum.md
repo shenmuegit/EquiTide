@@ -1,0 +1,3 @@
+公开请求传输次数勘误：本轮完整阶段共保存19次去重公开GET，其中1次失败。原result.md及transport_failure_verification.json的0次只覆盖账户采集阶段，漏纳入资金费预检中的ETH fundingRate请求。该请求HTTP状态0、curl退出35、TLS握手EOF，随后原有有界重试成功；失败原包、stderr和三次预检回执在原提交中已完整保留。
+
+本补充只纠正统计范围和中文汇总，不改写原报告、冻结规则、账户账本、资金费、净值、登记状态或监控，未发起新行情请求、回测或账户续接。全部逐请求来源、原始捕获UTC和SHA256见transport_count_erratum.json。各策略正负收益、历史通过/淘汰及独立前向限制保持。原data_manifest.json继续约束原封存文件，新增补充由transport_supplement_manifest.json绑定。
