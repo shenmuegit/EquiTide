@@ -1,0 +1,23 @@
+"""Review actual displayed figure and preserve a formatter-label correction."""
+import json,sys
+from pathlib import Path
+R=Path(__file__).resolve().parents[1];ROOT=R.parents[2];sys.path.insert(0,str(R));from common import sha,put,now,rel
+read=lambda p:json.loads(p.read_text());a=read(R/'component_attribution.json');receipt=read(R/'review/native_attribution_retry1.py_receipt.json');assert receipt['exit_code']==0 and a['passed'] and a['report_sha256']==sha(R/'report.json')
+fail=read(R/'read_failures.json')
+for z in fail['facts']:
+ if z['kind']=='readonly_attribution_formatter_failure':z.update(resolved=True,successful_retry_receipt=rel(R/'review/native_attribution_retry1.py_receipt.json'),successful_native_completion_chunk='8e2672',successful_readonly_source_sha256=sha(R/'review/attribution_retry1.py'),finished_financial_report_SHA_unchanged=sha(R/'report.json'))
+put(R/'read_failures.json',fail)
+put(R/'visual_inspection.json',{'passed':True,'inspected_utc':now(),'plot':rel(R/'exports/sensitivity.png'),'plot_sha256':sha(R/'exports/sensitivity.png'),'actual_view_image_used':True,'checked':['Readable 2x3 metric panels, all9 S/K cells and axes12/16/20days x0.625/0.750/0.875pct','Parent3x net row12=6.210/6.210/5.000; row16=6.088/7.329/7.329; row20=6.088/4.879/4.879','Whole-path DD/Sharpe/Calmar match reports;recent3x all6of8;strict local fraction all1','Center16/.0075 is the old read-only point per table and caption;not a new run','Metric variation and5flagged neighboring edges retained;no independent future or live-profit claim'],'no_financial_model_or_account_rerun':True})
+q=R/'checks.py';before=q.read_text();(R/'review/checks_before_label_fix.py').write_text(before);old=R/'research_verification.json';(R/'research_verification_before_label_fix.json').write_bytes(old.read_bytes())
+s=before.replace('all60scenes_and_folds_audited','all48scenes_and_folds_audited').replace('PASS20actualconfigs/60scenes','PASS16actualconfigs/48scenes').replace('PASS32finishedIDs/64exactappend events','PASS28finishedIDs/56exactappend events').replace('alloldrows/current20financialconfigs','alloldrows/current16financialconfigs');q.write_text(s)
+put(R/'formatter_label_correction.json',{'passed':True,'recorded_utc':now(),'old_source':rel(R/'review/checks_before_label_fix.py'),'old_source_sha256':sha(R/'review/checks_before_label_fix.py'),'old_verification':rel(R/'research_verification_before_label_fix.json'),'old_verification_sha256':sha(R/'research_verification_before_label_fix.json'),'reason':'Copied read-only formatter retained static20/60 messages and all60scenes key even while all actual assertions used16configs/48scenes. Correct labels and rerun only read-only research verification.','all_financial_assertions_unchanged':True,'finished_financial_report_sha256':sha(R/'report.json'),'no_evaluation_or_account_rerun':True})
+s=(R/'collect.py').read_text();needle="(R/'result.md').write_text('\\n'.join(lines)+'\\n')";assert needle in s
+insert="""attribution=rd(R/'component_attribution.json');assert attribution['passed'] and attribution['report_sha256']==sha(R/'report.json')
+lines += ['',f"追加归因证据：全部9格ETH在扩展19日均保持零持仓、19个零desired决策、零成交及零资金费现金流；27个父格/成本场景该段实际美元收益全部来自同一BTC银行，见component_attribution.json。全期ETH虽净正，但不满足逐折、近期和扩展门槛。父组合历史通过不代表新ETH策略近期有效。敏感性24条邻接边中{attribution['cliff_flag_count']}条超过预设2×样本标准差的Sharpe变化提示；3倍整体DD约1.49%–3.93%，没有因盈利而删除cliff。S16/K0.875%的三成本完整路径与旧中心精确相同，其余若干变体也互为路径别名，16定义不是16份独立alpha证据。",'', '实际失败留档：只读归因脚本首轮调用不存在的core.ns而停止，没有金融或账户写入；保留原源码和exit1凭据，另存显式UTC解析版本，实际重查通过。初次read-only研究检查复用了20/60的静态日志标签及all60scenes字段，实际断言与数量均为16/48；原源码/核验JSON保留，标签修正后仅重做只读检查。所有真实回测和观察窗口均只执行一次。']
+ns['research'].update(component_attribution=rel(R/'component_attribution.json'),all9_ETH_extension19_flat=True,extension19_parent_PnL_entirely_fixed_BTC=True,Sharpe_cliff_count=attribution['cliff_flag_count'],no_independent_incremental_ETH_future_alpha_proof=True)
+put(R/'next_research_state.json',ns)
+"""
+s=s.replace(needle,insert+needle);(R/'collect.py').write_text(s)
+s=(R/'finalize.py').read_text().replace("'research_check','midnight_archive'","'research_check_retry1','midnight_archive'").replace("'reporting_setup.py','staged_whitespace.py'","'reporting_setup.py','result_review.py','attribution_retry1.py','staged_whitespace.py'").replace("'long_only_prior_lookup.json','funding00_public_reuse.json'","'long_only_prior_lookup.json','funding00_public_reuse.json','component_attribution.json','formatter_label_correction.json'")
+(R/'finalize.py').write_text(s)
+print('PASS actualfigure inspected, savedPnL attribution reviewed and retained label-only correction;no financial/account recalculation')
