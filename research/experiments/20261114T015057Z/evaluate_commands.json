@@ -1,0 +1,16 @@
+[
+  {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T015057Z/run.py",
+      "evaluate"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-14T02:06:24.825187Z",
+    "finished_utc": "2026-11-14T02:06:28.857879Z",
+    "exit_code": 1,
+    "log": "research/experiments/20261114T015057Z/evaluate.log",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T015057Z/run.py\", line 63, in <module>\n    if __name__=='__main__':globals()[argparse.ArgumentParser().parse_known_args()[1][0]]()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T015057Z/run.py\", line 37, in evaluate\n    m=ms[row['asset']];v,z=engine.simulate(sp,m,int(k));z['summary']['recent40']=recent(v,m);z['summary']['extension21']=extension(v,m);vectors[row['fingerprint'],k]=v[cm['projections'][row['asset']]];summaries[row['fingerprint'],k]=z['summary'];arc['scenes'][k]=z;scenes[k]=z['summary']\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T015057Z/engine.py\", line 103, in simulate\n    return v,{'decisions':decisions,'trades':trades,'funding_events':funds,'state_segments':segments,'terminal_state':state,'summary':summary(m,v,trades,funds,segments)}\n                                                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T015057Z/core391.py\", line 77, in summary\n    for j,(a,b) in enumerate(zip(m['fold_indices'],m['fold_indices'][1:])):s['folds'].append({'fold':j+1,'start_utc':stamp(m['start_ns']+j*30*DAY),'end_exclusive_utc':stamp(m['start_ns']+min((j+1)*30,DAYS)*DAY),'duration_days':min(30,DAYS-j*30),**stats(v[a:b+1],daily[j*30:min((j+1)*30,DAYS)+1],min(30,DAYS-j*30))})\n                                                                                                                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T015057Z/core391.py\", line 72, in stats\n    ret=100*(v[-1]/v[0]-1);dd=100*float(np.max(1-v/np.maximum.accumulate(v)));rr=[b/a-1 for a,b in zip(daily,daily[1:])];sd=statistics.stdev(rr);cagr=100*((v[-1]/v[0])**(365/days)-1)\n                                                                                                                            ^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/statistics.py\", line 970, in stdev\n    raise StatisticsError('stdev requires at least two data points')\nstatistics.StatisticsError: stdev requires at least two data points\n"
+  }
+]
