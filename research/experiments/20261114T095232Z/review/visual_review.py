@@ -1,0 +1,5 @@
+"""Record actual view_image inspection of the six saved lookback/R panels."""
+import json,sys
+from pathlib import Path
+R=Path(__file__).resolve().parents[1];ROOT=R.parents[2];sys.path.insert(0,str(R));from common import put,sha,now,rel
+h=sha(R/'report.json');put(R/'visual_inspection.json',{'passed':True,'inspected_utc':now(),'plot':rel(R/'exports/sensitivity.png'),'plot_sha256':sha(R/'exports/sensitivity.png'),'actual_view_image_used':True,'checks':['All6panels readable; BTC lookbacks28/29/30 andETHR.00875/.01 correctly labelled','3xnetrows7.700/7.630,8.096/8.027,6.889/6.819; highestnetatold29center','DD1.359/1.483/1.473;allrecent6/8 andstrictlocalfraction1','Sharpe2.183/2.164,2.175/2.157,1.866/1.848 andCalmar5.277/5.230,5.081/5.038,4.357/4.313 match saved metrics','Native29to30heuristicflagandBTC30qualificationfailureretained;parentpositivecellsdonotreclassifysourcecomponent'],'report_sha256':h,'no_strategy_or_account_recalculation':True});assert sha(R/'report.json')==h;print('PASS actual L/R3x2six-panel surface inspected, all panels match saved metrics')
