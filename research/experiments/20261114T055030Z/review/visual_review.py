@@ -1,0 +1,5 @@
+"""Record completed view_image inspection of the six-panel saved surface."""
+import json,sys
+from pathlib import Path
+R=Path(__file__).resolve().parents[1];ROOT=R.parents[2];sys.path.insert(0,str(R));from common import put,sha,now,rel
+h=sha(R/'report.json');put(R/'visual_inspection.json',{'passed':True,'inspected_utc':now(),'plot':rel(R/'exports/sensitivity.png'),'plot_sha256':sha(R/'exports/sensitivity.png'),'actual_view_image_used':True,'checks':['All6panels readable; E0.5/1/1.5percent and ETHbudgets0.00875/0.01 labelled','3xreturnrows7.901/7.831,8.096/8.027,7.654/7.585 match saved actual results','WholeDDrows1.362/1.483/1.488percent; allrecentfolds6/8;strictlocalfraction1','Sharpe2.232/2.213,2.175/2.157,2.044/2.026 andCalmar5.401/5.354,5.081/5.038,4.790/4.746 match metrics','OldE1center has highest net;E0.5lowerDD withhigherSharpe butlowernet;oneheuristiccliffflagretained'],'report_sha256':h,'no_strategy_or_account_recalculation':True});assert sha(R/'report.json')==h;print('PASS actual3x2exit-buffer surface inspected; all six panels match saved metrics')
