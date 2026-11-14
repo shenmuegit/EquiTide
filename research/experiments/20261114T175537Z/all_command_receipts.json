@@ -1,0 +1,546 @@
+{
+  "gates_commands.json": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/checks/strategy_registry.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:14:34.827437Z",
+      "finished_utc": "2026-11-14T18:14:36.167497Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/registry_gate.log",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/monitor/snapshot.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:14:36.167879Z",
+      "finished_utc": "2026-11-14T18:15:00.649756Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/snapshot.log",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:15:00.650138Z",
+      "finished_utc": "2026-11-14T18:15:31.767897Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/monitor_check.log",
+      "stderr": ""
+    }
+  ],
+  "final_checks_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/checks.py",
+        "final"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:15:34.142920Z",
+      "finished_utc": "2026-11-14T18:15:55.807823Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261114T175537Z/final_checks.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/checks.py\", line 79, in <module>\n    if __name__=='__main__':globals()[argparse.ArgumentParser().parse_known_args()[1][0]]()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/checks.py\", line 74, in final\n    bindings();recovery=rd(R/'legacy_raw_path_recovery.json');assert recovery['passed'] and all(sha(ROOT[z['committed_copy']])==sha(ROOT[z['unique_recovered_path']])==z['sha256'] for z in recovery['rows']);assert all('/'+R.name+'/forward_raw/' in z['raw_gzip_path'] for z in rd(R/'forward_report.json')['provenance']);assert rd(R/'historical_path_alias_verification.json')['passed'];assert not [z for z in R.rglob('*') if z.name=='__pycache__' or z.suffix in ['.pyc','.npy','.tmp'] or 'checkpoint' in z.name];assert all(z.get('resolved') for z in rd(R/'read_failures.json')['facts'])\n                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/checks.py\", line 74, in <genexpr>\n    bindings();recovery=rd(R/'legacy_raw_path_recovery.json');assert recovery['passed'] and all(sha(ROOT[z['committed_copy']])==sha(ROOT[z['unique_recovered_path']])==z['sha256'] for z in recovery['rows']);assert all('/'+R.name+'/forward_raw/' in z['raw_gzip_path'] for z in rd(R/'forward_report.json')['provenance']);assert rd(R/'historical_path_alias_verification.json')['passed'];assert not [z for z in R.rglob('*') if z.name=='__pycache__' or z.suffix in ['.pyc','.npy','.tmp'] or 'checkpoint' in z.name];assert all(z.get('resolved') for z in rd(R/'read_failures.json')['facts'])\n                                                                                                    ~~~~^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'PosixPath' object is not subscriptable\n"
+    }
+  ],
+  "fewm_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/observe_fewm.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:06:35.271617Z",
+      "finished_utc": "2026-11-14T18:06:54.878315Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/fewm_observe.log",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/audit_fewm.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:06:54.878659Z",
+      "finished_utc": "2026-11-14T18:07:20.465329Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/fewm_audit.log",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/project_fewm_batch.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:07:20.465774Z",
+      "finished_utc": "2026-11-14T18:07:22.551272Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/fewm_index.log",
+      "stderr": ""
+    }
+  ],
+  "journal_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/journal.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:13:53.927802Z",
+      "finished_utc": "2026-11-14T18:14:09.768908Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/journal.log",
+      "stderr": ""
+    }
+  ],
+  "feed_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/checks.py",
+        "feed"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:15:31.818273Z",
+      "finished_utc": "2026-11-14T18:15:33.362915Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/feed.log",
+      "stderr": ""
+    }
+  ],
+  "units_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/parent_units.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:02:48.999567Z",
+      "finished_utc": "2026-11-14T18:02:49.308242Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/parent_units.log",
+      "stderr": ""
+    }
+  ],
+  "collect_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/collect.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:15:33.405655Z",
+      "finished_utc": "2026-11-14T18:15:34.101106Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/collect.log",
+      "stderr": ""
+    }
+  ],
+  "freeze_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/freeze.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:02:46.078179Z",
+      "finished_utc": "2026-11-14T18:02:48.958888Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/freeze.log",
+      "stderr": ""
+    }
+  ],
+  "finish_0_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/run.py",
+        "finish_batch"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:03:36.007395Z",
+      "finished_utc": "2026-11-14T18:03:57.124361Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/finish_0.log",
+      "stderr": ""
+    }
+  ],
+  "collect_retry2_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/collect.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:22:07.855130Z",
+      "finished_utc": "2026-11-14T18:22:08.524679Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/collect_retry2_collect.log",
+      "stderr": ""
+    }
+  ],
+  "sources_check_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/checks.py",
+        "sources"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:14:09.849815Z",
+      "finished_utc": "2026-11-14T18:14:34.784474Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/sources_check.log",
+      "stderr": ""
+    }
+  ],
+  "forward_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/forward_registry.py",
+        "reserve"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:08:30.558829Z",
+      "finished_utc": "2026-11-14T18:08:40.744895Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/forward_reserve.log",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/forward.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:08:40.745368Z",
+      "finished_utc": "2026-11-14T18:08:53.323942Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/forward.log",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/audit_forward.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:08:53.324378Z",
+      "finished_utc": "2026-11-14T18:08:57.354320Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/forward_audit.log",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/forward_registry.py",
+        "finish"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:08:57.354876Z",
+      "finished_utc": "2026-11-14T18:09:07.385970Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/forward_finish.log",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/forward.py",
+        "--reproduce"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:09:07.386517Z",
+      "finished_utc": "2026-11-14T18:09:09.687522Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/forward_replay.log",
+      "stderr": ""
+    }
+  ],
+  "reserve_0_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/run.py",
+        "reserve_batch"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:02:51.925522Z",
+      "finished_utc": "2026-11-14T18:03:12.681339Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/reserve_0.log",
+      "stderr": ""
+    }
+  ],
+  "evaluate_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/run.py",
+        "evaluate"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:03:12.721162Z",
+      "finished_utc": "2026-11-14T18:03:20.029273Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/evaluate.log",
+      "stderr": ""
+    }
+  ],
+  "exports_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/exports.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:03:33.443719Z",
+      "finished_utc": "2026-11-14T18:03:35.964493Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/exports.log",
+      "stderr": ""
+    }
+  ],
+  "accounts_check_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/checks.py",
+        "accounts"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:09:09.731134Z",
+      "finished_utc": "2026-11-14T18:09:31.138740Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/accounts_check.log",
+      "stderr": ""
+    }
+  ],
+  "audit_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/audit.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:03:20.070499Z",
+      "finished_utc": "2026-11-14T18:03:33.402736Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/audit.log",
+      "stderr": ""
+    }
+  ],
+  "final_checks_retry1_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/checks.py",
+        "final"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:17:37.504057Z",
+      "finished_utc": "2026-11-14T18:17:59.725192Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/final_checks_retry1_final_checks.log",
+      "stderr": ""
+    }
+  ],
+  "midnight_archive_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/check_midnight_archive.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:05:13.971055Z",
+      "finished_utc": "2026-11-14T18:05:14.301842Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/midnight_archive.log",
+      "stderr": ""
+    }
+  ],
+  "research_check_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/checks.py",
+        "research"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:03:57.169361Z",
+      "finished_utc": "2026-11-14T18:04:21.503510Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/research_check.log",
+      "stderr": ""
+    }
+  ],
+  "collect_retry1_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/collect.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:17:36.798095Z",
+      "finished_utc": "2026-11-14T18:17:37.457467Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/collect_retry1_collect.log",
+      "stderr": ""
+    }
+  ],
+  "final_checks_retry2_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/checks.py",
+        "final"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:22:08.571019Z",
+      "finished_utc": "2026-11-14T18:22:30.379465Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/final_checks_retry2_final_checks.log",
+      "stderr": ""
+    }
+  ],
+  "candidate_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/observe_candidate.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:07:22.592840Z",
+      "finished_utc": "2026-11-14T18:08:02.741064Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/candidate.log",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/audit_candidate.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:08:02.741537Z",
+      "finished_utc": "2026-11-14T18:08:28.389554Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/candidate_audit.log",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/project_candidate_batch.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:08:28.389975Z",
+      "finished_utc": "2026-11-14T18:08:30.517819Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/candidate_index.log",
+      "stderr": ""
+    }
+  ],
+  "l4h02_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/observe_l4h02.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:05:14.343493Z",
+      "finished_utc": "2026-11-14T18:06:07.598965Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/l4h02_observe.log",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/audit_l4h02.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:06:07.599293Z",
+      "finished_utc": "2026-11-14T18:06:33.019278Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/l4h02_audit.log",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/project_l4h02_batch.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:06:33.019650Z",
+      "finished_utc": "2026-11-14T18:06:35.230119Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/l4h02_index.log",
+      "stderr": ""
+    }
+  ],
+  "bind_commands.json": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/definitions.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-14T18:02:49.348612Z",
+      "finished_utc": "2026-11-14T18:02:51.882409Z",
+      "exit_code": 0,
+      "log": "research/experiments/20261114T175537Z/bind.log",
+      "stderr": ""
+    }
+  ]
+}

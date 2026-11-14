@@ -1,0 +1,16 @@
+[
+  {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/checks.py",
+      "final"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-14T18:15:34.142920Z",
+    "finished_utc": "2026-11-14T18:15:55.807823Z",
+    "exit_code": 1,
+    "log": "research/experiments/20261114T175537Z/final_checks.log",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/checks.py\", line 79, in <module>\n    if __name__=='__main__':globals()[argparse.ArgumentParser().parse_known_args()[1][0]]()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/checks.py\", line 74, in final\n    bindings();recovery=rd(R/'legacy_raw_path_recovery.json');assert recovery['passed'] and all(sha(ROOT[z['committed_copy']])==sha(ROOT[z['unique_recovered_path']])==z['sha256'] for z in recovery['rows']);assert all('/'+R.name+'/forward_raw/' in z['raw_gzip_path'] for z in rd(R/'forward_report.json')['provenance']);assert rd(R/'historical_path_alias_verification.json')['passed'];assert not [z for z in R.rglob('*') if z.name=='__pycache__' or z.suffix in ['.pyc','.npy','.tmp'] or 'checkpoint' in z.name];assert all(z.get('resolved') for z in rd(R/'read_failures.json')['facts'])\n                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/checks.py\", line 74, in <genexpr>\n    bindings();recovery=rd(R/'legacy_raw_path_recovery.json');assert recovery['passed'] and all(sha(ROOT[z['committed_copy']])==sha(ROOT[z['unique_recovered_path']])==z['sha256'] for z in recovery['rows']);assert all('/'+R.name+'/forward_raw/' in z['raw_gzip_path'] for z in rd(R/'forward_report.json')['provenance']);assert rd(R/'historical_path_alias_verification.json')['passed'];assert not [z for z in R.rglob('*') if z.name=='__pycache__' or z.suffix in ['.pyc','.npy','.tmp'] or 'checkpoint' in z.name];assert all(z.get('resolved') for z in rd(R/'read_failures.json')['facts'])\n                                                                                                    ~~~~^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'PosixPath' object is not subscriptable\n"
+  }
+]

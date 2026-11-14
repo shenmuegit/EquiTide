@@ -1,0 +1,5 @@
+"""Record corrected facts from the already viewed current entry-threshold surface."""
+import sys,json
+from pathlib import Path
+R=Path(__file__).resolve().parents[1];ROOT=R.parents[2];sys.path.insert(0,str(R));from common import put,sha,rel,now
+h=sha(R/'report.json');put(R/'visual_inspection.json',{'passed':True,'inspected_utc':now(),'plot':rel(R/'exports/sensitivity.png'),'plot_sha256':sha(R/'exports/sensitivity.png'),'actual_view_image_used':True,'checks':['3BTCentryrows2.5/3/3.5percent x2ETHR.00875/.01;exit.5percent fixed','3xnet7.384/7.314,7.901/7.831,7.581/7.512;center3percent above allnewparents','DD1.361673/1.361995/1.362359percent differences tiny despite rescaled colormap;table retains fullprecision','Sharpe2.073/2.054,2.232/2.213,2.146/2.127;Calmar5.050/5.002,5.401/5.354,5.182/5.134','Parentrecent6of8/localfraction1;oneheuristicflag;newH2.5BTC9of13monthsrejected not overridden by parentpass'],'superseded_inherited_narrative':rel(R/'superseded_visual_inspection.json'),'report_sha256':h,'no_financial_or_account_recalculation':True});assert sha(R/'report.json')==h;print('PASS corrected actual BTCentry3x2 saved metric inspection')

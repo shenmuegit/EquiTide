@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/checks.py", line 79, in <module>
+    if __name__=='__main__':globals()[argparse.ArgumentParser().parse_known_args()[1][0]]()
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/checks.py", line 74, in final
+    bindings();recovery=rd(R/'legacy_raw_path_recovery.json');assert recovery['passed'] and all(sha(ROOT[z['committed_copy']])==sha(ROOT[z['unique_recovered_path']])==z['sha256'] for z in recovery['rows']);assert all('/'+R.name+'/forward_raw/' in z['raw_gzip_path'] for z in rd(R/'forward_report.json')['provenance']);assert rd(R/'historical_path_alias_verification.json')['passed'];assert not [z for z in R.rglob('*') if z.name=='__pycache__' or z.suffix in ['.pyc','.npy','.tmp'] or 'checkpoint' in z.name];assert all(z.get('resolved') for z in rd(R/'read_failures.json')['facts'])
+                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261114T175537Z/checks.py", line 74, in <genexpr>
+    bindings();recovery=rd(R/'legacy_raw_path_recovery.json');assert recovery['passed'] and all(sha(ROOT[z['committed_copy']])==sha(ROOT[z['unique_recovered_path']])==z['sha256'] for z in recovery['rows']);assert all('/'+R.name+'/forward_raw/' in z['raw_gzip_path'] for z in rd(R/'forward_report.json')['provenance']);assert rd(R/'historical_path_alias_verification.json')['passed'];assert not [z for z in R.rglob('*') if z.name=='__pycache__' or z.suffix in ['.pyc','.npy','.tmp'] or 'checkpoint' in z.name];assert all(z.get('resolved') for z in rd(R/'read_failures.json')['facts'])
+                                                                                                    ~~~~^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'PosixPath' object is not subscriptable
