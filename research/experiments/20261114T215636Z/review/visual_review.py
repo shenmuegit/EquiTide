@@ -1,0 +1,13 @@
+"""Record actual viewed volatility sensitivity, exact V6/V14 path aliases and heuristic limits."""
+import sys,json
+from pathlib import Path
+R=Path(__file__).resolve().parents[1];ROOT=R.parents[2];sys.path.insert(0,str(R));from common import sha,put,now,rel
+rd=lambda p:json.loads(p.read_text());r=rd(R/'report.json');p=rd(R/'plan.json');grid=list(r['all_current_grid'].values());rows=[]
+for c in sorted(grid,key=lambda c:(c['W'],c['K'])):
+ z=c['scenes']['3'];rows.append({'BTC_vol_window_days':c['W'],'ETH_R':c['K'],'readonly':c.get('readonly',False),'net_return_pct':z['net_return_pct'],'max_drawdown_pct':z['max_drawdown_pct'],'sharpe_365':z['sharpe_365'],'calmar':z['calmar'],'recent_positive_5d':c['recent40_positive_5d_folds_by_cost']['3']})
+assert len(rows)==6 and {z['BTC_vol_window_days'] for z in rows}=={6,10,14} and all(z['recent_positive_5d']==6 for z in rows)
+for k in [.00875,.01]:
+ a,b,c=[next(z for z in rows if z['BTC_vol_window_days']==v and z['ETH_R']==k) for v in [6,10,14]];assert all(a[key]==c[key] for key in ['net_return_pct','max_drawdown_pct','sharpe_365','calmar']) and b['net_return_pct']<a['net_return_pct']
+d=rd(R/'conditional_parameter_robustness.json');aliases=rd(R/'NAV_alias_inventory.json');assert d['heuristic_cliff_flag_count']==10 and aliases['new_allcost_signatures_seen_before']==3
+put(R/'visual_inspection.json',{'passed':True,'recorded_utc':now(),'view_image_tool_group_native_chunk':'fac056','actually_viewed_image':rel(R/'exports/sensitivity.png'),'image_sha256':sha(R/'exports/sensitivity.png'),'financial_report_sha256':sha(R/'report.json'),'axes':'BTC V6/10/14 volatility memory rows,L29/H3%/exit.5%/cap3%;ETH R.00875/.01 columns,391days,3xcost,rawwholebanks1/1','actual_saved_values':rows,'six_metric_panels_checked':True,'findings':['V6 and actualV14 have identical fullcost NAV,all391desired/bookstates,trades/funding:threecurrentconfigpathaliases,noperformancegain.','V10 changes2desiredsignals,notrawROCtargets;netreturn lower,3xDDhigher by0.0007249655pp,parentSharpe lowerabout0.01576.','DDcolorbaroffset+1.362 andauto-scale emphasize a tinyabsolutedifference;use exact reportvalues.','All10rawheuristicflags kept:absSharpechanges0.01576to0.026,sampleSTDabschanges0.004372,threshold0.008743. Rule isuncenteredabsolute magnitudevssmallSTD,not statistical/economiccliff proof.','Tiedhighestmetrics atV6/V14 boundaries,noin-gridinteriorplateauorindependentnewalphaestablished.','PresetV10/R.01 unchanged afteroutcomes.'],'no_financial_account_or_grid_recalculation':True,'independent_future_qualified':False})
+print('PASS actual viewed6panelgrid,V6exactoldV14aliases,V10slightlyworse;10heuristicflags qualifiedbyabsolute magnitude andsame-path evidence')
