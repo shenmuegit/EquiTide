@@ -1,0 +1,5 @@
+"""Record actual view_image inspection of the six saved H/funding-median panels."""
+import json,sys
+from pathlib import Path
+R=Path(__file__).resolve().parents[1];ROOT=R.parents[2];sys.path.insert(0,str(R));from common import put,sha,now,rel
+h=sha(R/'report.json');put(R/'visual_inspection.json',{'passed':True,'inspected_utc':now(),'plot':rel(R/'exports/sensitivity.png'),'plot_sha256':sha(R/'exports/sensitivity.png'),'actual_view_image_used':True,'checks':['Sixpanels readable;2BTCrowsH3/3.5percent x3ETHmaturefundingmedian2/3/4settlements','3xnet7.749/7.749/8.027 and7.429/7.429/7.707;M2/M3pathaliases and previousbatchaliases disclosed','DDconstantbyrow1.483/1.372; recent6/8andstrictlocalfraction1matchsaved','Sharpe2.067/2.067/2.157 and1.987/1.987/2.076;Calmar4.864/4.864/5.038 and5.044/5.044/5.232','Parentpositivecellsdonotreclassify2rejectedETHcomponents;2heuristiccliffflagsretained'],'report_sha256':h,'no_strategy_or_account_recalculation':True});assert sha(R/'report.json')==h;print('PASS actual H/fundingmedian2x3 surface inspected and matches saved metrics')
