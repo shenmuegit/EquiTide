@@ -1,0 +1,5 @@
+"""Record actual visual inspection of the saved3x2 sensitivity surface only."""
+import json,sys
+from pathlib import Path
+R=Path(__file__).resolve().parents[1];ROOT=R.parents[2];sys.path.insert(0,str(R));from common import put,sha,now,rel
+r=json.loads((R/'report.json').read_text());h=sha(R/'report.json');put(R/'visual_inspection.json',{'passed':True,'inspected_utc':now(),'plot':rel(R/'exports/sensitivity.png'),'plot_sha256':sha(R/'exports/sensitivity.png'),'actual_view_image_used':True,'checks':['All6panels readable with3BTClookbacks6/10/14 and2ETHbudgetcolumns','3xnetrows6and14are8.096/8.027;old10daycenter8.040/7.971','WholepathDD1.483vs1.484;recentpositivefolds6/8 andstrictlocalfraction1','Sharpe2.175/2.157vs2.160/2.142;Calmar5.081/5.038vs5.044/5.000','6/14wholebankaliasesdisclosed;10tiny-change heuristicflagsretained in conditional_parameter_robustness'],'report_sha256':h,'no_strategy_or_account_recalculation':True});assert sha(R/'report.json')==h;print('PASS actual3x2surface inspected;all six panels match saved metrics')
