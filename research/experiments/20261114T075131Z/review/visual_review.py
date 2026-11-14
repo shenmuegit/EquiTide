@@ -1,0 +1,5 @@
+"""Record completed view_image inspection of the six-panel saved H/R surface."""
+import json,sys
+from pathlib import Path
+R=Path(__file__).resolve().parents[1];ROOT=R.parents[2];sys.path.insert(0,str(R));from common import put,sha,now,rel
+h=sha(R/'report.json');put(R/'visual_inspection.json',{'passed':True,'inspected_utc':now(),'plot':rel(R/'exports/sensitivity.png'),'plot_sha256':sha(R/'exports/sensitivity.png'),'actual_view_image_used':True,'checks':['All6panels readable; H2.5/3/3.5pct andETHR.00875/.01 correctly labelled','3xnetrows7.579/7.510,8.096/8.027,7.776/7.707; oldH3centerhighestnet','DD1.4830716 vs1.4834204 roundto1.483;H3.5DD1.372; recentfolds6/8 andstrictlocalfraction1','Sharpe2.025/2.007,2.175/2.157,2.094/2.076 andCalmar4.759/4.715,5.081/5.038,5.279/5.232 match saved metrics','OneBTCnativeSharpeheuristicflagretained;H3.5parentlowerDD higherCalmar butlowernet/Sharpe disclosed'],'report_sha256':h,'no_strategy_or_account_recalculation':True});assert sha(R/'report.json')==h;print('PASS actual H/R3x2six-panel surface inspected and matches saved metrics')
