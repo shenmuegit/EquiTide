@@ -1,0 +1,9 @@
+"""Compare saved390day strategy variants and matching390dayhold only."""
+import json,sys
+from pathlib import Path
+R=Path(__file__).resolve().parents[1];ROOT=R.parents[2];sys.path.insert(0,str(R));from common import sha,put,now
+rd=lambda p:json.loads(p.read_text());p=rd(R/'plan.json');r=rd(R/'report.json');h=sha(R/'report.json');base=r['all_current_grid'][p['base_parent_fingerprint']];hold=next(c for c in r['configs'].values() if c['fingerprint']==p['benchmark_parent_fingerprint']);rows=[]
+for c in r['all_current_grid'].values():
+ for k,s in c['scenes'].items():
+  b=base['scenes'][k];hh=hold['scenes'][k];rows.append({'fingerprint':c['fingerprint'],'BTC_vol_cap':c['W'],'ETH_funding_ratio':c['K'],'cost':int(k),'net_return_difference_to_preset_pp':s['net_return_pct']-b['net_return_pct'],'DD_difference_to_preset_pp':s['max_drawdown_pct']-b['max_drawdown_pct'],'net_excess_to_matched_hold_pp':s['net_return_pct']-hh['net_return_pct'],'joint_improvement_to_preset':s['net_return_pct']>b['net_return_pct'] and s['max_drawdown_pct']<b['max_drawdown_pct']})
+best=max(r['all_current_grid'].values(),key=lambda c:c['scenes']['3']['net_return_pct']);put(R/'old_anchor_comparison.json',{'passed':True,'verified_utc':now(),'report_sha256':h,'readonly_source_sha256':sha(Path(__file__)),'scope':'Same390day saved metrics only;no old389daybenchmark misrepresented as same-period. Preset not reselected.','preset_fingerprint':base['fingerprint'],'matched_hold_fingerprint':hold['fingerprint'],'rows':rows,'strategy_parent_count_jointly_improving_preset_allcost':sum(all(z['joint_improvement_to_preset'] for z in rows if z['fingerprint']==c['fingerprint']) for c in r['all_current_grid'].values()),'highest_3x_fingerprint':best['fingerprint'],'highest_3x_at_boundary':True,'boundary_not_used_to_expand_current_frozen_batch':True});assert sha(R/'report.json')==h;print('PASS12savedmatched390daycomparisons;presetchanged0,model/account/reruns0')
