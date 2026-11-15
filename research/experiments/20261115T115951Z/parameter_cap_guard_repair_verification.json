@@ -1,0 +1,78 @@
+{
+  "passed": true,
+  "recorded_utc": "2026-11-15T12:15:07.600753Z",
+  "failed_command": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261115T115951Z/run.py",
+      "evaluate"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-15T12:10:46.111833Z",
+    "finished_utc": "2026-11-15T12:10:50.859248Z",
+    "exit_code": 1,
+    "log": "research/experiments/20261115T115951Z/evaluate.log",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261115T115951Z/run.py\", line 64, in <module>\n    if __name__=='__main__':globals()[argparse.ArgumentParser().parse_known_args()[1][0]]()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261115T115951Z/run.py\", line 38, in evaluate\n    m=ms[row['asset']];v,z=engine.simulate(sp,m,int(k));z['summary']['recent40']=recent(v,m);z['summary']['extension21']=extension(v,m);vectors[row['fingerprint'],k]=v[cm['projections'][row['asset']]];summaries[row['fingerprint'],k]=z['summary'];arc['scenes'][k]=z;scenes[k]=z['summary']\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261115T115951Z/engine.py\", line 90, in simulate\n    actual=1 if D(state['signed_units'])>0 else -1 if D(state['signed_units'])<0 else 0;wanted,bounds=decide(spec,m,ref,actual);q=D(state['signed_units']);decisions.append({'decision_index':ref,'signal_available_ts_ns':int(m['frame']['available_ts'][ref*1440-1]),'execution_ts_ns':int(m['ts'][idx]),'policy_audit':bounds,'desired_direction':wanted,'fixed_entry_notional_usdt':float(notional),'state_before':copy.deepcopy(state)})\n                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261115T115951Z/engine.py\", line 71, in decide\n    raw,audit=base_decide(spec,m,i,actual);p=spec['parameters']\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261115T115951Z/engine.py\", line 15, in base_decide\n    V=int(p['entry_volatility_window_days']);cap=float(p['entry_volatility_ceiling']);assert V in [6,10,14] and cap in [.03,.04,.05] and p['entry_volatility_gate_scope']=='new_or_reversed_position_only'\n                                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  "initial_engine": "research/experiments/20261115T115951Z/review/engine_before_parameter_cap_guard.py",
+  "initial_engine_sha256": "c990cd75352ee42fdeca9c46a5a41e649f54cb976ebdd8cecd7cbc898cf270c4",
+  "current_engine": "research/experiments/20261115T115951Z/engine.py",
+  "current_engine_sha256": "47fbb31273e1502a4d44658922c6cc6710d79ba29c7c5fb19ec4e63b5033f2fb",
+  "initial_binding": "research/experiments/20261115T115951Z/code_binding_before_evaluation_initial.json",
+  "initial_binding_sha256": "ad0c53b4dfcd6b9567cf87812a20871369c6f704a4ed5262fa02d02fe47823b1",
+  "revised_binding_sha256": "5499d99c61c81c1a11faf0449be3b19c892a6021dbbc8eb46e235079755d8534",
+  "exact_source_change": {
+    "old": "cap in [.03,.04,.05]",
+    "new": "cap in [.025,.03,.035,.04,.05]"
+  },
+  "full_source_AST_identical_when_guard_list_normalized": true,
+  "simulate_and_money_formulas_and_core_bytes_unchanged": true,
+  "synthetic_guard_cases": [
+    {
+      "cap": 0.025,
+      "old_guard_reproduced_rejection": true
+    },
+    {
+      "cap": 0.035,
+      "old_guard_reproduced_rejection": true
+    },
+    {
+      "cap": 0.025,
+      "new_guard_allows_predeclared_cap": true,
+      "old_values_exact_target_and_audit_equal": false
+    },
+    {
+      "cap": 0.03,
+      "new_guard_allows_predeclared_cap": true,
+      "old_values_exact_target_and_audit_equal": true
+    },
+    {
+      "cap": 0.035,
+      "new_guard_allows_predeclared_cap": true,
+      "old_values_exact_target_and_audit_equal": false
+    },
+    {
+      "cap": 0.04,
+      "new_guard_allows_predeclared_cap": true,
+      "old_values_exact_target_and_audit_equal": true
+    },
+    {
+      "cap": 0.05,
+      "new_guard_allows_predeclared_cap": true,
+      "old_values_exact_target_and_audit_equal": true
+    }
+  ],
+  "frozen_specs_unchanged": {
+    "research/experiments/20261115T115951Z/specs/BTC_L29_H3_E0p005_V10cap0p025_391d.json": "412161ba42ba7e9520883d0560b12449d7a34d3ac2d57a6b116c3552f99bce00",
+    "research/experiments/20261115T115951Z/specs/BTC_L29_H3_E0p005_V10cap0p035_391d.json": "b64ef6d9fb34d95c5876d18309f57eb740d598ebb3bb37c06a034479c9dbec21",
+    "research/experiments/20261115T115951Z/specs/parent_BTCV10cap0p025_L29_H3_E0p005_ETHR0p00875_391d.json": "92058c8770f65ae4b8df7978068615e7dbecc2007c5802239d59353a43e93083",
+    "research/experiments/20261115T115951Z/specs/parent_BTCV10cap0p025_L29_H3_E0p005_ETHR0p01_391d.json": "a9225479efb67e8ec4356e3bd7ce95d95f7e7765d08640abcd33e3728a7cc5f6",
+    "research/experiments/20261115T115951Z/specs/parent_BTCV10cap0p035_L29_H3_E0p005_ETHR0p00875_391d.json": "5a592e4ff8b9f1a87fc37c512c4c4367dc2e90d576c67271defddd2c4c92823c",
+    "research/experiments/20261115T115951Z/specs/parent_BTCV10cap0p035_L29_H3_E0p005_ETHR0p01_391d.json": "f726463fd2a497b17be88dcd775b883e331ae784030a2a6fb223616400f723e7"
+  },
+  "successful_reservations_preserved": 6,
+  "completed_new_curves_before_fix": 0,
+  "new_market_backtests_from_repair_check": 0,
+  "failed_attempt_log_retained": "research/experiments/20261115T115951Z/evaluate.log"
+}

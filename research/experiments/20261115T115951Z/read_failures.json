@@ -1,0 +1,50 @@
+{
+  "round": "20261115T115951Z",
+  "facts": [
+    {
+      "type": "diagnostic_read_path_failure",
+      "recorded_utc": "2026-11-15T12:04:37.272022+00:00",
+      "command": "cat research/experiments/20261115T095944Z/review/bootstrap.py research/experiments/20261115T095944Z/startup.json",
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "native_chunk_id": "a36320",
+      "exit_code": 1,
+      "stderr": "cat: research/experiments/20261115T095944Z/review/bootstrap.py: No such file or directory",
+      "resolved": true,
+      "recovery": "Read actual bootstrap.py at prior-round root; prior files unchanged."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261115T115951Z/run.py",
+        "evaluate"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-15T12:10:46.111833Z",
+      "finished_utc": "2026-11-15T12:10:50.859248Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261115T115951Z/evaluate.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261115T115951Z/run.py\", line 64, in <module>\n    if __name__=='__main__':globals()[argparse.ArgumentParser().parse_known_args()[1][0]]()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261115T115951Z/run.py\", line 38, in evaluate\n    m=ms[row['asset']];v,z=engine.simulate(sp,m,int(k));z['summary']['recent40']=recent(v,m);z['summary']['extension21']=extension(v,m);vectors[row['fingerprint'],k]=v[cm['projections'][row['asset']]];summaries[row['fingerprint'],k]=z['summary'];arc['scenes'][k]=z;scenes[k]=z['summary']\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261115T115951Z/engine.py\", line 90, in simulate\n    actual=1 if D(state['signed_units'])>0 else -1 if D(state['signed_units'])<0 else 0;wanted,bounds=decide(spec,m,ref,actual);q=D(state['signed_units']);decisions.append({'decision_index':ref,'signal_available_ts_ns':int(m['frame']['available_ts'][ref*1440-1]),'execution_ts_ns':int(m['ts'][idx]),'policy_audit':bounds,'desired_direction':wanted,'fixed_entry_notional_usdt':float(notional),'state_before':copy.deepcopy(state)})\n                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261115T115951Z/engine.py\", line 71, in decide\n    raw,audit=base_decide(spec,m,i,actual);p=spec['parameters']\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261115T115951Z/engine.py\", line 15, in base_decide\n    V=int(p['entry_volatility_window_days']);cap=float(p['entry_volatility_ceiling']);assert V in [6,10,14] and cap in [.03,.04,.05] and p['entry_volatility_gate_scope']=='new_or_reversed_position_only'\n                                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "resolved": true,
+      "resolved_utc": "2026-11-15T12:18:41.245336+00:00",
+      "recovery": "Original engine and binding preserved; only preregistered cap allowlist extended and synthetic checked. Successful evaluate_retry1, independent audit, all6finish and research check exit0; no completed new curve before fix, specs/gates unchanged.",
+      "successful_pipeline_native_completion_chunk": "93889f"
+    },
+    {
+      "type": "SMA_original_curl_internal_retry_stderr",
+      "log": "research/experiments/20261115T115951Z/forward.log",
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "command_receipt": "research/experiments/20261115T115951Z/forward_commands.json",
+      "command_receipt_sha256": "608ed2b29f54c490f118a2155df326471a0d59ebb9d115f55abfec96a1a66849",
+      "command_start_utc": "2026-11-15T12:23:18.360798Z",
+      "command_finished_utc": "2026-11-15T12:23:39.284523Z",
+      "native_phase_exit_code": 0,
+      "curl_error_codes": [
+        "35"
+      ],
+      "exact_failed_attempt_UTC_asset_URL_and_body_not_separately_saved": true,
+      "resolved": true,
+      "recovery": "Original bounded curl completed successfully; final raw responses and exact forward replay verified. Failed body,asset/URL,and exact attempt UTC unavailable and not fabricated."
+    }
+  ]
+}
