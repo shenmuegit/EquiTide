@@ -1,0 +1,35 @@
+"""Add an erratum for a descriptive signal line; never rewrite registered definitions."""
+import ast,gzip,json,re,sys
+from decimal import Decimal as D
+from fractions import Fraction as F
+from pathlib import Path
+R=Path(__file__).resolve().parents[1];ROOT=R.parents[2];sys.path.insert(0,str(R));from common import sha,put,now,rel,reg
+rd=lambda p:json.loads(p.read_text());gz=lambda p:json.loads(gzip.decompress(p.read_bytes()))
+plan=rd(R/'plan.json');report=rd(R/'report.json');binding=rd(R/'code_binding_before_evaluation.json');batch=rd(R/'batch.json');before={rel(x):sha(x) for x in [R/'plan.json',R/'spec.json',R/'report.json',R/'code_binding_before_evaluation.json',R/'engine.py',R/'freeze.py',R/'core391_tail_safe.py',R/'audit.py',*[ROOT/z['spec'] for z in batch]]}
+bad=plan['rules']['signal'];badprefix='BTC strictcompletedROC H[.025,.03,.035]/entryH.03/exitE.005';correctprefix='BTC strictcompletedROC L29/entryH[.025,.03,.035]/exitE.005';assert bad.startswith(badprefix) and not bad.startswith(correctprefix)
+# Reproduce only the string transformation; no market input or model execution.
+prior=rd(ROOT/'research/experiments/20261115T180155Z/plan.json')['rules']['signal'];reproduced=re.sub(r'\bL\b','H',prior).replace('[28,29,30]','[.025,.03,.035]');attempted=reproduced.replace('BTC strictcompletedROC L[.025,.03,.035]/entryH.03/exitE.005',correctprefix);assert attempted==reproduced==bad
+corrected=bad.replace(badprefix,correctprefix,1);assert corrected.startswith(correctprefix) and bad.startswith(badprefix)
+records=reg.read_records(ROOT/'research/automation/registry.jsonl');rows=[];raw_checks=[];fp_paths={z['fingerprint']:z['spec'] for z in batch};fp_paths.update({fp:z['spec'] for fp,z in plan['read_only_references'].items()})
+assert plan['axes']=={'BTC_ENTRY_HURDLE':[.025,.03,.035],'ETH_FUND_R':[.00875,.01]};assert rd(R/'verification.json')['passed'] and rd(R/'audit_commands.json')[0]['exit_code']==0
+for path,h in {**binding['source_sha256'],**binding['immutable_source_sha256']}.items():assert sha(ROOT/path)==h,path
+for z in batch:
+ sp=rd(ROOT/z['spec']);q=sp['parameters'];rec=records[z['fingerprint']];c=report['configs'][z['name']];assert reg.fingerprint(sp)==z['fingerprint'] and rec['result_available'] and rec['status']==c['status'] and rec['report_sha256']==sha(R/'report.json');assert sp['logic']['signal']==bad
+ if z['scope']=='native':
+  assert q['lookback_days']==29 and q['return_hurdle'] in [.025,.035] and q['exit_buffer_fraction']==.005 and q['entry_volatility_window_days']==10 and q['entry_volatility_ceiling']==.0275;archive=gz(ROOT/c['archive']);assert archive['spec']==sp and archive['fingerprint']==z['fingerprint'];H=F(str(q['return_hurdle']));E=F('.005')
+  for k,s in archive['scenes'].items():
+   different=0
+   for d in s['decisions']:
+    roc=F(d['policy_audit']['return_exact']);units=D(d['state_before']['signed_units']);actual=1 if units>0 else -1 if units<0 else 0
+    target=lambda h:1 if roc>h else -1 if roc<-h else 1 if actual==1 and roc>-E else -1 if actual==-1 and roc<E else 0
+    assert target(H)==d['policy_audit']['raw_desired_before_entry_filter'];different+=target(H)!=target(F('.03'))
+   assert len(s['decisions'])==391 and different>0;raw_checks.append({'fingerprint':z['fingerprint'],'cost':k,'actual_H':str(H),'saved_daily_decisions_checked':391,'one_step_raw_targets_at_saved_actual_state_different_from_H3_count':different,'not_a_counterfactual_backtest':True})
+  rows.append({'fingerprint':z['fingerprint'],'spec':z['spec'],'L':29,'H_fraction':q['return_hurdle'],'E':.005,'V':10,'cap':.0275,'archive':c['archive'],'archive_sha256':sha(ROOT/c['archive']),'archived_spec_equals_bound_original':True})
+ else:
+  assert [x['weight'] for x in sp['components']]==[1,1] and [x['fingerprint'] for x in sp['components']]==z['source_fingerprints'];assert q['source_component_spec_sha256']==[sha(ROOT/fp_paths[x['fingerprint']]) for x in sp['components']];rows.append({'fingerprint':z['fingerprint'],'spec':z['spec'],'actual_components':sp['components'],'component_hashes_match_prebound_sources':True})
+assert all(sha(ROOT/path)==h for path,h in before.items())
+put(R/'signal_description_erratum.json',{'passed':True,'recorded_utc':now(),'original_free_text_inconsistent':True,'original_line_preserved':bad,'corrected_display_only_line':corrected,'affected_fields':['plan.json rules.signal','spec.json rules.signal','six registered specs logic.signal'],'root_cause':'Global word-boundary L->H source replacement also changed the descriptive string; the later L-prefixed literal replacement silently matched zero occurrences. Actual scalar parameters, axes, hypothesis and execution functions were already correct before reserve.','root_cause_reproduced_without_market_data':True,'affected_original_files_sha256_unchanged':before,'prebound_scalar_and_archived_spec_checks':rows,'saved_raw_signal_checks':raw_checks,'saved_decisions_checked':sum(x['saved_daily_decisions_checked'] for x in raw_checks),'no_fingerprint_status_report_financial_rule_gate_weight_or_result_rewrite':True,'no_new_strategy_account_or_market_calculation':True,'financial_or_account_window_reruns':0,'future_exact_scalar_input_cost_weight_equivalents_must_reuse_existing_actual_fingerprints':True,'future_preparation_fix':'Render descriptive signal explicitly from fixed scalar rule; assert intended prefix before binding. Apply only to future genuinely different batches; never rerun these completed configurations under a wording-only fingerprint.'})
+paragraphs=['原plan/spec.logic.signal错误写成BTC strictcompletedROC H[.025,.03,.035]/entryH.03。正确解释为固定L29，入场H按每个原生spec预登记标量取.025或.035，旧.03中心只读；E.005/V10/cap.0275不变。父组合使用已绑定组件指纹和原raw[1,1]银行规模。','成因通过纯字符串重现：全局L→H替换也改了说明文字，随后搜索L前缀的替换静默未命中。原参数、axes、hypothesis、绑定代码、归档spec与2346条已存日决策已核对，实际执行H.025/H.035；与.03在相同已存持仓状态的单步原始目标有差异，未计算新反事实净值。','保留原spec、plan、report、登记指纹/状态、源代码及全部结果字节；此文件只是追加勘误，不生成新配置、不重跑金融或账户窗口。未来相同完整标量/数据/成本/权重配置应读旧指纹结果，不能借修正文案重复计算。详细原哈希和逐成本检查见signal_description_erratum.json。']
+(R/'signal_description_erratum.md').write_text((chr(10)*2).join(paragraphs)+chr(10))
+f=R/'read_failures.json';facts=rd(f);facts['facts'].extend([{'type':'descriptive_signal_line_mismatch','detected_by_native_review':['3b82bc','057d7d','6a6eb7'],'resolved':True,'resolution':'Additive signal_description_erratum.json/.md; bound/archive actual scalar parameters verified; original definitions/results/fingerprints retained unchanged.','original_line':bad,'financial_or_account_reruns':0},{'type':'erratum_patch_format_error','tool':'tools.apply_patch via functions.exec','error':'apply_patch verification failed: invalid hunk at line37; an unprefixed paragraph was not a valid hunk header','no_files_changed_by_failed_patch':True,'resolved':True,'resolution':'Corrected patch writes paragraphs joined by chr(10), then this read-only evidence check; no model/account recalculation.'}]);put(f,facts)
+print('PASS additive description erratum,2346 saved raw targets verify actualH.025/H.035;allbound spec/plan/report/source bytes unchanged;0new calculations')
