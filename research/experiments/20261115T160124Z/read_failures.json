@@ -1,0 +1,68 @@
+{
+  "round": "20261115T160124Z",
+  "facts": [
+    {
+      "type": "official_document_web_fetch_timeout",
+      "attempt": "first",
+      "observed_tool_result_utc": "2026-11-15T16:06:00Z",
+      "url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "tool": "web.run open via functions.exec",
+      "tool_error": "Internal Error; (400) Timeout fetching",
+      "origin_HTTP_status_or_response_body_not_available": true,
+      "resolved": true,
+      "resolved_utc": "2026-11-15T16:11:18.616907+00:00",
+      "recovery": "Official specific funding-history URL redirected to canonical market-data page and fetched successfully; official Binance connector source and public-data README also read. Both original tool timeout results retained; no model/account rerun."
+    },
+    {
+      "type": "official_document_web_fetch_timeout",
+      "attempt": "bounded_retry",
+      "observed_tool_result_utc": "2026-11-15T16:06:53Z",
+      "url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "tool": "web.run open via functions.exec",
+      "tool_error": "Internal Error; (400) Timeout fetching",
+      "origin_HTTP_status_or_response_body_not_available": true,
+      "resolved": true,
+      "resolved_utc": "2026-11-15T16:11:18.616936+00:00",
+      "recovery": "Official specific funding-history URL redirected to canonical market-data page and fetched successfully; official Binance connector source and public-data README also read. Both original tool timeout results retained; no model/account rerun."
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261115T160124Z/review/prepare.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-15T16:09:48.729467Z",
+      "finished_utc": "2026-11-15T16:09:51.197957Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261115T160124Z/review/native_prepare.py_receipt.log",
+      "type": "synthetic_preparation_window_helper_guard_failure",
+      "resolved": true,
+      "recovery": "Both policy/helper window allowlists completed and five synthetic base/helper/future-prefix cases passed before first reserve/model calculation. Original failed script, partial engine and actual native receipt retained. No spec,capital,gates or completed result changed."
+    },
+    {
+      "type": "transient_public_GET_failure",
+      "url": "https://fapi.binance.com/fapi/v1/exchangeInfo",
+      "raw": "data/raw/binance/l4h02_forward/20261115T160124Z/http_0000.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "original_capture_utc": "2026-11-15T16:17:51.071252+00:00",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "resolved": true,
+      "recovery": "Subsequent bounded verified-TLS GET for same URL succeeded; original failure retained, account/model window executed once."
+    },
+    {
+      "type": "transient_public_GET_failure",
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=ETHUSDT&startTime=1794700800002&endTime=1794731400000&limit=1000",
+      "raw": "data/raw/binance/candidate_forward/20261115T160124Z/http_attempt_0005.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "original_capture_utc": "2026-11-15T16:20:22.746269+00:00",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "resolved": true,
+      "recovery": "Subsequent bounded verified-TLS GET for same URL succeeded; original failure retained, account/model window executed once."
+    }
+  ]
+}

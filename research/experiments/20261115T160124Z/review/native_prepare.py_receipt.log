@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261115T160124Z/review/prepare.py", line 41, in <module>
+    sp=copy.deepcopy(spec);sp['parameters']['entry_volatility_window_days']=V;result=nm.base_decide(sp,m,40,0);sigma=nm.btc_entry_sigma(m['closes'],40,V);raw=1 if m['closes'][39]/m['closes'][10]-1>.03 else 0;assert result[0]==(0 if raw and sigma>.0275 else raw) and result[1]['volatility_window_days']==V
+                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261115T160124Z/engine.py", line 16, in base_decide
+    raw,r=btc.target(m['closes'],i,int(p['lookback_days']),float(p['return_hurdle']),actual,float(p['exit_buffer_fraction']));sigma=btc_entry_sigma(m['closes'],i,V);wanted=entry_filter(raw,actual,sigma,cap)
+                                                                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261115T160124Z/engine.py", line 26, in btc_entry_sigma
+    assert window in [6,10,14] and i-window-1>=0
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
