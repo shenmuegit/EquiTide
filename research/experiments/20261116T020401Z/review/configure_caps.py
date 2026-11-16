@@ -1,0 +1,46 @@
+"""Configure the declared cap axis and current zero-settlement windows before reserve."""
+import ast,json,sys
+from pathlib import Path
+R=Path(__file__).resolve().parents[1];ROOT=R.parents[2];sys.path.insert(0,str(R));from common import *
+assert not any((R/n).exists() for n in ['plan.json','batch.json','report.json','code_binding_before_evaluation.json'])
+oldcaps='[.0225,.025,.0275,.03,.035,.04,.05]';newcaps='[.0225,.025,.02625,.0275,.02875,.03,.035,.04,.05]'
+def edit(name,pairs):
+ p=R/name;s=p.read_text()
+ for a,b in pairs:assert a in s,(name,a);s=s.replace(a,b)
+ ast.parse(s);p.write_text(s)
+edit('engine.py',[(oldcaps,newcaps)])
+for name in ['run.py','audit.py','exports.py']:edit(name,[('BTC_EXIT_BUFFER','BTC_ENTRY_VOL_CAP')])
+edit('audit.py',[(oldcaps,newcaps)])
+edit('exports.py',[('BTC exit buffer E','BTC entry sample-logvol ceiling'),("['0.5%','1.0%','1.5%']","['2.625%','2.750%','2.875%']"),('Preregistered BTC exit buffer / reused ETH funding budget','Preregistered BTC V10 entry-volatility ceiling / reused ETH funding budget')])
+edit('parent_units.py',[("g['W']==.01","g['W']==.0275"),("for cap in [.0225,.025,.0275,.03,.035,.04,.05]:","for cap in [.02625,.0275,.02875]:")])
+edit('commands.py',[("['freeze.py']","['freeze_caps.py']")])
+edit('review/diagnostics.py',[("center=btc[.005]","center=btc[.0275]"),('for V in [.01,.015]:','for V in [.02625,.02875]:'),("c['W']==.005","c['W']==.0275"),("best['W'] in [.005,.015]","best['W'] in [.02625,.02875]"),('BTC_exit_buffer_fraction','BTC_entry_volatility_ceiling'),('BTC_exit_buffer_axis_boundary','BTC_entry_volatility_ceiling_axis_boundary'),('old_exit0p5percent','old_cap2p75percent'),('matched_exit0p5percent','matched_cap2p75percent'),('actual BTC exit-buffer trade changes','actual BTC entry-volatility-ceiling trade changes')])
+edit('review/visual_review.py',[('BTC_exit_buffer_fraction','BTC_entry_volatility_ceiling'),('{.005,.01,.015}','{.02625,.0275,.02875}'),('[.01,.015]','[.02625,.02875]'),("y['BTC_entry_volatility_ceiling']==.005","y['BTC_entry_volatility_ceiling']==.0275"),('old_exit0p5percent','old_cap2p75percent'),('three BTC exit buffers','three BTC entry-volatility ceilings'),('old0.5percent reference at a boundary','old2.75percent reference at the middle')])
+split="{'SMA':0,'candidate':0,'l4h02':0,'fewm':0}"
+edit('checks.py',[("{'SMA':0,'candidate':0,'l4h02':6,'fewm':6} and len(cashflows)==12",split+' and len(cashflows)==0'),('actualNov15_16fundsplit0/0/6/6','currentActualFundingSplit0/0/0/0')])
+edit('review/account_continuity.py',[("{'SMA':0,'candidate':0,'l4h02':6,'fewm':6}",split),("all(len(xs)==1 and xs[0]['fundingTime']==1794758400000 for xs in fresh['public_fields_by_asset'].values())","all(not xs for xs in fresh['public_fields_by_asset'].values())"),("actual16==(0 if stem=='candidate' else 6)",'actual16==6'),('len(cashflows)==12','len(cashflows)==0'),('ownL4/FEWMactual16fund12rows','currentFunding0/all3actual16alreadyOnce')])
+edit('forward_registry.py',[('Nov14dailyalreadybooked; next daily event2026-11-15UTC00:01','Nov15dailyalreadybooked; next daily event2026-11-16UTC00:01')])
+source=(ROOT/'research/experiments/20261115T220354Z/definitions.py').read_text().replace('20261115T200222Z','20261116T000400Z')
+source=source.replace("f.read_text().replace('V in [6,8,10,12,14]'",'f.read_text().replace('+repr(oldcaps)+','+repr(newcaps)+").replace('V in [6,8,10,12,14]'")
+source=source.replace("q['exit_buffer_fraction'] in [.01,.015]","q['exit_buffer_fraction']==.005").replace("q['entry_volatility_ceiling']==.0275","q['entry_volatility_ceiling'] in [.02625,.02875]")
+source=source.replace("descriptor.startswith('BTC completedROC L29/strictentryH.03/exitE[.005,.01,.015]/priorV10samplelogvolCap.0275.')","descriptor.startswith('BTC completedROC L29/strictentryH.03/fixedexitE.005/priorV10samplelogvolCap[.02625,.0275,.02875].')")
+source=source.replace("['parameters']['exit_buffer_fraction']==z['W']","['parameters']['entry_volatility_ceiling']==z['W']")
+source=source.replace("'native_E':[.01,.015],'old_E_readonly':.005,'native_V':10,'native_cap':.0275","'fixed_E':.005,'native_caps':[.02625,.02875],'old_cap_readonly':.0275,'native_V':10")
+source=source.replace("'policy_and_accounting_source_equal_to_prior':True","'policy_and_accounting_AST_equal_after_allowlist_normalization':True")
+source=source.replace('allpolicy/corebytesunchanged;boundbeforefirstreserve','only declared entry-cap assertion allowlist widened;full money core bytes/normalized policy AST unchanged;bound before first reserve')
+ast.parse(source);(R/'definitions.py').write_text(source)
+p=R/'finalize.py';s=p.read_text();s=s.replace(", 'collect_retry1', 'final_checks_retry1', 'collect_retry2', 'final_checks_retry2'",'')
+s=s.replace("'configure.py'","'configure_caps.py'").replace("'prepare.py'","'prepare_caps.py'").replace("'setup.py'","'setup_caps.py'")
+s=s.replace(", 'correct_visual_label.py', 'validate_sources_axes.py', 'fix_seal_daily_assertion.py', 'validate_sources_seal.py'",'')
+s=s.replace("{'SMA':0,'candidate':0,'l4h02':6,'fewm':6}",split)
+s=s.replace("['2026-11-15T14:30:00Z','2026-11-15T16:30:00Z']","['2026-11-15T18:30:00Z','2026-11-15T20:30:00Z']").replace("['2026-11-15T16:10:00Z','2026-11-15T18:10:00Z']","['2026-11-15T20:10:00Z','2026-11-15T22:10:00Z']")
+s=s.replace("'only_predeclared_validation_allowlist_changed':False","'only_predeclared_validation_allowlist_changed':True").replace("'policy_and_money_source_bytes_exactly_unchanged':True","'policy_and_money_source_bytes_exactly_unchanged':False,'money_core_bytes_unchanged':True,'engine_AST_equal_after_allowlist_normalization':True")
+s=s.replace("'only_L4_FEWM_booked_current_window':True,'single_still_pending16':True","'no_current_window_settlement':True,'all3_perps_actual16_already_booked_once':True")
+s='\n'.join(l for l in s.splitlines() if not l.startswith("assert rd(R/'visual_axes_label_correction.json')") and not l.startswith("assert rd(R/'seal_daily_assertion_fix.json')"))+'\n'
+needle="m['artifacts']={rel(f):sha(f)";assert needle in s;s=s.replace(needle,"m['current_nonfinancial_engineering_failures']={'fact_count':len(rd(R/'read_failures.json')['facts']),'all_resolved':all(z.get('resolved') for z in rd(R/'read_failures.json')['facts']),'market_or_account_recalculations':0};m['only_current_engine_change']='predeclared BTC entry ceiling assertion allowlist,not policy formula or money core'\n"+needle);ast.parse(s);p.write_text(s)
+edit('publish.py',[('research: validate BTC exit buffers and settle original L4 FEWM funding','research: validate BTC entry-volatility ceilings and continue frozen accounts')])
+(R/'freeze.py').unlink()
+put(R/'stdout_label_notes.json',{'round':R.name,'notes':[],'current_scalar_and_window_labels_checked_before_binding':True,'old_round_raw_logs_and_errata_preserved':True,'financial_or_account_reruns':0})
+put(R/'primary_source_reads_current.json',{'round':R.name,'observed_reads_recorded_utc':now(),'reads':[{'url':'https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data','web_reference':'turn290view0','access_UTC_date':'2026-11-16','read_success':True},{'url':'https://github.com/binance/binance-public-data/blob/master/README.md','web_reference':'turn290view1','access_UTC_date':'2026-11-16','read_success':True}],'tool_timeouts':0,'HTTP_capture_timestamp_not_claimed':True})
+(R/'research_work_plan.md').write_text('预声明BTC V10入场波动率上限2.625/2.75/2.875% × ETH预算R.00875/.01，旧2.75%只读。L29/H3%/E0.5%、BTC3750/1000及ETH15000/4000固定，raw[1,1]不归一化。事前代表2.625%/R.01，6新定义逐项reserve后才实际计算391日及三成本，逐折/完整NAV/敏感性独立核验后finish。全部正负、淘汰和失败保留。\n\n本轮先扩展预声明参数白名单，并直接检验引擎入口及审计入口；货币核算核心保持原字节，归一化白名单后引擎完整AST一致，避免沿用上轮遗漏入口检查。旧失败源/登记记录保持，不做文案或等价数字格式重测。\n\nSMA/single16:30→18:30，L4/FEWM18:10→20:10，已新查完整窗口无实际结算；三永续此前真实16UTC各记一次不得重复。现金/数量/desired/冻结规则、原67日权威及66/65前缀保持。下轮18:30→20:30与20:10→22:10仍需新查完整实际结算，不假定八小时或零。\n\n锁内完成registry/checks及只读snapshot/check后main提交push，核对完整远端树及哈希再释锁。不部署、不新增定时任务、不下真实订单、不委派子代理。\n')
+print('PASS current cap axis,scalar guards,all-zero observed-window checks configured before first reserve')
