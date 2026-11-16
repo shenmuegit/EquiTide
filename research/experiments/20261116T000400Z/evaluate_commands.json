@@ -1,0 +1,16 @@
+[
+  {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261116T000400Z/run.py",
+      "evaluate"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-16T00:15:11.390626Z",
+    "finished_utc": "2026-11-16T00:15:16.142120Z",
+    "exit_code": 1,
+    "log": "research/experiments/20261116T000400Z/evaluate.log",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261116T000400Z/run.py\", line 64, in <module>\n    if __name__=='__main__':globals()[argparse.ArgumentParser().parse_known_args()[1][0]]()\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261116T000400Z/run.py\", line 38, in evaluate\n    m=ms[row['asset']];v,z=engine.simulate(sp,m,int(k));z['summary']['recent40']=recent(v,m);z['summary']['extension21']=extension(v,m);vectors[row['fingerprint'],k]=v[cm['projections'][row['asset']]];summaries[row['fingerprint'],k]=z['summary'];arc['scenes'][k]=z;scenes[k]=z['summary']\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261116T000400Z/engine.py\", line 90, in simulate\n    actual=1 if D(state['signed_units'])>0 else -1 if D(state['signed_units'])<0 else 0;wanted,bounds=decide(spec,m,ref,actual);q=D(state['signed_units']);decisions.append({'decision_index':ref,'signal_available_ts_ns':int(m['frame']['available_ts'][ref*1440-1]),'execution_ts_ns':int(m['ts'][idx]),'policy_audit':bounds,'desired_direction':wanted,'fixed_entry_notional_usdt':float(notional),'state_before':copy.deepcopy(state)})\n                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261116T000400Z/engine.py\", line 71, in decide\n    raw,audit=base_decide(spec,m,i,actual);p=spec['parameters']\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261116T000400Z/engine.py\", line 14, in base_decide\n    assert p['lookback_days'] in [28,29,30] and p['return_hurdle'] in [.025,.03,.035] and p['exit_buffer_fraction'] in [.005,.01,.015] and i-1-p['lookback_days']>=0\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  }
+]
