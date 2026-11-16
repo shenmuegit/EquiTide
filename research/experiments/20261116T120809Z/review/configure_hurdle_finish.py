@@ -1,0 +1,15 @@
+"""Predetermine minimum completed5day directional-return hurdles;no market return calculations."""
+import ast,json,sys
+from pathlib import Path
+R=Path(__file__).resolve().parents[1];ROOT=R.parents[2];P=ROOT/'research/experiments/20261116T100739Z';sys.path.insert(0,str(R));from common import *
+assert not any((R/n).exists() for n in ['plan.json','batch.json','report.json','code_binding_before_evaluation.json'])
+def edit(n,pairs):
+ f=R/n;s=f.read_text()
+ for a,b in pairs:assert a in s,(n,a);s=s.replace(a,b)
+ ast.parse(s);f.write_text(s)
+f=R/'finalize.py';s=f.read_text();a=s.index(" key=(");b=s.index(';required[key]',a);s=s[:a]+" key=phase+'_commands.json'"+s[b:];s='\n'.join(l for l in s.splitlines() if not l.startswith("repair=rd(R/'audit_repair_binding.json')"))+'\n';s=s.replace("'configure_neighbors.py'","'configure_hurdle.py'").replace(", 'repair_audit.py', 'resolve_readonly_failures.py'",'').replace('paired_differences_to_old_confirmation5','paired_differences_to_old_confirmation0').replace("['2026-11-16T02:30:00Z','2026-11-16T04:30:00Z']","['2026-11-16T04:30:00Z','2026-11-16T06:30:00Z']").replace("['2026-11-16T04:10:00Z','2026-11-16T06:10:00Z']","['2026-11-16T06:10:00Z','2026-11-16T08:10:00Z']").replace("'only_predeclared_validation_allowlist_changed':True","'only_predeclared_validation_allowlist_changed':False").replace("'BTC_recent_direction_confirmation_entry_policy_intentionally_changed':False","'BTC_recent_direction_confirmation_entry_policy_intentionally_changed':True").replace('strict4/6day','fixed5dayminimumhurdle.0025/.005');ast.parse(s);f.write_text(s)
+f=R/'publish.py';s=f.read_text().replace('research: validate adjacent BTC confirmation periods and continue frozen accounts','research: test minimum BTC confirmation strength and preserve original accounts');f.write_text(s)
+put(R/'primary_source_reads_current.json',{'round':R.name,'observed_reads_recorded_utc':now(),'reads':[{'url':u,'web_reference':v,'access_UTC_date':'2026-11-16','read_success':True} for u,v in [('https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data','turn295view0'),('https://github.com/binance/binance-public-data/blob/master/README.md','turn295view1')]],'HTTP_capture_timestamp_not_claimed':True})
+put(R/'stdout_label_notes.json',{'round':R.name,'notes':[],'current_scalar_and_window_labels_checked_before_binding':True,'old_round_raw_logs_and_errata_preserved':True,'financial_or_account_reruns':0})
+(R/'research_work_plan.md').write_text('事前固定5完成日近期方向ROC最小门槛A=[0,.0025,.005]×只读ETH预算R=[.00875,.01]，A0旧5日银行只读；两新BTC+四父六新配置逐个reserve后计算。代表A.0025/R.01。仅新或反手要求d×ROC5>A，等于门槛也阻新仓；正常退出和同向q不变，L29/H.03/E.005/V10cap.0275及money/cost/funding/保证金核心保持。391复用开发日、逐折、连续NAV、三成本与独立审计后全部finish。原SMA/single02:30→04:30、L4/FEWM04:10→06:10先查真实结算，保持原冻结账户；full68SPOT权威沿用080637轮，不把本轮minute-only输入当背景。锁内monitor/check/main提交push、完整远端核验与解锁。\n')
+print('PASS fixed5day minROC0/.0025/.005 x ETHbudget,preset.0025/.01;corrected independent native-axis audit retained;0financialcalculations')
