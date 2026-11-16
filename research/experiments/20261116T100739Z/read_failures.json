@@ -1,0 +1,62 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261116T100739Z/audit.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-16T10:17:50.021301Z",
+      "finished_utc": "2026-11-16T10:18:01.561919Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261116T100739Z/audit.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261116T100739Z/audit.py\", line 103, in <module>\n    rows=plan['grid'] if c['scope']=='parent' else plan['native_grid'];ns=[full[g['fingerprint']] for g in rows if abs(plan['axes']['BTC_RECENT_CONFIRM_DAYS'].index(g['W'])-plan['axes']['BTC_RECENT_CONFIRM_DAYS'].index(c['W']))<=1 and abs(plan['axes']['ETH_FUND_R'].index(g['K'])-plan['axes']['ETH_FUND_R'].index(c['K']))<=1];dims=2\n                                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: 0 is not in list\n",
+      "resolved": true,
+      "root_cause": "Independent readonly neighbor/export traversal evaluated unrelated ETH W0 on BTC4/5/6axis before asset filtering",
+      "effective_successful_receipt": "research/experiments/20261116T100739Z/audit_retry1_commands.json",
+      "effective_successful_receipt_sha256": "04417457b45174a8394a8762f47cbc05fdefa2ad19d2de9961768ad336187278",
+      "financial_report_sha256_unchanged": "9d01e5df354dd784a92600e7d98a4476b3bbd233047b420f26b8c645de53b006",
+      "strategy_or_account_reruns": 0
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261116T100739Z/exports.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-16T10:20:13.347599Z",
+      "finished_utc": "2026-11-16T10:20:14.504246Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261116T100739Z/exports.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261116T100739Z/exports.py\", line 29, in <module>\n    if abs(p['axes']['BTC_RECENT_CONFIRM_DAYS'].index(a['W'])-p['axes']['BTC_RECENT_CONFIRM_DAYS'].index(b['W']))+abs(p['axes']['ETH_FUND_R'].index(a['K'])-p['axes']['ETH_FUND_R'].index(b['K']))!=1:continue\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: 0 is not in list\n",
+      "resolved": true,
+      "root_cause": "Independent readonly neighbor/export traversal evaluated unrelated ETH W0 on BTC4/5/6axis before asset filtering",
+      "effective_successful_receipt": "research/experiments/20261116T100739Z/exports_retry1_commands.json",
+      "effective_successful_receipt_sha256": "ccf933a2ddf061c5ea734a7ec9bcfe085a6fa4c4efa3289296546a3982dbd23d",
+      "financial_report_sha256_unchanged": "9d01e5df354dd784a92600e7d98a4476b3bbd233047b420f26b8c645de53b006",
+      "strategy_or_account_reruns": 0
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261116T100739Z/finalize.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-16T10:35:13.145537Z",
+      "finished_utc": "2026-11-16T10:35:13.219053Z",
+      "exit_code": 1,
+      "log": ".git/automation_proofs/20261116T100739Z_seal.log",
+      "type": "private_seal_launcher_wrong_system_python",
+      "resolved": true,
+      "native_completion_chunk": "818bae",
+      "preserved_failure_log": "research/experiments/20261116T100739Z/review/first_native_seal.log",
+      "root_cause": "Private launcher inherited system python3; numpy absent there. All actual research/account executions already used existing venv.",
+      "resolution": "Explicit existing research venv dependency import succeeded; launcher now always selects that interpreter. Full seal remains pending separate native receipt.",
+      "successful_dependency_probe": "research/experiments/20261116T100739Z/review/seal_venv_dependency_probe.json",
+      "financial_or_account_valuations": 0
+    }
+  ]
+}

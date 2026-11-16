@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "recorded_utc": "2026-11-16T10:19:59.595458Z",
+  "completed_report_sha256": "9d01e5df354dd784a92600e7d98a4476b3bbd233047b420f26b8c645de53b006",
+  "supplemental_readonly_source_sha256": {
+    "research/experiments/20261116T100739Z/audit_retry1.py": "703a19e4533e5da91ad5827e86a6b114da70006567e9762399a7304644dbe40d"
+  },
+  "original_bound_audit_sha256_unchanged": "cb12addff907baf914d609f1d541145669f2485529b0389dc9dfb60907edac8a",
+  "failed_native_receipt": "research/experiments/20261116T100739Z/audit_commands.json",
+  "root_cause": "Independent audit eagerly applied BTC axis to readonly ETH W0 before native-specific branch;0 absent from new4/5/6axis. Valuation run.neighbors already correctly filters native asset first.",
+  "minimal_regression": [
+    {
+      "W": 4,
+      "original_wrong_axis_raises": true,
+      "fixed_BTC_neighbors": 2
+    },
+    {
+      "W": 5,
+      "original_wrong_axis_raises": true,
+      "fixed_BTC_neighbors": 3
+    },
+    {
+      "W": 6,
+      "original_wrong_axis_raises": true,
+      "fixed_BTC_neighbors": 2
+    }
+  ],
+  "only_difference": {
+    "before": "  rows=plan['grid'] if c['scope']=='parent' else plan['native_grid'];ns=[full[g['fingerprint']] for g in rows if abs(plan['axes']['BTC_RECENT_CONFIRM_DAYS'].index(g['W'])-plan['axes']['BTC_RECENT_CONFIRM_DAYS'].index(c['W']))<=1 and abs(plan['axes']['ETH_FUND_R'].index(g['K'])-plan['axes']['ETH_FUND_R'].index(c['K']))<=1];dims=2",
+    "after": "  rows=plan['grid'] if c['scope']=='parent' else plan['native_grid'];ns=[];dims=2\n  if c['scope']=='parent':ns=[full[g['fingerprint']] for g in rows if abs(plan['axes']['BTC_RECENT_CONFIRM_DAYS'].index(g['W'])-plan['axes']['BTC_RECENT_CONFIRM_DAYS'].index(c['W']))<=1 and abs(plan['axes']['ETH_FUND_R'].index(g['K'])-plan['axes']['ETH_FUND_R'].index(c['K']))<=1]"
+  },
+  "no_return_policy_accounting_or_gate_changed": true,
+  "no_strategy_or_account_reevaluation": true,
+  "audit_reads_only_saved_native_archives": true
+}
