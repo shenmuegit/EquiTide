@@ -1,0 +1,26 @@
+"""Preserve an unreserved capture failure and reuse exact real public responses."""
+import ast,gzip,hashlib,json
+from pathlib import Path
+from datetime import datetime,timezone
+ROOT=Path(__file__).resolve().parents[3];R=Path(__file__).resolve().parent;P=ROOT/'research/experiments/20261117T082021Z';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();rel=lambda p:str(p.relative_to(ROOT));rd=lambda p:json.loads(p.read_text())
+def put(p,x):p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n')
+W=R/'candidate_observation';failure=rd(W/'failure.json');assert failure['result_available'] is False and set(x.name for x in W.iterdir())=={'failure.json','failure_receipts.json'} and all('command' not in z for z in failure['receipts'])
+original_plan=rd(R/'candidate_transport_retry_plan.json');assert sha(ROOT/'research/automation/candidate_forward_latest.json')==original_plan['previous_shared_pointer_sha256'];rawdir=ROOT/'data/raw/binance/candidate_forward'/R.name;assert not(rawdir/'packet.json.gz').exists()
+cache={}
+for z in rd(P/'l4h02_observation/input_manifest.json')['provenance']:
+ if '/fapi/v1/markPriceKlines?' in z.get('url','') and z['http_status']==200 and not z.get('curl_exit_code',0):cache[z['url']]=z
+assert len(cache)==2
+for z in rd(R/'candidate_transport_attempts.json'):
+ if z['http_status']==200 and not z.get('curl_exit_code',0):cache[z['url']]=z
+assert len(cache)==3
+for z in cache.values():assert sha(ROOT/z['raw'])==z['sha256'] and json.loads(gzip.decompress((ROOT/z['raw']).read_bytes()))
+plan={'recorded_utc':datetime.now(timezone.utc).isoformat(),'passed':True,'responses_by_exact_URL':cache,'scope':'Only exact saved successful publicGET responses reused, original captureUTC/rawbytes/URL retained. Old L4 hourbars exactly cover23:00/00:00/01:00 required by candidate; current first-attempt BTCminutes exactURL retained. No oldaccount books/cashflows/NAV/decisions reused. All residualrequests remain actualboundedGETs.','cutoff_utc':original_plan['cutoff_utc'],'candidate_previous_pointer_sha256':original_plan['previous_shared_pointer_sha256'],'before_first_candidate_reservation':True};put(R/'candidate_recovery_public_response_cache.json',plan)
+archive=R/'candidate_capture_failed_attempt1';assert not archive.exists();W.rename(archive)
+s=(R/'observe_candidate.py').read_text().replace('candidate_transport_retry_plan.json','candidate_transport_retry1_plan.json').replace('candidate_transport_attempts.json','candidate_transport_retry1_attempts.json').replace('candidate_public_response_reuse_plan.json','candidate_public_response_retry1_reuse_plan.json')
+s=s.replace(" def cached(path,params,rd,rs):\n  if path in cache:"," exact_cache=json.loads((R/'candidate_recovery_public_response_cache.json').read_text())['responses_by_exact_URL']\n def cached(path,params,rd,rs):\n  fullurl='https://fapi.binance.com'+path+('?' + urllib.parse.urlencode(params) if params else '')\n  if fullurl in exact_cache:\n   row=dict(exact_cache[fullurl]);assert sha(ROOT/row['raw'])==row['sha256'];row['reused_public_response_only']=True;rs.append(row);return json.loads(gzip.decompress((ROOT/row['raw']).read_bytes()))\n  if path in cache:")
+s=s.replace('try:return original_capture(cutoff,previous,binding,rawdir,receipts)',"try:return original_capture(cutoff,previous,binding,rawdir.with_name(rawdir.name+'_retry1'),receipts)")
+ast.parse(s);(R/'observe_candidate_retry1.py').write_text(s)
+checks=R/'commands.py';s=checks.read_text();needle="if phase=='l4h02_retry1':jobs[0]=('l4h02_recovery_observe.log',['observe_l4h02_retry1.py'])";assert needle in s;s=s.replace(needle,needle+"\nif phase=='candidate_retry1':jobs[0]=('candidate_recovery.log',['observe_candidate_retry1.py'])");checks.write_text(s)
+failedraw={rel(p):sha(p) for p in rawdir.glob('*') if p.is_file()};archivehash={rel(p):sha(p) for p in archive.rglob('*') if p.is_file()};kernels=original_plan['source_hashes'];assert all(sha(ROOT/k)==v for k,v in kernels.items())
+put(R/'candidate_transport_recovery_binding.json',{'passed':True,'recorded_utc':datetime.now(timezone.utc).isoformat(),'first_finished_research_report_sha256':sha(R/'report.json'),'source_sha256':{rel(R/n):sha(R/n) for n in ['observe_candidate_retry1.py','candidate_recovery_public_response_cache.json']},'original_frozen_kernel_SHA256':{**kernels,rel(R/'observe_candidate.py'):sha(R/'observe_candidate.py')},'prior_failed_raw_files':{**failedraw,**archivehash},'original_failure_archive':rel(archive),'old_pointer_sha256_unchanged':original_plan['previous_shared_pointer_sha256'],'no_reserve_before_failure':True,'no_account_transition_before_failure':True,'original_capture_raw_destination_preserved':rel(rawdir),'new_transport_only_raw_directory':rel(rawdir.with_name(rawdir.name+'_retry1')),'first_packet_destination_did_not_exist':True,'exact_saved_public_response_cache':rel(R/'candidate_recovery_public_response_cache.json'),'not_a_completed_account_window_rerun':True})
+print(json.dumps({'prepared':True,'archived_failure':rel(archive),'preserved_raw_files':len(failedraw),'exact_real_public_responses_reused':len(cache),'previous_candidate_pointer_unchanged':True,'candidate_reservations_so_far':0,'candidate_account_evaluations_so_far':0}),flush=True)
