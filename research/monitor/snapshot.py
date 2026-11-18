@@ -11,6 +11,7 @@ import importlib.util
 import json
 import os
 import subprocess
+import zlib
 from collections import Counter
 from datetime import datetime, timezone
 from decimal import Decimal
@@ -19,6 +20,12 @@ from pathlib import Path
 
 def sha(raw):
     return hashlib.sha256(raw).hexdigest()
+
+
+def compress_configs(raw):
+    """Deterministic gzip; a larger deflate table preserves exact JSON bytes."""
+    compressor = zlib.compressobj(9, zlib.DEFLATED, 31, 9, zlib.Z_DEFAULT_STRATEGY)
+    return compressor.compress(raw) + compressor.flush()
 
 
 def load(path):
@@ -383,7 +390,7 @@ def main():
     path = args.output if args.output.is_absolute() else root / args.output
     configs = data["research"].pop("configs")
     raw = json.dumps(configs, ensure_ascii=False, allow_nan=False, separators=(",", ":")).encode()
-    compressed = gzip.compress(raw, mtime=0)
+    compressed = compress_configs(raw)
     config_path = path.with_name("configs.json.gz")
     atomic_bytes(config_path, compressed)
     data["research"].update({"configs_sha256": sha(raw), "configs_path": "configs.json.gz"})

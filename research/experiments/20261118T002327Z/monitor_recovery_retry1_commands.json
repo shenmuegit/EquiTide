@@ -1,0 +1,47 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/desktop/Documents/Codex/EquiTide/research/monitor/snapshot.py"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-18T00:58:06.597108Z",
+    "finished_utc": "2026-11-18T00:58:32.163130Z",
+    "exit_code": 0,
+    "log": "research/experiments/20261118T002327Z/monitor_recovery_snapshot.log",
+    "stdout": "{\"output\": \"/home/desktop/Documents/Codex/EquiTide/research/monitor/latest.json\", \"bytes\": 645770, \"paper_status\": \"ready\", \"research_configs\": 11038, \"compressed_research_bytes\": 4997629}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-18T00:58:32.163425Z",
+    "finished_utc": "2026-11-18T00:59:05.857842Z",
+    "exit_code": 0,
+    "log": "research/experiments/20261118T002327Z/monitor_recovery_check.log",
+    "stdout": "{\"ok\": true, \"paper_accounts\": 10, \"observations\": 407, \"research_configs\": 11038, \"protected_inputs_unchanged\": true}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "node",
+      "--input-type=module",
+      "-e",
+      "import fs from 'node:fs';import crypto from 'node:crypto';const b=fs.readFileSync(process.argv[1]);const meta=JSON.parse(fs.readFileSync(process.argv[2]));const raw=Buffer.from(await new Response(new Blob([b]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());const sha=crypto.createHash('sha256').update(raw).digest('hex');const rows=JSON.parse(raw.toString('utf8'));if(sha!==meta.research.configs_sha256||rows.length!==meta.research.counts.ranked)throw Error('browser-compatible gzip SHA/row mismatch');console.log(JSON.stringify({native_DecompressionStream:true,rows:rows.length,raw_sha256:sha}));",
+      "/home/desktop/Documents/Codex/EquiTide/research/monitor/configs.json.gz",
+      "/home/desktop/Documents/Codex/EquiTide/research/monitor/latest.json"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-18T00:59:06.956900Z",
+    "finished_utc": "2026-11-18T00:59:07.695887Z",
+    "exit_code": 0,
+    "log": "research/experiments/20261118T002327Z/monitor_native_decompression.log",
+    "stdout": "{\"native_DecompressionStream\":true,\"rows\":11038,\"raw_sha256\":\"adfd525cffbe103d7dcf56a4e975bf822db2c84ce56341bb0f76cccc4040808e\"}\n",
+    "stderr": ""
+  }
+]

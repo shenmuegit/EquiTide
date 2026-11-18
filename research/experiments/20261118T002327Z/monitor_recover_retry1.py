@@ -1,0 +1,26 @@
+"""Recover only the read-only feed with lossless gzip; retain every actual failure."""
+import gzip,hashlib,json,os,subprocess
+from pathlib import Path
+from datetime import datetime,timezone
+ROOT=Path(__file__).resolve().parents[3];R=Path(__file__).resolve().parent;F=ROOT/'.git/automation_proofs';rd=lambda p:json.loads(p.read_text());sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();now=lambda:datetime.now(timezone.utc).isoformat().replace('+00:00','Z');put=lambda p,x:p.write_text(json.dumps(x,ensure_ascii=False,indent=2)+'\n')
+assert not(R/'data_manifest.json').exists();pid=rd(R/'startup.json')['branch_lock_broker_pid'];assert any('FLOCK' in l and str(pid) in l.split() for l in Path('/proc/locks').read_text().splitlines());repair=rd(R/'monitor_compression_binding.json');b=rd(R/'code_binding_before_evaluation.json');probe=rd(R/'monitor_compression_probe.json');protected={**b['source_sha256'],**{p:h for p,h in b['immutable_source_sha256'].items() if p not in repair['new_source_sha256']},**repair['new_source_sha256']}
+for p in ['research/paper10/plan.json','research/paper10/state.json','research/paper10/run.py','research/automation/registry.jsonl','research/automation/candidate_forward_latest.json','research/automation/l4h02_forward_latest.json','research/automation/fewm_forward_latest.json',str((R/'report.json').relative_to(ROOT)),str((R/'forward_report.json').relative_to(ROOT)),str((R/'forward_state.json').relative_to(ROOT))]:protected[p]=sha(ROOT/p)
+for p,h in protected.items():assert sha(ROOT/p)==h,p
+saved={ROOT/p:(ROOT/p).read_bytes() for p in ['research/monitor/latest.json','research/monitor/configs.json.gz']};receipts=[];proof={'passed':False,'started_utc':now(),'failure_already_preserved':True,'financial_or_account_calculations':0,'registry_or_frozen_rule_mutations':False};dest=R/'monitor_recovery_retry1_commands.json';assert not dest.exists();env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1','OPENBLAS_NUM_THREADS':'1','OMP_NUM_THREADS':'1'}
+def run(cmd,log):
+ a=now();z=subprocess.run(cmd,cwd=ROOT,env=env,capture_output=True,text=True,timeout=240);(R/log).write_text(z.stdout+z.stderr);item={'command':cmd,'cwd':str(ROOT),'started_utc':a,'finished_utc':now(),'exit_code':z.returncode,'log':str((R/log).relative_to(ROOT)),'stdout':z.stdout,'stderr':z.stderr};receipts.append(item);put(dest,receipts);print(json.dumps({'command':cmd[:3],'exit_code':z.returncode,'output':(z.stdout+z.stderr)[-1600:]}),flush=True);assert z.returncode==0,item
+try:
+ run(['python3','-B',str(ROOT/'research/monitor/snapshot.py')],'monitor_recovery_snapshot.log')
+ run(['python3','-B',str(ROOT/'checks/monitor_snapshot.py')],'monitor_recovery_check.log')
+ raw=gzip.decompress((ROOT/'research/monitor/configs.json.gz').read_bytes());assert hashlib.sha256(raw).hexdigest()==probe['raw_sha256'] and len(raw)==probe['raw_bytes'];blob=ROOT/'research/monitor/configs.json.gz';assert blob.stat().st_size==probe['lossless_candidate_bytes']<probe['budget_bytes'];assert sha(blob)==probe['lossless_candidate_sha256'];latest=rd(ROOT/'research/monitor/latest.json');assert latest['research']['configs_sha256']==probe['raw_sha256']
+ rows=json.loads(raw);old=json.loads(gzip.decompress(saved[ROOT/'research/monitor/configs.json.gz']));by={x['fingerprint']:x for x in rows};assert len(rows)==len(old)+6 and all(by[x['fingerprint']]==x for x in old);assert len(rows)==latest['research']['counts']['ranked']==11038
+ node="import fs from 'node:fs';import crypto from 'node:crypto';const b=fs.readFileSync(process.argv[1]);const meta=JSON.parse(fs.readFileSync(process.argv[2]));const raw=Buffer.from(await new Response(new Blob([b]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());const sha=crypto.createHash('sha256').update(raw).digest('hex');const rows=JSON.parse(raw.toString('utf8'));if(sha!==meta.research.configs_sha256||rows.length!==meta.research.counts.ranked)throw Error('browser-compatible gzip SHA/row mismatch');console.log(JSON.stringify({native_DecompressionStream:true,rows:rows.length,raw_sha256:sha}));"
+ run(['node','--input-type=module','-e',node,str(blob),str(ROOT/'research/monitor/latest.json')],'monitor_native_decompression.log')
+ for p,h in protected.items():assert sha(ROOT/p)==h,p
+ proof.update(passed=True,finished_utc=now(),new_configs=len(rows),historical_rows_identical=len(old),new_rows=6,original_default_gzip_bytes=probe['default_gzip_bytes'],new_gzip_bytes=blob.stat().st_size,decoded_raw_bytes=len(raw),decoded_raw_sha256=probe['raw_sha256'],decoded_raw_bytes_identical_to_original_failed_generation=True,new_gzip_sha256=sha(blob),latest_sha256=sha(ROOT/'research/monitor/latest.json'),unchanged_budget_bytes=probe['budget_bytes'],native_browser_compatible_DecompressionStream_verified=True,protected_current_inputs_unchanged=len(protected),original_failure_receipt=repair['original_failed_command_receipt'],old_source_archives=repair['old_source_archives'],new_monitor_source_sha256=repair['new_source_sha256'],all_actual_command_exit_codes=[z['exit_code'] for z in receipts])
+except BaseException as e:
+ for p,raw in saved.items():p.write_bytes(raw)
+ proof.update(error=repr(e),finished_utc=now(),last_valid_feed_restored=True);raise
+finally:
+ put(R/'monitor_recovery_retry1_verification.json',proof)
+print(json.dumps(proof,ensure_ascii=False),flush=True)

@@ -98,7 +98,9 @@ def main():
         payload = copy.deepcopy(data)
         configs = payload["research"].pop("configs")
         config_raw = json.dumps(configs, ensure_ascii=False, allow_nan=False, separators=(",", ":")).encode()
-        config_gzip = gzip.compress(config_raw, mtime=0)
+        config_gzip = snapshot.compress_configs(config_raw)
+        assert gzip.decompress(config_gzip) == config_raw, "monitor gzip changed JSON bytes"
+        assert config_gzip == snapshot.compress_configs(config_raw), "monitor gzip is not deterministic"
         payload["research"].update({"configs_sha256": snapshot.sha(config_raw), "configs_path": "configs.json.gz"})
         snapshot.atomic_bytes(target.with_name("configs.json.gz"), config_gzip)
         snapshot.atomic_write(target, payload)
