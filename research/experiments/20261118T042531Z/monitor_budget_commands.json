@@ -1,0 +1,45 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/desktop/Documents/Codex/EquiTide/research/monitor/snapshot.py"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-18T05:01:15.674957+00:00",
+    "finished_utc": "2026-11-18T05:01:41.441108+00:00",
+    "exit_code": 0,
+    "stdout": "{\"output\": \"/home/desktop/Documents/Codex/EquiTide/research/monitor/latest.json\", \"bytes\": 638765, \"paper_status\": \"ready\", \"research_configs\": 11044, \"compressed_research_bytes\": 5000295}\n",
+    "stderr": "",
+    "log": "research/experiments/20261118T042531Z/monitor_budget_snapshot.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "/home/desktop/Documents/Codex/EquiTide/checks/monitor_snapshot.py"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-18T05:01:41.441397+00:00",
+    "finished_utc": "2026-11-18T05:02:15.011565+00:00",
+    "exit_code": 0,
+    "stdout": "{\"ok\": true, \"paper_accounts\": 10, \"observations\": 409, \"research_configs\": 11044, \"protected_inputs_unchanged\": true}\n",
+    "stderr": "",
+    "log": "research/experiments/20261118T042531Z/monitor_budget_check.log"
+  },
+  {
+    "command": [
+      "node",
+      "-e",
+      "const fs=require('node:fs'),crypto=require('node:crypto');(async()=>{const b=fs.readFileSync(process.argv[1]);const raw=Buffer.from(await new Response(new Blob([b]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());const rows=JSON.parse(raw.toString('utf8'));if(rows.length!==11044)throw Error('row count');console.log(JSON.stringify({passed:true,rows:rows.length,raw_bytes:raw.length,raw_sha256:crypto.createHash('sha256').update(raw).digest('hex')}));})().catch(e=>{console.error(e);process.exitCode=1;});",
+      "/home/desktop/Documents/Codex/EquiTide/research/monitor/configs.json.gz"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-18T05:02:16.137497+00:00",
+    "finished_utc": "2026-11-18T05:02:16.813004+00:00",
+    "exit_code": 0,
+    "stdout": "{\"passed\":true,\"rows\":11044,\"raw_bytes\":28792728,\"raw_sha256\":\"3c0b7b6622d0cfb9e349c42abe417caa38f346fb322cf803d01a16ce4c60d77d\"}\n",
+    "stderr": "",
+    "log": "research/experiments/20261118T042531Z/monitor_budget_native_gzip.log"
+  }
+]

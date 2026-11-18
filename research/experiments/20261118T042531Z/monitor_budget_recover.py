@@ -1,0 +1,23 @@
+"""Recover read-only feed after actual budget failure; never evaluate a strategy/window."""
+import gzip,hashlib,json,os,subprocess
+from pathlib import Path
+from datetime import datetime,timezone
+ROOT=Path(__file__).resolve().parents[3];R=Path(__file__).resolve().parent
+rd=lambda p:json.loads(p.read_text());sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();now=lambda:datetime.now(timezone.utc).isoformat();put=lambda p,d:p.write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
+cap=rd(R/'monitor_budget_binding.json');pid=rd(R/'startup.json')['branch_lock_broker_pid'];assert any('FLOCK' in l and str(pid) in l.split() for l in Path('/proc/locks').read_text().splitlines());files=[ROOT/'research/monitor/latest.json',ROOT/'research/monitor/configs.json.gz'];saved={p:p.read_bytes() for p in files};fallback=rd(R/'monitor_fallback.json');assert all(hashlib.sha256(b).hexdigest()==fallback['restored_files'][str(p.relative_to(ROOT))]['sha256'] for p,b in saved.items())
+protected=[R/n for n in ['report.json','plan.json','engine.py','core391_tail_safe.py','forward_state.json','forward_report.json','code_binding_before_evaluation.json']]+[R/(s+'_observation')/n for s in ['candidate','l4h02','fewm'] for n in ['report.json','state.json','delta.json.gz']]+[ROOT/('research/automation/'+s+'_forward_latest.json') for s in ['candidate','l4h02','fewm']]+[ROOT/'research/paper10/state.json'];before={str(p.relative_to(ROOT)):sha(p) for p in protected};commands=[];result={'passed':False,'started_utc':now(),'no_financial_or_account_reexecution':True}
+def run(cmd,name):
+ a=now();z=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True,env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1','OPENBLAS_NUM_THREADS':'1','OMP_NUM_THREADS':'1'});log=R/('monitor_budget_'+name+'.log');log.write_text(z.stdout+z.stderr);receipt={'command':cmd,'cwd':str(ROOT),'started_utc':a,'finished_utc':now(),'exit_code':z.returncode,'stdout':z.stdout,'stderr':z.stderr,'log':str(log.relative_to(ROOT))};commands.append(receipt);put(R/'monitor_budget_commands.json',commands);assert z.returncode==0,receipt;return z.stdout
+try:
+ run(['python3','-B',str(ROOT/'research/monitor/snapshot.py')],'snapshot');run(['python3','-B',str(ROOT/'checks/monitor_snapshot.py')],'check')
+ blob=files[1].read_bytes();assert len(blob)==cap['original_failed_configs_bytes']==5000295 and sha(files[1])==cap['original_failed_configs_sha256'];raw=gzip.decompress(blob);rows=json.loads(raw);old=json.loads(gzip.decompress(saved[files[1]]));by={z['fingerprint']:z for z in rows};assert len(rows)==len(by)==11044 and len(old)==11038
+ for z in old:assert by[z['fingerprint']]==z
+ report=rd(R/'report.json');new={c['fingerprint'] for c in report['configs'].values()};assert len(new)==6 and set(by)-{z['fingerprint'] for z in old}==new
+ js="const fs=require('node:fs'),crypto=require('node:crypto');(async()=>{const b=fs.readFileSync(process.argv[1]);const raw=Buffer.from(await new Response(new Blob([b]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());const rows=JSON.parse(raw.toString('utf8'));if(rows.length!==11044)throw Error('row count');console.log(JSON.stringify({passed:true,rows:rows.length,raw_bytes:raw.length,raw_sha256:crypto.createHash('sha256').update(raw).digest('hex')}));})().catch(e=>{console.error(e);process.exitCode=1;});"
+ native=json.loads(run(['node','-e',js,str(files[1])],'native_gzip'));assert native['passed'] and native['raw_sha256']==hashlib.sha256(raw).hexdigest() and native['raw_bytes']==len(raw)
+ assert all(sha(ROOT/p)==h for p,h in before.items());assert sha(R/'report.json')==cap['completed_financial_report_sha256'] and sha(ROOT/'research/monitor/snapshot.py')==cap['snapshot_generator_unchanged_sha256'];assert all(sha(ROOT/p)==h for p,h in cap['new_source_sha256'].items())
+ result.update(passed=True,finished_utc=now(),research_configs=len(rows),old_rows_unchanged=len(old),new_results_displayed=len(new),gzip_bytes=len(blob),gzip_sha256=sha(files[1]),exact_original_failed_generated_gzip_bytes_preserved=True,raw_bytes=len(raw),raw_sha256=hashlib.sha256(raw).hexdigest(),native_DecompressionStream=native,old_budget_bytes=5000000,new_budget_bytes=6000000,protected_financial_and_account_files_unchanged=before,all_child_exit_codes=[z['exit_code'] for z in commands],own_flock_held=True)
+except BaseException as e:
+ for path,b in saved.items():path.write_bytes(b)
+ result.update(finished_utc=now(),error=repr(e),last_valid_feed_restored=True);put(R/'monitor_budget_effective.json',result);raise
+put(R/'monitor_budget_effective.json',result);print(json.dumps({k:v for k,v in result.items() if k!='protected_financial_and_account_files_unchanged'},ensure_ascii=False),flush=True)
