@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "recorded_utc": "2026-11-19T21:04:10.467428+00:00",
+  "original_stdout_log": "research/experiments/20261119T203631Z/collect.log",
+  "original_stdout_sha256": "d42d3daca008e3745494d98bf908f75c1e6f901a15749ae0176f9707d1da08d3",
+  "observed_stdout_field_value": {
+    "SMA": 0,
+    "candidate": 0,
+    "l4h02": 0,
+    "fewm": 0
+  },
+  "authoritative_actual_funding_split": {
+    "SMA": 0,
+    "candidate": 0,
+    "l4h02": 6,
+    "fewm": 6
+  },
+  "financial_report_sha256_unchanged": "1ccaa9cd7771a7842879a9172fb7cc4095e662a1396412b6c6b7e24344d3a83b",
+  "original_formatter_sha256": "c51e0a291693f40bba6b1c61db5c1775e5ad326b774609d4cab13f549acf0ba9",
+  "corrected_formatter_sha256": "27c52f038c6b9cd0b3f3892bf43fa19cb97f31ded3121088c61a5736aa59ea74",
+  "source_patch": "--- collect.py_before\n+++ collect.py_after\n@@ -106,4 +106,7 @@\n lines+=['',f'敏感性全部保存：90个成本场景、1260逐折、720近期折、360扩展折、35280日NAV行、27个匹配持有对比及{ex[\"adjacent_edges\"]}条相邻边；新12配置有{aliases[\"distinct_allcost_NAV_paths\"]}条不同完整成本路径。启发式跳变边='+json.dumps(ex['cliffs_over_two_std'],ensure_ascii=False),'收益最优若在金额网格边缘，仅作敞口诊断；不根据结果扩网格或替换代表。小网格不证明全域稳健。',f'独立核验只读源银行36条完整曲线、{v[\"readonly_policy_decisions\"]}个原政策决策、42228条资金费、原成交/费用/小时风险，并核验新组合36条连续NAV、逐折和全部门槛；新增native策略决策/执行次数为0。父组合相对旧中心的货币现金流桥接见sizing_effect_decomposition.json。','',h['rules'],'',f'原SMA三倍成本累计{forward[\"configs\"][\"forward_snapshot_combo\"][\"scenes\"][\"3\"][\"net_return_pct\"]:.6f}%；原账户为延迟shadow，180日/六折资格未成熟。十策略仅只读汇总，未改冻结规则/本金/持仓或产生新成交。',f'保存{len(requests)}份唯一公共GET回执，本轮{len(current_requests)}、旧复用{len(old_reused)}、已保存运输失败{len(bad)}；旧首资金费来源UTC/SHA保留，完整71日SPOT权威只读。其他实际失败事实：'+json.dumps(fail['facts'],ensure_ascii=False),f'监控生成成功={feed[\"monitor_generation_succeeded\"]}，{feed[\"research_configs\"]}研究配置，{feed[\"historical_rows_identical\"]}旧行完整字典不变。','','实际完成阶段命令（完成目录不得重跑市场/账户，仅保留核验和数据哈希）：','','```sh','cd /home/desktop/Documents/Codex/EquiTide']\n phases=['prepare','prepare_retry1','freeze','units','bind','reserve_0','reserve_1','evaluate','audit','exports','finish_0','finish_1','research_check','l4h02','fewm','candidate','forward','accounts_check','journal','sources_check','gates','feed','collect','final_checks']\n for phase in phases:lines.append('/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python -B '+(str(R/'checks.py')+' research' if phase=='research_check' else str(R/'commands.py')+' '+phase)+(' # 首次准备在精确毫秒检查处停止；retry复用原成功响应，未重算账户或模型' if phase=='prepare' else ''))\n-lines+=['```','','字段格式与版本见primary_source_access.json的[Binance官方REST文档](https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data)及[公共数据README](https://github.com/binance/binance-public-data/blob/master/README.md)。所有负收益、失败、来源和冻结规则均保留；成本系数是研究假设。'];(R/'result.md').write_text('\\n'.join(lines)+'\\n');assert not [z for z in R.rglob('*') if z.name=='__pycache__' or z.suffix in ['.pyc','.npy','.tmp'] or 'checkpoint' in z.name];put(R/'cleanup_verification.json',{'passed':True,'no_reconstructible_round_debris':True,'protected_books_frozen_rules_registry_results_and_needed_evidence_retained':True});print(json.dumps({'collected':True,'financial_configs':12,'new_passive_strategy_parents':6,'historical_parent_passed':len(r['summary']['passed']),'strict_four_metric_improvements':strict,'new_native_model_runs':0,'current_original_funding_split':zero,'GET_receipts':len(requests)},ensure_ascii=False))\n+lines+=['```','','字段格式与版本见primary_source_access.json的[Binance官方REST文档](https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data)及[公共数据README](https://github.com/binance/binance-public-data/blob/master/README.md)。所有负收益、失败、来源和冻结规则均保留；成本系数是研究假设。'];(R/'result.md').write_text('\\n'.join(lines)+'\\n');assert not [z for z in R.rglob('*') if z.name=='__pycache__' or z.suffix in ['.pyc','.npy','.tmp'] or 'checkpoint' in z.name];put(R/'cleanup_verification.json',{'passed':True,'no_reconstructible_round_debris':True,'protected_books_frozen_rules_registry_results_and_needed_evidence_retained':True});print(json.dumps({'collected':True,'financial_configs':12,'new_passive_strategy_parents':6,'historical_parent_passed':len(r['summary']['passed']),'strict_four_metric_improvements':strict,'new_native_model_runs':0,'current_original_funding_split':fund,'GET_receipts':len(requests)},ensure_ascii=False))\n+\n+if (R/'collector_stdout_erratum.json').exists():\n+ with (R/'result.md').open('a') as f:f.write('\\n'+'控制台摘要更正：collect.log末行资金费分配为旧零值标签；逐笔账本、account_window_verification与本轮交接状态均为SMA0、candidate0、L4 6、FEWM6。原日志保留，详见collector_stdout_erratum.json。'+'\\n')\n",
+  "original_result_md_sha256": "70dc3f16741fd575a88467cc72ccb6105f91e74f4006fda59d742ba99cf10aa1",
+  "result_md_sha256_with_erratum": "21e5c53d9a672d7ca018e2aef53021592482ca6cccb99416171846aa0a9bd260",
+  "original_stdout_not_rewritten": true,
+  "no_market_account_or_funding_calculation_reexecution": true
+}
