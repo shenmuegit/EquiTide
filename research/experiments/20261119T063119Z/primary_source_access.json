@@ -1,0 +1,33 @@
+{
+  "recorded_utc": "2026-11-19T07:05:03.086764+00:00",
+  "method": "Actual web.open and web.find of original Binance documentation this round",
+  "sources": [
+    {
+      "url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "version": "Official REST catalog accessed2026-11-19;legacy fundingRate/exchangeInfo URLs redirect here",
+      "checked_fields": [
+        "fundingTime",
+        "fundingRate",
+        "markPrice",
+        "rateType",
+        "tickSize",
+        "stepSize",
+        "filters"
+      ],
+      "notes": "Real saved responses and normalized metadata are authoritative inputs. Precision digits are not substituted for tick/step filters; no nominal8h schedule assumption and no unavailable historical maxqty/tier filters invented."
+    },
+    {
+      "url": "https://github.com/binance/binance-public-data/blob/master/README.md",
+      "version": "master accessed2026-11-19",
+      "checked_fields": [
+        "spot archive timestamps from2025 are microseconds",
+        "USD-M klines provenance"
+      ],
+      "notes": "Time units validated separately in saved real market sources;no new SMA daily capture this round."
+    }
+  ],
+  "research_assumptions_not_exchange_guarantees": [
+    "5bp fee,1bp halfspread,2bp slippage and .5*past20sigma*sqrt(actual order notional/past20quoteADV) impact;1/2/3cost and funding-outflow stress;fully collateralized1x entry,1% adverse-hour maintenance proxy.",
+    "BTC entryN1250/1500 vs1000readonly and ETH readonlycaps.0525/.05625;capital3750/15000 and rawbankweights[1,1] fixed;matched samecapital/sameentryN constant-long references;not equal dynamic risk or independent future alpha."
+  ]
+}
