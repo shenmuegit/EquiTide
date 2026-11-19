@@ -1,0 +1,20 @@
+--- failed auxiliary readonly verifier
++++ corrected quantity-conservation verifier
+@@ -87,10 +87,14 @@
+         for asset, scenarios in before['books'].items():
+             for k, book in scenarios.items():
+                 assert all(after['books'][asset][k][key] == val for key, val in book.items() if key != 'cash')
+-    if stem == 'candidate':
+-        assert all(D(b['signed_units']) == D('-1.644') for b in after['books']['ETH'].values())
++    for asset, scenarios in before['books'].items():
++        for k, book in scenarios.items():
++            changes = [D(z['change_signed_units']) for z in delta['journal'] if z['kind']=='trade' and z['status']=='filled' and z['asset']==asset and str(z['cost_multiplier'])==k]
++            expected_units = D(book['signed_units']) + sum(changes,D(0))
++            assert D(after['books'][asset][k]['signed_units']) == expected_units
++            assert h['current_original_signed_units_by_asset_cost'][stem][asset][k] == after['books'][asset][k]['signed_units']
+     assert len(after['context']['BTC']['daily']) - len(before['context']['BTC']['daily']) == aw['current_daily_event_counts'][stem]
+-    books[stem] = {'own_books_reconciled': True, 'NAV_points': v['NAV_points_per_scene'], 'new_funding_rows': v['new_funding_settlements'], 'new_daily_events': v['new_daily_events'], 'new_fills': v['new_fills'], 'complete_prefix_audit_passed': True}
++    books[stem] = {'own_books_reconciled': True, 'quantity_conservation_from_actual_filled_trade_changes': True, 'NAV_points': v['NAV_points_per_scene'], 'new_funding_rows': v['new_funding_settlements'], 'new_daily_events': v['new_daily_events'], 'new_fills': v['new_fills'], 'complete_prefix_audit_passed': True}
+ fv = rd(R / 'forward_verification.json')
+ assert fv['passed'] and fv['new_daily_decisions'] == 2 and fv['new_reference_points'] == 1 and fv['independent_frozen_signal_cost_balance_NAV_and_nextstate_verified']
+ assert rd(R / 'SMA_daily_binding.json')['passed']

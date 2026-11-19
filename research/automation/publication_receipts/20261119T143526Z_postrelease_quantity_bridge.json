@@ -1,0 +1,286 @@
+{
+  "passed": true,
+  "recorded_utc": "2026-11-19T15:22:33.554226+00:00",
+  "type": "auxiliary_readonly_postrelease_verifier_recovery",
+  "round": "20261119T143526Z",
+  "research_commit": "73278b9761f95cdd00c3990d8509146014e3aec9",
+  "parent_main_at_receipt": "73278b9761f95cdd00c3990d8509146014e3aec9",
+  "research_report_sha256": "7c548573f1304a95620c677690991383c836c3004be375f72ef276c4b492930e",
+  "sealed_manifest_sha256": "3d0ee41696e45773cd1615d7af4cf0b218416ee1b40db76a16e9cfb38ce9c8df",
+  "actual_failed_native_receipt": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "/home/desktop/Documents/Codex/EquiTide/.git/automation_proofs/20261119T143526Z_postrelease.py"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-19T15:16:34.662306Z",
+    "finished_utc": "2026-11-19T15:17:44.547560Z",
+    "exit_code": 1,
+    "log": ".git/automation_proofs/20261119T143526Z_postrelease.log"
+  },
+  "actual_retry_native_receipt": {
+    "command": [
+      "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+      "-B",
+      "/home/desktop/Documents/Codex/EquiTide/.git/automation_proofs/20261119T143526Z_postrelease.py"
+    ],
+    "cwd": "/home/desktop/Documents/Codex/EquiTide",
+    "started_utc": "2026-11-19T15:19:21.490484Z",
+    "finished_utc": "2026-11-19T15:20:31.844279Z",
+    "exit_code": 0,
+    "log": ".git/automation_proofs/20261119T143526Z_postrelease_retry1.log"
+  },
+  "actual_failed_native_output": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/.git/automation_proofs/20261119T143526Z_postrelease.py\", line 91, in <module>\n    assert all(D(b['signed_units']) == D('-1.644') for b in after['books']['ETH'].values())\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "failure_reason": "Auxiliary checker inherited an expectation of ETHshort=-1.644 after the frozen original day rule had actually closed it; real account ledgers and independent in-round audits correctly contained zero after closing.",
+  "correction": "For every original asset/cost, derive current signed units from previous units plus actual filled signed changes, then match saved current state and next-window handoff. Cash, fees, funding and no-fill continuity checks remain active.",
+  "actual_previous_candidate_signed_units": {
+    "BTC": {
+      "1": "-0.012000000000000000",
+      "2": "-0.012000000000000000",
+      "3": "-0.012000000000000000"
+    },
+    "ETH": {
+      "1": "-1.644000000000000000",
+      "2": "-1.644000000000000000",
+      "3": "-1.644000000000000000"
+    }
+  },
+  "actual_current_candidate_signed_units": {
+    "BTC": {
+      "1": "-0.012000000000000000",
+      "2": "-0.012000000000000000",
+      "3": "-0.012000000000000000"
+    },
+    "ETH": {
+      "1": "0",
+      "2": "0",
+      "3": "0"
+    }
+  },
+  "actual_original_frozen_close_records": [
+    {
+      "asset": "ETH",
+      "change_signed_units": "1.644000000000000000",
+      "cost_multiplier": 1,
+      "cost_parts": {
+        "fee": "1.458597900000000000000000000",
+        "half_spread": "0.291627516000000000000000",
+        "impact": "0.03113612567176392165504114719",
+        "slippage": "0.583255032000000000000000",
+        "tick_rounding": "0.01462132632823607834495743200"
+      },
+      "cost_usdt": "2.379237899999999999999998579",
+      "event_code": 6,
+      "execution": "1774.450000000000000000",
+      "fee_rate": "0.0005",
+      "half_spread_rate": "0.0001",
+      "impact_rate": "0.00001067667622686328462059154500",
+      "kind": "trade",
+      "lagged_ADV": "8153782533.229807",
+      "lagged_sigma": "0.03570519270286796",
+      "opening": false,
+      "participation": "3.576591781930722994960435541E-7",
+      "quantity": "1.644000000000000000",
+      "realized_price_PnL_usdt": "82.05204000000000000000000000",
+      "reference": "1773.89",
+      "reference_price_PnL_usdt": "83.90976000000000000000",
+      "side": "buy",
+      "slippage_rate": "0.0002",
+      "state_after": {
+        "cash": "10306.34421470165887075400000",
+        "entry_price": "0",
+        "entry_reference": "0",
+        "signed_units": "0"
+      },
+      "state_before": {
+        "cash": "10225.75077260165887075400000",
+        "entry_price": "1824.360000000000000000",
+        "entry_reference": "1824.93",
+        "signed_units": "-1.644000000000000000"
+      },
+      "status": "filled",
+      "terminal": false,
+      "theoretical_execution": "1774.441106249192070511955622",
+      "timestamp_ns": 1795046460000000000
+    },
+    {
+      "asset": "ETH",
+      "change_signed_units": "1.644000000000000000",
+      "cost_multiplier": 2,
+      "cost_parts": {
+        "fee": "2.918100000000000000000000000",
+        "half_spread": "0.583255032000000000000000",
+        "impact": "0.06227225134352784331008229438",
+        "slippage": "1.166510064000000000000000",
+        "tick_rounding": "0.01280265265647215668991815200"
+      },
+      "cost_usdt": "4.742940000000000000000000446",
+      "event_code": 6,
+      "execution": "1775.000000000000000000",
+      "fee_rate": "0.0010",
+      "half_spread_rate": "0.0002",
+      "impact_rate": "0.00002135335245372656924118309000",
+      "kind": "trade",
+      "lagged_ADV": "8153782533.229807",
+      "lagged_sigma": "0.03570519270286796",
+      "opening": false,
+      "participation": "3.576591781930722994960435541E-7",
+      "quantity": "1.644000000000000000",
+      "realized_price_PnL_usdt": "80.21076000000000000000000000",
+      "reference": "1773.89",
+      "reference_price_PnL_usdt": "83.90976000000000000000",
+      "side": "buy",
+      "slippage_rate": "0.0004",
+      "state_after": {
+        "cash": "10296.85953094054380186960000",
+        "entry_price": "0",
+        "entry_reference": "0",
+        "signed_units": "0"
+      },
+      "state_before": {
+        "cash": "10219.56687094054380186960000",
+        "entry_price": "1823.790000000000000000",
+        "entry_reference": "1824.93",
+        "signed_units": "-1.644000000000000000"
+      },
+      "status": "filled",
+      "terminal": false,
+      "theoretical_execution": "1774.992212498384141023911242",
+      "timestamp_ns": 1795046460000000000
+    },
+    {
+      "asset": "ETH",
+      "change_signed_units": "1.644000000000000000",
+      "cost_multiplier": 3,
+      "cost_parts": {
+        "fee": "4.378506300000000000000000000",
+        "half_spread": "0.874882548000000000000000",
+        "impact": "0.09340837701529176496512344157",
+        "slippage": "1.749765096000000000000000",
+        "tick_rounding": "0.01098397898470823503487558400"
+      },
+      "cost_usdt": "7.107546299999999999999999026",
+      "event_code": 6,
+      "execution": "1775.550000000000000000",
+      "fee_rate": "0.0015",
+      "half_spread_rate": "0.0003",
+      "impact_rate": "0.00003203002868058985386177463500",
+      "kind": "trade",
+      "lagged_ADV": "8153782533.229807",
+      "lagged_sigma": "0.03570519270286796",
+      "opening": false,
+      "participation": "3.576591781930722994960435541E-7",
+      "quantity": "1.644000000000000000",
+      "realized_price_PnL_usdt": "78.36948000000000000000000000",
+      "reference": "1773.89",
+      "reference_price_PnL_usdt": "83.90976000000000000000",
+      "side": "buy",
+      "slippage_rate": "0.0006",
+      "state_after": {
+        "cash": "10287.36259046442873298520000",
+        "entry_price": "0",
+        "entry_reference": "0",
+        "signed_units": "0"
+      },
+      "state_before": {
+        "cash": "10213.37161676442873298520000",
+        "entry_price": "1823.220000000000000000",
+        "entry_reference": "1824.93",
+        "signed_units": "-1.644000000000000000"
+      },
+      "status": "filled",
+      "terminal": false,
+      "theoretical_execution": "1775.543318747576211535866864",
+      "timestamp_ns": 1795046460000000000
+    }
+  ],
+  "post_release_verification": {
+    "passed": true,
+    "verified_utc": "2026-11-19T15:20:31.827660+00:00",
+    "own_commit": "73278b9761f95cdd00c3990d8509146014e3aec9",
+    "HEAD_at_readonly_check": "73278b9761f95cdd00c3990d8509146014e3aec9",
+    "sealed_artifacts_unchanged": 318,
+    "protected_files_verified_in_published_commit": 93655,
+    "subsequent_authorized_peer_changes": [],
+    "original_account_checks": {
+      "candidate": {
+        "own_books_reconciled": true,
+        "quantity_conservation_from_actual_filled_trade_changes": true,
+        "NAV_points": 33912,
+        "new_funding_rows": 6,
+        "new_daily_events": 1,
+        "new_fills": 3,
+        "complete_prefix_audit_passed": true
+      },
+      "l4h02": {
+        "own_books_reconciled": true,
+        "quantity_conservation_from_actual_filled_trade_changes": true,
+        "NAV_points": 26649,
+        "new_funding_rows": 0,
+        "new_daily_events": 0,
+        "new_fills": 0,
+        "complete_prefix_audit_passed": true
+      },
+      "fewm": {
+        "own_books_reconciled": true,
+        "quantity_conservation_from_actual_filled_trade_changes": true,
+        "NAV_points": 20757,
+        "new_funding_rows": 0,
+        "new_daily_events": 0,
+        "new_fills": 0,
+        "complete_prefix_audit_passed": true
+      }
+    },
+    "SMA_NAV_points": 69199,
+    "current_actual_funding_split": {
+      "SMA": 0,
+      "candidate": 6,
+      "l4h02": 0,
+      "fewm": 0
+    },
+    "current_daily_event_counts": {
+      "SMA": 1,
+      "candidate": 1,
+      "l4h02": 0,
+      "fewm": 0
+    },
+    "current_fills_by_account": {
+      "SMA": 0,
+      "candidate": 3,
+      "l4h02": 0,
+      "fewm": 0
+    },
+    "SMA_actual_full71_exact70prefix_retained": true,
+    "current_daily_split_verified": {
+      "SMA": 1,
+      "candidate": 1,
+      "l4h02": 0,
+      "fewm": 0
+    },
+    "current_L4_FEWM_midnight_processed_once": true,
+    "SMA_candidate_midnight_and_full71_completed_once_next_markonly": true,
+    "next_L4_FEWM_actual_new_funding_lookup_required": true,
+    "own_native_lock_released": true,
+    "completed_model_or_window_reruns": 0
+  },
+  "source_archives": {
+    "before": {
+      "path": "research/automation/publication_receipts/20261119T143526Z_postrelease_verifier_before.py",
+      "sha256": "2f27425e58aa811c165aef9dfc4cc0a10c1732deaabc2bd79decc5143274b214"
+    },
+    "after": {
+      "path": "research/automation/publication_receipts/20261119T143526Z_postrelease_verifier_after.py",
+      "sha256": "8a0684f02236f4e595514fe955ca14bf6fb5773bf9d81abeafeacc0a3ca6ebf4"
+    },
+    "patch": {
+      "path": "research/automation/publication_receipts/20261119T143526Z_postrelease_quantity_bridge.diff",
+      "sha256": "e51c672bf6cbd2637a920ae5c988433b31369c1794c2027ac34781f9ec0e5129"
+    }
+  },
+  "financial_or_completed_account_window_reruns": 0,
+  "new_financial_or_original_account_configurations": 0,
+  "sealed_research_and_original_ledgers_not_modified": true,
+  "monitor_not_regenerated_because_only_auxiliary_verification_evidence_added": true,
+  "no_new_orders_or_paper10_changes": true
+}
