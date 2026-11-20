@@ -1,0 +1,48 @@
+{
+  "facts": [
+    {
+      "asset": "ETH",
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=ETHUSDT&startTime=1795127400000&endTime=1795140660000&limit=1000",
+      "started_utc": "2026-11-20T16:51:44.262852Z",
+      "finished_utc": "2026-11-20T16:51:49.275025Z",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "research/experiments/20261120T164617Z/window_funding_responses/ETH_1.json.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "raw_body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "resolved": true,
+      "reason": "Later bounded publicGET succeeded before any reserve/calculation"
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261120T164617Z/definitions.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-20T16:52:22.912632Z",
+      "finished_utc": "2026-11-20T16:52:25.742735Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261120T164617Z/bind.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261120T164617Z/definitions.py\", line 20, in <module>\n    assert all(rd(R/n)['passed'] for n in ['parent_primitive_verification.json','sizing_primitive_verification.json','engine_domain_unit_verification.json']);ab=rd(R/'original_accounts_binding.json');assert all(sha(ROOT/path)==h for path,h in ab['sources_sha256'].items())\n                                                                                                                                                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "resolved": true,
+      "resolution": "Pre-reservation authority-index metadata hash refresh;oldbinding/source/failurelogretained;noreserve/calculation/retrievalrerun.",
+      "repair": "research/experiments/20261120T164617Z/prebinding_metadata_repair.json"
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/markPriceKlines?symbol=BTCUSDT&interval=1h&startTime=1795129200000&endTime=1795136400000&limit=1500",
+      "started_utc": "2026-11-20T16:59:11.547373+00:00",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "data/raw/binance/l4h02_forward/20261120T164617Z/http_0003.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "transport": "verifiedTLSmin1.2HTTP1.1 publicGET,bounded3attempts",
+      "resolved": true,
+      "resolution": "Same exact URL has validated successful saved public bytes; original capture time retained, including earlier source reuse documented before first reserve. Successful original account packet and audit retained."
+    }
+  ]
+}
