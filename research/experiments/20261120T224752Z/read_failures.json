@@ -1,0 +1,105 @@
+{
+  "facts": [
+    {
+      "asset": "ETH",
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=ETHUSDT&startTime=1795149000000&endTime=1795162260000&limit=1000",
+      "started_utc": "2026-11-20T22:55:51.772537Z",
+      "finished_utc": "2026-11-20T22:55:56.784950Z",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "research/experiments/20261120T224752Z/window_funding_responses/ETH_1.json.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "raw_body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "resolved": true,
+      "reason": "Later bounded publicGET succeeded before any reserve/calculation"
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261120T224752Z/observe_l4h02.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-20T23:02:58.663767Z",
+      "finished_utc": "2026-11-20T23:03:22.266693Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261120T224752Z/l4h02_observe.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261120T224752Z/observe_l4h02.py\", line 19, in <module>\n    obs.request=request;sys.argv=[str(SOURCE/'observer.py'),'run','--round',R.name,'--cutoff',plan['cutoff_utc'],'--lock-pid',str(plan['branch_lock_broker_pid'])];obs.main()\n                                                                                                                                                                   ^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T174613Z/prospective_l4/observer.py\", line 128, in main\n    packet=capture(cut,previous,binding,rawdir,receipts);packetpath=rawdir/'packet.json.gz';gzput(packetpath,packet);put(window/'input_manifest.json',{'packet':rel(packetpath),'sha256':c.sha(packetpath),'provenance':receipts,'plan_sha256':binding['plan_sha256']})\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261031T174613Z/prospective_l4/observer.py\", line 46, in capture\n    info=request('/fapi/v1/exchangeInfo',{},rawdir,receipts);server=request('/fapi/v1/time',{},rawdir,receipts);retrieved=min(now(),int(server['serverTime'])*c.MS)\n                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261120T224752Z/observe_l4h02.py\", line 18, in request\n    raise RuntimeError('Three bounded public GET attempts failed;preserve account and capture failure')\nRuntimeError: Three bounded public GET attempts failed;preserve account and capture failure\n",
+      "resolved": true,
+      "resolution": "Original capture failed before reserve/advance; actual l4h02_retry1 succeeded once and full account audit passed; original failures and source hashes retained.",
+      "effective_recovery_verification": "research/experiments/20261120T224752Z/l4h02_capture_recovery_verification.json"
+    },
+    {
+      "native_chunk": "5ec63e",
+      "exit_code": 1,
+      "stage": "readonly_prior_recovery_binding_lookup",
+      "reason": "A prior recovery-wrapper source was found and read; the guessed binding filename did not exist. Current recovery binding is independently constructed from actual current failure receipts.",
+      "resolved": true
+    },
+    {
+      "native_chunk": "2b972e",
+      "exit_code": 1,
+      "stage": "readonly_L4_recovery_verifier",
+      "log": "research/experiments/20261120T224752Z/l4h02_capture_recovery_verification_failed_attempt1.log",
+      "failed_source": "research/experiments/20261120T224752Z/l4h02_recovery_verifier_failed_attempt1.py",
+      "failed_source_sha256": "911ba46d9982652015cfa23810bcef8ef34e43b32e35f8e5e2bd1803a898c985",
+      "reason": "The supplemental verifier assumed packet.json.gz is in retry1. Frozen observer.capture stores HTTP in retry1, while unchanged observer.main stores final packet in original rawdir after success. Hash is correct; original failed HTTP files were preserved. Only readonly assertion corrected.",
+      "resolved": true,
+      "no_strategy_or_account_window_rerun": true
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/time",
+      "started_utc": "2026-11-20T23:03:07.176676+00:00",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "data/raw/binance/l4h02_forward/20261120T224752Z/http_0001.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "transport": "verifiedTLSmin1.2HTTP1.1 publicGET,bounded3attempts",
+      "resolved": true,
+      "resolution": "Same exact URL has validated successful saved public bytes; original capture time retained, including earlier source reuse documented before first reserve. Successful original account packet and audit retained."
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/time",
+      "started_utc": "2026-11-20T23:03:12.188799+00:00",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "data/raw/binance/l4h02_forward/20261120T224752Z/http_0002.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "transport": "verifiedTLSmin1.2HTTP1.1 publicGET,bounded3attempts",
+      "resolved": true,
+      "resolution": "Same exact URL has validated successful saved public bytes; original capture time retained, including earlier source reuse documented before first reserve. Successful original account packet and audit retained."
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/time",
+      "started_utc": "2026-11-20T23:03:17.201144+00:00",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "data/raw/binance/l4h02_forward/20261120T224752Z/http_0003.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "transport": "verifiedTLSmin1.2HTTP1.1 publicGET,bounded3attempts",
+      "resolved": true,
+      "resolution": "Same exact URL has validated successful saved public bytes; original capture time retained, including earlier source reuse documented before first reserve. Successful original account packet and audit retained."
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/time",
+      "started_utc": "2026-11-20T23:06:08.082243+00:00",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "research/experiments/20261120T224752Z/l4h02_time_recovery_probe.json.gz",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "transport": "verifiedTLSminimum1.2HTTP1.1;single readonly external failure diagnostic before capture recovery",
+      "resolved": true,
+      "resolution": "Same exact URL has validated successful saved public bytes; original capture time retained, including earlier source reuse documented before first reserve. Successful original account packet and audit retained."
+    }
+  ]
+}
