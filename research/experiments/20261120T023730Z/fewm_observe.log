@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261120T023730Z/observe_fewm.py", line 15, in <module>
+    obs.capture=capture;sys.argv=[str(SOURCE/'observer.py'),'run','--round',R.name,'--cutoff',WIN['cutoff_utc'],'--lock-pid','3748537'];obs.main()
+                                                                                                                                        ^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T201939Z/prospective_fewm/observer.py", line 125, in main
+    assert args.cutoff and args.round and args.lock_pid;owner(args.lock_pid);cut=c.ns(args.cutoff);pointer,previous=prior(binding);c.check_window(previous,cut,now())
+                                                        ^^^^^^^^^^^^^^^^^^^^
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261104T201939Z/prospective_fewm/observer.py", line 23, in owner
+    assert any('FLOCK' in x and 'WRITE' in x and x.split()[4]==str(pid) and int(x.split()[5].split(':')[-1])==ino for x in lines),'outer branch broker must hold lock'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: outer branch broker must hold lock
