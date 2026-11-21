@@ -1,0 +1,11 @@
+"""Compare only already saved current slopeK.00625 and previous K.0075 results."""
+from common import *
+import csv
+rd=lambda p:json.loads(p.read_text());P=ROOT/'research/experiments/20261121T145102Z';r=rd(R/'report.json');old=rd(P/'report.json');before=sha(R/'report.json');rows=[]
+for c in r['configs'].values():
+ ref=next(z for z in old['configs'].values() if z['W']==c['W'] and z['K']==c['K']);sp=rd(ROOT/c['spec']);op=rd(ROOT/ref['spec']);assert sp['parameters']['ETH_return_hurdle']==op['parameters']['ETH_return_hurdle']==.02 and sp['parameters']['ETH_entry_funding_max_age_hours']==op['parameters']['ETH_entry_funding_max_age_hours']==48 and sp['parameters']['ETH_trend_slope_hurdle_fraction']==.00625 and op['parameters']['ETH_trend_slope_hurdle_fraction']==.0075 and sp['parameters']['component_capitals_usdt']==op['parameters']['component_capitals_usdt']==[3750,15000] and [x['weight'] for x in sp['components']]==[x['weight'] for x in op['components']]==[1,1]
+ for k,z in c['scenes'].items():
+  o=ref['scenes'][k];rows.append({'fingerprint':c['fingerprint'],'prior_fingerprint':ref['fingerprint'],'BTC_N':c['W'],'ETH_M':c['K'],'cost':int(k),'new_slope_hurdle_fraction':.00625,'old_slope_hurdle_fraction':.0075,'new_return_pct':z['net_return_pct'],'old_return_pct':o['net_return_pct'],'return_difference_pp':z['net_return_pct']-o['net_return_pct'],'DD_difference_pp':z['max_drawdown_pct']-o['max_drawdown_pct'],'Sharpe_difference':z['sharpe_365']-o['sharpe_365'],'Calmar_difference':z['calmar']-o['calmar'],'same_full_NAV':z['NAV_sha256_f64le']==o['NAV_sha256_f64le']})
+f=R/'exports/previous_H002_comparisons.csv'
+with f.open('w',newline='') as out:w=csv.DictWriter(out,list(rows[0]),lineterminator='\n');w.writeheader();w.writerows(rows)
+put(R/'previous_H_comparison.json',{'passed':True,'recorded_utc':now(),'completed_report_sha256_unchanged':before,'prior_actual_report':rel(P/'report.json'),'prior_actual_report_sha256':sha(P/'report.json'),'rows':rows,'CSV':rel(f),'CSV_sha256':sha(f),'saved_actual_results_only':True,'no_financial_or_account_reexecution':True});assert sha(R/'report.json')==before;print(json.dumps({'passed':True,'comparisons':len(rows),'new_model_runs':0,'new_account_windows':0,'report_sha256_unchanged':before}))
