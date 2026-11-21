@@ -1,0 +1,234 @@
+{
+  "passed": true,
+  "events": 40504,
+  "IDs": 20113,
+  "baseline_parameters": {
+    "initial_capital_usdt": 15000,
+    "raw_entry_notional_fraction_of_initial_capital": 0.26666666666666666,
+    "fixed_entry_notional_usdt": 4000,
+    "lookback_days": 5,
+    "return_hurdle": 0.02,
+    "start_utc": "2025-10-19T00:01:00Z",
+    "end_utc": "2026-11-14T00:01:00Z",
+    "warmup_days": 30,
+    "embargo_days": 3,
+    "walk_forward_folds": 14,
+    "walk_forward_test_days": 30,
+    "maintenance_margin_proxy": 0.01,
+    "initial_notional_cap_to_collateral": 1,
+    "costs": {
+      "per_side_commission": 0.0005,
+      "half_spread": 0.0001,
+      "slippage": 0.0002,
+      "impact": "0.5*sampledailylogvol20*sqrt(abs(orderquantity)*nativeOPEN/prior20fullperpdayquoteADV)",
+      "participation_max": 0.001,
+      "fee_provenance": "Frozen5bp perpetual assumption matches existing20261001T053425Z/carry.py;not a claim of historicalVIPfee schedule.",
+      "rounding": "NativeDecimal28adversetick,actualnormalizedlot/minnotional;no unavailablehistoricalmaxqty/percentfilter invented.",
+      "cost_multipliers": [
+        1,
+        2,
+        3
+      ],
+      "funding_stress": "Outflowsmultiplied,inflowsunchanged on actualexposure.",
+      "borrow": "Linearperpetualshortusescashcollateral,nounderlyingspotborrow;no borrowfees invented."
+    },
+    "input_hashes": {
+      "data/runs/automation/20261114T015057Z/extended391/ETH/perp_bars.parquet": "62db8f3b0206f60907cb2ab8f9f112cf51b5ae8a313d98c357d67c91ce5cd0a9",
+      "data/runs/automation/20261114T015057Z/extended391/ETH/mark_hour_bars.parquet": "03b8f0e39d4cd58713047f84926205c684c2a3d44aeefedd3d2e52cd8ce00685",
+      "data/runs/automation/20261114T015057Z/extended391/ETH/funding_settlement.parquet": "58612f8d4b71696e02a85eaeb7f7b4b095c0b2495412ac60394446db722cb0ec",
+      "data/runs/automation/20261114T015057Z/extended391/ETH/perp_instrument_meta.parquet": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6"
+    },
+    "persistence": "Executedpositiononly;longonlyL5/H.02/E.0075,finiteEWMS16D3strictK.0075,entryriskV6cap.05625,M4actualmaturefundmedianR.0075/VW9;gatesonlynew/reversed,retainactualqandnormalexit.",
+    "exit_buffer_fraction": 0.0075,
+    "complete_30day_folds": 13,
+    "tail_fold_days": 1,
+    "positive_complete30d_folds_required": 10,
+    "signal_mode": "finite_EWMslope_entry_gated_reversal_entry_vol",
+    "trend_lookback_days": 16,
+    "entry_volatility_window_days": 6,
+    "entry_volatility_ceiling": 0.05625,
+    "long_entry_return_hurdle": 0.02,
+    "short_entry_return_hurdle": 0.02,
+    "trend_estimator": "finite_normalized_exponentially_weighted_mean_slope",
+    "trend_mean_includes_latest_complete_close": true,
+    "trend_window_days": 16,
+    "trend_decay_numerator": 15,
+    "trend_decay_denominator": 17,
+    "trend_slope_lag_days": 3,
+    "trend_slope_hurdle_fraction": 0.0075,
+    "trend_gate_scope": "new_or_reversed_position_only",
+    "entry_funding_filter": "volatility_relative_median_of_latest_N_eligible_realized_settlements_new_entry_only",
+    "entry_funding_min_age_hours": 1,
+    "entry_funding_max_age_hours": 36,
+    "entry_funding_missing_policy": "block_new_or_reversed_entry_only",
+    "entry_funding_availability_policy": "source_available_ts_lte_daily_signal_available_ts",
+    "entry_funding_outflow_formula": "max(desired_direction*median(lastNeligible_realized_rates),0)",
+    "entry_funding_same_direction_policy": "retain_actual_quantity_without_funding_exit",
+    "entry_funding_outflow_cap": 0.0002,
+    "entry_funding_even_median_policy": "arithmetic_mean_of_two_middle_rates",
+    "entry_funding_settlement_count": 4,
+    "entry_funding_budget_formula": "min(hardcap,ratio*pastVW_sample_daily_logvol*latest_eligible_completed_actual_interval_hours/24)",
+    "entry_funding_interval_source": "latesteligibleactualfundingTime_minus_immediatepredecessor;bothavailable<=signal;nsdifference/3600000000000_Decimal28;missing/nonpositive/over36hblocksnewentry",
+    "entry_funding_volatility_ratio": 0.0075,
+    "entry_funding_budget_volatility_window_days": 9,
+    "continuous_oos_days": 391,
+    "walk_forward_tail_days": 1,
+    "prior_370day_source_fingerprint": "ee5d9cea8f250a0b6151bf8d6ff7824ce472dc557265589594b200f0110de0f9",
+    "entry_direction_mode": "long_only",
+    "entry_side_policy": "negative base desired ->0;normal exit andsameq unchanged"
+  },
+  "native_rows": [
+    {
+      "fingerprint": "a34c0bd6e523db4188b1b6f27d2e8efec9b679106ae19d9cd97438b6dbae3984",
+      "lag_days": 3,
+      "age_hours": 36,
+      "M": 4,
+      "status": "rejected",
+      "result_available": true,
+      "report": "research/experiments/20261117T182123Z/report.json"
+    },
+    {
+      "fingerprint": "2d507bae7fcad21f0cee312f173fc1f75c24a0d7df574965a3c25d7fa60dc4cb",
+      "lag_days": 2,
+      "age_hours": 36,
+      "M": 4,
+      "status": "rejected",
+      "result_available": true,
+      "report": "research/experiments/20261118T062535Z/report.json"
+    },
+    {
+      "fingerprint": "837c883b294d38362de4d77bbf8977e1656bffdad55f2e12c0917b6291c957ae",
+      "lag_days": 4,
+      "age_hours": 36,
+      "M": 4,
+      "status": "rejected",
+      "result_available": true,
+      "report": "research/experiments/20261118T062535Z/report.json"
+    },
+    {
+      "fingerprint": "9324083614d7c1c42fe0dce4d5f02b3ca50af40cf8a64f4d26f110c5f02e73d5",
+      "lag_days": 1,
+      "age_hours": 36,
+      "M": 4,
+      "status": "rejected",
+      "result_available": true,
+      "report": "research/experiments/20261118T102907Z/report.json"
+    },
+    {
+      "fingerprint": "59f76f9f2455232c24de58e19662cfe976af5420036ac4df37f819ef6b80ef13",
+      "lag_days": 5,
+      "age_hours": 36,
+      "M": 4,
+      "status": "rejected",
+      "result_available": true,
+      "report": "research/experiments/20261118T102907Z/report.json"
+    }
+  ],
+  "graphs": [
+    {
+      "BTC_N": 1000,
+      "D": 3,
+      "ETH_native": "a34c0bd6e523db4188b1b6f27d2e8efec9b679106ae19d9cd97438b6dbae3984",
+      "matches": [
+        "7fc833127158c4a3bb8c598fbe74614a706870039d2b3ad44ef82bd5e7c5a92f"
+      ]
+    },
+    {
+      "BTC_N": 1500,
+      "D": 3,
+      "ETH_native": "a34c0bd6e523db4188b1b6f27d2e8efec9b679106ae19d9cd97438b6dbae3984",
+      "matches": [
+        "d60187d5e9fc23a6accf31c615e0f85e8b9618736d8879fbe69cc4d8f055f18f"
+      ]
+    },
+    {
+      "BTC_N": 1750,
+      "D": 3,
+      "ETH_native": "a34c0bd6e523db4188b1b6f27d2e8efec9b679106ae19d9cd97438b6dbae3984",
+      "matches": [
+        "fc83c231bdd8d6734f7c5a23a3f5d788685d996a5afcfbe716586a901edd4e0d"
+      ]
+    },
+    {
+      "BTC_N": 1000,
+      "D": 2,
+      "ETH_native": "2d507bae7fcad21f0cee312f173fc1f75c24a0d7df574965a3c25d7fa60dc4cb",
+      "matches": [
+        "92866ecf49bccb0ec760b3d5733961734a08ab5b34c2de168c6814cf65a155de"
+      ]
+    },
+    {
+      "BTC_N": 1500,
+      "D": 2,
+      "ETH_native": "2d507bae7fcad21f0cee312f173fc1f75c24a0d7df574965a3c25d7fa60dc4cb",
+      "matches": []
+    },
+    {
+      "BTC_N": 1750,
+      "D": 2,
+      "ETH_native": "2d507bae7fcad21f0cee312f173fc1f75c24a0d7df574965a3c25d7fa60dc4cb",
+      "matches": []
+    },
+    {
+      "BTC_N": 1000,
+      "D": 4,
+      "ETH_native": "837c883b294d38362de4d77bbf8977e1656bffdad55f2e12c0917b6291c957ae",
+      "matches": [
+        "8266fbde7e0867f490b879035cb7d5b93d0ff657393590f900886101ed960194"
+      ]
+    },
+    {
+      "BTC_N": 1500,
+      "D": 4,
+      "ETH_native": "837c883b294d38362de4d77bbf8977e1656bffdad55f2e12c0917b6291c957ae",
+      "matches": []
+    },
+    {
+      "BTC_N": 1750,
+      "D": 4,
+      "ETH_native": "837c883b294d38362de4d77bbf8977e1656bffdad55f2e12c0917b6291c957ae",
+      "matches": []
+    },
+    {
+      "BTC_N": 1000,
+      "D": 1,
+      "ETH_native": "9324083614d7c1c42fe0dce4d5f02b3ca50af40cf8a64f4d26f110c5f02e73d5",
+      "matches": [
+        "004f49f2e3a408908a7c451062f481364d2139edcf3f1ece9c1045587fa12ece"
+      ]
+    },
+    {
+      "BTC_N": 1500,
+      "D": 1,
+      "ETH_native": "9324083614d7c1c42fe0dce4d5f02b3ca50af40cf8a64f4d26f110c5f02e73d5",
+      "matches": []
+    },
+    {
+      "BTC_N": 1750,
+      "D": 1,
+      "ETH_native": "9324083614d7c1c42fe0dce4d5f02b3ca50af40cf8a64f4d26f110c5f02e73d5",
+      "matches": []
+    },
+    {
+      "BTC_N": 1000,
+      "D": 5,
+      "ETH_native": "59f76f9f2455232c24de58e19662cfe976af5420036ac4df37f819ef6b80ef13",
+      "matches": [
+        "ea0b3aab0615c2352e8b6d4eb1953bda41b09c168892b9c0ebf1a8ae7cfd702b"
+      ]
+    },
+    {
+      "BTC_N": 1500,
+      "D": 5,
+      "ETH_native": "59f76f9f2455232c24de58e19662cfe976af5420036ac4df37f819ef6b80ef13",
+      "matches": []
+    },
+    {
+      "BTC_N": 1750,
+      "D": 5,
+      "ETH_native": "59f76f9f2455232c24de58e19662cfe976af5420036ac4df37f819ef6b80ef13",
+      "matches": []
+    }
+  ],
+  "new_financial_or_account_calculations": 0
+}
