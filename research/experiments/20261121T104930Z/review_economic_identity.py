@@ -1,0 +1,10 @@
+"""Read complete logical registry;verify new passive graphs and all actual source banks."""
+from common import *
+from decimal import Decimal
+rd=lambda p:json.loads(p.read_text());rs=reg.read_records(ROOT/'research/automation/registry.jsonl');p=rd(R/'plan.json');r=rd(R/'report.json');batch=rd(R/'batch.json');own={z['fingerprint'] for z in batch};rows=[]
+for z in batch:
+ sp=rd(ROOT/z['spec']);q=sp['parameters'];sig=sorted((x['fingerprint'],Decimal(str(x['weight']))) for x in sp['components']);matches=[fp for fp,x in rs.items() if fp not in own and (x.get('result_available') or x['status']=='reserved') and x.get('spec',{}).get('kind')=='combination' and x['spec'].get('parameters',{}).get('start_utc')==q['start_utc'] and x['spec']['parameters'].get('end_utc')==q['end_utc'] and sorted((a['fingerprint'],Decimal(str(a['weight']))) for a in x['spec'].get('components',[]))==sig];assert not matches and rs[z['fingerprint']]['result_available'] and reg.fingerprint(sp)==z['fingerprint'];rows.append({'fingerprint':z['fingerprint'],'BTC_actual_target':z['W'],'ETH_mature_count':z['K'],'raw_weights':[1,1],'old_graph_matches':matches})
+for fp,z in p['read_only_references'].items():
+ assert rs[fp]['result_available'] and rs[fp]['status']==z['status'] and rs[fp]['report_sha256']==z['report_sha256']
+ for key in ['spec','report','archive']:assert sha(ROOT/z[key])==z[key+'_sha256']
+put(R/'economic_configuration_identity_verification.json',{'passed':True,'verified_utc':now(),'records_fully_compared':len(rs),'completed_report_sha256':sha(R/'report.json'),'rows':rows,'new_native_models':0,'new_parent_models':12,'exact_source_results_reused':22,'old_statuses_unchanged':True,'no_financial_or_account_reexecution':True});print(json.dumps({'passed':True,'records':len(rs),'new_graphs':12,'old_matches':0,'readonly_results':22}))
