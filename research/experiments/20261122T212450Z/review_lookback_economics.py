@@ -1,0 +1,10 @@
+"""Compare completed ETH bank cashflows; every amount comes from saved actual reports."""
+from common import *
+rd=lambda p:json.loads(p.read_text());p=rd(R/'plan.json');r=rd(R/'report.json');before=sha(R/'report.json');sources={int(z['K']):r['read_only_configs'][fp] for fp,z in p['read_only_references'].items() if z['scope']=='native' and z['asset']=='ETH' and z['role']=='component'};assert set(sources)=={4,5,6};rows=[]
+for L,c in sorted(sources.items()):
+ for k,s in c['scenes'].items():
+  base=sources[5]['scenes'][k];fields=['gross_reference_price_PnL_usdt','funding_usdt','cost_usdt','final_NAV_usdt','executions','round_trips'];delta={f:s[f]-base[f] for f in fields};assert abs(delta['final_NAV_usdt']-delta['gross_reference_price_PnL_usdt']-delta['funding_usdt']+delta['cost_usdt'])<1e-8;rows.append({'existing_native_fingerprint':c['fingerprint'],'actual_origin_status_unchanged':c['status'],'ETH_L':L,'cost':int(k),'actual_saved':{f:s[f] for f in fields},'delta_to_old_L5':delta,'positive_complete30d_folds_1x':c['positive_complete_30d_folds_1x'],'read_only_existing_component':True})
+for c in r['configs'].values():
+ for k,s in c['scenes'].items():
+  cross=next(z for z in rd(R/'previous_H_comparison.json')['rows'] if z['fingerprint']==c['fingerprint'] and z['cost']==int(k));child_delta=sources[int(c['K'])]['scenes'][k]['final_NAV_usdt']-sources[5]['scenes'][k]['final_NAV_usdt'];assert abs(cross['return_difference_pp']-100*child_delta/18750)<1e-10
+assert sha(R/'report.json')==before;put(R/'lookback_economic_review.json',{'passed':True,'recorded_utc':now(),'financial_report_sha256_unchanged':before,'rows':rows,'matched_same_BTC_parent_return_difference_exactly_from_actual_ETH_bank_difference':True,'component_historical_statuses_not_reclassified':True,'parent_gate_pass_does_not_imply_component_robustness_or_new_independent_evidence':True,'no_financial_or_account_execution':True});print('PASS9oldETHsavedscenes;L4moreturnover,L6lessgross/cost;all12matchedparentdifferencesreconcile')
