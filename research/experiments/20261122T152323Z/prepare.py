@@ -1,0 +1,164 @@
+"""Prepare independent saved-bank combinations and four original frozen windows with actual funding coverage."""
+import ast,copy,gzip,hashlib,json,subprocess,sys,urllib.parse
+from datetime import datetime,timezone,timedelta
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[3];R=Path(__file__).resolve().parent
+P=ROOT/'research/experiments/20261122T132351Z';MARK=P
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+rel=lambda p:str(p.relative_to(ROOT))
+now=lambda:datetime.now(timezone.utc).isoformat().replace('+00:00','Z')
+rd=lambda p:json.loads(p.read_text())
+def put(p,x):p.write_text(json.dumps(x,ensure_ascii=False,indent=2,allow_nan=False)+'\n')
+def gz(p):return json.loads(gzip.decompress(p.read_bytes()))
+PID=rd(R/'startup.json')['branch_lock_broker_pid'];assert PID==592492
+assert any('FLOCK' in l and str(PID) in l.split() for l in Path('/proc/locks').read_text().splitlines())
+assert not (R/'plan.json').exists() and not (R/'account_windows.json').exists()
+sources={rel(P/n):sha(P/n) for n in ['common.py', 'engine.py', 'core391_tail_safe.py', 'market.py', 'recent.py', 'portfolio.py', 'run.py', 'audit.py', 'audit_native.py', 'audit_helpers_complete.py', 'audit_incremental.py', 'audit_l4h02.py', 'audit_candidate.py', 'audit_fewm.py', 'project_l4h02_batch.py', 'project_candidate_batch.py', 'project_fewm_batch.py', 'parent_units.py', 'exports.py', 'observe_l4h02.py', 'observe_fewm.py', 'observe_candidate.py', 'journal.py', 'forward.py', 'forward_registry.py', 'audit_forward.py', 'commands.py', 'checks.py', 'collect.py', 'finalize.py', 'publish.py', 'definitions.py', 'freeze_confirmation.py', 'sizing_units.py']}
+domain=rd(R/'engine_domain_binding.json');assert domain['passed'] and sha(R/'engine.py')==domain['new_source_sha256'] and sha(P/'engine.py')==domain['old_source_sha256'] and sha(R/'core391_tail_safe.py')==sha(P/'core391_tail_safe.py')
+put(R/'template_sources.json',{'recorded_utc':now(),'source_SHA256':sources,'native_cashflow_accounting_bytes_exact':True,'engine_observation_age_parameter_extended':False,'SMA_mark_only_template':'research/experiments/20261121T145102Z/forward.py','SMA_original_daily_kernel_not_called_this_markonly_window':True,'transport_change_only':'Cap TLS maximum1.2 before binding;verified certificates,HTTP1.1,bounded3publicGETattempts;original finance kernels unchanged and unchanged observer kernels/registration.'})
+for f in P.glob('funding*_nov*_preflight.json'):(R/f.name).write_bytes(f.read_bytes())
+put(R/'immutable_settlement_sources.json',{'passed':True,'copied_without_relabeling_capture_UTC':{rel(R/f.name):{'prior_path':rel(f),'sha256':sha(f)} for f in P.glob('funding*_nov*_preflight.json')},'no_cashflows_reused':True})
+previous=rd(P/'next_research_state.json')['UTC_midnight_handoff'];qlo=min(previous['next_SMA_single_window_utc'][0],previous['next_L4_FEWM_window_utc'][0]);qend=(datetime.fromisoformat(max(previous['next_SMA_single_window_utc'][1],previous['next_L4_FEWM_window_utc'][1]).replace('Z','+00:00'))+timedelta(minutes=1)).isoformat().replace('+00:00','Z');qstartms=int(datetime.fromisoformat(qlo.replace('Z','+00:00')).timestamp()*1000);qendms=int(datetime.fromisoformat(qend.replace('Z','+00:00')).timestamp()*1000)
+if not (R/'window_funding_preflight.json').exists():
+ attempts=[];responses={};rawdir=R/'window_funding_responses';rawdir.mkdir(exist_ok=True)
+ for asset in ['BTC','ETH']:
+  params={'symbol':asset+'USDT','startTime':qstartms,'endTime':qendms,'limit':1000};url='https://fapi.binance.com/fapi/v1/fundingRate?'+urllib.parse.urlencode(params)
+  for attempt in range(1,4):
+   started=now();z=subprocess.run(['curl','--ipv4','--compressed','--http1.1','--tlsv1.2','--tls-max','1.2','--silent','--show-error','--connect-timeout','10','--max-time','30','--write-out','\n%{http_code}',url],cwd=ROOT,capture_output=True,timeout=65)
+   body,code=z.stdout.rsplit(b'\n',1) if b'\n' in z.stdout else (z.stdout,b'000');f=rawdir/(asset+'_'+str(attempt)+'.json.gz');f.write_bytes(gzip.compress(body,mtime=0));item={'asset':asset,'url':url,'started_utc':started,'finished_utc':now(),'http_status':int(code),'curl_exit_code':z.returncode,'raw':rel(f),'sha256':sha(f),'raw_body_sha256':hashlib.sha256(body).hexdigest(),'bytes':len(body),'stderr':z.stderr.decode(errors='replace')};attempts.append(item);put(R/'window_funding_preflight_attempts.json',attempts)
+   if z.returncode==0 and int(code)==200:responses[asset]=json.loads(body);break
+  else:raise RuntimeError('Public funding preflight failed; no reserve or model/account calculation has occurred')
+  assert isinstance(responses[asset],list) and len(responses[asset])<1000
+ assert all(isinstance(xs,list) for xs in responses.values())
+ assert all(qstartms<int(z['fundingTime'])<=qendms and 'fundingRate' in z and 'markPrice' in z for xs in responses.values() for z in xs),responses
+ fresh={'recorded_utc':now(),'public_fields_by_asset':responses,'query_window_utc':[qlo,qend],'all_pages_completed':True,'HTTP_receipts':attempts,'purpose':'Fresh complete actual settlement lookup before reserve; no nominal funding schedule assumed.'};put(R/'window_funding_preflight.json',fresh);assert sha(R/'funding08_nov17_preflight.json')==sha(P/'funding08_nov17_preflight.json')
+else:
+ fresh=rd(R/'window_funding_preflight.json');responses=fresh['public_fields_by_asset'];attempts=fresh['HTTP_receipts']
+ assert fresh['query_window_utc']==[qlo,qend] and fresh['all_pages_completed']
+ for z in attempts:
+  assert z['http_status']==200 and z['curl_exit_code']==0 and sha(ROOT/z['raw'])==z['sha256']
+  assert hashlib.sha256(gzip.decompress((ROOT/z['raw']).read_bytes())).hexdigest()==z['raw_body_sha256']
+ assert all(qstartms<int(z['fundingTime'])<=qendms for xs in responses.values() for z in xs)
+known_fields={a:[] for a in ['BTC','ETH']}
+for file in R.glob('funding*_nov*_preflight.json'):
+ for a,rows in rd(file)['public_fields_by_asset'].items():known_fields[a].extend(rows)
+newfields={a:[z for z in responses[a] if z not in known_fields[a]] for a in ['BTC','ETH']}
+if any(newfields.values()):
+ newsource=R/('funding_actual_nov'+str(datetime.fromisoformat(qlo.replace('Z','+00:00')).day)+'_'+R.name+'_preflight.json');put(newsource,{'recorded_utc':fresh['recorded_utc'],'public_fields_by_asset':newfields,'query_window_utc':fresh['query_window_utc'],'HTTP_receipts':attempts,'all_pages_completed':True,'purpose':'First actually captured current-window new public settlements;exact timestamps/marks/rates retained before reserve,nominal schedule not assumed.'})
+
+# Persist first actual newly observed settlements before ANY current reservation.
+first1916=R/'funding16_nov19_preflight.json'
+lo1916=int(datetime.fromisoformat(previous['next_L4_FEWM_window_utc'][0].replace('Z','+00:00')).timestamp()*1000)
+hi1916=int(datetime.fromisoformat(previous['next_L4_FEWM_window_utc'][1].replace('Z','+00:00')).timestamp()*1000)
+if not first1916.exists():
+ actual1916={a:[z for z in responses[a] if lo1916<int(z['fundingTime'])<=hi1916] for a in ['BTC','ETH']}
+ assert any(actual1916.values()),'No actual new settlement evidence returned in the preregistered window; no reservation or account calculation yet'
+ put(first1916,{'recorded_utc':fresh['recorded_utc'],'public_fields_by_asset':actual1916,'original_query_window_utc':fresh['query_window_utc'],'HTTP_receipts':attempts,'purpose':'First actually observed new settlements in Nov19 L4/FEWM14:10-16:10 window; filename nominal16 is a label only, original actual millisecond fundingTime/mark/rate/captureUTC never rounded or relabeled.'})
+source1916=rd(first1916)
+for a in ['BTC','ETH']:
+ covered=[z for z in source1916['public_fields_by_asset'][a] if qstartms<int(z['fundingTime'])<=qendms]
+ assert [z for z in responses[a] if int(z['fundingTime']) in {int(v['fundingTime']) for v in source1916['public_fields_by_asset'][a]}]==covered
+if (P/first1916.name).exists():assert sha(first1916)==sha(P/first1916.name)
+assert not (R/'reserve_batches').exists()
+put(R/'actual16_nov19_prebinding_source.json',{'passed':True,'source':rel(first1916),'sha256':sha(first1916),'first_capture_utc':source1916['recorded_utc'],'fresh_query_utc':fresh['recorded_utc'],'actual_public_fields':source1916['public_fields_by_asset'],'before_any_current_reservation':True,'cashflow_calculations':0,'actual_timestamp_not_nominal_schedule_used':True})
+
+known8=R/'funding08_nov20_preflight.json';assert known8.exists() and sha(known8)==sha(P/known8.name)
+doc8=rd(known8);assert doc8['recorded_utc']=='2026-11-20T21:14:36.626765Z'
+for asset in ['BTC','ETH']:
+ known={int(z['fundingTime']) for z in doc8['public_fields_by_asset'][asset]};assert [z for z in responses[asset] if int(z['fundingTime']) in known]==[z for z in doc8['public_fields_by_asset'][asset] if qstartms<int(z['fundingTime'])<=qendms]
+put(R/'actual08_nov20_prebinding_source.json',{'passed':True,'source':rel(known8),'sha256':sha(known8),'first_capture_utc':doc8['recorded_utc'],'actual_public_fields':doc8['public_fields_by_asset'],'fresh_complete_window_query':rel(R/'window_funding_preflight.json'),'before_any_current_reservation':True,'cashflow_calculations':0,'original_source_UTC_and_exact_timestamp_not_relabelled':True})
+first20=R/'funding00_nov20_preflight.json';assert first20.exists() and sha(first20)==sha(P/first20.name)
+doc20=rd(first20);assert doc20['recorded_utc']=='2026-11-20T13:12:16.739946Z'
+for asset in ['BTC','ETH']:
+ known={int(z['fundingTime']) for z in doc20['public_fields_by_asset'][asset]};assert [z for z in responses[asset] if int(z['fundingTime']) in known]==[z for z in doc20['public_fields_by_asset'][asset] if qstartms<int(z['fundingTime'])<=qendms]
+put(R/'actual00_nov20_prebinding_source.json',{'passed':True,'source':rel(first20),'sha256':sha(first20),'first_capture_utc':doc20['recorded_utc'],'actual_public_fields':doc20['public_fields_by_asset'],'fresh_complete_window_query':rel(R/'window_funding_preflight.json'),'before_any_current_reservation':True,'cashflow_calculations':0,'original_source_UTC_bytes_not_relabelled':True})
+first00=R/'funding00_nov19_preflight.json';assert first00.exists() and sha(first00)==sha(P/first00.name)
+original00=rd(first00);assert original00['recorded_utc']==previous['original_Nov19_00_capture_utc']
+covered00={a:[z for z in original00['public_fields_by_asset'][a] if qstartms<int(z['fundingTime'])<=qendms] for a in ['BTC','ETH']}
+for a in ['BTC','ETH']:
+ known={int(z['fundingTime']) for z in original00['public_fields_by_asset'][a]};assert [z for z in responses[a] if int(z['fundingTime']) in known]==covered00[a]
+first08=R/'funding08_nov19_preflight.json'
+actual08={a:list(responses[a]) for a in ['BTC','ETH']} # Exact returned milliseconds,including08:00:00.002;never substitute nominal schedule.
+if not first08.exists():
+ assert all(len(v)==1 for v in actual08.values()),actual08
+ put(first08,{**fresh,'public_fields_by_asset':actual08,'purpose':'Original first observed actualNov19_08 source;preserve this UTC/bytes before ANY current reservation;no cashflows calculated.'})
+source08=rd(first08)
+for a in ['BTC','ETH']:
+ covered=[z for z in source08['public_fields_by_asset'][a] if qstartms<int(z['fundingTime'])<=qendms]
+ assert [z for z in responses[a] if int(z['fundingTime']) in {int(v['fundingTime']) for v in source08['public_fields_by_asset'][a]}]==covered
+put(R/'actual08_nov19_prebinding_source.json',{'passed':True,'source':rel(first08),'sha256':sha(first08),'first_capture_utc':source08['recorded_utc'],'fresh_current_query_utc':fresh['recorded_utc'],'actual_public_fields':source08['public_fields_by_asset'],'recorded_before_any_current_reservation':True,'original_first_source_retained_without_relabeling':True,'cashflow_calculations':0})
+put(R/'actual00_nov19_prebinding_source.json',{'passed':True,'source':rel(first00),'sha256':sha(first00),'first_capture_utc':original00['recorded_utc'],'fresh_current_query_utc':fresh['recorded_utc'],'actual_public_fields':original00['public_fields_by_asset'],'current_covered_original_fields':covered00,'query_window_utc':fresh['query_window_utc'],'recorded_before_any_current_reservation':True,'first_source_copied_without_relabeling':True,'cashflow_calculations':0})
+
+put(R/'new_actual_settlement_preflight.json',{**fresh,'fresh_complete_window_query':True,'original_first_source_retained':True,'no_cashflow_calculation_yet':True});assert sha(R/'funding00_nov18_preflight.json')==sha(P/'funding00_nov18_preflight.json')
+assert sha(R/'funding08_nov18_preflight.json')==sha(P/'funding08_nov18_preflight.json');assert rd(R/'funding08_nov18_preflight.json')['recorded_utc']==previous['original_Nov18_08_capture_utc']
+known08=rd(R/'funding08_nov18_preflight.json')['public_fields_by_asset']
+for asset in ['BTC','ETH']:
+ known={int(x['fundingTime']):x for x in known08[asset]};covered=[x for x in known08[asset] if qstartms<=int(x['fundingTime'])<=qendms];observed=[x for x in responses[asset] if int(x['fundingTime']) in known];assert observed==covered
+
+first16=R/'funding16_nov18_preflight.json';assert first16.exists() and sha(first16)==sha(P/first16.name)
+known16=rd(first16);assert known16['recorded_utc']==previous['original_Nov18_16_capture_utc']
+covered16={a:[z for z in known16['public_fields_by_asset'][a] if qstartms<=int(z['fundingTime'])<=qendms] for a in ['BTC','ETH']}
+for a in ['BTC','ETH']:
+ known_times={int(z['fundingTime']) for z in known16['public_fields_by_asset'][a]};observed=[z for z in responses[a] if int(z['fundingTime']) in known_times];assert observed==covered16[a]
+put(R/'actual16_prebinding_source.json',{'passed':True,'source':rel(first16),'sha256':sha(first16),'first_capture_utc':known16['recorded_utc'],'fresh_current_query_utc':fresh['recorded_utc'],'original_known16_public_fields':known16['public_fields_by_asset'],'current_query_covered_known16_fields':covered16,'current_query_includes_known16':any(covered16.values()),'first_source_copied_without_relabeling':True,'before_any_current_reserve':True,'cashflow_calculations':0})
+previous=rd(P/'next_research_state.json')['UTC_midnight_handoff'];windows={}
+for a in ['SMA','candidate','l4h02','fewm']:
+ if a=='SMA':start=rd(P/'forward_state.json')['last_completed_mark_utc'];daily=rd(P/'forward_state.json')['next_daily_decision_utc']
+ else:
+  point=rd(ROOT/('research/automation/'+a+'_forward_latest.json'));state=rd(ROOT/point['state']);start=datetime.fromtimestamp(point['cutoff_ns']/1e9,timezone.utc).isoformat().replace('+00:00','Z');daily=previous['next_daily_decision_by_account'][a]
+ cut=(datetime.fromisoformat(start.replace('Z','+00:00'))+timedelta(hours=2)).isoformat().replace('+00:00','Z')
+ assert start==previous['next_SMA_single_window_utc' if a in ['SMA','candidate'] else 'next_L4_FEWM_window_utc'][0]
+ events=[];d=daily
+ while d<=cut:
+  if start<d:events.append(d)
+  d=(datetime.fromisoformat(d.replace('Z','+00:00'))+timedelta(days=1)).isoformat().replace('+00:00','Z')
+ nextdaily=d
+ startms=int(datetime.fromisoformat(start.replace('Z','+00:00')).timestamp()*1000);cutms=int(datetime.fromisoformat(cut.replace('Z','+00:00')).timestamp()*1000);fr={s:[z for z in responses[s] if startms<int(z['fundingTime'])<=cutms] for s in ['BTC','ETH']} if a!='SMA' else {'BTC':[],'ETH':[]};times=sorted({int(z['fundingTime']) for xs in fr.values() for z in xs});windows[a]={'start_utc':start,'cutoff_utc':cut,'expected_daily_events_utc':events,'expected_funding_utc':[datetime.fromtimestamp(t/1000,timezone.utc).isoformat().replace('+00:00','Z') for t in times],'expected_funding_by_asset':fr,'expected_funding_records':3*sum(map(len,fr.values())),'next_daily_decision_utc':nextdaily}
+windows.update(recorded_utc=now(),rules='All4originalNov20dailyand3perpsactual00fundingalreadybookedonce;all4_original_Nov21_daily_and_actual00_funding_already_completed_allcurrent_markonly_no_repeat;freshownfundinganddailyaredeclaredbeforeanyreserve;deriveeachactualfundingeventfromcompletepubliclookup;all3perpsNov19fundingandall4dailyalreadybookedonce;exactownstart/cutoffanddaily/fundingeventsaredeclaredinthisdocument. Freshcompleteactualfundinglookup,bookonlyown(start,cutoff],neverrepeatNov18_00or00:01. Preserveeachq/desired/entry/costsandfullNAV;bookonlynewactualownfundingcash;candidateETHalreadyclosedNov19_00:01;full73SPOTauthorityexact72prefix_readonly. No researchsizing/risk-rule adoption;all3perpsalreadybookedknown16once,queryallcurrentwindowsforactualspecialevents.')
+put(R/'account_windows.json',windows)
+lp=copy.deepcopy(rd(P/'l4h02_resume_plan.json'));point=ROOT/'research/automation/l4h02_forward_latest.json';lp.update(frozen_at_utc=now(),recorded_utc=now(),round=R.name,previous_pointer=rd(point),previous_pointer_sha256=sha(point),cutoff_utc=windows['l4h02']['cutoff_utc'],cutoff_ns=int(datetime.fromisoformat(windows['l4h02']['cutoff_utc'].replace('Z','+00:00')).timestamp()*1e9),branch_lock_broker_pid=PID,rules=windows['rules']);put(R/'l4h02_resume_plan.json',lp)
+for path,h in lp['source_sha256'].items():assert sha(ROOT/path)==h,path
+authorities={}
+for n in [66,67,68,69,70]:
+ path=ROOT/previous[f'SMA_full{n}_authority'];data=gz(path);assert sha(path)==previous[f'SMA_full{n}_sha256'] and all(len(data[a]['1d'])==n for a in ['BTC','ETH']);authorities[str(n)]={'path':rel(path),'sha256':sha(path),'days':n}
+for high,low in [(70,69),(69,68),(68,67),(67,66)]:
+ a=gz(ROOT/authorities[str(high)]['path']);b=gz(ROOT/authorities[str(low)]['path']);assert all(a[s]['1d'][:low]==b[s]['1d'] for s in ['BTC','ETH'])
+old65=gz(ROOT/'research/experiments/20261113T033939Z/forward_inputs.json.gz');d66=gz(ROOT/authorities['66']['path']);assert all(d66[a]['1d'][:65]==old65[a]['1d'] for a in ['BTC','ETH'])
+path=ROOT/previous['SMA_full71_authority'];assert sha(path)==previous['SMA_full71_sha256'];data71=gz(path);assert all(len(data71[a]['1d'])==71 and data71[a]['1d'][:70]==gz(ROOT/authorities['70']['path'])[a]['1d'] for a in ['BTC','ETH']);authorities['71']={'path':rel(path),'sha256':sha(path),'days':71}
+path72=ROOT/previous['SMA_full72_authority'];assert sha(path72)==previous['SMA_full72_sha256'];data72=gz(path72);assert all(len(data72[a]['1d'])==72 and data72[a]['1d'][:71]==data71[a]['1d'] for a in ['BTC','ETH']);authorities['72']={'path':rel(path72),'sha256':sha(path72),'days':72}
+put(R/'SMA_full72_prebinding.json',{'passed':True,'recorded_utc':now(),'authority':rel(path72),'sha256':sha(path72),'full71_authority':authorities['71']['path'],'full71_sha256':authorities['71']['sha256'],'full72_realSPOT_exact71prefix':True,'current_original_daily_event_count':0,'role':'Prior full72 authority retained; current mark-only window reuses complete full73 readonly','all4_original_Nov20_daily_already_booked':True,'current_minute_packets_not_reinterpreted_as_daily_context':True,'before_any_current_reservation':True,'no_financial_or_account_calculations':True})
+put(R/'SMA_background_authorities.json',{'passed':True,'authorities':authorities,'full71_to_original65_prefix_exact':True,'current_SMA_window_requires_one_original_daily_decision':False,'all4_original_Nov19_daily_already_booked':True,'complete71_authority_readonly_reused':True,'current_minute_packet_is_not_daily_authority':True})
+known21=R/'funding_actual_nov21_next_first_preflight.json';assert sha(known21)==sha(P/known21.name)=='325f558da4bb29a1211f41f9e4c57a752d788f583bfcae16d793a3dd6a2e0e8f';doc21=rd(known21);assert doc21['recorded_utc']=='2026-11-21T13:20:15.157839Z';t21={str(int(z['fundingTime'])*1000000) for xs in doc21['public_fields_by_asset'].values() for z in xs};assert t21=={'1795219200002000000'}
+for asset in ['BTC','ETH']:assert [z for z in responses[asset] if str(int(z['fundingTime'])*1000000) in t21]==[z for z in doc21['public_fields_by_asset'][asset] if qstartms<int(z['fundingTime'])<=qendms]
+oldcheck=rd(P/'account_window_verification.json');prior21={a:{t:oldcheck['full_chain_once_counts'][a]['funding'].get(t,0) for t in t21} for a in ['candidate','l4h02','fewm']};assert {a:sum(v.values()) for a,v in prior21.items()}=={'candidate':6,'l4h02':6,'fewm':6};inc21={a:{t:sum(3 for xs in windows[a]['expected_funding_by_asset'].values() for z in xs if str(int(z['fundingTime'])*1000000)==t) for t in t21} for a in prior21};assert {a:sum(xs.values()) for a,xs in inc21.items()}=={'candidate':0,'l4h02':0,'fewm':0}
+expected21={a:{t:prior21[a][t]+inc21[a][t] for t in t21} for a in prior21};assert all(n==6 for v in expected21.values() for n in v.values())
+put(R/'actual00_nov21_prebinding_source.json',{'passed':True,'source':rel(known21),'sha256':sha(known21),'first_capture_utc':doc21['recorded_utc'],'actual_public_fields':doc21['public_fields_by_asset'],'prior_unique_counts':prior21,'expected_current_increment_counts':inc21,'expected_current_full_chain_counts':expected21,'before_any_current_reservation':True,'fresh_exact_actual_window_fields_equal':True,'no_financial_or_account_calculations':True})
+path73=ROOT/previous['SMA_full73_authority'];assert sha(path73)==previous['SMA_full73_sha256'];data73=gz(path73);assert all(len(data73[a]['1d'])==73 and data73[a]['1d'][:72]==data72[a]['1d'] for a in ['BTC','ETH']);authorities['73']={'path':rel(path73),'sha256':sha(path73),'days':73}
+put(R/'SMA_full73_prebinding.json',{'passed':True,'recorded_utc':now(),'authority':rel(path73),'sha256':sha(path73),'full72_authority':rel(path72),'full72_sha256':sha(path72),'full73_realSPOT_exact72prefix':True,'current_original_daily_event_count':0,'current_minute_packets_are_not_daily_authority':True,'prior_original_daily_context_readonly':True,'before_any_current_reservation':True})
+put(R/'SMA_background_authorities.json',{'passed':True,'authorities':authorities,'full73_to_original65_prefix_exact':True,'current_SMA_window_requires_one_original_daily_decision':False,'all4_original_Nov21_daily_already_booked':True,'complete73_authority_readonly_reused':True,'current_minute_packet_is_not_daily_authority':True})
+known08=R/'funding_actual_nov21_08_1795248000003_next_first_preflight.json';assert sha(known08)==sha(P/known08.name)=='cb0972d5c74ff1863e13d18fe7eb65a605bb897e611507636a7741138437d808';doc08=rd(known08);assert doc08['recorded_utc']=='2026-11-21T21:14:55.193067Z';times08={str(int(z['fundingTime'])*1000000) for xs in doc08['public_fields_by_asset'].values() for z in xs};assert times08=={'1795248000003000000'}
+for asset in ['BTC','ETH']:
+ ids={int(z['fundingTime']) for z in doc08['public_fields_by_asset'][asset]};assert [z for z in responses[asset] if int(z['fundingTime']) in ids]==[z for z in doc08['public_fields_by_asset'][asset] if qstartms<int(z['fundingTime'])<=qendms]
+prior08check=rd(P/'account_window_verification.json');prior08={a:{t:prior08check['full_chain_once_counts'][a]['funding'].get(t,0) for t in times08} for a in ['candidate','l4h02','fewm']};assert {a:sum(row.values()) for a,row in prior08.items()}=={'candidate':6,'l4h02':6,'fewm':6};inc08={a:{t:sum(3 for xs in windows[a]['expected_funding_by_asset'].values() for z in xs if str(int(z['fundingTime'])*1000000)==t) for t in times08} for a in prior08};assert {a:sum(row.values()) for a,row in inc08.items()}=={'candidate':0,'l4h02':0,'fewm':0};expected08={a:{t:prior08[a][t]+inc08[a][t] for t in times08} for a in prior08};put(R/'actual08_nov21_prebinding_source.json',{'passed':True,'source':rel(known08),'sha256':sha(known08),'first_capture_utc':doc08['recorded_utc'],'actual_public_fields':doc08['public_fields_by_asset'],'prior_unique_counts':prior08,'expected_current_increment_counts':inc08,'expected_current_full_chain_counts':expected08,'before_any_current_reservation':True,'fresh_exact_actual_window_fields_equal':True,'no_financial_or_account_calculations':True})
+known21_16=R/'funding_actual_nov21_16_1795276800000_next_first_preflight.json';assert sha(known21_16)==sha(P/known21_16.name)=='47c8cd048c477ef0a860dba45e5298f3402141f0f3f353364835826b8d4ecc96';doc21_16=rd(known21_16);assert doc21_16['recorded_utc']=='2026-11-22T05:30:01.859371Z';times21_16={str(int(z['fundingTime'])*1000000) for xs in doc21_16['public_fields_by_asset'].values() for z in xs};assert times21_16=={'1795276800000000000'}
+for asset in ['BTC','ETH']:
+ ids={int(z['fundingTime']) for z in doc21_16['public_fields_by_asset'][asset]};assert [z for z in responses[asset] if int(z['fundingTime']) in ids]==[z for z in doc21_16['public_fields_by_asset'][asset] if qstartms<int(z['fundingTime'])<=qendms]
+prior21_16={a:{t:oldcheck['full_chain_once_counts'][a]['funding'].get(t,0) for t in times21_16} for a in ['candidate','l4h02','fewm']};assert {a:sum(v.values()) for a,v in prior21_16.items()}=={'candidate':6,'l4h02':6,'fewm':6};inc21_16={a:{t:sum(3 for xs in windows[a]['expected_funding_by_asset'].values() for z in xs if str(int(z['fundingTime'])*1000000)==t) for t in times21_16} for a in prior21_16};assert {a:sum(v.values()) for a,v in inc21_16.items()}=={'candidate':0,'l4h02':0,'fewm':0};expected21_16={a:{t:prior21_16[a][t]+inc21_16[a][t] for t in times21_16} for a in prior21_16}
+put(R/'actual16_nov21_prebinding_source.json',{'passed':True,'source':rel(known21_16),'sha256':sha(known21_16),'first_capture_utc':doc21_16['recorded_utc'],'actual_public_fields':doc21_16['public_fields_by_asset'],'prior_unique_counts':prior21_16,'expected_current_increment_counts':inc21_16,'expected_current_full_chain_counts':expected21_16,'before_any_current_reservation':True,'fresh_exact_actual_window_fields_equal':True,'no_financial_or_account_calculations':True,'cashflow_rule':'Each own signed q and actual mark/rate; income unamplified, outflow stressed1/2/3. No amount borrowed from another account.'})
+names2=['actual16_nov21_prebinding_source.json','reconcile_actual16.py','actual08_nov21_prebinding_source.json','SMA_full73_prebinding.json','funding08_nov20_preflight.json','actual08_nov20_prebinding_source.json','SMA_full72_prebinding.json','funding00_nov20_preflight.json','actual00_nov20_prebinding_source.json','funding16_nov19_preflight.json','actual16_nov19_prebinding_source.json','funding08_nov19_preflight.json','actual08_nov19_prebinding_source.json','observe_l4h02.py','observe_fewm.py','observe_candidate.py','forward.py','forward_registry.py','audit_incremental.py','audit_l4h02.py','audit_fewm.py','audit_candidate.py','audit_forward.py','window_funding_preflight.json','immutable_settlement_sources.json','SMA_background_authorities.json','actual00_nov21_prebinding_source.json','new_actual_settlement_preflight.json','funding08_nov18_preflight.json','funding00_nov19_preflight.json','actual00_nov19_prebinding_source.json']+(['funding16_nov18_preflight.json','actual16_prebinding_source.json'] if (R/'actual16_prebinding_source.json').exists() else [])
+binding={rel(R/n):sha(R/n) for n in names2};binding.update({rel(f):sha(f) for f in R.glob('funding*_nov*_preflight.json')});binding.update(lp['source_sha256']);binding.update({z['path']:z['sha256'] for z in authorities.values()})
+put(R/'original_accounts_binding.json',{'recorded_utc':now(),'sources_sha256':binding,'original_kernels_unchanged':True,'frozen_before_current_account_calculation':True,'SMA_current_original_daily_adapter':None,'SMA_current_mark_only_adapter':rel(R/'forward.py'),'SMA_last_actual_original_daily_adapter':previous['SMA_original_latest_daily_adapter'],'SMA_current_full_daily_context':73,'SMA_prior_full72_authority':authorities['72'],'SMA_full72_authority':authorities['72'],'SMA_full71_authority':authorities['71'],'all4windows_predeclared_before_reserve':True})
+put(R/'read_failures.json',{'facts':rd(R/'read_failures.json')['facts']+[{**z,'resolved':True,'reason':'Later bounded publicGET succeeded before any reserve/calculation'} for z in attempts if z['curl_exit_code'] or z['http_status']!=200]})
+put(R/'implementation_plan.json',{'frozen_utc':now(),**rd(R/'research_design.json')})
+assert {a:windows[a]['expected_daily_events_utc'] for a in ['SMA','candidate','l4h02','fewm']}=={'SMA':[],'candidate':[],'l4h02':['2026-11-22T00:01:00Z'],'fewm':['2026-11-22T00:01:00Z']}
+print(json.dumps({'prepared':True,'financial_calculations':0,'account_calculations':0,'funding_by_asset':responses,'windows':{a:[windows[a]['start_utc'],windows[a]['cutoff_utc']] for a in ['SMA','candidate','l4h02','fewm']},'full69authority':authorities['69']}),flush=True)
+
+known20_16=R/'funding_actual_nov20_next_first_preflight.json';assert sha(known20_16)==sha(P/known20_16.name);meta20_16=rd(known20_16);assert meta20_16['recorded_utc']=='2026-11-21T05:15:47.350340Z';priorcheck=rd(P/'account_window_verification.json');times20_16={str(int(z['fundingTime'])*1000000) for xs in meta20_16['public_fields_by_asset'].values() for z in xs};priorcounts20_16={a:{t:priorcheck['full_chain_once_counts'][a]['funding'].get(t,0) for t in times20_16} for a in ['candidate','l4h02','fewm']};assert {a:sum(v.values()) for a,v in priorcounts20_16.items()}=={'candidate':6,'l4h02':6,'fewm':6};increments20_16={a:{t:sum(3 for xs in windows[a]['expected_funding_by_asset'].values() for z in xs if str(int(z['fundingTime'])*1000000)==t) for t in times20_16} for a in ['candidate','l4h02','fewm']};assert {a:sum(v.values()) for a,v in increments20_16.items()}=={'candidate':0,'l4h02':0,'fewm':0};expected20_16={a:{t:priorcounts20_16[a][t]+increments20_16[a][t] for t in times20_16} for a in priorcounts20_16};assert all(n==6 for v in expected20_16.values() for n in v.values());put(R/'actual16_nov20_prebinding_source.json',{'passed':True,'source':rel(known20_16),'sha256':sha(known20_16),'first_capture_utc':meta20_16['recorded_utc'],'actual_public_fields':meta20_16['public_fields_by_asset'],'before_any_current_reservation':True,'prior_unique_counts':priorcounts20_16,'expected_current_increment_counts':increments20_16,'expected_current_full_chain_counts':expected20_16,'current_own_coverage_from_actual_timestamps':True,'no_cashflows_calculated':True});print('PASSNov20_16priorall3six/currentallzero/sourcefirstUTCunchanged;sourcefirstUTCunchanged')
+
+# Bind the original first Nov22 source before ANY reservation, retaining exact milliseconds and first UTC.
+known22=R/'funding_actual_nov22_00_1795305600001_next_first_preflight.json';assert sha(known22)==sha(P/known22.name)=='6847c6a41ec04c41496d5e927b3c533b6808827579652a2784419bfafa8b44c5';doc22=rd(known22);assert doc22['recorded_utc']=='2026-11-22T13:55:24.752610Z';times22={str(int(z['fundingTime'])*1000000) for xs in doc22['public_fields_by_asset'].values() for z in xs};assert times22=={'1795305600001000000'}
+for asset in ['BTC','ETH']:
+ ids={int(z['fundingTime']) for z in doc22['public_fields_by_asset'][asset]};assert [z for z in responses[asset] if int(z['fundingTime']) in ids]==[z for z in doc22['public_fields_by_asset'][asset] if qstartms<int(z['fundingTime'])<=qendms]
+oldcheck22=rd(P/'account_window_verification.json');prior22={a:{t:oldcheck22['full_chain_once_counts'][a]['funding'].get(t,0) for t in times22} for a in ['candidate','l4h02','fewm']};assert all(v==0 for row in prior22.values() for v in row.values());inc22={a:{t:sum(3 for xs in windows[a]['expected_funding_by_asset'].values() for z in xs if str(int(z['fundingTime'])*1000000)==t) for t in times22} for a in prior22};assert {a:sum(v.values()) for a,v in inc22.items()}=={'candidate':0,'l4h02':6,'fewm':6};expected22={a:{t:prior22[a][t]+inc22[a][t] for t in times22} for a in prior22}
+put(R/'actual00_nov22_prebinding_source.json',{'passed':True,'source':rel(known22),'sha256':sha(known22),'first_capture_utc':doc22['recorded_utc'],'actual_public_fields':doc22['public_fields_by_asset'],'prior_unique_counts':prior22,'expected_current_increment_counts':inc22,'expected_current_full_chain_counts':expected22,'current_daily_events_by_account':{a:windows[a]['expected_daily_events_utc'] for a in ['SMA','candidate','l4h02','fewm']},'before_any_current_reservation':True,'cashflow_calculations':0,'actual_timestamp_not_nominal_schedule':True})
+ab=rd(R/'original_accounts_binding.json');ab['sources_sha256'].update({rel(R/n):sha(R/n) for n in ['actual00_nov22_prebinding_source.json',known22.name]});ab['current_perp_daily_contract']='Original daily kernel byteexact; L4/FEWM Nov22daily only, SMA/candidate mark only; each own funding and any original-kernel fills declared/audited.';put(R/'original_accounts_binding.json',ab)
