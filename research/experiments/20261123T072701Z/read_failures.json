@@ -1,0 +1,90 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261123T072701Z/observe_candidate.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-23T07:42:32.345509Z",
+      "finished_utc": "2026-11-23T07:42:55.187618Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261123T072701Z/candidate.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261123T072701Z/observe_candidate.py\", line 38, in <module>\n    sys.argv=[str(SOURCE/'prospective_observer.py'),'run','--round',R.name,'--cutoff',WIN['cutoff_utc'],'--lock-pid',str(PID)];obs.main()\n                                                                                                                               ^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 131, in main\n    packet=capture(cut,previous,binding,rawdir,receipts);packetpath=rawdir/'packet.json.gz';gzput(packetpath,packet);put(window/'input_manifest.json',{'packet':rel(packetpath),'sha256':c.sha(packetpath),'provenance':receipts,'plan_sha256':binding['plan_sha256']})\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261123T072701Z/observe_candidate.py\", line 35, in capture\n    try:return original_capture(cutoff,previous,binding,rawdir,receipts)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 64, in capture\n    hours=bars('/fapi/v1/markPriceKlines',a,'1h',c.HOUR,(lo//c.HOUR)*c.HOUR-c.HOUR,(cutoff//c.HOUR-1)*c.HOUR)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 55, in bars\n    data=request(path,{'symbol':a+'USDT','interval':interval,'startTime':cursor,'endTime':end//c.MS,'limit':1500},rawdir,receipts);assert isinstance(data,list) and data\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261123T072701Z/observe_candidate.py\", line 33, in cached\n    return request(path,params,rd,rs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261123T072701Z/observe_candidate.py\", line 19, in request\n    receipts.append(item);raise RuntimeError('Public GET failed three bounded attempts;original account preserved')\n                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Public GET failed three bounded attempts;original account preserved\n",
+      "resolved": true,
+      "resolution": "Pending original candidate capture/account completed once through isolated retry2; source kernels unchanged, exact-URL cached public bytes verified with original UTC, all4 failed raw attempts retained; independent full39065-point NAV audit and3 finishes exit0.",
+      "recovery_proof": "research/experiments/20261123T072701Z/candidate_capture_recovery_effective.json",
+      "actual_recovery_native_chunk": "e9dc35"
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261123T072701Z/observe_candidate_retry1.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-23T07:47:13.643638Z",
+      "finished_utc": "2026-11-23T07:47:14.036176Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261123T072701Z/candidate_retry1_candidate_recovery.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261123T072701Z/observe_candidate_retry1.py\", line 25, in <module>\n    obs.request=request;sys.argv=[str(SOURCE/'prospective_observer.py'),'run','--round',R.name,'--cutoff',WIN['cutoff_utc'],'--lock-pid',str(PID)];obs.main()\n                                                                                                                                                   ^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 131, in main\n    packet=capture(cut,previous,binding,rawdir,receipts);packetpath=rawdir/'packet.json.gz';gzput(packetpath,packet);put(window/'input_manifest.json',{'packet':rel(packetpath),'sha256':c.sha(packetpath),'provenance':receipts,'plan_sha256':binding['plan_sha256']})\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261026T110637Z/prospective_observer.py\", line 48, in capture\n    c.check_window(previous,cutoff,now());rawdir.mkdir(parents=True,exist_ok=False)\n                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py\", line 1311, in mkdir\n    os.mkdir(self, mode)\nFileExistsError: [Errno 17] File exists: '/home/desktop/Documents/Codex/EquiTide/data/raw/binance/candidate_forward/20261123T072701Z'\n",
+      "resolved": true,
+      "resolution": "Pending original candidate capture/account completed once through isolated retry2; source kernels unchanged, exact-URL cached public bytes verified with original UTC, all4 failed raw attempts retained; independent full39065-point NAV audit and3 finishes exit0.",
+      "recovery_proof": "research/experiments/20261123T072701Z/candidate_capture_recovery_effective.json",
+      "actual_recovery_native_chunk": "e9dc35"
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/markPriceKlines?symbol=BTCUSDT&interval=1h&startTime=1795338000000&endTime=1795345200000&limit=1500",
+      "started_utc": "2026-11-23T07:42:40.055015+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261123T072701Z/http_attempt_0001.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLSmin1.2,separate bounded attempts",
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "resolved": true,
+      "resolution": "Same exact URL has validated successful saved public bytes; original capture time retained, including earlier source reuse documented before first reserve. Successful original account packet and audit retained."
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/markPriceKlines?symbol=BTCUSDT&interval=1h&startTime=1795338000000&endTime=1795345200000&limit=1500",
+      "started_utc": "2026-11-23T07:42:45.067685+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261123T072701Z/http_attempt_0002.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLSmin1.2,separate bounded attempts",
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "resolved": true,
+      "resolution": "Same exact URL has validated successful saved public bytes; original capture time retained, including earlier source reuse documented before first reserve. Successful original account packet and audit retained."
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/markPriceKlines?symbol=BTCUSDT&interval=1h&startTime=1795338000000&endTime=1795345200000&limit=1500",
+      "started_utc": "2026-11-23T07:42:50.089873+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261123T072701Z/http_attempt_0003.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "curl compressed verifiedTLSmin1.2,separate bounded attempts",
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "resolved": true,
+      "resolution": "Same exact URL has validated successful saved public bytes; original capture time retained, including earlier source reuse documented before first reserve. Successful original account packet and audit retained."
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=BTCUSDT&startTime=1795334400003&endTime=1795350600000&limit=1000",
+      "started_utc": "2026-11-23T07:49:11.147034+00:00",
+      "http_status": 0,
+      "raw": "data/raw/binance/candidate_forward/20261123T072701Z/capture_retry2/recovery2_requests/http_attempt_0000.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "transport": "Unchanged verifiedTLS1.2HTTP1.1,bounded3attempts;only unreserved capture resumed",
+      "curl_exit_code": 35,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "resolved": true,
+      "resolution": "Same exact URL has validated successful saved public bytes; original capture time retained, including earlier source reuse documented before first reserve. Successful original account packet and audit retained."
+    }
+  ]
+}
