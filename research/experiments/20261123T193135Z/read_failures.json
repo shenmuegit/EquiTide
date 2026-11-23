@@ -1,0 +1,21 @@
+{
+  "facts": [
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261123T193135Z/audit_forward.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-23T19:54:12.067744Z",
+      "finished_utc": "2026-11-23T19:54:17.425400Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261123T193135Z/forward_audit.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261123T193135Z/audit_forward.py\", line 88, in <module>\n    if __name__=='__main__':main()\n                            ^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261123T193135Z/audit_forward.py\", line 48, in main\n    assert len(daily)==74 and [b[0] for b in daily]==list(range(events[0]-60000-74*86400000,events[0]-60000,86400000))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "resolved": true,
+      "root_cause": "The inherited readonly daily auditor still expected74 total daily bars and73 old-prefix bars. Actual current inputs have75 closed daily bars and74 exact old-prefix bars. Original daily calculation already finished, not rerun.",
+      "resolution": "A separately bound readonly full75 auditor passed with unchanged account/financial results; only registry finish resumed, no reserve or model/account execution repeated",
+      "effective_verification": "forward_daily_audit_recovery_verification.json"
+    }
+  ]
+}

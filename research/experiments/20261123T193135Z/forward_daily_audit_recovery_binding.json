@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "bound_utc": "2026-11-23T19:55:38.214261+00:00",
+  "before_readonly_recovery_audit_execution": true,
+  "failed_native_phase": {
+    "chunk_id": "9dead9",
+    "exit_code": 1,
+    "stage": "forward"
+  },
+  "root_cause": "The inherited readonly daily auditor still expected74 total daily bars and73 old-prefix bars. Actual current inputs have75 closed daily bars and74 exact old-prefix bars. Original daily calculation already finished, not rerun.",
+  "old_bound_auditor": "research/experiments/20261123T193135Z/audit_forward.py",
+  "old_bound_auditor_sha256": "09d6aba6001278fd5cafb14969b4a507fc159f9791cf3d626c0a34e9217aef4d",
+  "new_readonly_auditor": "research/experiments/20261123T193135Z/audit_forward_full75.py",
+  "new_readonly_auditor_sha256": "62ba71f5d699902934ec1fed665c42cf4291d528f3844c6cda393d8b78eeaa2b",
+  "only_source_changes": [
+    "len(daily)74->75",
+    "UTC history range74days->75days",
+    "exact old overlap count73->74"
+  ],
+  "financial_and_current_original_account_evidence_sha256_before": {
+    "research/experiments/20261123T193135Z/report.json": "8206bbea59ee7e57746507f04de146d805b19bf727b5e8dbde4ca7af7a19dda9",
+    "research/experiments/20261123T193135Z/forward_report.json": "4badb44c7418ada8ced40a92d638b0fb219506ce3f931cec881da0fa5da413c5",
+    "research/experiments/20261123T193135Z/forward_state.json": "15991b8ad2254044d57f6d4f9111fcf2ca8c0c9854dcb8b7161fe6bc822990a9",
+    "research/experiments/20261123T193135Z/forward_inputs.json.gz": "9d2029bd7e88337021dd05d2ffc7e4bcfb1510683816027a226dd813a04cfc0e",
+    "research/experiments/20261123T193135Z/forward_resume_plan.json": "4eb551bba2db27ce706d40927861a3ad7be9557344888e3511ee5ab1ac70d75a",
+    "research/experiments/20261123T193135Z/forward_batch.json": "c0cc440699f9ef16919ace9c4ced45cd43b800a7bc9608fe6f7311d0b250b5f3",
+    "research/experiments/20261123T193135Z/forward.py": "7057c06c1d24b841cff2005feaa9fa35f7dd7d3fa39fb5334031b06ab1a1dd70",
+    "research/experiments/20261123T193135Z/forward_registry.py": "e332816bf4314ae9561271d6c7d7a0a5d83bfe67e61ff27aaa5b72e198e0f456"
+  },
+  "original_bound_auditor_preserved": true,
+  "new_model_or_account_execution_allowed": false
+}

@@ -1,0 +1,12 @@
+"""Compare saved ETH trend-hurdle bank decisions and cashflows; no model/account execution."""
+from common import *
+rd=lambda p:json.loads(p.read_text());plan=rd(R/'plan.json');rh=sha(R/'report.json');banks={}
+for z in plan['read_only_references'].values():
+ if z['scope']=='native' and z['asset']=='ETH' and z['role']=='component':
+  sp=rd(ROOT/z['spec']);q=sp['parameters'];K=q['trend_slope_hurdle_fraction'];assert K in [.00625,.0075,.00875] and q['trend_slope_lag_days']==3 and q['entry_funding_budget_volatility_window_days']==9;arc=json.loads(gzip.decompress((ROOT/z['archive']).read_bytes()));assert sha(ROOT/z['archive'])==z['archive_sha256'] and arc['spec']==sp;banks[K]=(z,arc)
+assert set(banks)=={.00625,.0075,.00875};rows=[];keys=['gross_reference_price_PnL_usdt','funding_usdt','cost_usdt','final_NAV_usdt','round_trips','executions']
+for K,(ref,arc) in sorted(banks.items()):
+ for cost,z in arc['scenes'].items():
+  old=banks[.0075][1]['scenes'][cost];a,b=z['decisions'],old['decisions'];assert len(a)==len(b)==391 and [x['signal_available_ts_ns'] for x in a]==[x['signal_available_ts_ns'] for x in b];v,o=z['summary'],old['summary'];delta={key:v[key]-o[key] for key in keys};assert abs(delta['gross_reference_price_PnL_usdt']+delta['funding_usdt']-delta['cost_usdt']-delta['final_NAV_usdt'])<1e-8
+  rows.append({'ETH_trend_hurdle_K':K,'cost_multiplier':int(cost),'fingerprint':ref['fingerprint'],'different_saved_slowgate_directions_to_K0075':sum(x['policy_audit']['slowgate_direction']!=y['policy_audit']['slowgate_direction'] for x,y in zip(a,b)),'different_saved_final_desired_days_to_K0075':sum(x['desired_direction']!=y['desired_direction'] for x,y in zip(a,b)),'actual_summary':{key:v[key] for key in keys},'delta_to_old_K0075':delta,'same_full_NAV_to_K0075':v['NAV_sha256_f64le']==o['NAV_sha256_f64le'],'NAV_sha256':v['NAV_sha256_f64le']})
+assert len(rows)==9 and sha(R/'report.json')==rh;put(R/'trend_hurdle_economic_review.json',{'passed':True,'recorded_utc':now(),'completed_financial_report_sha256_unchanged':rh,'source_bank_capital_usdt':15000,'source_actual_entry_target_usdt':4000,'rows':rows,'cashflow_difference_identity_verified':True,'actual_saved_results_only':True,'new_model_or_account_executions':0,'parent_bank_multiplier_literal_one':True});print(json.dumps({'passed':True,'rows':9,'cost1_nonbaseline':[z for z in rows if z['cost_multiplier']==1 and z['ETH_trend_hurdle_K']!=.0075]}))
