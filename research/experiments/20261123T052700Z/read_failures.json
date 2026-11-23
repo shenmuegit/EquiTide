@@ -1,0 +1,19 @@
+{
+  "facts": [
+    {
+      "operation": "Ad hoc read-only source metadata inspection before SMA forward stage",
+      "native_chunk": "7cc4a7",
+      "actual_exit_code": 1,
+      "recorded_utc": "2026-11-23T05:52:02.967422+00:00",
+      "attempted_path": "research/experiments/20261123T052700Z/forward_resume_plan.json",
+      "actual_error": "FileNotFoundError: [Errno 2] No such file or directory: 'research/experiments/20261123T052700Z/forward_resume_plan.json'",
+      "cause": "Diagnostic requested a generated SMA resume-plan file before the first scheduled forward stage had run. No backtest or account evaluation was invoked by the failed read.",
+      "resolved": true,
+      "resolution_required": "After the original forward stage succeeds, read and verify its actually generated resume plan; never replay completed financial or account work.",
+      "resolution": "Original forward stage completed once with native exit0. Generated resume plan now read successfully; frozen terminal and independently audited full74122-point NAV verified without replay. See diagnostic_source_read_recovery.json.",
+      "recovery_recorded_utc": "2026-11-23T05:54:35.200477+00:00",
+      "native_recovery_chunk": "2e59cf",
+      "native_recovery_exit_code": 0
+    }
+  ]
+}
