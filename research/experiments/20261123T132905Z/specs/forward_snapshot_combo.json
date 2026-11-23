@@ -1,0 +1,26 @@
+{
+  "kind": "combination",
+  "family": "daily-sma-hysteresis-initial-capital",
+  "logic": {
+    "allocation": "Weights specify fractions of initial 2000 USDT capital, not target weights later. Sum actual already-size-costed component NAVs on exactly identical timestamps; no second scaling, averaging Sharpe or new component backtests.",
+    "rebalance": "No transfers or rebalancing; component absolute NAVs already reflect their specified initial capital and all actual size-dependent costs."
+  },
+  "parameters": {
+    "initial_capital_usdt": 2000,
+    "start_utc": "2026-10-02T00:01:00Z",
+    "end_utc": "2026-11-22T18:30:00Z",
+    "observation_terminal_action": "Mark only; no artificial liquidation; preserve underlying units/cash"
+  },
+  "components": [
+    {
+      "fingerprint": "d80f2be7a45d962d001d0dd24bd4d0093a047277c0b083daf8eb69f453d3418e",
+      "weight": 0.75
+    },
+    {
+      "fingerprint": "5291ab7062bdff03165d6ca7c6b3564832e56b9aad43e6685a557bd9bee711b8",
+      "weight": 0.25
+    }
+  ],
+  "name": "forward_snapshot_combo",
+  "validation_plan": "research/experiments/20261123T132905Z/forward_resume_plan.json"
+}
