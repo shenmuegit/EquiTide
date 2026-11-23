@@ -1,0 +1,85 @@
+{
+  "facts": [
+    {
+      "asset": "BTC",
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=BTCUSDT&startTime=1795372200000&endTime=1795385460000&limit=1000",
+      "started_utc": "2026-11-23T15:40:30.485140Z",
+      "finished_utc": "2026-11-23T15:40:35.504718Z",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "research/experiments/20261123T153007Z/window_funding_responses/BTC_1.json.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "raw_body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "resolved": true,
+      "reason": "Later bounded publicGET succeeded before any reserve/calculation"
+    },
+    {
+      "asset": "BTC",
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate?symbol=BTCUSDT&startTime=1795372200000&endTime=1795385460000&limit=1000",
+      "started_utc": "2026-11-23T15:40:35.505156Z",
+      "finished_utc": "2026-11-23T15:40:40.518351Z",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "research/experiments/20261123T153007Z/window_funding_responses/BTC_2.json.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "raw_body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "resolved": true,
+      "reason": "Later bounded publicGET succeeded before any reserve/calculation"
+    },
+    {
+      "command": [
+        "/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python",
+        "-B",
+        "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261123T153007Z/audit.py"
+      ],
+      "cwd": "/home/desktop/Documents/Codex/EquiTide",
+      "started_utc": "2026-11-23T15:42:42.234159Z",
+      "finished_utc": "2026-11-23T15:42:47.168840Z",
+      "exit_code": 1,
+      "log": "research/experiments/20261123T153007Z/audit.log",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261123T153007Z/audit.py\", line 75, in <module>\n    policy(z,arc['spec'],m);v=native(z,m,m,int(k),None,arc['spec'],counts);verify_recent(v,m,z['summary']);verify_extension(v,m,z['summary']);vectors[fp,k]=v[cm['projections'][ref['asset']]];source_scenes[fp,k]=z['summary'];readonly_curves+=1\n    ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/desktop/Documents/Codex/EquiTide/research/experiments/20261123T153007Z/audit.py\", line 47, in policy\n    assert audit['ungated_desired']==base and audit['slowgate_direction']==gate and audit['trend_gate_applied']==bool(base and base!=actual) and audit['trend_gate_scope']=='new_or_reversed_position_only'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "resolved": true,
+      "resolution": "Read-only recovery audit exited0 (native5b245e); restored exact prior independent policy function, preserving current funding-window coordinates. All12new parent curves,30old native curves,35190funding rows,414fills,990metrics and209376margin checks passed. Bound failed source/log and first financial report bytes retained; zero model/account reruns."
+    },
+    {
+      "type": "audit_recovery_note_schema_assumption",
+      "native_output_chunk": "482a15",
+      "failed_child": "python3 stdin metadata-note writer",
+      "failed_child_exit_code": 1,
+      "error_excerpt": "Traceback (most recent call last): File <stdin>, line 4, AssertionError",
+      "resolved": true,
+      "resolution": "The note writer wrongly assumed read_failures contained only one fact; two earlier BTC public funding TLS35 retries had already been correctly retained/resolved before reserve. Selected the actual audit failure by exact log path instead, preserving all three existing facts. Financial report and completed audit/evaluation unchanged."
+    },
+    {
+      "url": "https://fapi.binance.com/fapi/v1/klines?symbol=BTCUSDT&interval=1m&startTime=1795378140000&endTime=1795385400000&limit=1500",
+      "started_utc": "2026-11-23T15:53:19.786218+00:00",
+      "http_status": 0,
+      "curl_exit_code": 35,
+      "raw": "data/raw/binance/l4h02_forward/20261123T153007Z/http_0002.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 0,
+      "stderr": "curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading\n",
+      "transport": "verifiedTLSmin1.2HTTP1.1 publicGET,bounded3attempts",
+      "resolved": true,
+      "resolution": "Same exact URL has validated successful saved public bytes; original capture time retained, including earlier source reuse documented before first reserve. Successful original account packet and audit retained."
+    },
+    {
+      "type": "closure_metadata_old_mark_only_guard",
+      "native_chunk_id": "a0e98a",
+      "native_exit_code": 1,
+      "failed_source": "research/experiments/20261123T153007Z/closure_metadata_failed_source.py.txt.gz",
+      "failed_source_sha256": "8d9f382d884129f621abb5d795565be9ff36297e310597da08553e64bc60e910",
+      "error_excerpt": "AssertionError at closure_notes.py line45: boundary['next_windows_mark_only'] was asserted true although saved next L4/FEWM windows cross Nov23daily.",
+      "resolved": true,
+      "resolution": "Corrected only the readonly guard to exact saved next-calendar equality and per-account daily events; corrected report aggregation actually exited0 in native93f573. All completed financial and original account bytes remain unchanged; failed source archive retained.",
+      "effective_native_completion": {
+        "chunk_id": "93f573",
+        "exit_code": 0
+      }
+    }
+  ]
+}
