@@ -1,0 +1,9 @@
+"""Pre-reservation exact source/calendar and frozen-kernel checks, without market computation."""
+from common import *
+rd=lambda p:json.loads(p.read_text());w=rd(R/'account_windows.json');pre=rd(R/'actual00_nov22_prebinding_source.json');assert not(R/'reserve_batches').exists()
+assert {a:len(w[a]['expected_daily_events_utc']) for a in ['SMA','candidate','l4h02','fewm']}=={'SMA':0,'candidate':0,'l4h02':0,'fewm':0};assert {a:w[a]['expected_funding_records'] for a in ['SMA','candidate','l4h02','fewm']}=={'SMA':0,'candidate':0,'l4h02':6,'fewm':6};assert pre['sha256']==sha(ROOT/pre['source']) and pre['first_capture_utc']=='2026-11-22T13:55:24.752610Z'
+for n in ['observe_l4h02.py','observe_fewm.py','audit_incremental.py']:assert sha(R/n)==sha(ROOT/'research/experiments/20261121T145102Z'/n)
+assert all(w[a]['next_daily_decision_utc']=='2026-11-23T00:01:00Z' for a in ['l4h02','fewm']) and all(w[a]['next_daily_decision_utc']=='2026-11-23T00:01:00Z' for a in ['SMA','candidate'])
+put(R/'boundary_unit_verification.json',{'passed':True,'recorded_utc':now(),'original_daily_kernels_and_independent_audit_byteexact':True,'actual_00_ms':1795305600001,'original_first_source_UTC_retained':True,'current_expected_daily_counts':{a:len(w[a]['expected_daily_events_utc']) for a in ['SMA','candidate','l4h02','fewm']},'before_any_current_reservation':True,'financial_or_account_calculations':0});print('PASS original daily kernels,exact .001 funding source and per-account boundaries;0 calculations')
+
+new=rd(R/'actual08_nov22_prebinding_source.json');assert new['passed'] and new['sha256']==sha(ROOT/new['source']) and new['first_capture_utc']=='2026-11-22T21:50:17.299563Z' and new['expected_current_increment_counts']=={'candidate':{'1795334400003000000':0},'l4h02':{'1795334400003000000':0},'fewm':{'1795334400003000000':0}}
