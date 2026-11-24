@@ -1,0 +1,102 @@
+{
+  "round": "20261124T013414Z",
+  "recorded_utc": "2026-11-24T02:10:27.112306+00:00",
+  "original_native_failure_chunk": "08210f",
+  "original_native_exit_code": 1,
+  "original_failed_attempts": [
+    {
+      "native_chunk": "08210f",
+      "exit_code": 1,
+      "source": ".git/automation_proofs/20261124T013414Z_publish.py",
+      "source_sha256": "ff910660d501b64129dd5e4c8d6ae6fbedc0cff91d8d35cb51b466810832e271",
+      "commands": [
+        {
+          "command": [
+            "git",
+            "branch",
+            "--show-current"
+          ],
+          "started_utc": "2026-11-24T02:07:07.590812+00:00",
+          "finished_utc": "2026-11-24T02:07:07.592950+00:00",
+          "exit_code": 0,
+          "stdout": "main\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "git",
+            "for-each-ref",
+            "--format=%(refname)",
+            "refs/heads"
+          ],
+          "started_utc": "2026-11-24T02:07:07.593454+00:00",
+          "finished_utc": "2026-11-24T02:07:07.595190+00:00",
+          "exit_code": 0,
+          "stdout": "refs/heads/main\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "git",
+            "rev-parse",
+            "HEAD"
+          ],
+          "started_utc": "2026-11-24T02:07:07.595705+00:00",
+          "finished_utc": "2026-11-24T02:07:07.597191+00:00",
+          "exit_code": 0,
+          "stdout": "4473e6b35dbec611381abf9b001b8443368e3a51\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "git",
+            "fetch",
+            "origin",
+            "main"
+          ],
+          "started_utc": "2026-11-24T02:07:07.597587+00:00",
+          "finished_utc": "2026-11-24T02:07:12.613646+00:00",
+          "exit_code": 128,
+          "stdout": "",
+          "stderr": "fatal: unable to access 'https://github.com/shenmuegit/EquiTide/': GnuTLS, handshake failed: The TLS connection was non-properly terminated.\n"
+        }
+      ],
+      "stage": "precommit HTTPS fetch",
+      "commit_created": false,
+      "sealed_public_R_unchanged": true
+    }
+  ],
+  "successful_precommit_HTTP_receipts": [
+    {
+      "requested_command": [
+        "git",
+        "fetch",
+        "origin",
+        "main"
+      ],
+      "command": [
+        "git",
+        "-c",
+        "http.version=HTTP/1.1",
+        "-c",
+        "http.sslVersion=tlsv1.2",
+        "-c",
+        "http.sslVerify=true",
+        "fetch",
+        "origin",
+        "main"
+      ],
+      "attempt": 1,
+      "maximum_attempts": 3,
+      "started_utc": "2026-11-24T02:10:23.927233+00:00",
+      "finished_utc": "2026-11-24T02:10:27.109384+00:00",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "From https://github.com/shenmuegit/EquiTide\n * branch                main       -> FETCH_HEAD\n"
+    }
+  ],
+  "transport_only_change": "Verified certificates retained;HTTP1.1 andTLSminimum1.2;at most3attempts per fetch/lsremote;no retries of commit/order/account mutations.",
+  "sealed_R_manifest_sha256": "7ec44f146311714784922970adbfbdd40f2b32cb3901c8f9bc145ddb66445ccf",
+  "financial_or_completed_account_replays": 0,
+  "actual_final_push_and_commit_proof": "Recorded after publication in private native receipt,not claimed before commit."
+}

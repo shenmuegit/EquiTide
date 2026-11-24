@@ -1,0 +1,6 @@
+"""Exact current own windows and actual first08 source before any reservation."""
+from common import *
+rd=lambda p:json.loads(p.read_text());w=rd(R/'account_windows.json');f=rd(R/'window_funding_preflight.json');assert not(R/'reserve_batches').exists();assert all(not w[a]['expected_daily_events_utc'] and w[a]['next_daily_decision_utc']=='2026-11-24T00:01:00Z' for a in ['SMA','candidate','l4h02','fewm']);assert {a:w[a]['expected_funding_records'] for a in ['SMA','candidate','l4h02','fewm']}=={'SMA':0,'candidate':0,'l4h02':6,'fewm':6}
+pre=rd(R/'actual08_nov23_prebinding_source.json');assert pre['passed'] and pre['before_any_current_reservation'] and pre['sha256']==sha(ROOT/pre['source']) and pre['first_capture_utc']=='2026-11-23T23:51:12.472710Z'
+for n in ['observe_l4h02.py','observe_fewm.py','audit_incremental.py']:assert sha(R/n)==sha(ROOT/'research/experiments/20261123T233413Z'/n)
+assert rd(R/'SMA_markonly_kernel_identity.json')['passed'];put(R/'boundary_unit_verification.json',{'passed':True,'new_daily_decisions_expected':0,'actual_funding_counts':{a:w[a]['expected_funding_records'] for a in ['SMA','candidate','l4h02','fewm']},'exact_first_actual_timestamp_ns':'1795420800004000000','original_first_capture_UTC_and_fields_retained':True,'before_any_current_reservation':True});print('PASSdaily0/ownfund0,0,6,6/exact.004firstsource/full75markonly')
