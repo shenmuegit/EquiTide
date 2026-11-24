@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/desktop/Documents/Codex/EquiTide/research/experiments/20261124T214055Z/archive_registry.py", line 5, in <module>
+    rd=lambda p:json.loads(p.read_text());start=rd(R/'startup.json');PID=start['branch_lock_broker_pid'];assert any('FLOCK' in l and str(PID) in l.split() for l in Path('/proc/locks').read_text().splitlines());assert rd(R/'registry_archive_plan.json')['planned_before_any_reservation'];main=ROOT/'research/automation/registry.jsonl';sidecar=R/'registry_records.jsonl';assert not sidecar.exists();base=subprocess.check_output(['git','show',start['base_commit']+':research/automation/registry.jsonl'],cwd=ROOT);current=main.read_bytes();assert current.startswith(base) and base.endswith(b'\n');tail=current[len(base):];rows=[json.loads(x) for x in tail.splitlines()];assert len(rows)==32
+                                                                                                                                                                                                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'planned_before_any_reservation'
