@@ -1,0 +1,17 @@
+{
+  "native_chunk_id": "64459c",
+  "exit_code": 1,
+  "recorded_utc": "2026-11-24T05:56:56.997859+00:00",
+  "stage": "supplemental readonly BTC extra-roundtrip attribution",
+  "error": "TypeError: unsupported operand type(s) for +: int and str",
+  "failing_expression": "sum(z['reference_price_PnL_usdt'] for z in extra)",
+  "root_cause": {
+    "actual_ledger_amount_type": "str",
+    "actual_value": "0",
+    "summary_metric_type": "float",
+    "schema": "Exact monetary amounts in individual actual trades are Decimal strings;aggregate display statistics are floats."
+  },
+  "source_archives_readonly": true,
+  "financial_and_completed_account_evaluations_replayed": 0,
+  "intended_recovery": "Decimal parses exact saved monetary strings;use real trade_ts_ns,opening,terminal keys;verify matched executions and extra roundtrip without any strategy or account execution."
+}
