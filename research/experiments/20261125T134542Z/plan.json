@@ -1,0 +1,963 @@
+{
+  "round": "20261125T134542Z",
+  "frozen_at_utc": "2026-11-25T13:56:00.030558Z",
+  "hypothesis": "固定BTC L29、H.03、退出缓冲E.005、已完成10日样本logvol及ROC5严格方向门槛.0025、C3750/N1000；仅改变新建/反转入场波动上限cap=.02625/.0275旧/.02875，sigma>cap才阻止入场，不按当前波动强制已有仓位退出。联合ETH资金费预算已完成日logvol估计窗VW=7/9旧/12天；R.0075、M4、成熟年龄1..36h/保守1h可得延迟、longonly、有限EWMS16 D3/K.0075、L5/H.02/E.0075、入场V6cap.05625、C15000/N4000保持。检验BTC入场风险容忍与ETH资金费预算记忆的联合影响。先按完整定义查重：四角cap.02625/.02875×VW7/12为4个新图，五个旧格只读；代表cap.02625/VW7结果前固定，不重选。原始完整银行乘数[1,1]，总资本18750、资金占比20%/80%、初始目标总敞口5000，不归一化、数量缩放、划拨、再平衡或交叉保证金。",
+  "rules": {
+    "signal": "固定BTC L29、H.03、退出缓冲E.005、已完成10日样本logvol及ROC5严格方向门槛.0025、C3750/N1000；仅改变新建/反转入场波动上限cap=.02625/.0275旧/.02875，sigma>cap才阻止入场，不按当前波动强制已有仓位退出。联合ETH资金费预算已完成日logvol估计窗VW=7/9旧/12天；R.0075、M4、成熟年龄1..36h/保守1h可得延迟、longonly、有限EWMS16 D3/K.0075、L5/H.02/E.0075、入场V6cap.05625、C15000/N4000保持。检验BTC入场风险容忍与ETH资金费预算记忆的联合影响。先按完整定义查重：四角cap.02625/.02875×VW7/12为4个新图，五个旧格只读；代表cap.02625/VW7结果前固定，不重选。原始完整银行乘数[1,1]，总资本18750、资金占比20%/80%、初始目标总敞口5000，不归一化、数量缩放、划拨、再平衡或交叉保证金。",
+    "execution": "Actual native bank cash,quantity,LOT,tick,fees,spread,slippage,volumeimpact,actualfunding,independentmargin/fullNAV reused;0newnative.",
+    "costs": "Fee5bp+halfspread1bp+slip2bp+impact.5*past20samplelogvol*sqrt(actualabsq*OPEN/past20quoteADV).1/2/3execandfundingoutflowstress,positivefundincomeunboosted.LOT/tick/minnotional,participation<=.001,postfee1xentrycollateral,1%adverseclosedhourmarkmaintenanceproxy.Linearperpnosspotborrow.NoL2/TCA/fullhistoricaltiers/tickliquidationproof.",
+    "allocation": "Rawwholebank[1,1],capital3750+15000=18750,20/80,target1000+4000=5000. Full-dollar NAV sum,no normalization,scaling,parentorders,transfers,rebalance,crossmargin.8native+6parent read-only sources;4newparents.",
+    "validation": "Same391day development period2025-10-19T00:01Zto2026-11-14T00:01Z;13full30dayfolds+1daytail,>=10/13positive1xmonths,tailexcluded;recent40day3518x5,extension21day3705+5+5+6;cash/q inherited,onlyfinalcostexit. All reused history,not untouchedfinal orindependentfuture.",
+    "legacy_metadata_resolution": "Newparentdescriptionsderivefromactualchildspecs,oldspecs/reports/statusesunchanged. NandderivedN/Cchangesarecoupled;33closedcontextdays/zeroembargo,nolabelmodel. Completeengine/nativeaccountingbytesidenticaltoprior."
+  },
+  "axes": {
+    "BTC_ENTRY_VOLATILITY_CEILING": [
+      0.02625,
+      0.0275,
+      0.02875
+    ],
+    "ETH_FUNDING_BUDGET_VOLATILITY_WINDOW_DAYS": [
+      7,
+      9,
+      12
+    ]
+  },
+  "axis_semantics": {
+    "W": "BTC entry-only completed10day sample daily logvol ceiling cap=.02625/.0275/.02875 (fraction); block only new/reversed entries when sigma>cap. Existing-position E.005,L29,H.03,ROC5 strict .0025,N1000 fixed.",
+    "K": "ETH funding-budget sample logvol window in completed days;R.0075,M4,age36h,finiteEWMS16D3K.0075,V6cap.05625,N4000 fixed."
+  },
+  "grid": [
+    {
+      "scope": "parent",
+      "role": "candidate",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "NB": 1000,
+      "NE": 4000,
+      "BTC_entry_volatility_ceiling": 0.02625,
+      "ETH_entry_funding_budget_volatility_window_days": 7,
+      "source_fingerprints": [
+        "da7069863b77d53e613ff515a803c4cc465d12ad0b5a4229864a7b1c3228ef23",
+        "5cd3e65984c4a723e3c8291811f0f9a2aed2486ce1f219eaf4bd6b580f96e143"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "readonly": false,
+      "name": "parent_BTCEntryVolCap0p02625_N1000_ETHBudgetVW7_M4_N4000_raw1_1_C3750_15000_391d",
+      "fingerprint": "6cee8a96c86bdd115eafa42d56ce23236f97eecc0ba3ef5cbe296cc598e565cd",
+      "spec": "research/experiments/20261125T134542Z/specs/parent_BTCEntryVolCap0p02625_N1000_ETHBudgetVW7_M4_N4000_raw1_1_C3750_15000_391d.json",
+      "W": 0.02625,
+      "K": 7
+    },
+    {
+      "scope": "parent",
+      "role": "candidate",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "name": "parent_BTCEntryCap0.02625_N1000_ETHSlopeLag3_M4_N4000_raw1_1_C3750_15000_391d",
+      "fingerprint": "f3c67ded27ba2086850a8cf0221ec50f4ba657e063c01f2707bc7ac3d3209955",
+      "spec": "research/experiments/20261124T173957Z/specs/parent_BTCEntryCap0.02625_N1000_ETHSlopeLag3_M4_N4000_raw1_1_C3750_15000_391d.json",
+      "readonly": true,
+      "W": 0.02625,
+      "K": 9,
+      "control_only": false,
+      "NB": 1000,
+      "NE": 4000,
+      "source_fingerprints": [
+        "da7069863b77d53e613ff515a803c4cc465d12ad0b5a4229864a7b1c3228ef23",
+        "a34c0bd6e523db4188b1b6f27d2e8efec9b679106ae19d9cd97438b6dbae3984"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "report": "research/experiments/20261124T173957Z/report.json",
+      "report_sha256": "d127c718917a8303fd59a7b058e450fa0beae8ae080d358c5033a92c225e0774",
+      "spec_sha256": "5300f23c77eb5d46c24e668d83ffb1c72c554268e9d0e9525c504dfd8f562868",
+      "archive": "research/experiments/20261124T173957Z/results/parent_BTCEntryCap0.02625_N1000_ETHSlopeLag3_M4_N4000_raw1_1_C3750_15000_391d.json.gz",
+      "archive_sha256": "c423a7e40458843d40f18c85efec08e87969fca06e8327c3a3e9374e2b192075",
+      "status": "passed"
+    },
+    {
+      "scope": "parent",
+      "role": "candidate",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "NB": 1000,
+      "NE": 4000,
+      "BTC_entry_volatility_ceiling": 0.02625,
+      "ETH_entry_funding_budget_volatility_window_days": 12,
+      "source_fingerprints": [
+        "da7069863b77d53e613ff515a803c4cc465d12ad0b5a4229864a7b1c3228ef23",
+        "a4b17122bd98314bb52f9033edbd9a4240c5a399186b17e7f2eb86dbcd9ddf79"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "readonly": false,
+      "name": "parent_BTCEntryVolCap0p02625_N1000_ETHBudgetVW12_M4_N4000_raw1_1_C3750_15000_391d",
+      "fingerprint": "f55fea6903e6b3de26547e007ad4f539a924c5ef8fbb79cb15ae950c8d863424",
+      "spec": "research/experiments/20261125T134542Z/specs/parent_BTCEntryVolCap0p02625_N1000_ETHBudgetVW12_M4_N4000_raw1_1_C3750_15000_391d.json",
+      "W": 0.02625,
+      "K": 12
+    },
+    {
+      "scope": "parent",
+      "role": "candidate",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "name": "parent_ETHEntryRiskV6Cap0p05625BudgetVW7R0p0075_BTCH0p03Confirm5Min0p0025_391d",
+      "fingerprint": "fd0cca4ec823658db1a7f28cd96c60d0bd2a1f55051fbc4d1c05a618b9fe1760",
+      "spec": "research/experiments/20261117T182123Z/specs/parent_ETHEntryRiskV6Cap0p05625BudgetVW7R0p0075_BTCH0p03Confirm5Min0p0025_391d.json",
+      "readonly": true,
+      "W": 0.0275,
+      "K": 7,
+      "control_only": false,
+      "NB": 1000,
+      "NE": 4000,
+      "source_fingerprints": [
+        "41de4309229b892489a07574af07a73ae93229a35c118558ed60362285e90c89",
+        "5cd3e65984c4a723e3c8291811f0f9a2aed2486ce1f219eaf4bd6b580f96e143"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "report": "research/experiments/20261117T182123Z/report.json",
+      "report_sha256": "9750a447c79c911b8646c6b7179ac818b8c2a8c117f8bd4aff39eea2e02d28a9",
+      "spec_sha256": "7c6c3b47f58fb645bf3d1b64b9971a5d39b66015af057a773914b41ae6739c6b",
+      "archive": "research/experiments/20261117T182123Z/results/parent_ETHEntryRiskV6Cap0p05625BudgetVW7R0p0075_BTCH0p03Confirm5Min0p0025_391d.json.gz",
+      "archive_sha256": "2616fc2ec9f856475f7bffb5b029ba26e8479140c7b7bc95470634b19bb678bf",
+      "status": "passed"
+    },
+    {
+      "scope": "parent",
+      "role": "candidate",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "name": "parent_ETHEntryRiskV6Cap0p05625BudgetVW9R0p0075_BTCH0p03Confirm5Min0p0025_391d",
+      "fingerprint": "7fc833127158c4a3bb8c598fbe74614a706870039d2b3ad44ef82bd5e7c5a92f",
+      "spec": "research/experiments/20261117T182123Z/specs/parent_ETHEntryRiskV6Cap0p05625BudgetVW9R0p0075_BTCH0p03Confirm5Min0p0025_391d.json",
+      "readonly": true,
+      "W": 0.0275,
+      "K": 9,
+      "control_only": false,
+      "NB": 1000,
+      "NE": 4000,
+      "source_fingerprints": [
+        "41de4309229b892489a07574af07a73ae93229a35c118558ed60362285e90c89",
+        "a34c0bd6e523db4188b1b6f27d2e8efec9b679106ae19d9cd97438b6dbae3984"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "report": "research/experiments/20261117T182123Z/report.json",
+      "report_sha256": "9750a447c79c911b8646c6b7179ac818b8c2a8c117f8bd4aff39eea2e02d28a9",
+      "spec_sha256": "6c28d74fe93a4168179d7cdb4f838e567075898944ef91725ddc819ae460c6a4",
+      "archive": "research/experiments/20261117T182123Z/results/parent_ETHEntryRiskV6Cap0p05625BudgetVW9R0p0075_BTCH0p03Confirm5Min0p0025_391d.json.gz",
+      "archive_sha256": "9eb45c54bb4e66771ad03b164866b7b938fab568e198f552a7eb43b54c599f38",
+      "status": "passed"
+    },
+    {
+      "scope": "parent",
+      "role": "candidate",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "name": "parent_ETHEntryRiskV6Cap0p05625BudgetVW12R0p0075_BTCH0p03Confirm5Min0p0025_391d",
+      "fingerprint": "7e684842cbb0090e1b975ff56fe4fd208f791a0afdfb6847077947417b623af6",
+      "spec": "research/experiments/20261117T202125Z/specs/parent_ETHEntryRiskV6Cap0p05625BudgetVW12R0p0075_BTCH0p03Confirm5Min0p0025_391d.json",
+      "readonly": true,
+      "W": 0.0275,
+      "K": 12,
+      "control_only": false,
+      "NB": 1000,
+      "NE": 4000,
+      "source_fingerprints": [
+        "41de4309229b892489a07574af07a73ae93229a35c118558ed60362285e90c89",
+        "a4b17122bd98314bb52f9033edbd9a4240c5a399186b17e7f2eb86dbcd9ddf79"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "report": "research/experiments/20261117T202125Z/report.json",
+      "report_sha256": "d36089112b2906f444cea18e9e71cfedcf42e41dbea28416a209c8081de3b62b",
+      "spec_sha256": "2a4156d69565cb3f65595f0adeb2c5169ceb4b70d982d9e2be1051134b90ff4f",
+      "archive": "research/experiments/20261117T202125Z/results/parent_ETHEntryRiskV6Cap0p05625BudgetVW12R0p0075_BTCH0p03Confirm5Min0p0025_391d.json.gz",
+      "archive_sha256": "d66de22971be4dababe70ce46b47e246277d98635ceec9b8137240cf606cc29a",
+      "status": "passed"
+    },
+    {
+      "scope": "parent",
+      "role": "candidate",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "NB": 1000,
+      "NE": 4000,
+      "BTC_entry_volatility_ceiling": 0.02875,
+      "ETH_entry_funding_budget_volatility_window_days": 7,
+      "source_fingerprints": [
+        "7e63c20ee9efe5a14cd618f1a7b660aff37b265f350135692b24b1edf1dd4e82",
+        "5cd3e65984c4a723e3c8291811f0f9a2aed2486ce1f219eaf4bd6b580f96e143"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "readonly": false,
+      "name": "parent_BTCEntryVolCap0p02875_N1000_ETHBudgetVW7_M4_N4000_raw1_1_C3750_15000_391d",
+      "fingerprint": "a3045fc72b82d0acccd1b6b6adb39e6fa5d73bc68f4ff9bc02d130fbf5025554",
+      "spec": "research/experiments/20261125T134542Z/specs/parent_BTCEntryVolCap0p02875_N1000_ETHBudgetVW7_M4_N4000_raw1_1_C3750_15000_391d.json",
+      "W": 0.02875,
+      "K": 7
+    },
+    {
+      "scope": "parent",
+      "role": "candidate",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "name": "parent_BTCEntryCap0.02875_N1000_ETHSlopeLag3_M4_N4000_raw1_1_C3750_15000_391d",
+      "fingerprint": "4ea0af2f0169ff5be010751b765eab3c9d20e9ba6f63c6e9aa00b7e4ccd875eb",
+      "spec": "research/experiments/20261124T173957Z/specs/parent_BTCEntryCap0.02875_N1000_ETHSlopeLag3_M4_N4000_raw1_1_C3750_15000_391d.json",
+      "readonly": true,
+      "W": 0.02875,
+      "K": 9,
+      "control_only": false,
+      "NB": 1000,
+      "NE": 4000,
+      "source_fingerprints": [
+        "7e63c20ee9efe5a14cd618f1a7b660aff37b265f350135692b24b1edf1dd4e82",
+        "a34c0bd6e523db4188b1b6f27d2e8efec9b679106ae19d9cd97438b6dbae3984"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "report": "research/experiments/20261124T173957Z/report.json",
+      "report_sha256": "d127c718917a8303fd59a7b058e450fa0beae8ae080d358c5033a92c225e0774",
+      "spec_sha256": "214aeec81b4f55b53490c45499534b61d199e149f5f888a0aa16c2c206531fa6",
+      "archive": "research/experiments/20261124T173957Z/results/parent_BTCEntryCap0.02875_N1000_ETHSlopeLag3_M4_N4000_raw1_1_C3750_15000_391d.json.gz",
+      "archive_sha256": "7c4c97e32be44daf8a8ca2e34cd633290b9eeca264c308d17c3889418bbc1991",
+      "status": "passed"
+    },
+    {
+      "scope": "parent",
+      "role": "candidate",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "NB": 1000,
+      "NE": 4000,
+      "BTC_entry_volatility_ceiling": 0.02875,
+      "ETH_entry_funding_budget_volatility_window_days": 12,
+      "source_fingerprints": [
+        "7e63c20ee9efe5a14cd618f1a7b660aff37b265f350135692b24b1edf1dd4e82",
+        "a4b17122bd98314bb52f9033edbd9a4240c5a399186b17e7f2eb86dbcd9ddf79"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "readonly": false,
+      "name": "parent_BTCEntryVolCap0p02875_N1000_ETHBudgetVW12_M4_N4000_raw1_1_C3750_15000_391d",
+      "fingerprint": "7f33c8e3381ff166bde0f743c3e43209bfa8530152270653efbaf3f7a90cb8da",
+      "spec": "research/experiments/20261125T134542Z/specs/parent_BTCEntryVolCap0p02875_N1000_ETHBudgetVW12_M4_N4000_raw1_1_C3750_15000_391d.json",
+      "W": 0.02875,
+      "K": 12
+    }
+  ],
+  "native_grid": [],
+  "benchmark_parent_fingerprint": "102c4b4aa82c9d870d3a8be8ef235a82139aa0518e0a4a2a6d5dcff2de7bb3a4",
+  "base_parent_fingerprint": "6cee8a96c86bdd115eafa42d56ce23236f97eecc0ba3ef5cbe296cc598e565cd",
+  "representative_preset": {
+    "W": 0.02625,
+    "K": 7
+  },
+  "bank_capitals_usdt": [
+    3750,
+    15000
+  ],
+  "raw_component_weights": [
+    1,
+    1
+  ],
+  "read_only_references": {
+    "da7069863b77d53e613ff515a803c4cc465d12ad0b5a4229864a7b1c3228ef23": {
+      "scope": "native",
+      "role": "component",
+      "asset": "BTC",
+      "capital_usdt": 3750,
+      "name": "BTC_L29_H3_E0p005_V10cap0p02625_RecentConfirm5_Min0p0025_391d",
+      "fingerprint": "da7069863b77d53e613ff515a803c4cc465d12ad0b5a4229864a7b1c3228ef23",
+      "spec": "research/experiments/20261116T141010Z/specs/BTC_L29_H3_E0p005_V10cap0p02625_RecentConfirm5_Min0p0025_391d.json",
+      "readonly": true,
+      "W": 0.02625,
+      "K": null,
+      "control_only": true,
+      "N": 1000,
+      "report": "research/experiments/20261116T141010Z/report.json",
+      "report_sha256": "e6bfc7314e1a673f8ea4945d8186d9d2e7d5480ab1265e31ffc45d2952abc612",
+      "spec_sha256": "3959e8fe89c0a8b6d0c3145bc69cd227a9715298f403b9a3a19a9e6aa47608db",
+      "archive": "research/experiments/20261116T141010Z/results/BTC_L29_H3_E0p005_V10cap0p02625_RecentConfirm5_Min0p0025_391d.json.gz",
+      "archive_sha256": "73ca339ed1b20992e369d55d5a70a7656db5a3b6c3facdca563c9bf5a46b2f5b",
+      "status": "passed"
+    },
+    "41de4309229b892489a07574af07a73ae93229a35c118558ed60362285e90c89": {
+      "scope": "native",
+      "role": "component",
+      "asset": "BTC",
+      "capital_usdt": 3750,
+      "name": "BTC_L29_H3_E0p005_V10cap0p0275_RecentConfirm5_Min0p0025_391d",
+      "fingerprint": "41de4309229b892489a07574af07a73ae93229a35c118558ed60362285e90c89",
+      "spec": "research/experiments/20261116T120809Z/specs/BTC_L29_H3_E0p005_V10cap0p0275_RecentConfirm5_Min0p0025_391d.json",
+      "readonly": true,
+      "W": 0.0275,
+      "K": null,
+      "control_only": true,
+      "N": 1000,
+      "report": "research/experiments/20261116T120809Z/report.json",
+      "report_sha256": "28177f8f57e00a981c99a04cf3f9a7a84cac3c42bb6d04345775046189282790",
+      "spec_sha256": "cbb95a0789f3b66a73940e136b14b3460a6227fb323c4906a58adf2453d88d31",
+      "archive": "research/experiments/20261116T120809Z/results/BTC_L29_H3_E0p005_V10cap0p0275_RecentConfirm5_Min0p0025_391d.json.gz",
+      "archive_sha256": "d8b5280fb80d577676f0dbcc2146fa7898d987a4a08dbb18f13240ac57928367",
+      "status": "passed"
+    },
+    "7e63c20ee9efe5a14cd618f1a7b660aff37b265f350135692b24b1edf1dd4e82": {
+      "scope": "native",
+      "role": "component",
+      "asset": "BTC",
+      "capital_usdt": 3750,
+      "name": "BTC_L29_H3_E0p005_V10cap0p02875_RecentConfirm5_Min0p0025_391d",
+      "fingerprint": "7e63c20ee9efe5a14cd618f1a7b660aff37b265f350135692b24b1edf1dd4e82",
+      "spec": "research/experiments/20261116T141010Z/specs/BTC_L29_H3_E0p005_V10cap0p02875_RecentConfirm5_Min0p0025_391d.json",
+      "readonly": true,
+      "W": 0.02875,
+      "K": null,
+      "control_only": true,
+      "N": 1000,
+      "report": "research/experiments/20261116T141010Z/report.json",
+      "report_sha256": "e6bfc7314e1a673f8ea4945d8186d9d2e7d5480ab1265e31ffc45d2952abc612",
+      "spec_sha256": "9587da5df0634afeae2a3802c47cb4c584a11203ad54be56533512e8e08a232b",
+      "archive": "research/experiments/20261116T141010Z/results/BTC_L29_H3_E0p005_V10cap0p02875_RecentConfirm5_Min0p0025_391d.json.gz",
+      "archive_sha256": "46b9d2957dde5c0963033f3d684c77e35fefaf3bbadc877639027df434cc5aff",
+      "status": "passed"
+    },
+    "5cd3e65984c4a723e3c8291811f0f9a2aed2486ce1f219eaf4bd6b580f96e143": {
+      "scope": "native",
+      "role": "component",
+      "asset": "ETH",
+      "capital_usdt": 15000,
+      "name": "ETH_longonly_L5H0p02E0p0075_EWMS16D3K0p0075_EntryRiskV6Cap0p05625_M4_BudgetVW7R0p0075_391d",
+      "fingerprint": "5cd3e65984c4a723e3c8291811f0f9a2aed2486ce1f219eaf4bd6b580f96e143",
+      "spec": "research/experiments/20261117T182123Z/specs/ETH_longonly_L5H0p02E0p0075_EWMS16D3K0p0075_EntryRiskV6Cap0p05625_M4_BudgetVW7R0p0075_391d.json",
+      "readonly": true,
+      "W": null,
+      "K": 7,
+      "control_only": true,
+      "N": 4000,
+      "report": "research/experiments/20261117T182123Z/report.json",
+      "report_sha256": "9750a447c79c911b8646c6b7179ac818b8c2a8c117f8bd4aff39eea2e02d28a9",
+      "spec_sha256": "5314ebb16caa2049e145f9ad373b8020df5f327bb6dec9957ca685b32e5edd5a",
+      "archive": "research/experiments/20261117T182123Z/results/ETH_longonly_L5H0p02E0p0075_EWMS16D3K0p0075_EntryRiskV6Cap0p05625_M4_BudgetVW7R0p0075_391d.json.gz",
+      "archive_sha256": "20d408043c02d8067457052dcdafbbe45fffec57f3460097c546b635bd7ca3b0",
+      "status": "rejected"
+    },
+    "a34c0bd6e523db4188b1b6f27d2e8efec9b679106ae19d9cd97438b6dbae3984": {
+      "scope": "native",
+      "role": "component",
+      "asset": "ETH",
+      "capital_usdt": 15000,
+      "name": "ETH_longonly_L5H0p02E0p0075_EWMS16D3K0p0075_EntryRiskV6Cap0p05625_M4_BudgetVW9R0p0075_391d",
+      "fingerprint": "a34c0bd6e523db4188b1b6f27d2e8efec9b679106ae19d9cd97438b6dbae3984",
+      "spec": "research/experiments/20261117T182123Z/specs/ETH_longonly_L5H0p02E0p0075_EWMS16D3K0p0075_EntryRiskV6Cap0p05625_M4_BudgetVW9R0p0075_391d.json",
+      "readonly": true,
+      "W": null,
+      "K": 9,
+      "control_only": true,
+      "N": 4000,
+      "report": "research/experiments/20261117T182123Z/report.json",
+      "report_sha256": "9750a447c79c911b8646c6b7179ac818b8c2a8c117f8bd4aff39eea2e02d28a9",
+      "spec_sha256": "f28a7f22ca50525433fb41291c129692b81e499b79c3f631707aab7023aae1c8",
+      "archive": "research/experiments/20261117T182123Z/results/ETH_longonly_L5H0p02E0p0075_EWMS16D3K0p0075_EntryRiskV6Cap0p05625_M4_BudgetVW9R0p0075_391d.json.gz",
+      "archive_sha256": "6999d2b1905498e523a7d614307aed02a86fda24f18539fe5fadae758c1f6d3e",
+      "status": "rejected"
+    },
+    "a4b17122bd98314bb52f9033edbd9a4240c5a399186b17e7f2eb86dbcd9ddf79": {
+      "scope": "native",
+      "role": "component",
+      "asset": "ETH",
+      "capital_usdt": 15000,
+      "name": "ETH_longonly_L5H0p02E0p0075_EWMS16D3K0p0075_EntryRiskV6Cap0p05625_M4_BudgetVW12R0p0075_391d",
+      "fingerprint": "a4b17122bd98314bb52f9033edbd9a4240c5a399186b17e7f2eb86dbcd9ddf79",
+      "spec": "research/experiments/20261117T202125Z/specs/ETH_longonly_L5H0p02E0p0075_EWMS16D3K0p0075_EntryRiskV6Cap0p05625_M4_BudgetVW12R0p0075_391d.json",
+      "readonly": true,
+      "W": null,
+      "K": 12,
+      "control_only": true,
+      "N": 4000,
+      "report": "research/experiments/20261117T202125Z/report.json",
+      "report_sha256": "d36089112b2906f444cea18e9e71cfedcf42e41dbea28416a209c8081de3b62b",
+      "spec_sha256": "74dd2c2f5ba30953dc4540af527c541e57d3add6bef62a357110b326ca78b435",
+      "archive": "research/experiments/20261117T202125Z/results/ETH_longonly_L5H0p02E0p0075_EWMS16D3K0p0075_EntryRiskV6Cap0p05625_M4_BudgetVW12R0p0075_391d.json.gz",
+      "archive_sha256": "a4547e5e0a4995dabc44d0929e294eb752b83793e80dc57ee5f4708096b35071",
+      "status": "rejected"
+    },
+    "8c4a819586d938bef2d405290fa78edbd1a95b96dd1ac78ae4802edb7b22abd3": {
+      "scope": "native",
+      "role": "benchmark",
+      "asset": "BTC",
+      "capital_usdt": 3750.0,
+      "name": "extend391_hold_BTC",
+      "fingerprint": "8c4a819586d938bef2d405290fa78edbd1a95b96dd1ac78ae4802edb7b22abd3",
+      "spec": "research/experiments/20261114T015057Z/specs/extend391_hold_BTC.json",
+      "readonly": true,
+      "W": null,
+      "K": null,
+      "control_only": true,
+      "N": 1000,
+      "report": "research/experiments/20261114T015057Z/report.json",
+      "report_sha256": "352b57cf640dda0aa65ae1c8febe29cec1e8e3e1b4660ec29bb3df6090961bfe",
+      "spec_sha256": "217b1a047dbc0d814e7fc7e2ed242bc54b25c7051515522e5974e9f39cff0150",
+      "archive": "research/experiments/20261114T015057Z/results/extend391_hold_BTC.json.gz",
+      "archive_sha256": "00643f3b75c57642c662739049c421cd3f6119200f08289fe0df12db6b20a4bd",
+      "status": "rejected"
+    },
+    "2b5eb3d1a240680f04f3f8a531c4192e154c5aac118ccdfdb47bc164d21e968b": {
+      "scope": "native",
+      "role": "benchmark",
+      "asset": "ETH",
+      "capital_usdt": 15000.0,
+      "name": "extend391_hold_ETH",
+      "fingerprint": "2b5eb3d1a240680f04f3f8a531c4192e154c5aac118ccdfdb47bc164d21e968b",
+      "spec": "research/experiments/20261114T015057Z/specs/extend391_hold_ETH.json",
+      "readonly": true,
+      "W": null,
+      "K": null,
+      "control_only": true,
+      "N": 4000,
+      "report": "research/experiments/20261114T015057Z/report.json",
+      "report_sha256": "352b57cf640dda0aa65ae1c8febe29cec1e8e3e1b4660ec29bb3df6090961bfe",
+      "spec_sha256": "43463dcf113acae5251a8fa20598cb24f0de769b0d029a9c3b1bd7ee15ad4139",
+      "archive": "research/experiments/20261114T015057Z/results/extend391_hold_ETH.json.gz",
+      "archive_sha256": "873c76f8a6c868ab06afad5c955002f0361e1b0d58a4445e317c3cbb2a940b08",
+      "status": "rejected"
+    },
+    "102c4b4aa82c9d870d3a8be8ef235a82139aa0518e0a4a2a6d5dcff2de7bb3a4": {
+      "scope": "parent",
+      "role": "benchmark",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "name": "extend391_parent_matched_hold",
+      "fingerprint": "102c4b4aa82c9d870d3a8be8ef235a82139aa0518e0a4a2a6d5dcff2de7bb3a4",
+      "spec": "research/experiments/20261114T015057Z/specs/extend391_parent_matched_hold.json",
+      "readonly": true,
+      "W": null,
+      "K": null,
+      "control_only": true,
+      "NB": 1000,
+      "NE": 4000,
+      "source_fingerprints": [
+        "8c4a819586d938bef2d405290fa78edbd1a95b96dd1ac78ae4802edb7b22abd3",
+        "2b5eb3d1a240680f04f3f8a531c4192e154c5aac118ccdfdb47bc164d21e968b"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "report": "research/experiments/20261114T015057Z/report.json",
+      "report_sha256": "352b57cf640dda0aa65ae1c8febe29cec1e8e3e1b4660ec29bb3df6090961bfe",
+      "spec_sha256": "306fb82660cedd624d7bb73b46a81d6e46aed5027ef9fee0b8a589fce594f4ec",
+      "archive": "research/experiments/20261114T015057Z/results/extend391_parent_matched_hold.json.gz",
+      "archive_sha256": "9bddfb3dc16dfdc3348985d4d72e24d1ff164c5bdc11c4535430a9065d1b5c10",
+      "status": "rejected"
+    },
+    "f3c67ded27ba2086850a8cf0221ec50f4ba657e063c01f2707bc7ac3d3209955": {
+      "scope": "parent",
+      "role": "candidate",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "name": "parent_BTCEntryCap0.02625_N1000_ETHSlopeLag3_M4_N4000_raw1_1_C3750_15000_391d",
+      "fingerprint": "f3c67ded27ba2086850a8cf0221ec50f4ba657e063c01f2707bc7ac3d3209955",
+      "spec": "research/experiments/20261124T173957Z/specs/parent_BTCEntryCap0.02625_N1000_ETHSlopeLag3_M4_N4000_raw1_1_C3750_15000_391d.json",
+      "readonly": true,
+      "W": 0.02625,
+      "K": 9,
+      "control_only": false,
+      "NB": 1000,
+      "NE": 4000,
+      "source_fingerprints": [
+        "da7069863b77d53e613ff515a803c4cc465d12ad0b5a4229864a7b1c3228ef23",
+        "a34c0bd6e523db4188b1b6f27d2e8efec9b679106ae19d9cd97438b6dbae3984"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "report": "research/experiments/20261124T173957Z/report.json",
+      "report_sha256": "d127c718917a8303fd59a7b058e450fa0beae8ae080d358c5033a92c225e0774",
+      "spec_sha256": "5300f23c77eb5d46c24e668d83ffb1c72c554268e9d0e9525c504dfd8f562868",
+      "archive": "research/experiments/20261124T173957Z/results/parent_BTCEntryCap0.02625_N1000_ETHSlopeLag3_M4_N4000_raw1_1_C3750_15000_391d.json.gz",
+      "archive_sha256": "c423a7e40458843d40f18c85efec08e87969fca06e8327c3a3e9374e2b192075",
+      "status": "passed"
+    },
+    "fd0cca4ec823658db1a7f28cd96c60d0bd2a1f55051fbc4d1c05a618b9fe1760": {
+      "scope": "parent",
+      "role": "candidate",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "name": "parent_ETHEntryRiskV6Cap0p05625BudgetVW7R0p0075_BTCH0p03Confirm5Min0p0025_391d",
+      "fingerprint": "fd0cca4ec823658db1a7f28cd96c60d0bd2a1f55051fbc4d1c05a618b9fe1760",
+      "spec": "research/experiments/20261117T182123Z/specs/parent_ETHEntryRiskV6Cap0p05625BudgetVW7R0p0075_BTCH0p03Confirm5Min0p0025_391d.json",
+      "readonly": true,
+      "W": 0.0275,
+      "K": 7,
+      "control_only": false,
+      "NB": 1000,
+      "NE": 4000,
+      "source_fingerprints": [
+        "41de4309229b892489a07574af07a73ae93229a35c118558ed60362285e90c89",
+        "5cd3e65984c4a723e3c8291811f0f9a2aed2486ce1f219eaf4bd6b580f96e143"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "report": "research/experiments/20261117T182123Z/report.json",
+      "report_sha256": "9750a447c79c911b8646c6b7179ac818b8c2a8c117f8bd4aff39eea2e02d28a9",
+      "spec_sha256": "7c6c3b47f58fb645bf3d1b64b9971a5d39b66015af057a773914b41ae6739c6b",
+      "archive": "research/experiments/20261117T182123Z/results/parent_ETHEntryRiskV6Cap0p05625BudgetVW7R0p0075_BTCH0p03Confirm5Min0p0025_391d.json.gz",
+      "archive_sha256": "2616fc2ec9f856475f7bffb5b029ba26e8479140c7b7bc95470634b19bb678bf",
+      "status": "passed"
+    },
+    "7fc833127158c4a3bb8c598fbe74614a706870039d2b3ad44ef82bd5e7c5a92f": {
+      "scope": "parent",
+      "role": "candidate",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "name": "parent_ETHEntryRiskV6Cap0p05625BudgetVW9R0p0075_BTCH0p03Confirm5Min0p0025_391d",
+      "fingerprint": "7fc833127158c4a3bb8c598fbe74614a706870039d2b3ad44ef82bd5e7c5a92f",
+      "spec": "research/experiments/20261117T182123Z/specs/parent_ETHEntryRiskV6Cap0p05625BudgetVW9R0p0075_BTCH0p03Confirm5Min0p0025_391d.json",
+      "readonly": true,
+      "W": 0.0275,
+      "K": 9,
+      "control_only": false,
+      "NB": 1000,
+      "NE": 4000,
+      "source_fingerprints": [
+        "41de4309229b892489a07574af07a73ae93229a35c118558ed60362285e90c89",
+        "a34c0bd6e523db4188b1b6f27d2e8efec9b679106ae19d9cd97438b6dbae3984"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "report": "research/experiments/20261117T182123Z/report.json",
+      "report_sha256": "9750a447c79c911b8646c6b7179ac818b8c2a8c117f8bd4aff39eea2e02d28a9",
+      "spec_sha256": "6c28d74fe93a4168179d7cdb4f838e567075898944ef91725ddc819ae460c6a4",
+      "archive": "research/experiments/20261117T182123Z/results/parent_ETHEntryRiskV6Cap0p05625BudgetVW9R0p0075_BTCH0p03Confirm5Min0p0025_391d.json.gz",
+      "archive_sha256": "9eb45c54bb4e66771ad03b164866b7b938fab568e198f552a7eb43b54c599f38",
+      "status": "passed"
+    },
+    "7e684842cbb0090e1b975ff56fe4fd208f791a0afdfb6847077947417b623af6": {
+      "scope": "parent",
+      "role": "candidate",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "name": "parent_ETHEntryRiskV6Cap0p05625BudgetVW12R0p0075_BTCH0p03Confirm5Min0p0025_391d",
+      "fingerprint": "7e684842cbb0090e1b975ff56fe4fd208f791a0afdfb6847077947417b623af6",
+      "spec": "research/experiments/20261117T202125Z/specs/parent_ETHEntryRiskV6Cap0p05625BudgetVW12R0p0075_BTCH0p03Confirm5Min0p0025_391d.json",
+      "readonly": true,
+      "W": 0.0275,
+      "K": 12,
+      "control_only": false,
+      "NB": 1000,
+      "NE": 4000,
+      "source_fingerprints": [
+        "41de4309229b892489a07574af07a73ae93229a35c118558ed60362285e90c89",
+        "a4b17122bd98314bb52f9033edbd9a4240c5a399186b17e7f2eb86dbcd9ddf79"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "report": "research/experiments/20261117T202125Z/report.json",
+      "report_sha256": "d36089112b2906f444cea18e9e71cfedcf42e41dbea28416a209c8081de3b62b",
+      "spec_sha256": "2a4156d69565cb3f65595f0adeb2c5169ceb4b70d982d9e2be1051134b90ff4f",
+      "archive": "research/experiments/20261117T202125Z/results/parent_ETHEntryRiskV6Cap0p05625BudgetVW12R0p0075_BTCH0p03Confirm5Min0p0025_391d.json.gz",
+      "archive_sha256": "d66de22971be4dababe70ce46b47e246277d98635ceec9b8137240cf606cc29a",
+      "status": "passed"
+    },
+    "4ea0af2f0169ff5be010751b765eab3c9d20e9ba6f63c6e9aa00b7e4ccd875eb": {
+      "scope": "parent",
+      "role": "candidate",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "name": "parent_BTCEntryCap0.02875_N1000_ETHSlopeLag3_M4_N4000_raw1_1_C3750_15000_391d",
+      "fingerprint": "4ea0af2f0169ff5be010751b765eab3c9d20e9ba6f63c6e9aa00b7e4ccd875eb",
+      "spec": "research/experiments/20261124T173957Z/specs/parent_BTCEntryCap0.02875_N1000_ETHSlopeLag3_M4_N4000_raw1_1_C3750_15000_391d.json",
+      "readonly": true,
+      "W": 0.02875,
+      "K": 9,
+      "control_only": false,
+      "NB": 1000,
+      "NE": 4000,
+      "source_fingerprints": [
+        "7e63c20ee9efe5a14cd618f1a7b660aff37b265f350135692b24b1edf1dd4e82",
+        "a34c0bd6e523db4188b1b6f27d2e8efec9b679106ae19d9cd97438b6dbae3984"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "report": "research/experiments/20261124T173957Z/report.json",
+      "report_sha256": "d127c718917a8303fd59a7b058e450fa0beae8ae080d358c5033a92c225e0774",
+      "spec_sha256": "214aeec81b4f55b53490c45499534b61d199e149f5f888a0aa16c2c206531fa6",
+      "archive": "research/experiments/20261124T173957Z/results/parent_BTCEntryCap0.02875_N1000_ETHSlopeLag3_M4_N4000_raw1_1_C3750_15000_391d.json.gz",
+      "archive_sha256": "7c4c97e32be44daf8a8ca2e34cd633290b9eeca264c308d17c3889418bbc1991",
+      "status": "passed"
+    }
+  },
+  "data": {
+    "assets": {
+      "BTC": [
+        {
+          "path": "data/runs/automation/20261114T015057Z/extended391/BTC/perp_bars.parquet",
+          "sha256": "a0a45bdf64291d7d2351e7bd4549e9b514917811dc3b6d0d235096c5531a66b3",
+          "bytes": 33617760,
+          "rows": 610562
+        },
+        {
+          "path": "data/runs/automation/20261114T015057Z/extended391/BTC/mark_hour_bars.parquet",
+          "sha256": "ecd4239cceff4e18a8c7e515811ad5d018e3c00c9f3a33d30150f1510039a01b",
+          "bytes": 519260,
+          "rows": 10176
+        },
+        {
+          "path": "data/runs/automation/20261114T015057Z/extended391/BTC/funding_settlement.parquet",
+          "sha256": "d77b26c4daec2a254d0a9683d346672bbaa7319a7f0554e8ccc6c00725b91d85",
+          "bytes": 36363,
+          "rows": 1273
+        },
+        {
+          "path": "data/runs/automation/20261114T015057Z/extended391/BTC/perp_instrument_meta.parquet",
+          "sha256": "4e4d9da37ee3129957a80340bbefabe0123155b755fbaa3056f602ab49ca5f99",
+          "bytes": 1892,
+          "rows": 1
+        }
+      ],
+      "ETH": [
+        {
+          "path": "data/runs/automation/20261114T015057Z/extended391/ETH/perp_bars.parquet",
+          "sha256": "62db8f3b0206f60907cb2ab8f9f112cf51b5ae8a313d98c357d67c91ce5cd0a9",
+          "bytes": 30583606,
+          "rows": 610562
+        },
+        {
+          "path": "data/runs/automation/20261114T015057Z/extended391/ETH/mark_hour_bars.parquet",
+          "sha256": "03b8f0e39d4cd58713047f84926205c684c2a3d44aeefedd3d2e52cd8ce00685",
+          "bytes": 485029,
+          "rows": 10176
+        },
+        {
+          "path": "data/runs/automation/20261114T015057Z/extended391/ETH/funding_settlement.parquet",
+          "sha256": "58612f8d4b71696e02a85eaeb7f7b4b095c0b2495412ac60394446db722cb0ec",
+          "bytes": 35538,
+          "rows": 1273
+        },
+        {
+          "path": "data/runs/automation/20261114T015057Z/extended391/ETH/perp_instrument_meta.parquet",
+          "sha256": "4ee16a4365d150d6180bc1856ae33b7a1ef5581d1f2a4daecf11ba2eb408a8f6",
+          "bytes": 1892,
+          "rows": 1
+        }
+      ]
+    },
+    "provenance_manifest": "research/experiments/20261114T015057Z/new_day_readiness.json",
+    "provenance_manifest_sha256": "288b88e37bab8a648df54f3715fa74d5396ed921a369a16ffd151c9009048cab"
+  },
+  "sources": [
+    {
+      "title": "Prior actually executed latest-realized-rate filter and native accounting",
+      "path": "research/experiments/20261110T011054Z/engine.py",
+      "sha256": "160df24dd06a74410e5ca88015e4b64ab4e61d6792fa79863edca649e1719f3a",
+      "access_date": "2026-11-10",
+      "role": "ExactoldsameM/F50ppmbank/parentsreusedreadonly;fullmedian/nativeaccountingASTunchanged."
+    },
+    {
+      "title": "Binance official USD-M funding rate history",
+      "url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "access_date": "2026-11-10",
+      "role": "ActualfundingTime/rate/markfields;normalized1hdelayassumed,notarrivalmeasurements."
+    },
+    {
+      "title": "Current actual settlement interval/availability audit",
+      "path": "research/experiments/20261110T051156Z/funding_signal_preflight.json",
+      "sha256": "77252773a2432b6ed8bc0104c2fe10341c96dffbf3ab5d20a1dce4f78e33d617",
+      "access_date": "2026-11-10",
+      "role": "1212 actual signed rates/timestamps perasset; latestinterval derivedfromconsecutivepastsource timestamps; normalizedconstant8notmeasuredgap."
+    },
+    {
+      "title": "Current budget-window/source availability audit",
+      "path": "research/experiments/20261110T071157Z/funding_signal_preflight.json",
+      "sha256": "8f08c379c3c2c7b5dc9a26618323b2e407546169aa6e5839085e59f4b86ce84f",
+      "access_date": "2026-11-10",
+      "role": "1212 actualsettlements/asset and pasttimestampinterval; source33days supports price19,cost21 and budgetVW+1<=13 closes."
+    },
+    {
+      "title": "Current original-account actualNov10_08 official settlement fields",
+      "path": "research/experiments/20261110T091228Z/funding08_nov10_preflight.json",
+      "sha256": "3dbe07c16085b51f552bc4f7bfced648b8bbd544df349f0922c24d0f795b7ac1",
+      "access_date": "2026-11-10",
+      "role": "Accountpublicfields only,beforebinding/reserve;not researchmarketwindow or anotheraccountcashflow."
+    },
+    {
+      "title": "Current original-account actualNov10_08 official settlement fields",
+      "path": "research/experiments/20261110T111259Z/funding08_nov10_preflight.json",
+      "sha256": "3dbe07c16085b51f552bc4f7bfced648b8bbd544df349f0922c24d0f795b7ac1",
+      "access_date": "2026-11-10",
+      "role": "Accountpublicfields only,beforebinding/reserve;not researchmarketwindow or anotheraccountcashflow."
+    },
+    {
+      "title": "Current original-account actualNov10_08 official settlement fields",
+      "path": "research/experiments/20261110T131400Z/funding08_nov10_preflight.json",
+      "sha256": "3dbe07c16085b51f552bc4f7bfced648b8bbd544df349f0922c24d0f795b7ac1",
+      "access_date": "2026-11-10",
+      "role": "Accountpublicfields only,beforebinding/reserve;not researchmarketwindow or anotheraccountcashflow."
+    },
+    {
+      "title": "Current original-account actualNov10_08 official settlement fields",
+      "path": "research/experiments/20261110T151431Z/funding08_nov10_preflight.json",
+      "sha256": "3dbe07c16085b51f552bc4f7bfced648b8bbd544df349f0922c24d0f795b7ac1",
+      "access_date": "2026-11-10",
+      "role": "Accountpublicfields only,beforebinding/reserve;not researchmarketwindow or anotheraccountcashflow."
+    },
+    {
+      "title": "Fresh actualNov10_16 official settlement public fields",
+      "path": "research/experiments/20261110T171502Z/funding16_nov10_preflight.json",
+      "sha256": "76efb250b4a26534a7a8cff08e0565da82ce1e55ca700fd79816adc0f158362e",
+      "access_date": "2026-11-10",
+      "role": "Original account actual public settlement fields only,beforebinding/reserve;not research marketwindow or otheraccountcashflows."
+    },
+    {
+      "title": "Immutable actualNov10_16 official funding fields reuse",
+      "path": "research/experiments/20261110T191703Z/funding16_nov10_preflight.json",
+      "sha256": "76efb250b4a26534a7a8cff08e0565da82ce1e55ca700fd79816adc0f158362e",
+      "access_date": "2026-11-10",
+      "role": "Original single own14:30to16:30 accountpublicfields only;L4/FEWM16alreadyonce. No new public capture/accountcashflow reuse/research market window."
+    }
+  ],
+  "time_boundaries": {
+    "oos_start_utc": "2025-10-19T00:01:00Z",
+    "oos_end_exclusive_utc": "2026-11-14T00:01:00Z",
+    "continuous_oos_days": 391,
+    "complete_30day_folds": 13,
+    "tail_fold_days": 1,
+    "recent40_start_utc": "2026-10-05T00:01:00Z",
+    "extension21_start_utc": "2026-10-24T00:01:00Z",
+    "source_context_days": 33,
+    "purge_horizon": 0,
+    "causality": "No fit/labels;completedclose/priorADV/sigma andmatureactualfundingonly;newnextminuteOPEN execution;allfoldcash/qinherited,terminalcostatnewendonly."
+  },
+  "qualification_gates": {
+    "positive_all_costs": true,
+    "positive_complete30d_1x_min": 10,
+    "complete30d_fold_count": 13,
+    "recent40_positive_all_costs": true,
+    "recent40_positive5d_eachcost_min": 6,
+    "max_DD3_pct": 25,
+    "local_positive3_min": 0.6,
+    "local_recent_strict_min": 0.6,
+    "underlying_closes1_min": 4,
+    "gross_plus_funding_to_cost1_min": 2.5,
+    "no_native_violations": true,
+    "terminal_flat": true,
+    "min_days": 180,
+    "extension21_positive_all_costs": true,
+    "extension21_positive_fold_eachcost_min": 3
+  },
+  "expected_counts": {
+    "new_configs": 4,
+    "new_native": 0,
+    "new_parents": 4,
+    "new_candidate_configs": 4,
+    "new_benchmark_configs": 0,
+    "new_source_components": 0,
+    "new_cost_scenes": 12,
+    "read_only_unique_results": 14,
+    "read_only_native_models": 8,
+    "read_only_parent_models": 6,
+    "read_only_cost_scenes": 42,
+    "grid_points": 9,
+    "native_grid_points": 0,
+    "read_only_existing_grid_points": 5
+  },
+  "sensitivity": {
+    "axes": [
+      "BTC_ENTRY_VOLATILITY_CEILING",
+      "ETH_FUNDING_BUDGET_VOLATILITY_WINDOW_DAYS"
+    ],
+    "index_radius": 1,
+    "local_positive3_min": 0.6,
+    "local_recent_allcost6of8_min": 0.6,
+    "no_post_outcome_reselection_or_extension": true
+  },
+  "prior_report": {
+    "path": "research/experiments/20261125T114510Z/report.json",
+    "sha256": "afa11b45bf943c9976e8acc274404c84eda0c2ab36ec43eb5936bcd63a9f435f"
+  },
+  "limits": [
+    "391天历史反复使用，仅开发验证，不是未触碰最终测试集",
+    "本轮及历史多重检验和相关网格，未证明DSR/PBO或实盘显著性",
+    "费用价差滑点及成交量冲击为模型，缺真实盘口TCA和经验容量证明",
+    "永续实际资金费及独立保证金/小时不利价代理不等于完整档位和逐tick强平证明",
+    "原四账户为不足180天延迟shadow，不代表稳定实盘盈利",
+    "不改冻结账户或十策略plan/本金/持仓",
+    "参数网格和代表在结果前固定，不OOS重选或扩网"
+  ],
+  "primary_source_reads": {
+    "recorded_utc": "2026-11-25T13:55:56.987711Z",
+    "browser_reads": [
+      {
+        "url": "https://raw.githubusercontent.com/binance/binance-futures-connector-python/main/binance/um_futures/market.py",
+        "reference": "turn428view0",
+        "purpose": "Official public GET implementation,read-only source,not executed"
+      }
+    ],
+    "official_SDK_code": {
+      "name": "official_market_py",
+      "url": "https://raw.githubusercontent.com/binance/binance-futures-connector-python/main/binance/um_futures/market.py",
+      "started_utc": "2026-11-25T13:55:53.027174Z",
+      "retrieved_utc": "2026-11-25T13:55:56.987253Z",
+      "http_status": 200,
+      "curl_exit_code": 0,
+      "raw": "research/experiments/20261125T134542Z/preflight_raw/official_market_py_1.gz",
+      "sha256": "b7f3118ead2cdfe6a975cb28126277b1c4950d04f7fee9a6254ad16cf88afa4b",
+      "raw_body_sha256": "9e55db014233d92bad66a90ec36212f1fada7f1f93a092ec5d6bc9298988659f",
+      "bytes": 20935,
+      "stderr": ""
+    },
+    "source_code_version_sha256": "9e55db014233d92bad66a90ec36212f1fada7f1f93a092ec5d6bc9298988659f",
+    "downloaded_code_not_executed": true
+  },
+  "native_axes": {
+    "BTC": {
+      "axes": []
+    },
+    "ETH": {
+      "axes": []
+    }
+  },
+  "benchmark_by_cell": {
+    "0.02625:7": "102c4b4aa82c9d870d3a8be8ef235a82139aa0518e0a4a2a6d5dcff2de7bb3a4",
+    "0.02625:9": "102c4b4aa82c9d870d3a8be8ef235a82139aa0518e0a4a2a6d5dcff2de7bb3a4",
+    "0.02625:12": "102c4b4aa82c9d870d3a8be8ef235a82139aa0518e0a4a2a6d5dcff2de7bb3a4",
+    "0.0275:7": "102c4b4aa82c9d870d3a8be8ef235a82139aa0518e0a4a2a6d5dcff2de7bb3a4",
+    "0.0275:9": "102c4b4aa82c9d870d3a8be8ef235a82139aa0518e0a4a2a6d5dcff2de7bb3a4",
+    "0.0275:12": "102c4b4aa82c9d870d3a8be8ef235a82139aa0518e0a4a2a6d5dcff2de7bb3a4",
+    "0.02875:7": "102c4b4aa82c9d870d3a8be8ef235a82139aa0518e0a4a2a6d5dcff2de7bb3a4",
+    "0.02875:9": "102c4b4aa82c9d870d3a8be8ef235a82139aa0518e0a4a2a6d5dcff2de7bb3a4",
+    "0.02875:12": "102c4b4aa82c9d870d3a8be8ef235a82139aa0518e0a4a2a6d5dcff2de7bb3a4"
+  },
+  "baseline_native_fingerprint": "a34c0bd6e523db4188b1b6f27d2e8efec9b679106ae19d9cd97438b6dbae3984",
+  "grid_index_semantics": {
+    "W": "BTC entry-only completed10day sample daily logvol ceiling cap=.02625/.0275/.02875 (fraction); block only new/reversed entries when sigma>cap. Existing-position E.005,L29,H.03,ROC5 strict .0025,N1000 fixed.",
+    "K": "ETH funding-budget sample logvol window in completed days;R.0075,M4,age36h,finiteEWMS16D3K.0075,V6cap.05625,N4000 fixed."
+  },
+  "baseline_by_ETH_budget_volatility_window_days": {
+    "7": "fd0cca4ec823658db1a7f28cd96c60d0bd2a1f55051fbc4d1c05a618b9fe1760",
+    "9": "7fc833127158c4a3bb8c598fbe74614a706870039d2b3ad44ef82bd5e7c5a92f",
+    "12": "7e684842cbb0090e1b975ff56fe4fd208f791a0afdfb6847077947417b623af6"
+  },
+  "additional_predeclared_BTCCap0p0275_report_controls": {
+    "7": {
+      "scope": "parent",
+      "role": "candidate",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "name": "parent_ETHEntryRiskV6Cap0p05625BudgetVW7R0p0075_BTCH0p03Confirm5Min0p0025_391d",
+      "fingerprint": "fd0cca4ec823658db1a7f28cd96c60d0bd2a1f55051fbc4d1c05a618b9fe1760",
+      "spec": "research/experiments/20261117T182123Z/specs/parent_ETHEntryRiskV6Cap0p05625BudgetVW7R0p0075_BTCH0p03Confirm5Min0p0025_391d.json",
+      "readonly": true,
+      "W": 0.0275,
+      "K": 7,
+      "control_only": false,
+      "NB": 1000,
+      "NE": 4000,
+      "source_fingerprints": [
+        "41de4309229b892489a07574af07a73ae93229a35c118558ed60362285e90c89",
+        "5cd3e65984c4a723e3c8291811f0f9a2aed2486ce1f219eaf4bd6b580f96e143"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "report": "research/experiments/20261117T182123Z/report.json",
+      "report_sha256": "9750a447c79c911b8646c6b7179ac818b8c2a8c117f8bd4aff39eea2e02d28a9",
+      "spec_sha256": "7c6c3b47f58fb645bf3d1b64b9971a5d39b66015af057a773914b41ae6739c6b",
+      "archive": "research/experiments/20261117T182123Z/results/parent_ETHEntryRiskV6Cap0p05625BudgetVW7R0p0075_BTCH0p03Confirm5Min0p0025_391d.json.gz",
+      "archive_sha256": "2616fc2ec9f856475f7bffb5b029ba26e8479140c7b7bc95470634b19bb678bf",
+      "status": "passed"
+    },
+    "9": {
+      "scope": "parent",
+      "role": "candidate",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "name": "parent_ETHEntryRiskV6Cap0p05625BudgetVW9R0p0075_BTCH0p03Confirm5Min0p0025_391d",
+      "fingerprint": "7fc833127158c4a3bb8c598fbe74614a706870039d2b3ad44ef82bd5e7c5a92f",
+      "spec": "research/experiments/20261117T182123Z/specs/parent_ETHEntryRiskV6Cap0p05625BudgetVW9R0p0075_BTCH0p03Confirm5Min0p0025_391d.json",
+      "readonly": true,
+      "W": 0.0275,
+      "K": 9,
+      "control_only": false,
+      "NB": 1000,
+      "NE": 4000,
+      "source_fingerprints": [
+        "41de4309229b892489a07574af07a73ae93229a35c118558ed60362285e90c89",
+        "a34c0bd6e523db4188b1b6f27d2e8efec9b679106ae19d9cd97438b6dbae3984"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "report": "research/experiments/20261117T182123Z/report.json",
+      "report_sha256": "9750a447c79c911b8646c6b7179ac818b8c2a8c117f8bd4aff39eea2e02d28a9",
+      "spec_sha256": "6c28d74fe93a4168179d7cdb4f838e567075898944ef91725ddc819ae460c6a4",
+      "archive": "research/experiments/20261117T182123Z/results/parent_ETHEntryRiskV6Cap0p05625BudgetVW9R0p0075_BTCH0p03Confirm5Min0p0025_391d.json.gz",
+      "archive_sha256": "9eb45c54bb4e66771ad03b164866b7b938fab568e198f552a7eb43b54c599f38",
+      "status": "passed"
+    },
+    "12": {
+      "scope": "parent",
+      "role": "candidate",
+      "asset": "COMBO",
+      "capital_usdt": 18750,
+      "name": "parent_ETHEntryRiskV6Cap0p05625BudgetVW12R0p0075_BTCH0p03Confirm5Min0p0025_391d",
+      "fingerprint": "7e684842cbb0090e1b975ff56fe4fd208f791a0afdfb6847077947417b623af6",
+      "spec": "research/experiments/20261117T202125Z/specs/parent_ETHEntryRiskV6Cap0p05625BudgetVW12R0p0075_BTCH0p03Confirm5Min0p0025_391d.json",
+      "readonly": true,
+      "W": 0.0275,
+      "K": 12,
+      "control_only": false,
+      "NB": 1000,
+      "NE": 4000,
+      "source_fingerprints": [
+        "41de4309229b892489a07574af07a73ae93229a35c118558ed60362285e90c89",
+        "a4b17122bd98314bb52f9033edbd9a4240c5a399186b17e7f2eb86dbcd9ddf79"
+      ],
+      "raw_weights": [
+        1,
+        1
+      ],
+      "report": "research/experiments/20261117T202125Z/report.json",
+      "report_sha256": "d36089112b2906f444cea18e9e71cfedcf42e41dbea28416a209c8081de3b62b",
+      "spec_sha256": "2a4156d69565cb3f65595f0adeb2c5169ceb4b70d982d9e2be1051134b90ff4f",
+      "archive": "research/experiments/20261117T202125Z/results/parent_ETHEntryRiskV6Cap0p05625BudgetVW12R0p0075_BTCH0p03Confirm5Min0p0025_391d.json.gz",
+      "archive_sha256": "d66de22971be4dababe70ce46b47e246277d98635ceec9b8137240cf606cc29a",
+      "status": "passed"
+    }
+  }
+}
