@@ -1,0 +1,42 @@
+"""Audit saved actual sources and each own completed chain; never book future cashflows."""
+import gzip,json
+from datetime import datetime
+from common import *
+rd=lambda p:json.loads(p.read_text());b=rd(R/'next_funding_checker_binding.json');assert sha(Path(__file__))==b['source_sha256'];h=rd(R/'next_research_state.json')['UTC_midnight_handoff'];aw=rd(R/'account_window_verification.json');lookup=rd(R/'next_window_funding_lookup.json');first=rd(R/'verification.json')['report_sha256'];assert aw['passed'] and sha(R/'report.json')==first
+sources=[]
+for e in h['next_window_known_actual_funding_sources']:
+ doc=rd(ROOT/e['path']);assert sha(ROOT/e['path'])==e['sha256'] and doc['recorded_utc']==e['original_capture_utc'] and doc['public_fields_by_asset']==e['actual_public_fields']
+ for item in doc['HTTP_receipts']:
+  assert sha(ROOT/item['raw'])==item['sha256']
+  if item['http_status']==200 and not item['curl_exit_code']:
+   rows=json.loads(gzip.decompress((ROOT/item['raw']).read_bytes()))
+   for asset,fields in doc['public_fields_by_asset'].items():
+    if 'symbol='+asset+'USDT' in item['url']:assert all(z in rows for z in fields)
+ times={str(int(z['fundingTime'])*1000000) for xs in doc['public_fields_by_asset'].values() for z in xs}
+ for a in ['candidate','l4h02','fewm']:assert all(e['current_own_booked_counts'][a][t]==aw['full_chain_once_counts'][a]['funding'].get(t,0) for t in times)
+ sources.append({'path':e['path'],'sha256':e['sha256'],'first_capture_utc':e['original_capture_utc'],'actual_public_fields':e['actual_public_fields'],'current_own_counts':e['current_own_booked_counts'],'next_pending_by_own_window':e['next_own_coverage_expected_counts']})
+for a in ['candidate','l4h02','fewm']:
+ for t in ['1795420800004000000','1795449600000000000','1795478400001000000','1795507200000000000']:assert aw['full_chain_once_counts'][a]['funding'][t]==6
+ assert aw['full_chain_once_counts'][a]['daily']['1795478460000000000']==6
+pre=rd(R/'actual08_nov24_prebinding_source.json');assert pre['sha256']=='31df50eb269aeb0f8de7070ef07acbadae15205daa4e5244bfcafc89e74ce337' and pre['first_capture_utc']=='2026-11-25T00:04:32.009842Z'
+assert {a:sum(z.values()) for a,z in pre['prior_unique_counts'].items()}=={'candidate':6,'l4h02':6,'fewm':6} and {a:sum(z.values()) for a,z in pre['expected_current_increment_counts'].items()}=={'candidate':0,'l4h02':0,'fewm':0}
+
+last=rd(R/'actual16_nov24_prebinding_source.json');assert last['sha256']=='b83d66f870d189d066c4939190c39b16a44e3785ef23277e70d85250a7e8cf5d' and last['first_capture_utc']=='2026-11-25T08:05:57.950668Z' and {a:sum(z.values()) for a,z in last['prior_unique_counts'].items()}=={'candidate':6,'l4h02':6,'fewm':6} and {a:sum(z.values()) for a,z in last['expected_current_increment_counts'].items()}=={'candidate':0,'l4h02':0,'fewm':0}
+assert {a:aw['full_chain_once_counts'][a]['funding'].get('1795536000000000000',0) for a in ['candidate','l4h02','fewm']}=={'candidate':6,'l4h02':6,'fewm':6} and h['actual_Nov24_16_counts_by_account']=={a:{'1795536000000000000':n} for a,n in [('candidate',6),('l4h02',6),('fewm',6)]}
+assert h['L4_FEWM_actualNov24_16_booked_once'] and not h['single_actualNov24_16_not_yet_booked'] and h['all3_perp_actualNov24_16_booked_once']
+
+pre25=rd(R/'actual00_nov25_prebinding_source.json');assert pre25['sha256']=='544483981df9602e29816ee8b475664a6c1d23c46b57c5d8ed1be093afca619d' and pre25['first_capture_utc']=='2026-11-25T16:05:48.565903Z' and {a:sum(z.values()) for a,z in pre25['prior_unique_counts'].items()}=={'candidate':0,'l4h02':6,'fewm':6} and {a:sum(z.values()) for a,z in pre25['expected_current_increment_counts'].items()}=={'candidate':6,'l4h02':0,'fewm':0}
+assert {a:aw['full_chain_once_counts'][a]['funding'].get('1795564800003000000',0) for a in ['candidate','l4h02','fewm']}=={'candidate':6,'l4h02':6,'fewm':6}
+assert {a:aw['full_chain_once_counts'][a]['daily'].get('1795564860000000000',0) for a in ['candidate','l4h02','fewm']}=={'candidate':6,'l4h02':6,'fewm':6}
+assert h['L4_FEWM_actualNov25_00_booked_once'] and not h['single_actualNov25_00_not_yet_booked'] and h['all3_perp_actualNov25_00_booked_once']
+
+ms=lambda s:int(datetime.fromisoformat(s.replace('Z','+00:00')).timestamp()*1000);pending={}
+for a in ['SMA','candidate','l4h02','fewm']:
+ ww=h['next_SMA_single_window_utc'] if a in ['SMA','candidate'] else h['next_L4_FEWM_window_utc'];pending[a]=0 if a=='SMA' else 3*sum(ms(ww[0])<int(z['fundingTime'])<=ms(ww[1]) for xs in lookup['public_fields_by_asset'].values() for z in xs)
+ expected='original_daily_decision_and_actual_funding_if_covered' if h['next_window_original_daily_events'][a] else 'original_actual_funding_settlement_and_closed_marks_no_daily_decision' if pending[a] else 'closed_minute_marks_only_no_daily_decision';assert h['next_required_resume_mode_by_account'][a]==expected
+assert pending==h['next_new_actual_funding_pending_by_own_window']==lookup['own_next_window_pending_counts']==h['next_funding_first_source_by_own_window']['pending_records_by_account'] and 'Before ANY next reserve' in h['next_actual_funding_prebinding_contract']
+assert all(all(n==0 for n in e['current_own_booked_counts'][a].values()) for e in h['next_new_actual_funding_sources'] for a in ['candidate','l4h02','fewm'] if e['next_own_coverage_expected_counts'][a])
+assert h['current_original_signed_units_by_asset_cost']=={a:{asset:{k:z['signed_units'] for k,z in books.items()} for asset,books in rd(R/(a+'_observation/state.json'))['books'].items()} for a in ['candidate','l4h02','fewm']}
+full=rd(R/'SMA_full77_prebinding.json');assert h['SMA_full77_sha256']==full['sha256']==sha(ROOT/full['authority']) and h['next_daily_decision_by_account']=={'candidate':'2026-11-26T00:01:00Z','l4h02':'2026-11-26T00:01:00Z','fewm':'2026-11-26T00:01:00Z','SMA':'2026-11-26T00:01:00Z'} and h['SMA_next_daily_event_requires_full_days']==78 and h['all3_perp_actualNov24_08_booked_once'] and not h['single_actualNov24_08_not_yet_booked']
+put(R/'midnight_handoff_verification.json',{'passed':True,'known_actual08_source_SHA':pre['sha256'],'original_capture_UTC':pre['first_capture_utc'],'actual08_own_counts':h['actual_Nov24_08_counts_by_account'],'actual16_own_counts':h['actual_Nov24_16_counts_by_account'],'actual16_first_source_SHA':last['sha256'],'actual16_original_capture_UTC':last['first_capture_utc'],'actualNov25_00_source_SHA':pre25['sha256'],'actualNov25_00_first_capture_UTC':pre25['first_capture_utc'],'actualNov25_00_counts':h['actual_Nov25_00_counts_by_account'],'current_funding_records_by_account':aw['current_funding_records_by_account'],'next_daily_events':h['next_window_original_daily_events'],'next_funding_pending':pending,'SMA_current_full77_verified_future_daily_requires_closed_full78':True,'all_current_signed_unit_metadata_from_each_own_audited_state':True,'new_strategy_or_account_or_cashflow_executions':0})
+put(R/'next_funding_handoff_verification.json',{'passed':True,'first_actual_sources':sources,'all3_original_perps_actual16_and08_unique_counts6_each':True,'legacy_count_scope':'Nov23_16 and Nov24_08;new Nov24_16 is explicitly per-account','newNov24_16_counts':h['actual_Nov24_16_counts_by_account'],'known_first_source_SHA_original_UTC_and_exact_fields_retained':True,'next_pending_from_fresh_complete_actual_query':pending,'no_early_or_duplicate_bookings':True,'next_window_must_refresh_and_bind_before_reserve':True,'cashflow_or_strategy_or_account_calculations':0,'financial_report_sha256_unchanged':first});print(json.dumps({'passed':True,'known_sources':len(sources),'current_actual08_all_accounts_once':True,'next_pending':pending,'new_evaluations':0}))

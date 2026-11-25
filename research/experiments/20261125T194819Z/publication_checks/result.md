@@ -1,0 +1,3 @@
+# 发布辅助检查失败留档
+
+首次封存工具回执259a66实际退出1，原因为saved_review_binding缺少source路径字段。原失败核验程序与SHA保存在本目录；未进入财务、账户或监控计算，也未写data_manifest。修复只引用在首次reserve前已由code_binding和readonly_formatter双重冻结的确切saved_review.py路径，继续要求三个源码SHA完全一致。所有首次报告、冻结绑定、登记与账户状态均不变。后续真实封存与push结果见发布回执。
