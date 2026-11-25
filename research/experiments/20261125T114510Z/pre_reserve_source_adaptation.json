@@ -1,0 +1,676 @@
+{
+  "recorded_utc": "2026-11-25T11:56:32.581322+00:00",
+  "selected_axis": "return_hurdle",
+  "new_graphs": 2,
+  "old_grid_controls": 7,
+  "old_native_sources": 8,
+  "old_parent_sources": 8,
+  "original_observation_IDs": 12,
+  "total_planned_IDs": 14,
+  "planned_events": 28,
+  "nine_unchanged_monetary_sources": {
+    "engine.py": "ff5e9cd3da2ec056d30cd2223f52195b77cbb93c477be29985367eba10503cd9",
+    "core391_tail_safe.py": "7491cc0a55e83c7431a6fc3d66899e660a8d9daec0629af4391fc31da6d4ce6c",
+    "market.py": "321cdb4f49666da9ce1adbe7f6ebc3a8084ff62bb6c47730f54646a67c2b9f6c",
+    "portfolio.py": "f3222f83370e707c918426d4b5269ad32fcc158098db2eeeeac9141967788d4b",
+    "audit_native.py": "4a2f958d8f1c33baec2788c68bfa32c321b0be7aa5eee3809a2a1687ab5be536",
+    "observe_l4h02.py": "99691760735948ac2f42feae1a1abfe8f6a1a2a135a6cf8a7c1f558cda04a73f",
+    "observe_fewm.py": "63f32233b4f2dabf433aabf0f135004598261d37e58e2f61e61483c7c90d7715",
+    "audit_incremental.py": "a9d026baeca392c897688bb6b85b33d19db43fb6d7563d57b773fabfec9d7118",
+    "forward.py": "006ac600c36c801588871b6415fcdbd6d281afb87f33a41e3a780f0131c1ad08"
+  },
+  "source_changes": [
+    {
+      "source": "freeze_confirmation.py",
+      "old": "BTC_EXIT_BUFFER_FRACTION",
+      "new": "BTC_RETURN_HURDLE",
+      "matches": 2
+    },
+    {
+      "source": "run.py",
+      "old": "BTC_EXIT_BUFFER_FRACTION",
+      "new": "BTC_RETURN_HURDLE",
+      "matches": 2
+    },
+    {
+      "source": "audit.py",
+      "old": "BTC_EXIT_BUFFER_FRACTION",
+      "new": "BTC_RETURN_HURDLE",
+      "matches": 2
+    },
+    {
+      "source": "sizing_units.py",
+      "old": "BTC_EXIT_BUFFER_FRACTION",
+      "new": "BTC_RETURN_HURDLE",
+      "matches": 3
+    },
+    {
+      "source": "exports.py",
+      "old": "BTC_EXIT_BUFFER_FRACTION",
+      "new": "BTC_RETURN_HURDLE",
+      "matches": 5
+    },
+    {
+      "source": "prepare.py",
+      "old": "PID==1583301",
+      "new": "PID==1612778",
+      "matches": 1
+    },
+    {
+      "source": "prepare.py",
+      "old": "assert {a:windows[a]['expected_funding_records'] for a in ['SMA','candidate','l4h02','fewm']}=={'SMA':0,'candidate':0,'l4h02':6,'fewm':6}",
+      "new": "assert {a:windows[a]['expected_funding_records'] for a in ['SMA','candidate','l4h02','fewm']}=={'SMA':0,'candidate':6,'l4h02':0,'fewm':0}",
+      "matches": 1
+    },
+    {
+      "source": "prepare.py",
+      "old": "Current SMA/candidate Nov24_12:30..14:30 closed marks only; L4/FEWM Nov24_14:10..16:10 closed marks plus actual16 funding. All3 own old08 keys already6 each, no repeat; all4 daily0/fills0, new funding counts SMA0/candidate0/L4six/FEWMsix.",
+      "new": "Current SMA/candidate Nov24_14:30..16:30; only candidate books own actual16 funding. L4/FEWM Nov24_16:10..18:10 closed marks only; each already has6 actual16 keys, never repeat. All3 own old08 keys already6 each; all4 daily0/fills0; new funding counts SMA0/candidate6/L40/FEWM0.",
+      "matches": 1
+    },
+    {
+      "source": "prepare.py",
+      "old": "pclast==entrylast['current_own_booked_counts'] and all(sum(z.values())==0 for z in pclast.values())",
+      "new": "pclast==entrylast['current_own_booked_counts'] and {a:sum(z.values()) for a,z in pclast.items()}=={'candidate':0,'l4h02':6,'fewm':6}",
+      "matches": 1
+    },
+    {
+      "source": "prepare.py",
+      "old": "{a:sum(xs.values()) for a,xs in inclast.items()}=={'candidate':0,'l4h02':6,'fewm':6}",
+      "new": "{a:sum(xs.values()) for a,xs in inclast.items()}=={'candidate':6,'l4h02':0,'fewm':0}",
+      "matches": 1
+    },
+    {
+      "source": "prepare.py",
+      "old": "'reference':'turn426view0'",
+      "new": "'reference':'turn427view0'",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "WS=[.00375,.005,.00625]",
+      "new": "WS=[.0275,.03,.0325]",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "'BTC_exit_buffer_fraction':w",
+      "new": "'BTC_return_hurdle':w",
+      "matches": 2
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "if fs:assert len(fs)==1 and not (w in [.00375,.00625] and k in [7,12]);parents[w,k]=reuse(fs[0],w,k,False)",
+      "new": "if fs:assert len(fs)==1;parents[w,k]=reuse(fs[0],w,k,False)",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "else:assert w in [.00375,.00625] and k in [7,12]",
+      "new": "else:assert (w,k) in {(z['W'],z['K']) for z in meta['rows'] if not z['matches']}",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "parents[.005,k]",
+      "new": "parents[.03,k]",
+      "matches": 3
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "parent_BTCExitE",
+      "new": "parent_BTCEntryH",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "btc-exit-buffer-eth-funding-budget-volwindow-passive-combination",
+      "new": "btc-entry-hurdle-eth-funding-budget-volwindow-passive-combination",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "BTC position-exit hysteresis buffer E=.00375/.005/.00625 (fraction,0.375/0.5/0.625 percent); V10cap.0275,L29,H.03,ROC5 .0025,N1000 fixed. Long held while completed29dROC>-E and short while ROC<E, unless a new opposite entry signal.",
+      "new": "BTC symmetric entry hurdle H=.0275/.03/.0325 (fraction,2.75/3/3.25 percent) on completed29dROC; strict ROC>H long,ROC<-H short; existing-position exit buffer E.005,V10cap.0275,ROC5 .0025,N1000 fixed.",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "g['W']==.00375 and g['K']==7",
+      "new": "g['W']==.0275 and g['K']==7",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "{'W':.00375,'K':7}",
+      "new": "{'W':.0275,'K':7}",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "additional_predeclared_BTCExitE0p005_report_controls",
+      "new": "additional_predeclared_BTCH0p03_report_controls",
+      "matches": 1
+    },
+    {
+      "source": "review_joint_economics.py",
+      "old": "additional_predeclared_BTCExitE0p005_report_controls",
+      "new": "additional_predeclared_BTCH0p03_report_controls",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "8native+6parent read-only sources;4newparents.",
+      "new": "8native+8parent read-only sources;2newparents.",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "len(refs)==14 and len(batch)==4",
+      "new": "len(refs)==16 and len(batch)==2",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "'new_configs':4",
+      "new": "'new_configs':2",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "'new_parents':4",
+      "new": "'new_parents':2",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "'new_candidate_configs':4",
+      "new": "'new_candidate_configs':2",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "'new_cost_scenes':12",
+      "new": "'new_cost_scenes':6",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "'read_only_unique_results':14",
+      "new": "'read_only_unique_results':16",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "'read_only_parent_models':6",
+      "new": "'read_only_parent_models':8",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "'read_only_cost_scenes':42",
+      "new": "'read_only_cost_scenes':48",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "'read_only_existing_grid_points':5",
+      "new": "'read_only_existing_grid_points':7",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "'new_graphs':4",
+      "new": "'new_graphs':2",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "'old_grid_controls':5",
+      "new": "'old_grid_controls':7",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "PASS4newgraphs/8native+6parentactualoldrefs",
+      "new": "PASS2newgraphs/8native+8parentactualoldrefs",
+      "matches": 1
+    },
+    {
+      "source": "run.py",
+      "old": "'BTC_return_hurdle_fixed':0.03",
+      "new": "'BTC_return_hurdle':[.0275,.03,.0325]",
+      "matches": 1
+    },
+    {
+      "source": "run.py",
+      "old": "'BTC_exit_buffer_fraction':[.00375,.005,.00625]",
+      "new": "'BTC_exit_buffer_fraction_fixed':.005",
+      "matches": 1
+    },
+    {
+      "source": "run.py",
+      "old": "'new_parent_models': 4",
+      "new": "'new_parent_models': 2",
+      "matches": 1
+    },
+    {
+      "source": "definitions.py",
+      "old": "len(batch)==4 and len(p['read_only_references'])==14",
+      "new": "len(batch)==2 and len(p['read_only_references'])==16",
+      "matches": 1
+    },
+    {
+      "source": "definitions.py",
+      "old": "{'W':.00375,'K':7}",
+      "new": "{'W':.0275,'K':7}",
+      "matches": 1
+    },
+    {
+      "source": "definitions.py",
+      "old": "q['BTC_exit_buffer_fraction']==row['W'] in [.00375,.00625]",
+      "new": "q['BTC_return_hurdle']==row['W']==.0275",
+      "matches": 1
+    },
+    {
+      "source": "definitions.py",
+      "old": "q['BTC_return_hurdle']==.03",
+      "new": "q['BTC_exit_buffer_fraction']==.005",
+      "matches": 1
+    },
+    {
+      "source": "definitions.py",
+      "old": "'new_parent_models':4",
+      "new": "'new_parent_models':2",
+      "matches": 1
+    },
+    {
+      "source": "definitions.py",
+      "old": "'new_configs':4,'read_only_refs':14",
+      "new": "'new_configs':2,'read_only_refs':16",
+      "matches": 1
+    },
+    {
+      "source": "definitions.py",
+      "old": "PASS4newgraphs/14actualrefs",
+      "new": "PASS2newgraphs/16actualrefs",
+      "matches": 1
+    },
+    {
+      "source": "sizing_units.py",
+      "old": "[.00375,.005,.00625]",
+      "new": "[.0275,.03,.0325]",
+      "matches": 1
+    },
+    {
+      "source": "sizing_units.py",
+      "old": "b['exit_buffer_fraction']==g['W']",
+      "new": "b['return_hurdle']==g['W']",
+      "matches": 1
+    },
+    {
+      "source": "sizing_units.py",
+      "old": "b['return_hurdle']==.03",
+      "new": "b['exit_buffer_fraction']==.005",
+      "matches": 1
+    },
+    {
+      "source": "sizing_units.py",
+      "old": "(b,baseBTC,'exit_buffer_fraction',.005,g['W'])",
+      "new": "(b,baseBTC,'return_hurdle',.03,g['W'])",
+      "matches": 1
+    },
+    {
+      "source": "exports.py",
+      "old": "BTC_exit_buffer_fraction=c['W']",
+      "new": "BTC_return_hurdle=c['W']",
+      "matches": 1
+    },
+    {
+      "source": "exports.py",
+      "old": "BTC exit hysteresis buffer (fraction)",
+      "new": "BTC entry ROC hurdle (fraction)",
+      "matches": 1
+    },
+    {
+      "source": "exports.py",
+      "old": "BTC exit hysteresis buffer x ETH funding-budget volatility window",
+      "new": "BTC entry ROC hurdle x ETH funding-budget volatility window",
+      "matches": 1
+    },
+    {
+      "source": "exports.py",
+      "old": "BTC E .00375/.005/.00625; V10 cap .0275, H .03, L29, ROC5 .0025, N1000 fixed",
+      "new": "BTC H .0275/.03/.0325; E .005, V10 cap .0275, L29, ROC5 .0025, N1000 fixed",
+      "matches": 1
+    },
+    {
+      "source": "exports.py",
+      "old": "4 new graphs, 5 old cells",
+      "new": "2 new graphs, 7 old cells",
+      "matches": 1
+    },
+    {
+      "source": "review_joint_economics.py",
+      "old": "BTC E.005 controls",
+      "new": "BTC H.03 controls",
+      "matches": 1
+    },
+    {
+      "source": "review_joint_economics.py",
+      "old": "'BTC_exit_buffer_fraction':c['W']",
+      "new": "'BTC_return_hurdle':c['W']",
+      "matches": 1
+    },
+    {
+      "source": "review_joint_economics.py",
+      "old": "BTC_E0p005_comparisons",
+      "new": "BTC_H0p03_comparisons",
+      "matches": 1
+    },
+    {
+      "source": "review_joint_economics.py",
+      "old": "central_E0p005_VW9",
+      "new": "central_H0p03_VW9",
+      "matches": 1
+    },
+    {
+      "source": "review_joint_economics.py",
+      "old": "14 predeclared read-only old results",
+      "new": "16 predeclared read-only old results",
+      "matches": 1
+    },
+    {
+      "source": "saved_review.py",
+      "old": "{'W':.00375,'K':7}",
+      "new": "{'W':.0275,'K':7}",
+      "matches": 1
+    },
+    {
+      "source": "saved_review.py",
+      "old": "len(r['configs'])==4",
+      "new": "len(r['configs'])==2",
+      "matches": 1
+    },
+    {
+      "source": "saved_review.py",
+      "old": "c['W']==.00375 and c['K']==7",
+      "new": "c['W']==.0275 and c['K']==7",
+      "matches": 1
+    },
+    {
+      "source": "saved_review.py",
+      "old": "BTC退出缓冲E.00375",
+      "new": "BTC入场阈值H.0275",
+      "matches": 1
+    },
+    {
+      "source": "saved_review.py",
+      "old": "BTC E.005对照",
+      "new": "BTC H.03对照",
+      "matches": 1
+    },
+    {
+      "source": "saved_review.py",
+      "old": "4个新定义",
+      "new": "2个新定义",
+      "matches": 1
+    },
+    {
+      "source": "saved_review.py",
+      "old": "14个预声明旧结果",
+      "new": "16个预声明旧结果",
+      "matches": 1
+    },
+    {
+      "source": "saved_review.py",
+      "old": "'new_definitions':4",
+      "new": "'new_definitions':2",
+      "matches": 2
+    },
+    {
+      "source": "prior_round_identity_review.py",
+      "old": "因此相对于该前轮只有{len(rows)-aliases}个未匹配路径。",
+      "new": "因此相对于该前轮有{len(rows)-aliases}个未匹配配置定义（不是独立净值路径数，路径去重另见saved_result_review.json）。",
+      "matches": 1
+    },
+    {
+      "source": "prior_round_identity_review.py",
+      "old": "原14个预声明控制",
+      "new": "原16个预声明控制",
+      "matches": 1
+    },
+    {
+      "source": "boundary_units.py",
+      "old": "fc=={'SMA':0,'candidate':0,'l4h02':6,'fewm':6}",
+      "new": "fc=={'SMA':0,'candidate':6,'l4h02':0,'fewm':0}",
+      "matches": 1
+    },
+    {
+      "source": "boundary_units.py",
+      "old": "last['prior_unique_counts'].items()}=={'candidate':0,'l4h02':0,'fewm':0}",
+      "new": "last['prior_unique_counts'].items()}=={'candidate':0,'l4h02':6,'fewm':6}",
+      "matches": 1
+    },
+    {
+      "source": "boundary_units.py",
+      "old": "last['expected_current_increment_counts'].items()}=={'candidate':0,'l4h02':6,'fewm':6}",
+      "new": "last['expected_current_increment_counts'].items()}=={'candidate':6,'l4h02':0,'fewm':0}",
+      "matches": 1
+    },
+    {
+      "source": "verify_next_funding_handoff.py",
+      "old": "last['prior_unique_counts'].items()}=={'candidate':0,'l4h02':0,'fewm':0}",
+      "new": "last['prior_unique_counts'].items()}=={'candidate':0,'l4h02':6,'fewm':6}",
+      "matches": 1
+    },
+    {
+      "source": "verify_next_funding_handoff.py",
+      "old": "last['expected_current_increment_counts'].items()}=={'candidate':0,'l4h02':6,'fewm':6}",
+      "new": "last['expected_current_increment_counts'].items()}=={'candidate':6,'l4h02':0,'fewm':0}",
+      "matches": 1
+    },
+    {
+      "source": "boundary_units.py",
+      "old": "SMA-C funding0/L4-FEWM funding6each/old source keys6each/new16keys0 before reserve",
+      "new": "SMA-L4-FEWM funding0/candidate funding6/old sources6each/new16 priorC0-L4FEWM6",
+      "matches": 1
+    },
+    {
+      "source": "boundary_units.py",
+      "old": "archiveplan['own_finished_IDs']==16 and archiveplan['own_raw_reserve_finish_events']==32",
+      "new": "archiveplan['own_finished_IDs']==14 and archiveplan['own_raw_reserve_finish_events']==28",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "fund['1795536000000000000']=={'candidate':0,'l4h02':6,'fewm':6}[a]",
+      "new": "fund['1795536000000000000']==6",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "counts=={'SMA':0,'candidate':0,'l4h02':6,'fewm':6}",
+      "new": "counts=={'SMA':0,'candidate':6,'l4h02':0,'fewm':0}",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "single_actualNov24_16_not_yet_booked=True,all3_perp_actualNov24_16_booked_once=False",
+      "new": "single_actualNov24_16_not_yet_booked=False,all3_perp_actualNov24_16_booked_once=True",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "For actualNov24_16 candidate still has0 while L4 andFEWM now have6 own keys each;only candidate next window covers this event.",
+      "new": "All3 original perps now have6 unique Nov24_16 keys each;no next own window covers this already booked event.",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "do not repeat L4/FEWM.",
+      "new": "do not repeat any of the three original accounts.",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "Current all4 daily0/fills0;SMA/candidate append closed marks and funding0,L4/FEWM book six own actual16 records each plus closed marks.",
+      "new": "Current all4 daily0/fills0;candidate books six own actual16 records with BTC income unamplified and ETH short funding outflow stressed1/2/3;SMA,L4,FEWM append closed marks and never repeat prior funding.",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "本轮BTC退出缓冲E.00375/.00625×ETH资金费预算VW7/12四个新角点已完成，五旧格只读。",
+      "new": "本轮BTC入场阈值H.0275×ETH资金费预算VW7/12两个新格已完成，七旧格只读。",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "# BTC退出缓冲与ETH资金费预算记忆研究",
+      "new": "# BTC入场ROC阈值与ETH资金费预算记忆研究",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "|BTC退出缓冲（比例）|",
+      "new": "|BTC入场ROC阈值（比例）|",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "4新角点及5旧格",
+      "new": "2新格及7旧格",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "代表BTC E.00375/ETH预算VW7",
+      "new": "代表BTC H.0275/ETH预算VW7",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "14个旧结果只读，8原生+6父组合",
+      "new": "16个旧结果只读，8原生+8父组合",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "BTC E.005旧对照",
+      "new": "BTC H.03旧对照",
+      "matches": 2
+    },
+    {
+      "source": "collect.py",
+      "old": "中心BTC E.005/ETH预算VW9",
+      "new": "中心BTC H.03/ETH预算VW9",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "BTC退出缓冲与desired/交易差分",
+      "new": "BTC入场阈值与desired/交易差分",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "本轮只有L4与FEWM各自窗口覆盖该事件，分别按各自原signedq及真实rate/mark入账各六唯一键；candidate窗口尚未覆盖仍为零。ETH数量为零仍保留真实零金额资金费行，不虚构持仓。所有账户无新日决策/成交，原数量、desired和执行成本保持；L4/FEWM现金仅增加各自真实资金费，收入不放大、支出按1/2/3倍。",
+      "new": "本轮只有candidate窗口覆盖该事件，按自己的原BTC−.012、ETH−1.754持仓及真实rate/mark入账六唯一键；L4与FEWM此前已各自记六键，本轮不重复。candidate的BTC资金费收入不放大，ETH空头资金费支出按1/2/3倍；不复制其他账户金额。所有账户无新日决策/成交，原数量、desired及执行成本保持；只有candidate现金按各自成本场景真实资金费变动。",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "len(own)==16",
+      "new": "len(own)==14",
+      "matches": 1
+    },
+    {
+      "source": "checks.py",
+      "old": "len(own)==16",
+      "new": "len(own)==14",
+      "matches": 1
+    },
+    {
+      "source": "archive_registry.py",
+      "old": "len(own)==16",
+      "new": "len(own)==14",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "'current_actual_financial_variants':4",
+      "new": "'current_actual_financial_variants':2",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "4新图和12原观察",
+      "new": "2新图和12原观察",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "32条原始事件",
+      "new": "28条原始事件",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "本轮32事件",
+      "new": "本轮28事件",
+      "matches": 1
+    },
+    {
+      "source": "archive_registry.py",
+      "old": "len(rows)==32",
+      "new": "len(rows)==28",
+      "matches": 1
+    },
+    {
+      "source": "checks.py",
+      "old": "len(events)-ctx['registry_events']==32 and len(records)-ctx['registry_ids']==16",
+      "new": "len(events)-ctx['registry_events']==28 and len(records)-ctx['registry_ids']==14",
+      "matches": 1
+    },
+    {
+      "source": "checks.py",
+      "old": "'append_only_new_events':32",
+      "new": "'append_only_new_events':28",
+      "matches": 1
+    },
+    {
+      "source": "verify_next_funding_handoff.py",
+      "old": "=={'candidate':0,'l4h02':6,'fewm':6} and h['actual_Nov24_16_counts_by_account']",
+      "new": "=={'candidate':6,'l4h02':6,'fewm':6} and h['actual_Nov24_16_counts_by_account']",
+      "matches": 1
+    },
+    {
+      "source": "verify_next_funding_handoff.py",
+      "old": "[('candidate',0),('l4h02',6),('fewm',6)]",
+      "new": "[('candidate',6),('l4h02',6),('fewm',6)]",
+      "matches": 1
+    },
+    {
+      "source": "verify_next_funding_handoff.py",
+      "old": "h['L4_FEWM_actualNov24_16_booked_once'] and h['single_actualNov24_16_not_yet_booked'] and not h['all3_perp_actualNov24_16_booked_once']",
+      "new": "h['L4_FEWM_actualNov24_16_booked_once'] and not h['single_actualNov24_16_not_yet_booked'] and h['all3_perp_actualNov24_16_booked_once']",
+      "matches": 1
+    }
+  ],
+  "new_model_account_or_cashflow_evaluations": 0,
+  "all_before_any_current_reservation": true,
+  "actual16_first_source": {
+    "SHA": "b83d66f870d189d066c4939190c39b16a44e3785ef23277e70d85250a7e8cf5d",
+    "original_capture_UTC": "2026-11-25T08:05:57.950668Z",
+    "prior_own_counts": {
+      "candidate": 0,
+      "l4h02": 6,
+      "fewm": 6
+    },
+    "expected_current_counts": {
+      "candidate": 6,
+      "l4h02": 0,
+      "fewm": 0
+    }
+  }
+}
