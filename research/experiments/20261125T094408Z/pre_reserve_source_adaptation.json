@@ -1,0 +1,451 @@
+{
+  "recorded_utc": "2026-11-25T09:55:39.650301+00:00",
+  "metadata_selected_axis": "exit_buffer_fraction",
+  "BTC_values": [
+    0.00375,
+    0.005,
+    0.00625
+  ],
+  "ETH_values": [
+    7,
+    9,
+    12
+  ],
+  "nine_unchanged_monetary_sources": {
+    "engine.py": "ff5e9cd3da2ec056d30cd2223f52195b77cbb93c477be29985367eba10503cd9",
+    "core391_tail_safe.py": "7491cc0a55e83c7431a6fc3d66899e660a8d9daec0629af4391fc31da6d4ce6c",
+    "market.py": "321cdb4f49666da9ce1adbe7f6ebc3a8084ff62bb6c47730f54646a67c2b9f6c",
+    "portfolio.py": "f3222f83370e707c918426d4b5269ad32fcc158098db2eeeeac9141967788d4b",
+    "audit_native.py": "4a2f958d8f1c33baec2788c68bfa32c321b0be7aa5eee3809a2a1687ab5be536",
+    "observe_l4h02.py": "99691760735948ac2f42feae1a1abfe8f6a1a2a135a6cf8a7c1f558cda04a73f",
+    "observe_fewm.py": "63f32233b4f2dabf433aabf0f135004598261d37e58e2f61e61483c7c90d7715",
+    "audit_incremental.py": "a9d026baeca392c897688bb6b85b33d19db43fb6d7563d57b773fabfec9d7118",
+    "forward.py": "006ac600c36c801588871b6415fcdbd6d281afb87f33a41e3a780f0131c1ad08"
+  },
+  "source_changes": [
+    {
+      "source": "freeze_confirmation.py",
+      "old": "BTC_ENTRY_VOLATILITY_WINDOW_DAYS",
+      "new": "BTC_EXIT_BUFFER_FRACTION",
+      "matches": 2
+    },
+    {
+      "source": "run.py",
+      "old": "BTC_ENTRY_VOLATILITY_WINDOW_DAYS",
+      "new": "BTC_EXIT_BUFFER_FRACTION",
+      "matches": 2
+    },
+    {
+      "source": "audit.py",
+      "old": "BTC_ENTRY_VOLATILITY_WINDOW_DAYS",
+      "new": "BTC_EXIT_BUFFER_FRACTION",
+      "matches": 2
+    },
+    {
+      "source": "sizing_units.py",
+      "old": "BTC_ENTRY_VOLATILITY_WINDOW_DAYS",
+      "new": "BTC_EXIT_BUFFER_FRACTION",
+      "matches": 3
+    },
+    {
+      "source": "exports.py",
+      "old": "BTC_ENTRY_VOLATILITY_WINDOW_DAYS",
+      "new": "BTC_EXIT_BUFFER_FRACTION",
+      "matches": 5
+    },
+    {
+      "source": "prepare.py",
+      "old": "PID==1556142",
+      "new": "PID==1583301",
+      "matches": 1
+    },
+    {
+      "source": "prepare.py",
+      "old": "known16=rd(ROOT/h['actual_Nov23_16_source']);first16ms=min(int(z['fundingTime']) for xs in known16['public_fields_by_asset'].values() for z in xs);lo=datetime.fromtimestamp(min(ms(lo),first16ms-1)/1000,timezone.utc).isoformat().replace('+00:00','Z')",
+      "new": "earliest_doc=rd(ROOT/h['actual_Nov23_08_source']);first_ms=min(int(z['fundingTime']) for xs in earliest_doc['public_fields_by_asset'].values() for z in xs);lo=datetime.fromtimestamp(min(ms(lo),first_ms-1)/1000,timezone.utc).isoformat().replace('+00:00','Z')",
+      "matches": 1
+    },
+    {
+      "source": "prepare.py",
+      "old": "including exact known16 source context",
+      "new": "including all five first actual settlement sources",
+      "matches": 1
+    },
+    {
+      "source": "prepare.py",
+      "old": "assert {a:windows[a]['expected_funding_records'] for a in ['SMA','candidate','l4h02','fewm']}=={'SMA':0,'candidate':0,'l4h02':0,'fewm':0}",
+      "new": "assert {a:windows[a]['expected_funding_records'] for a in ['SMA','candidate','l4h02','fewm']}=={'SMA':0,'candidate':0,'l4h02':6,'fewm':6}",
+      "matches": 1
+    },
+    {
+      "source": "prepare.py",
+      "old": "CurrentSMA/candidateNov24_10:30..12:30 andL4/FEWMNov24_12:10..14:10 marks only. All3 own actual08 keys already6 each, no repeat;all4 daily0/fills0/newfunding0.",
+      "new": "Current SMA/candidate Nov24_12:30..14:30 closed marks only; L4/FEWM Nov24_14:10..16:10 closed marks plus actual16 funding. All3 own old08 keys already6 each, no repeat; all4 daily0/fills0, new funding counts SMA0/candidate0/L4six/FEWMsix.",
+      "matches": 1
+    },
+    {
+      "source": "prepare.py",
+      "old": "'reference':'turn425view0'",
+      "new": "'reference':'turn426view0'",
+      "matches": 1
+    },
+    {
+      "source": "prepare.py",
+      "old": "put(R/'original_accounts_binding.json'",
+      "new": "\n# Exact genuinely first Nov24_16 response, original UTC and each own unbooked key, before ANY reserve.\nentrylast=next(e for e in h['next_window_known_actual_funding_sources'] if e['sha256']=='b83d66f870d189d066c4939190c39b16a44e3785ef23277e70d85250a7e8cf5d');originlast=ROOT/entrylast['path'];locallast=R/originlast.name;doclast=rd(locallast)\nassert sha(originlast)==sha(locallast)==entrylast['sha256'] and doclast['recorded_utc']==entrylast['original_capture_utc']=='2026-11-25T08:05:57.950668Z' and doclast['public_fields_by_asset']==entrylast['actual_public_fields']\ntimeslast={str(int(z['fundingTime'])*1000000) for xs in doclast['public_fields_by_asset'].values() for z in xs};assert timeslast=={'1795536000000000000'}\nfor asset in ['BTC','ETH']:\n ids={int(z['fundingTime']) for z in doclast['public_fields_by_asset'][asset]};assert [z for z in response[asset] if int(z['fundingTime']) in ids]==doclast['public_fields_by_asset'][asset]\nfor item in doclast['HTTP_receipts']:\n assert sha(ROOT/item['raw'])==item['sha256'];sources[item['raw']]=item['sha256']\n if item['http_status']==200 and not item['curl_exit_code']:\n  rows=gz(ROOT/item['raw'])\n  for asset,fields in doclast['public_fields_by_asset'].items():\n   if 'symbol='+asset+'USDT' in item['url']:assert all(z in rows for z in fields)\npclast={a:{t:prior08[a]['funding'].get(t,0) for t in timeslast} for a in ['candidate','l4h02','fewm']};assert pclast==entrylast['current_own_booked_counts'] and all(sum(z.values())==0 for z in pclast.values())\ninclast={a:{t:sum(3 for xs in windows[a]['expected_funding_by_asset'].values() for z in xs if str(int(z['fundingTime'])*1000000)==t) for t in timeslast} for a in pclast};assert {a:sum(xs.values()) for a,xs in inclast.items()}=={'candidate':0,'l4h02':6,'fewm':6}\nprooflast=R/'actual16_nov24_prebinding_source.json';put(prooflast,{'passed':True,'recorded_utc':now(),'source':rel(locallast),'sha256':sha(locallast),'original_source':rel(originlast),'first_capture_utc':doclast['recorded_utc'],'actual_public_fields':doclast['public_fields_by_asset'],'prior_unique_counts':pclast,'expected_current_increment_counts':inclast,'fresh_exact_source_fields_equal':True,'original_successful_HTTP_raw_bytes_verified':True,'before_any_current_reservation':True,'cashflow_calculations':0,'own_signed_q_and_cost_required_no_cashflow_copy':True});sources.update({rel(prooflast):sha(prooflast),rel(originlast):sha(originlast)})\n\nput(R/'original_accounts_binding.json'",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "WS=[9,10,11]",
+      "new": "WS=[.00375,.005,.00625]",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "'BTC_entry_volatility_window_days':w",
+      "new": "'BTC_exit_buffer_fraction':w",
+      "matches": 2
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "[9,11]",
+      "new": "[.00375,.00625]",
+      "matches": 2
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "parents[10,k]",
+      "new": "parents[.005,k]",
+      "matches": 3
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "parent_BTCVolV",
+      "new": "parent_BTCExitE",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "btc-entry-volatility-window-eth-funding-budget-volwindow-passive-combination",
+      "new": "btc-exit-buffer-eth-funding-budget-volwindow-passive-combination",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "BTC completed sample logvol estimation window 9/10/11 days; cap.0275, L29/H.03/E.005, ROC5 confirmation .0025 and N1000 fixed; entry gate only.",
+      "new": "BTC position-exit hysteresis buffer E=.00375/.005/.00625 (fraction,0.375/0.5/0.625 percent); V10cap.0275,L29,H.03,ROC5 .0025,N1000 fixed. Long held while completed29dROC>-E and short while ROC<E, unless a new opposite entry signal.",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "g['W']==9 and g['K']==7",
+      "new": "g['W']==.00375 and g['K']==7",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "{'W':9,'K':7}",
+      "new": "{'W':.00375,'K':7}",
+      "matches": 1
+    },
+    {
+      "source": "freeze_confirmation.py",
+      "old": "additional_predeclared_BTCVolV10_report_controls",
+      "new": "additional_predeclared_BTCExitE0p005_report_controls",
+      "matches": 1
+    },
+    {
+      "source": "review_joint_economics.py",
+      "old": "additional_predeclared_BTCVolV10_report_controls",
+      "new": "additional_predeclared_BTCExitE0p005_report_controls",
+      "matches": 1
+    },
+    {
+      "source": "run.py",
+      "old": "'BTC_exit_buffer_fraction_fixed':0.005",
+      "new": "'BTC_exit_buffer_fraction':[.00375,.005,.00625]",
+      "matches": 1
+    },
+    {
+      "source": "run.py",
+      "old": "'BTC_entry_volatility_window_days':[9,10,11]",
+      "new": "'BTC_entry_volatility_window_days_fixed':10",
+      "matches": 1
+    },
+    {
+      "source": "definitions.py",
+      "old": "{'W':9,'K':7}",
+      "new": "{'W':.00375,'K':7}",
+      "matches": 1
+    },
+    {
+      "source": "definitions.py",
+      "old": "q['BTC_entry_volatility_window_days']==row['W'] in [9,11]",
+      "new": "q['BTC_exit_buffer_fraction']==row['W'] in [.00375,.00625]",
+      "matches": 1
+    },
+    {
+      "source": "definitions.py",
+      "old": "q['BTC_exit_buffer_fraction']==.005",
+      "new": "q['BTC_entry_volatility_window_days']==10",
+      "matches": 1
+    },
+    {
+      "source": "definitions.py",
+      "old": "'actual08_nov24_prebinding_source.json','parent_primitive_verification.json'",
+      "new": "'actual08_nov24_prebinding_source.json','actual16_nov24_prebinding_source.json','parent_primitive_verification.json'",
+      "matches": 1
+    },
+    {
+      "source": "boundary_units.py",
+      "old": "{'SMA':0,'candidate':0,'l4h02':0,'fewm':0}",
+      "new": "{'SMA':0,'candidate':0,'l4h02':6,'fewm':6}",
+      "matches": 1
+    },
+    {
+      "source": "boundary_units.py",
+      "old": "full=rd(R/'SMA_full76_prebinding.json')",
+      "new": "\nlast=rd(R/'actual16_nov24_prebinding_source.json');assert last['passed'] and last['before_any_current_reservation'] and sha(ROOT/last['source'])==last['sha256']=='b83d66f870d189d066c4939190c39b16a44e3785ef23277e70d85250a7e8cf5d' and last['first_capture_utc']=='2026-11-25T08:05:57.950668Z' and {a:sum(z.values()) for a,z in last['prior_unique_counts'].items()}=={'candidate':0,'l4h02':0,'fewm':0} and {a:sum(z.values()) for a,z in last['expected_current_increment_counts'].items()}=={'candidate':0,'l4h02':6,'fewm':6}\nassert {str(int(z['fundingTime'])*1000000) for xs in last['actual_public_fields'].values() for z in xs}=={'1795536000000000000'}\n\nfull=rd(R/'SMA_full76_prebinding.json')",
+      "matches": 1
+    },
+    {
+      "source": "boundary_units.py",
+      "old": "all4 daily0/allfunding0/original source keys6each",
+      "new": "all4 daily0/SMA-C funding0/L4-FEWM funding6each/old source keys6each/new16keys0 before reserve",
+      "matches": 1
+    },
+    {
+      "source": "boundary_units.py",
+      "old": "'exact_actual00_source_SHA_originalUTC_retained':True",
+      "new": "'exact_actual00_source_SHA_originalUTC_retained':True,'new16_source_SHA_originalUTC_fields_and_own_unbooked_keys_bound':True",
+      "matches": 1
+    },
+    {
+      "source": "sizing_units.py",
+      "old": "[9,10,11]",
+      "new": "[.00375,.005,.00625]",
+      "matches": 1
+    },
+    {
+      "source": "sizing_units.py",
+      "old": "b['entry_volatility_window_days']==g['W']",
+      "new": "b['exit_buffer_fraction']==g['W']",
+      "matches": 1
+    },
+    {
+      "source": "sizing_units.py",
+      "old": "b['exit_buffer_fraction']==.005",
+      "new": "b['entry_volatility_window_days']==10",
+      "matches": 1
+    },
+    {
+      "source": "sizing_units.py",
+      "old": "(b,baseBTC,'entry_volatility_window_days',10,g['W'])",
+      "new": "(b,baseBTC,'exit_buffer_fraction',.005,g['W'])",
+      "matches": 1
+    },
+    {
+      "source": "exports.py",
+      "old": "BTC_entry_volatility_window_days=c['W']",
+      "new": "BTC_exit_buffer_fraction=c['W']",
+      "matches": 1
+    },
+    {
+      "source": "exports.py",
+      "old": "BTC entry volatility estimation window (days)",
+      "new": "BTC exit hysteresis buffer (fraction)",
+      "matches": 1
+    },
+    {
+      "source": "exports.py",
+      "old": "BTC entry volatility estimation window x ETH funding-budget volatility window",
+      "new": "BTC exit hysteresis buffer x ETH funding-budget volatility window",
+      "matches": 1
+    },
+    {
+      "source": "exports.py",
+      "old": "BTC V9/10/11 days; cap .0275, H .03, E .005, L29, ROC5 .0025, N1000 fixed",
+      "new": "BTC E .00375/.005/.00625; V10 cap .0275, H .03, L29, ROC5 .0025, N1000 fixed",
+      "matches": 1
+    },
+    {
+      "source": "review_joint_economics.py",
+      "old": "same-ETH-budget-volatility-window BTC V10 controls",
+      "new": "same-ETH-budget-volatility-window BTC E.005 controls",
+      "matches": 1
+    },
+    {
+      "source": "review_joint_economics.py",
+      "old": "'BTC_entry_volatility_window_days':c['W']",
+      "new": "'BTC_exit_buffer_fraction':c['W']",
+      "matches": 1
+    },
+    {
+      "source": "review_joint_economics.py",
+      "old": "matched_ETHbudgetVW_BTC_V10_comparisons",
+      "new": "matched_ETHbudgetVW_BTC_E0p005_comparisons",
+      "matches": 1
+    },
+    {
+      "source": "review_joint_economics.py",
+      "old": "central_V10_VW9_comparisons",
+      "new": "central_E0p005_VW9_comparisons",
+      "matches": 1
+    },
+    {
+      "source": "saved_review.py",
+      "old": "{'W':9,'K':7}",
+      "new": "{'W':.00375,'K':7}",
+      "matches": 1
+    },
+    {
+      "source": "saved_review.py",
+      "old": "c['W']==9 and c['K']==7",
+      "new": "c['W']==.00375 and c['K']==7",
+      "matches": 1
+    },
+    {
+      "source": "saved_review.py",
+      "old": "BTC入场估计窗V9/ETH预算VW7",
+      "new": "BTC退出缓冲E.00375/ETH预算VW7",
+      "matches": 1
+    },
+    {
+      "source": "saved_review.py",
+      "old": "BTC V10对照",
+      "new": "BTC E.005对照",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "('Nov24_08','actual08_nov24_prebinding_source.json')]};new=firsts['Nov24_08']",
+      "new": "('Nov24_08','actual08_nov24_prebinding_source.json'),('Nov24_16','actual16_nov24_prebinding_source.json')]};new=firsts['Nov24_16']",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "counts=={'SMA':0,'candidate':0,'l4h02':0,'fewm':0}",
+      "new": "counts=={'SMA':0,'candidate':0,'l4h02':6,'fewm':6}",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "assert daily['1795478460000000000']==6",
+      "new": "assert daily['1795478460000000000']==6 and fund['1795536000000000000']=={'candidate':0,'l4h02':6,'fewm':6}[a]",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "'first_actual08_sha256':new['sha256'],'first_actual08_capture_utc':new['first_capture_utc']",
+      "new": "'first_actual08_sha256':firsts['Nov24_08']['sha256'],'first_actual08_capture_utc':firsts['Nov24_08']['first_capture_utc'],'first_actual16_sha256':new['sha256'],'first_actual16_capture_utc':new['first_capture_utc'],'current_actual16_unique_counts':{a:fullcounts[a]['funding'].get('1795536000000000000',0) for a in ['candidate','l4h02','fewm']},'own_actual16_cashflows':flows",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "single_actualNov24_08_not_yet_booked=False,next_new_actual_funding_pending_by_own_window",
+      "new": "single_actualNov24_08_not_yet_booked=False,L4_FEWM_actualNov24_16_booked_once=True,single_actualNov24_16_not_yet_booked=True,all3_perp_actualNov24_16_booked_once=False,next_new_actual_funding_pending_by_own_window",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "All3 original perps now have six unique Nov24_08 keys;do not repeat.",
+      "new": "All3 original perps have six unique old Nov24_08 keys;do not repeat. For actualNov24_16 candidate still has0 while L4 andFEWM now have6 own keys each;only candidate next window covers this event. Retain first SHA b83d66f870d189d066c4939190c39b16a44e3785ef23277e70d85250a7e8cf5d/originalUTC2026-11-25T08:05:57.950668Z/exact fields;do not repeat L4/FEWM.",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "Current all4 daily0/fills0/newfunding0;each original account appends only closed marks.",
+      "new": "Current all4 daily0/fills0;SMA/candidate append closed marks and funding0,L4/FEWM book six own actual16 records each plus closed marks.",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "本轮BTC入场logvol估计窗V9/11×ETH资金费预算VW7/12四个新角点已完成",
+      "new": "本轮BTC退出缓冲E.00375/.00625×ETH资金费预算VW7/12四个新角点已完成",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "# BTC/ETH 双估计窗口研究",
+      "new": "# BTC退出缓冲与ETH资金费预算记忆研究",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "|BTC入场logvol估计窗（日）|",
+      "new": "|BTC退出缓冲（比例）|",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "代表BTC V9/ETH预算VW7",
+      "new": "代表BTC E.00375/ETH预算VW7",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "BTC V10旧对照",
+      "new": "BTC E.005旧对照",
+      "matches": 2
+    },
+    {
+      "source": "collect.py",
+      "old": "中心BTC V10/ETH预算VW9",
+      "new": "中心BTC E.005/ETH预算VW9",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "BTC波动率拦截与desired/交易差分",
+      "new": "BTC退出缓冲与desired/交易差分",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "实际Nov24_08首次源SHA{new['sha256']}",
+      "new": "实际Nov24_16首次源SHA{new['sha256']}",
+      "matches": 1
+    },
+    {
+      "source": "collect.py",
+      "old": "三原永续账户此前已各自按原signedq和真实rate/mark核算该事件，每个账户六唯一键；本轮全部窗口不再覆盖该事件，不得重复。四账户只追加已闭合mark，原现金、数量、desired及成本保持；资金费收入不放大、支出按1/2/3倍。",
+      "new": "本轮只有L4与FEWM各自窗口覆盖该事件，分别按各自原signedq及真实rate/mark入账各六唯一键；candidate窗口尚未覆盖仍为零。ETH数量为零仍保留真实零金额资金费行，不虚构持仓。所有账户无新日决策/成交，原数量、desired和执行成本保持；L4/FEWM现金仅增加各自真实资金费，收入不放大、支出按1/2/3倍。旧Nov24_08均已记六键不得重复。",
+      "matches": 1
+    },
+    {
+      "source": "verify_next_funding_handoff.py",
+      "old": "ms=lambda s:int(datetime.fromisoformat",
+      "new": "\nlast=rd(R/'actual16_nov24_prebinding_source.json');assert last['sha256']=='b83d66f870d189d066c4939190c39b16a44e3785ef23277e70d85250a7e8cf5d' and last['first_capture_utc']=='2026-11-25T08:05:57.950668Z' and {a:sum(z.values()) for a,z in last['prior_unique_counts'].items()}=={'candidate':0,'l4h02':0,'fewm':0} and {a:sum(z.values()) for a,z in last['expected_current_increment_counts'].items()}=={'candidate':0,'l4h02':6,'fewm':6}\nassert {a:aw['full_chain_once_counts'][a]['funding'].get('1795536000000000000',0) for a in ['candidate','l4h02','fewm']}=={'candidate':0,'l4h02':6,'fewm':6} and h['actual_Nov24_16_counts_by_account']=={a:{'1795536000000000000':n} for a,n in [('candidate',0),('l4h02',6),('fewm',6)]}\nassert h['L4_FEWM_actualNov24_16_booked_once'] and h['single_actualNov24_16_not_yet_booked'] and not h['all3_perp_actualNov24_16_booked_once']\n\nms=lambda s:int(datetime.fromisoformat",
+      "matches": 1
+    },
+    {
+      "source": "verify_next_funding_handoff.py",
+      "old": "'actual08_own_counts':h['actual_Nov24_08_counts_by_account']",
+      "new": "'actual08_own_counts':h['actual_Nov24_08_counts_by_account'],'actual16_own_counts':h['actual_Nov24_16_counts_by_account'],'actual16_first_source_SHA':last['sha256'],'actual16_original_capture_UTC':last['first_capture_utc']",
+      "matches": 1
+    },
+    {
+      "source": "verify_next_funding_handoff.py",
+      "old": "'all3_original_perps_actual16_and08_unique_counts6_each':True",
+      "new": "'all3_original_perps_actual16_and08_unique_counts6_each':True,'legacy_count_scope':'Nov23_16 and Nov24_08;new Nov24_16 is explicitly per-account','newNov24_16_counts':h['actual_Nov24_16_counts_by_account']",
+      "matches": 1
+    }
+  ],
+  "new_model_account_or_cashflow_evaluations": 0,
+  "all_before_any_current_reservation": true,
+  "exact_new16_first_source_to_be_refreshed_and_bound_before_reserve": {
+    "sha256": "b83d66f870d189d066c4939190c39b16a44e3785ef23277e70d85250a7e8cf5d",
+    "original_capture_utc": "2026-11-25T08:05:57.950668Z",
+    "prior_own_counts": {
+      "candidate": 0,
+      "l4h02": 0,
+      "fewm": 0
+    },
+    "expected_current_counts": {
+      "candidate": 0,
+      "l4h02": 6,
+      "fewm": 6
+    }
+  }
+}
