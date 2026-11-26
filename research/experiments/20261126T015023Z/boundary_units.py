@@ -1,0 +1,17 @@
+"""Verify real current funding boundaries, full original prefixes and every axis consumer before reserve."""
+import ast,re
+from common import *
+rd=lambda p:json.loads(p.read_text());w=rd(R/'account_windows.json');p=rd(R/'plan.json');P=ROOT/'research/experiments/20261125T234917Z';assert not(R/'reserve_batches').exists();accounts=['SMA','candidate','l4h02','fewm'];dc={a:len(w[a]['expected_daily_events_utc']) for a in accounts};fc={a:w[a]['expected_funding_records'] for a in accounts};assert dc==dict.fromkeys(accounts,0) and fc=={'SMA':0,'candidate':0,'l4h02':6,'fewm':6}
+allp=rd(R/'all_actual_funding_prebinding.json');assert allp['source_count']==7
+for z in allp['sources']:
+ q=rd(ROOT/z['path']);assert q['passed'] and q['before_any_current_reservation'] and sha(ROOT/z['path'])==z['sha256'] and sha(ROOT/q['source'])==q['sha256']
+ for a,ts in q['prior_unique_counts'].items():
+  for t,count in ts.items():assert count+q['expected_current_increment_counts'][a][t]<=q['maximum_once_counts_by_timestamp'][t]
+q=rd(R/'actual08_nov25_prebinding_source.json');assert q['sha256']=='0be877a666e7d443ab72dc3b6bfd211fd05baddba5fbb51378c91af3dba6188a' and q['first_capture_utc']=='2026-11-26T00:17:27.633588Z' and {a:sum(v.values()) for a,v in q['prior_unique_counts'].items()}=={'candidate':0,'l4h02':0,'fewm':0} and {a:sum(v.values()) for a,v in q['expected_current_increment_counts'].items()}=={'candidate':0,'l4h02':6,'fewm':6}
+full=rd(R/'SMA_full77_prebinding.json');assert full['passed'] and full['current_original_daily_event_count']==0 and full['full77_exact_original76_prefix'] and sha(ROOT/full['authority'])==full['sha256'] and rd(R/'SMA_markonly_kernel_identity.json')['original_Float_financial_arithmetic_unchanged']
+for n in ['engine.py','core391_tail_safe.py','market.py','portfolio.py','audit_native.py','observe_l4h02.py','observe_fewm.py','audit_incremental.py']:assert sha(R/n)==sha(P/n)
+consumers={}
+for n in ['run.py','audit.py','exports.py','definitions.py','sizing_units.py']:
+ keys={z.value for z in ast.walk(ast.parse((R/n).read_text())) if isinstance(z,ast.Constant) and isinstance(z.value,str) and re.fullmatch(r'(BTC|ETH)_[A-Z_]+',z.value)};assert keys<=set(p['axes']),(n,keys,set(p['axes']));consumers[n]=sorted(keys)
+a=rd(R/'registry_archive_plan.json');assert a['planned_before_any_reservation'] and a['own_finished_IDs']==len(rd(R/'batch.json'))+12==14 and a['own_raw_reserve_finish_events']==28 and p['expected_counts']['read_only_unique_results']==16
+put(R/'boundary_unit_verification.json',{'passed':True,'current_daily_event_counts':dc,'actual_funding_counts':fc,'all7_original_first_sources_bound':True,'SMA_full77_exact76prefix_markonly_arithmetic_verified':True,'axis_consumer_constants_match_frozen_axes':consumers,'own_IDs':14,'own_events':28,'before_any_current_reservation':True});print('PASS sevenfirstsources/L4FEWM6fundingeach/C0/daily0/full77+76prefix/everyaxisconsumer/14ID28events')
