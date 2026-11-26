@@ -1,0 +1,12 @@
+"""Run native phases sequentially and retain every actual exit and output."""
+import json,os,subprocess,sys
+from datetime import datetime,timezone
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[3];R=Path(__file__).resolve().parent;PY='/home/desktop/.local/share/equitide-research/worktree/.venv/bin/python';phase=sys.argv[1];now=lambda:datetime.now(timezone.utc).isoformat().replace('+00:00','Z')
+jobs={'review':[['review_joint_economics.py']],'retain':[['retain_raw.py']],'nextfund':[['verify_next_funding_handoff.py']],'transport':[['retain_transport_failures.py']],'archive':[['archive_registry.py']],'units_retry':[['sizing_units.py'],['boundary_units.py']],'prepare':[['prepare.py']],'freeze':[['freeze_confirmation.py']],'units':[['parent_units.py'],['sizing_units.py'],['boundary_units.py']],'bind':[['definitions.py']],'reserve':[['run.py','reserve_batch']],'evaluate':[['run.py','evaluate']],'audit':[['audit.py']],'exports':[['exports.py']],'finish':[['run.py','finish_batch']],'l4':[['observe_l4h02.py'],['audit_l4h02.py']],'fewm':[['observe_fewm.py'],['audit_fewm.py']],'candidate':[['observe_candidate.py'],['audit_candidate.py']],'forward':[['forward_registry.py','reserve'],['forward.py'],['audit_forward.py'],['forward_registry.py','finish']],'registry':[['../../../checks/strategy_registry.py']],'collect':[['collect.py']],'checks':[['checks.py']],'monitor':[['../../monitor/snapshot.py'],['../../../checks/monitor_snapshot.py']]}
+if phase not in jobs:raise ValueError(phase)
+folder=R/'command_receipts';folder.mkdir(exist_ok=True);dest=folder/(phase+'.json');assert not dest.exists();receipts=[]
+for i,args in enumerate(jobs[phase]):
+ cmd=[PY,'-B',str((R/args[0]).resolve()),*args[1:]];a=now();z=subprocess.run(cmd,cwd=ROOT,env={**os.environ,'PYTHONDONTWRITEBYTECODE':'1','OPENBLAS_NUM_THREADS':'1','OMP_NUM_THREADS':'1'},capture_output=True,text=True);log=folder/(phase+'_'+str(i)+'.log');log.write_text(z.stdout+z.stderr);row={'command':cmd,'cwd':str(ROOT),'started_utc':a,'finished_utc':now(),'exit_code':z.returncode,'log':str(log.relative_to(ROOT))};receipts.append(row);dest.write_text(json.dumps({'phase':phase,'commands':receipts,'passed':all(x['exit_code']==0 for x in receipts)},ensure_ascii=False,indent=2)+'\n');print(z.stdout+z.stderr,flush=True)
+ if z.returncode:raise SystemExit(z.returncode)
+print('PHASE_SUCCESS',phase,flush=True)
