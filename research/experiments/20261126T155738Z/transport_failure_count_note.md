@@ -1,0 +1,3 @@
+# 本轮传输失败计数口径
+
+collect阶段最初登记一条ETH资金费预检TLS失败；随后完整传输补充检查另找到SMA抓取期间的一条失败。最终公共GET失败总数为2，以transport_failure_supplement.json与read_failures.json的完整列表为准；对应原始响应和同次抓取内重试回执均保留。Git启动HTTPS失败另记startup_fetch_failure.json。所有已完成策略与账户窗口均未重放。
