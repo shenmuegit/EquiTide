@@ -1,0 +1,3 @@
+# 前轮统计字段勘误
+
+20261126T155738Z/trial_counts.json中current_actual_financial_variants遗留为4。该轮report.json实际含2个新配置，14个总ID=2财务+12观察，28个原始登记事件和监控新增2条均正确。保留旧文件、报告、登记与收益原字节，本轮另存此勘误；本轮统计改从实际report配置数量生成。
