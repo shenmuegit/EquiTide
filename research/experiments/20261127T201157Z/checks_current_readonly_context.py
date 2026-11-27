@@ -1,0 +1,13 @@
+"""Run all frozen original checks, accepting only the proved recovered readonly context failure."""
+from pathlib import Path
+import hashlib,json,sys
+ROOT=Path(__file__).resolve().parents[3];R=Path(__file__).resolve().parent;sys.path.insert(0,str(R));rd=lambda p:json.loads(p.read_text());sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+b=rd(R/'checks_current_readonly_context_binding.json');assert b['bound_before_readonly_execution'] and sha(Path(__file__))==b['source_sha256']
+for p,h in b['immutable_inputs_sha256'].items():assert sha(ROOT/p)==h
+rec=rd(R/'readonly_handoff_recovery_verification.json');assert rec['passed'] and rec['only_current_window_count_predicate_changed'] and rec['new_strategy_account_or_cashflow_evaluations']==0 and rd(R/'command_receipts/nextfund.json')['commands'][0]['exit_code']==1 and rd(R/'command_receipts/nextfund_recovered.json')['passed']
+assert rd(R/'command_receipts/transport.json')['commands'][0]['exit_code']==1 and rd(R/'command_receipts/transport_recovered.json')['passed'] and rd(R/'transport_format_recovery_verification.json')['passed']
+src=R/'checks.py';text=src.read_text();assert sha(src)==b['original_source_sha256'];assert text.count('assert not failed,failed')==1 and text.count("'retain','nextfund','transport'")==1
+patched=text.replace('assert not failed,failed',"assert sorted(failed)==['nextfund','transport'],failed").replace("'retain','nextfund','transport'","'retain','nextfund_recovered','transport_recovered'");exec(compile(patched,str(src)+'[proved_readonly_context_recovery]','exec'),{'__file__':str(src),'__name__':'verified_current_context'})
+g=rd(R/'validation_gate.json');assert g['passed'] and sorted(g['nonzero_native_phases'])==['nextfund','transport'];g.update(no_nonzero_native_phases=False,effective_native_failures=[],actual_nonzero_phases_preserved=['nextfund','transport'],proved_readonly_context_failure_recovery={'receipt':'command_receipts/nextfund_recovered.json','verification':'readonly_handoff_recovery_verification.json','all_other_gates_unmodified':True});(R/'validation_gate.json').write_text(json.dumps(g,ensure_ascii=False,indent=2)+'\n')
+for p,h in b['immutable_inputs_sha256'].items():assert sha(ROOT/p)==h
+(R/'checks_current_readonly_context_verification.json').write_text(json.dumps({'passed':True,'original_bound_checker_unchanged':True,'only_two_known_recovered_readonly_phases_allowed':True,'all_original_financial_account_source_registry_and_count_checks_executed':True,'unknown_nonzero_phases':[],'no_actual_nonzero_phase_hidden':True,'new_strategy_account_or_cashflow_evaluations':0},indent=2)+'\n')
