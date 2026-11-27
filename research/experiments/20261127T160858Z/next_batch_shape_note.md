@@ -1,0 +1,15 @@
+# 下轮必需状态
+
+原36项事前参数交叉优先队列已由完整定义查重确认全部0新图，first_definition_only_available_batch为null；不得伪造已有优先序37或重跑旧配置。新方向独立记录于next_direction_predeclaration.json：BTC主动量回看28/29/30天 × 入场收益阈值0.0275/0.03/0.0325，BTC其余完整参数和ETH原M4子银行固定，原始银行乘数[1,1]、资本3750/15000、入场目标1000/4000不变。代表28/.0275和原默认29/.03在未来结果前固定；这只是下轮计划，尚未计算、reserve或产生结果。完整源spec参数、数据SHA、规则、时间边界、失败标准及两轴九格在该JSON中。
+
+下轮先完整读取registry及结论、核对完整原生定义和组件/原始权重图；实际缺失原生组件可新测，已有实际原生结果只读复用，随后才计算新父图。不要使用本轮0新原生/4新父图专用运行器直接计算新原生批次。当前engine/audit已支持BTC主回看28/29/30，但仍须事前核对33天历史背景、逐原生与父图完整spec、每个变体先成功reserve、实际计算、独立审计与finish；所有负收益保留。实际新配置数、成本行、只读引用与登记数由完整查重确定，不照抄本轮16ID/32事件。历史391天反复使用，不能声称最终未触碰测试；多重选择偏差继续披露。
+
+下一SMA/候选为Nov26_20:30→22:30，仍无日决策和查询待处理资金费。下一L4/FEWM为Nov26_22:10→Nov27_00:10，覆盖Nov27_00:01原日决策及新实际资金费：各6行，不能提前入账。本轮新增第12首次实际来源的原时间/费率/mark、SHA和首次UTC见本note JSON的next_unbooked_sources；当前三个原永续账户均未记第12来源。旧11份来源则每个原永续账户均各六唯一键，不能重记。下轮任何受影响reserve前必须刷新完整实际资金费来源并核对各自原q/cash/desired/费用/全链已记键；收入不放大、支出按成本倍数，不复制另一个账户金额。先结算实际时间再按自身原冻结规则执行00:01日决策，公共响应、完整账户账本与原冻结规则保留。
+
+SMA下一窗口沿用full78真实SPOT权威20261126T195835Z、旧77/76前缀和原Float marks-only核算，不新建日决策。将来SMA/候选覆盖Nov27日决策时再预取full79并用原每日模板；L4/FEWM较早跨午夜须按其各自冻结原生观察器取得完整日背景。候选已一完整30天折，须事前安排九资产/成本场景首月折审计；原audit_incremental.py保持不变。L4/FEWM当前尚无完整30天折。
+
+仅复制code_binding_before_evaluation.source_sha256列出的标准44份适配源码，不能把本轮新增只读错误恢复适配器当金融核算代码。bootstrap和source_inventory必须原生实际退出0才继续；绑定正确PID、main基点、前轮指针、原始资料版本和全部实际资金费来源。任何轴/参数变化需在reserve前同步metadata/freeze/definitions/sizing/运行器/独立audit/导出/图表/比较/代表/计数。两轴原生批次应先固定全部方案再看收益，不做OOS选择或结果后扩网。
+
+本轮一次只读next_params绑定漏字段导致真实退出1；原始失败receipt/log/binding未改写或移走，修复为new_financial_account_or_cashflow_evaluations=0后next_params_recovered实际退出0，详见readonly_metadata_recovery/verification.json。回测、账户和44份预绑定源码未重跑或改写。下轮新绑定要提供准确字段名；原checks.py仍是正常严格门禁，不复制本轮checks_metadata_recovery.py的例外。发布/封存可从20261127T140855Z的正常模板恢复一般全阶段成功门禁，按下轮真实配置计数调整，历史失败证据继续只读保留。
+
+所有真实结果完成登记及必要检查后，在同一branch.lock内生成并检查只读monitor，逐旧行和paper字典保持，提交main并普通非强制push；新鲜fetch/tree及每份本轮blob核对成功才释放native FLOCK，等待真实退出0，再后置核验和仅清理可重建中间文件。不得创建其他分支、改paper冻结规则或用SMA shadow冒充十策略真实报价模拟。
