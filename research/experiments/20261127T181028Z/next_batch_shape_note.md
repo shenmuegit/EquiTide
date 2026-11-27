@@ -1,0 +1,17 @@
+# 下轮必需状态
+
+事前源顺序的下一批为BTC主回看28/29/30天（入场H.03固定） × ETH资金费预算比例.00625/.0075/.00875；这是组合定义查重，不看收益择参。当前4新父图/5旧格，0新原生，8原生+6父图只读共14引用，条件形状18模型54成本行、12相邻边、16ID32事件。新组件已在本轮独立实际计算、审计和finish；读取本轮native_report.json的实际source SHA及归档，不能因为BTC组件历史rejected而当成无实际结果重测。原始完整银行权重[1,1]、C3750/15000、N1000/4000、初始目标5000及20/80资本解释保持，不归一化或线性缩放。本note JSON保存每个BTC/ETH实际指纹和新图格；代表W28/K.00625、原默认W29/K.0075已在未来结果前固定。任何下一真实配置重新全量查重、保存完整spec并成功reserve才计算。
+
+BTC固定VW10/cap.0275、确认ROC5/h.0025、退出.005；ETH固定ROC5/H.02、有限EWMS16/D3/强度.0075、入场VW6/cap.05625、退出.0075、成熟M4/最大年龄36h/至少1h滞后、预算VW9，仅预算比变化。两币都是已有实际银行，优先复用其真实现金/数量/成本/资金费/保证金/全NAV；本轮12金融定义对应10条路径，并非12独立alpha试验。391天反复使用开发历史，非未触碰最终测试，不声称稳定实盘盈利。
+
+下一SMA/候选窗口Nov26_22:30→Nov27_00:30，两者各覆盖一次原00:01日决策；候选另覆盖第12实际资金费、应记六唯一键，SMA为现货不计永续资金费。下轮必须在任何reserve前取得真实闭合Nov26_SPOT日线，构成full79并逐条核验旧full78/77/76前缀；full78权威20261126T195835Z，SHA eabd844f407c0accc02fb986ea3e1a181111d7330bc07d6e06997155ad7efdb6。使用20261126T195835Z原Float每日adapter/registry/auditor模板，重绑最新forward_state/report、日决策日期和新full79，不能拿本轮marks-only adapter做每日交易。原SPOT LOT与10bp费用、现金/数量/desired/费用/NAV前缀都保留。候选仍只有一个完整30天折，须用本轮预先绑定的九场景首月折auditor从首次只读审计就检查，不改旧audit_incremental.py，不重跑已完成窗口。
+
+下一L4/FEWM窗口Nov27_00:10→02:10，按本轮完整查询待资金费0、日决策0，但任何受影响reserve前仍刷新真实完整窗口数据，不假定8小时固定结算。第12来源actualNov27_00 fundingTime=1795737600000ms，SHA df07c084e681d205d31c00d48adfa81c78cfc9227903dc3dffe694debfaf5902，首次UTC2026-11-27T16:33:56.662528Z保持；当前候选0键，L4/FEWM各6键，LF已完成该次原日决策，不能重复入账/重做。L4在00:01按原规则ETH平仓，当前ETH0；FEWM按自己的原规则保持ETH短仓-2.659，不能复制L4状态/现金。候选BTC-0.012/ETH0、L4BTC-0.006/ETH0、FEWMBTC-0.009/ETH-2.659（各成本原值见本note JSON）。旧11来源三个原永续账户均各六键，无追溯或再次收费；下一候选使用自己的原q/rate/mark先结算再执行原00:01日决策，收入不放大、支出按倍数，ETH0仍保留相应零金额唯一键。
+
+先验证固定root/main并获取远端，原生bootstrap和source_inventory均真实退出0后继续。仅复制当前code_binding_before_evaluation.source_sha256的45个核心源码，明确下一批是0新原生的graph-only路径；可复用20261127T160858Z等既有graph-only executor，按下一BTC主回看与ETH预算比轴、完整实际source和数量逐消费者调整，在任何reserve前统一绑定。不要重新运行本轮6原生银行或将不适用的native-first路径硬套到4父图批次。完整规则、输入SHA、邻域、失败标准及代表在看下一收益前固定，所有实际敏感性变体独立reserve/finish，负收益保留。
+
+本轮工程失败均真实保留：首次metadata记录器缺目录在prebinding_orchestration_failure.json，修复为录制器自建输出目录；首次bind证据路径重复拼接保留command_receipts/bind.json、原源码和日志，使用Path basename在reserve前修复，bind_recovered退出0。下轮新绑定和正常检查应从干净一般模板恢复，不继承本轮已知失败例外；创建receipt目录并核对所有具体证据路径/源schema、所有源EOF/实际报告换行，再reserve。
+
+混合原生/父图有两项只读范围修复：经济比较行只含父图时all(empty)误把6原生计作别名，原始输出joint_economic_review_initial.json保留，correct_economic_alias_summary.py只改派生计数6→0、18条真实比较及全部金融结果不变。prior_round_identity_review.py旧版假定所有新配置资本18750，混合报告首次失败保留prior_identity.json；prior_identity_parent_only.py只比较同资本6父图，prior_identity_recovered退出0。本轮所有45核心源码和原生/组合/账户结果SHA保持。下轮在绑定前将这两处比较显式限于父图并要求每图三条成本比较，或者在仅父图批次使用正常模板；不要在OOS后改金融规则，不重跑已完成模型。next_research_state中的native_command_failures是生成时快照，后续真实失败/恢复以read_failures、scope verification和本说明为准。
+
+最终按同一branch.lock生成/检查只读monitor，保留每个旧研究行及paper10完整字典；提交main、普通非强制push、新鲜fetch/tree/每个本轮blob核对成功才释放native FLOCK并等待真实退出0，再后置核验、清理仅可重建的本轮私有生成器与备份。完整账户账本、规则、所有登记/真实结果及核验必要失败证据保留；不新建分支、不更换冻结账户、不把SMA或原shadow当十策略真实报价执行。

@@ -1,0 +1,12 @@
+"""Bound readonly parent-only prior NAV comparison; no monetary calculation or source mutation."""
+import ast,hashlib,json
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[3];R=Path(__file__).resolve().parent
+rd=lambda p:json.loads(p.read_text());sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();put=lambda p,o:p.write_text(json.dumps(o,ensure_ascii=False,indent=2)+'\n')
+b=rd(R/'prior_parent_scope_binding.json');assert b['bound_before_readonly_execution'] and sha(Path(__file__))==b['source_sha256']
+for path,h in b['immutable_financial_inputs_sha256'].items():assert sha(ROOT/path)==h
+old=R/'prior_round_identity_review.py';assert sha(old)==b['original_source_sha256'];s=old.read_text();a="for c in r['configs'].values():";z="for d in old['configs'].values():";assert s.count(a)==s.count(z)==1;s=s.replace(a,"for c in [x for x in r['configs'].values() if x['scope']=='parent']:").replace(z,"for d in [x for x in old['configs'].values() if x['scope']=='parent']:");ast.parse(s);exec(compile(s,str(old)+'[parent_only_scope]','exec'),{'__name__':'__main__','__file__':str(old)})
+result=rd(R/'prior_round_NAV_identity.json');parents={c['fingerprint'] for c in rd(R/'report.json')['configs'].values() if c['scope']=='parent'};assert result['passed'] and result['new_definitions']==6 and {x['fingerprint'] for x in result['comparisons']}==parents
+result['comparison_scope_correction']={'only_parent_capital18750_and_raw_weights1_1_compared':True,'six_native_bank_results_excluded_from_parent_NAV_comparison':True,'actual_current_parent_definitions':6,'actual_all_new_definitions':12,'original_failed_receipt':'command_receipts/prior_identity.json','effective_readonly_receipt':'command_receipts/prior_identity_recovered.json','current_legacy_row_field_ETH_axis_value_means_BTC_entry_hurdle_K':True};put(R/'prior_round_NAV_identity.json',result)
+for path,h in b['immutable_financial_inputs_sha256'].items():assert sha(ROOT/path)==h
+put(R/'prior_parent_scope_verification.json',{'passed':True,'source_sha256':b['source_sha256'],'original_source_kept_byteexact':True,'current_parent_definitions_compared':6,'excluded_native_banks':6,'original_failed_receipt':b['original_failed_receipt'],'failed_receipt_sha256':b['failed_receipt_sha256'],'failed_log_sha256':b['failed_log_sha256'],'new_strategy_account_or_cashflow_evaluations':0,'immutable_financial_inputs_sha256':b['immutable_financial_inputs_sha256']});print('PASS six same-capital parent comparisons only;original failed helper/source and all financial/account evidence preserved')

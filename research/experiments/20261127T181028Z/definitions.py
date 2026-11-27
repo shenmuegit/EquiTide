@@ -1,0 +1,23 @@
+"""Validate complete native and parent specs, actual sources and original account boundaries before reserve."""
+import ast,json
+from common import *
+rd=lambda p:json.loads(p.read_text());p=rd(R/'plan.json');batch=rd(R/'batch.json');rs=reg.read_records(ROOT/'research/automation/registry.jsonl');P=ROOT/'research/experiments/20261127T160858Z';assert len(batch)==12 and len(p['read_only_references'])==10 and len(p['grid'])==len(p['native_grid'])==9
+for n in ['engine.py','core391_tail_safe.py','market.py','portfolio.py','audit_native.py','observe_l4h02.py','observe_fewm.py','audit_incremental.py']:assert sha(R/n)==sha(P/n)
+by={c['fingerprint']:c for c in [*p['native_grid'],*p['read_only_references'].values()]}
+for row in batch:
+ sp=rd(ROOT/row['spec']);q=sp['parameters'];assert reg.fingerprint(sp)==row['fingerprint'] and row['fingerprint'] not in rs and q['continuous_oos_days']==391
+ if row['scope']=='native':assert sp['universe']==['BTC/USDT'] and q['lookback_days']==row['W'] in [28,30] and q['return_hurdle']==row['K'] in [.0275,.03,.0325] and q['initial_capital_usdt']==3750 and q['fixed_entry_notional_usdt']==1000 and q['entry_volatility_window_days']==10 and q['entry_volatility_ceiling']==.0275 and q['exit_buffer_fraction']==.005 and q['entry_directional_confirmation_hurdle']==.0025 and q['entry_directional_confirmation_lookback_days']==5
+ else:
+  assert q['component_capitals_usdt']==[3750,15000] and q['component_initial_entry_notionals_usdt']==[1000,4000] and q['initial_capital_usdt']==18750 and [x['weight'] for x in sp['components']]==[1,1] and q['BTC_lookback_days']==row['W'] in [28,30] and q['BTC_return_hurdle']==row['K'] and q['ETH_entry_funding_settlement_count']==4 and q['ETH_entry_funding_max_age_hours']==36 and q['ETH_entry_funding_budget_volatility_window_days']==9 and q['ETH_entry_funding_volatility_ratio']==.0075
+  for asset,fp in zip(['BTC','ETH'],row['source_fingerprints']):
+   child=rd(ROOT/by[fp]['spec'])['parameters']
+   for k,v in q.items():
+    if k.startswith(asset+'_') and k[len(asset)+1:] in child:assert v==child[k[len(asset)+1:]],k
+for fp,z in p['read_only_references'].items():
+ assert rs[fp]['result_available'] and rs[fp]['report_sha256']==z['report_sha256']
+ for k in ['spec','report','archive']:assert sha(ROOT/z[k])==z[k+'_sha256']
+a=rd(R/'original_accounts_binding.json');assert all(sha(ROOT/path)==h for path,h in a['sources_sha256'].items());assert rd(R/'boundary_unit_verification.json')['passed'];assert rd(R/'command_receipts/metadata.json')['passed']
+for name in ['next_funding_checker_binding.json','transport_failure_binding.json']:
+ z=rd(R/name);assert z['bound_before_execution'] and sha(ROOT/z['source'])==z['source_sha256']
+names=['pre_reserve_source_adaptation.json','prebinding_orchestration_failure.json','prebinding_failure/metadata_first_product.json','prebinding_failure/bind_recovery_plan.json','prebinding_failure/definitions_first_source.py.txt','candidate_completed_fold_audit_plan.json','startup.json','context.json','plan.json','spec.json','batch.json','account_windows.json','original_accounts_binding.json','SMA_full78_prebinding.json','SMA_markonly_kernel_identity.json','SMA_old77_76_prefix_verification.json','sma65_prebinding_manifest.json','l4h02_resume_plan.json','research_design.json','primary_source_access.json','window_funding_preflight.json','registry_archive_plan.json','joint_parameter_metadata_availability.json','all_actual_funding_prebinding.json','parent_primitive_verification.json','sizing_primitive_verification.json','boundary_unit_verification.json','readonly_formatter_binding.json','next_funding_checker_binding.json','transport_failure_binding.json'];names+=[Path(x['path']).name for x in rd(R/'all_actual_funding_prebinding.json')['sources']]
+imm={rel(R/n):sha(R/n) for n in names};imm.update({x['spec']:sha(ROOT/x['spec']) for x in batch});imm.update(a['sources_sha256']);source={rel(f):sha(f) for f in R.glob('*.py')};put(R/'code_binding_before_evaluation.json',{'recorded_utc':now(),'source_sha256':source,'immutable_source_sha256':imm,'new_native_models':6,'new_parent_models':6,'no_new_financial_calculation_yet':True,'raw_weights_not_normalized':True,'new_native_stage_audit_and_finish_before_parent_predeclared':True,'all12_first_actual_sources_bound_before_reserve':True});put(R/'definition_check.json',{'passed':True,'new_configs':12,'new_native_models':6,'new_parent_models':6,'read_only_refs':10,'all_sources_and_account_boundaries_checked':True,'all_variants_predeclared_before_outcomes':True});print('PASS12newspecs/6native6parent/10actualrefs/12firstfundsources/fullsourcebindings')

@@ -1,0 +1,10 @@
+"""Run all original checks, retaining exactly two known recovered bookkeeping/readonly failures."""
+import ast,hashlib,json
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[3];R=Path(__file__).resolve().parent
+rd=lambda p:json.loads(p.read_text());sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();put=lambda p,o:p.write_text(json.dumps(o,ensure_ascii=False,indent=2)+'\n')
+b=rd(R/'final_readonly_scope_checker_binding.json');assert b['bound_before_execution'] and sha(Path(__file__))==b['source_sha256'];old=R/'checks.py';assert sha(old)==b['original_checker_sha256']==rd(R/'code_binding_before_evaluation.json')['source_sha256'][str(old.relative_to(ROOT))]
+assert rd(R/'prior_parent_scope_verification.json')['passed'] and rd(R/'command_receipts/prior_identity_recovered.json')['passed'];bad=rd(R/'command_receipts/prior_identity.json');assert not bad['passed'] and [x['exit_code'] for x in bad['commands']]==[1];assert 'AssertionError' in (ROOT/bad['commands'][0]['log']).read_text()
+s=old.read_text();a="assert failed==['bind'],failed";assert s.count(a)==1;s=s.replace(a,"assert set(failed)=={'bind','prior_identity'},failed");ast.parse(s);exec(compile(s,str(old)+'[readonly_scope_recovery]','exec'),{'__name__':'__main__','__file__':str(old)})
+gate=rd(R/'validation_gate.json');assert gate['passed'] and set(gate['nonzero_native_phases'])=={'bind','prior_identity'} and not gate['no_nonzero_native_phases'];gate.update(all_actual_native_attempts_zero_exit=False,effective_unresolved_native_failures=[],only_known_initial_bind_and_parent_scope_failures_recovered=True,readonly_parent_scope_recovery='prior_parent_scope_verification.json',effective_prior_identity_receipt='command_receipts/prior_identity_recovered.json',original_checker_and_financial_sources_unchanged=True,new_financial_or_account_evaluations_from_adapter=0);put(R/'validation_gate.json',gate)
+print('PASS full original checks with both original known failure receipts retained and corrected phases actual0; financial/account reruns0')
